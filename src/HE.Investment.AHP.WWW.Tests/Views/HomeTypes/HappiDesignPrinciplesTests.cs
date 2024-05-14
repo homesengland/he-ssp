@@ -1,4 +1,3 @@
-using System.Diagnostics.CodeAnalysis;
 using HE.Investment.AHP.WWW.Models.HomeTypes;
 
 namespace HE.Investment.AHP.WWW.Tests.Views.HomeTypes;
@@ -22,8 +21,7 @@ public class HappiDesignPrinciplesTests : HomeTypesTestBase
             .HasElementWithText("a", "View the HAPPI principles for more information.")
             .HasCheckboxes(
                 "DesignPrinciples",
-                new[]
-                {
+                [
                     "AdaptabilityAndCareReadyDesign",
                     "BalconiesAndOutdoorSpace",
                     "DaylightInTheHomeAndInSharedSpaces",
@@ -34,8 +32,8 @@ public class HappiDesignPrinciplesTests : HomeTypesTestBase
                     "SharedFacilitiesAndHubs",
                     "SpaceAndFlexibility",
                     "StorageForBelongingsAndBicycles",
-                })
-            .HasCheckboxes("OtherPrinciples", new[] { "NoneOfThese", })
+                ])
+            .HasCheckboxes("OtherPrinciples", ["NoneOfThese",])
             .HasSaveAndContinueButton();
     }
 }

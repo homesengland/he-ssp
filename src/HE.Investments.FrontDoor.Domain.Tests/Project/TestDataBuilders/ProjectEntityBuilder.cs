@@ -9,7 +9,7 @@ namespace HE.Investments.FrontDoor.Domain.Tests.Project.TestDataBuilders;
 
 public class ProjectEntityBuilder : TestObjectBuilder<ProjectEntityBuilder, ProjectEntity>
 {
-    private readonly IList<SupportActivityType> _supportActivityTypes = new List<SupportActivityType> { SupportActivityType.AcquiringLand };
+    private readonly IList<SupportActivityType> _supportActivityTypes = [SupportActivityType.AcquiringLand];
 
     private readonly bool _isFundingRequired = true;
 
@@ -21,7 +21,7 @@ public class ProjectEntityBuilder : TestObjectBuilder<ProjectEntityBuilder, Proj
 
     private readonly int _organisationHomesBuilt = 10;
 
-    private readonly IList<InfrastructureType> _infrastructureTypes = new List<InfrastructureType>() { InfrastructureType.Enabling };
+    private readonly IList<InfrastructureType> _infrastructureTypes = [InfrastructureType.Enabling];
 
     private readonly ProjectGeographicFocus _geographicFocus = ProjectGeographicFocus.Regional;
 
@@ -29,7 +29,7 @@ public class ProjectEntityBuilder : TestObjectBuilder<ProjectEntityBuilder, Proj
 
     private readonly bool _isSupportRequired = true;
 
-    private readonly IList<RegionType> _regionTypes = new List<RegionType>() { RegionType.EastMidlands };
+    private readonly IList<RegionType> _regionTypes = [RegionType.EastMidlands];
 
     private readonly int _homesNumber = 10;
 
@@ -107,7 +107,7 @@ public class ProjectEntityBuilder : TestObjectBuilder<ProjectEntityBuilder, Proj
     {
         return WithIsSiteIdentified(false)
             .WithGeographicFocus(ProjectGeographicFocus.Regional)
-            .WithRegions(new List<RegionType> { RegionType.EastMidlands })
+            .WithRegions([RegionType.EastMidlands])
             .WithHomesNumber(35);
     }
 }

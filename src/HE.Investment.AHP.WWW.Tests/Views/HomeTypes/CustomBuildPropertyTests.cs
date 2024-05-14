@@ -22,11 +22,10 @@ public class CustomBuildPropertyTests : HomeTypesTestBase
             .HasElementWithText("a", "more information on custom build (opens in a new tab).")
             .HasRadio(
                 "CustomBuild",
-                new[]
-                {
+                [
                     "Yes",
                     "No",
-                })
+                ])
             .HasSaveAndContinueButton();
     }
 }

@@ -16,11 +16,11 @@ public class SaveFloorAreaStandardsCommandHandler : SaveHomeTypeSegmentCommandHa
     {
     }
 
-    protected override IReadOnlyCollection<HomeTypeSegmentType> SegmentTypes => new[] { HomeTypeSegmentType.HomeInformation };
+    protected override IReadOnlyCollection<HomeTypeSegmentType> SegmentTypes => [HomeTypeSegmentType.HomeInformation];
 
-    protected override IEnumerable<Action<SaveFloorAreaStandardsCommand, IHomeTypeEntity>> SaveActions => new[]
-    {
+    protected override IEnumerable<Action<SaveFloorAreaStandardsCommand, IHomeTypeEntity>> SaveActions =>
+    [
         (SaveFloorAreaStandardsCommand request, IHomeTypeEntity homeType) =>
             homeType.HomeInformation.ChangeNationallyDescribedSpaceStandards(request.NationallyDescribedSpaceStandards),
-    };
+    ];
 }

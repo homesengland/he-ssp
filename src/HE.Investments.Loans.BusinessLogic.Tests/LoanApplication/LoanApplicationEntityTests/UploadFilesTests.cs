@@ -24,7 +24,7 @@ public class UploadFilesTests : TestBase<LoanApplicationEntity>
         // when
         var upload = () => testCandidate.UploadFiles(
             fileService,
-            new[] { new SupportingDocumentsFile("test.pdf", 1000, 10, new MemoryStream()) },
+            [new SupportingDocumentsFile("test.pdf", 1000, 10, new MemoryStream())],
             eventDispatcher,
             CancellationToken.None);
 
@@ -43,7 +43,7 @@ public class UploadFilesTests : TestBase<LoanApplicationEntity>
         // when
         var upload = () => testCandidate.UploadFiles(
             fileService,
-            new[] { new SupportingDocumentsFile("test-1.pdf", 1000, 10, new MemoryStream()) },
+            [new SupportingDocumentsFile("test-1.pdf", 1000, 10, new MemoryStream())],
             eventDispatcher,
             CancellationToken.None);
 
@@ -57,11 +57,11 @@ public class UploadFilesTests : TestBase<LoanApplicationEntity>
         // given
         var fileService = FileServiceMockTestBuilder.Build<SupportingDocumentsParams>(5);
         var testCandidate = LoanApplicationTestBuilder.NewWithOtherApplicationStatus(ApplicationStatus.ReferredBackToApplicant).Build();
-        var file = new SupportingDocumentsFile("new-test.pdf", 1000, 10, new MemoryStream());
+        using var file = new SupportingDocumentsFile("new-test.pdf", 1000, 10, new MemoryStream());
         var eventDispatcher = CreateAndRegisterDependencyMock<IEventDispatcher>().Object;
 
         // when
-        var result = await testCandidate.UploadFiles(fileService, new[] { file }, eventDispatcher, CancellationToken.None);
+        var result = await testCandidate.UploadFiles(fileService, [file], eventDispatcher, CancellationToken.None);
 
         // then
         var uploadedFile = result.Should().HaveCount(1).And.Subject.Single();

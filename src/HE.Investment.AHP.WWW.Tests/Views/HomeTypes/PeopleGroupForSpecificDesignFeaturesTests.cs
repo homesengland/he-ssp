@@ -1,4 +1,3 @@
-using System.Diagnostics.CodeAnalysis;
 using HE.Investment.AHP.WWW.Models.HomeTypes;
 
 namespace HE.Investment.AHP.WWW.Tests.Views.HomeTypes;
@@ -21,8 +20,7 @@ public class PeopleGroupForSpecificDesignFeaturesTests : HomeTypesTestBase
             .HasElementWithText("p", "If these homes are designed specifically to meet the needs of more than one group, select the priority group. You can also create another home type for each group and enter them separately.")
             .HasRadio(
                 "PeopleGroupForSpecificDesignFeatures",
-                new[]
-                {
+                [
                     "People from ethnic minority backgrounds",
                     "Disabled people",
                     "Faith groups",
@@ -30,7 +28,7 @@ public class PeopleGroupForSpecificDesignFeaturesTests : HomeTypesTestBase
                     "Young people",
                     "Older people",
                     "None of these groups",
-                })
+                ])
             .HasSaveAndContinueButton();
     }
 }

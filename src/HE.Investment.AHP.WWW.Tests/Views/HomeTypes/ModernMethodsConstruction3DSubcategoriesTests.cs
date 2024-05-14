@@ -1,4 +1,3 @@
-using System.Diagnostics.CodeAnalysis;
 using HE.Investment.AHP.Contract.HomeTypes.Enums;
 using HE.Investment.AHP.WWW.Models.HomeTypes;
 
@@ -24,13 +23,12 @@ public class ModernMethodsConstruction3DSubcategoriesTests : HomeTypesTestBase
             .HasElementWithText("span", "Select all that apply.")
             .HasCheckboxes(
                 "ModernMethodsConstruction3DSubcategories",
-                new[]
-                {
+                [
                     "StructuralChassisOnly",
                     "StructuralChassisAndInternallyFittedOut",
                     "StructuralChassisInternallyFittedOutAndExternalCladdingOrRoofingCompleted",
                     "StructuralChassisInternallyFittedOutAndPoddedRoomAssembled",
-                })
+                ])
             .HasSaveAndContinueButton();
     }
 
@@ -40,11 +38,11 @@ public class ModernMethodsConstruction3DSubcategoriesTests : HomeTypesTestBase
         // given
         var model = new ModernMethodsConstructionModel("My application", "My homes")
         {
-            ModernMethodsConstruction3DSubcategories = new List<ModernMethodsConstruction3DSubcategoriesType>
-            {
+            ModernMethodsConstruction3DSubcategories =
+            [
                 ModernMethodsConstruction3DSubcategoriesType.StructuralChassisAndInternallyFittedOut,
                 ModernMethodsConstruction3DSubcategoriesType.StructuralChassisInternallyFittedOutAndPoddedRoomAssembled,
-            },
+            ],
         };
 
         // when
@@ -58,11 +56,10 @@ public class ModernMethodsConstruction3DSubcategoriesTests : HomeTypesTestBase
             .HasElementWithText("span", "Select all that apply.")
             .HasCheckedCheckboxes(
                 "ModernMethodsConstruction3DSubcategories",
-                new[]
-                {
+                [
                     "StructuralChassisAndInternallyFittedOut",
                     "StructuralChassisInternallyFittedOutAndPoddedRoomAssembled",
-                })
+                ])
             .HasSaveAndContinueButton();
     }
 }

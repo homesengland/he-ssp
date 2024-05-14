@@ -44,7 +44,7 @@ public class HomeTypeDetailsTests : HomeTypesTestBase
             .HasElementWithText("h2", "Home type name")
             .HasInput("HomeTypeName")
             .HasElementWithText("h2", "What type of homes are you delivering?")
-            .HasRadio("HousingType", new[] { "General", "HomesForOlderPeople", "HomesForDisabledAndVulnerablePeople" })
+            .HasRadio("HousingType", ["General", "HomesForOlderPeople", "HomesForDisabledAndVulnerablePeople"])
             .HasSaveAndContinueButton();
     }
 }

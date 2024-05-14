@@ -21,11 +21,10 @@ public class ExemptFromTheRightToSharedOwnershipTests : HomeTypesTestBase
             .HasElementWithText("a", "Read about the Right to Shared Ownership and the types of property that are in scope (opens in a new tab).")
             .HasRadio(
                 "ExemptFromTheRightToSharedOwnership",
-                new[]
-                {
+                [
                     "Yes",
                     "No",
-                })
+                ])
             .HasSaveAndContinueButton();
     }
 }

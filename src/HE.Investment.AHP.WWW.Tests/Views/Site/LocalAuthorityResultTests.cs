@@ -16,7 +16,7 @@ public class LocalAuthorityResultTests : AhpViewTestBase
         var localAuthorities = new LocalAuthorities()
         {
             Page = new PaginationResult<LocalAuthority>(
-                new List<LocalAuthority> { new("1", "Liverpool") },
+                [new("1", "Liverpool")],
                 1,
                 10,
                 1),

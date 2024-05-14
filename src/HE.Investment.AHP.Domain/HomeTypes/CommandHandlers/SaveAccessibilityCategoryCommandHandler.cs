@@ -16,10 +16,10 @@ public class SaveAccessibilityCategoryCommandHandler : SaveHomeTypeSegmentComman
     {
     }
 
-    protected override IReadOnlyCollection<HomeTypeSegmentType> SegmentTypes => new[] { HomeTypeSegmentType.HomeInformation };
+    protected override IReadOnlyCollection<HomeTypeSegmentType> SegmentTypes => [HomeTypeSegmentType.HomeInformation];
 
-    protected override IEnumerable<Action<SaveAccessibilityCategoryCommand, IHomeTypeEntity>> SaveActions => new[]
-    {
+    protected override IEnumerable<Action<SaveAccessibilityCategoryCommand, IHomeTypeEntity>> SaveActions =>
+    [
         (SaveAccessibilityCategoryCommand request, IHomeTypeEntity homeType) => homeType.HomeInformation.ChangeAccessibilityCategory(request.AccessibilityCategory),
-    };
+    ];
 }

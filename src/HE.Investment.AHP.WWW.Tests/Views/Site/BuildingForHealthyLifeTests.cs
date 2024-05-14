@@ -23,12 +23,11 @@ public class BuildingForHealthyLifeTests : AhpViewTestBase
             .HasSummaryDetails("Building for a Healthy Life is a design code to help people improve the design of new and growing neighbourhoods. You can read more in the")
             .HasRadio(
                 "BuildingForHealthyLife",
-                new[]
-                {
+                [
                     "Yes",
                     "No",
                     "Not applicable, this site does not contain more than 10 homes",
-                })
+                ])
             .HasSaveAndContinueButton()
             .HasBackLink(out _, false);
     }
@@ -53,12 +52,11 @@ public class BuildingForHealthyLifeTests : AhpViewTestBase
             .HasSummaryDetails("Building for a Healthy Life is a design code to help people improve the design of new and growing neighbourhoods. You can read more in the")
             .HasRadio(
                 "BuildingForHealthyLife",
-                new[]
-                {
+                [
                     "Yes",
                     "No",
                     "Not applicable, this site does not contain more than 10 homes",
-                })
+                ])
             .HasSaveAndContinueButton()
             .HasBackLink(out _, false)
             .HasOneValidationMessages(errorMessage);

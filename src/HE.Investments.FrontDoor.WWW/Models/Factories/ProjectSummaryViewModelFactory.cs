@@ -122,8 +122,8 @@ public class ProjectSummaryViewModelFactory : IProjectSummaryViewModelFactory
 
         if (projectDetails.SupportActivityTypes?.Count == 1 && projectDetails.SupportActivityTypes.Contains(SupportActivityType.DevelopingHomes))
         {
-            summary.AddRange(new[]
-            {
+            summary.AddRange(
+            [
                 new SectionSummaryItemModel(
                     "Amount of affordable homes",
                     SummaryAnswerHelper.ToEnum(projectDetails.AffordableHomesAmount),
@@ -134,7 +134,7 @@ public class ProjectSummaryViewModelFactory : IProjectSummaryViewModelFactory
                     projectDetails.OrganisationHomesBuilt.ToOneElementList(),
                     createAction(nameof(ProjectController.OrganisationHomesBuilt)),
                     IsEditable: isEditable),
-            });
+            ]);
         }
 
         return summary;
@@ -181,8 +181,8 @@ public class ProjectSummaryViewModelFactory : IProjectSummaryViewModelFactory
 
     private static List<SectionSummaryItemModel> CreateSiteDetailsSummary(SiteDetails site, CreateAction createAction, bool isEditable)
     {
-        return new List<SectionSummaryItemModel>
-        {
+        return
+        [
             new("Site name", site.Name.ToOneElementList(), createAction(nameof(SiteController.Name)), IsEditable: isEditable),
             new("Number of homes", site.HomesNumber.ToOneElementList(), createAction(nameof(SiteController.HomesNumber)), IsEditable: isEditable),
             new(
@@ -195,7 +195,7 @@ public class ProjectSummaryViewModelFactory : IProjectSummaryViewModelFactory
                 SummaryAnswerHelper.ToEnum(site.PlanningStatus),
                 createAction(nameof(SiteController.PlanningStatus)),
                 IsEditable: isEditable),
-        };
+        ];
     }
 
     private static List<SectionSummaryItemModel> CreateProjectFinancialDetailsSummary(
@@ -219,8 +219,8 @@ public class ProjectSummaryViewModelFactory : IProjectSummaryViewModelFactory
 
         if (projectDetails.IsFundingRequired == true)
         {
-            summary.AddRange(new[]
-            {
+            summary.AddRange(
+            [
                 new SectionSummaryItemModel(
                     "How much funding",
                     SummaryAnswerHelper.ToEnum(projectDetails.RequiredFunding),
@@ -231,7 +231,7 @@ public class ProjectSummaryViewModelFactory : IProjectSummaryViewModelFactory
                     SummaryAnswerHelper.ToYesNo(projectDetails.IsProfit),
                     createAction(nameof(ProjectController.Profit)),
                     IsEditable: isEditable),
-            });
+            ]);
         }
 
         summary.Add(new(

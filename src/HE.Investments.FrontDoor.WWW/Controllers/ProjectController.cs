@@ -164,7 +164,7 @@ public class ProjectController : WorkflowController<ProjectWorkflowState>
     public async Task<IActionResult> SupportRequiredActivities([FromRoute] string projectId, ProjectDetails model, CancellationToken cancellationToken)
     {
         return await ExecuteProjectCommand(
-            new ProvideSupportActivitiesCommand(FrontDoorProjectId.From(projectId), model.SupportActivityTypes ?? new List<SupportActivityType>()),
+            new ProvideSupportActivitiesCommand(FrontDoorProjectId.From(projectId), model.SupportActivityTypes ?? []),
             nameof(SupportRequiredActivities),
             project =>
             {
@@ -186,7 +186,7 @@ public class ProjectController : WorkflowController<ProjectWorkflowState>
     public async Task<IActionResult> Infrastructure([FromRoute] string projectId, ProjectDetails model, CancellationToken cancellationToken)
     {
         return await ExecuteProjectCommand(
-            new ProvideInfrastructureTypesCommand(FrontDoorProjectId.From(projectId), model.InfrastructureTypes ?? new List<InfrastructureType>()),
+            new ProvideInfrastructureTypesCommand(FrontDoorProjectId.From(projectId), model.InfrastructureTypes ?? []),
             nameof(Infrastructure),
             project =>
             {
@@ -316,7 +316,7 @@ public class ProjectController : WorkflowController<ProjectWorkflowState>
     public async Task<IActionResult> Region([FromRoute] string projectId, ProjectDetails model, CancellationToken cancellationToken)
     {
         return await ExecuteProjectCommand(
-            new ProvideRegionCommand(FrontDoorProjectId.From(projectId), model.Regions ?? new List<RegionType>()),
+            new ProvideRegionCommand(FrontDoorProjectId.From(projectId), model.Regions ?? []),
             nameof(Region),
             project =>
             {

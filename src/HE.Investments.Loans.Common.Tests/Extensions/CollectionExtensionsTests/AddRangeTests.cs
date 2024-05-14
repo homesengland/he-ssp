@@ -13,10 +13,10 @@ public class AddRangeTests
     public void ShouldNotThrowException_WhenNullIsPassedAsParameter()
     {
         // given
-        IList<int> listWithOneElement = new List<int>
-            {
+        IList<int> listWithOneElement =
+            [
                 1,
-            };
+            ];
 
         // when
         listWithOneElement.AddRange(null!);
@@ -29,11 +29,11 @@ public class AddRangeTests
     public void ShouldAddTwoElementsToIList_WhenAddingElementsArePassedAsList()
     {
         // given
-        IList<int> listWithTwoElements = new List<int>
-            {
+        IList<int> listWithTwoElements =
+            [
                 1,
                 2,
-            };
+            ];
 
         var elementsToAdd = new List<int>
             {
@@ -60,11 +60,11 @@ public class AddRangeTests
     public void ShouldAddElementsToIList_WhenAddingElementsArePassedAsArray()
     {
         // given
-        IList<int> listWithTwoElements = new List<int>
-            {
+        IList<int> listWithTwoElements =
+            [
                 1,
                 2,
-            };
+            ];
 
         var elementsToAdd = new[]
         {
@@ -91,11 +91,11 @@ public class AddRangeTests
     public void ShouldAddElementsToCollection()
     {
         // given
-        IList<int> listWithTwoElements = new Collection<int>(new List<int>
-            {
+        IList<int> listWithTwoElements = new Collection<int>(
+            [
                 1,
                 2,
-            });
+            ]);
 
         var elementsToAdd = new List<int>
             {

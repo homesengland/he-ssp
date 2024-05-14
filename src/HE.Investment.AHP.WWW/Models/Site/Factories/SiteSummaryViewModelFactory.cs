@@ -41,10 +41,10 @@ public class SiteSummaryViewModelFactory : ISiteSummaryViewModelFactory
 
     private static List<SectionSummaryItemModel> CreateSiteDetailsSummary(SiteModel site, CreateAction createAction, bool isEditable)
     {
-        return new List<SectionSummaryItemModel>
-        {
+        return
+        [
             new("Site name", site.Name.ToOneElementList(), createAction(nameof(Controller.Name)), IsEditable: isEditable),
-        };
+        ];
     }
 
     private static List<SectionSummaryItemModel> CreateSection106Summary(Section106Dto? section, CreateAction createAction, bool isEditable)
@@ -99,14 +99,14 @@ public class SiteSummaryViewModelFactory : ISiteSummaryViewModelFactory
 
     private static List<SectionSummaryItemModel> CreateLocationSummary(LocalAuthority? localAuthority, CreateAction createAction, bool isEditable)
     {
-        return new List<SectionSummaryItemModel>
-        {
+        return
+        [
             new(
                 "Local authority",
                 localAuthority?.Name.ToOneElementList(),
                 createAction(nameof(Controller.LocalAuthoritySearch)),
                 IsEditable: isEditable),
-        };
+        ];
     }
 
     private static List<SectionSummaryItemModel> CreatePlanningSummary(SitePlanningDetails planning, CreateAction createAction, bool isEditable)
@@ -224,18 +224,18 @@ public class SiteSummaryViewModelFactory : ISiteSummaryViewModelFactory
     private static List<SectionSummaryItemModel> CreateConsortiumSummary()
     {
         // TODO: AB#65903: Site information - Partner information
-        return new List<SectionSummaryItemModel>
-        {
+        return
+        [
             new("Developing partner", "TODO".ToOneElementList()),
             new("Owner of the land", "TODO".ToOneElementList()),
             new("Owner of the homes", "TODO".ToOneElementList()),
-        };
+        ];
     }
 
     private static List<SectionSummaryItemModel> CreateUrbSummary()
     {
         // TODO: AB#65903: Site information - Partner information
-        return new List<SectionSummaryItemModel> { new("Owner of the homes", "TODO".ToOneElementList()) };
+        return [new("Owner of the homes", "TODO".ToOneElementList())];
     }
 
     private static List<SectionSummaryItemModel> CreateLandDetailsSummary(SiteModel site, CreateAction createAction, bool isEditable)
@@ -405,14 +405,14 @@ public class SiteSummaryViewModelFactory : ISiteSummaryViewModelFactory
 
     private static List<SectionSummaryItemModel> CreateProcurementSummary(SiteModel site, CreateAction createAction, bool isEditable)
     {
-        return new List<SectionSummaryItemModel>
-        {
+        return
+        [
             new(
                 "Procurement mechanisms",
                 site.SiteProcurements.Select(x => x.GetDescription()).ToList(),
                 createAction(nameof(Controller.Procurements)),
                 IsEditable: isEditable),
-        };
+        ];
     }
 
     private static string CreateSiteActionUrl(IUrlHelper urlHelper, SiteId siteId, string actionName, string? workflow)

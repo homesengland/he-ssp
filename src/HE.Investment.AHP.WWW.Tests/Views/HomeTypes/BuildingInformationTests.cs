@@ -20,14 +20,13 @@ public class BuildingInformationTests : HomeTypesTestBase
             .HasPageHeader("My application - My homes", "Building information")
             .HasRadio(
                 "BuildingType",
-                new[]
-                {
+                [
                     "House",
                     "Flat",
                     "Bedsit",
                     "Bungalow",
                     "Maisonette",
-                })
+                ])
             .HasElementWithText("span", "A single self-contained residential dwelling, usually of more than one storey.")
             .HasElementWithText("span", "A single self-contained residential dwelling, usually of one storey, within a single structure containing multiple dwellings.")
             .HasElementWithText("span", "Single unit within a shared property.")

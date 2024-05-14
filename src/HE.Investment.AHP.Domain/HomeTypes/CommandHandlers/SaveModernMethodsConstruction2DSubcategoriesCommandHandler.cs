@@ -16,11 +16,11 @@ public class SaveModernMethodsConstruction2DSubcategoriesCommandHandler : SaveHo
     {
     }
 
-    protected override IReadOnlyCollection<HomeTypeSegmentType> SegmentTypes => new[] { HomeTypeSegmentType.ModernMethodsConstruction };
+    protected override IReadOnlyCollection<HomeTypeSegmentType> SegmentTypes => [HomeTypeSegmentType.ModernMethodsConstruction];
 
-    protected override IEnumerable<Action<SaveModernMethodsConstruction2DSubcategoriesCommand, IHomeTypeEntity>> SaveActions => new[]
-    {
+    protected override IEnumerable<Action<SaveModernMethodsConstruction2DSubcategoriesCommand, IHomeTypeEntity>> SaveActions =>
+    [
         (SaveModernMethodsConstruction2DSubcategoriesCommand request, IHomeTypeEntity homeType) =>
             homeType.ModernMethodsConstruction.ChangeModernMethodsConstruction2DSubcategories(request.ModernMethodsConstruction2DSubcategories),
-    };
+    ];
 }

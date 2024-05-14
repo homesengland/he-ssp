@@ -64,11 +64,10 @@ public class AffordableRentTests : HomeTypesTestBase
             .HasElementWithText("a", "Find out more information on our Rent Policy Statement (opens in a new tab).")
             .HasRadio(
                 "TargetRentExceedMarketRent",
-                new[]
-                {
+                [
                     "Yes",
                     "No",
-                })
+                ])
             .HasSaveAndContinueButton()
             .HasElementWithText("button", "Calculate");
     }

@@ -18,10 +18,10 @@ public class SaveExemptionJustificationCommandHandler : SaveHomeTypeSegmentComma
     {
     }
 
-    protected override IReadOnlyCollection<HomeTypeSegmentType> SegmentTypes => new[] { HomeTypeSegmentType.TenureDetails };
+    protected override IReadOnlyCollection<HomeTypeSegmentType> SegmentTypes => [HomeTypeSegmentType.TenureDetails];
 
-    protected override IEnumerable<Action<SaveExemptionJustificationCommand, IHomeTypeEntity>> SaveActions => new[]
-    {
+    protected override IEnumerable<Action<SaveExemptionJustificationCommand, IHomeTypeEntity>> SaveActions =>
+    [
         (SaveExemptionJustificationCommand request, IHomeTypeEntity homeType) =>
         {
             var exemptionJustification = request.ExemptionJustification.IsNotProvided()
@@ -29,5 +29,5 @@ public class SaveExemptionJustificationCommandHandler : SaveHomeTypeSegmentComma
                 : new MoreInformation(request.ExemptionJustification!, "exemption justification");
             homeType.TenureDetails.ChangeExemptionJustification(exemptionJustification);
         },
-    };
+    ];
 }

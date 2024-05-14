@@ -43,7 +43,7 @@ internal sealed class HomeTypeQuestionFactory
             return null;
         }
 
-        var validAnswers = answers?.Where(x => x != null).Select(x => x!).ToList() ?? new List<string>();
+        var validAnswers = answers?.Where(x => x != null).Select(x => x!).ToList() ?? [];
         return new SectionSummaryItemModel(questionName, validAnswers, CreateActionUrl(controllerActionName), IsEditable: !_isReadOnly);
     }
 

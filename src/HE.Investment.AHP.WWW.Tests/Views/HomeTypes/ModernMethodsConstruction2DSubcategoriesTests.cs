@@ -1,4 +1,3 @@
-using System.Diagnostics.CodeAnalysis;
 using HE.Investment.AHP.Contract.HomeTypes.Enums;
 using HE.Investment.AHP.WWW.Models.HomeTypes;
 
@@ -24,12 +23,11 @@ public class ModernMethodsConstruction2DSubcategoriesTests : HomeTypesTestBase
             .HasElementWithText("span", "Select all that apply.")
             .HasCheckboxes(
                 "ModernMethodsConstruction2DSubcategories",
-                new[]
-                {
+                [
                     "BasicFramingOnly",
                     "EnhancedConsolidation",
                     "FurtherEnhancedConsolidation",
-                })
+                ])
             .HasSaveAndContinueButton();
     }
 
@@ -39,11 +37,11 @@ public class ModernMethodsConstruction2DSubcategoriesTests : HomeTypesTestBase
         // given
         var model = new ModernMethodsConstructionModel("My application", "My homes")
         {
-            ModernMethodsConstruction2DSubcategories = new List<ModernMethodsConstruction2DSubcategoriesType>
-            {
+            ModernMethodsConstruction2DSubcategories =
+            [
                 ModernMethodsConstruction2DSubcategoriesType.BasicFramingOnly,
                 ModernMethodsConstruction2DSubcategoriesType.EnhancedConsolidation,
-            },
+            ],
         };
 
         // when
@@ -57,11 +55,10 @@ public class ModernMethodsConstruction2DSubcategoriesTests : HomeTypesTestBase
             .HasElementWithText("span", "Select all that apply.")
             .HasCheckedCheckboxes(
                 "ModernMethodsConstruction2DSubcategories",
-                new[]
-                {
+                [
                     "BasicFramingOnly",
                     "EnhancedConsolidation",
-                })
+                ])
             .HasSaveAndContinueButton();
     }
 }

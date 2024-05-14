@@ -147,9 +147,9 @@ public class ProvideHomesTypesCommandHandlerTests : TestBase<ProvideHomesTypesCo
         project.HomesTypes?.OtherHomesTypesValue.Should().Be(ValidOtherHomesTypes());
     }
 
-    private string[] ValidHomesTypes_WithoutOtherSelected() => new[] { "bungalows", "apartments" };
+    private string[] ValidHomesTypes_WithoutOtherSelected() => ["bungalows", "apartments"];
 
-    private string[] ValidHomesTypes_WithOtherSelected() => new[] { "bungalows", "other" };
+    private string[] ValidHomesTypes_WithOtherSelected() => ["bungalows", "other"];
 
     private string ValidOtherHomesTypes() => "ValidOtherHomeType";
 

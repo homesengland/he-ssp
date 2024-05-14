@@ -7,8 +7,8 @@ public static class ContactRolesDtoTestData
 {
     public static readonly ContactRolesDto ContactRolesDto = new()
     {
-        contactRoles = new List<ContactRoleDto>()
-        {
+        contactRoles =
+        [
             new()
             {
                 accountId = GuidTestData.GuidOne,
@@ -17,7 +17,7 @@ public static class ContactRolesDtoTestData
                 permissionLevel = "Test permission level",
                 permission = 858110001,
             },
-        },
+        ],
         email = "test@test.com",
         externalId = "UserOne",
     };

@@ -1,4 +1,3 @@
-using System.Diagnostics.CodeAnalysis;
 using HE.Investment.AHP.Contract.HomeTypes.Enums;
 using HE.Investment.AHP.WWW.Models.HomeTypes;
 
@@ -23,8 +22,7 @@ public class ModernMethodsConstructionCategoriesTests : HomeTypesTestBase
             .HasElementWithText("span", "Select all that apply.")
             .HasCheckboxes(
                 "ModernMethodsConstructionCategories",
-                new[]
-                {
+                [
                     "Category1PreManufacturing3DPrimaryStructuralSystems",
                     "Category2PreManufacturing2DPrimaryStructuralSystems",
                     "Category3PreManufacturedComponentNonSystemizedPrimaryStructure",
@@ -32,7 +30,7 @@ public class ModernMethodsConstructionCategoriesTests : HomeTypesTestBase
                     "Category5PreManufacturingNonStructuralAssembliesAndSubAssemblies",
                     "Category6TraditionalBuildingProductLedSiteLabourReductionOrProductivityImprovements",
                     "Category7SiteProcessLedLabourReductionOrProductivityOrAssuranceImprovements",
-                })
+                ])
             .HasSaveAndContinueButton();
     }
 
@@ -42,13 +40,13 @@ public class ModernMethodsConstructionCategoriesTests : HomeTypesTestBase
         // given
         var model = new ModernMethodsConstructionModel("My application", "My homes")
         {
-            ModernMethodsConstructionCategories = new List<ModernMethodsConstructionCategoriesType>
-            {
+            ModernMethodsConstructionCategories =
+            [
                 ModernMethodsConstructionCategoriesType.Category2PreManufacturing2DPrimaryStructuralSystems,
                 ModernMethodsConstructionCategoriesType.Category4AdditiveManufacturingStructuringAndNonStructural,
                 ModernMethodsConstructionCategoriesType.Category5PreManufacturingNonStructuralAssembliesAndSubAssemblies,
                 ModernMethodsConstructionCategoriesType.Category6TraditionalBuildingProductLedSiteLabourReductionOrProductivityImprovements,
-            },
+            ],
         };
 
         // when
@@ -61,13 +59,12 @@ public class ModernMethodsConstructionCategoriesTests : HomeTypesTestBase
             .HasElementWithText("span", "Select all that apply.")
             .HasCheckedCheckboxes(
                 "ModernMethodsConstructionCategories",
-                new[]
-                {
+                [
                     "Category2PreManufacturing2DPrimaryStructuralSystems",
                     "Category4AdditiveManufacturingStructuringAndNonStructural",
                     "Category5PreManufacturingNonStructuralAssembliesAndSubAssemblies",
                     "Category6TraditionalBuildingProductLedSiteLabourReductionOrProductivityImprovements",
-                })
+                ])
             .HasSaveAndContinueButton();
     }
 }

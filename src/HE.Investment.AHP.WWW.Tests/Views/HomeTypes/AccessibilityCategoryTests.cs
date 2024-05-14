@@ -1,4 +1,3 @@
-using System.Diagnostics.CodeAnalysis;
 using HE.Investment.AHP.WWW.Models.HomeTypes;
 
 namespace HE.Investment.AHP.WWW.Tests.Views.HomeTypes;
@@ -22,12 +21,11 @@ public class AccessibilityCategoryTests : HomeTypesTestBase
             .HasElementWithText("a", "Read the Building Regulations to find out more (opens in a new tab).")
             .HasRadio(
                 "AccessibilityCategory",
-                new[]
-                {
+                [
                     "M4(1) Category 1: Visitable dwellings",
                     "M4(2) Category 2: Accessible and adaptable dwellings",
                     "M4(3) Category 3: Wheelchair user dwellings",
-                })
+                ])
             .HasSaveAndContinueButton();
     }
 }

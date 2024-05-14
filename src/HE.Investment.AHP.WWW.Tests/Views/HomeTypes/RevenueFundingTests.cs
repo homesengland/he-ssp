@@ -1,4 +1,3 @@
-using System.Diagnostics.CodeAnalysis;
 using HE.Investment.AHP.Contract.HomeTypes.Enums;
 using HE.Investment.AHP.WWW.Models.HomeTypes;
 
@@ -23,8 +22,7 @@ public class RevenueFundingTests : HomeTypesTestBase
             .HasElementWithText("span", "Select all that apply.")
             .HasCheckboxes(
                 "Sources",
-                new[]
-                {
+                [
                     "Charity",
                     "ClinicalCommissioningGroupLocalAreaTeam",
                     "CrimeAndDisorderReductionPartnerships",
@@ -45,7 +43,7 @@ public class RevenueFundingTests : HomeTypesTestBase
                     "SupportingPeople",
                     "YouthOffendingTeams",
                     "Other",
-                })
+                ])
             .HasSaveAndContinueButton();
     }
 
@@ -55,12 +53,12 @@ public class RevenueFundingTests : HomeTypesTestBase
         // given
         var model = new RevenueFundingModel("My application", "My homes")
         {
-            Sources = new List<RevenueFundingSourceType>
-            {
+            Sources =
+            [
                 RevenueFundingSourceType.SocialServicesDepartment,
                 RevenueFundingSourceType.Charity,
                 RevenueFundingSourceType.NationalLottery,
-            },
+            ],
         };
 
         // when
@@ -73,12 +71,11 @@ public class RevenueFundingTests : HomeTypesTestBase
             .HasElementWithText("span", "Select all that apply.")
             .HasCheckedCheckboxes(
                 "Sources",
-                new[]
-                {
+                [
                     "Charity",
                     "NationalLottery",
                     "SocialServicesDepartment",
-                })
+                ])
             .HasSaveAndContinueButton();
     }
 }

@@ -53,7 +53,7 @@ public class HomeInformationSegmentEntity : DomainEntity, IHomeTypeSegmentEntity
         AccessibilityCategory = accessibilityCategory;
         InternalFloorArea = internalFloorArea;
         MeetNationallyDescribedSpaceStandards = meetNationallyDescribedSpaceStandards;
-        _nationallyDescribedSpaceStandards = nationallyDescribedSpaceStandards?.ToList() ?? new List<NationallyDescribedSpaceStandardType>();
+        _nationallyDescribedSpaceStandards = nationallyDescribedSpaceStandards?.ToList() ?? [];
     }
 
     public event EntityModifiedEventHandler SegmentModified;

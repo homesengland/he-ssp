@@ -22,9 +22,9 @@ public class ModernMethodsConstructionSegmentEntity : DomainEntity, IHomeTypeSeg
         SiteUsingModernMethodsOfConstruction = siteUsingModernMethodsOfConstruction;
         _modificationTracker = new ModificationTracker(() => SegmentModified?.Invoke());
         ModernMethodsConstructionApplied = modernMethodsConstructionApplied;
-        ModernMethodsConstructionCategories = modernMethodsConstructionCategories?.ToList() ?? new List<ModernMethodsConstructionCategoriesType>();
-        ModernMethodsConstruction2DSubcategories = modernMethodsConstruction2DSubcategories?.ToList() ?? new List<ModernMethodsConstruction2DSubcategoriesType>();
-        ModernMethodsConstruction3DSubcategories = modernMethodsConstruction3DSubcategories?.ToList() ?? new List<ModernMethodsConstruction3DSubcategoriesType>();
+        ModernMethodsConstructionCategories = modernMethodsConstructionCategories?.ToList() ?? [];
+        ModernMethodsConstruction2DSubcategories = modernMethodsConstruction2DSubcategories?.ToList() ?? [];
+        ModernMethodsConstruction3DSubcategories = modernMethodsConstruction3DSubcategories?.ToList() ?? [];
     }
 
     public event EntityModifiedEventHandler SegmentModified;

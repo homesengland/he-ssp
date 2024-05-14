@@ -151,11 +151,11 @@ public class UserOrganisationController : Controller
         var userOrganisationActions = new List<ActionModel>();
         if (canViewOrganisationDetails)
         {
-            userOrganisationActions.AddRange(new List<ActionModel>
-            {
+            userOrganisationActions.AddRange(
+            [
                 new("Add or manage users at this Organisation", "Index", "Users", HasAccess: canViewOrganisationDetails),
                 new($"Manage {organisationName} details", "Details", "UserOrganisation", HasAccess: canViewOrganisationDetails),
-            });
+            ]);
         }
 
         userOrganisationActions.Add(new("Manage your account", "GetProfileDetails", "User", new { callback = Url.Action("Index") }, true));

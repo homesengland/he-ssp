@@ -40,7 +40,7 @@ public class UserOrganisationTests : AccountViewTestBase
     public async Task ShouldDisplayUserOrganisation_ForMissingProgrammesToAccess()
     {
         // given
-        var model = CreateTestModel(programmesToAccess: new List<ProgrammeToAccessModel>());
+        var model = CreateTestModel(programmesToAccess: []);
 
         // when
         var document = await Render(_viewPath, model);
@@ -54,12 +54,12 @@ public class UserOrganisationTests : AccountViewTestBase
     {
         // given
         var model = CreateTestModel(
-            programmesToAccess: new List<ProgrammeToAccessModel>
-            {
+            programmesToAccess:
+            [
                 new(
                     new ProgrammeModel(ProgrammeType.Ahp, "P1", "Desc1", "V"),
-                    new List<UserApplicationModel>()),
-            });
+                    []),
+            ]);
 
         // when
         var document = await Render(_viewPath, model);
@@ -72,7 +72,7 @@ public class UserOrganisationTests : AccountViewTestBase
     public async Task ShouldDisplayUserOrganisation_ForMissingActions()
     {
         // given
-        var model = CreateTestModel(actions: new List<ActionModel>());
+        var model = CreateTestModel(actions: []);
 
         // when
         var document = await Render(_viewPath, model);
@@ -103,12 +103,12 @@ public class UserOrganisationTests : AccountViewTestBase
 
     private static List<ProgrammeToAccessModel> ProgrammesToToAccess()
     {
-        return new List<ProgrammeToAccessModel>
-        {
+        return
+        [
             new(
                 new ProgrammeModel(ProgrammeType.Ahp, "P1", "Desc1", "V"),
-                new List<UserApplicationModel> { new("1", "AP1", ApplicationStatus.Withdrawn, "http://localhost/app/") }),
-        };
+                [new("1", "AP1", ApplicationStatus.Withdrawn, "http://localhost/app/")]),
+        ];
     }
 
     private UserOrganisationModel CreateTestModel(
@@ -123,8 +123,8 @@ public class UserOrganisationTests : AccountViewTestBase
             userName ?? "Jan Muzykant",
             isLimitedUser,
             "start-project",
-            new List<UserProjectModel>(),
+            [],
             programmesToAccess ?? ProgrammesToToAccess(),
-            actions ?? new List<ActionModel> { new("ViewAllApplicationsUrl Name", "A", "C", true) });
+            actions ?? [new("ViewAllApplicationsUrl Name", "A", "C", true)]);
     }
 }

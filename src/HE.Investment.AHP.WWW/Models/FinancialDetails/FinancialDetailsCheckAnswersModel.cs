@@ -10,7 +10,7 @@ public class FinancialDetailsCheckAnswersModel : FinancialDetailsBaseModel, IEdi
 {
     public FinancialDetailsCheckAnswersModel()
     {
-        AllowedOperations = new List<AhpApplicationOperation>();
+        AllowedOperations = [];
     }
 
     public FinancialDetailsCheckAnswersModel(

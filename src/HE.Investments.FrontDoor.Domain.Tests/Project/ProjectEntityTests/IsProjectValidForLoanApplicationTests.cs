@@ -17,7 +17,7 @@ public class IsProjectValidForLoanApplicationTests
         DateTimeUtil.SetDateTimeProvider(dateTimeProviderMock);
         var project = ProjectEntityBuilder
             .New()
-            .WithSupportActivities(new List<SupportActivityType> { SupportActivityType.AcquiringLand })
+            .WithSupportActivities([SupportActivityType.AcquiringLand])
             .WithAffordableHomesAmount(AffordableHomesAmount.OnlyOpenMarketHomes)
             .WithOrganisationHomesBuilt(5000)
             .WithIsSiteIdentified(true)
@@ -42,7 +42,7 @@ public class IsProjectValidForLoanApplicationTests
         DateTimeUtil.SetDateTimeProvider(dateTimeProviderMock);
         var project = ProjectEntityBuilder
             .New()
-            .WithSupportActivities(new List<SupportActivityType> { SupportActivityType.DevelopingHomes })
+            .WithSupportActivities([SupportActivityType.DevelopingHomes])
             .WithAffordableHomesAmount(AffordableHomesAmount.OnlyOpenMarketHomes)
             .WithOrganisationHomesBuilt(1000)
             .WithIsSiteIdentified(true)

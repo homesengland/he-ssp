@@ -20,12 +20,11 @@ public class TypeOfFacilitiesTests : HomeTypesTestBase
             .HasPageHeader("My application - My homes", "What type of facilities do the homes have?")
             .HasRadio(
                 "FacilityType",
-                new[]
-                {
+                [
                     "Self-contained facilities",
                     "Shared facilities",
                     "Mix of self-contained snd shared facilities",
-                })
+                ])
             .HasHint("Resident has use of their own facilities, such as bathroom and kitchen, within their own home.")
             .HasHint("Residents have their own room or rooms but facilities, such as bathroom and kitchen, are shared with others.")
             .HasSaveAndContinueButton();

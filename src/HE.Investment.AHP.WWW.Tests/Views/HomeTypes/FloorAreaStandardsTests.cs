@@ -23,13 +23,8 @@ public class FloorAreaStandardsTests : HomeTypesTestBase
             .HasElementWithText("a", "Read more about the Nationally Described Space Standards (opens in a new tab).")
             .HasCheckboxes(
                 "NationallyDescribedSpaceStandards",
-                new[]
-                {
-                    "BuiltInStorageSpaceSize",
-                    "BedroomAreas",
-                    "BedroomWidth",
-                })
-            .HasCheckboxes("OtherNationallyDescribedSpaceStandards", new[] { "NoneOfThese", })
+                ["BuiltInStorageSpaceSize", "BedroomAreas", "BedroomWidth",])
+            .HasCheckboxes("OtherNationallyDescribedSpaceStandards", ["NoneOfThese",])
             .HasSaveAndContinueButton();
     }
 }

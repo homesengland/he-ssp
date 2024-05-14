@@ -56,7 +56,7 @@ public class NextStateTests
     {
         var modernMethodsOfConstruction = new SiteModernMethodsOfConstruction(
             SiteUsingModernMethodsOfConstruction.Yes,
-            new List<ModernMethodsConstructionCategoriesType> { ModernMethodsConstructionCategoriesType.Category1PreManufacturing3DPrimaryStructuralSystems, });
+            [ModernMethodsConstructionCategoriesType.Category1PreManufacturing3DPrimaryStructuralSystems,]);
 
         await TestContinue(SiteWorkflowState.MmcCategories, SiteWorkflowState.Mmc3DCategory, modernMethodsOfConstruction);
     }
@@ -66,7 +66,7 @@ public class NextStateTests
     {
         var modernMethodsOfConstruction = new SiteModernMethodsOfConstruction(
             SiteUsingModernMethodsOfConstruction.Yes,
-            new List<ModernMethodsConstructionCategoriesType> { ModernMethodsConstructionCategoriesType.Category2PreManufacturing2DPrimaryStructuralSystems, });
+            [ModernMethodsConstructionCategoriesType.Category2PreManufacturing2DPrimaryStructuralSystems,]);
 
         await TestContinue(SiteWorkflowState.MmcCategories, SiteWorkflowState.Mmc2DCategory, modernMethodsOfConstruction);
     }
@@ -76,11 +76,10 @@ public class NextStateTests
     {
         var modernMethodsOfConstruction = new SiteModernMethodsOfConstruction(
             SiteUsingModernMethodsOfConstruction.Yes,
-            new List<ModernMethodsConstructionCategoriesType>
-            {
+            [
                 ModernMethodsConstructionCategoriesType.Category1PreManufacturing3DPrimaryStructuralSystems,
                 ModernMethodsConstructionCategoriesType.Category2PreManufacturing2DPrimaryStructuralSystems,
-            });
+            ]);
 
         await TestContinue(SiteWorkflowState.MmcCategories, SiteWorkflowState.Mmc3DCategory, modernMethodsOfConstruction);
     }
@@ -90,7 +89,7 @@ public class NextStateTests
     {
         var modernMethodsOfConstruction = new SiteModernMethodsOfConstruction(
             SiteUsingModernMethodsOfConstruction.Yes,
-            new List<ModernMethodsConstructionCategoriesType> { ModernMethodsConstructionCategoriesType.Category2PreManufacturing2DPrimaryStructuralSystems, });
+            [ModernMethodsConstructionCategoriesType.Category2PreManufacturing2DPrimaryStructuralSystems,]);
 
         await TestContinue(SiteWorkflowState.Mmc3DCategory, SiteWorkflowState.Mmc2DCategory, modernMethodsOfConstruction);
     }
@@ -100,7 +99,7 @@ public class NextStateTests
     {
         var modernMethodsOfConstruction = new SiteModernMethodsOfConstruction(
             SiteUsingModernMethodsOfConstruction.Yes,
-            new List<ModernMethodsConstructionCategoriesType> { ModernMethodsConstructionCategoriesType.Category2PreManufacturing2DPrimaryStructuralSystems, });
+            [ModernMethodsConstructionCategoriesType.Category2PreManufacturing2DPrimaryStructuralSystems,]);
 
         await TestBack(SiteWorkflowState.Procurements, SiteWorkflowState.Mmc2DCategory, modernMethodsOfConstruction);
     }
@@ -110,11 +109,10 @@ public class NextStateTests
     {
         var modernMethodsOfConstruction = new SiteModernMethodsOfConstruction(
             SiteUsingModernMethodsOfConstruction.Yes,
-            new List<ModernMethodsConstructionCategoriesType>
-            {
+            [
                 ModernMethodsConstructionCategoriesType.Category1PreManufacturing3DPrimaryStructuralSystems,
                 ModernMethodsConstructionCategoriesType.Category2PreManufacturing2DPrimaryStructuralSystems,
-            });
+            ]);
 
         await TestBack(SiteWorkflowState.Procurements, SiteWorkflowState.Mmc2DCategory, modernMethodsOfConstruction);
     }
@@ -124,7 +122,7 @@ public class NextStateTests
     {
         var modernMethodsOfConstruction = new SiteModernMethodsOfConstruction(
             SiteUsingModernMethodsOfConstruction.Yes,
-            new List<ModernMethodsConstructionCategoriesType> { ModernMethodsConstructionCategoriesType.Category1PreManufacturing3DPrimaryStructuralSystems, });
+            [ModernMethodsConstructionCategoriesType.Category1PreManufacturing3DPrimaryStructuralSystems,]);
 
         await TestBack(SiteWorkflowState.Procurements, SiteWorkflowState.Mmc3DCategory, modernMethodsOfConstruction);
     }
@@ -142,7 +140,7 @@ public class NextStateTests
     {
         var modernMethodsOfConstruction = new SiteModernMethodsOfConstruction(
             SiteUsingModernMethodsOfConstruction.Yes,
-            new List<ModernMethodsConstructionCategoriesType> { ModernMethodsConstructionCategoriesType.Category1PreManufacturing3DPrimaryStructuralSystems, });
+            [ModernMethodsConstructionCategoriesType.Category1PreManufacturing3DPrimaryStructuralSystems,]);
 
         await TestBack(SiteWorkflowState.Mmc2DCategory, SiteWorkflowState.Mmc3DCategory, modernMethodsOfConstruction);
     }
@@ -152,10 +150,9 @@ public class NextStateTests
     {
         var modernMethodsOfConstruction = new SiteModernMethodsOfConstruction(
             SiteUsingModernMethodsOfConstruction.Yes,
-            new List<ModernMethodsConstructionCategoriesType>
-            {
+            [
                 ModernMethodsConstructionCategoriesType.Category3PreManufacturedComponentNonSystemizedPrimaryStructure,
-            });
+            ]);
 
         await TestBack(SiteWorkflowState.Mmc2DCategory, SiteWorkflowState.MmcCategories, modernMethodsOfConstruction);
     }

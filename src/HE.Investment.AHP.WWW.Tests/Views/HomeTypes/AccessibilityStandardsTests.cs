@@ -1,4 +1,3 @@
-using System.Diagnostics.CodeAnalysis;
 using HE.Investment.AHP.WWW.Models.HomeTypes;
 
 namespace HE.Investment.AHP.WWW.Tests.Views.HomeTypes;
@@ -22,11 +21,10 @@ public class AccessibilityStandardsTests : HomeTypesTestBase
             .HasElementWithText("a", "Read the Building Regulations to find out more (opens in a new tab).")
             .HasRadio(
                 "AccessibilityStandards",
-                new[]
-                {
+                [
                     "Yes",
                     "No",
-                })
+                ])
             .HasSaveAndContinueButton();
     }
 }

@@ -57,7 +57,7 @@ public class BuildActivity : ValueObject, IQuestion
     {
         if (tenure.IsIn(Tenure.HomeOwnershipLongTermDisabilities))
         {
-            return new[] { BuildActivityType.ExistingSatisfactory };
+            return [BuildActivityType.ExistingSatisfactory];
         }
 
         var availableTypeForRehab = new List<BuildActivityType>
@@ -83,16 +83,16 @@ public class BuildActivity : ValueObject, IQuestion
     {
         if (tenure.IsIn(Tenure.HomeOwnershipLongTermDisabilities))
         {
-            return new[] { BuildActivityType.OffTheShelf };
+            return [BuildActivityType.OffTheShelf];
         }
 
-        return new[]
-        {
+        return
+        [
             BuildActivityType.AcquisitionAndWorks,
             BuildActivityType.OffTheShelf,
             BuildActivityType.WorksOnly,
             BuildActivityType.LandInclusivePackage,
             BuildActivityType.Regeneration,
-        };
+        ];
     }
 }

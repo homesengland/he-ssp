@@ -1,4 +1,3 @@
-using System.Diagnostics.CodeAnalysis;
 using HE.Investment.AHP.WWW.Models.HomeTypes;
 
 namespace HE.Investment.AHP.WWW.Tests.Views.HomeTypes;
@@ -20,8 +19,7 @@ public class DisabledPeopleClientGroupTests : HomeTypesTestBase
             .HasPageHeader("My application - My homes", "What client group are the homes for?")
             .HasRadio(
                 "DisabledPeopleClientGroup",
-                new[]
-                {
+                [
                     "PeopleAtRiskOfDomesticViolence",
                     "PeopleWithAlcoholProblems",
                     "PeopleWithDrugProblems",
@@ -39,7 +37,7 @@ public class DisabledPeopleClientGroupTests : HomeTypesTestBase
                     "TeenageParents",
                     "YoungPeopleAtRisk",
                     "YoungPeopleLeavingCare",
-                })
+                ])
             .HasSaveAndContinueButton();
     }
 }

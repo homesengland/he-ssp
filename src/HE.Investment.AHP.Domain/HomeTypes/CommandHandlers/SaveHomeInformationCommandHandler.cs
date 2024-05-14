@@ -16,13 +16,13 @@ public class SaveHomeInformationCommandHandler : SaveHomeTypeSegmentCommandHandl
     {
     }
 
-    protected override IReadOnlyCollection<HomeTypeSegmentType> SegmentTypes => new[] { HomeTypeSegmentType.HomeInformation };
+    protected override IReadOnlyCollection<HomeTypeSegmentType> SegmentTypes => [HomeTypeSegmentType.HomeInformation];
 
-    protected override IEnumerable<Action<SaveHomeInformationCommand, IHomeTypeEntity>> SaveActions => new[]
-    {
+    protected override IEnumerable<Action<SaveHomeInformationCommand, IHomeTypeEntity>> SaveActions =>
+    [
         (SaveHomeInformationCommand request, IHomeTypeEntity homeType) => homeType.HomeInformation.ChangeNumberOfHomes(request.NumberOfHomes),
         (request, homeType) => homeType.HomeInformation.ChangeNumberOfBedrooms(request.NumberOfBedrooms),
         (request, homeType) => homeType.HomeInformation.ChangeMaximumOccupancy(request.MaximumOccupancy),
         (request, homeType) => homeType.HomeInformation.ChangeNumberOfStoreys(request.NumberOfStoreys),
-    };
+    ];
 }

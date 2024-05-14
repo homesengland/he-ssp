@@ -16,13 +16,13 @@ public class SaveFloorAreaCommandHandler : SaveHomeTypeSegmentCommandHandlerBase
     {
     }
 
-    protected override IReadOnlyCollection<HomeTypeSegmentType> SegmentTypes => new[] { HomeTypeSegmentType.HomeInformation };
+    protected override IReadOnlyCollection<HomeTypeSegmentType> SegmentTypes => [HomeTypeSegmentType.HomeInformation];
 
-    protected override IEnumerable<Action<SaveFloorAreaCommand, IHomeTypeEntity>> SaveActions => new[]
-    {
+    protected override IEnumerable<Action<SaveFloorAreaCommand, IHomeTypeEntity>> SaveActions =>
+    [
         (SaveFloorAreaCommand request, IHomeTypeEntity entity) =>
             entity.HomeInformation.ChangeInternalFloorArea(request.FloorArea),
         (request, entity) =>
             entity.HomeInformation.ChangeMeetNationallyDescribedSpaceStandards(request.MeetNationallyDescribedSpaceStandards),
-    };
+    ];
 }

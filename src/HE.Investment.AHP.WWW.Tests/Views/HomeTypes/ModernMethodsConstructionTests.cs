@@ -22,11 +22,10 @@ public class ModernMethodsConstructionTests : HomeTypesTestBase
             .HasElementWithText("a", "Read further information on the MMC categories (opens in a new tab).")
             .HasRadio(
                 "ModernMethodsConstructionApplied",
-                new[]
-                {
+                [
                     "Yes",
                     "No",
-                })
+                ])
             .HasSaveAndContinueButton();
     }
 }

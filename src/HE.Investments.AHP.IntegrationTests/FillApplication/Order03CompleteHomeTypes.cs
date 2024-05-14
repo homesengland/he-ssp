@@ -532,7 +532,7 @@ public class Order03CompleteHomeTypes : AhpIntegrationTest
         // when
         var nextPage = await TestClient.SubmitButton(
             continueButton,
-            new[] { new KeyValuePair<string, string>("MoreInformation", homeType.DesignPlanInformation) },
+            [new KeyValuePair<string, string>("MoreInformation", homeType.DesignPlanInformation)],
             new[] { ("File", homeType.DesignFile) });
 
         // then

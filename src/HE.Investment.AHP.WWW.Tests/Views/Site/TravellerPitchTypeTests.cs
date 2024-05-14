@@ -22,7 +22,7 @@ public class TravellerPitchTypeTests : AhpViewTestBase
         document
             .HasTitle(SitePageTitles.TravellerPitchType)
             .HasPageHeader(siteName)
-            .HasRadio(nameof(SiteUseDetails.TravellerPitchSiteType), new[] { "Permanent", "Transit", "Temporary" })
+            .HasRadio(nameof(SiteUseDetails.TravellerPitchSiteType), ["Permanent", "Transit", "Temporary"])
             .HasHint("Sites that are intended for permanent use as a traveller pitch site and provide pitches for long-term use by residents.")
             .HasHint("Sites that are intended for the permanent provision of transit pitches, providing temporary accommodation for travellers for up to 3 months.")
             .HasHint("Sites that are only intended for temporary use as a traveller pitch site or which lack planning approval for permanent provision of traveller pitches.")

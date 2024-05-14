@@ -15,53 +15,7 @@ public class SchemeSummaryViewModelFactory : ISchemeSummaryViewModelFactory
 {
     public SectionSummaryViewModel GetSchemeAndCreateSummary(string title, Contract.Scheme.Scheme scheme, IUrlHelper urlHelper)
     {
-        return new SectionSummaryViewModel(title, new List<SectionSummaryItemModel>
-        {
-            new(
-                "Application name",
-                scheme.Application.Name.ToOneElementList(),
-                IsEditable: false),
-            new(
-                "Tenure",
-                scheme.Application.Tenure.GetDescription().ToOneElementList(),
-                IsEditable: false),
-            new(
-                "Funding required",
-                scheme.RequiredFunding.DisplayPounds().ToOneElementList(),
-                IsEditable: scheme.Application.IsEditable,
-                ActionUrl: CreateSchemeActionUrl(urlHelper, scheme.Application.Id, nameof(SchemeController.Funding))),
-            new(
-                "Number of homes",
-                scheme.HousesToDeliver?.ToString(CultureInfo.InvariantCulture).ToOneElementList(),
-                IsEditable: scheme.Application.IsEditable,
-                ActionUrl: CreateSchemeActionUrl(urlHelper, scheme.Application.Id, nameof(SchemeController.Funding), allowWcagDuplicate: true)),
-            new(
-                "Affordability of Shared Ownership",
-                scheme.AffordabilityEvidence.ToOneElementList(),
-                IsEditable: scheme.Application.IsEditable,
-                ActionUrl: CreateSchemeActionUrl(urlHelper, scheme.Application.Id, nameof(SchemeController.Affordability))),
-            new(
-                "Sales risk of Shared Ownership",
-                scheme.SalesRisk.ToOneElementList(),
-                IsEditable: scheme.Application.IsEditable,
-                ActionUrl: CreateSchemeActionUrl(urlHelper, scheme.Application.Id, nameof(SchemeController.SalesRisk))),
-            new(
-                "Type and tenure of homes",
-                scheme.MeetingLocalPriorities.ToOneElementList(),
-                IsEditable: scheme.Application.IsEditable,
-                ActionUrl: CreateSchemeActionUrl(urlHelper, scheme.Application.Id, nameof(SchemeController.HousingNeeds))),
-            new(
-                "Locally identified housing need",
-                scheme.MeetingLocalHousingNeed.ToOneElementList(),
-                IsEditable: scheme.Application.IsEditable,
-                ActionUrl: CreateSchemeActionUrl(urlHelper, scheme.Application.Id, nameof(SchemeController.HousingNeeds), allowWcagDuplicate: true)),
-            new(
-                "Local stakeholder discussions",
-                scheme.StakeholderDiscussionsReport.ToOneElementList(),
-                ActionUrl: CreateSchemeActionUrl(urlHelper, scheme.Application.Id, nameof(SchemeController.StakeholderDiscussions)),
-                IsEditable: scheme.Application.IsEditable,
-                Files: ConvertFiles(urlHelper, scheme.Application.Id, scheme.LocalAuthoritySupportFile)),
-        });
+        return new SectionSummaryViewModel(title, [new("Application name", scheme.Application.Name.ToOneElementList(), IsEditable: false), new("Tenure", scheme.Application.Tenure.GetDescription().ToOneElementList(), IsEditable: false), new("Funding required", scheme.RequiredFunding.DisplayPounds().ToOneElementList(), IsEditable: scheme.Application.IsEditable, ActionUrl: CreateSchemeActionUrl(urlHelper, scheme.Application.Id, nameof(SchemeController.Funding))), new("Number of homes", scheme.HousesToDeliver?.ToString(CultureInfo.InvariantCulture).ToOneElementList(), IsEditable: scheme.Application.IsEditable, ActionUrl: CreateSchemeActionUrl(urlHelper, scheme.Application.Id, nameof(SchemeController.Funding), allowWcagDuplicate: true)), new("Affordability of Shared Ownership", scheme.AffordabilityEvidence.ToOneElementList(), IsEditable: scheme.Application.IsEditable, ActionUrl: CreateSchemeActionUrl(urlHelper, scheme.Application.Id, nameof(SchemeController.Affordability))), new("Sales risk of Shared Ownership", scheme.SalesRisk.ToOneElementList(), IsEditable: scheme.Application.IsEditable, ActionUrl: CreateSchemeActionUrl(urlHelper, scheme.Application.Id, nameof(SchemeController.SalesRisk))), new("Type and tenure of homes", scheme.MeetingLocalPriorities.ToOneElementList(), IsEditable: scheme.Application.IsEditable, ActionUrl: CreateSchemeActionUrl(urlHelper, scheme.Application.Id, nameof(SchemeController.HousingNeeds))), new("Locally identified housing need", scheme.MeetingLocalHousingNeed.ToOneElementList(), IsEditable: scheme.Application.IsEditable, ActionUrl: CreateSchemeActionUrl(urlHelper, scheme.Application.Id, nameof(SchemeController.HousingNeeds), allowWcagDuplicate: true)), new("Local stakeholder discussions", scheme.StakeholderDiscussionsReport.ToOneElementList(), ActionUrl: CreateSchemeActionUrl(urlHelper, scheme.Application.Id, nameof(SchemeController.StakeholderDiscussions)), IsEditable: scheme.Application.IsEditable, Files: ConvertFiles(urlHelper, scheme.Application.Id, scheme.LocalAuthoritySupportFile)),]);
     }
 
     private static string CreateSchemeActionUrl(IUrlHelper urlHelper, AhpApplicationId applicationId, string actionName, bool allowWcagDuplicate = false)

@@ -492,7 +492,7 @@ public class SiteController : WorkflowController<SiteWorkflowState>
         return await ExecuteSiteCommand(
             new ProvideNationalDesignGuidePrioritiesCommand(
                 this.GetSiteIdFromRoute(),
-                (IReadOnlyCollection<NationalDesignGuidePriority>)(model.DesignPriorities ?? new List<NationalDesignGuidePriority>())),
+                (IReadOnlyCollection<NationalDesignGuidePriority>)(model.DesignPriorities ?? [])),
             nameof(NationalDesignGuide),
             _ => model,
             cancellationToken);
