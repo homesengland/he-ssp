@@ -24,7 +24,7 @@ public class AhpAccessContext : IAhpAccessContext
     public async Task<bool> CanManageConsortium()
     {
         var account = await _ahpUserContext.GetSelectedAccount();
-        return account.CanManageConsortium;
+        return account is { CanManageConsortium: true, Consortium.IsLeadPartner: true };
     }
 
     public async Task<bool> CanEditApplication()
