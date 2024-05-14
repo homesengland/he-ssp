@@ -43,7 +43,7 @@ public abstract class CalculateQueryHandlerBase<TQuery> : IRequestHandler<TQuery
             .Select<Action<TQuery, IHomeTypeEntity>, Action>(x => () => x(request, homeType))
             .ToArray());
 
-        var operationResult = errors.Any() ? new OperationResult(errors) : OperationResult.Success();
+        var operationResult = errors.Count != 0 ? new OperationResult(errors) : OperationResult.Success();
         var calculationResult = BuildCalculationResult(homeType);
 
         return (operationResult, calculationResult);

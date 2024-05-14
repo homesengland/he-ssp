@@ -88,7 +88,7 @@ public class HomeTypesEntity
 
         if (finishAnswer == FinishHomeTypesAnswer.Yes)
         {
-            if (!_homeTypes.Any())
+            if (_homeTypes.Count == 0)
             {
                 throw new DomainValidationException(
                     new OperationResult().AddValidationErrors(new List<ErrorItem>
@@ -98,7 +98,7 @@ public class HomeTypesEntity
             }
 
             var notCompletedHomeTypes = _homeTypes.Where(x => x.Status != SectionStatus.Completed).ToList();
-            if (notCompletedHomeTypes.Any())
+            if (notCompletedHomeTypes.Count != 0)
             {
                 throw new DomainValidationException(new OperationResult().AddValidationErrors(
                     notCompletedHomeTypes.Select(x => new ErrorItem($"HomeType-{x.Id}", $"Complete {x.Name.Value} to save and continue")).ToList()));

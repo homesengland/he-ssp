@@ -142,7 +142,7 @@ public class DesignPlansSegmentEntity : DomainEntity, IHomeTypeSegmentEntity
 
     public bool IsCompleted(HousingType housingType, Tenure tenure)
     {
-        return DesignPrinciples.Any();
+        return DesignPrinciples.Count != 0;
     }
 
     public void HousingTypeChanged(HousingType sourceHousingType, HousingType targetHousingType)

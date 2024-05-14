@@ -111,7 +111,7 @@ public static class SiteDtoToSiteEntityMapper
     {
         var priorities = MapCollection(nationalDesignGuidePriorities, NationalDesignGuideMapper);
 
-        return priorities.Any()
+        return priorities.Count != 0
             ? new NationalDesignGuidePriorities(new ReadOnlyCollection<NationalDesignGuidePriority>(priorities))
             : new NationalDesignGuidePriorities();
     }
