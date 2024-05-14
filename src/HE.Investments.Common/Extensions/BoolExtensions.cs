@@ -14,13 +14,13 @@ public static class BoolExtensions
 
     public static string MapToTrueFalse(this bool value) => ((bool?)value).MapToTrueFalse();
 
-    public static string MapToYesNoNotProvided(this bool? value)
+    public static string? MapToYesNo(this bool? value)
     {
         return value switch
         {
             true => "Yes",
             false => "No",
-            _ => "Not provided",
+            _ => null,
         };
     }
 }
