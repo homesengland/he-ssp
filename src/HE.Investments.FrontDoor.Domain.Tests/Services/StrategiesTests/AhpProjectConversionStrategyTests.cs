@@ -7,6 +7,7 @@ using HE.Investments.FrontDoor.Domain.Project.ValueObjects;
 using HE.Investments.FrontDoor.Domain.Services.Strategies;
 using HE.Investments.FrontDoor.Domain.Site;
 using HE.Investments.FrontDoor.Domain.Site.ValueObjects;
+using HE.Investments.FrontDoor.Domain.Tests.Programme.TestObjectBuilders;
 using HE.Investments.FrontDoor.Domain.Tests.Project.TestDataBuilders;
 using HE.Investments.FrontDoor.Domain.Tests.Site.TestDataBuilders;
 using HE.Investments.FrontDoor.Shared.Project;
@@ -17,44 +18,60 @@ namespace HE.Investments.FrontDoor.Domain.Tests.Services.StrategiesTests;
 
 public class AhpProjectConversionStrategyTests
 {
-    private readonly AhpProjectConversionStrategy _strategy = new();
-
     [Fact]
-    public void ShouldReturnAhpApplicationType_WhenProjectAndSitesAreValidForAhpProject()
+    public async Task ShouldReturnAhpApplicationType_WhenProjectAndSitesAreValidForAhpProject()
     {
         // given
         var project = CreateAhpValidProjectEntity();
 
+        var strategy = new AhpProjectConversionStrategy(
+            ProgrammeRepositoryTestBuilder
+                .New()
+                .ReturnIsAnyAhpProgrammeAvailableResponse(project.ExpectedStartDate.Value, true)
+                .Build());
+
         var projectSites = CreateAhpValidProjectSites();
 
         // when
-        var result = _strategy.Apply(project, projectSites);
+        var result = await strategy.Apply(project, projectSites, CancellationToken.None);
 
         // then
         result.Should().Be(ApplicationType.Ahp);
     }
 
     [Fact]
-    public void ShouldReturnUndefinedApplicationType_WhenSitesAreValidButProjectIsNotValidForAhpProject()
+    public async Task ShouldReturnUndefinedApplicationType_WhenSitesAreValidButProjectIsNotValidForAhpProject()
     {
         // given
         var project = CreateAhpValidProjectEntity();
         project.ProvideAffordableHomesAmount(new ProjectAffordableHomesAmount(AffordableHomesAmount.OnlyOpenMarketHomes));
 
+        var strategy = new AhpProjectConversionStrategy(
+            ProgrammeRepositoryTestBuilder
+                .New()
+                .ReturnIsAnyAhpProgrammeAvailableResponse(project.ExpectedStartDate.Value, true)
+                .Build());
+
         var projectSites = CreateAhpValidProjectSites();
 
         // when
-        var result = _strategy.Apply(project, projectSites);
+        var result = await strategy.Apply(project, projectSites, CancellationToken.None);
 
         // then
         result.Should().Be(ApplicationType.Undefined);
     }
 
     [Fact]
-    public void ShouldReturnUndefinedApplicationType_WhenProjectIsValidButSitesAreNotValidForAhpProject()
+    public async Task ShouldReturnUndefinedApplicationType_WhenProjectIsValidButSitesAreNotValidForAhpProject()
     {
         // given
         var project = CreateAhpValidProjectEntity();
+
+        var strategy = new AhpProjectConversionStrategy(
+            ProgrammeRepositoryTestBuilder
+                .New()
+                .ReturnIsAnyAhpProgrammeAvailableResponse(project.ExpectedStartDate.Value, true)
+                .Build());
 
         var projectSites = CreateAhpValidProjectSites();
 
@@ -67,7 +84,7 @@ public class AhpProjectConversionStrategyTests
         projectSites.Sites.Add(newSite);
 
         // when
-        var result = _strategy.Apply(project, projectSites);
+        var result = await strategy.Apply(project, projectSites, CancellationToken.None);
 
         // then
         result.Should().Be(ApplicationType.Undefined);

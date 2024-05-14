@@ -1,6 +1,8 @@
 using HE.Investments.Account.Shared.Config;
 using HE.Investments.Common;
 using HE.Investments.Common.Utils;
+using HE.Investments.FrontDoor.Domain.Programme.Crm;
+using HE.Investments.FrontDoor.Domain.Programme.Repository;
 using HE.Investments.FrontDoor.Domain.Project.Crm;
 using HE.Investments.FrontDoor.Domain.Project.Crm.Mappers;
 using HE.Investments.FrontDoor.Domain.Project.Repository;
@@ -29,6 +31,8 @@ public static class DomainModule
         services.AddScoped<IRemoveSiteRepository, SiteRepository>();
         services.AddSingleton<IProjectCrmMapper, ProjectCrmMapper>();
         services.AddEligibilityServiceWithStrategies();
+        services.AddScoped<IProgrammeCrmContext, ProgrammeCrmContext>();
+        services.AddScoped<IProgrammeRepository, ProgrammeRepository>();
 
         services.AddTransient(typeof(IRequestExceptionHandler<,,>), typeof(DomainValidationHandler<,,>));
     }

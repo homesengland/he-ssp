@@ -10,9 +10,10 @@ namespace HE.Investments.FrontDoor.Domain.Services.Strategies;
 
 public class LoanApplicationConversionStrategy : IProjectConversionStrategy
 {
-    public ApplicationType Apply(ProjectEntity project, ProjectSitesEntity projectSites)
+    public Task<ApplicationType> Apply(ProjectEntity project, ProjectSitesEntity projectSites, CancellationToken cancellationToken)
     {
-        return IsProjectValidForLoanApplication(project) && AreSitesValidForLoanApplication(projectSites) ? ApplicationType.Loans : ApplicationType.Undefined;
+        return Task.FromResult(IsProjectValidForLoanApplication(project) && AreSitesValidForLoanApplication(projectSites)
+                ? ApplicationType.Loans : ApplicationType.Undefined);
     }
 
     private bool IsProjectValidForLoanApplication(ProjectEntity project)

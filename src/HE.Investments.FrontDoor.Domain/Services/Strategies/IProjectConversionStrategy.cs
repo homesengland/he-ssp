@@ -6,5 +6,5 @@ namespace HE.Investments.FrontDoor.Domain.Services.Strategies;
 
 public interface IProjectConversionStrategy
 {
-    ApplicationType Apply(ProjectEntity project, ProjectSitesEntity projectSites);
+    Task<ApplicationType> Apply(ProjectEntity project, ProjectSitesEntity projectSites, CancellationToken cancellationToken);
 }
