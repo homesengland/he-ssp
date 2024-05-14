@@ -18,19 +18,14 @@ namespace HE.CRM.AHP.Plugins.Handlers.DeliveryPhase
     {
         private readonly IAhpApplicationRepository _applicationRepository;
         private readonly IMilestoneFrameworkItemRepository _milestoneFrameworkItemRepository;
-        private readonly INotificationSettingRepository _notificationSettingRepository;
-        private readonly IAccountRepository _accountRepository;
         private readonly IGovNotifyEmailService _govNotifyEmailService;
 
-        public AcceptOrRejectPaymentProportion(IAhpApplicationRepository applicationRepository
-            , IMilestoneFrameworkItemRepository milestoneFrameworkItemRepository,
-            INotificationSettingRepository notificationSettingRepository,
-            IAccountRepository accountRepository, IGovNotifyEmailService govNotifyEmailService)
+        public AcceptOrRejectPaymentProportion(IAhpApplicationRepository applicationRepository,
+                IMilestoneFrameworkItemRepository milestoneFrameworkItemRepository,
+                IGovNotifyEmailService govNotifyEmailService)
         {
             _applicationRepository = applicationRepository;
             _milestoneFrameworkItemRepository = milestoneFrameworkItemRepository;
-            _notificationSettingRepository = notificationSettingRepository;
-            _accountRepository = accountRepository;
             _govNotifyEmailService = govNotifyEmailService;
         }
 
