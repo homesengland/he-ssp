@@ -4,6 +4,7 @@ using HE.Investment.AHP.Contract.Application.Commands;
 using HE.Investment.AHP.Contract.Application.Queries;
 using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Contract.Site.Queries;
+using HE.Investment.AHP.Domain.UserContext;
 using HE.Investment.AHP.WWW.Extensions;
 using HE.Investment.AHP.WWW.Models.Application;
 using HE.Investment.AHP.WWW.Models.Application.Factories;
@@ -29,15 +30,21 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
     private readonly IMediator _mediator;
     private readonly IApplicationSummaryViewModelFactory _applicationSummaryViewModelFactory;
     private readonly IAccountAccessContext _accountAccessContext;
+    private readonly IAhpAccessContext _ahpAccessContext;
+    private readonly IAhpUserContext _ahpUserContext;
 
     public ApplicationController(
         IMediator mediator,
         IApplicationSummaryViewModelFactory applicationSummaryViewModelFactory,
-        IAccountAccessContext accountAccessContext)
+        IAccountAccessContext accountAccessContext,
+        IAhpAccessContext ahpAccessContext,
+        IAhpUserContext ahpUserContext)
     {
         _mediator = mediator;
         _applicationSummaryViewModelFactory = applicationSummaryViewModelFactory;
         _accountAccessContext = accountAccessContext;
+        _ahpAccessContext = ahpAccessContext;
+        _ahpUserContext = ahpUserContext;
     }
 
     [HttpGet]
@@ -53,9 +60,15 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
     [HttpGet("start")]
     [WorkflowState(ApplicationWorkflowState.Start)]
     [AuthorizeWithCompletedProfile(AccountAccessContext.EditApplications)]
-    public IActionResult Start()
+    public async Task<IActionResult> Start()
     {
-        return View("Splash");
+        var userAccount = await _ahpUserContext.GetSelectedAccount();
+        if (userAccount.Consortium.HasNoConsortium || await _ahpAccessContext.CanManageConsortium())
+        {
+            return View("Splash");
+        }
+
+        return RedirectToAction("Index", "ConsortiumMember", new { consortiumId = userAccount.Consortium.ConsortiumId });
     }
 
     [HttpPost("start")]
