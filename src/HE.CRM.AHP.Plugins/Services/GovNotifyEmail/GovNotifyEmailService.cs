@@ -9,10 +9,12 @@ using System.Threading.Tasks;
 using System.Xml.Linq;
 using DataverseModel;
 using HE.Base.Services;
+using HE.CRM.AHP.Plugins.Common;
 using HE.CRM.Common.Repositories.interfaces;
 using HE.CRM.Common.Repositories.Interfaces;
 using HE.CRM.Model.CrmSerialiedParameters;
 using Microsoft.Xrm.Sdk;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace HE.CRM.AHP.Plugins.Services.GovNotifyEmail
 {
@@ -48,6 +50,35 @@ namespace HE.CRM.AHP.Plugins.Services.GovNotifyEmail
             _accountRepositoryAdmin = CrmRepositoriesFactory.GetSystem<IAccountRepository>();
             _deliveryPhaseRepositoryAdmin = CrmRepositoriesFactory.GetSystem<IDeliveryPhaseRepository>();
             _programmeRepositoryAdmin = CrmRepositoriesFactory.GetSystem<IProgrammeRepository>();
+        }
+
+        public void SendNotification_AHP_DELIVERY_PHASE_NOTIFICATION_OF_ADJUSTMENT_ACCEPTED(invln_scheme ahpApplication)
+        {
+            this.TracingService.Trace(AHPConst.AdjustmentAccepted);
+            var emailTemplate = _notificationSettingRepositoryAdmin.GetTemplateViaTypeName(AHPConst.AdjustmentAccepted);
+            var contact = _contactRepositoryAdmin.GetById(ahpApplication.invln_contactid.Id, nameof(Contact.FullName).ToLower(), nameof(Contact.EMailAddress1).ToLower());
+            var account = _accountRepositoryAdmin.GetById(ahpApplication.invln_organisationid.Id, Account.Fields.Name);
+            var subject = emailTemplate.invln_subject;
+            var govNotParams = new AHP_DELIVERY_PHASE_NOTIFICATION_OF_ADJUSTMENT_ACCEPTED()
+            {
+                templateId = emailTemplate?.invln_templateid,
+                personalisation = new parameters_AHP_DELIVERY_PHASE_NOTIFICATION_OF_ADJUSTMENT_ACCEPTED()
+                {
+                    recipientEmail = contact.EMailAddress1,
+                    subject = subject,
+                    name = contact.FullName ?? "NO NAME",
+                }
+            };
+
+            var options = new JsonSerializerOptions
+            {
+                Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+                WriteIndented = true
+            };
+
+            var parameters = JsonSerializer.Serialize(govNotParams, options);
+            this.SendGovNotifyEmail(ahpApplication.OwnerId, ahpApplication.ToEntityReference(), subject, parameters, emailTemplate);
+
         }
 
         public void SendNotifications_COMMON_CHANGE_EXTERNAL_USER_PERMISSIONS(EntityReference contactWebroleId)
@@ -125,8 +156,6 @@ namespace HE.CRM.AHP.Plugins.Services.GovNotifyEmail
                 }
             }
         }
-
-
 
         #region !!! Probably not used. To be checked and removed. !!!
 
@@ -230,12 +259,7 @@ namespace HE.CRM.AHP.Plugins.Services.GovNotifyEmail
             }
         }
 
-        #endregion
-
-
-
-
-
+        #endregion !!! Probably not used. To be checked and removed. !!!
 
         public void SendNotifications_AHP_INTERNAL_EXTERNAL_WANTS_ADDITIONAL_PAYMENTS_FOR_PHASE(EntityReference deliveryPhaseId)
         {
@@ -436,11 +460,9 @@ namespace HE.CRM.AHP.Plugins.Services.GovNotifyEmail
                         WriteIndented = true
                     };
 
-
                     govNotParams.personalisation.recipientEmail = user.DomainName;
                     var parameters = JsonSerializer.Serialize(govNotParams, options);
                     this.SendGovNotifyEmail(ahpApplication.OwnerId, ahpApplication.ToEntityReference(), subject, parameters, emailTemplate);
-
 
                     govNotParams.personalisation.recipientEmail = "Housing.Contracts@homesengland.gov.uk";
                     parameters = JsonSerializer.Serialize(govNotParams, options);
@@ -519,7 +541,6 @@ namespace HE.CRM.AHP.Plugins.Services.GovNotifyEmail
             }
             var programme = _programmeRepositoryAdmin.GetById(ahpApplication.invln_programmelookup.Id, invln_programme.Fields.invln_programmename);
             var emailTemplate = _notificationSettingRepositoryAdmin.GetTemplateViaTypeName("AHP_EXTERNAL_APPLICATION_ON_HOLD");
-
 
             if (contact != null && programme != null && emailTemplate != null)
             {

@@ -9,6 +9,8 @@ using DataverseModel;
 using HE.Base.Plugins.Handlers;
 using HE.CRM.Common.Repositories.Interfaces;
 using HE.CRM.AHP.Plugins.Common;
+using HE.CRM.Model.CrmSerialiedParameters;
+using HE.CRM.AHP.Plugins.Services.GovNotifyEmail;
 
 namespace HE.CRM.AHP.Plugins.Handlers.DeliveryPhase
 {
@@ -18,16 +20,18 @@ namespace HE.CRM.AHP.Plugins.Handlers.DeliveryPhase
         private readonly IMilestoneFrameworkItemRepository _milestoneFrameworkItemRepository;
         private readonly INotificationSettingRepository _notificationSettingRepository;
         private readonly IAccountRepository _accountRepository;
+        private readonly IGovNotifyEmailService _govNotifyEmailService;
 
         public AcceptOrRejectPaymentProportion(IAhpApplicationRepository applicationRepository
             , IMilestoneFrameworkItemRepository milestoneFrameworkItemRepository,
             INotificationSettingRepository notificationSettingRepository,
-            IAccountRepository accountRepository)
+            IAccountRepository accountRepository, IGovNotifyEmailService govNotifyEmailService)
         {
             _applicationRepository = applicationRepository;
             _milestoneFrameworkItemRepository = milestoneFrameworkItemRepository;
             _notificationSettingRepository = notificationSettingRepository;
             _accountRepository = accountRepository;
+            _govNotifyEmailService = govNotifyEmailService;
         }
 
         public override bool CanWork()
@@ -46,37 +50,7 @@ namespace HE.CRM.AHP.Plugins.Handlers.DeliveryPhase
                 ExecutionData.Target.invln_Dateofapproval = DateTime.Now;
                 ExecutionData.Target.invln_Approvedby = CurrentState.ModifiedBy;
 
-                //  AHPConst.adjustmentAccepted
-
-                //if (ahpApplication.OwnerId.LogicalName == SystemUser.EntityLogicalName)
-                //{
-                this.TracingService.Trace(AHPConst.AdjustmentAccepted);
-                var emailTemplate = _notificationSettingRepository.GetTemplateViaTypeName(AHPConst.AdjustmentAccepted);
-                //    var ownerData = _systemUserRepositoryAdmin.GetById(ahpApplication.OwnerId.Id, nameof(SystemUser.InternalEMailAddress).ToLower(), nameof(SystemUser.FullName).ToLower());
-                var account = _accountRepository.GetById(application.invln_organisationid.Id, nameof(Account.Name).ToLower());
-                var subject = (account.Name ?? AHPConst.NoName) + " " + emailTemplate.invln_subject;
-                var govNotParams = new AHP_DELIVERY_PHASE_NOTIFICATION_OF_ADDITIONAL_PAYMENTS_FOR_PHASE()
-                {
-                    templateId = emailTemplate?.invln_templateid,
-                    personalisation = new parameters_AHP_DELIVERY_PHASE_NOTIFICATION_OF_ADDITIONAL_PAYMENTS_FOR_PHASE()
-                    {
-                        recipientEmail = ownerData.InternalEMailAddress,
-                        subject = subject,
-                        username = ownerData.FullName ?? "NO NAME",
-                        organisationname = account.Name ?? "NO NAME",
-                    }
-                };
-
-                //    var options = new JsonSerializerOptions
-                //    {
-                //        Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
-                //        WriteIndented = true
-                //    };
-
-                //    var parameters = JsonSerializer.Serialize(govNotParams, options);
-                //    this.SendGovNotifyEmail(ahpApplication.OwnerId, ahpApplication.ToEntityReference(), subject, parameters, emailTemplate);
-                //}
-
+                _govNotifyEmailService.SendNotification_AHP_DELIVERY_PHASE_NOTIFICATION_OF_ADJUSTMENT_ACCEPTED(application);
             }
 
             if (CurrentState.StatusCode.Value == (int)invln_DeliveryPhase_StatusCode.RejectedAdjustment)
