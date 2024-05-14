@@ -147,7 +147,7 @@ public class SupportedHousingInformationSegmentEntity : DomainEntity, IHomeTypeS
     {
         if (RevenueFundingType == RevenueFundingType.RevenueFundingNeededAndIdentified)
         {
-            yield return () => RevenueFundingSources.Any();
+            yield return () => RevenueFundingSources.Count != 0;
         }
 
         if (ShortStayAccommodation == YesNoType.Yes)
