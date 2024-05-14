@@ -5,6 +5,7 @@ using HE.Investments.FrontDoor.Domain.Project.Crm;
 using HE.Investments.FrontDoor.Domain.Project.Crm.Mappers;
 using HE.Investments.FrontDoor.Domain.Project.Repository;
 using HE.Investments.FrontDoor.Domain.Services;
+using HE.Investments.FrontDoor.Domain.Services.Strategies;
 using HE.Investments.FrontDoor.Domain.Site.Crm;
 using HE.Investments.FrontDoor.Domain.Site.Repository;
 using HE.Investments.FrontDoor.Shared.Config;
@@ -27,7 +28,7 @@ public static class DomainModule
         services.AddScoped<ISiteRepository, SiteRepository>();
         services.AddScoped<IRemoveSiteRepository, SiteRepository>();
         services.AddSingleton<IProjectCrmMapper, ProjectCrmMapper>();
-        services.AddScoped<IEligibilityService, EligibilityService>();
+        services.AddEligibilityServiceWithStrategies();
 
         services.AddTransient(typeof(IRequestExceptionHandler<,,>), typeof(DomainValidationHandler<,,>));
     }
@@ -42,5 +43,14 @@ public static class DomainModule
     {
         services.AddScoped<ISiteCrmContext, SiteCrmContext>();
         services.Decorate<ISiteCrmContext, RequestCacheSiteCrmContextDecorator>();
+    }
+
+    private static void AddEligibilityServiceWithStrategies(this IServiceCollection services)
+    {
+        services.AddScoped<IProjectConversionStrategy, LoanApplicationConversionStrategy>();
+        services.AddScoped<IProjectConversionStrategy, AhpProjectConversionStrategy>();
+        services.AddScoped<IList<IProjectConversionStrategy>>(sp => sp.GetServices<IProjectConversionStrategy>().ToList());
+
+        services.AddScoped<IEligibilityService, EligibilityService>();
     }
 }

@@ -2,7 +2,7 @@ using System.ComponentModel;
 
 namespace HE.Investments.FrontDoor.Domain.Site.Utilities.Enums;
 
-public enum NotAllowedLocalAuthority
+public enum LoanApplicationNotAllowedLocalAuthority
 {
     [Description("8000001")]
     Bolton,
