@@ -9,7 +9,6 @@ using HE.Investment.AHP.WWW.Extensions;
 using HE.Investment.AHP.WWW.Models.Application;
 using HE.Investment.AHP.WWW.Models.Application.Factories;
 using HE.Investment.AHP.WWW.Workflows;
-using HE.Investments.Account.Shared;
 using HE.Investments.Account.Shared.Authorization.Attributes;
 using HE.Investments.Common.Contract.Pagination;
 using HE.Investments.Common.Extensions;
@@ -29,20 +28,17 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
     private readonly string _siteName = "Test Site";
     private readonly IMediator _mediator;
     private readonly IApplicationSummaryViewModelFactory _applicationSummaryViewModelFactory;
-    private readonly IAccountAccessContext _accountAccessContext;
     private readonly IAhpAccessContext _ahpAccessContext;
     private readonly IAhpUserContext _ahpUserContext;
 
     public ApplicationController(
         IMediator mediator,
         IApplicationSummaryViewModelFactory applicationSummaryViewModelFactory,
-        IAccountAccessContext accountAccessContext,
         IAhpAccessContext ahpAccessContext,
         IAhpUserContext ahpUserContext)
     {
         _mediator = mediator;
         _applicationSummaryViewModelFactory = applicationSummaryViewModelFactory;
-        _accountAccessContext = accountAccessContext;
         _ahpAccessContext = ahpAccessContext;
         _ahpUserContext = ahpUserContext;
     }
@@ -52,14 +48,14 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
     public async Task<IActionResult> Index([FromQuery] int? page, CancellationToken cancellationToken)
     {
         var applicationsQueryResult = await _mediator.Send(new GetApplicationsQuery(new PaginationRequest(page ?? 1)), cancellationToken);
-        var isReadOnly = !await _accountAccessContext.CanEditApplication();
+        var isReadOnly = !await _ahpAccessContext.CanEditApplication();
 
         return View("Index", new ApplicationsListModel(applicationsQueryResult.OrganisationName, applicationsQueryResult.PaginationResult, isReadOnly));
     }
 
     [HttpGet("start")]
     [WorkflowState(ApplicationWorkflowState.Start)]
-    [AuthorizeWithCompletedProfile(AccountAccessContext.EditApplications)]
+    [AuthorizeWithCompletedProfile(AhpAccessContext.EditApplications)]
     public async Task<IActionResult> Start()
     {
         var userAccount = await _ahpUserContext.GetSelectedAccount();
@@ -73,7 +69,7 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
 
     [HttpPost("start")]
     [WorkflowState(ApplicationWorkflowState.Start)]
-    [AuthorizeWithCompletedProfile(AccountAccessContext.EditApplications)]
+    [AuthorizeWithCompletedProfile(AhpAccessContext.EditApplications)]
     public async Task<IActionResult> StartPost(CancellationToken cancellationToken)
     {
         var response = await _mediator.Send(new GetSiteListQuery(new PaginationRequest(1, 1)), cancellationToken);
@@ -87,7 +83,7 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
 
     [WorkflowState(ApplicationWorkflowState.ApplicationName)]
     [HttpGet("/{siteId}/application/name")]
-    [AuthorizeWithCompletedProfile(AccountAccessContext.EditApplications)]
+    [AuthorizeWithCompletedProfile(AhpAccessContext.EditApplications)]
     public IActionResult Name([FromQuery] string? applicationName)
     {
         return View("Name", new ApplicationBasicModel(null, applicationName, Contract.Application.Tenure.Undefined));
@@ -95,7 +91,7 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
 
     [WorkflowState(ApplicationWorkflowState.ApplicationName)]
     [HttpPost("/{siteId}/application/name")]
-    [AuthorizeWithCompletedProfile(AccountAccessContext.EditApplications)]
+    [AuthorizeWithCompletedProfile(AhpAccessContext.EditApplications)]
     public async Task<IActionResult> Name([FromRoute] string siteId, ApplicationBasicModel model, CancellationToken cancellationToken)
     {
         var result = await _mediator.Send(new IsApplicationNameAvailableQuery(model.Name), cancellationToken);
@@ -111,7 +107,7 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
 
     [WorkflowState(ApplicationWorkflowState.ApplicationTenure)]
     [HttpGet("/{siteId}/application/tenure")]
-    [AuthorizeWithCompletedProfile(AccountAccessContext.EditApplications)]
+    [AuthorizeWithCompletedProfile(AhpAccessContext.EditApplications)]
     public IActionResult Tenure([FromQuery] string applicationName)
     {
         return View("Tenure", new ApplicationBasicModel(null, applicationName, Contract.Application.Tenure.Undefined));
@@ -119,7 +115,7 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
 
     [WorkflowState(ApplicationWorkflowState.ApplicationTenure)]
     [HttpPost("/{siteId}/application/tenure")]
-    [AuthorizeWithCompletedProfile(AccountAccessContext.EditApplications)]
+    [AuthorizeWithCompletedProfile(AhpAccessContext.EditApplications)]
     public async Task<IActionResult> Tenure([FromRoute] string siteId, ApplicationBasicModel model, CancellationToken cancellationToken)
     {
         var result = await _mediator.Send(new CreateApplicationCommand(SiteId.From(siteId), model.Name, model.Tenure), cancellationToken);
@@ -168,7 +164,7 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
 
     [WorkflowState(ApplicationWorkflowState.CheckAnswers)]
     [HttpPost("{applicationId}/check-answers")]
-    [AuthorizeWithCompletedProfile(AccountAccessContext.SubmitApplication)]
+    [AuthorizeWithCompletedProfile(AhpAccessContext.SubmitApplication)]
     public async Task<IActionResult> CheckAnswersPost(string applicationId, CancellationToken cancellationToken)
     {
         var result = await _mediator.Send(new CheckAnswersCommand(AhpApplicationId.From(applicationId)), cancellationToken);
@@ -195,7 +191,7 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
 
     [WorkflowState(ApplicationWorkflowState.Submit)]
     [HttpPost("{applicationId}/submit")]
-    [AuthorizeWithCompletedProfile(AccountAccessContext.SubmitApplication)]
+    [AuthorizeWithCompletedProfile(AhpAccessContext.SubmitApplication)]
     public async Task<IActionResult> Submit(string applicationId, ApplicationSubmitModel model, CancellationToken cancellationToken)
     {
         return await this.ExecuteCommand<ApplicationSubmitModel>(
@@ -213,7 +209,7 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
 
     [WorkflowState(ApplicationWorkflowState.Completed)]
     [HttpGet("{applicationId}/completed")]
-    [AuthorizeWithCompletedProfile(AccountAccessContext.SubmitApplication)]
+    [AuthorizeWithCompletedProfile(AhpAccessContext.SubmitApplication)]
     public async Task<IActionResult> Completed(string applicationId, CancellationToken cancellationToken)
     {
         var model = await GetApplicationSubmitModel(applicationId, cancellationToken);

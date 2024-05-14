@@ -7,7 +7,7 @@ using Microsoft.FeatureManagement;
 
 namespace HE.Investments.FrontDoor.WWW.Controllers;
 
-[Route("apply-for-loan-application")]
+[Route("redirect-to-another-application")]
 [AuthorizeWithCompletedProfile]
 public class ConvertProjectController : Controller
 {
@@ -21,18 +21,16 @@ public class ConvertProjectController : Controller
         _featureManager = featureManager;
     }
 
-    [Route("redirect-to-another-application")]
     [Route("")]
     [HttpGet]
-    public async Task<IActionResult> Redirect([FromQuery] string fdProjectId, [FromQuery] string applicationType, CancellationToken cancellationToken)
+    public async Task<IActionResult> Redirect([FromQuery] string fdProjectId, [FromQuery] ApplicationType applicationType, CancellationToken cancellationToken)
     {
         if (await _featureManager.IsEnabledAsync(FeatureFlags.StayInCurrentApplication, cancellationToken))
         {
             return RedirectToAction("Index", "Projects");
         }
 
-        Enum.TryParse(applicationType, out ApplicationType applicationTypeEnum);
-        var urlWithRouteData = applicationTypeEnum switch
+        var urlWithRouteData = applicationType switch
         {
             ApplicationType.Loans => $"{_programmeUrlConfig.Loans}?fdProjectId={fdProjectId}",
             ApplicationType.Ahp => $"{_programmeUrlConfig.Ahp}?fdProjectId={fdProjectId}",
