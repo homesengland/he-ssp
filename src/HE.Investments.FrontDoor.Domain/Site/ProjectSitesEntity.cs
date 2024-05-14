@@ -69,11 +69,6 @@ public class ProjectSitesEntity
         }
     }
 
-    public bool AreSitesValidForLoanApplication()
-    {
-        return Sites.Count == 1 && Sites.All(site => site.IsSiteValidForLoanApplication());
-    }
-
     public void AllSitesAreFilled()
     {
         foreach (var site in Sites)
