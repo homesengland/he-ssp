@@ -4,4 +4,4 @@ using MediatR;
 
 namespace HE.Investment.AHP.Contract.Common.Queries;
 
-public record GetConsortiumPartnersQuery(PaginationRequest PaginationRequest) : IRequest<PaginationResult<ConsortiumMemberDetails>>;
+public record GetConsortiumMembersQuery(PaginationRequest PaginationRequest) : IRequest<PaginationResult<ConsortiumMemberDetails>>;

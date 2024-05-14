@@ -1,6 +1,4 @@
-﻿using HE.Investments.Common.WWW.Models;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace HE.Investments.Common.WWW.Components.InputListHeader;
 
