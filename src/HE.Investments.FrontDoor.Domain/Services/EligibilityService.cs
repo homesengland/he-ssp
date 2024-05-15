@@ -64,9 +64,16 @@ public class EligibilityService : IEligibilityService
             return (domainValidationException.OperationResult, ApplicationType.Undefined);
         }
 
-        var targetApplication = _strategies
-            .Select(x => x.Apply(project, projectSites))
-            .FirstOrDefault(x => x != ApplicationType.Undefined);
+        var targetApplication = ApplicationType.Undefined;
+
+        foreach (var strategy in _strategies)
+        {
+            targetApplication = await strategy.Apply(project, projectSites, cancellationToken);
+            if (targetApplication != ApplicationType.Undefined)
+            {
+                break;
+            }
+        }
 
         return (OperationResult.Success(), targetApplication);
     }

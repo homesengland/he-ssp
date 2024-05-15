@@ -20,7 +20,7 @@ public class LoanApplicationConversionStrategyTests
     private readonly LoanApplicationConversionStrategy _strategy = new();
 
     [Fact]
-    public void ShouldReturnLoansApplicationType_WhenProjectAndSitesAreValidForLoanApplication()
+    public async Task ShouldReturnLoansApplicationType_WhenProjectAndSitesAreValidForLoanApplication()
     {
         // given
         var project = CreateLoansValidProjectEntity();
@@ -28,14 +28,14 @@ public class LoanApplicationConversionStrategyTests
         var projectSites = CreateLoansValidProjectSites();
 
         // when
-        var result = _strategy.Apply(project, projectSites);
+        var result = await _strategy.Apply(project, projectSites, CancellationToken.None);
 
         // then
         result.Should().Be(ApplicationType.Loans);
     }
 
     [Fact]
-    public void ShouldReturnUndefinedApplicationType_WhenSitesAreValidButProjectIsNotValidForLoanApplication()
+    public async Task ShouldReturnUndefinedApplicationType_WhenSitesAreValidButProjectIsNotValidForLoanApplication()
     {
         // given
         var project = CreateLoansValidProjectEntity();
@@ -44,14 +44,14 @@ public class LoanApplicationConversionStrategyTests
         var projectSites = CreateLoansValidProjectSites();
 
         // when
-        var result = _strategy.Apply(project, projectSites);
+        var result = await _strategy.Apply(project, projectSites, CancellationToken.None);
 
         // then
         result.Should().Be(ApplicationType.Undefined);
     }
 
     [Fact]
-    public void ShouldReturnUndefinedApplicationType_WhenProjectIsValidButSitesAreNotValidForLoanApplication()
+    public async Task ShouldReturnUndefinedApplicationType_WhenProjectIsValidButSitesAreNotValidForLoanApplication()
     {
         // given
         var project = CreateLoansValidProjectEntity();
@@ -67,7 +67,7 @@ public class LoanApplicationConversionStrategyTests
         projectSites.Sites.Add(siteTwo);
 
         // when
-        var result = _strategy.Apply(project, projectSites);
+        var result = await _strategy.Apply(project, projectSites, CancellationToken.None);
 
         // then
         result.Should().Be(ApplicationType.Undefined);

@@ -1,5 +1,5 @@
 using HE.Investments.Common.Contract.Enum;
-using HE.Investments.Common.Utils;
+using HE.Investments.FrontDoor.Domain.Programme.Repository;
 using HE.Investments.FrontDoor.Domain.Project;
 using HE.Investments.FrontDoor.Domain.Site;
 using HE.Investments.FrontDoor.Domain.Site.Utilities;
@@ -10,14 +10,24 @@ namespace HE.Investments.FrontDoor.Domain.Services.Strategies;
 
 public class AhpProjectConversionStrategy : IProjectConversionStrategy
 {
-    public ApplicationType Apply(ProjectEntity project, ProjectSitesEntity projectSites)
+    private readonly IProgrammeRepository _programmeRepository;
+
+    private readonly IProgrammeAvailabilityService _programmeAvailability;
+
+    public AhpProjectConversionStrategy(IProgrammeRepository programmeRepository, IProgrammeAvailabilityService programmeAvailability)
     {
-        return IsProjectValidForAhpProject(project) && AreSitesValidForAhpProject(projectSites) ? ApplicationType.Ahp : ApplicationType.Undefined;
+        _programmeRepository = programmeRepository;
+        _programmeAvailability = programmeAvailability;
     }
 
-    private bool IsProjectValidForAhpProject(ProjectEntity project)
+    public async Task<ApplicationType> Apply(ProjectEntity project, ProjectSitesEntity projectSites, CancellationToken cancellationToken)
     {
-        return project.SupportActivities.Values.Count == 1
+        return await IsProjectValidForAhpProject(project, cancellationToken) && AreSitesValidForAhpProject(projectSites) ? ApplicationType.Ahp : ApplicationType.Undefined;
+    }
+
+    private async Task<bool> IsProjectValidForAhpProject(ProjectEntity project, CancellationToken cancellationToken)
+    {
+        var isProjectValid = project.SupportActivities.Values.Count == 1
                && project.SupportActivities.Values.Contains(SupportActivityType.DevelopingHomes)
                && project.AffordableHomesAmount.AffordableHomesAmount is AffordableHomesAmountType.OnlyAffordableHomes
                    or AffordableHomesAmountType.OpenMarkedAndAffordableHomes
@@ -32,8 +42,15 @@ public class AhpProjectConversionStrategy : IProjectConversionStrategy
                    or RequiredFundingOption.Between10MlnAnd30Mln
                    or RequiredFundingOption.Between30MlnAnd50Mln
                    or RequiredFundingOption.MoreThan50Mln
-               && project.IsProfit.Value is true or false
-               && DateTimeUtil.IsDateWithinXYearsFromNow(project.ExpectedStartDate.Value?.ToDateTime(TimeOnly.MinValue), 2); // todo get programme dates
+               && project.IsProfit.Value is true or false;
+
+        if (isProjectValid)
+        {
+            var programmes = await _programmeRepository.GetProgrammes(cancellationToken);
+            isProjectValid = _programmeAvailability.IsStartDateValidForAnyProgramme(programmes, project.ExpectedStartDate.Value);
+        }
+
+        return isProjectValid;
     }
 
     private bool AreSitesValidForAhpProject(ProjectSitesEntity projectSites)
