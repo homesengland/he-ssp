@@ -225,6 +225,16 @@ namespace HE.CRM.Common.DtoMapping
                 site.invln_AccountId = new EntityReference(Account.EntityLogicalName, accountGUID);
             }
 
+            if (dto.fdSiteid != null)
+            {
+                site.invln_HeProjectLocalAuthorityId = new EntityReference(he_ProjectLocalAuthority.EntityLogicalName, new Guid(dto.fdSiteid));
+            }
+
+            if (dto.ahpProjectid != null)
+            {
+                site.invln_AHPProjectId = new EntityReference(invln_ahpproject.EntityLogicalName, new Guid(dto.ahpProjectid));
+            }
+
             return site;
         }
 
