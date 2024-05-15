@@ -21,6 +21,8 @@ using HE.Investment.AHP.Domain.PrefillData.Repositories;
 using HE.Investment.AHP.Domain.Programme;
 using HE.Investment.AHP.Domain.Programme.Config;
 using HE.Investment.AHP.Domain.Programme.Crm;
+using HE.Investment.AHP.Domain.Project.Crm;
+using HE.Investment.AHP.Domain.Project.Repositories;
 using HE.Investment.AHP.Domain.Scheme.Repositories;
 using HE.Investment.AHP.Domain.Scheme.Services;
 using HE.Investment.AHP.Domain.Scheme.ValueObjects;
@@ -61,7 +63,8 @@ public static class DomainModule
             .AddFinancialDetails()
             .AddDelivery()
             .AddPrefillData()
-            .AddDocuments();
+            .AddDocuments()
+            .AddAhpProjects();
     }
 
     private static IServiceCollection AddHomeTypes(this IServiceCollection services)
@@ -162,9 +165,16 @@ public static class DomainModule
         return services;
     }
 
-    private static void AddDocuments(this IServiceCollection services)
+    private static IServiceCollection AddDocuments(this IServiceCollection services)
     {
         services.AddScoped<IDocumentsCrmContext, DocumentsCrmContext>();
         services.AddSingleton<IAhpDocumentSettings, AhpDocumentSettings>();
+        return services;
+    }
+
+    private static void AddAhpProjects(this IServiceCollection services)
+    {
+        services.AddScoped<IProjectCrmContext, ProjectCrmContext>();
+        services.AddScoped<IProjectRepository, ProjectRepository>();
     }
 }
