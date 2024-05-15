@@ -164,6 +164,15 @@ public class SiteWorkflow : EncodedStateRouting<SiteWorkflowState>
             .Permit(Trigger.Continue, SiteWorkflowState.LandAcquisitionStatus)
             .Permit(Trigger.Back, SiteWorkflowState.BuildingForHealthyLife);
 
+        Machine.Configure(SiteWorkflowState.DevelopingPartnerConfirm)
+            .Permit(Trigger.Continue, SiteWorkflowState.OwnerOfTheLand);
+
+        Machine.Configure(SiteWorkflowState.OwnerOfTheLandConfirm)
+            .Permit(Trigger.Continue, SiteWorkflowState.OwnerOfTheHomes);
+
+        Machine.Configure(SiteWorkflowState.OwnerOfTheHomesConfirm)
+            .Permit(Trigger.Continue, SiteWorkflowState.LandAcquisitionStatus);
+
         Machine.Configure(SiteWorkflowState.LandAcquisitionStatus)
             .Permit(Trigger.Continue, SiteWorkflowState.TenderingStatus)
             .PermitIf(Trigger.Back, SiteWorkflowState.NumberOfGreenLights, IsBuildingForHealthyLife)

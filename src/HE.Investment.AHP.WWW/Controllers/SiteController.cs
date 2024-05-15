@@ -556,6 +556,23 @@ public class SiteController : WorkflowController<SiteWorkflowState>
         return View(await GetConfirmPartnerModel(siteId, organisationId, x => x.DevelopingPartner?.OrganisationId, cancellationToken));
     }
 
+    [HttpPost("{siteId}/developing-partner-confirm/{organisationId}")]
+    [WorkflowState(SiteWorkflowState.DevelopingPartnerConfirm)]
+    public async Task<IActionResult> DevelopingPartnerConfirm([FromRoute] string siteId, [FromRoute] string organisationId, [FromForm] bool? isConfirmed, [FromQuery] string? workflow, CancellationToken cancellationToken)
+    {
+        return await this.ExecuteCommand<(OrganisationDetails Organisation, bool? IsConfirmed)>(
+            _mediator,
+            new ProvideDevelopingPartnerCommand(SiteId.From(siteId), OrganisationId.From(organisationId), isConfirmed),
+            async () => await this.ReturnToSitesListOrContinue(async () =>
+                isConfirmed == true ? await ContinueWithWorkflow(new { siteId }) : RedirectToAction("DevelopingPartner", new { siteId, workflow })),
+            async () =>
+            {
+                var (organisation, _) = await GetConfirmPartnerModel(siteId, organisationId, x => x.DevelopingPartner?.OrganisationId, cancellationToken);
+                return View((organisation, isConfirmed));
+            },
+            cancellationToken);
+    }
+
     [HttpGet("{siteId}/owner-of-the-land")]
     [WorkflowState(SiteWorkflowState.OwnerOfTheLand)]
     public async Task<IActionResult> OwnerOfTheLand([FromRoute] string siteId, [FromQuery] int? page, CancellationToken cancellationToken)
@@ -570,6 +587,23 @@ public class SiteController : WorkflowController<SiteWorkflowState>
         return View(await GetConfirmPartnerModel(siteId, organisationId, x => x.OwnerOfTheLand?.OrganisationId, cancellationToken));
     }
 
+    [HttpPost("{siteId}/owner-of-the-land-confirm/{organisationId}")]
+    [WorkflowState(SiteWorkflowState.OwnerOfTheLandConfirm)]
+    public async Task<IActionResult> OwnerOfTheLandConfirm([FromRoute] string siteId, [FromRoute] string organisationId, [FromForm] bool? isConfirmed, [FromQuery] string? workflow, CancellationToken cancellationToken)
+    {
+        return await this.ExecuteCommand<(OrganisationDetails Organisation, bool? IsConfirmed)>(
+            _mediator,
+            new ProvideOwnerOfTheLandCommand(SiteId.From(siteId), OrganisationId.From(organisationId), isConfirmed),
+            async () => await this.ReturnToSitesListOrContinue(async () =>
+                isConfirmed == true ? await ContinueWithWorkflow(new { siteId }) : RedirectToAction("OwnerOfTheLand", new { siteId, workflow })),
+            async () =>
+            {
+                var (organisation, _) = await GetConfirmPartnerModel(siteId, organisationId, x => x.OwnerOfTheLand?.OrganisationId, cancellationToken);
+                return View((organisation, isConfirmed));
+            },
+            cancellationToken);
+    }
+
     [HttpGet("{siteId}/owner-of-the-homes")]
     [WorkflowState(SiteWorkflowState.OwnerOfTheHomes)]
     public async Task<IActionResult> OwnerOfTheHomes([FromRoute] string siteId, [FromQuery] int? page, CancellationToken cancellationToken)
@@ -582,6 +616,23 @@ public class SiteController : WorkflowController<SiteWorkflowState>
     public async Task<IActionResult> OwnerOfTheHomesConfirm([FromRoute] string siteId, [FromRoute] string organisationId, CancellationToken cancellationToken)
     {
         return View(await GetConfirmPartnerModel(siteId, organisationId, x => x.OwnerOfTheHomes?.OrganisationId, cancellationToken));
+    }
+
+    [HttpPost("{siteId}/owner-of-the-homes-confirm/{organisationId}")]
+    [WorkflowState(SiteWorkflowState.OwnerOfTheHomesConfirm)]
+    public async Task<IActionResult> OwnerOfTheHomesConfirm([FromRoute] string siteId, [FromRoute] string organisationId, [FromForm] bool? isConfirmed, [FromQuery] string? workflow, CancellationToken cancellationToken)
+    {
+        return await this.ExecuteCommand<(OrganisationDetails Organisation, bool? IsConfirmed)>(
+            _mediator,
+            new ProvideOwnerOfTheHomesCommand(SiteId.From(siteId), OrganisationId.From(organisationId), isConfirmed),
+            async () => await this.ReturnToSitesListOrContinue(async () =>
+                isConfirmed == true ? await ContinueWithWorkflow(new { siteId }) : RedirectToAction("OwnerOfTheHomes", new { siteId, workflow })),
+            async () =>
+            {
+                var (organisation, _) = await GetConfirmPartnerModel(siteId, organisationId, x => x.OwnerOfTheHomes?.OrganisationId, cancellationToken);
+                return View((organisation, isConfirmed));
+            },
+            cancellationToken);
     }
 
     [HttpGet("{siteId}/land-acquisition-status")]

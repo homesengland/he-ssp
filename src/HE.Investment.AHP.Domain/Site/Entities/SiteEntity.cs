@@ -9,6 +9,7 @@ using HE.Investment.AHP.Domain.Site.ValueObjects.Factories;
 using HE.Investment.AHP.Domain.Site.ValueObjects.Planning;
 using HE.Investment.AHP.Domain.Site.ValueObjects.StrategicSite;
 using HE.Investment.AHP.Domain.Site.ValueObjects.TenderingStatus;
+using HE.Investment.AHP.Domain.UserContext;
 using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Extensions;
@@ -30,6 +31,7 @@ public class SiteEntity : DomainEntity, IQuestion
     public SiteEntity(
         SiteId id,
         SiteName name,
+        SitePartners sitePartners,
         SiteStatus? status = null,
         Section106? section106 = null,
         LocalAuthority? localAuthority = null,
@@ -58,6 +60,7 @@ public class SiteEntity : DomainEntity, IQuestion
         NationalDesignGuidePriorities = nationalDesignGuidePriorities ?? new NationalDesignGuidePriorities();
         BuildingForHealthyLife = buildingForHealthyLife ?? BuildingForHealthyLifeType.Undefined;
         NumberOfGreenLights = numberOfGreenLights;
+        SitePartners = sitePartners;
         LandAcquisitionStatus = landAcquisitionStatus ?? new LandAcquisitionStatus();
         TenderingStatusDetails = tenderingStatusDetails ?? new TenderingStatusDetails();
         StrategicSiteDetails = strategicSiteDetails ?? new StrategicSiteDetails();
@@ -93,6 +96,8 @@ public class SiteEntity : DomainEntity, IQuestion
 
     public NumberOfGreenLights? NumberOfGreenLights { get; private set; }
 
+    public SitePartners SitePartners { get; private set; }
+
     public LandAcquisitionStatus LandAcquisitionStatus { get; private set; }
 
     public TenderingStatusDetails TenderingStatusDetails { get; private set; }
@@ -113,9 +118,13 @@ public class SiteEntity : DomainEntity, IQuestion
 
     public bool IsModified => _modificationTracker.IsModified;
 
-    public static SiteEntity NewSite(FrontDoorProjectId? projectId, FrontDoorSiteId? siteId)
+    public static SiteEntity NewSite(AhpUserAccount userAccount, FrontDoorProjectId? projectId, FrontDoorSiteId? siteId)
     {
-        return new SiteEntity(SiteId.New(), new SiteName($"New Site - {Guid.NewGuid()}"), frontDoorProjectId: projectId, frontDoorSiteId: siteId);
+        var sitePartners = userAccount.Consortium.HasNoConsortium
+            ? SitePartners.SinglePartner(userAccount.SelectedOrganisation())
+            : new SitePartners();
+
+        return new SiteEntity(SiteId.New(), new SiteName($"New Site - {Guid.NewGuid()}"), sitePartners, frontDoorProjectId: projectId, frontDoorSiteId: siteId);
     }
 
     public async Task ProvideName(SiteName siteName, ISiteNameExist siteNameExist, CancellationToken cancellationToken)
@@ -167,6 +176,11 @@ public class SiteEntity : DomainEntity, IQuestion
     public void ProvideNumberOfGreenLights(NumberOfGreenLights? numberOfGreenLights)
     {
         NumberOfGreenLights = _modificationTracker.Change(NumberOfGreenLights, numberOfGreenLights, MarkAsNotCompleted);
+    }
+
+    public void ProvideSitePartners(SitePartners sitePartners)
+    {
+        SitePartners = _modificationTracker.Change(SitePartners, sitePartners, MarkAsNotCompleted);
     }
 
     public void ProvideLandAcquisitionStatus(LandAcquisitionStatus landAcquisitionStatus)
@@ -251,6 +265,7 @@ public class SiteEntity : DomainEntity, IQuestion
                PlanningDetails.IsAnswered() &&
                NationalDesignGuidePriorities.IsAnswered() &&
                BuildingForHealthyLife != BuildingForHealthyLifeType.Undefined &&
+               SitePartners.IsAnswered() &&
                LandAcquisitionStatus.IsAnswered() &&
                TenderingStatusDetails.IsAnswered() &&
                StrategicSiteDetails.IsProvided() &&
