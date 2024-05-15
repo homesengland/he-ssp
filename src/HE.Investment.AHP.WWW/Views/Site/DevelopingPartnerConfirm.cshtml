@@ -1,5 +1,4 @@
-@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Links
-@using HE.Investment.AHP.WWW.Extensions
+@using HE.Investment.AHP.Contract.Site
 @using HE.Investment.AHP.WWW.Views.Shared.Components.OrganisationDetailsComponent
 @using HE.Investment.AHP.WWW.Views.Shared.Components.ReturnToSitesLink
 @using HE.Investment.AHP.WWW.Views.Site.Const
@@ -8,7 +7,6 @@
 @{
     ViewData["Title"] = SitePageTitles.DevelopingPartnerConfirm;
     var workflow = Context.Request.Query["workflow"];
-    var siteId = this.GetSiteIdFromRoute();
 
     var organisationDetails = new DynamicComponentViewModel(
         nameof(OrganisationDetailsComponent),
@@ -23,7 +21,7 @@
 }
 
 <gds-div-grid-column-two-thirds>
-    <gds-back-link class="govuk-!-margin-bottom-8" href="@Url.Action("DevelopingPartner", "Site", new { siteId, workflow })"></gds-back-link>
+    <vc:ahp-workflow-back-button current-page="@SiteWorkflowState.DevelopingPartnerConfirm"/>
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
     <vc:page-header caption="@ViewBag.SiteName"/>
 

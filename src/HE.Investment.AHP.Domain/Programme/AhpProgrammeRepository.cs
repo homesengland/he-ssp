@@ -33,6 +33,7 @@ public class AhpProgrammeRepository : IAhpProgrammeRepository
                          throw new InvalidOperationException("Milestone framework does not have Completion percentage set.");
 
         return new AhpProgramme(
+            programme.name,
             new ProgrammeDates(
                 DateOnly.FromDateTime(programme.startOn ?? throw new InvalidOperationException("Ahp programme does not have Start Date set.")),
                 DateOnly.FromDateTime(programme.endOn ?? throw new InvalidOperationException("Ahp programme does not have End Date set.")),

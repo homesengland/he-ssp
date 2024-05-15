@@ -28,7 +28,7 @@ public static class ApplicationBasicInfoTestData
             new HE.Investment.AHP.Domain.Application.ValueObjects.ApplicationSection(SectionType.FinancialDetails),
             new HE.Investment.AHP.Domain.Application.ValueObjects.ApplicationSection(SectionType.DeliveryPhases),
         }),
-        new AhpProgramme(ProgrammeDatesTestData.ProgrammeDates, MilestoneFramework.Default),
+        new AhpProgramme("Affordable Homes Programme 2021-2026 CME", ProgrammeDatesTestData.ProgrammeDates, MilestoneFramework.Default),
         new ApplicationStateFactory(UserAccountTestData.AdminUserAccountOne));
 
     public static ApplicationBasicInfo CreateAffordableRentInDraftState() => new(
@@ -44,6 +44,6 @@ public static class ApplicationBasicInfoTestData
             new HE.Investment.AHP.Domain.Application.ValueObjects.ApplicationSection(SectionType.FinancialDetails),
             new HE.Investment.AHP.Domain.Application.ValueObjects.ApplicationSection(SectionType.DeliveryPhases),
         }),
-        new AhpProgramme(ProgrammeDatesTestData.ProgrammeDates, MilestoneFramework.Default),
+        new AhpProgramme("Affordable Homes Programme 2021-2026 CME", ProgrammeDatesTestData.ProgrammeDates, MilestoneFramework.Default),
         new ApplicationStateFactory(UserAccountTestData.AdminUserAccountOne));
 }
