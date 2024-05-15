@@ -1,4 +1,4 @@
-@model HE.Investments.Account.WWW.Models.UserOrganisation.ListCardModel
+@model HE.Investments.Common.WWW.Components.ListCard.ListCardModel
 @{
     var hasPaging = !string.IsNullOrEmpty(Model.ViewAllUrl);
     var itemsToDisplayCount = hasPaging ? 5 : int.MaxValue;
@@ -13,12 +13,17 @@
             <h2 class="govuk-summary-card__title">@Model.Header</h2>
         </div>
         <div class="govuk-summary-card__content">
-            <dl class="govuk-summary-list">
-                @if (!string.IsNullOrEmpty(Model.Title))
-                {
-                    <gds-h3 size="ControlSize.S">@Model.Title</gds-h3>
-                }
+            @if (!string.IsNullOrEmpty(Model.Title))
+            {
+                <gds-h3 size="ControlSize.S">@Model.Title</gds-h3>
+            }
 
+            @if (!string.IsNullOrEmpty(Model.Description))
+            {
+                <gds-p>@Model.Description</gds-p>
+            }
+
+            <dl class="govuk-summary-list">
                 @foreach (var item in itemsToDisplay)
                 {
                     <div class="govuk-summary-list__row">
