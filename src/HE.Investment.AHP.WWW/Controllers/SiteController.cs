@@ -45,12 +45,19 @@ public class SiteController : WorkflowController<SiteWorkflowState>
 
     private readonly IAccountAccessContext _accountAccessContext;
 
+    private readonly IAccountUserContext _accountUserContext;
+
     private readonly ISiteSummaryViewModelFactory _siteSummaryViewModelFactory;
 
-    public SiteController(IMediator mediator, IAccountAccessContext accountAccessContext, ISiteSummaryViewModelFactory siteSummaryViewModelFactory)
+    public SiteController(
+        IMediator mediator,
+        IAccountAccessContext accountAccessContext,
+        IAccountUserContext accountUserContext,
+        ISiteSummaryViewModelFactory siteSummaryViewModelFactory)
     {
         _mediator = mediator;
         _accountAccessContext = accountAccessContext;
+        _accountUserContext = accountUserContext;
         _siteSummaryViewModelFactory = siteSummaryViewModelFactory;
     }
 
@@ -1075,7 +1082,8 @@ public class SiteController : WorkflowController<SiteWorkflowState>
         var siteId = this.GetSiteIdFromRoute();
         var siteDetails = await GetSiteDetails(siteId.Value, cancellationToken);
         var isEditable = await _accountAccessContext.CanEditApplication();
-        var sections = _siteSummaryViewModelFactory.CreateSiteSummary(siteDetails, Url, isEditable, useWorkflowRedirection);
+        var userAccount = await _accountUserContext.GetSelectedAccount();
+        var sections = _siteSummaryViewModelFactory.CreateSiteSummary(siteDetails, userAccount.SelectedOrganisation(), Url, isEditable, useWorkflowRedirection);
 
         return new SiteSummaryViewModel(
             siteId.Value,
