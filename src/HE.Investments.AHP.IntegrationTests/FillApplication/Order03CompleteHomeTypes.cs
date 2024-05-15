@@ -533,7 +533,7 @@ public class Order03CompleteHomeTypes : AhpIntegrationTest
         var nextPage = await TestClient.SubmitButton(
             continueButton,
             [new KeyValuePair<string, string>("MoreInformation", homeType.DesignPlanInformation)],
-            new[] { ("File", homeType.DesignFile) });
+            [("File", homeType.DesignFile)]);
 
         // then
         ThenTestQuestionPage(nextPage, BuildHomeTypePage(HomeTypePagesUrl.SupportedHousingInformation, DisabledHomeType));

@@ -15,7 +15,7 @@ public class DisabledPeopleClientGroupTests : HomeTypesTestBase
         var document = await RenderHomeTypePage(ViewPath, Model);
 
         // then
-        IList<string> options = [
+        IList<string> radioOptions = [
             "PeopleAtRiskOfDomesticViolence",
             "PeopleWithAlcoholProblems",
             "PeopleWithDrugProblems",
@@ -37,7 +37,7 @@ public class DisabledPeopleClientGroupTests : HomeTypesTestBase
 
         document
             .HasPageHeader("My application - My homes", "What client group are the homes for?")
-            .HasRadio("DisabledPeopleClientGroup", options)
+            .HasRadio("DisabledPeopleClientGroup", radioOptions)
             .HasSaveAndContinueButton();
     }
 }
