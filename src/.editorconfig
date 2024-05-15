@@ -565,7 +565,7 @@ dotnet_diagnostic.IDE0305.severity = suggestion
 dotnet_diagnostic.IDE0301.severity = suggestion
 dotnet_diagnostic.IDE0300.severity = suggestion
 dotnet_diagnostic.IDE0028.severity = suggestion
-dotnet_diagnostic.IDE2000.severity = suggestion
+dotnet_diagnostic.IDE0200.severity = suggestion
 
 dotnet_diagnostic.ASP0018.severity = suggestion
 
