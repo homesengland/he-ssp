@@ -152,7 +152,7 @@ public class SupportedHousingInformationSegmentEntity : DomainEntity, IHomeTypeS
 
         if (ShortStayAccommodation == YesNoType.Yes)
         {
-            yield return () => MoveOnArrangements.IsProvided();
+            yield return MoveOnArrangements.IsProvided;
         }
     }
 }

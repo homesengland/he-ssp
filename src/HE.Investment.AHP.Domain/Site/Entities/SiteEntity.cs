@@ -267,7 +267,7 @@ public class SiteEntity : DomainEntity, IQuestion
     {
         if (BuildingForHealthyLife == BuildingForHealthyLifeType.Yes)
         {
-            yield return () => NumberOfGreenLights.IsProvided();
+            yield return NumberOfGreenLights.IsProvided;
         }
 
         if (StrategicSiteDetails.IsProvided())
