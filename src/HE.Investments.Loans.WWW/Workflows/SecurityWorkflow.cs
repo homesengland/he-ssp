@@ -62,7 +62,7 @@ public class SecurityWorkflow : WorkflowBase<SecurityState, SecurityViewModel>
 
         Machine.Configure(SecurityState.CheckAnswers)
            .Permit(Trigger.Continue, SecurityState.Complete)
-           .PermitIf(Trigger.Back, SecurityState.Complete, () => Model.IsReadOnly())
+           .PermitIf(Trigger.Back, SecurityState.Complete, Model.IsReadOnly)
            .PermitIf(Trigger.Back, SecurityState.DirLoansSub, () => Model.IsEditable() && Model.DirLoans == CommonResponse.Yes)
            .PermitIf(Trigger.Back, SecurityState.DirLoans, () => Model.IsEditable() && Model.DirLoans != CommonResponse.Yes);
 

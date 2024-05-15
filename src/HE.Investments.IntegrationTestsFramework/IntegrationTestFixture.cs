@@ -23,7 +23,7 @@ public class IntegrationTestFixture<TProgram> : WebApplicationFactory<TProgram>
 
         var userConfig = Configuration.GetSection("IntegrationTestsConfig:UserConfig").Get<UserLoginData>();
         LoginData = userConfig ?? new UserLoginData();
-        Scope = new Lazy<IServiceScope>(() => Server.Services.CreateScope());
+        Scope = new Lazy<IServiceScope>(Server.Services.CreateScope);
     }
 
     public IDictionary<string, object> DataBag { get; }
