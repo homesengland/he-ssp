@@ -58,8 +58,8 @@ public class CompanyStructureWorkflow : WorkflowBase<CompanyStructureState, Comp
 
         Machine.Configure(CompanyStructureState.CheckAnswers)
             .PermitIf(Trigger.Continue, CompanyStructureState.Complete)
-            .PermitIf(Trigger.Back, CompanyStructureState.Complete, () => Model.IsReadOnly())
-            .PermitIf(Trigger.Back, CompanyStructureState.HomesBuilt, () => Model.IsEditable());
+            .PermitIf(Trigger.Back, CompanyStructureState.Complete, Model.IsReadOnly)
+            .PermitIf(Trigger.Back, CompanyStructureState.HomesBuilt, Model.IsEditable);
 
         Machine.Configure(CompanyStructureState.Complete)
            .Permit(Trigger.Back, CompanyStructureState.CheckAnswers);
