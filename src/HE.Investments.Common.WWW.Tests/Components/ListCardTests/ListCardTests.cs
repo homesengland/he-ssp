@@ -1,14 +1,14 @@
 using AngleSharp.Html.Dom;
-using HE.Investments.Account.WWW.Models.UserOrganisation;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.WWW.Components;
 using HE.Investments.Common.WWW.Components.ApplicationStatusTagComponent;
+using HE.Investments.Common.WWW.Components.ListCard;
 
-namespace HE.Investments.Account.WWW.Tests.Views.UserOrganisation;
+namespace HE.Investments.Common.WWW.Tests.Components.ListCardTests;
 
-public class ListCardTests : AccountViewTestBase
+public class ListCardTests : ViewComponentTestBase<ListCardTests>
 {
-    private readonly string _viewPath = "/Views/UserOrganisation/_ListCard.cshtml";
+    private readonly string _viewPath = "/Components/ListCardTests/ListCardTests.cshtml";
 
     [Fact]
     public async Task ShouldDisplayListCard_WhenThereAreMoreThan5Applications()

@@ -302,7 +302,7 @@ public class ProjectEntity : DomainEntity
 
         if (SupportActivities.Values.Count == 1 && SupportActivities.Values.Contains(SupportActivityType.ProvidingInfrastructure))
         {
-            yield return () => Infrastructure.IsAnswered();
+            yield return Infrastructure.IsAnswered;
         }
 
         if (IsSiteIdentified?.Value == false)
@@ -312,12 +312,12 @@ public class ProjectEntity : DomainEntity
 
         if (GeographicFocus.GeographicFocus == Shared.Project.Contract.ProjectGeographicFocus.Regional)
         {
-            yield return () => Regions.IsAnswered();
+            yield return Regions.IsAnswered;
         }
 
         if (GeographicFocus.GeographicFocus == Shared.Project.Contract.ProjectGeographicFocus.SpecificLocalAuthority)
         {
-            yield return () => LocalAuthority.IsProvided();
+            yield return LocalAuthority.IsProvided;
         }
 
         if (IsFundingRequired?.Value == true)

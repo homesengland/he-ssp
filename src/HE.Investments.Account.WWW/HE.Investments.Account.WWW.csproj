@@ -43,7 +43,6 @@
     <AdditionalFiles Include="Views\UserOrganisation\ChangeOrganisationDetails.cshtml"/>
     <AdditionalFiles Include="Views\UserOrganisation\OrganisationDetails.cshtml"/>
     <AdditionalFiles Include="Views\UserOrganisation\UserOrganisation.cshtml"/>
-    <AdditionalFiles Include="Views\UserOrganisation\_ListCard.cshtml"/>
   </ItemGroup>
 
   <ItemGroup>
