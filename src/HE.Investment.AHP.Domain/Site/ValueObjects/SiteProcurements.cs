@@ -15,7 +15,7 @@ public class SiteProcurements : ValueObject, IQuestion
 
     public bool IsAnswered()
     {
-        return Procurements.Any();
+        return Procurements.Count != 0;
     }
 
     protected override IEnumerable<object?> GetAtomicValues()

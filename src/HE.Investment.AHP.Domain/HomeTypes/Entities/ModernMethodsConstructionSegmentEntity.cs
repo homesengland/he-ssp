@@ -123,17 +123,17 @@ public class ModernMethodsConstructionSegmentEntity : DomainEntity, IHomeTypeSeg
     {
         if (ModernMethodsConstructionApplied == YesNoType.Yes)
         {
-            yield return () => ModernMethodsConstructionCategories.Any();
+            yield return () => ModernMethodsConstructionCategories.Count != 0;
         }
 
         if (ModernMethodsConstructionCategories.Contains(ModernMethodsConstructionCategoriesType.Category1PreManufacturing3DPrimaryStructuralSystems))
         {
-            yield return () => ModernMethodsConstruction3DSubcategories.Any();
+            yield return () => ModernMethodsConstruction3DSubcategories.Count != 0;
         }
 
         if (ModernMethodsConstructionCategories.Contains(ModernMethodsConstructionCategoriesType.Category2PreManufacturing2DPrimaryStructuralSystems))
         {
-            yield return () => ModernMethodsConstruction2DSubcategories.Any();
+            yield return () => ModernMethodsConstruction2DSubcategories.Count != 0;
         }
     }
 }

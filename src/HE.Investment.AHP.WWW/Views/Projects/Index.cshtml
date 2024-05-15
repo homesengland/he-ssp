@@ -1,0 +1,13 @@
+@using HE.Investments.Common.WWW.Components.PageHeader
+@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Links
+@model HE.Investment.AHP.Contract.Project.ProjectDetailsModel
+@{
+    var title = "List of projects";
+    ViewData["Title"] = title;
+}
+<div class="govuk-grid-column-full">
+    <gds-back-link href="@Url.Action("Details", "Project")" class="govuk-!-margin-bottom-8"></gds-back-link>
+    <vc:page-header title="@title" caption="Morales"/>
+
+    <gds-p>TODO: #94077</gds-p>
+</div>

@@ -141,7 +141,7 @@ public class UserOrganisationController : Controller
 
     private Dictionary<ProgrammeType, ProgrammeModel> GetProgrammes(IList<ProgrammeType> programmeTypes)
     {
-        return programmeTypes.Select(x => _programmes.GetProgramme(x)).ToDictionary(x => x.Type, x => x);
+        return programmeTypes.Select(_programmes.GetProgramme).ToDictionary(x => x.Type, x => x);
     }
 
     private async Task<List<ActionModel>> UserOrganisationActions(string organisationName)

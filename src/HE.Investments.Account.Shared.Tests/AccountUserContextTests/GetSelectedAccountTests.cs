@@ -22,7 +22,7 @@ public class GetSelectedAccountTests : TestBase<AccountUserContext>
             .ReturnsAsync((IList<UserAccount>?)null);
 
         // when
-        var get = () => TestCandidate.GetSelectedAccount();
+        var get = TestCandidate.GetSelectedAccount;
 
         // then
         await get.Should().ThrowAsync<NotFoundException>();

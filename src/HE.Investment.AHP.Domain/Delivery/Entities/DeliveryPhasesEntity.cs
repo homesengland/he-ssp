@@ -71,7 +71,7 @@ public class DeliveryPhasesEntity : IHomeTypeConsumer
 
     public void ProvideHomesToBeDeliveredInPhase(DeliveryPhaseId deliveryPhaseId, IReadOnlyCollection<HomesToDeliverInPhase> homesToDeliver)
     {
-        if (!_homesToDeliver.Any())
+        if (_homesToDeliver.Count == 0)
         {
             OperationResult.ThrowValidationError(nameof(HomesToDeliver), "You must add at least 1 home type in home types section");
         }
@@ -94,7 +94,7 @@ public class DeliveryPhasesEntity : IHomeTypeConsumer
             }
         }
 
-        if (errors.Any())
+        if (errors.Count != 0)
         {
             OperationResult.New().AddValidationErrors(errors).CheckErrors();
         }
@@ -148,7 +148,7 @@ public class DeliveryPhasesEntity : IHomeTypeConsumer
 
         if (isDeliveryCompleted == IsDeliveryCompleted.Yes)
         {
-            if (!_deliveryPhases.Any())
+            if (_deliveryPhases.Count == 0)
             {
                 OperationResult.ThrowValidationError(
                     "DeliveryPhases",
@@ -156,7 +156,7 @@ public class DeliveryPhasesEntity : IHomeTypeConsumer
             }
 
             var notCompletedDeliveryPhases = _deliveryPhases.Where(x => x.Status != SectionStatus.Completed).ToList();
-            if (notCompletedDeliveryPhases.Any())
+            if (notCompletedDeliveryPhases.Count != 0)
             {
                 OperationResult.New()
                     .AddValidationErrors(notCompletedDeliveryPhases

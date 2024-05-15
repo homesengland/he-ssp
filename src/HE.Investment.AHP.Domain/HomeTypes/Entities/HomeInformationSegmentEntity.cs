@@ -259,7 +259,7 @@ public class HomeInformationSegmentEntity : DomainEntity, IHomeTypeSegmentEntity
 
         if (MeetNationallyDescribedSpaceStandards == YesNoType.No)
         {
-            yield return () => NationallyDescribedSpaceStandards.Any();
+            yield return () => NationallyDescribedSpaceStandards.Count != 0;
         }
     }
 }

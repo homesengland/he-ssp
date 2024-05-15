@@ -226,7 +226,7 @@ public class DeliveryPhaseEntity : DomainEntity, IDeliveryPhaseEntity
                          BuildActivity.IsAnswered() &&
                          reconfigureExistingValid &&
                          Tranches.IsAnswered() &&
-                         _homesToDeliver.Any() &&
+                         _homesToDeliver.Count != 0 &&
                          DeliveryPhaseMilestones.IsAnswered() &&
                          MilestonesTranches.IsAnswered();
 

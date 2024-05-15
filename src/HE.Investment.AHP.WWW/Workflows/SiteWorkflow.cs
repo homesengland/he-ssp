@@ -157,17 +157,45 @@ public class SiteWorkflow : EncodedStateRouting<SiteWorkflowState>
 
         Machine.Configure(SiteWorkflowState.BuildingForHealthyLife)
             .PermitIf(Trigger.Continue, SiteWorkflowState.NumberOfGreenLights, IsBuildingForHealthyLife)
-            .PermitIf(Trigger.Continue, SiteWorkflowState.LandAcquisitionStatus, () => !IsBuildingForHealthyLife())
+            .PermitIf(Trigger.Continue, SiteWorkflowState.LandAcquisitionStatus, () => !IsBuildingForHealthyLife() && !IsConsortiumMember())
+            .PermitIf(Trigger.Continue, SiteWorkflowState.DevelopingPartner, () => !IsBuildingForHealthyLife() && IsConsortiumMember())
             .Permit(Trigger.Back, SiteWorkflowState.NationalDesignGuide);
 
         Machine.Configure(SiteWorkflowState.NumberOfGreenLights)
-            .Permit(Trigger.Continue, SiteWorkflowState.LandAcquisitionStatus)
+            .PermitIf(Trigger.Continue, SiteWorkflowState.LandAcquisitionStatus, () => !IsConsortiumMember())
+            .PermitIf(Trigger.Continue, SiteWorkflowState.DevelopingPartner, IsConsortiumMember)
             .Permit(Trigger.Back, SiteWorkflowState.BuildingForHealthyLife);
+
+        Machine.Configure(SiteWorkflowState.DevelopingPartner)
+            .Permit(Trigger.Continue, SiteWorkflowState.DevelopingPartnerConfirm)
+            .PermitIf(Trigger.Back, SiteWorkflowState.NumberOfGreenLights, IsBuildingForHealthyLife)
+            .PermitIf(Trigger.Back, SiteWorkflowState.BuildingForHealthyLife, () => !IsBuildingForHealthyLife());
+
+        Machine.Configure(SiteWorkflowState.DevelopingPartnerConfirm)
+            .Permit(Trigger.Continue, SiteWorkflowState.OwnerOfTheLand)
+            .Permit(Trigger.Back, SiteWorkflowState.DevelopingPartner);
+
+        Machine.Configure(SiteWorkflowState.OwnerOfTheLand)
+            .Permit(Trigger.Continue, SiteWorkflowState.OwnerOfTheLandConfirm)
+            .Permit(Trigger.Back, SiteWorkflowState.DevelopingPartner);
+
+        Machine.Configure(SiteWorkflowState.OwnerOfTheLandConfirm)
+            .Permit(Trigger.Continue, SiteWorkflowState.OwnerOfTheHomes)
+            .Permit(Trigger.Back, SiteWorkflowState.OwnerOfTheLand);
+
+        Machine.Configure(SiteWorkflowState.OwnerOfTheHomes)
+            .Permit(Trigger.Continue, SiteWorkflowState.OwnerOfTheHomesConfirm)
+            .Permit(Trigger.Back, SiteWorkflowState.OwnerOfTheLand);
+
+        Machine.Configure(SiteWorkflowState.OwnerOfTheHomesConfirm)
+            .Permit(Trigger.Continue, SiteWorkflowState.LandAcquisitionStatus)
+            .Permit(Trigger.Back, SiteWorkflowState.OwnerOfTheHomes);
 
         Machine.Configure(SiteWorkflowState.LandAcquisitionStatus)
             .Permit(Trigger.Continue, SiteWorkflowState.TenderingStatus)
-            .PermitIf(Trigger.Back, SiteWorkflowState.NumberOfGreenLights, IsBuildingForHealthyLife)
-            .PermitIf(Trigger.Back, SiteWorkflowState.BuildingForHealthyLife, () => !IsBuildingForHealthyLife());
+            .PermitIf(Trigger.Back, SiteWorkflowState.NumberOfGreenLights, () => IsBuildingForHealthyLife() && !IsConsortiumMember())
+            .PermitIf(Trigger.Back, SiteWorkflowState.BuildingForHealthyLife, () => !IsBuildingForHealthyLife() && !IsConsortiumMember())
+            .PermitIf(Trigger.Back, SiteWorkflowState.OwnerOfTheHomes, IsConsortiumMember);
 
         Machine.Configure(SiteWorkflowState.TenderingStatus)
             .PermitIf(Trigger.Continue, SiteWorkflowState.ContractorDetails, IsConditionalOrUnconditionalWorksContract)

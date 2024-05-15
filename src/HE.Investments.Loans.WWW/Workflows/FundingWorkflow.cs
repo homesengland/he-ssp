@@ -78,8 +78,8 @@ public class FundingWorkflow : WorkflowBase<FundingState, FundingViewModel>
 
         Machine.Configure(FundingState.CheckAnswers)
            .Permit(Trigger.Continue, FundingState.Complete)
-           .PermitIf(Trigger.Back, FundingState.AdditionalProjects, () => Model.IsEditable())
-           .PermitIf(Trigger.Back, FundingState.Complete, () => Model.IsReadOnly());
+           .PermitIf(Trigger.Back, FundingState.AdditionalProjects, Model.IsEditable)
+           .PermitIf(Trigger.Back, FundingState.Complete, Model.IsReadOnly);
 
         Machine.Configure(FundingState.Complete)
             .Permit(Trigger.Back, FundingState.CheckAnswers);

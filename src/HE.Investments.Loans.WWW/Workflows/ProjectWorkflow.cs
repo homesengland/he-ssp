@@ -128,8 +128,8 @@ public class ProjectWorkflow : WorkflowBase<ProjectState, ProjectViewModel>
         Machine.Configure(ProjectState.Ownership)
             .PermitIf(Trigger.Continue, ProjectState.Additional, () => Model.Ownership == CommonResponse.Yes)
             .PermitIf(Trigger.Continue, ProjectState.GrantFunding, () => Model.Ownership != CommonResponse.Yes)
-            .PermitIf(Trigger.Back, ProjectState.LocalAuthorityConfirm, () => Model.LocalAuthorityName.IsProvided())
-            .PermitIf(Trigger.Back, ProjectState.ProvideLocalAuthority, () => Model.LocalAuthorityName.IsNotProvided());
+            .PermitIf(Trigger.Back, ProjectState.LocalAuthorityConfirm, Model.LocalAuthorityName.IsProvided)
+            .PermitIf(Trigger.Back, ProjectState.ProvideLocalAuthority, Model.LocalAuthorityName.IsNotProvided);
 
         Machine.Configure(ProjectState.Additional)
             .Permit(Trigger.Continue, ProjectState.GrantFunding)
@@ -158,7 +158,7 @@ public class ProjectWorkflow : WorkflowBase<ProjectState, ProjectViewModel>
 
         Machine.Configure(ProjectState.CheckAnswers)
             .Permit(Trigger.Continue, ProjectState.Complete)
-            .PermitIf(Trigger.Back, ProjectState.AffordableHomes, () => Model.IsEditable())
-            .PermitIf(Trigger.Back, ProjectState.Complete, () => Model.IsReadOnly());
+            .PermitIf(Trigger.Back, ProjectState.AffordableHomes, Model.IsEditable)
+            .PermitIf(Trigger.Back, ProjectState.Complete, Model.IsReadOnly);
     }
 }

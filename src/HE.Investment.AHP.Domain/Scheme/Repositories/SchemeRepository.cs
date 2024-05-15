@@ -47,7 +47,7 @@ public class SchemeRepository : ISchemeRepository
         {
             var stakeholderDiscussionsFiles = await _fileService.GetFiles(new LocalAuthoritySupportFileParams(id), cancellationToken);
 
-            file = stakeholderDiscussionsFiles.Any() ? stakeholderDiscussionsFiles.First() : null;
+            file = stakeholderDiscussionsFiles.Count != 0 ? stakeholderDiscussionsFiles.First() : null;
         }
 
         return CreateEntity(application, applicationBasicInfo, file);

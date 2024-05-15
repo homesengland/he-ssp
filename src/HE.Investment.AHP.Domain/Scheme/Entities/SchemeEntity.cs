@@ -88,12 +88,11 @@ public class SchemeEntity : DomainEntity
     public void Complete()
     {
         var operationResult = new OperationResult();
-        operationResult.Aggregate(() => Funding.CheckIsComplete());
-        operationResult.Aggregate(() => AffordabilityEvidence.CheckIsComplete());
-        operationResult.Aggregate(() => SalesRisk.CheckIsComplete());
-        operationResult.Aggregate(() => HousingNeeds.CheckIsComplete());
-        operationResult.Aggregate(() => StakeholderDiscussions.CheckIsComplete());
-
+        operationResult.Aggregate(Funding.CheckIsComplete);
+        operationResult.Aggregate(AffordabilityEvidence.CheckIsComplete);
+        operationResult.Aggregate(SalesRisk.CheckIsComplete);
+        operationResult.Aggregate(HousingNeeds.CheckIsComplete);
+        operationResult.Aggregate(StakeholderDiscussions.CheckIsComplete);
         operationResult.CheckErrors();
 
         Status = _modificationTracker.Change(Status, SectionStatus.Completed);

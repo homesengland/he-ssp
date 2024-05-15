@@ -62,6 +62,7 @@
     <EmbeddedResource Include="Components\ButtonStart\ButtonStart.cshtml"/>
     <EmbeddedResource Include="Components\LinkWorkingAsButton\LinkWorkingAsButton.cshtml"/>
     <EmbeddedResource Include="Components\Notification\Notification.cshtml"/>
+    <EmbeddedResource Include="Components\ListCard\ListCard.cshtml"/>
   </ItemGroup>
 
   <ItemGroup>

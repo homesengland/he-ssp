@@ -4,6 +4,7 @@ using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Messages;
 using HE.Investments.FrontDoor.Domain.Project.Repository;
+using HE.Investments.FrontDoor.Domain.Services.Strategies;
 using HE.Investments.FrontDoor.Domain.Site.Repository;
 using HE.Investments.FrontDoor.Shared.Project;
 using Microsoft.Extensions.Logging;
@@ -20,16 +21,20 @@ public class EligibilityService : IEligibilityService
 
     private readonly ILogger _logger;
 
+    private readonly IList<IProjectConversionStrategy> _strategies;
+
     public EligibilityService(
         IProjectRepository projectRepository,
         IAccountUserContext accountUserContext,
         ISiteRepository siteRepository,
-        ILogger<EligibilityService> logger)
+        ILogger<EligibilityService> logger,
+        IList<IProjectConversionStrategy> strategies)
     {
         _projectRepository = projectRepository;
         _accountUserContext = accountUserContext;
         _siteRepository = siteRepository;
         _logger = logger;
+        _strategies = strategies;
     }
 
     public async Task<(OperationResult OperationResult, ApplicationType ApplicationType)> GetEligibleApplication(FrontDoorProjectId projectId, CancellationToken cancellationToken)
@@ -59,11 +64,17 @@ public class EligibilityService : IEligibilityService
             return (domainValidationException.OperationResult, ApplicationType.Undefined);
         }
 
-        if (project.IsProjectValidForLoanApplication() && projectSites.AreSitesValidForLoanApplication())
+        var targetApplication = ApplicationType.Undefined;
+
+        foreach (var strategy in _strategies)
         {
-            return (OperationResult.Success(), ApplicationType.Loans);
+            targetApplication = await strategy.Apply(project, projectSites, cancellationToken);
+            if (targetApplication != ApplicationType.Undefined)
+            {
+                break;
+            }
         }
 
-        return (OperationResult.Success(), ApplicationType.Undefined);
+        return (OperationResult.Success(), targetApplication);
     }
 }

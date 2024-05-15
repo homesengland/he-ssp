@@ -523,9 +523,9 @@ public class ProjectController : WorkflowController<ProjectWorkflowState>
             return View("CheckAnswers", await CreateProjectSummary(cancellationToken));
         }
 
-        if (applicationType == ApplicationType.Loans)
+        if (applicationType != ApplicationType.Undefined)
         {
-            return RedirectToAction("RedirectToLoans", "LoanApplication", new { fdProjectId = projectId });
+            return RedirectToAction("Redirect", "ConvertProject", new { fdProjectId = projectId, applicationType });
         }
 
         return RedirectToAction("YouNeedToSpeakToHomesEngland", new { projectId });

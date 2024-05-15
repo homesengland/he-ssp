@@ -11,9 +11,11 @@ using HE.Investment.AHP.Domain.Site.ValueObjects.Planning;
 using HE.Investment.AHP.Domain.Site.ValueObjects.StrategicSite;
 using HE.Investment.AHP.Domain.Site.ValueObjects.TenderingStatus;
 using HE.Investment.AHP.Domain.UserContext;
+using HE.Investments.AHP.Consortium.Contract;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Extensions;
 using MediatR;
+using Org::HE.Investments.Organisation.ValueObjects;
 using SiteTypeDetails = HE.Investment.AHP.Contract.Site.SiteTypeDetails;
 
 namespace HE.Investment.AHP.Domain.Site.QueryHandlers;
@@ -53,6 +55,9 @@ public class GetSiteQueryHandler : IRequestHandler<GetSiteQuery, SiteModel>
             NationalDesignGuidePriorities = site.NationalDesignGuidePriorities.Values.ToList(),
             BuildingForHealthyLife = site.BuildingForHealthyLife,
             NumberOfGreenLights = site.NumberOfGreenLights?.ToString(),
+            DevelopingPartner = CreateOrganisationDetails(site.SitePartners.DevelopingPartner),
+            OwnerOfTheLand = CreateOrganisationDetails(site.SitePartners.OwnerOfTheLand),
+            OwnerOfTheHomes = CreateOrganisationDetails(site.SitePartners.OwnerOfTheHomes),
             LandAcquisitionStatus = site.LandAcquisitionStatus.Value,
             TenderingStatusDetails = CreateSiteTenderingStatusDetails(site.TenderingStatusDetails),
             StrategicSiteDetails = CreateStrategicSiteDetails(site.StrategicSiteDetails),
@@ -111,6 +116,11 @@ public class GetSiteQueryHandler : IRequestHandler<GetSiteQuery, SiteModel>
             planningDetails.IsQuestionActive(nameof(planningDetails.LandRegistryDetails)),
             planningDetails.IsAnswered(),
             localAuthorityCode);
+    }
+
+    private static OrganisationDetails? CreateOrganisationDetails(InvestmentsOrganisation? sitePartner)
+    {
+        return sitePartner.IsProvided() ? OrganisationDetails.WithoutAddress(sitePartner!.Id, sitePartner.Name) : null;
     }
 
     private static SiteTenderingStatusDetails CreateSiteTenderingStatusDetails(TenderingStatusDetails tenderingStatusDetails)
