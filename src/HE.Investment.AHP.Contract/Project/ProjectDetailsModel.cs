@@ -1,7 +1,7 @@
 namespace HE.Investment.AHP.Contract.Project;
 
 public record ProjectDetailsModel(
-    string ProjectId,
+    AhpProjectId ProjectId,
     string ProjectName,
     string ProgrammeName,
     string OrganisationName,

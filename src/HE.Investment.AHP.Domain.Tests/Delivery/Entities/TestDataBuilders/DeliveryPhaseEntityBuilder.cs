@@ -186,6 +186,7 @@ public class DeliveryPhaseEntityBuilder
             _applicationBasicInfo,
             nameof(ApplicationBasicInfo.Programme),
             new AhpProgramme(
+                "Affordable Homes Programme 2021-2026 Continuous Market Engagement",
                 ProgrammeDatesTestData.ProgrammeDates,
                 milestoneFramework));
         return this;
