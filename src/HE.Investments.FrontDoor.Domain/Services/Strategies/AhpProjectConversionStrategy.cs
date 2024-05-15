@@ -12,9 +12,12 @@ public class AhpProjectConversionStrategy : IProjectConversionStrategy
 {
     private readonly IProgrammeRepository _programmeRepository;
 
-    public AhpProjectConversionStrategy(IProgrammeRepository programmeRepository)
+    private readonly IProgrammeAvailabilityService _programmeAvailability;
+
+    public AhpProjectConversionStrategy(IProgrammeRepository programmeRepository, IProgrammeAvailabilityService programmeAvailability)
     {
         _programmeRepository = programmeRepository;
+        _programmeAvailability = programmeAvailability;
     }
 
     public async Task<ApplicationType> Apply(ProjectEntity project, ProjectSitesEntity projectSites, CancellationToken cancellationToken)
@@ -43,7 +46,8 @@ public class AhpProjectConversionStrategy : IProjectConversionStrategy
 
         if (isProjectValid)
         {
-            isProjectValid = await _programmeRepository.IsAnyAhpProgrammeAvailable(project.ExpectedStartDate.Value, cancellationToken);
+            var programmes = await _programmeRepository.GetProgrammes(cancellationToken);
+            isProjectValid = _programmeAvailability.IsStartDateValidForAnyProgramme(programmes, project.ExpectedStartDate.Value);
         }
 
         return isProjectValid;

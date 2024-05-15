@@ -11,24 +11,16 @@ public class ProgrammeRepository : IProgrammeRepository
         _crmContext = crmContext;
     }
 
-    public async Task<bool> IsAnyAhpProgrammeAvailable(DateOnly? expectedStartDate, CancellationToken cancellationToken)
+    public async Task<IEnumerable<ProgrammeDetails>> GetProgrammes(CancellationToken cancellationToken)
     {
         var programmes = await _crmContext.GetProgrammes(cancellationToken)
                         ?? throw new InvalidOperationException("Cannot find any AHP Programme");
 
-        foreach (var programme in programmes)
-        {
-            var isEndDateValid = programme.endOn.HasValue
-                                 && expectedStartDate > DateOnly.FromDateTime(programme.endOn.Value);
-            var isStartOnSiteEndDateValid = programme.startOnSiteEndDate.HasValue
-                                            && expectedStartDate > DateOnly.FromDateTime(programme.startOnSiteEndDate.Value);
-
-            if (isEndDateValid && isStartOnSiteEndDateValid)
-            {
-                return true;
-            }
-        }
-
-        return false;
+        return programmes.Select(programme => new ProgrammeDetails(
+                programme.name,
+                programme.startOn.HasValue ? DateOnly.FromDateTime(programme.startOn.Value) : null,
+                programme.endOn.HasValue ? DateOnly.FromDateTime(programme.endOn.Value) : null,
+                programme.startOnSiteEndDate.HasValue ? DateOnly.FromDateTime(programme.startOnSiteEndDate.Value) : null))
+            .ToList();
     }
 }

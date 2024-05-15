@@ -2,5 +2,5 @@ namespace HE.Investments.FrontDoor.Domain.Programme.Repository;
 
 public interface IProgrammeRepository
 {
-    Task<bool> IsAnyAhpProgrammeAvailable(DateOnly? expectedStartDate, CancellationToken cancellationToken);
+    Task<IEnumerable<ProgrammeDetails>> GetProgrammes(CancellationToken cancellationToken);
 }

@@ -1,4 +1,6 @@
+using HE.Investments.FrontDoor.Domain.Programme;
 using HE.Investments.FrontDoor.Domain.Programme.Repository;
+using HE.Investments.FrontDoor.Domain.Tests.Programme.TestData;
 using HE.Investments.TestsUtils.TestFramework;
 using Moq;
 
@@ -15,11 +17,11 @@ public class ProgrammeRepositoryTestBuilder
 
     public static ProgrammeRepositoryTestBuilder New() => new();
 
-    public ProgrammeRepositoryTestBuilder ReturnIsAnyAhpProgrammeAvailableResponse(DateOnly? expectedStartDate, bool response)
+    public ProgrammeRepositoryTestBuilder ReturnProgrammes()
     {
         _mock.Setup(x => x
-                    .IsAnyAhpProgrammeAvailable(expectedStartDate, CancellationToken.None))
-                .ReturnsAsync(response);
+                    .GetProgrammes(CancellationToken.None))
+                .ReturnsAsync(new List<ProgrammeDetails> { ProgrammeTestData.ImportantProgramme });
 
         return this;
     }

@@ -33,6 +33,7 @@ public static class DomainModule
         services.AddEligibilityServiceWithStrategies();
         services.AddScoped<IProgrammeCrmContext, ProgrammeCrmContext>();
         services.AddScoped<IProgrammeRepository, ProgrammeRepository>();
+        services.AddScoped<IProgrammeAvailabilityService, ProgrammeAvailabilityService>();
 
         services.AddTransient(typeof(IRequestExceptionHandler<,,>), typeof(DomainValidationHandler<,,>));
     }
