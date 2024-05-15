@@ -15,24 +15,24 @@ public class HappiDesignPrinciplesTests : HomeTypesTestBase
         var document = await RenderHomeTypePage(ViewPath, Model);
 
         // then
+        IList<string> options = [
+            "AdaptabilityAndCareReadyDesign",
+            "BalconiesAndOutdoorSpace",
+            "DaylightInTheHomeAndInSharedSpaces",
+            "EnergyEfficiencyAndSustainableDesign",
+            "ExternalSharedSurfacedAndHomeZones",
+            "PlantsTreesAndTheNaturalEnvironment",
+            "PositiveUseOfCirculationSpace",
+            "SharedFacilitiesAndHubs",
+            "SpaceAndFlexibility",
+            "StorageForBelongingsAndBicycles",
+        ];
+
         document
             .HasPageHeader("My application - My homes", "Which Housing our Ageing Population Panel for Innovation (HAPPI) design principles do the homes meet?")
             .HasElementWithText("summary", "What are the HAPPI design principles?")
             .HasElementWithText("a", "View the HAPPI principles for more information.")
-            .HasCheckboxes(
-                "DesignPrinciples",
-                [
-                    "AdaptabilityAndCareReadyDesign",
-                    "BalconiesAndOutdoorSpace",
-                    "DaylightInTheHomeAndInSharedSpaces",
-                    "EnergyEfficiencyAndSustainableDesign",
-                    "ExternalSharedSurfacedAndHomeZones",
-                    "PlantsTreesAndTheNaturalEnvironment",
-                    "PositiveUseOfCirculationSpace",
-                    "SharedFacilitiesAndHubs",
-                    "SpaceAndFlexibility",
-                    "StorageForBelongingsAndBicycles",
-                ])
+            .HasCheckboxes("DesignPrinciples", options)
             .HasCheckboxes("OtherPrinciples", ["NoneOfThese",])
             .HasSaveAndContinueButton();
     }

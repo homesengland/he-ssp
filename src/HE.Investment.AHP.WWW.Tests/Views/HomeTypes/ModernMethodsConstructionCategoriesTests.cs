@@ -17,20 +17,20 @@ public class ModernMethodsConstructionCategoriesTests : HomeTypesTestBase
         var document = await RenderHomeTypePage(ViewPath, model);
 
         // then
+        IList<string> options = [
+            "Category1PreManufacturing3DPrimaryStructuralSystems",
+            "Category2PreManufacturing2DPrimaryStructuralSystems",
+            "Category3PreManufacturedComponentNonSystemizedPrimaryStructure",
+            "Category4AdditiveManufacturingStructuringAndNonStructural",
+            "Category5PreManufacturingNonStructuralAssembliesAndSubAssemblies",
+            "Category6TraditionalBuildingProductLedSiteLabourReductionOrProductivityImprovements",
+            "Category7SiteProcessLedLabourReductionOrProductivityOrAssuranceImprovements",
+        ];
+
         document
             .HasPageHeader("My application - My homes", "Which Modern Methods of Construction (MMC) categories are you using?")
             .HasElementWithText("span", "Select all that apply.")
-            .HasCheckboxes(
-                "ModernMethodsConstructionCategories",
-                [
-                    "Category1PreManufacturing3DPrimaryStructuralSystems",
-                    "Category2PreManufacturing2DPrimaryStructuralSystems",
-                    "Category3PreManufacturedComponentNonSystemizedPrimaryStructure",
-                    "Category4AdditiveManufacturingStructuringAndNonStructural",
-                    "Category5PreManufacturingNonStructuralAssembliesAndSubAssemblies",
-                    "Category6TraditionalBuildingProductLedSiteLabourReductionOrProductivityImprovements",
-                    "Category7SiteProcessLedLabourReductionOrProductivityOrAssuranceImprovements",
-                ])
+            .HasCheckboxes("ModernMethodsConstructionCategories", options)
             .HasSaveAndContinueButton();
     }
 
@@ -53,18 +53,18 @@ public class ModernMethodsConstructionCategoriesTests : HomeTypesTestBase
         var document = await RenderHomeTypePage(ViewPath, model);
 
         // then
+        IList<string> checkedValues = [
+            "Category2PreManufacturing2DPrimaryStructuralSystems",
+            "Category4AdditiveManufacturingStructuringAndNonStructural",
+            "Category5PreManufacturingNonStructuralAssembliesAndSubAssemblies",
+            "Category6TraditionalBuildingProductLedSiteLabourReductionOrProductivityImprovements",
+        ];
+
         document
             .HasElementWithText("span", "My application - My homes")
             .HasElementWithText("h1", "Which Modern Methods of Construction (MMC) categories are you using?")
             .HasElementWithText("span", "Select all that apply.")
-            .HasCheckedCheckboxes(
-                "ModernMethodsConstructionCategories",
-                [
-                    "Category2PreManufacturing2DPrimaryStructuralSystems",
-                    "Category4AdditiveManufacturingStructuringAndNonStructural",
-                    "Category5PreManufacturingNonStructuralAssembliesAndSubAssemblies",
-                    "Category6TraditionalBuildingProductLedSiteLabourReductionOrProductivityImprovements",
-                ])
+            .HasCheckedCheckboxes("ModernMethodsConstructionCategories", checkedValues)
             .HasSaveAndContinueButton();
     }
 }

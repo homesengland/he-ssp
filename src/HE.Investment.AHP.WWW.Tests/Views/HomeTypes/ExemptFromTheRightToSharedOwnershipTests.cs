@@ -15,16 +15,16 @@ public class ExemptFromTheRightToSharedOwnershipTests : HomeTypesTestBase
         var document = await RenderHomeTypePage(ViewPath, Model);
 
         // then
+        IList<string> options = [
+            "Yes",
+            "No",
+        ];
+
         document
             .HasPageHeader("My application - My homes", "For any reason, are these homes considered exempt from the Right to Shared Ownership?")
             .HasElementWithText("span", "Which properties are in scope for the Right to Shared Ownership?")
             .HasElementWithText("a", "Read about the Right to Shared Ownership and the types of property that are in scope (opens in a new tab).")
-            .HasRadio(
-                "ExemptFromTheRightToSharedOwnership",
-                [
-                    "Yes",
-                    "No",
-                ])
+            .HasRadio("ExemptFromTheRightToSharedOwnership", options)
             .HasSaveAndContinueButton();
     }
 }

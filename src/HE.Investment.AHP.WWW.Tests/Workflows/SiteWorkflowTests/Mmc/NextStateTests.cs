@@ -74,12 +74,14 @@ public class NextStateTests
     [Fact]
     public async Task ShouldReturnNextState_WhenContinueTriggerExecutedForMmcCategoriesWithSelected3dAnd2DCategory()
     {
+        IList<ModernMethodsConstructionCategoriesType> modernMethodsConstructionCategories = [
+            ModernMethodsConstructionCategoriesType.Category1PreManufacturing3DPrimaryStructuralSystems,
+            ModernMethodsConstructionCategoriesType.Category2PreManufacturing2DPrimaryStructuralSystems,
+        ];
+
         var modernMethodsOfConstruction = new SiteModernMethodsOfConstruction(
             SiteUsingModernMethodsOfConstruction.Yes,
-            [
-                ModernMethodsConstructionCategoriesType.Category1PreManufacturing3DPrimaryStructuralSystems,
-                ModernMethodsConstructionCategoriesType.Category2PreManufacturing2DPrimaryStructuralSystems,
-            ]);
+            modernMethodsConstructionCategories);
 
         await TestContinue(SiteWorkflowState.MmcCategories, SiteWorkflowState.Mmc3DCategory, modernMethodsOfConstruction);
     }
@@ -107,12 +109,14 @@ public class NextStateTests
     [Fact]
     public async Task ShouldReturnMmc3DCategory_WhenBackTriggerExecutedForProcurementsAndSelected3DAnd2DCategory()
     {
+        IList<ModernMethodsConstructionCategoriesType> modernMethodsConstructionCategories = [
+            ModernMethodsConstructionCategoriesType.Category1PreManufacturing3DPrimaryStructuralSystems,
+            ModernMethodsConstructionCategoriesType.Category2PreManufacturing2DPrimaryStructuralSystems,
+        ];
+
         var modernMethodsOfConstruction = new SiteModernMethodsOfConstruction(
             SiteUsingModernMethodsOfConstruction.Yes,
-            [
-                ModernMethodsConstructionCategoriesType.Category1PreManufacturing3DPrimaryStructuralSystems,
-                ModernMethodsConstructionCategoriesType.Category2PreManufacturing2DPrimaryStructuralSystems,
-            ]);
+            modernMethodsConstructionCategories);
 
         await TestBack(SiteWorkflowState.Procurements, SiteWorkflowState.Mmc2DCategory, modernMethodsOfConstruction);
     }
@@ -148,11 +152,13 @@ public class NextStateTests
     [Fact]
     public async Task ShouldReturnMmcCategories_WhenBackTriggerExecutedForMmc2DCategoryAndNotSelected3DOr2DCategory()
     {
+        IList<ModernMethodsConstructionCategoriesType> modernMethodsConstructionCategories = [
+            ModernMethodsConstructionCategoriesType.Category3PreManufacturedComponentNonSystemizedPrimaryStructure,
+        ];
+
         var modernMethodsOfConstruction = new SiteModernMethodsOfConstruction(
             SiteUsingModernMethodsOfConstruction.Yes,
-            [
-                ModernMethodsConstructionCategoriesType.Category3PreManufacturedComponentNonSystemizedPrimaryStructure,
-            ]);
+            modernMethodsConstructionCategories);
 
         await TestBack(SiteWorkflowState.Mmc2DCategory, SiteWorkflowState.MmcCategories, modernMethodsOfConstruction);
     }

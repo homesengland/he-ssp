@@ -17,17 +17,17 @@ public class ModernMethodsConstruction2DSubcategoriesTests : HomeTypesTestBase
         var document = await RenderHomeTypePage(ViewPath, model);
 
         // then
+        IList<string> options = [
+            "BasicFramingOnly",
+            "EnhancedConsolidation",
+            "FurtherEnhancedConsolidation",
+        ];
+
         document
             .HasPageHeader("My application - My homes", "Category 2")
             .HasElementWithText("h2", "Which of these sub-categories of 2D primary structural systems are you using?")
             .HasElementWithText("span", "Select all that apply.")
-            .HasCheckboxes(
-                "ModernMethodsConstruction2DSubcategories",
-                [
-                    "BasicFramingOnly",
-                    "EnhancedConsolidation",
-                    "FurtherEnhancedConsolidation",
-                ])
+            .HasCheckboxes("ModernMethodsConstruction2DSubcategories", options)
             .HasSaveAndContinueButton();
     }
 
@@ -48,17 +48,17 @@ public class ModernMethodsConstruction2DSubcategoriesTests : HomeTypesTestBase
         var document = await RenderHomeTypePage(ViewPath, model);
 
         // then
+        IList<string> checkedValues = [
+            "BasicFramingOnly",
+            "EnhancedConsolidation",
+        ];
+
         document
             .HasElementWithText("span", "My application - My homes")
             .HasElementWithText("h1", "Category 2")
             .HasElementWithText("h2", "Which of these sub-categories of 2D primary structural systems are you using?")
             .HasElementWithText("span", "Select all that apply.")
-            .HasCheckedCheckboxes(
-                "ModernMethodsConstruction2DSubcategories",
-                [
-                    "BasicFramingOnly",
-                    "EnhancedConsolidation",
-                ])
+            .HasCheckedCheckboxes("ModernMethodsConstruction2DSubcategories", checkedValues)
             .HasSaveAndContinueButton();
     }
 }

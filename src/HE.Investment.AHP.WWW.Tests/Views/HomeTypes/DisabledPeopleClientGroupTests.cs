@@ -15,29 +15,29 @@ public class DisabledPeopleClientGroupTests : HomeTypesTestBase
         var document = await RenderHomeTypePage(ViewPath, Model);
 
         // then
+        IList<string> options = [
+            "PeopleAtRiskOfDomesticViolence",
+            "PeopleWithAlcoholProblems",
+            "PeopleWithDrugProblems",
+            "PeopleWithHivOrAids",
+            "PeopleWithLearningDisabilitiesOrAutism",
+            "PeopleWithMentalHealthProblems",
+            "PeopleWithMultipleComplexNeeds",
+            "PeopleWithPhysicalOrSensoryDisabilities",
+            "MilitaryVeteransWithSupportNeeds",
+            "OffendersAndPeopleAtRiskOfOffending",
+            "HomelessFamiliesWithSupportNeeds",
+            "Refugees",
+            "RoughSleepers",
+            "SingleHomelessPeopleWithSupportNeeds",
+            "TeenageParents",
+            "YoungPeopleAtRisk",
+            "YoungPeopleLeavingCare",
+        ];
+
         document
             .HasPageHeader("My application - My homes", "What client group are the homes for?")
-            .HasRadio(
-                "DisabledPeopleClientGroup",
-                [
-                    "PeopleAtRiskOfDomesticViolence",
-                    "PeopleWithAlcoholProblems",
-                    "PeopleWithDrugProblems",
-                    "PeopleWithHivOrAids",
-                    "PeopleWithLearningDisabilitiesOrAutism",
-                    "PeopleWithMentalHealthProblems",
-                    "PeopleWithMultipleComplexNeeds",
-                    "PeopleWithPhysicalOrSensoryDisabilities",
-                    "MilitaryVeteransWithSupportNeeds",
-                    "OffendersAndPeopleAtRiskOfOffending",
-                    "HomelessFamiliesWithSupportNeeds",
-                    "Refugees",
-                    "RoughSleepers",
-                    "SingleHomelessPeopleWithSupportNeeds",
-                    "TeenageParents",
-                    "YoungPeopleAtRisk",
-                    "YoungPeopleLeavingCare",
-                ])
+            .HasRadio("DisabledPeopleClientGroup", options)
             .HasSaveAndContinueButton();
     }
 }

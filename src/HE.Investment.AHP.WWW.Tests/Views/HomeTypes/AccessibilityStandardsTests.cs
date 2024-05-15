@@ -15,16 +15,16 @@ public class AccessibilityStandardsTests : HomeTypesTestBase
         var document = await RenderHomeTypePage(ViewPath, Model);
 
         // then
+        IList<string> options = [
+            "Yes",
+            "No",
+        ];
+
         document
             .HasPageHeader("My application - My homes", "Do these homes meet any of the Building Regulations Part M accessibility categories?")
             .HasElementWithText("span", "What are the accessibility categories?")
             .HasElementWithText("a", "Read the Building Regulations to find out more (opens in a new tab).")
-            .HasRadio(
-                "AccessibilityStandards",
-                [
-                    "Yes",
-                    "No",
-                ])
+            .HasRadio("AccessibilityStandards", options)
             .HasSaveAndContinueButton();
     }
 }

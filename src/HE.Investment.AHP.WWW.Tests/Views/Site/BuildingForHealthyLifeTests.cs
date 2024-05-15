@@ -17,17 +17,17 @@ public class BuildingForHealthyLifeTests : AhpViewTestBase
         var document = await Render(_viewPath, site);
 
         // then
+        IList<string> options = [
+            "Yes",
+            "No",
+            "Not applicable, this site does not contain more than 10 homes",
+        ];
+
         document
             .HasTitle(SitePageTitles.BuildingForHealthyLife)
             .HasPageHeader(siteName, SitePageTitles.BuildingForHealthyLife)
             .HasSummaryDetails("Building for a Healthy Life is a design code to help people improve the design of new and growing neighbourhoods. You can read more in the")
-            .HasRadio(
-                "BuildingForHealthyLife",
-                [
-                    "Yes",
-                    "No",
-                    "Not applicable, this site does not contain more than 10 homes",
-                ])
+            .HasRadio("BuildingForHealthyLife", options)
             .HasSaveAndContinueButton()
             .HasBackLink(out _, false);
     }
@@ -46,17 +46,17 @@ public class BuildingForHealthyLifeTests : AhpViewTestBase
         var document = await Render(_viewPath, site, modelStateDictionary: modelState);
 
         // then
+        IList<string> options = [
+            "Yes",
+            "No",
+            "Not applicable, this site does not contain more than 10 homes",
+        ];
+
         document
             .HasTitle(SitePageTitles.BuildingForHealthyLife)
             .HasPageHeader(siteName, SitePageTitles.BuildingForHealthyLife)
             .HasSummaryDetails("Building for a Healthy Life is a design code to help people improve the design of new and growing neighbourhoods. You can read more in the")
-            .HasRadio(
-                "BuildingForHealthyLife",
-                [
-                    "Yes",
-                    "No",
-                    "Not applicable, this site does not contain more than 10 homes",
-                ])
+            .HasRadio("BuildingForHealthyLife", options)
             .HasSaveAndContinueButton()
             .HasBackLink(out _, false)
             .HasOneValidationMessages(errorMessage);
