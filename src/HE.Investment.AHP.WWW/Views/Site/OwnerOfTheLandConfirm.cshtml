@@ -14,6 +14,7 @@
         nameof(OrganisationDetailsComponent),
         new
         {
+            name = Model.Organisation.Name,
             street = Model.Organisation.Street,
             city = Model.Organisation.City,
             postalCode = Model.Organisation.PostalCode,
@@ -24,13 +25,13 @@
 <gds-div-grid-column-two-thirds>
     <gds-back-link class="govuk-!-margin-bottom-8" href="@Url.Action("OwnerOfTheLand", "Site", new { siteId, workflow })"></gds-back-link>
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
-    <vc:page-header title="@SitePageTitles.OwnerOfTheLandConfirm" caption="@ViewBag.SiteName"/>
+    <vc:page-header caption="@ViewBag.SiteName"/>
 
     <form asp-controller="Site" asp-action="OwnerOfTheLandConfirm" asp-route-workflow=@workflow asp-method="post" novalidate>
         <vc:radio-yes-no
-            title="@Model.Organisation.Name"
-            title-type="InputTitleType.InputBoldDescription"
-            field-name="IsConfirmed"
+            title="@SitePageTitles.OwnerOfTheLandConfirm"
+            title-type="InputTitleType.PageHeader"
+            field-name="isConfirmed"
             value="@Model.IsConfirmed"
             additional-content="@organisationDetails"/>
 

@@ -12,8 +12,11 @@ using HE.Investment.AHP.Domain.Site.ValueObjects.Mmc;
 using HE.Investment.AHP.Domain.Site.ValueObjects.Planning;
 using HE.Investment.AHP.Domain.Site.ValueObjects.StrategicSite;
 using HE.Investment.AHP.Domain.Site.ValueObjects.TenderingStatus;
+using HE.Investments.Common.Contract;
 using HE.Investments.Common.CRM.Mappers;
 using Org::HE.Investments.Organisation.LocalAuthorities.ValueObjects;
+using Org::HE.Investments.Organisation.ValueObjects;
+using LocalAuthority = Org::HE.Investments.Organisation.LocalAuthorities.ValueObjects.LocalAuthority;
 using Section106Dto = HE.Common.IntegrationModel.PortalIntegrationModel.Section106Dto;
 using SiteModernMethodsOfConstruction = HE.Investment.AHP.Domain.Site.ValueObjects.Mmc.SiteModernMethodsOfConstruction;
 using SiteRuralClassification = HE.Investment.AHP.Domain.Site.ValueObjects.SiteRuralClassification;
@@ -44,6 +47,7 @@ public static class SiteDtoToSiteEntityMapper
         return new SiteEntity(
             SiteId.From(dto.id),
             new SiteName(dto.name),
+            new SitePartners(MapOrganisation(dto.developerPartner), MapOrganisation(dto.ownerOfTheLandDuringDevelopment), MapOrganisation(dto.ownerOfTheHomesAfterCompletion)),
             SiteStatusMapper.ToDomain(dto.status),
             CreateSection106(dto.section106),
             CreateLocalAuthority(dto.localAuthority?.id, dto.localAuthority?.name),
@@ -119,6 +123,16 @@ public static class SiteDtoToSiteEntityMapper
     private static NumberOfGreenLights? CreateNumberOfGreenLights(int? dto)
     {
         return dto != null ? new NumberOfGreenLights(dto.Value.ToString(CultureInfo.InvariantCulture)) : null;
+    }
+
+    private static InvestmentsOrganisation? MapOrganisation(OrganizationDetailsDto? organisation)
+    {
+        if (string.IsNullOrWhiteSpace(organisation?.organisationId))
+        {
+            return null;
+        }
+
+        return new InvestmentsOrganisation(OrganisationId.From(organisation.organisationId), organisation.registeredCompanyName);
     }
 
     private static TenderingStatusDetails CreateTenderingStatusDetails(TenderingDetailsDto dto)
