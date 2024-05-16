@@ -6,16 +6,19 @@ namespace HE.Investment.AHP.Domain.Project.Entities;
 
 public class AhpProjectEntity
 {
-    public AhpProjectEntity(AhpProjectId id, AhpProjectName name, IList<AhpProjectApplication>? applications = null)
+    public AhpProjectEntity(AhpProjectId id, AhpProjectName name, IList<AhpProjectApplication>? applications = null, IList<AhpProjectSite>? sites = null)
     {
         Id = id;
         Name = name;
         Applications.AddRange(applications);
+        Sites.AddRange(sites);
     }
 
     public AhpProjectId Id { get; }
 
     public AhpProjectName Name { get; }
+
+    public IList<AhpProjectSite> Sites { get; } = new List<AhpProjectSite>();
 
     public IList<AhpProjectApplication> Applications { get; } = new List<AhpProjectApplication>();
 }

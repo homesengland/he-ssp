@@ -11,10 +11,10 @@ public interface IProjectCrmContext
         string? consortiumId,
         CancellationToken cancellationToken);
 
-    Task<ProjectDto> GetProjects(
-        string projectId,
+    Task<PagedResponseDto<ProjectDto>> GetProjects(
         string userId,
         string organisationId,
         string? consortiumId,
+        PagingRequestDto pagination,
         CancellationToken cancellationToken);
 }

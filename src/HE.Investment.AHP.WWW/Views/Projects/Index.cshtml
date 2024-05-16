@@ -1,13 +1,18 @@
 @using HE.Investments.Common.WWW.Components.PageHeader
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Links
-@model HE.Investment.AHP.Contract.Project.ProjectDetailsModel
+@using HE.Investment.AHP.Contract.Project;
+@using HE.Investments.Common.Contract
+@using HE.Investments.Common.WWW.Components.ApplicationStatusTagComponent
+@using HE.Investments.Common.WWW.Components.ListCard
+
+@model ProjectsListModel;
 @{
-    var title = "List of projects";
+    var title = $"{Model.ProgrammeName} projects";
     ViewData["Title"] = title;
 }
-<div class="govuk-grid-column-full">
-    <gds-back-link href="@Url.Action("Details", "Project")" class="govuk-!-margin-bottom-8"></gds-back-link>
-    <vc:page-header title="@title" caption="Morales"/>
+<div class="govuk-grid-column-two-thirds">
+    <gds-back-link href="@Url.Action("Index", "Account")" class="govuk-!-margin-bottom-8"></gds-back-link>
+    <vc:page-header title="@title" caption="@Model.OrganisationName"/>
 
-    <gds-p>TODO: #94077</gds-p>
+    <gds-p>View a project to start or manage an application. You can also view the details of each site.</gds-p>
 </div>
