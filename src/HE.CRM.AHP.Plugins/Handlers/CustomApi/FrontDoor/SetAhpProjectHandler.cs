@@ -19,21 +19,21 @@ namespace HE.CRM.AHP.Plugins.Handlers.CustomApi.FrontDoor
         private string consortiumId => ExecutionData.GetInputParameter<string>(invln_createahpprojectRequest.Fields.invln_consortiumid);
         private string heProjectId => ExecutionData.GetInputParameter<string>(invln_createahpprojectRequest.Fields.invln_heprojectid);
         private string ahpProjectName => ExecutionData.GetInputParameter<string>(invln_createahpprojectRequest.Fields.invln_projectname);
-        private string ahpProjectDto => ExecutionData.GetInputParameter<string>(invln_createahpprojectRequest.Fields.invln_listofsites);
+        private string listOfSitesFromPortal => ExecutionData.GetInputParameter<string>(invln_createahpprojectRequest.Fields.invln_listofsites);
 
 
         public override bool CanWork()
         {
-            return externalContactId != null && organisationId != null && heProjectId != null && ahpProjectName != null && JsonSerializer.Deserialize<AhpProjectDto>(ahpProjectDto).ListOfSites != null;
+            return externalContactId != null && organisationId != null && heProjectId != null && ahpProjectName != null && JsonSerializer.Deserialize<List<SiteDto>>(listOfSitesFromPortal).Count > 0;
         }
 
         public override void DoWork()
         {
-            this.TracingService.Trace("SetAhpProjectHandler");
-            string  ahpProjectId = CrmServicesFactory.Get<IAhpProjectService>().CreateRecordFromPortal(externalContactId, organisationId, heProjectId, ahpProjectName, consortiumId);
+            TracingService.Trace("SetAhpProjectHandler");
+            string ahpProjectId = CrmServicesFactory.Get<IAhpProjectService>().CreateRecordFromPortal(externalContactId, organisationId, heProjectId, ahpProjectName, consortiumId);
             if (ahpProjectId != null && Guid.TryParse(ahpProjectId, out var ahpProjectGuid))
             {
-                List<SiteDto> listOfSites = JsonSerializer.Deserialize<AhpProjectDto>(ahpProjectDto).ListOfSites;
+                List<SiteDto> listOfSites = JsonSerializer.Deserialize<List<SiteDto>>(listOfSitesFromPortal);
                 var isSitesCreated = CrmServicesFactory.Get<ISiteService>().CreateRecordsWithAhpProject(listOfSites, ahpProjectGuid, externalContactId, organisationId);
                 if (isSitesCreated != null)
                 {
