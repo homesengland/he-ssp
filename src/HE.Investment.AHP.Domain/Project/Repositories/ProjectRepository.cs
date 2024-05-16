@@ -21,6 +21,8 @@ public class ProjectRepository : IProjectRepository
 {
     private readonly IProjectCrmContext _projectCrmContext;
 
+    private readonly SiteStatusMapper _siteStatusMapper = new();
+
     public ProjectRepository(IProjectCrmContext projectCrmContext)
     {
         _projectCrmContext = projectCrmContext;
@@ -39,11 +41,32 @@ public class ProjectRepository : IProjectRepository
             id,
             new AhpProjectName(project.ProjectName),
             project.Applications.Select(x => new AhpProjectApplication(
-                AhpApplicationId.From(x.ApplicationId),
-                new ApplicationName(x.ApplicationName),
-                ApplicationStatusMapper.MapToPortalStatus(x.ApplicationStatus),
-                new SchemeFunding((int?)x.RequiredFunding, x.NoOfHomes),
-                ApplicationTenureMapper.ToDomain(x.Tenure)!.Value)).ToList());
+                    AhpApplicationId.From(x.ApplicationId),
+                    new ApplicationName(x.ApplicationName),
+                    ApplicationStatusMapper.MapToPortalStatus(x.ApplicationStatus),
+                    new SchemeFunding((int?)x.RequiredFunding, x.NoOfHomes),
+                    ApplicationTenureMapper.ToDomain(x.Tenure)!.Value))
+                .ToList());
+    }
+
+    public async Task<AhpProjectSitesEntity> GetProjectSites(AhpProjectId id, AhpUserAccount userAccount, CancellationToken cancellationToken)
+    {
+        var projectSites = await _projectCrmContext.GetProjectSites(
+            id.ToString(),
+            userAccount.UserGlobalId.ToString(),
+            userAccount.SelectedOrganisationId().ToString(),
+            userAccount.Consortium.ConsortiumId.ToString(),
+            cancellationToken);
+
+        return new AhpProjectSitesEntity(
+            id,
+            new AhpProjectName(projectSites.ProjectName),
+            projectSites.Sites.Select(x => new ProjectSite(
+                    SiteId.From(x.id),
+                    new SiteName(x.name),
+                    _siteStatusMapper.ToDomain(x.status)!.Value,
+                    LocalAuthorityMapper.FromDto(x.localAuthority)))
+                .ToList());
     }
 
     public async Task<PaginationResult<AhpProjectEntity>> GetProjects(

@@ -17,4 +17,11 @@ public interface IProjectCrmContext
         string? consortiumId,
         PagingRequestDto pagination,
         CancellationToken cancellationToken);
+
+    Task<ProjectSitesDto> GetProjectSites(
+        string projectId,
+        string userId,
+        string organisationId,
+        string? consortiumId,
+        CancellationToken cancellationToken);
 }

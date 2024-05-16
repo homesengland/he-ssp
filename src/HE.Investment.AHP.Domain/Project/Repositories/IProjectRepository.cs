@@ -10,4 +10,6 @@ public interface IProjectRepository
     Task<AhpProjectEntity> GetProject(AhpProjectId id, AhpUserAccount userAccount, CancellationToken cancellationToken);
 
     Task<PaginationResult<AhpProjectEntity>> GetProjects(PaginationRequest paginationRequest, AhpUserAccount userAccount, CancellationToken cancellationToken);
+
+    Task<AhpProjectSitesEntity> GetProjectSites(AhpProjectId id, AhpUserAccount userAccount, CancellationToken cancellationToken);
 }

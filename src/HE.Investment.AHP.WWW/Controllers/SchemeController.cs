@@ -83,6 +83,15 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
             cancellationToken);
     }
 
+    [WorkflowState(SchemeWorkflowState.PartnerDetails)]
+    [HttpGet("partner-details")]
+    public async Task<IActionResult> PartnerDetails([FromRoute] string applicationId, CancellationToken cancellationToken)
+    {
+        var scheme = await GetScheme(applicationId, cancellationToken);
+
+        return View(scheme);
+    }
+
     [WorkflowState(SchemeWorkflowState.Affordability)]
     [HttpGet("affordability")]
     public async Task<IActionResult> Affordability([FromRoute] string applicationId, CancellationToken cancellationToken)
