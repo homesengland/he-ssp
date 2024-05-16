@@ -10,11 +10,11 @@ public class ProjectCrmContext : IProjectCrmContext
         {
             ProjectId = "885f479a-eed7-4745-817d-9c7968db4852",
             ProjectName = "Mocked project",
-            Sites = new List<SiteDto>
+            Sites =
             {
-                new() { id = Guid.NewGuid().ToString(), name = "first new site", status = 858110001, },
-                new() { id = Guid.NewGuid().ToString(), name = "second new site", status = 858110000, },
-                new() { id = Guid.NewGuid().ToString(), name = "third new site", status = 858110001, },
+                new SiteDto { id = Guid.NewGuid().ToString(), name = "first new site", status = 858110001, },
+                new SiteDto { id = Guid.NewGuid().ToString(), name = "second new site", status = 858110000, },
+                new SiteDto { id = Guid.NewGuid().ToString(), name = "third new site", status = 858110001, },
             },
         };
 
@@ -60,7 +60,7 @@ public class ProjectCrmContext : IProjectCrmContext
     {
         return Task.FromResult(new PagedResponseDto<ProjectDto>
         {
-            items = new List<ProjectDto> { _mockedProjectDto },
+            items = { _mockedProjectDto },
             totalItemsCount = 1,
             paging = new PagingRequestDto { pageNumber = 1, pageSize = 1, },
         });
