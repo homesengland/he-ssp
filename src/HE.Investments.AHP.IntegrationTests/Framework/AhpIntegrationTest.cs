@@ -37,11 +37,11 @@ public class AhpIntegrationTest : IntegrationTestBase<Program>, IAsyncLifetime
 
     public Stopwatch Stopwatch { get; private set; }
 
-    protected AhpApplicationCrmContext AhpApplicationCrmContext => _fixture.AhpApplicationCrmContext;
+    protected AhpCrmContext AhpCrmContext => _fixture.AhpCrmContext;
 
-    private ILoginData LoginData { get; }
+    protected ILoginData LoginData { get; }
 
-    public Task InitializeAsync()
+    public virtual Task InitializeAsync()
     {
         return Task.CompletedTask;
     }
@@ -54,7 +54,7 @@ public class AhpIntegrationTest : IntegrationTestBase<Program>, IAsyncLifetime
 
     public async Task ChangeApplicationStatus(string applicationId, ApplicationStatus applicationStatus)
     {
-        await AhpApplicationCrmContext.ChangeApplicationStatus(applicationId, applicationStatus, LoginData);
+        await AhpCrmContext.ChangeApplicationStatus(applicationId, applicationStatus, LoginData);
     }
 
     private void SetApplicationData()
