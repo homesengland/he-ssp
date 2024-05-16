@@ -13,7 +13,7 @@ public class LocalAuthorityResultTests : ViewTestBase
     public async Task ShouldDisplayView()
     {
         // given
-        var model = new LocalAuthoritiesViewModel { Items = new List<LocalAuthorityViewModel>() };
+        var model = new LocalAuthoritiesViewModel { Items = [] };
         var localAuthority = LocalAuthority.New(LocalAuthorityCode.From("10"), "Liverpool");
         model.Items.Add(new LocalAuthorityViewModel() { Id = localAuthority.Code.ToString(), Name = localAuthority.Name });
 

@@ -18,10 +18,10 @@ public class SaveTypologyLocationAndDesignCommandHandler : SaveHomeTypeSegmentCo
     {
     }
 
-    protected override IReadOnlyCollection<HomeTypeSegmentType> SegmentTypes => new[] { HomeTypeSegmentType.SupportedHousingInformation };
+    protected override IReadOnlyCollection<HomeTypeSegmentType> SegmentTypes => [HomeTypeSegmentType.SupportedHousingInformation];
 
-    protected override IEnumerable<Action<SaveTypologyLocationAndDesignCommand, IHomeTypeEntity>> SaveActions => new[]
-    {
+    protected override IEnumerable<Action<SaveTypologyLocationAndDesignCommand, IHomeTypeEntity>> SaveActions =>
+    [
         (SaveTypologyLocationAndDesignCommand request, IHomeTypeEntity homeType) =>
         {
             var typologyLocationAndDesign = request.TypologyLocationAndDesign.IsNotProvided()
@@ -29,5 +29,5 @@ public class SaveTypologyLocationAndDesignCommandHandler : SaveHomeTypeSegmentCo
                 : new MoreInformation(request.TypologyLocationAndDesign!, "typology, location and design of these homes");
             homeType.SupportedHousingInformation.ChangeTypologyLocationAndDesign(typologyLocationAndDesign);
         },
-    };
+    ];
 }

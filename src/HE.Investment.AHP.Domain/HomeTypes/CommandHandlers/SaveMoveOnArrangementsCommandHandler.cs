@@ -18,10 +18,10 @@ public class SaveMoveOnArrangementsCommandHandler : SaveHomeTypeSegmentCommandHa
     {
     }
 
-    protected override IReadOnlyCollection<HomeTypeSegmentType> SegmentTypes => new[] { HomeTypeSegmentType.SupportedHousingInformation };
+    protected override IReadOnlyCollection<HomeTypeSegmentType> SegmentTypes => [HomeTypeSegmentType.SupportedHousingInformation];
 
-    protected override IEnumerable<Action<SaveMoveOnArrangementsCommand, IHomeTypeEntity>> SaveActions => new[]
-    {
+    protected override IEnumerable<Action<SaveMoveOnArrangementsCommand, IHomeTypeEntity>> SaveActions =>
+    [
         (SaveMoveOnArrangementsCommand request, IHomeTypeEntity homeType) =>
         {
             var moveOnArrangements = request.MoveOnArrangements.IsNotProvided()
@@ -29,5 +29,5 @@ public class SaveMoveOnArrangementsCommandHandler : SaveHomeTypeSegmentCommandHa
                 : new MoreInformation(request.MoveOnArrangements!, "move in arrangements");
             homeType.SupportedHousingInformation.ChangeMoveOnArrangements(moveOnArrangements);
         },
-    };
+    ];
 }

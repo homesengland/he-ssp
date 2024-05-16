@@ -11,12 +11,12 @@ internal static class LocalAuthorityDtoTestData
     public static readonly LocalAuthorityDto LocalAuthorityFour = new() { onsCode = "4", name = "Brighton" };
     public static readonly LocalAuthorityDto LocalAuthorityFive = new() { onsCode = "5", name = "Leicester" };
 
-    public static readonly IList<LocalAuthorityDto> LocalAuthoritiesDtoList = new List<LocalAuthorityDto>
-    {
+    public static readonly IList<LocalAuthorityDto> LocalAuthoritiesDtoList =
+    [
         LocalAuthorityOne,
         LocalAuthorityTwo,
         LocalAuthorityThree,
         LocalAuthorityFour,
         LocalAuthorityFive,
-    };
+    ];
 }

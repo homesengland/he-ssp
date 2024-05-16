@@ -38,7 +38,7 @@ public class DraftConsortiumRepository : IDraftConsortiumRepository
             consortium.Name,
             consortium.Programme,
             new DraftConsortiumMember(consortium.LeadPartner.Id, consortium.LeadPartner.OrganisationName),
-            new List<DraftConsortiumMember>());
+            []);
 
         _cache.SetValue(StorageKey(consortium.Id, userAccount), ToDto(draftConsortium));
     }

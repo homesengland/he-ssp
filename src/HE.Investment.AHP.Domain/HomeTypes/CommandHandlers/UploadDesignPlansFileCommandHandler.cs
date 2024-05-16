@@ -43,7 +43,7 @@ public class UploadDesignPlansFileCommandHandler : IRequestHandler<UploadDesignP
                 new FileSize(request.File.Lenght),
                 request.File.Content,
                 _documentSettings);
-            homeType.DesignPlans.AddFilesToUpload(new[] { designFile });
+            homeType.DesignPlans.AddFilesToUpload([designFile]);
 
             await _homeTypeRepository.Save(homeType, account.SelectedOrganisationId(), cancellationToken);
 

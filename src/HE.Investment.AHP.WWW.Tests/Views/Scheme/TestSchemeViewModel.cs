@@ -1,5 +1,4 @@
 using HE.Investment.AHP.WWW.Models.Scheme;
-using HE.Investments.Common.WWW.Models;
 
 namespace HE.Investment.AHP.WWW.Tests.Views.Scheme;
 
@@ -16,7 +15,7 @@ public static class TestSchemeViewModel
             "type and tenure justification",
             "scheme and proposal justification",
             "stakeholders accepted everything",
-            new List<FileModel>(),
+            [],
             25,
             "PDF, DOCX, PNG");
 }

@@ -146,12 +146,12 @@ public abstract class HomeTypeDataBase<THomeTypeData> : INestedItemData
 
     public THomeTypeData GenerateModernMethodsConstructionCategories()
     {
-        MmcCategories = new[]
-        {
+        MmcCategories =
+        [
             ModernMethodsConstructionCategoriesType.Category1PreManufacturing3DPrimaryStructuralSystems,
             ModernMethodsConstructionCategoriesType.Category2PreManufacturing2DPrimaryStructuralSystems,
             ModernMethodsConstructionCategoriesType.Category6TraditionalBuildingProductLedSiteLabourReductionOrProductivityImprovements,
-        };
+        ];
 
         Mmc3DSubcategory = ModernMethodsConstruction3DSubcategoriesType.StructuralChassisOnly;
         Mmc2DSubcategory = ModernMethodsConstruction2DSubcategoriesType.FurtherEnhancedConsolidation;

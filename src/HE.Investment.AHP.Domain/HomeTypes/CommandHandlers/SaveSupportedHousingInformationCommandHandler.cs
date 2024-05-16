@@ -16,12 +16,12 @@ public class SaveSupportedHousingInformationCommandHandler : SaveHomeTypeSegment
     {
     }
 
-    protected override IReadOnlyCollection<HomeTypeSegmentType> SegmentTypes => new[] { HomeTypeSegmentType.SupportedHousingInformation };
+    protected override IReadOnlyCollection<HomeTypeSegmentType> SegmentTypes => [HomeTypeSegmentType.SupportedHousingInformation];
 
-    protected override IEnumerable<Action<SaveSupportedHousingInformationCommand, IHomeTypeEntity>> SaveActions => new[]
-    {
+    protected override IEnumerable<Action<SaveSupportedHousingInformationCommand, IHomeTypeEntity>> SaveActions =>
+    [
         (SaveSupportedHousingInformationCommand request, IHomeTypeEntity homeType) => homeType.SupportedHousingInformation.ChangeLocalCommissioningBodiesConsulted(request.LocalCommissioningBodiesConsulted),
         (request, homeType) => homeType.SupportedHousingInformation.ChangeShortStayAccommodation(request.ShortStayAccommodation),
         (request, homeType) => homeType.SupportedHousingInformation.ChangeRevenueFundingType(request.RevenueFundingType),
-    };
+    ];
 }

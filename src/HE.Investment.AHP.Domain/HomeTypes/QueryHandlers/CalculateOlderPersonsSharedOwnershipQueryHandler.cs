@@ -17,14 +17,14 @@ internal sealed class CalculateOlderPersonsSharedOwnershipQueryHandler : Calcula
     {
     }
 
-    protected override IEnumerable<Action<CalculateOlderPersonsSharedOwnershipQuery, IHomeTypeEntity>> CalculateActions => new[]
-    {
+    protected override IEnumerable<Action<CalculateOlderPersonsSharedOwnershipQuery, IHomeTypeEntity>> CalculateActions =>
+    [
         (CalculateOlderPersonsSharedOwnershipQuery request, IHomeTypeEntity homeType) => homeType.TenureDetails.ChangeMarketValue(request.MarketValue, true),
         (request, homeType) => homeType.TenureDetails.ChangeInitialSale(request.InitialSale, true),
         (_, homeType) => homeType.TenureDetails.ChangeExpectedFirstTranche(),
         (request, homeType) => homeType.TenureDetails.ChangeRentPerWeek(request.RentPerWeek, isCalculation: true),
         (_, homeType) => homeType.TenureDetails.ChangeRentAsPercentageOfTheUnsoldShare(),
-    };
+    ];
 
     protected override CalculationResult BuildCalculationResult(IHomeTypeEntity homeType)
     {

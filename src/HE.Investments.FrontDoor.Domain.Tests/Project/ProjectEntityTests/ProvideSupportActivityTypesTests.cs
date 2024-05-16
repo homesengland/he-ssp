@@ -12,13 +12,13 @@ public class ProvideSupportActivityTypesTests
     public void ShouldResetAffordableHomesQuestion_WhenSupportActivityHasChanged()
     {
         // given
-        var project = ProjectEntityBuilder.New().WithSupportActivities(new List<SupportActivityType>
-        {
+        var project = ProjectEntityBuilder.New().WithSupportActivities(
+        [
             SupportActivityType.DevelopingHomes,
-        }).WithAffordableHomesAmount(AffordableHomesAmount.OnlyAffordableHomes).Build();
+        ]).WithAffordableHomesAmount(AffordableHomesAmount.OnlyAffordableHomes).Build();
 
         // when
-        project.ProvideSupportActivityTypes(new SupportActivities(new[] { SupportActivityType.AcquiringLand }));
+        project.ProvideSupportActivityTypes(new SupportActivities([SupportActivityType.AcquiringLand]));
 
         // then
         project.AffordableHomesAmount.Should().Be(ProjectAffordableHomesAmount.Empty());
@@ -28,13 +28,13 @@ public class ProvideSupportActivityTypesTests
     public void ShouldResetProvidingInfrastructureQuestion_WhenSupportActivityHasChanged()
     {
         // given
-        var project = ProjectEntityBuilder.New().WithSupportActivities(new List<SupportActivityType>
-        {
+        var project = ProjectEntityBuilder.New().WithSupportActivities(
+        [
             SupportActivityType.DevelopingHomes,
-        }).WithAffordableHomesAmount(AffordableHomesAmount.OnlyAffordableHomes).Build();
+        ]).WithAffordableHomesAmount(AffordableHomesAmount.OnlyAffordableHomes).Build();
 
         // when
-        project.ProvideSupportActivityTypes(new SupportActivities(new[] { SupportActivityType.AcquiringLand }));
+        project.ProvideSupportActivityTypes(new SupportActivities([SupportActivityType.AcquiringLand]));
 
         // then
         project.Infrastructure.Should().Be(ProjectInfrastructure.Empty());
@@ -44,13 +44,13 @@ public class ProvideSupportActivityTypesTests
     public void ShouldNotResetAffordableHomesQuestion_WhenSupportActivityHasChangedToTheSame()
     {
         // given
-        var project = ProjectEntityBuilder.New().WithSupportActivities(new List<SupportActivityType>
-        {
+        var project = ProjectEntityBuilder.New().WithSupportActivities(
+        [
             SupportActivityType.DevelopingHomes,
-        }).WithAffordableHomesAmount(AffordableHomesAmount.OnlyAffordableHomes).Build();
+        ]).WithAffordableHomesAmount(AffordableHomesAmount.OnlyAffordableHomes).Build();
 
         // when
-        project.ProvideSupportActivityTypes(new SupportActivities(new[] { SupportActivityType.DevelopingHomes }));
+        project.ProvideSupportActivityTypes(new SupportActivities([SupportActivityType.DevelopingHomes]));
 
         // then
         project.AffordableHomesAmount.Should().NotBe(ProjectAffordableHomesAmount.Empty());

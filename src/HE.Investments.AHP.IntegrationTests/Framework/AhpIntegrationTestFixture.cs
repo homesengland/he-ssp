@@ -7,10 +7,10 @@ namespace HE.Investments.AHP.IntegrationTests.Framework;
 
 public class AhpIntegrationTestFixture : IntegrationTestFixture<Program>
 {
-    public AhpApplicationCrmContext AhpApplicationCrmContext => Scope.Value.ServiceProvider.GetRequiredService<AhpApplicationCrmContext>();
+    public AhpCrmContext AhpCrmContext => Scope.Value.ServiceProvider.GetRequiredService<AhpCrmContext>();
 
     protected override void ConfigureTestServices(IServiceCollection services)
     {
-        services.AddScoped<AhpApplicationCrmContext>();
+        services.AddScoped<AhpCrmContext>();
     }
 }

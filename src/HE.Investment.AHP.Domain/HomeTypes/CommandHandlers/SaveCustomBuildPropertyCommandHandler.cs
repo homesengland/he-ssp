@@ -16,10 +16,10 @@ public class SaveCustomBuildPropertyCommandHandler : SaveHomeTypeSegmentCommandH
     {
     }
 
-    protected override IReadOnlyCollection<HomeTypeSegmentType> SegmentTypes => new[] { HomeTypeSegmentType.HomeInformation };
+    protected override IReadOnlyCollection<HomeTypeSegmentType> SegmentTypes => [HomeTypeSegmentType.HomeInformation];
 
-    protected override IEnumerable<Action<SaveCustomBuildPropertyCommand, IHomeTypeEntity>> SaveActions => new[]
-    {
+    protected override IEnumerable<Action<SaveCustomBuildPropertyCommand, IHomeTypeEntity>> SaveActions =>
+    [
         (SaveCustomBuildPropertyCommand request, IHomeTypeEntity homeType) => homeType.HomeInformation.ChangeCustomBuild(request.CustomBuild),
-    };
+    ];
 }

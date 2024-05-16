@@ -16,7 +16,7 @@ public class Files<TFileEntity>
     public Files(IEnumerable<UploadedFile>? uploadedFiles = null, IFilePolicy<int>? filesCountPolicy = null)
     {
         _filesCountPolicy = filesCountPolicy;
-        UploadedFiles = uploadedFiles?.ToList() ?? new List<UploadedFile>();
+        UploadedFiles = uploadedFiles?.ToList() ?? [];
     }
 
     public IList<UploadedFile> UploadedFiles { get; }
@@ -35,7 +35,7 @@ public class Files<TFileEntity>
 
     public void AddFileToUpload(TFileEntity file)
     {
-        AddFilesToUpload(new List<TFileEntity> { file });
+        AddFilesToUpload([file]);
     }
 
     public void MarkFileToRemove(FileId fileId)

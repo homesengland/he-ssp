@@ -26,7 +26,7 @@ public class ProjectData
 
     public ProjectGeographicFocus GeographicFocus => ProjectGeographicFocus.Regional;
 
-    public IList<RegionType> RegionTypes => new List<RegionType> { RegionType.NorthEast, RegionType.London };
+    public IList<RegionType> RegionTypes => [RegionType.NorthEast, RegionType.London];
 
     public int OrganisationHomesBuilt => _dataSeed + 2;
 

@@ -17,9 +17,9 @@ public class ConsortiumEntity : IConsortiumEntity
 {
     private readonly List<ConsortiumMember> _members;
 
-    private readonly List<ConsortiumMember> _joinRequests = new();
+    private readonly List<ConsortiumMember> _joinRequests = [];
 
-    private readonly List<OrganisationId> _removeRequests = new();
+    private readonly List<OrganisationId> _removeRequests = [];
 
     public ConsortiumEntity(ConsortiumId id, ConsortiumName name, ProgrammeSlim programme, ConsortiumMember leadPartner, IEnumerable<ConsortiumMember>? members)
     {

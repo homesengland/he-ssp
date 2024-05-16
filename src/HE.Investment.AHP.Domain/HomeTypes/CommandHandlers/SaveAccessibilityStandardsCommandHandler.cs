@@ -16,10 +16,10 @@ public class SaveAccessibilityStandardsCommandHandler : SaveHomeTypeSegmentComma
     {
     }
 
-    protected override IReadOnlyCollection<HomeTypeSegmentType> SegmentTypes => new[] { HomeTypeSegmentType.HomeInformation };
+    protected override IReadOnlyCollection<HomeTypeSegmentType> SegmentTypes => [HomeTypeSegmentType.HomeInformation];
 
-    protected override IEnumerable<Action<SaveAccessibilityStandardsCommand, IHomeTypeEntity>> SaveActions => new[]
-    {
+    protected override IEnumerable<Action<SaveAccessibilityStandardsCommand, IHomeTypeEntity>> SaveActions =>
+    [
         (SaveAccessibilityStandardsCommand request, IHomeTypeEntity homeType) => homeType.HomeInformation.ChangeAccessibilityStandards(request.AccessibilityStandards),
-    };
+    ];
 }

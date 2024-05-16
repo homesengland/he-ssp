@@ -27,6 +27,11 @@ public class SchemeWorkflow : IStateRouting<SchemeWorkflowState>
 
     public Task<bool> StateCanBeAccessed(SchemeWorkflowState nextState)
     {
+        if (nextState == SchemeWorkflowState.PartnerDetails && !_scheme.IsConsortiumMember)
+        {
+            return Task.FromResult(false);
+        }
+
         return Task.FromResult(true);
     }
 
@@ -46,6 +51,8 @@ public class SchemeWorkflow : IStateRouting<SchemeWorkflowState>
         {
             { RequiredFunding: var x } when x.IsNotProvided() => SchemeWorkflowState.Funding,
             { HousesToDeliver: var x } when x.IsNotProvided() => SchemeWorkflowState.Funding,
+            { IsConsortiumMember: true, DevelopingPartner: var dp, OwnerOfTheHomes: var ho, OwnerOfTheLand: var lo } when
+                dp.IsNotProvided() || ho.IsNotProvided() || lo.IsNotProvided() => SchemeWorkflowState.PartnerDetails,
             { AffordabilityEvidence: var x } when x.IsNotProvided() => SchemeWorkflowState.Affordability,
             { SalesRisk: var x } when x.IsNotProvided() => SchemeWorkflowState.SalesRisk,
             { MeetingLocalPriorities: var x } when x.IsNotProvided() => SchemeWorkflowState.HousingNeeds,

@@ -7,11 +7,11 @@ using HE.Investments.IntegrationTestsFramework.Auth;
 
 namespace HE.Investments.AHP.IntegrationTests.Crm;
 
-public class AhpApplicationCrmContext
+public class AhpCrmContext
 {
     private readonly ICrmService _service;
 
-    public AhpApplicationCrmContext(ICrmService service)
+    public AhpCrmContext(ICrmService service)
     {
         _service = service;
     }
@@ -33,5 +33,16 @@ public class AhpApplicationCrmContext
             request,
             r => r.ResponseName,
             CancellationToken.None);
+    }
+
+    public async Task<bool> HasConsortium(ILoginData loginData)
+    {
+        var request = new invln_getconsortiumsRequest { invln_organisationid = loginData.OrganisationId };
+        var response = await _service.ExecuteAsync<invln_getconsortiumsRequest, invln_getconsortiumsResponse>(
+            request,
+            r => r.invln_consortiums,
+            CancellationToken.None);
+
+        return !string.IsNullOrWhiteSpace(response);
     }
 }

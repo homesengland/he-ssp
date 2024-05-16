@@ -15,8 +15,7 @@ public class SchemeSummaryViewModelFactory : ISchemeSummaryViewModelFactory
 {
     public SectionSummaryViewModel GetSchemeAndCreateSummary(string title, Contract.Scheme.Scheme scheme, IUrlHelper urlHelper)
     {
-        return new SectionSummaryViewModel(title, new List<SectionSummaryItemModel>
-        {
+        IList<SectionSummaryItemModel> items = [
             new(
                 "Application name",
                 scheme.Application.Name.ToOneElementList(),
@@ -60,8 +59,9 @@ public class SchemeSummaryViewModelFactory : ISchemeSummaryViewModelFactory
                 scheme.StakeholderDiscussionsReport.ToOneElementList(),
                 ActionUrl: CreateSchemeActionUrl(urlHelper, scheme.Application.Id, nameof(SchemeController.StakeholderDiscussions)),
                 IsEditable: scheme.Application.IsEditable,
-                Files: ConvertFiles(urlHelper, scheme.Application.Id, scheme.LocalAuthoritySupportFile)),
-        });
+                Files: ConvertFiles(urlHelper, scheme.Application.Id, scheme.LocalAuthoritySupportFile))];
+
+        return new SectionSummaryViewModel(title, items);
     }
 
     private static string CreateSchemeActionUrl(IUrlHelper urlHelper, AhpApplicationId applicationId, string actionName, bool allowWcagDuplicate = false)

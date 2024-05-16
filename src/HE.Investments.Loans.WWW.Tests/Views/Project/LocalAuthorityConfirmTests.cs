@@ -14,7 +14,7 @@ public class LocalAuthorityConfirmTests : ViewTestBase
     public async Task ShouldDisplayView()
     {
         // given
-        var localAuthoritiesViewModel = new LocalAuthoritiesViewModel { Items = new List<LocalAuthorityViewModel>() };
+        var localAuthoritiesViewModel = new LocalAuthoritiesViewModel { Items = [] };
         var localAuthority = LocalAuthority.New(LocalAuthorityCode.From("10"), "Liverpool");
         var model = new ConfirmModel<LocalAuthoritiesViewModel> { ViewModel = localAuthoritiesViewModel };
         model.ViewModel.LocalAuthorityName = localAuthority.Name;

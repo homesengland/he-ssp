@@ -16,17 +16,16 @@ public class CustomBuildPropertyTests : HomeTypesTestBase
         var document = await RenderHomeTypePage(ViewPath, Model);
 
         // then
+        IList<string> options = [
+            "Yes",
+            "No",
+        ];
+
         document
             .HasPageHeader("My application - My homes", "Are the properties custom build?")
             .HasElementWithText("span", "What are custom build properties?")
             .HasElementWithText("a", "more information on custom build (opens in a new tab).")
-            .HasRadio(
-                "CustomBuild",
-                new[]
-                {
-                    "Yes",
-                    "No",
-                })
+            .HasRadio("CustomBuild", options)
             .HasSaveAndContinueButton();
     }
 }

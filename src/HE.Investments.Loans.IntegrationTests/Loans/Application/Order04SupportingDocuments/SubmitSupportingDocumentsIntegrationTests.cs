@@ -1,6 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Extensions;
+using HE.Investments.IntegrationTestsFramework.Data;
 using HE.Investments.Loans.IntegrationTests.IntegrationFramework;
 using HE.Investments.Loans.IntegrationTests.Loans.LoansHelpers.Extensions;
 using HE.Investments.Loans.IntegrationTests.Loans.LoansHelpers.Pages;
@@ -49,7 +50,13 @@ public class SubmitSupportingDocumentsIntegrationTests : IntegrationTest
         // given
         var supportingDocumentsPage = await GetCurrentPage(ApplicationPagesUrls.ApplicationDashboardSupportingDocuments(_applicationLoanId));
         var submitButton = supportingDocumentsPage.GetGdsSubmitButtonByTestId("submit-button");
-        var supportingDocuments = UserData.GenerateSupportingDocuments();
+        using FileEntry doc = new("document.pdf", "application/pdf", new MemoryStream([1, 2, 3]));
+        using FileEntry doc2 = new("another_documents.zip", "application/zip", new MemoryStream([1, 2, 3]));
+        IList<FileEntry> supportingDocuments =
+        [
+            doc,
+            doc2
+        ];
         var formFiles = new[] { ("SupportingDocumentsFile", supportingDocuments[0]), ("SupportingDocumentsFile", supportingDocuments[1]), };
 
         // when

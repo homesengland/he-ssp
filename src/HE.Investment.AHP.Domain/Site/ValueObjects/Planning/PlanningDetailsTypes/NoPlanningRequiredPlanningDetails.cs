@@ -11,8 +11,8 @@ public class NoPlanningRequiredPlanningDetails : PlanningDetails
 
     public override SitePlanningStatus? PlanningStatus => SitePlanningStatus.NoPlanningRequired;
 
-    protected override IReadOnlyCollection<string> ActiveFields => new[]
-    {
+    protected override IReadOnlyCollection<string> ActiveFields =>
+    [
         nameof(LandRegistryDetails),
-    };
+    ];
 }

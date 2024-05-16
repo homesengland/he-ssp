@@ -32,5 +32,5 @@ public class DraftConsortiumEntityBuilder : TestObjectBuilder<DraftConsortiumEnt
 
     public DraftConsortiumEntityBuilder WithMember(InvestmentsOrganisation organisation) => SetProperty(
         x => x.Members,
-        Item.Members.Concat(new[] { new DraftConsortiumMember(organisation.Id, organisation.Name) }).ToList());
+        Item.Members.Concat([new DraftConsortiumMember(organisation.Id, organisation.Name)]).ToList());
 }

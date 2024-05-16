@@ -88,7 +88,7 @@ public class PlanningDetailsTests : AhpViewTestBase
                 exist: expectedPlanningApprovalDateExist)
             .HasRadio(
                 nameof(SitePlanningDetails.IsGrantFundingForAllHomesCoveredByApplication),
-                new List<string> { "Yes", "No" },
+                ["Yes", "No"],
                 value: "True",
                 exist: isGrantFundingForAllHomesExist)
             .HasTextAreaInput(
@@ -98,7 +98,7 @@ public class PlanningDetailsTests : AhpViewTestBase
                 requiredFurtherStepsExist)
             .HasRadio(
                 nameof(SitePlanningDetails.IsLandRegistryTitleNumberRegistered),
-                new List<string> { "Yes", "No" },
+                ["Yes", "No"],
                 value: "False",
                 exist: isLandRegistryTitleNumberRegisteredExist)
             .HasSaveAndContinueButton()

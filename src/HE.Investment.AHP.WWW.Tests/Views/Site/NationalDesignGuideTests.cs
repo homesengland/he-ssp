@@ -1,4 +1,3 @@
-using HE.Investment.AHP.Contract.Site.Enums;
 using HE.Investment.AHP.WWW.Models.Site;
 using HE.Investment.AHP.WWW.Views.Site.Const;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
@@ -18,7 +17,7 @@ public class NationalDesignGuideTests : AhpViewTestBase
         {
             SiteId = "8",
             SiteName = siteName,
-            DesignPriorities = new List<NationalDesignGuidePriority>(),
+            DesignPriorities = [],
         };
         var document = await Render(_viewPath, site);
 
@@ -41,7 +40,7 @@ public class NationalDesignGuideTests : AhpViewTestBase
         {
             SiteId = "8",
             SiteName = siteName,
-            DesignPriorities = new List<NationalDesignGuidePriority>(),
+            DesignPriorities = [],
         };
         modelState.AddModelError(nameof(NationalDesignGuidePrioritiesModel.DesignPriorities), errorMessage);
 

@@ -41,7 +41,7 @@ public class ApplicationEntity : DomainEntity
         Tenure = tenure;
         LastModified = lastModified;
         LastSubmitted = lastSubmitted;
-        Sections = sections ?? new ApplicationSections(new List<ApplicationSection>());
+        Sections = sections ?? new ApplicationSections([]);
         _applicationState = applicationStateFactory.Create(status);
         RepresentationsAndWarranties = representationsAndWarranties ?? new RepresentationsAndWarranties(false);
     }
