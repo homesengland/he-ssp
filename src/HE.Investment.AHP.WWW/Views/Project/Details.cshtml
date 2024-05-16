@@ -52,7 +52,7 @@
         <gds-p>
             View a list of your competed and in progress sites.
         </gds-p>
-        <link-button action-url="@Url.Action("Index", "Site", new { projectId = Model.ProjectId })" button-type="@ButtonType.Secondary">
+        <link-button action-url="@Url.Action("Sites", "Project", new { projectId = Model.ProjectId })" button-type="@ButtonType.Secondary">
             View
         </link-button>
     </div>

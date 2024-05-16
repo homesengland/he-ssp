@@ -3,6 +3,7 @@ using HE.Investment.AHP.Contract.Project;
 using HE.Investment.AHP.Contract.Project.Queries;
 using HE.Investments.Account.Shared.Authorization.Attributes;
 using HE.Investments.Common.Contract;
+using HE.Investments.Common.Contract.Pagination;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -29,5 +30,11 @@ public class ProjectController : Controller
     public async Task<IActionResult> Applications(string projectId)
     {
         return View("ListOfApplications", await _mediator.Send(new GetProjectDetailsQuery(new AhpProjectId(projectId))));
+    }
+
+    [HttpGet("{projectId}/sites")]
+    public async Task<IActionResult> Sites(string projectId, [FromQuery] int? page)
+    {
+        return View("ListOfSites", await _mediator.Send(new GetProjectSitesQuery(new AhpProjectId(projectId), new PaginationRequest(page ?? 1, 10))));
     }
 }

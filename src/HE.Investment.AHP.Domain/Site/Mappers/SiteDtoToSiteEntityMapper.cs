@@ -50,7 +50,7 @@ public static class SiteDtoToSiteEntityMapper
             new SitePartners(MapOrganisation(dto.developerPartner), MapOrganisation(dto.ownerOfTheLandDuringDevelopment), MapOrganisation(dto.ownerOfTheHomesAfterCompletion)),
             SiteStatusMapper.ToDomain(dto.status),
             CreateSection106(dto.section106),
-            CreateLocalAuthority(dto.localAuthority?.id, dto.localAuthority?.name),
+            LocalAuthorityMapper.FromDto(dto.localAuthority),
             CreatePlanningDetails(dto.planningDetails),
             CreateNationalDesignGuidePriorities(dto.nationalDesignGuidePriorities),
             BuildingForHealthyLifeTypeMapper.ToDomain(dto.buildingForHealthyLife),
@@ -79,13 +79,6 @@ public static class SiteDtoToSiteEntityMapper
                 dto.areAdditionalHomes,
                 dto.areRestrictionsOrObligations,
                 dto.localAuthorityConfirmation);
-    }
-
-    private static LocalAuthority? CreateLocalAuthority(string? id, string? name)
-    {
-        return string.IsNullOrWhiteSpace(id) || string.IsNullOrWhiteSpace(name)
-            ? null
-            : new LocalAuthority(new LocalAuthorityCode(id), name);
     }
 
     private static PlanningDetails CreatePlanningDetails(PlanningDetailsDto dto)

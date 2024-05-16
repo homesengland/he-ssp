@@ -1,4 +1,6 @@
+using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investment.AHP.Domain.Application.Crm;
+using HE.Investment.AHP.Domain.Site.Crm;
 
 namespace HE.Investment.AHP.Domain.Project.Crm;
 
@@ -8,9 +10,12 @@ public class ProjectCrmContext : IProjectCrmContext
 
     private readonly IApplicationCrmContext _applicationCrmContext;
 
-    public ProjectCrmContext(IApplicationCrmContext applicationCrmContext)
+    private readonly ISiteCrmContext _siteCrmContext;
+
+    public ProjectCrmContext(IApplicationCrmContext applicationCrmContext, ISiteCrmContext siteCrmContext)
     {
         _applicationCrmContext = applicationCrmContext;
+        _siteCrmContext = siteCrmContext;
     }
 
     public async Task<ProjectDto> GetProject(
@@ -47,5 +52,21 @@ public class ProjectCrmContext : IProjectCrmContext
         CancellationToken cancellationToken)
     {
         return Task.FromResult(_mockedProjectDto);
+    }
+
+    public async Task<ProjectSitesDto> GetProjectSites(
+        string projectId,
+        string userId,
+        string organisationId,
+        string? consortiumId,
+        CancellationToken cancellationToken)
+    {
+        var sites = await _siteCrmContext.GetUserSites(userId, new PagingRequestDto { pageNumber = 1, pageSize = 100 }, cancellationToken);
+        return new ProjectSitesDto
+        {
+            ProjectId = _mockedProjectDto.ProjectId,
+            ProjectName = _mockedProjectDto.ProjectName,
+            Sites = sites.items,
+        };
     }
 }
