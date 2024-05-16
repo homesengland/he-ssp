@@ -41,13 +41,16 @@ namespace HE.CRM.AHP.Plugins.Handlers.AHPApplication
                     return;
                 ExecutionData.Target.invln_representationsandwarrantiesconfirmation = false;
             }
-            if (CurrentState.StatusCode.Value == (int)invln_scheme_StatusCode.ApplicationSubmitted)
+            if (CurrentState.StatusCode.Value == (int)invln_scheme_StatusCode.ApplicationSubmitted ||
+                CurrentState.StatusCode.Value == (int)invln_scheme_StatusCode.UnderReviewPendingAssessment)
             {
                 var hometypes = _homeTypeRepository.GetByAttribute(invln_HomeType.Fields.invln_application,
                     CurrentState.Id,
                     new string[] { invln_HomeType.Fields.invln_PercentageValueofNDSSStandard,
                         invln_HomeType.Fields.invln_prospectiverentasofmarketrent,
-                        invln_HomeType.Fields.invln_FirstTrancheSalesReceipt    });
+                        invln_HomeType.Fields.invln_FirstTrancheSalesReceipt,
+                        invln_HomeType.Fields.invln_SharedOwnershipInitialSale,
+                        invln_HomeType.Fields.invln_proposedrentasaofunsoldshare});
                 if (hometypes == null || hometypes.Count == 0)
                     return;
                 ClearDataBeforeCalculation();
