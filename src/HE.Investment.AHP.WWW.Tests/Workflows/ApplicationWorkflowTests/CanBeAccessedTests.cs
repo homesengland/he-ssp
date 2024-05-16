@@ -16,7 +16,7 @@ public class CanBeAccessedTests
         // given
         var workflow = ApplicationWorkflowFactory.BuildWorkflow(
             ApplicationWorkflowState.Start,
-            allowedOperations: new[] { AhpApplicationOperation.Modification, allowedOperation });
+            allowedOperations: [AhpApplicationOperation.Modification, allowedOperation]);
 
         // when
         var result = await workflow.StateCanBeAccessed(state);
@@ -35,7 +35,7 @@ public class CanBeAccessedTests
         // given
         var workflow = ApplicationWorkflowFactory.BuildWorkflow(
             ApplicationWorkflowState.Start,
-            allowedOperations: new[] { AhpApplicationOperation.Modification });
+            allowedOperations: [AhpApplicationOperation.Modification]);
 
         // when
         var result = await workflow.StateCanBeAccessed(state);
@@ -60,7 +60,7 @@ public class CanBeAccessedTests
         var workflow = ApplicationWorkflowFactory.BuildWorkflow(
             ApplicationWorkflowState.Start,
             sections: sections,
-            allowedOperations: new[] { AhpApplicationOperation.Submit });
+            allowedOperations: [AhpApplicationOperation.Submit]);
 
         // when
         var result = await workflow.StateCanBeAccessed(state);
@@ -85,7 +85,7 @@ public class CanBeAccessedTests
         var workflow = ApplicationWorkflowFactory.BuildWorkflow(
             ApplicationWorkflowState.Start,
             sections: sections,
-            allowedOperations: new[] { AhpApplicationOperation.Modification });
+            allowedOperations: [AhpApplicationOperation.Modification]);
 
         // when
         var result = await workflow.StateCanBeAccessed(state);
@@ -110,7 +110,7 @@ public class CanBeAccessedTests
         var workflow = ApplicationWorkflowFactory.BuildWorkflow(
             ApplicationWorkflowState.Start,
             sections: sections,
-            allowedOperations: new[] { AhpApplicationOperation.Submit });
+            allowedOperations: [AhpApplicationOperation.Submit]);
 
         // when
         var result = await workflow.StateCanBeAccessed(state);

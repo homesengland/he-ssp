@@ -20,12 +20,12 @@ public class ListTests : AhpViewTestBase
         // given
         var model = new DeliveryListModel(ApplicationName)
         {
-            AllowedOperations = new[] { AhpApplicationOperation.Modification },
+            AllowedOperations = [AhpApplicationOperation.Modification],
             UnusedHomeTypesCount = 0,
-            DeliveryPhases = new[]
-            {
+            DeliveryPhases =
+            [
                 new DeliveryPhaseItemModel("1", "Phase 1", 2, null, null, null),
-            },
+            ],
         };
 
         // when
@@ -45,12 +45,12 @@ public class ListTests : AhpViewTestBase
         // given
         var model = new DeliveryListModel(ApplicationName)
         {
-            AllowedOperations = new[] { AhpApplicationOperation.Modification },
+            AllowedOperations = [AhpApplicationOperation.Modification],
             UnusedHomeTypesCount = -1,
-            DeliveryPhases = new[]
-            {
+            DeliveryPhases =
+            [
                 new DeliveryPhaseItemModel("1", "Phase 1", 2, null, null, null),
-            },
+            ],
         };
 
         // when
@@ -70,9 +70,9 @@ public class ListTests : AhpViewTestBase
         // given
         var model = new DeliveryListModel(ApplicationName)
         {
-            AllowedOperations = new[] { AhpApplicationOperation.Modification },
+            AllowedOperations = [AhpApplicationOperation.Modification],
             UnusedHomeTypesCount = 2,
-            DeliveryPhases = new List<DeliveryPhaseItemModel>(),
+            DeliveryPhases = [],
         };
 
         // when
@@ -91,12 +91,12 @@ public class ListTests : AhpViewTestBase
         // given
         var model = new DeliveryListModel(ApplicationName)
         {
-            AllowedOperations = new[] { AhpApplicationOperation.Modification },
+            AllowedOperations = [AhpApplicationOperation.Modification],
             UnusedHomeTypesCount = 1,
-            DeliveryPhases = new[]
-            {
+            DeliveryPhases =
+            [
                 new DeliveryPhaseItemModel("1", "Phase 1", 1, null, null, null),
-            },
+            ],
         };
 
         // when

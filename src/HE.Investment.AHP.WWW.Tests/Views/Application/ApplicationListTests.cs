@@ -17,7 +17,7 @@ public class ApplicationListTests : AhpViewTestBase
     public async Task ShouldDisplayView_WhenThereIsNoApplications()
     {
         // given
-        var applicationListModel = new ApplicationsListModel("Organisation Name", PaginationResult(new List<ApplicationBasicDetails>()), false);
+        var applicationListModel = new ApplicationsListModel("Organisation Name", PaginationResult([]), false);
 
         // when
         var document = await Render(_viewPath, applicationListModel);
@@ -33,7 +33,7 @@ public class ApplicationListTests : AhpViewTestBase
         var application1 = new ApplicationBasicDetails(AhpApplicationId.From("1"), "Application 1", ApplicationStatus.ApplicationSubmitted, "Local Authority 1", 1564553, 12);
         var application2 = new ApplicationBasicDetails(AhpApplicationId.From("2"), "Application 2", ApplicationStatus.Draft, null, 266468, null);
 
-        var applicationListModel = new ApplicationsListModel("Organisation Name", PaginationResult(new List<ApplicationBasicDetails> { application1, application2, }), false);
+        var applicationListModel = new ApplicationsListModel("Organisation Name", PaginationResult([application1, application2,]), false);
 
         // when
         var document = await Render(_viewPath, applicationListModel);

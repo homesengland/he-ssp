@@ -173,13 +173,12 @@ public class ApplicationRepository : IApplicationRepository
             new ApplicationStateFactory(userAccount, previousStatus, application.dateSubmitted.IsProvided()),
             new ApplicationReferenceNumber(application.referenceNumber),
             new ApplicationSections(
-                new List<ApplicationSection>
-                {
+                [
                     new(SectionType.Scheme, SectionStatusMapper.ToDomain(application.schemeInformationSectionCompletionStatus, applicationStatus)),
                     new(SectionType.HomeTypes, SectionStatusMapper.ToDomain(application.homeTypesSectionCompletionStatus, applicationStatus)),
                     new(SectionType.FinancialDetails, SectionStatusMapper.ToDomain(application.financialDetailsSectionCompletionStatus, applicationStatus)),
                     new(SectionType.DeliveryPhases, SectionStatusMapper.ToDomain(application.deliveryPhasesSectionCompletionStatus, applicationStatus)),
-                }),
+                ]),
             new AuditEntry(
                 application.lastExternalModificationBy?.firstName,
                 application.lastExternalModificationBy?.lastName,

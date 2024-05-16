@@ -34,12 +34,12 @@ public class ListCardTests : ViewComponentTestBase<ListCardTests>
     public async Task ShouldDisplayListCard_WhenThereAreLessThan5Applications()
     {
         // given
-        var model = CreateTestModel(new[]
-        {
+        var model = CreateTestModel(
+        [
             new ListCardItemModel("Ap1", CreateStatusComponent(ApplicationStatus.New), "http://localhost/app/"),
             new ListCardItemModel("Ap2", CreateStatusComponent(ApplicationStatus.Draft), "http://localhost/app/"),
             new ListCardItemModel("Ap3", CreateStatusComponent(ApplicationStatus.ApplicationSubmitted), "http://localhost/app/"),
-        });
+        ]);
 
         // when
         var document = await Render(_viewPath, model);
@@ -57,7 +57,7 @@ public class ListCardTests : ViewComponentTestBase<ListCardTests>
     public async Task ShouldNotDisplayListCard_WhenThereAreNoApplications()
     {
         // given
-        var model = CreateTestModel(new List<ListCardItemModel>());
+        var model = CreateTestModel([]);
 
         // when
         var document = await Render(_viewPath, model);
@@ -79,8 +79,8 @@ public class ListCardTests : ViewComponentTestBase<ListCardTests>
 
     private static ListCardItemModel[] ApplicationBasicDetailsModels()
     {
-        return new[]
-        {
+        return
+        [
             new ListCardItemModel("Ap1", CreateStatusComponent(ApplicationStatus.New), "http://localhost/app/"),
             new ListCardItemModel("Ap2", CreateStatusComponent(ApplicationStatus.New), "http://localhost/app/"),
             new ListCardItemModel("Ap3", CreateStatusComponent(ApplicationStatus.ApplicationDeclined), "http://localhost/app/"),
@@ -88,7 +88,7 @@ public class ListCardTests : ViewComponentTestBase<ListCardTests>
             new ListCardItemModel("Ap5", CreateStatusComponent(ApplicationStatus.Draft), "http://localhost/app/"),
             new ListCardItemModel("Ap6", CreateStatusComponent(ApplicationStatus.New), "http://localhost/app/"),
             new ListCardItemModel("Ap7", CreateStatusComponent(ApplicationStatus.New), "http://localhost/app/"),
-        };
+        ];
     }
 
     private static DynamicComponentViewModel CreateStatusComponent(ApplicationStatus status)

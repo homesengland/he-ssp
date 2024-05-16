@@ -8,7 +8,7 @@ public class SiteProcurements : ValueObject, IQuestion
 {
     public SiteProcurements(IList<SiteProcurement>? procurements = null)
     {
-        Procurements = new ReadOnlyCollection<SiteProcurement>(procurements ?? new List<SiteProcurement>());
+        Procurements = new ReadOnlyCollection<SiteProcurement>(procurements ?? []);
     }
 
     public IReadOnlyCollection<SiteProcurement> Procurements { get; }

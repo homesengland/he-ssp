@@ -40,7 +40,7 @@ public class DetailsTests : AhpViewTestBase
             "My new Site",
             "PwC Organisation",
             "My local authority",
-            new(new[] { application }, 1, 10, 1));
+            new([application], 1, 10, 1));
 
         // when
         var document = await Render(_viewPath, model);

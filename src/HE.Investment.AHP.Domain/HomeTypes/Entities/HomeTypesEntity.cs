@@ -16,7 +16,7 @@ public class HomeTypesEntity
 
     private readonly List<HomeTypeEntity> _homeTypes;
 
-    private readonly List<HomeTypeEntity> _toRemove = new();
+    private readonly List<HomeTypeEntity> _toRemove = [];
 
     private readonly ModificationTracker _statusModificationTracker = new();
 
@@ -91,10 +91,10 @@ public class HomeTypesEntity
             if (_homeTypes.Count == 0)
             {
                 throw new DomainValidationException(
-                    new OperationResult().AddValidationErrors(new List<ErrorItem>
-                    {
+                    new OperationResult().AddValidationErrors(
+                    [
                         new("HomeTypes", "Home Types cannot be completed because at least one Home Type needs to be added"),
-                    }));
+                    ]));
             }
 
             var notCompletedHomeTypes = _homeTypes.Where(x => x.Status != SectionStatus.Completed).ToList();
@@ -137,13 +137,13 @@ public class HomeTypesEntity
     private string? ValidateNameUniqueness(string? name, HomeTypeEntity? entity = null)
     {
         if ((entity == null && _homeTypes.Exists(x => x.Name.Value == name))
-            || (entity != null && _homeTypes.Except(new[] { entity }).Any(x => x.Name.Value == name)))
+            || (entity != null && _homeTypes.Except([entity]).Any(x => x.Name.Value == name)))
         {
             throw new DomainValidationException(
-                new OperationResult().AddValidationErrors(new List<ErrorItem>
-                {
+                new OperationResult().AddValidationErrors(
+                [
                     new(nameof(HomeTypeName), "Enter a different name. Home types cannot have the same name"),
-                }));
+                ]));
         }
 
         return name;

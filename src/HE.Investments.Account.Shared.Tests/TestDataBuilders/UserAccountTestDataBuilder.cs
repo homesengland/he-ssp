@@ -14,7 +14,7 @@ public class UserAccountTestDataBuilder : TestObjectBuilder<UserAccount>
             UserGlobalId.From("user-1"),
             "test@email.com",
             new OrganisationBasicInfo(new OrganisationId("00000000-0000-0000-0000-000000000001"), "AccountOne", "1234", "London", false),
-            new List<UserRole>());
+            []);
     }
 
     public UserAccountTestDataBuilder WithUserGlobalId(string userGlobalId)

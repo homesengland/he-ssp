@@ -474,7 +474,7 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
     {
         if (isCompleted == null)
         {
-            return await DisplayChecksAnswersPage(cancellationToken, new List<string> { "Select whether you have completed this section" });
+            return await DisplayChecksAnswersPage(cancellationToken, ["Select whether you have completed this section"]);
         }
 
         var result = isCompleted == IsSectionCompleted.Yes

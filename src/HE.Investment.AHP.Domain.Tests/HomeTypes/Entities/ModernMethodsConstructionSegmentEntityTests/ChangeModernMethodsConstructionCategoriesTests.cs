@@ -23,7 +23,7 @@ public class ChangeModernMethodsConstructionCategoriesTests
 
         // when
         testCandidate.ChangeModernMethodsConstructionCategories(
-            new[] { ModernMethodsConstructionCategoriesType.Category4AdditiveManufacturingStructuringAndNonStructural });
+            [ModernMethodsConstructionCategoriesType.Category4AdditiveManufacturingStructuringAndNonStructural]);
 
         // then
         testCandidate.IsModified.Should().BeTrue();

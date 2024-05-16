@@ -10,5 +10,5 @@ public static class ApplicationTestData
         "appName",
         Tenure.AffordableRent,
         ApplicationStatus.Draft,
-        new[] { AhpApplicationOperation.Modification });
+        [AhpApplicationOperation.Modification]);
 }

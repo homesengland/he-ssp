@@ -39,7 +39,7 @@ public class GetLoanApplicationPrefillDataTests : TestBase<LoanPrefillDataReposi
     public async Task ShouldReturnBuildingNewHomesFundingPurpose_WhenActivityTypeIsDevelopingHomes()
     {
         // given
-        MockPrefillDataRepository(activityTypes: new[] { SupportActivityType.DevelopingHomes });
+        MockPrefillDataRepository(activityTypes: [SupportActivityType.DevelopingHomes]);
 
         // when
         var result = await TestCandidate.GetLoanApplicationPrefillData(ProjectId, UserAccount, CancellationToken.None);
@@ -53,7 +53,7 @@ public class GetLoanApplicationPrefillDataTests : TestBase<LoanPrefillDataReposi
     public async Task ShouldReturnNullFundingPurpose_WhenThereAreMultipleActivityTypes()
     {
         // given
-        MockPrefillDataRepository(activityTypes: new[] { SupportActivityType.DevelopingHomes, SupportActivityType.ProvidingInfrastructure });
+        MockPrefillDataRepository(activityTypes: [SupportActivityType.DevelopingHomes, SupportActivityType.ProvidingInfrastructure]);
 
         // when
         var result = await TestCandidate.GetLoanApplicationPrefillData(ProjectId, UserAccount, CancellationToken.None);
@@ -72,7 +72,7 @@ public class GetLoanApplicationPrefillDataTests : TestBase<LoanPrefillDataReposi
     public async Task ShouldReturnNullFundingPurpose_WhenActivityTypeIs(SupportActivityType activityType)
     {
         // given
-        MockPrefillDataRepository(activityTypes: new[] { activityType });
+        MockPrefillDataRepository(activityTypes: [activityType]);
 
         // when
         var result = await TestCandidate.GetLoanApplicationPrefillData(ProjectId, UserAccount, CancellationToken.None);
@@ -93,7 +93,7 @@ public class GetLoanApplicationPrefillDataTests : TestBase<LoanPrefillDataReposi
             .ReturnsAsync(new ProjectPrefillData(
                 ProjectId,
                 projectName ?? "Empty",
-                activityTypes?.ToList() ?? new List<SupportActivityType>(),
+                activityTypes?.ToList() ?? [],
                 siteId != null ? new FrontDoorSiteId(siteId) : null));
     }
 }

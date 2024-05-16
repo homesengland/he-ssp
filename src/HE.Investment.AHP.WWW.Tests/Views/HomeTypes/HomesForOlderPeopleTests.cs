@@ -1,4 +1,3 @@
-using System.Diagnostics.CodeAnalysis;
 using HE.Investment.AHP.WWW.Models.HomeTypes;
 
 namespace HE.Investment.AHP.WWW.Tests.Views.HomeTypes;
@@ -20,7 +19,7 @@ public class HomesForOlderPeopleTests : HomeTypesTestBase
             .HasPageHeader("My application - My homes", "What type of homes will you be providing for older people?")
             .HasRadio(
                 "HousingType",
-                new[] { "DesignatedSupportedHomes", "HomesWithAccessToSupport", "HomesWithSomeSpecialDesignFeatures", "HomesWithAllSpecialDesignFeatures", })
+                ["DesignatedSupportedHomes", "HomesWithAccessToSupport", "HomesWithSomeSpecialDesignFeatures", "HomesWithAllSpecialDesignFeatures",])
             .HasSaveAndContinueButton();
     }
 }

@@ -8,12 +8,12 @@ namespace HE.Investments.FrontDoor.Domain.Tests.Project.ValueObjects.ExpectedSta
 
 public class ExpectedStartDateCtorTests
 {
-    public static IEnumerable<object[]> ValidDates => new[]
-    {
-        new object[] { "1", "1900", new DateOnly(1900, 1, 1) },
-        new object[] { "03", "2024", new DateOnly(2024, 3, 1) },
-        new object[] { "12", "9999", new DateOnly(9999, 12, 1) },
-    };
+    public static IEnumerable<object[]> ValidDates =>
+    [
+        ["1", "1900", new DateOnly(1900, 1, 1)],
+        ["03", "2024", new DateOnly(2024, 3, 1)],
+        ["12", "9999", new DateOnly(9999, 12, 1)],
+    ];
 
     [Fact]
     public void ShouldThrowException_WhenYearAndMonthIsNotProvided()

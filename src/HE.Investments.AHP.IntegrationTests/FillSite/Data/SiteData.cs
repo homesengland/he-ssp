@@ -44,12 +44,12 @@ public class SiteData
 
     public YesNoType IsGrantFundingForAllHomesCoveredByTitleNumber => YesNoType.Yes;
 
-    public IReadOnlyCollection<NationalDesignGuidePriority> NationalDesignGuidePriorities => new[]
-    {
+    public IReadOnlyCollection<NationalDesignGuidePriority> NationalDesignGuidePriorities =>
+    [
         NationalDesignGuidePriority.Nature,
         NationalDesignGuidePriority.Movement,
         NationalDesignGuidePriority.Resources,
-    };
+    ];
 
     public BuildingForHealthyLifeType BuildingForHealthyLife => BuildingForHealthyLifeType.Yes;
 
@@ -91,18 +91,18 @@ public class SiteData
 
     public string InformationImpact { get; private set; }
 
-    public IReadOnlyCollection<ModernMethodsConstructionCategoriesType> MmcCategories { get; private set; } = new[]
-    {
+    public IReadOnlyCollection<ModernMethodsConstructionCategoriesType> MmcCategories { get; private set; } =
+    [
         ModernMethodsConstructionCategoriesType.Category1PreManufacturing3DPrimaryStructuralSystems,
         ModernMethodsConstructionCategoriesType.Category2PreManufacturing2DPrimaryStructuralSystems,
         ModernMethodsConstructionCategoriesType.Category6TraditionalBuildingProductLedSiteLabourReductionOrProductivityImprovements,
-    };
+    ];
 
     public ModernMethodsConstruction3DSubcategoriesType Mmc3DSubcategory { get; private set; } = ModernMethodsConstruction3DSubcategoriesType.StructuralChassisOnly;
 
     public ModernMethodsConstruction2DSubcategoriesType Mmc2DSubcategory { get; private set; } = ModernMethodsConstruction2DSubcategoriesType.FurtherEnhancedConsolidation;
 
-    public IReadOnlyCollection<SiteProcurement> Procurements => new[] { SiteProcurement.BulkPurchaseOfComponents, SiteProcurement.PartneringSupplyChain };
+    public IReadOnlyCollection<SiteProcurement> Procurements => [SiteProcurement.BulkPurchaseOfComponents, SiteProcurement.PartneringSupplyChain];
 
     public string GenerateSiteName()
     {
@@ -127,7 +127,7 @@ public class SiteData
     public SiteUsingModernMethodsOfConstruction ChangeMmcUsingAnswer()
     {
         UsingMmc = SiteUsingModernMethodsOfConstruction.OnlyForSomeHomes;
-        MmcCategories = new List<ModernMethodsConstructionCategoriesType>();
+        MmcCategories = [];
         Mmc2DSubcategory = ModernMethodsConstruction2DSubcategoriesType.Undefined;
         Mmc3DSubcategory = ModernMethodsConstruction3DSubcategoriesType.Undefined;
         return UsingMmc;

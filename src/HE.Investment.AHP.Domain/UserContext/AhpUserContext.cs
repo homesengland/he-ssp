@@ -20,7 +20,7 @@ internal sealed class AhpUserContext(
 {
     private readonly ProgrammeId _ahpProgrammeId = new(programmeSettings.AhpProgrammeId);
 
-    private readonly Dictionary<OrganisationId, CachedEntity<AhpConsortiumBasicInfo>> _consortia = new();
+    private readonly Dictionary<OrganisationId, CachedEntity<AhpConsortiumBasicInfo>> _consortia = [];
 
     public bool IsLogged => accountUserContext.IsLogged;
 

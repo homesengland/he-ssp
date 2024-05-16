@@ -16,11 +16,11 @@ public class SaveMoveOnAccommodationCommandHandler : SaveHomeTypeSegmentCommandH
     {
     }
 
-    protected override IReadOnlyCollection<HomeTypeSegmentType> SegmentTypes => new[] { HomeTypeSegmentType.HomeInformation };
+    protected override IReadOnlyCollection<HomeTypeSegmentType> SegmentTypes => [HomeTypeSegmentType.HomeInformation];
 
-    protected override IEnumerable<Action<SaveMoveOnAccommodationCommand, IHomeTypeEntity>> SaveActions => new[]
-    {
+    protected override IEnumerable<Action<SaveMoveOnAccommodationCommand, IHomeTypeEntity>> SaveActions =>
+    [
         (SaveMoveOnAccommodationCommand request, IHomeTypeEntity entity) =>
             entity.HomeInformation.ChangeIntendedAsMoveOnAccommodation(request.IntendedAsMoveOnAccommodation),
-    };
+    ];
 }

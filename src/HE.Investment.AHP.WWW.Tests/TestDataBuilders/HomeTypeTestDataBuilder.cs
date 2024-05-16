@@ -31,7 +31,7 @@ public class HomeTypeTestDataBuilder
 
     private SiteUsingModernMethodsOfConstruction _siteUsingMmc = SiteUsingModernMethodsOfConstruction.OnlyForSomeHomes;
 
-    private IList<ModernMethodsConstructionCategoriesType> _modernMethodsConstructionCategories = new List<ModernMethodsConstructionCategoriesType>();
+    private IList<ModernMethodsConstructionCategoriesType> _modernMethodsConstructionCategories = [];
 
     public HomeTypeTestDataBuilder WithTenure(Tenure tenure)
     {
@@ -113,7 +113,7 @@ public class HomeTypeTestDataBuilder
                 "appName",
                 _tenure,
                 ApplicationStatus.Draft,
-                new[] { AhpApplicationOperation.Modification }),
+                [AhpApplicationOperation.Modification]),
             HomeTypeId.From("home-type-id"),
             "My Home Type",
             _housingType,

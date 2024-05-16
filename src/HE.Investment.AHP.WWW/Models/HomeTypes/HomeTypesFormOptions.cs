@@ -21,7 +21,7 @@ public static class HomeTypesFormOptions
     public static IEnumerable<SelectListItem> HappiDesignPrinciplesExceptNone => SelectListHelper.FromEnum<HappiDesignPrincipleType>()
         .Where(x => x.Value != HappiDesignPrincipleType.NoneOfThese.ToString());
 
-    public static IEnumerable<SelectListItem> HappiDesignPrinciplesOnlyNone => new[] { SelectListHelper.FromEnum(HappiDesignPrincipleType.NoneOfThese) };
+    public static IEnumerable<SelectListItem> HappiDesignPrinciplesOnlyNone => [SelectListHelper.FromEnum(HappiDesignPrincipleType.NoneOfThese)];
 
     public static IEnumerable<SelectListItem> RevenueFundingTypes => SelectListHelper.FromEnum<RevenueFundingType>();
 
@@ -34,7 +34,7 @@ public static class HomeTypesFormOptions
     public static IEnumerable<SelectListItem> NationallyDescribedSpaceStandardsExceptNone => SelectListHelper.FromEnum<NationallyDescribedSpaceStandardType>()
         .Where(x => x.Value != NationallyDescribedSpaceStandardType.NoneOfThese.ToString());
 
-    public static IEnumerable<SelectListItem> NationallyDescribedSpaceStandardsOnlyNone => new[] { SelectListHelper.FromEnum(NationallyDescribedSpaceStandardType.NoneOfThese) };
+    public static IEnumerable<SelectListItem> NationallyDescribedSpaceStandardsOnlyNone => [SelectListHelper.FromEnum(NationallyDescribedSpaceStandardType.NoneOfThese)];
 
     public static IEnumerable<SelectListItem> ModernMethodsConstructionCategoriesTypes => SelectListHelper.FromEnum<ModernMethodsConstructionCategoriesType>();
 

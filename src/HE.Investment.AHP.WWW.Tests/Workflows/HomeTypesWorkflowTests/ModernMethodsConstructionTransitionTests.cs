@@ -154,7 +154,7 @@ public class ModernMethodsConstructionTransitionTests
         // given
         var homeType = new HomeTypeTestDataBuilder()
             .WithSiteUsingMmc(SiteUsingModernMethodsOfConstruction.OnlyForSomeHomes)
-            .WithModernMethodsConstructionCategories(new[] { ModernMethodsConstructionCategoriesType.Category1PreManufacturing3DPrimaryStructuralSystems })
+            .WithModernMethodsConstructionCategories([ModernMethodsConstructionCategoriesType.Category1PreManufacturing3DPrimaryStructuralSystems])
             .Build();
         var workflow = BuildWorkflow(homeType, HomeTypesWorkflowState.ModernMethodsConstructionCategories);
 
@@ -176,7 +176,7 @@ public class ModernMethodsConstructionTransitionTests
         // given
         var homeType = new HomeTypeTestDataBuilder()
             .WithSiteUsingMmc(SiteUsingModernMethodsOfConstruction.OnlyForSomeHomes)
-            .WithModernMethodsConstructionCategories(new[] { ModernMethodsConstructionCategoriesType.Category1PreManufacturing3DPrimaryStructuralSystems })
+            .WithModernMethodsConstructionCategories([ModernMethodsConstructionCategoriesType.Category1PreManufacturing3DPrimaryStructuralSystems])
             .Build();
         var workflow = BuildWorkflow(homeType, HomeTypesWorkflowState.CheckAnswers);
 
@@ -198,7 +198,7 @@ public class ModernMethodsConstructionTransitionTests
         // given
         var homeType = new HomeTypeTestDataBuilder()
             .WithSiteUsingMmc(SiteUsingModernMethodsOfConstruction.OnlyForSomeHomes)
-            .WithModernMethodsConstructionCategories(new[] { ModernMethodsConstructionCategoriesType.Category2PreManufacturing2DPrimaryStructuralSystems })
+            .WithModernMethodsConstructionCategories([ModernMethodsConstructionCategoriesType.Category2PreManufacturing2DPrimaryStructuralSystems])
             .Build();
         var workflow = BuildWorkflow(homeType, HomeTypesWorkflowState.ModernMethodsConstructionCategories);
 
@@ -220,7 +220,7 @@ public class ModernMethodsConstructionTransitionTests
         // given
         var homeType = new HomeTypeTestDataBuilder()
             .WithSiteUsingMmc(SiteUsingModernMethodsOfConstruction.OnlyForSomeHomes)
-            .WithModernMethodsConstructionCategories(new[] { ModernMethodsConstructionCategoriesType.Category2PreManufacturing2DPrimaryStructuralSystems })
+            .WithModernMethodsConstructionCategories([ModernMethodsConstructionCategoriesType.Category2PreManufacturing2DPrimaryStructuralSystems])
             .Build();
         var workflow = BuildWorkflow(homeType, HomeTypesWorkflowState.CheckAnswers);
 
@@ -242,12 +242,12 @@ public class ModernMethodsConstructionTransitionTests
         // given
         var homeType = new HomeTypeTestDataBuilder()
             .WithSiteUsingMmc(SiteUsingModernMethodsOfConstruction.OnlyForSomeHomes)
-            .WithModernMethodsConstructionCategories(new[]
-            {
+            .WithModernMethodsConstructionCategories(
+            [
                 ModernMethodsConstructionCategoriesType.Category4AdditiveManufacturingStructuringAndNonStructural,
                 ModernMethodsConstructionCategoriesType.Category6TraditionalBuildingProductLedSiteLabourReductionOrProductivityImprovements,
                 ModernMethodsConstructionCategoriesType.Category7SiteProcessLedLabourReductionOrProductivityOrAssuranceImprovements,
-            })
+            ])
             .Build();
         var workflow = BuildWorkflow(homeType, HomeTypesWorkflowState.ModernMethodsConstructionCategories);
 
@@ -264,12 +264,12 @@ public class ModernMethodsConstructionTransitionTests
         // given
         var homeType = new HomeTypeTestDataBuilder()
             .WithSiteUsingMmc(SiteUsingModernMethodsOfConstruction.OnlyForSomeHomes)
-            .WithModernMethodsConstructionCategories(new[]
-            {
+            .WithModernMethodsConstructionCategories(
+            [
                 ModernMethodsConstructionCategoriesType.Category4AdditiveManufacturingStructuringAndNonStructural,
                 ModernMethodsConstructionCategoriesType.Category6TraditionalBuildingProductLedSiteLabourReductionOrProductivityImprovements,
                 ModernMethodsConstructionCategoriesType.Category7SiteProcessLedLabourReductionOrProductivityOrAssuranceImprovements,
-            })
+            ])
             .Build();
         var workflow = BuildWorkflow(homeType, HomeTypesWorkflowState.CheckAnswers);
 
