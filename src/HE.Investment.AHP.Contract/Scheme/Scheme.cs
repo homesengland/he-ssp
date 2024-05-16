@@ -1,4 +1,5 @@
 using HE.Investment.AHP.Contract.Application;
+using HE.Investments.AHP.Consortium.Contract;
 using HE.Investments.Common.Contract;
 using UploadedFile = HE.Investment.AHP.Contract.Common.UploadedFile;
 
@@ -9,9 +10,14 @@ public record Scheme(
     SectionStatus Status,
     decimal? RequiredFunding,
     int? HousesToDeliver,
+    OrganisationDetails? DevelopingPartner,
+    OrganisationDetails? OwnerOfTheLand,
+    OrganisationDetails? OwnerOfTheHomes,
+    bool? ArePartnersConfirmed,
     string? AffordabilityEvidence,
     string? SalesRisk,
     string? MeetingLocalPriorities,
     string? MeetingLocalHousingNeed,
     string? StakeholderDiscussionsReport,
-    UploadedFile? LocalAuthoritySupportFile);
+    UploadedFile? LocalAuthoritySupportFile,
+    bool IsConsortiumMember);
