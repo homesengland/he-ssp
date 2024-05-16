@@ -59,7 +59,7 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
     public async Task<IActionResult> Start()
     {
         var userAccount = await _ahpUserContext.GetSelectedAccount();
-        if (userAccount.Consortium.HasNoConsortium || await _ahpAccessContext.CanManageConsortium())
+        if (userAccount.Consortium.HasNoConsortium || await _ahpAccessContext.IsConsortiumLeadPartner())
         {
             return View("Splash");
         }
