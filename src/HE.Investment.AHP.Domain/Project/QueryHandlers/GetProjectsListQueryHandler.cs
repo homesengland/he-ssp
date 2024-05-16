@@ -35,9 +35,7 @@ public class GetProjectsListQueryHandler : IRequestHandler<GetProjectsListQuery,
             .Select(p => new ProjectModel(
                 p.Id,
                 p.Name.Value,
-                p.Sites
-                    .Select(s => new SiteProjectModel(s.Id, s.Name.Value, s.Status))
-                    .ToList()))
+                p.Sites?.Select(s => new SiteProjectModel(s.Id, s.Name.Value, s.Status)).ToList()))
             .ToList();
 
         return new ProjectsListModel(

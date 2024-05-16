@@ -36,16 +36,19 @@ public class ProjectRepository : IProjectRepository
             userAccount.Consortium.ConsortiumId.ToString(),
             cancellationToken);
 
+        var applications = project.Applications?
+            .Select(x => new AhpProjectApplication(
+                AhpApplicationId.From(x.ApplicationId),
+                new ApplicationName(x.ApplicationName),
+                ApplicationStatusMapper.MapToPortalStatus(x.ApplicationStatus),
+                new SchemeFunding((int?)x.RequiredFunding, x.NoOfHomes),
+                ApplicationTenureMapper.ToDomain(x.Tenure)!.Value))
+            .ToList();
+
         return new AhpProjectApplications(
             id,
             new AhpProjectName(project.ProjectName),
-            project.Applications.Select(x => new AhpProjectApplication(
-                    AhpApplicationId.From(x.ApplicationId),
-                    new ApplicationName(x.ApplicationName),
-                    ApplicationStatusMapper.MapToPortalStatus(x.ApplicationStatus),
-                    new SchemeFunding((int?)x.RequiredFunding, x.NoOfHomes),
-                    ApplicationTenureMapper.ToDomain(x.Tenure)!.Value))
-                .ToList());
+            applications);
     }
 
     public async Task<AhpProjectSites> GetProjectSites(AhpProjectId id, AhpUserAccount userAccount, CancellationToken cancellationToken)
@@ -90,14 +93,17 @@ public class ProjectRepository : IProjectRepository
 
     private AhpProjectSites CreateAhpProjectEntity(ProjectDto projectDto)
     {
+        var sites = projectDto.Sites?
+            .Select(s => new AhpProjectSite(
+                SiteId.From(s.id),
+                new SiteName(s.name),
+                new SiteStatusMapper().ToDomain(s.status)!.Value,
+                null))
+            .ToList();
+
         return new AhpProjectSites(
             AhpProjectId.From(projectDto.ProjectId),
             new AhpProjectName(projectDto.ProjectName),
-            projectDto.Sites.Select(s => new AhpProjectSite(
-                    SiteId.From(s.id),
-                    new SiteName(s.name),
-                    new SiteStatusMapper().ToDomain(s.status)!.Value,
-                    null))
-                .ToList());
+            sites);
     }
 }

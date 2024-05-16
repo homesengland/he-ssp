@@ -17,7 +17,7 @@ public class AhpProjectSites : ValueObject
 
     public AhpProjectName Name { get; }
 
-    public IReadOnlyList<AhpProjectSite> Sites { get; }
+    public IReadOnlyList<AhpProjectSite>? Sites { get; }
 
     protected override IEnumerable<object?> GetAtomicValues()
     {

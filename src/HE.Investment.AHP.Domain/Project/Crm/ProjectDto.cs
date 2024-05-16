@@ -8,7 +8,7 @@ public class ProjectDto
 
     public string ProjectName { get; set; }
 
-    public IList<ProjectApplicationDto> Applications { get; set; }
+    public IList<ProjectApplicationDto>? Applications { get; set; }
 
-    public IList<SiteDto> Sites { get; set; }
+    public IList<SiteDto>? Sites { get; set; }
 }
