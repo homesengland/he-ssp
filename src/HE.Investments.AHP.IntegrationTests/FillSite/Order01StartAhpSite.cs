@@ -26,6 +26,14 @@ public class Order01StartAhpSite : AhpIntegrationTest
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
+    [Order(0)]
+    public async Task Order00_CheckPrerequisites()
+    {
+        var hasConsortium = await AhpCrmContext.HasConsortium(LoginData);
+        hasConsortium.Should().BeFalse("AHP Site tests requires Organisation which does not belong to consortium");
+    }
+
+    [Fact(Skip = AhpConfig.SkipTest)]
     [Order(1)]
     public async Task Order01_ShouldOpenStartSite()
     {
@@ -480,10 +488,10 @@ public class Order01StartAhpSite : AhpIntegrationTest
         summary.Should().ContainKey("National Design Guide priorities").WithOnlyValues(SiteData.NationalDesignGuidePriorities);
         summary.Should().ContainKey("Building for a Healthy Life criteria").WithValue(SiteData.BuildingForHealthyLife.ToString());
         summary.Should().ContainKey("Number of green lights").WithValue(SiteData.NumberOfGreenLights);
-        summary.Should().ContainKey("Developing partner").WithValue("TODO");
-        summary.Should().ContainKey("Owner of the land").WithValue("TODO");
-        summary.Should().ContainKey("Owner of the homes").WithValue("TODO");
-        summary.Should().ContainKey("URB - Owner of the homes").WithValue("TODO");
+        summary.Should().NotContainKey("Developing partner");
+        summary.Should().NotContainKey("Owner of the land");
+        summary.Should().NotContainKey("Owner of the homes");
+        summary.Should().NotContainKey("URB - Owner of the homes");
         summary.Should().ContainKey("Land status").WithValue(SiteData.LandAcquisitionStatus);
         summary.Should().ContainKey("Tendering progress for main works contract").WithValue(SiteData.TenderingStatus);
         summary.Should().ContainKey("Name of contractor").WithValue(SiteData.ContractorName);
