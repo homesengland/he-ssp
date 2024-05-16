@@ -30,7 +30,7 @@ public class AhpAccessContext : IAhpAccessContext
     public async Task<bool> IsConsortiumLeadPartner()
     {
         var account = await _ahpUserContext.GetSelectedAccount();
-        return account is { CanManageConsortium: true, Consortium.IsLeadPartner: true };
+        return account is { Consortium.IsLeadPartner: true };
     }
 
     public async Task<bool> CanEditApplication()
