@@ -107,6 +107,8 @@ public static class ValidationErrorMessage
 
     public static string MustProvideTheLowerNumber<TNumber>(string fieldName, TNumber maxValue) => string.Format(CultureInfo.InvariantCulture, "The {0} must be {1} or fewer", fieldName, maxValue);
 
+    public static string MustProvideNumberBetween<TNumber>(string fieldName, TNumber minValue, TNumber maxValue) => string.Format(CultureInfo.InvariantCulture, "The {0} must be must be a number between {1} and {2}", fieldName, minValue, maxValue);
+
     public static string MustBeYourWholeNumber(string fieldName, string? example) => $"Your {fieldName} must be a whole number{Example(example)}";
 
     public static string MustBeTheWholeNumber(string displayName, string? example) => $"The {displayName} must be a whole number{Example(example)}";
