@@ -1,31 +1,35 @@
+extern alias Org;
+
 using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Domain.Site.ValueObjects;
 using HE.Investments.Common.Domain;
+using Org::HE.Investments.Organisation.LocalAuthorities.ValueObjects;
 
 namespace HE.Investment.AHP.Domain.Project.ValueObjects;
 
 public class AhpProjectSite : ValueObject
 {
-    public AhpProjectSite(
-        SiteId id,
-        SiteName name,
-        SiteStatus siteStatus)
+    public AhpProjectSite(SiteId id, SiteName name, SiteStatus status, LocalAuthority? localAuthority)
     {
         Id = id;
         Name = name;
-        SiteStatus = siteStatus;
+        Status = status;
+        LocalAuthority = localAuthority;
     }
 
     public SiteId Id { get; }
 
     public SiteName Name { get; }
 
-    public SiteStatus SiteStatus { get; }
+    public SiteStatus Status { get; }
+
+    public LocalAuthority? LocalAuthority { get; }
 
     protected override IEnumerable<object?> GetAtomicValues()
     {
         yield return Id;
         yield return Name;
-        yield return SiteStatus;
+        yield return Status;
+        yield return LocalAuthority;
     }
 }

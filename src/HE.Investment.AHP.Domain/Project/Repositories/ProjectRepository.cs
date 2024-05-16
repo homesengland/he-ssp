@@ -5,7 +5,6 @@ using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Domain.Application.Repositories;
 using HE.Investment.AHP.Domain.Application.ValueObjects;
 using HE.Investment.AHP.Domain.Project.Crm;
-using HE.Investment.AHP.Domain.Project.Entities;
 using HE.Investment.AHP.Domain.Project.ValueObjects;
 using HE.Investment.AHP.Domain.Scheme.ValueObjects;
 using HE.Investment.AHP.Domain.Site.Mappers;
@@ -28,7 +27,7 @@ public class ProjectRepository : IProjectRepository
         _projectCrmContext = projectCrmContext;
     }
 
-    public async Task<AhpProjectEntity> GetProject(AhpProjectId id, AhpUserAccount userAccount, CancellationToken cancellationToken)
+    public async Task<AhpProjectApplications> GetProject(AhpProjectId id, AhpUserAccount userAccount, CancellationToken cancellationToken)
     {
         var project = await _projectCrmContext.GetProject(
             id.ToString(),
@@ -37,7 +36,7 @@ public class ProjectRepository : IProjectRepository
             userAccount.Consortium.ConsortiumId.ToString(),
             cancellationToken);
 
-        return new AhpProjectEntity(
+        return new AhpProjectApplications(
             id,
             new AhpProjectName(project.ProjectName),
             project.Applications.Select(x => new AhpProjectApplication(
@@ -49,7 +48,7 @@ public class ProjectRepository : IProjectRepository
                 .ToList());
     }
 
-    public async Task<AhpProjectSitesEntity> GetProjectSites(AhpProjectId id, AhpUserAccount userAccount, CancellationToken cancellationToken)
+    public async Task<AhpProjectSites> GetProjectSites(AhpProjectId id, AhpUserAccount userAccount, CancellationToken cancellationToken)
     {
         var projectSites = await _projectCrmContext.GetProjectSites(
             id.ToString(),
@@ -58,10 +57,10 @@ public class ProjectRepository : IProjectRepository
             userAccount.Consortium.ConsortiumId.ToString(),
             cancellationToken);
 
-        return new AhpProjectSitesEntity(
+        return new AhpProjectSites(
             id,
             new AhpProjectName(projectSites.ProjectName),
-            projectSites.Sites.Select(x => new ProjectSite(
+            projectSites.Sites.Select(x => new AhpProjectSite(
                     SiteId.From(x.id),
                     new SiteName(x.name),
                     _siteStatusMapper.ToDomain(x.status)!.Value,
@@ -69,7 +68,7 @@ public class ProjectRepository : IProjectRepository
                 .ToList());
     }
 
-    public async Task<PaginationResult<AhpProjectEntity>> GetProjects(
+    public async Task<PaginationResult<AhpProjectSites>> GetProjects(
         PaginationRequest paginationRequest,
         AhpUserAccount userAccount,
         CancellationToken cancellationToken)
@@ -82,23 +81,23 @@ public class ProjectRepository : IProjectRepository
             paging,
             cancellationToken);
 
-        return new PaginationResult<AhpProjectEntity>(
+        return new PaginationResult<AhpProjectSites>(
             projects.items.Select(CreateAhpProjectEntity).ToList(),
             paginationRequest.Page,
             paginationRequest.ItemsPerPage,
             projects.totalItemsCount);
     }
 
-    private AhpProjectEntity CreateAhpProjectEntity(ProjectDto projectDto)
+    private AhpProjectSites CreateAhpProjectEntity(ProjectDto projectDto)
     {
-        return new AhpProjectEntity(
+        return new AhpProjectSites(
             AhpProjectId.From(projectDto.ProjectId),
             new AhpProjectName(projectDto.ProjectName),
-            null,
             projectDto.Sites.Select(s => new AhpProjectSite(
                     SiteId.From(s.id),
                     new SiteName(s.name),
-                    new SiteStatusMapper().ToDomain(s.status)!.Value))
+                    new SiteStatusMapper().ToDomain(s.status)!.Value,
+                    null))
                 .ToList());
     }
 }
