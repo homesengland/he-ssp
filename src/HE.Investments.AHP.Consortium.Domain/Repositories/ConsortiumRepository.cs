@@ -34,7 +34,7 @@ public class ConsortiumRepository : IConsortiumRepository
             return new ConsortiumEntity(
                 consortiumId,
                 new ConsortiumName(consortiumDto.name),
-                new ProgrammeSlim(ProgrammeId.From(consortiumDto.programmeId), "AHP CME"),
+                new ProgrammeSlim(ProgrammeId.From(consortiumDto.programmeId), consortiumDto.programmeName),
                 new ConsortiumMember(OrganisationId.From(consortiumDto.leadPartnerId), consortiumDto.leadPartnerName, ConsortiumMemberStatus.Active),
                 members);
         }

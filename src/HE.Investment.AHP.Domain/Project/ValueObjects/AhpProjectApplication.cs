@@ -9,11 +9,11 @@ namespace HE.Investment.AHP.Domain.Project.ValueObjects;
 public class AhpProjectApplication : ValueObject
 {
     public AhpProjectApplication(
-                    AhpApplicationId id,
-                    ApplicationName name,
-                    ApplicationStatus applicationStatus,
-                    SchemeFunding funding,
-                    Tenure tenure)
+        AhpApplicationId id,
+        ApplicationName name,
+        ApplicationStatus applicationStatus,
+        SchemeFunding funding,
+        Tenure tenure)
     {
         Id = id;
         Name = name;
