@@ -41,7 +41,7 @@ public class RegionsCtorTests
     public void ShouldThrowDomainValidationException_WhenProvidedValueIsEmpty()
     {
         // given && when
-        var result = () => new Regions(new List<RegionType>());
+        var result = () => new Regions([]);
 
         // then
         result.Should().Throw<DomainValidationException>().WithMessage(ValidationErrorMessage.MustBeSelected("region your project will be located in"));

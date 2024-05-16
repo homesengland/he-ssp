@@ -16,11 +16,11 @@ public class SaveBuildingInformationCommandHandler : SaveHomeTypeSegmentCommandH
     {
     }
 
-    protected override IReadOnlyCollection<HomeTypeSegmentType> SegmentTypes => new[] { HomeTypeSegmentType.HomeInformation };
+    protected override IReadOnlyCollection<HomeTypeSegmentType> SegmentTypes => [HomeTypeSegmentType.HomeInformation];
 
-    protected override IEnumerable<Action<SaveBuildingInformationCommand, IHomeTypeEntity>> SaveActions => new[]
-    {
+    protected override IEnumerable<Action<SaveBuildingInformationCommand, IHomeTypeEntity>> SaveActions =>
+    [
         (SaveBuildingInformationCommand request, IHomeTypeEntity entity) =>
             entity.HomeInformation.ChangeBuildingType(request.BuildingType),
-    };
+    ];
 }

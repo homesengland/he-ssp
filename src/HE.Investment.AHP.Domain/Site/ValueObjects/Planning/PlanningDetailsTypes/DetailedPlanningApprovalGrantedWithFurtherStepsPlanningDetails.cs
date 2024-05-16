@@ -19,11 +19,11 @@ public class DetailedPlanningApprovalGrantedWithFurtherStepsPlanningDetails : Pl
 
     public override SitePlanningStatus? PlanningStatus => SitePlanningStatus.DetailedPlanningApprovalGrantedWithFurtherSteps;
 
-    protected override IReadOnlyCollection<string> ActiveFields => new[]
-    {
+    protected override IReadOnlyCollection<string> ActiveFields =>
+    [
         nameof(ReferenceNumber),
         nameof(DetailedPlanningApprovalDate),
         nameof(RequiredFurtherSteps),
         nameof(IsGrantFundingForAllHomesCoveredByApplication),
-    };
+    ];
 }

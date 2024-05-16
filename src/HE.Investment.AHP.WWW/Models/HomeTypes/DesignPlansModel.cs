@@ -7,7 +7,7 @@ public class DesignPlansModel : HomeTypeBasicModel
     public DesignPlansModel(string applicationName, string homeTypeName)
         : base(applicationName, homeTypeName)
     {
-        UploadedFiles = new List<FileModel>();
+        UploadedFiles = [];
     }
 
     public DesignPlansModel()

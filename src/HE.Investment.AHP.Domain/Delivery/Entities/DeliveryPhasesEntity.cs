@@ -19,7 +19,7 @@ public class DeliveryPhasesEntity : IHomeTypeConsumer
 {
     private readonly List<DeliveryPhaseEntity> _deliveryPhases;
 
-    private readonly List<DeliveryPhaseEntity> _toRemove = new();
+    private readonly List<DeliveryPhaseEntity> _toRemove = [];
 
     private readonly List<HomesToDeliver> _homesToDeliver;
 
@@ -188,7 +188,7 @@ public class DeliveryPhasesEntity : IHomeTypeConsumer
     private DeliveryPhaseName ValidateNameUniqueness(DeliveryPhaseName name, DeliveryPhaseEntity? entity = null)
     {
         if ((entity == null && _deliveryPhases.Exists(x => x.Name == name))
-            || (entity != null && _deliveryPhases.Except(new[] { entity }).Any(x => x.Name == name)))
+            || (entity != null && _deliveryPhases.Except([entity]).Any(x => x.Name == name)))
         {
             OperationResult.ThrowValidationError(nameof(DeliveryPhaseName), "Provided delivery phase name is already in use. Delivery phase name should be unique.");
         }

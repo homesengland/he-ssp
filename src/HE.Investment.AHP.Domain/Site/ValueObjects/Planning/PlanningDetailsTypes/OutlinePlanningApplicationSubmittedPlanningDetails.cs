@@ -21,12 +21,12 @@ public class OutlinePlanningApplicationSubmittedPlanningDetails : PlanningDetail
 
     public override SitePlanningStatus? PlanningStatus => SitePlanningStatus.OutlinePlanningApplicationSubmitted;
 
-    protected override IReadOnlyCollection<string> ActiveFields => new[]
-    {
+    protected override IReadOnlyCollection<string> ActiveFields =>
+    [
         nameof(ReferenceNumber),
         nameof(RequiredFurtherSteps),
         nameof(ExpectedPlanningApprovalDate),
         nameof(IsGrantFundingForAllHomesCoveredByApplication),
         nameof(PlanningSubmissionDate),
-    };
+    ];
 }

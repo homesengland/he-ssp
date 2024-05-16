@@ -21,7 +21,7 @@ public class ProgrammeRepositoryTestBuilder
     {
         _mock.Setup(x => x
                     .GetProgrammes(CancellationToken.None))
-                .ReturnsAsync(new List<ProgrammeDetails> { ProgrammeTestData.ImportantProgramme });
+                .ReturnsAsync([ProgrammeTestData.ImportantProgramme]);
 
         return this;
     }

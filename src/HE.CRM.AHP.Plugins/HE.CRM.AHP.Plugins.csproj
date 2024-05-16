@@ -114,6 +114,7 @@
     <Compile Include="Handlers\CustomApi\Consortium\SetConsortiumHandler.cs" />
     <Compile Include="Handlers\CustomApi\DeleteDeliveryPhaseHandler.cs" />
     <Compile Include="Handlers\CustomApi\DeleteHomeTypeHandler.cs" />
+    <Compile Include="Handlers\CustomApi\FrontDoor\SetAhpProjectHandler.cs" />
     <Compile Include="Handlers\CustomApi\GetAbsoluteAhpApplicationFileLocationHandler.cs" />
     <Compile Include="Handlers\CustomApi\GetAhpApplicationFileLocationHandler.cs" />
     <Compile Include="Handlers\CustomApi\GetApplicationHandler.cs" />
@@ -220,6 +221,7 @@
     <Compile Include="Plugins\CustomApi\Consortium\SetConsortiumPlugin.cs" />
     <Compile Include="Plugins\CustomApi\DeleteDeliveryPhasePlugin.cs" />
     <Compile Include="Plugins\CustomApi\DeleteHomeTypePlugin.cs" />
+    <Compile Include="Plugins\CustomApi\FrontDoor\SetAhpProjectPlugin.cs" />
     <Compile Include="Plugins\CustomApi\GetMultipleDeliveryPhasePlugin.cs" />
     <Compile Include="Plugins\CustomApi\GetMultipleProgrammePlugin.cs" />
     <Compile Include="Plugins\CustomApi\GetSingleDeliveryPhasePlugin.cs" />
@@ -251,6 +253,8 @@
     <Compile Include="Plugins\Programme\PreValidation.cs" />
     <Compile Include="Plugins\Site\SitePreUpdate.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\AhpProject\AhpProjectService.cs" />
+    <Compile Include="Services\AhpProject\IAhpProjectService.cs" />
     <Compile Include="Services\AhpStatusChange\AhpStatusChangeService.cs" />
     <Compile Include="Services\AhpStatusChange\IAhpStatusChangeService.cs" />
     <Compile Include="Services\Application\ApplicationService.cs" />

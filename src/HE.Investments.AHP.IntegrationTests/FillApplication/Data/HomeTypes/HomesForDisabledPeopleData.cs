@@ -101,7 +101,7 @@ public class HomesForDisabledPeopleData : HomeTypeDataBase<HomesForDisabledPeopl
 
     public HomesForDisabledPeopleData GenerateDesignPlans()
     {
-        DesignFile = new FileEntry("design_plan.pdf", "application/pdf", new MemoryStream(new byte[] { 1, 2, 3 }));
+        DesignFile = new FileEntry("design_plan.pdf", "application/pdf", new MemoryStream([1, 2, 3]));
         DesignPlanInformation = nameof(DesignPlanInformation).WithTimestampPrefix();
         return this;
     }

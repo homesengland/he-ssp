@@ -86,8 +86,8 @@ public class HomeTypeEntity : DomainEntity, IHomeTypeEntity
 
     public SectionStatus Status { get; private set; }
 
-    private IEnumerable<IHomeTypeSegmentEntity> Segments => new IHomeTypeSegmentEntity[]
-    {
+    private IEnumerable<IHomeTypeSegmentEntity> Segments =>
+    [
         HomeInformation,
         DisabledPeopleHomeTypeDetails,
         OlderPeopleHomeTypeDetails,
@@ -95,7 +95,7 @@ public class HomeTypeEntity : DomainEntity, IHomeTypeEntity
         SupportedHousingInformation,
         TenureDetails,
         ModernMethodsConstruction,
-    };
+    ];
 
     public void CompleteHomeType(IsSectionCompleted isSectionCompleted)
     {

@@ -18,7 +18,7 @@ public class AhpProjectEntity
 
     public AhpProjectName Name { get; }
 
-    public IList<AhpProjectSite> Sites { get; } = new List<AhpProjectSite>();
+    public IList<AhpProjectSite> Sites { get; } = [];
 
-    public IList<AhpProjectApplication> Applications { get; } = new List<AhpProjectApplication>();
+    public IList<AhpProjectApplication> Applications { get; } = [];
 }

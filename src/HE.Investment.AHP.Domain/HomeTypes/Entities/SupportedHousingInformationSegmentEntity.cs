@@ -28,7 +28,7 @@ public class SupportedHousingInformationSegmentEntity : DomainEntity, IHomeTypeS
         LocalCommissioningBodiesConsulted = localCommissioningBodiesConsulted;
         ShortStayAccommodation = shortStayAccommodation;
         RevenueFundingType = revenueFundingType;
-        _revenueFundingSources = revenueFundingSources?.ToList() ?? new List<RevenueFundingSourceType>();
+        _revenueFundingSources = revenueFundingSources?.ToList() ?? [];
         MoveOnArrangements = moveOnArrangements;
         TypologyLocationAndDesign = typologyLocationAndDesign;
         ExitPlan = exitPlan;

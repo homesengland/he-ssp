@@ -17,14 +17,14 @@ internal sealed class CalculateRentToBuyQueryHandler : CalculateQueryHandlerBase
     {
     }
 
-    protected override IEnumerable<Action<CalculateRentToBuyQuery, IHomeTypeEntity>> CalculateActions => new[]
-    {
+    protected override IEnumerable<Action<CalculateRentToBuyQuery, IHomeTypeEntity>> CalculateActions =>
+    [
         (CalculateRentToBuyQuery request, IHomeTypeEntity homeType) => homeType.TenureDetails.ChangeMarketValue(request.MarketValue, true),
         (request, homeType) => homeType.TenureDetails.ChangeMarketRentPerWeek(request.MarketRentPerWeek, true),
         (request, homeType) => homeType.TenureDetails.ChangeRentPerWeek(request.RentPerWeek, isCalculation: true),
         (request, homeType) => homeType.TenureDetails.ChangeTargetRentExceedMarketRent(request.TargetRentExceedMarketRent, true),
         (_, homeType) => homeType.TenureDetails.ChangeRentAsPercentageOfMarketRent(),
-    };
+    ];
 
     protected override CalculationResult BuildCalculationResult(IHomeTypeEntity homeType)
     {

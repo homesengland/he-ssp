@@ -16,11 +16,11 @@ public class SaveExemptFromTheRightToSharedOwnershipCommandHandler : SaveHomeTyp
     {
     }
 
-    protected override IReadOnlyCollection<HomeTypeSegmentType> SegmentTypes => new[] { HomeTypeSegmentType.TenureDetails };
+    protected override IReadOnlyCollection<HomeTypeSegmentType> SegmentTypes => [HomeTypeSegmentType.TenureDetails];
 
-    protected override IEnumerable<Action<SaveExemptFromTheRightToSharedOwnershipCommand, IHomeTypeEntity>> SaveActions => new[]
-    {
+    protected override IEnumerable<Action<SaveExemptFromTheRightToSharedOwnershipCommand, IHomeTypeEntity>> SaveActions =>
+    [
         (SaveExemptFromTheRightToSharedOwnershipCommand request, IHomeTypeEntity entity) =>
             entity.TenureDetails.ChangeExemptFromTheRightToSharedOwnership(request.ExemptFromTheRightToSharedOwnership),
-    };
+    ];
 }

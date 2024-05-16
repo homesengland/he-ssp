@@ -16,10 +16,10 @@ public class SaveOlderPeopleHousingTypeCommandHandler : SaveHomeTypeSegmentComma
     {
     }
 
-    protected override IReadOnlyCollection<HomeTypeSegmentType> SegmentTypes => new[] { HomeTypeSegmentType.OlderPeople };
+    protected override IReadOnlyCollection<HomeTypeSegmentType> SegmentTypes => [HomeTypeSegmentType.OlderPeople];
 
-    protected override IEnumerable<Action<SaveOlderPeopleHousingTypeCommand, IHomeTypeEntity>> SaveActions => new[]
-    {
+    protected override IEnumerable<Action<SaveOlderPeopleHousingTypeCommand, IHomeTypeEntity>> SaveActions =>
+    [
         (SaveOlderPeopleHousingTypeCommand request, IHomeTypeEntity homeType) => homeType.OlderPeopleHomeTypeDetails.ChangeHousingType(request.HousingType),
-    };
+    ];
 }

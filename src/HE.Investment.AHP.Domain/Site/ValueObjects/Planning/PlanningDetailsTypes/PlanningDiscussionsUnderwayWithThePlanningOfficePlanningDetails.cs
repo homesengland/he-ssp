@@ -13,9 +13,9 @@ public class PlanningDiscussionsUnderwayWithThePlanningOfficePlanningDetails : P
 
     public override SitePlanningStatus? PlanningStatus => SitePlanningStatus.PlanningDiscussionsUnderwayWithThePlanningOffice;
 
-    protected override IReadOnlyCollection<string> ActiveFields => new[]
-    {
+    protected override IReadOnlyCollection<string> ActiveFields =>
+    [
         nameof(ExpectedPlanningApprovalDate),
         nameof(LandRegistryDetails),
-    };
+    ];
 }

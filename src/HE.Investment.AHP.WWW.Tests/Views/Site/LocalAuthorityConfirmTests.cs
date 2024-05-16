@@ -23,7 +23,7 @@ public class LocalAuthorityConfirmTests : AhpViewTestBase
             .HasPageHeader(viewBag["SiteName"].ToString(), SitePageTitles.LocalAuthorityConfirm)
             .HasBoldText("Liverpool")
             .HasHeader2("Is this the correct local authority?")
-            .HasRadio("Response", new[] { "Yes", "No" })
+            .HasRadio("Response", ["Yes", "No"])
             .HasBackLink(out _, false);
     }
 
@@ -46,7 +46,7 @@ public class LocalAuthorityConfirmTests : AhpViewTestBase
             .HasPageHeader(viewBag["SiteName"].ToString(), SitePageTitles.LocalAuthorityConfirm)
             .HasBoldText("Liverpool")
             .HasHeader2("Is this the correct local authority?")
-            .HasRadio("Response", new[] { "Yes", "No" })
+            .HasRadio("Response", ["Yes", "No"])
             .HasBackLink(out _, false)
             .HasOneValidationMessages(errorMessage);
     }

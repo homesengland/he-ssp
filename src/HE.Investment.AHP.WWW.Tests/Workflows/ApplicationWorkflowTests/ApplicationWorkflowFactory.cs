@@ -6,13 +6,13 @@ namespace HE.Investment.AHP.WWW.Tests.Workflows.ApplicationWorkflowTests;
 
 public static class ApplicationWorkflowFactory
 {
-    private static readonly List<ApplicationSection> NotStartedSections = new()
-    {
+    private static readonly List<ApplicationSection> NotStartedSections =
+    [
         new(SectionType.Scheme, SectionStatus.NotStarted),
         new(SectionType.HomeTypes, SectionStatus.NotStarted),
         new(SectionType.FinancialDetails, SectionStatus.NotStarted),
         new(SectionType.DeliveryPhases, SectionStatus.NotStarted),
-    };
+    ];
 
     public static ApplicationWorkflow BuildWorkflow(
         ApplicationWorkflowState currentSiteWorkflowState,
@@ -29,7 +29,7 @@ public static class ApplicationWorkflowFactory
             name,
             tenure,
             status,
-            allowedOperations?.ToList() ?? new List<AhpApplicationOperation>(),
+            allowedOperations?.ToList() ?? [],
             referenceNumber,
             lastModificationDetails,
             null,
