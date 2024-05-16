@@ -6,7 +6,35 @@ namespace HE.Investment.AHP.Domain.Project.Crm;
 
 public class ProjectCrmContext : IProjectCrmContext
 {
-    private readonly ProjectDto _mockedProjectDto = new() { ProjectId = "885f479a-eed7-4745-817d-9c7968db4852", ProjectName = "Mocked project", };
+    private readonly ProjectDto _mockedProjectDto =
+        new() { ProjectId = "885f479a-eed7-4745-817d-9c7968db4852", ProjectName = "Mocked project", };
+
+    private readonly List<ProjectDto> _mockedProjectDtoList =
+    [
+        new ProjectDto { ProjectName = "Mocked project", ProjectId = "885f479a-eed7-4745-817d-9c7968db4852" },
+        new ProjectDto
+        {
+            ProjectName = "Second project",
+            ProjectId = Guid.NewGuid().ToString(),
+            Sites =
+            [
+                new SiteDto { id = Guid.NewGuid().ToString(), name = "first new site", status = 858110001, },
+                new SiteDto { id = Guid.NewGuid().ToString(), name = "second new site", status = 858110000, },
+                new SiteDto { id = Guid.NewGuid().ToString(), name = "third new site", status = 858110001, },
+            ],
+        },
+        new ProjectDto
+        {
+            ProjectName = "Third project",
+            ProjectId = Guid.NewGuid().ToString(),
+            Sites =
+            [
+                new SiteDto { id = Guid.NewGuid().ToString(), name = "first new site", status = 858110001, },
+                new SiteDto { id = Guid.NewGuid().ToString(), name = "second new site", status = 858110000, },
+            ],
+        },
+        new ProjectDto { ProjectName = "Fourth project", ProjectId = Guid.NewGuid().ToString() },
+    ];
 
     private readonly IApplicationCrmContext _applicationCrmContext;
 
@@ -44,14 +72,22 @@ public class ProjectCrmContext : IProjectCrmContext
         return _mockedProjectDto;
     }
 
-    public Task<ProjectDto> GetProjects(
-        string projectId,
+    public async Task<PagedResponseDto<ProjectDto>> GetProjects(
         string userId,
         string organisationId,
         string? consortiumId,
+        PagingRequestDto pagination,
         CancellationToken cancellationToken)
     {
-        return Task.FromResult(_mockedProjectDto);
+        var sites = await _siteCrmContext.GetUserSites(userId, new PagingRequestDto { pageNumber = 1, pageSize = 100 }, cancellationToken);
+        _mockedProjectDtoList[0].Sites = sites.items;
+
+        return new PagedResponseDto<ProjectDto>
+        {
+            items = pagination.pageNumber == 1 ? _mockedProjectDtoList[..3] : _mockedProjectDtoList[3..],
+            totalItemsCount = 4,
+            paging = new PagingRequestDto { pageNumber = pagination.pageNumber, pageSize = pagination.pageSize, },
+        };
     }
 
     public async Task<ProjectSitesDto> GetProjectSites(
@@ -62,11 +98,6 @@ public class ProjectCrmContext : IProjectCrmContext
         CancellationToken cancellationToken)
     {
         var sites = await _siteCrmContext.GetUserSites(userId, new PagingRequestDto { pageNumber = 1, pageSize = 100 }, cancellationToken);
-        return new ProjectSitesDto
-        {
-            ProjectId = _mockedProjectDto.ProjectId,
-            ProjectName = _mockedProjectDto.ProjectName,
-            Sites = sites.items,
-        };
+        return new ProjectSitesDto { ProjectId = _mockedProjectDto.ProjectId, ProjectName = _mockedProjectDto.ProjectName, Sites = sites.items, };
     }
 }

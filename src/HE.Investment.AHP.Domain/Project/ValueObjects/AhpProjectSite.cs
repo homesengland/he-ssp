@@ -7,9 +7,9 @@ using Org::HE.Investments.Organisation.LocalAuthorities.ValueObjects;
 
 namespace HE.Investment.AHP.Domain.Project.ValueObjects;
 
-public class ProjectSite : ValueObject
+public class AhpProjectSite : ValueObject
 {
-    public ProjectSite(SiteId id, SiteName name, SiteStatus status, LocalAuthority? localAuthority)
+    public AhpProjectSite(SiteId id, SiteName name, SiteStatus status, LocalAuthority? localAuthority)
     {
         Id = id;
         Name = name;

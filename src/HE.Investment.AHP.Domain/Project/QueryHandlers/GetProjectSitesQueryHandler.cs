@@ -2,6 +2,7 @@ using HE.Investment.AHP.Contract.Project;
 using HE.Investment.AHP.Contract.Project.Queries;
 using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Domain.Project.Repositories;
+using HE.Investment.AHP.Domain.Project.ValueObjects;
 using HE.Investment.AHP.Domain.UserContext;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Pagination;
@@ -26,21 +27,23 @@ public class GetProjectSitesQueryHandler : IRequestHandler<GetProjectSitesQuery,
     {
         var userAccount = await _userContext.GetSelectedAccount();
         var projectSites = await _projectRepository.GetProjectSites(request.ProjectId, userAccount, cancellationToken);
+        var sites = projectSites.Sites.IsProvided() ? projectSites.Sites!
+            .TakePage(request.PaginationRequest)
+            .Select(x => new SiteBasicModel(
+                x.Id.Value,
+                x.Name.Value,
+                x.LocalAuthority?.Name,
+                x.Status))
+            .ToList() : [];
+
         return new ProjectSitesModel(
             projectSites.Id,
             projectSites.Name.Value,
             userAccount.Organisation!.RegisteredCompanyName,
             new PaginationResult<SiteBasicModel>(
-                projectSites.Sites
-                    .TakePage(request.PaginationRequest)
-                    .Select(x => new SiteBasicModel(
-                        x.Id.Value,
-                        x.Name.Value,
-                        x.LocalAuthority?.Name,
-                        x.Status))
-                    .ToList(),
+                sites,
                 request.PaginationRequest.Page,
                 request.PaginationRequest.ItemsPerPage,
-                projectSites.Sites.Count));
+                sites.Count));
     }
 }
