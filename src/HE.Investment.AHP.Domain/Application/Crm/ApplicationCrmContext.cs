@@ -74,7 +74,11 @@ public class ApplicationCrmContext : IApplicationCrmContext
                 nameof(invln_scheme.invln_grantsfromthelottery),
                 nameof(invln_scheme.invln_grantsfromotherpublicbodies),
                 nameof(invln_scheme.invln_programmelookup),
-                nameof(invln_scheme.invln_representationsandwarrantiesconfirmation))
+                nameof(invln_scheme.invln_representationsandwarrantiesconfirmation),
+                nameof(invln_scheme.invln_DevelopingPartner),
+                nameof(invln_scheme.invln_OwneroftheLand),
+                nameof(invln_scheme.invln_OwneroftheHomes),
+                nameof(invln_scheme.invln_partnerconfirmation))
             .ToLowerInvariant();
 
     private readonly ICrmService _service;
