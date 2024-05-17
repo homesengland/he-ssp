@@ -9,5 +9,5 @@ public class FrontDoorLinks : IFrontDoorLinks
         _configuration = configuration;
     }
 
-    public string StartNewProject => _configuration.GetValue<string>("AppConfiguration:FrontDoorService:StartFrontDoorProject") ?? string.Empty;
+    public string StartNewProject => _configuration.GetValue<string>("AppConfiguration:ProgrammeUrl:StartFrontDoorProject") ?? string.Empty;
 }
