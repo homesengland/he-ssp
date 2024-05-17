@@ -17,6 +17,7 @@ invln_checkiffrontdoorprojectwithgivennameexists|
 invln_checkifloanapplicationwithgivennameexists|
 invln_checkifsitewithgivennameexists|
 invln_checkifsitewithstrategicsitenameexists|
+invln_createahpproject|
 invln_createsinglesitedetail|
 invln_deactivatefrontdoorproject|
 invln_deactivatefrontdoorsite|
@@ -51,6 +52,7 @@ invln_getsingleloanapplicationforaccountandcontact|
 invln_getsingleprogramme|
 invln_getsinglesite|
 invln_getsinglesitedetails|
+invln_getsiteapplications|
 invln_gettemporaryportaldata|
 invln_gettypeofhomeslist|
 invln_invitecontacttojoinexistingorganisation|
@@ -69,8 +71,10 @@ invln_sendreminderemailforrefferedbacktoapplicant|
 invln_sendremindertofinalisadraftapplication|
 invln_sendrequesttoassigncontacttoexistingorganisation|
 invln_setahpapplication|
+invln_setconsortium|
 invln_setdeliveryphase|
 invln_setfrontdoorproject|
+invln_setfrontdoorsite|
 invln_sethometype|
 invln_setsite|
 invln_updatesingleloanapplication|

@@ -12,6 +12,7 @@ namespace HE.Common.IntegrationModel.PortalIntegrationModel
         public int? applicationStatus { get; set; }
         public string siteId { get; set; }
         public string programmeId { get; set; }
+        public string applicationName { get; set; }
 
         //sections statuses
         public int? schemeInformationSectionCompletionStatus { get; set; }

@@ -20,6 +20,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_checkifloanapplicationwithgivennameexists.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_checkifsitewithgivennameexists.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_checkifsitewithstrategicsitenameexists.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_createahpproject.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_createsinglesitedetail.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_deactivatefrontdoorproject.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_deactivatefrontdoorsite.cs" />
@@ -55,6 +56,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getsingleprogramme.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getsinglesite.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getsinglesitedetails.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getsiteapplications.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_gettemporaryportaldata.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_gettypeofhomeslist.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_invitecontacttojoinexistingorganisation.cs" />

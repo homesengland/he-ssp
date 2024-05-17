@@ -19,6 +19,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)dtomapping\LoanApplicationDtoMapper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)dtomapping\MilestoneFrameWorkItemMapper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)dtomapping\ProgrammeMapper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)dtomapping\SiteApplicationMapper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)dtomapping\SiteDetailsDtoMapper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DtoMapping\SiteMapper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\DateTimeExtensions.cs" />

@@ -62,6 +62,8 @@ namespace DataverseModel
 			public const string invln_AccountIdName = "invln_accountidname";
 			public const string invln_AccountIdYomiName = "invln_accountidyominame";
 			public const string invln_ActionstoReduce = "invln_actionstoreduce";
+			public const string invln_AHPProjectId = "invln_ahpprojectid";
+			public const string invln_AHPProjectIdName = "invln_ahpprojectidname";
 			public const string invln_anyrestrictionsinthes106 = "invln_anyrestrictionsinthes106";
 			public const string invln_anyrestrictionsinthes106Name = "invln_anyrestrictionsinthes106name";
 			public const string invln_applicationfordetailedplanningsubmitted = "invln_applicationfordetailedplanningsubmitted";
@@ -91,6 +93,8 @@ namespace DataverseModel
 			public const string invln_greenbeltName = "invln_greenbeltname";
 			public const string invln_HeLocalAuthorityId = "invln_helocalauthorityid";
 			public const string invln_HeLocalAuthorityIdName = "invln_helocalauthorityidname";
+			public const string invln_HeProjectLocalAuthorityId = "invln_heprojectlocalauthorityid";
+			public const string invln_HeProjectLocalAuthorityIdName = "invln_heprojectlocalauthorityidname";
 			public const string invln_homesintheapplicationareadditional = "invln_homesintheapplicationareadditional";
 			public const string invln_homesintheapplicationareadditionalName = "invln_homesintheapplicationareadditionalname";
 			public const string invln_intentiontoworkwithsme = "invln_intentiontoworkwithsme";
@@ -454,6 +458,40 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_ActionstoReduce");
 				this.SetAttributeValue("invln_actionstoreduce", value);
 				this.OnPropertyChanged("invln_ActionstoReduce");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_ahpprojectid")]
+		public Microsoft.Xrm.Sdk.EntityReference invln_AHPProjectId
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("invln_ahpprojectid");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_AHPProjectId");
+				this.SetAttributeValue("invln_ahpprojectid", value);
+				this.OnPropertyChanged("invln_AHPProjectId");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_ahpprojectidname")]
+		public string invln_AHPProjectIdName
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				if (this.FormattedValues.Contains("invln_ahpprojectid"))
+				{
+					return this.FormattedValues["invln_ahpprojectid"];
+				}
+				else
+				{
+					return default(string);
+				}
 			}
 		}
 		
@@ -945,6 +983,43 @@ namespace DataverseModel
 				if (this.FormattedValues.Contains("invln_helocalauthorityid"))
 				{
 					return this.FormattedValues["invln_helocalauthorityid"];
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+		}
+		
+		/// <summary>
+		/// HE Project Local Authority
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_heprojectlocalauthorityid")]
+		public Microsoft.Xrm.Sdk.EntityReference invln_HeProjectLocalAuthorityId
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("invln_heprojectlocalauthorityid");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_HeProjectLocalAuthorityId");
+				this.SetAttributeValue("invln_heprojectlocalauthorityid", value);
+				this.OnPropertyChanged("invln_HeProjectLocalAuthorityId");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_heprojectlocalauthorityidname")]
+		public string invln_HeProjectLocalAuthorityIdName
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				if (this.FormattedValues.Contains("invln_heprojectlocalauthorityid"))
+				{
+					return this.FormattedValues["invln_heprojectlocalauthorityid"];
 				}
 				else
 				{

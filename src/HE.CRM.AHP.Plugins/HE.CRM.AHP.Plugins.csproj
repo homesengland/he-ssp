@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>HE.CRM.AHP.Plugins</RootNamespace>
-    <AssemblyName>HE.CRM.AHP.Plugins</AssemblyName>
+    <AssemblyName>HE.CRM.AHP.Plugins_WS</AssemblyName>
     <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -114,6 +114,7 @@
     <Compile Include="Handlers\CustomApi\Consortium\SetConsortiumHandler.cs" />
     <Compile Include="Handlers\CustomApi\DeleteDeliveryPhaseHandler.cs" />
     <Compile Include="Handlers\CustomApi\DeleteHomeTypeHandler.cs" />
+    <Compile Include="Handlers\CustomApi\FrontDoor\GetSiteApplicationHandler.cs" />
     <Compile Include="Handlers\CustomApi\GetAbsoluteAhpApplicationFileLocationHandler.cs" />
     <Compile Include="Handlers\CustomApi\GetAhpApplicationFileLocationHandler.cs" />
     <Compile Include="Handlers\CustomApi\GetApplicationHandler.cs" />
@@ -220,6 +221,7 @@
     <Compile Include="Plugins\CustomApi\Consortium\SetConsortiumPlugin.cs" />
     <Compile Include="Plugins\CustomApi\DeleteDeliveryPhasePlugin.cs" />
     <Compile Include="Plugins\CustomApi\DeleteHomeTypePlugin.cs" />
+    <Compile Include="Plugins\CustomApi\FrontDoor\GetSiteApplicationPlugin.cs" />
     <Compile Include="Plugins\CustomApi\GetMultipleDeliveryPhasePlugin.cs" />
     <Compile Include="Plugins\CustomApi\GetMultipleProgrammePlugin.cs" />
     <Compile Include="Plugins\CustomApi\GetSingleDeliveryPhasePlugin.cs" />

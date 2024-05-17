@@ -13,7 +13,7 @@ namespace DataverseModel
 	
 	
 	/// <summary>
-	/// Application Based Access Control Mode. 0 is Disabled, 1 is Enabled , 2 is audit mode
+	/// Application Based Access Control Mode. 0 is Disabled, 1 is Enabled, 2 is audit mode, 3 is Enabled for roles
 	/// </summary>
 	[System.Runtime.Serialization.DataContractAttribute()]
 	public enum organization_applicationbasedaccesscontrolmode
@@ -27,6 +27,9 @@ namespace DataverseModel
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Enabled = 1,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Enabledforroles = 3,
 	}
 }
 #pragma warning restore CS1591
