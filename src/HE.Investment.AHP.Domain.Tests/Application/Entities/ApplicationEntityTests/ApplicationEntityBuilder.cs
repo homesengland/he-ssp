@@ -3,6 +3,7 @@ using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Domain.Application.Entities;
 using HE.Investment.AHP.Domain.Application.Factories;
 using HE.Investment.AHP.Domain.Application.ValueObjects;
+using HE.Investment.AHP.Domain.Scheme.ValueObjects;
 using HE.Investments.Account.Shared.User;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Tests.TestData;
@@ -83,6 +84,7 @@ public class ApplicationEntityBuilder
             _name,
             _status,
             new ApplicationTenure(Tenure.AffordableRent),
+            ApplicationPartners.ConfirmedPartner(OrganisationId.From("cd7e3fb6-bff0-43ee-b65c-54db77d81f4c")),
             new ApplicationStateFactory(_userAccount, _previousStatus, _wasSubmitted),
             _reference,
             new ApplicationSections(_sections ?? []));

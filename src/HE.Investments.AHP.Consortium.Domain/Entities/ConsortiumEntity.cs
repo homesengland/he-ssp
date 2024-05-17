@@ -40,7 +40,7 @@ public class ConsortiumEntity : IConsortiumEntity
 
     public IEnumerable<ConsortiumMember> ActiveMembers => _members.Where(x => x.Status is ConsortiumMemberStatus.Active);
 
-    public IEnumerable<ConsortiumMember> Members => _members;
+    public IEnumerable<ConsortiumMember> Members => _members.Where(x => x.Status != ConsortiumMemberStatus.Inactive);
 
     public static async Task<ConsortiumEntity> New(ProgrammeSlim programme, ConsortiumMember leadPartner, IIsPartOfConsortium isPartOfConsortium)
     {
@@ -134,7 +134,7 @@ public class ConsortiumEntity : IConsortiumEntity
         IIsPartOfConsortium isPartOfConsortium,
         CancellationToken cancellationToken)
     {
-        if (organisation.Id == LeadPartner.Id || _members.Exists(x => x.Id == organisation.Id))
+        if (organisation.Id == LeadPartner.Id || Members.Any(x => x.Id == organisation.Id))
         {
             return true;
         }
@@ -142,6 +142,6 @@ public class ConsortiumEntity : IConsortiumEntity
         return await isPartOfConsortium.IsPartOfConsortiumForProgramme(Programme.Id, organisation.Id, cancellationToken);
     }
 
-    private ConsortiumMember GetMember(OrganisationId organisationId) => _members.SingleOrDefault(x => x.Id == organisationId) ??
+    private ConsortiumMember GetMember(OrganisationId organisationId) => Members.SingleOrDefault(x => x.Id == organisationId) ??
                                                                          throw new NotFoundException(nameof(ConsortiumMember), organisationId);
 }

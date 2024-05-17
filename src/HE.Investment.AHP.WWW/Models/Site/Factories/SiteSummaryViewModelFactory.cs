@@ -42,10 +42,6 @@ public class SiteSummaryViewModelFactory : ISiteSummaryViewModelFactory
         {
             yield return new SectionSummaryViewModel("Consortium", CreateConsortiumSummary(siteDetails, CreateAction, isEditable));
         }
-        else if (organisation.IsUnregisteredBody)
-        {
-            yield return new SectionSummaryViewModel("URB", CreateUrbSummary(siteDetails, CreateAction, isEditable));
-        }
 
         yield return new SectionSummaryViewModel("Land details", CreateLandDetailsSummary(siteDetails, CreateAction, isEditable));
         yield return new SectionSummaryViewModel("Site use", CreateSiteUseSummary(siteDetails, CreateAction, isEditable));
@@ -249,18 +245,6 @@ public class SiteSummaryViewModelFactory : ISiteSummaryViewModelFactory
                 site.OwnerOfTheLand?.Name.ToOneElementList(),
                 createAction(nameof(Controller.OwnerOfTheLand)),
                 IsEditable: isEditable),
-            new(
-                "Owner of the homes",
-                site.OwnerOfTheHomes?.Name.ToOneElementList(),
-                createAction(nameof(Controller.OwnerOfTheHomes)),
-                IsEditable: isEditable),
-        ];
-    }
-
-    private static List<SectionSummaryItemModel> CreateUrbSummary(SiteModel site, CreateAction createAction, bool isEditable)
-    {
-        return
-        [
             new(
                 "Owner of the homes",
                 site.OwnerOfTheHomes?.Name.ToOneElementList(),

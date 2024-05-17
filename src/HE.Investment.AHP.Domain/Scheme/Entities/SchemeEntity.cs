@@ -13,8 +13,9 @@ public class SchemeEntity : DomainEntity
 
     public SchemeEntity(
         ApplicationBasicInfo application,
-        SchemeFunding funding,
         SectionStatus status,
+        SchemeFunding funding,
+        ApplicationPartners applicationPartners,
         AffordabilityEvidence affordabilityEvidence,
         SalesRisk salesRisk,
         HousingNeeds housingNeeds,
@@ -23,6 +24,7 @@ public class SchemeEntity : DomainEntity
         Status = status;
         Application = application;
         Funding = funding;
+        ApplicationPartners = applicationPartners;
         AffordabilityEvidence = affordabilityEvidence;
         SalesRisk = salesRisk;
         HousingNeeds = housingNeeds;
@@ -32,6 +34,8 @@ public class SchemeEntity : DomainEntity
     public ApplicationBasicInfo Application { get; }
 
     public SchemeFunding Funding { get; private set; }
+
+    public ApplicationPartners ApplicationPartners { get; private set; }
 
     public AffordabilityEvidence AffordabilityEvidence { get; private set; }
 
@@ -48,6 +52,11 @@ public class SchemeEntity : DomainEntity
     public void ProvideFunding(SchemeFunding funding)
     {
         Funding = _modificationTracker.Change(Funding, funding, SetInProgress, FundingHasChanged);
+    }
+
+    public void ProvideApplicationPartners(ApplicationPartners applicationPartners)
+    {
+        ApplicationPartners = _modificationTracker.Change(ApplicationPartners, applicationPartners, SetInProgress);
     }
 
     public void ChangeAffordabilityEvidence(AffordabilityEvidence affordabilityEvidence)

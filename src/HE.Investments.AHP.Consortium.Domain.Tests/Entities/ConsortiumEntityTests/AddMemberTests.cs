@@ -84,4 +84,28 @@ public class AddMemberTests
         testCandidate.PopJoinRequest().Should().Be(InvestmentsOrganisationTestData.CactusDevelopments.Id);
         testCandidate.PopJoinRequest().Should().BeNull();
     }
+
+    [Fact]
+    public async Task ShouldAddPendingMember_WhenMemberWasPreviouslyInThisConsortium()
+    {
+        // given
+        var testCandidate = new ConsortiumEntityBuilder()
+            .WithLeadPartner(InvestmentsOrganisationTestData.JjCompany)
+            .WithMember(InvestmentsOrganisationTestData.CactusDevelopments, ConsortiumMemberStatus.Inactive)
+            .Build();
+        var isPartOfConsortium = IsPartOfConsortiumBuilder.New().IsNotPartOfConsortium().Build();
+
+        // when
+        await testCandidate.AddMember(InvestmentsOrganisationTestData.CactusDevelopments, isPartOfConsortium, CancellationToken.None);
+
+        // then
+        var member = testCandidate.Members.Should().HaveCount(1).And.Subject.Single();
+
+        member.Id.Should().Be(InvestmentsOrganisationTestData.CactusDevelopments.Id);
+        member.OrganisationName.Should().Be(InvestmentsOrganisationTestData.CactusDevelopments.Name);
+        member.Status.Should().Be(ConsortiumMemberStatus.PendingAddition);
+
+        testCandidate.PopJoinRequest().Should().Be(InvestmentsOrganisationTestData.CactusDevelopments.Id);
+        testCandidate.PopJoinRequest().Should().BeNull();
+    }
 }

@@ -14,8 +14,9 @@ public class SchemeEntityBuilder
     {
         _item = new SchemeEntity(
             ApplicationBasicInfoTestData.SharedOwnershipInDraftState,
-            SchemeFunding.Empty(),
             SectionStatus.NotStarted,
+            SchemeFunding.Empty(),
+            ApplicationPartners.ConfirmedPartner(OrganisationId.From("cd7e3fb6-bff0-43ee-b65c-54db77d81f4c")),
             new AffordabilityEvidence(string.Empty),
             new SalesRisk(null),
             new HousingNeeds(string.Empty, string.Empty),
