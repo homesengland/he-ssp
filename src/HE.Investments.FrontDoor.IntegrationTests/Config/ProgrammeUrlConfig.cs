@@ -6,6 +6,6 @@ public class ProgrammeUrlConfig : WWW.Config.ProgrammeUrlConfig
 {
     public ProgrammeUrlConfig()
     {
-        Loans = $"https://localhost/{ProjectsPagesUrl.List}";
+        StartLoanApplication = $"https://localhost/{ProjectsPagesUrl.List}";
     }
 }

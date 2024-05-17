@@ -2,7 +2,7 @@ namespace HE.Investments.FrontDoor.WWW.Config;
 
 public class ProgrammeUrlConfig
 {
-    public string Loans { get; set; }
+    public string StartLoanApplication { get; set; }
 
-    public string Ahp { get; set; }
+    public string StartAhpProject { get; set; }
 }
