@@ -37,6 +37,7 @@ public class ProjectRepository : IProjectRepository
             cancellationToken);
 
         var applications = project.Applications?
+            .OrderByDescending(x => x.LastModificationDate)
             .Select(x => new AhpProjectApplication(
                 AhpApplicationId.From(x.ApplicationId),
                 new ApplicationName(x.ApplicationName),

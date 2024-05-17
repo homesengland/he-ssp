@@ -62,10 +62,9 @@ public class SiteController : WorkflowController<SiteWorkflowState>
     }
 
     [HttpGet]
-    public async Task<IActionResult> Index([FromQuery] int? page, CancellationToken cancellationToken)
+    public IActionResult Index()
     {
-        var response = await _mediator.Send(new GetSiteListQuery(new PaginationRequest(page ?? 1)), cancellationToken);
-        return View("Index", response);
+        return RedirectToAction("Sites", "Project", new { projectId = "to remove" });
     }
 
     [HttpGet("select")]
