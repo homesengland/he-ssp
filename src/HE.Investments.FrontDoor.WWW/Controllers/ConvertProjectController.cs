@@ -32,8 +32,8 @@ public class ConvertProjectController : Controller
 
         var urlWithRouteData = applicationType switch
         {
-            ApplicationType.Loans => $"{_programmeUrlConfig.Loans}?fdProjectId={fdProjectId}",
-            ApplicationType.Ahp => $"{_programmeUrlConfig.Ahp}?fdProjectId={fdProjectId}",
+            ApplicationType.Loans => $"{_programmeUrlConfig.StartLoanApplication}?fdProjectId={fdProjectId}",
+            ApplicationType.Ahp => $"{_programmeUrlConfig.StartAhpProject}?fdProjectId={fdProjectId}",
             _ => string.Empty,
         };
 

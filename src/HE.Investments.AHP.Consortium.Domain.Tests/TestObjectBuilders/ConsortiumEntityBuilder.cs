@@ -32,7 +32,12 @@ public class ConsortiumEntityBuilder : TestObjectBuilder<ConsortiumEntityBuilder
 
     public ConsortiumEntityBuilder WithActiveMember(InvestmentsOrganisation organisation)
     {
-        List<ConsortiumMember> members = [.. Item.Members, new ConsortiumMember(organisation.Id, organisation.Name, ConsortiumMemberStatus.Active)];
+        return WithMember(organisation, ConsortiumMemberStatus.Active);
+    }
+
+    public ConsortiumEntityBuilder WithMember(InvestmentsOrganisation organisation, ConsortiumMemberStatus status)
+    {
+        List<ConsortiumMember> members = [.. Item.Members, new ConsortiumMember(organisation.Id, organisation.Name, status)];
         PrivatePropertySetter.SetPrivateField(Item, "_members", members);
 
         return this;

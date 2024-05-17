@@ -1,6 +1,9 @@
+extern alias Org;
+
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Domain.Application.Crm;
+using HE.Investment.AHP.Domain.Application.Mappers;
 using HE.Investment.AHP.Domain.Application.Repositories;
 using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.Documents.Services;
@@ -64,6 +67,9 @@ public class SchemeRepository : ISchemeRepository
         dto.schemeInformationSectionCompletionStatus = SectionStatusMapper.ToDto(entity.Status);
         dto.fundingRequested = entity.Funding.RequiredFunding;
         dto.noOfHomes = entity.Funding.HousesToDeliver;
+        dto.developingPartnerId = entity.ApplicationPartners.DevelopingPartner.Id.ToGuidAsString();
+        dto.ownerOfTheLandDuringDevelopmentId = entity.ApplicationPartners.OwnerOfTheLand.Id.ToGuidAsString();
+        dto.ownerOfTheHomesAfterCompletionId = entity.ApplicationPartners.OwnerOfTheHomes.Id.ToGuidAsString();
         dto.affordabilityEvidence = entity.AffordabilityEvidence.Evidence;
         dto.discussionsWithLocalStakeholders = entity.StakeholderDiscussions.StakeholderDiscussionsDetails.Report;
         dto.meetingLocalProrities = entity.HousingNeeds.MeetingLocalPriorities;
@@ -81,8 +87,9 @@ public class SchemeRepository : ISchemeRepository
     {
         return new SchemeEntity(
             applicationBasicInfo,
-            new SchemeFunding((int?)dto.fundingRequested, dto.noOfHomes),
             SectionStatusMapper.ToDomain(dto.schemeInformationSectionCompletionStatus, applicationBasicInfo.Status),
+            new SchemeFunding((int?)dto.fundingRequested, dto.noOfHomes),
+            ApplicationPartnersMapper.ToDomain(dto),
             new AffordabilityEvidence(dto.affordabilityEvidence),
             new SalesRisk(dto.sharedOwnershipSalesRisk),
             new HousingNeeds(dto.meetingLocalProrities, dto.meetingLocalHousingNeed),

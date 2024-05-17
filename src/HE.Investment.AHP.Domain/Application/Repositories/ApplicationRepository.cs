@@ -5,6 +5,7 @@ using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Domain.Application.Crm;
 using HE.Investment.AHP.Domain.Application.Entities;
 using HE.Investment.AHP.Domain.Application.Factories;
+using HE.Investment.AHP.Domain.Application.Mappers;
 using HE.Investment.AHP.Domain.Application.ValueObjects;
 using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.FinancialDetails.Mappers;
@@ -133,6 +134,9 @@ public class ApplicationRepository : IApplicationRepository
         dto.organisationId = organisationId.ToGuidAsString();
         dto.applicationStatus = AhpApplicationStatusMapper.MapToCrmStatus(application.Status);
         dto.siteId = application.SiteId.ToGuidAsString();
+        dto.developingPartnerId = application.ApplicationPartners.DevelopingPartner.Id.ToGuidAsString();
+        dto.ownerOfTheLandDuringDevelopmentId = application.ApplicationPartners.OwnerOfTheLand.Id.ToGuidAsString();
+        dto.ownerOfTheHomesAfterCompletionId = application.ApplicationPartners.OwnerOfTheHomes.Id.ToGuidAsString();
 
         var id = await _applicationCrmContext.Save(dto, organisationId.ToGuidAsString(), cancellationToken);
         if (application.Id.IsNew)
@@ -170,6 +174,7 @@ public class ApplicationRepository : IApplicationRepository
             new ApplicationName(application.name ?? "Unknown"),
             applicationStatus,
             ApplicationTenureMapper.ToDomain(application.tenure)!,
+            ApplicationPartnersMapper.ToDomain(application),
             new ApplicationStateFactory(userAccount, previousStatus, application.dateSubmitted.IsProvided()),
             new ApplicationReferenceNumber(application.referenceNumber),
             new ApplicationSections(
