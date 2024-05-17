@@ -44,6 +44,6 @@ public class GetProjectSitesQueryHandler : IRequestHandler<GetProjectSitesQuery,
                 sites,
                 request.PaginationRequest.Page,
                 request.PaginationRequest.ItemsPerPage,
-                sites.Count));
+                projectSites.Sites?.Count ?? 0));
     }
 }

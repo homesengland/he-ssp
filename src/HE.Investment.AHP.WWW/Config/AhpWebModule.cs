@@ -45,6 +45,7 @@ public static class AhpWebModule
         AddViewModelFactories(services);
 
         services.AddSingleton<IAhpExternalLinks, AhpExternalLinks>();
+        services.AddSingleton<IFrontDoorLinks, FrontDoorLinks>();
     }
 
     private static void AddConfiguration(IServiceCollection services)
