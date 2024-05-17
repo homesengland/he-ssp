@@ -3,7 +3,7 @@ WORKDIR /app
 ENV ASPNETCORE_URLS="http://*:5555"
 EXPOSE 5555
 
-FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:8.0.204 AS build
 
 RUN curl -Lk "https://raw.githubusercontent.com/Microsoft/artifacts-credprovider/master/helpers/installcredprovider.sh" | sh
 ARG INTERNAL_FEED_ACCESSTOKEN

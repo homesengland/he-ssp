@@ -3,7 +3,7 @@ WORKDIR /app
 ENV ASPNETCORE_URLS="http://*:5555"
 EXPOSE 5555
 
-FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:8.0.204 AS build
 WORKDIR /src
 
 RUN find -type d -name bin -prune -exec rm -rf {} \; && find -type d -name obj -prune -exec rm -rf {} \;
