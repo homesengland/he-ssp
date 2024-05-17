@@ -27,5 +27,5 @@ public class ApplicationPartnersBuilder : TestObjectBuilder<ApplicationPartnersB
 
     public ApplicationPartnersBuilder WithOwnerOfTheHomes(InvestmentsOrganisation value) => SetProperty(x => x.OwnerOfTheHomes, value);
 
-    public ApplicationPartnersBuilder WithConfirmation(bool? value) => SetProperty(x => x.IsConfirmed, value);
+    public ApplicationPartnersBuilder WithAllPartnersConfirmation(bool? value) => SetProperty(x => x.AreAllPartnersConfirmed, value);
 }

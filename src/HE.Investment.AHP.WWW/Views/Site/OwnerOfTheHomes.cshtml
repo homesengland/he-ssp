@@ -1,32 +1,27 @@
 @using HE.Investment.AHP.Contract.Site
-@using HE.Investment.AHP.WWW.Models.Site
+@using HE.Investment.AHP.WWW.Extensions
+@using HE.Investment.AHP.WWW.Views.Shared
 @using HE.Investment.AHP.WWW.Views.Shared.Components.AhpWorkflowBackButton
 @using HE.Investment.AHP.WWW.Views.Shared.Components.ReturnToSitesLink
-@using HE.Investment.AHP.WWW.Views.Site.Const
-@using HE.Investments.Common.Contract.Pagination
 @using HE.Investments.Common.WWW.Components.PageHeader
-@using HE.Investments.Common.WWW.Components.SelectList
 @using SelectList = Microsoft.AspNetCore.Mvc.Rendering.SelectList
 @model HE.Investment.AHP.WWW.Models.Site.SelectPartnerModel;
 @{
-    ViewData["Title"] = SitePageTitles.OwnerOfTheHomes;
+    ViewData["Title"] = SharedPageTitles.OwnerOfTheHomes;
     var workflow = Context.Request.Query["workflow"];
 
-    var items = new PaginationResult<SelectListItemViewModel>(
-        Model.ConsortiumMembers.Items.Select(x => new PartnerSelectListItemViewModel(
-            Url.Action("OwnerOfTheHomesConfirm", new { Model.SiteId, organisationId = x.OrganisationId.Value, workflow }) ?? string.Empty,
-            x)).ToList<SelectListItemViewModel>(),
-        Model.ConsortiumMembers.CurrentPage,
-        Model.ConsortiumMembers.ItemsPerPage,
-        Model.ConsortiumMembers.TotalItems);
+    var items = Model.ConsortiumMembers.ToSelectListViewModel(
+        x => Url.Action("OwnerOfTheHomesConfirm", "Site", new { Model.SiteId, organisationId = x.Value, workflow }));
 }
 
 <gds-div-grid-column-two-thirds>
     <vc:ahp-workflow-back-button current-page="@SiteWorkflowState.OwnerOfTheHomes"/>
-    <vc:page-header title="@SitePageTitles.OwnerOfTheHomes" caption="@Model.SiteName"/>
+    <vc:page-header title="@SharedPageTitles.OwnerOfTheHomes" caption="@Model.SiteName"/>
 
-    <gds-p>This is the partner who will own the homes after completion.</gds-p>
-    <gds-p>If you cannot find the partner. you'll need to add them to your consortium.</gds-p>
+    @foreach (var paragraph in SharedParagraphs.OwnerOfTheHomes)
+    {
+        <gds-p>@paragraph</gds-p>
+    }
 
     <vc:select-list
         items="@items"
