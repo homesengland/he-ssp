@@ -34,7 +34,8 @@ public class GetFinancialDetailsQueryHandler : IRequestHandler<GetFinancialDetai
             ExpectedOnCost = financialDetails.OtherApplicationCosts.ExpectedOnCosts?.Value,
             TotalExpectedCosts = financialDetails.ExpectedTotalCosts(),
             SectionStatus = financialDetails.SectionStatus,
-            IsFullUnconditionalOption = financialDetails.SiteBasicInfo.LandAcquisitionStatus.IsFullUnconditionalOption,
+            LandAcquisitionStatus = financialDetails.SiteBasicInfo.LandAcquisitionStatus.Value,
+            HasFullLandOwnership = financialDetails.SiteBasicInfo.LandAcquisitionStatus.HasFullLandOwnership,
         };
 
         MapPublicGrants(financialDetailsDto, financialDetails.PublicGrants);
