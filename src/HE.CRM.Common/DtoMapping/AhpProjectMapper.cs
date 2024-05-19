@@ -38,5 +38,16 @@ namespace HE.CRM.Common.dtomapping
 
             return ahpProject;
         }
+
+        public static AhpProjectDto MapRegularEntityToDto(invln_ahpproject ahpproject, List<SiteDto> listOfSites = null, List<AhpApplicationDto> listOfApplications = null)
+        {
+            return new AhpProjectDto()
+            {
+                AhpProjectId = ahpproject.Id.ToString(),
+                AhpProjectName = ahpproject.invln_Name,
+                ListOfSites = listOfSites,
+                ListOfApplications = listOfApplications
+            };
+        }
     }
 }
