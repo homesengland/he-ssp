@@ -94,6 +94,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\AHPConst.cs" />
     <Compile Include="CrmPluginRegistrationAttribute.cs" />
     <Compile Include="Handlers\AHPApplication\ChangeExternalStatusOnInternalStatusChangeHandler.cs" />
     <Compile Include="Handlers\AHPApplication\CheckIfApplicationWithNewNameExistsHandler.cs" />
@@ -140,6 +141,7 @@
     <Compile Include="Handlers\CustomApi\Site\GetMultipleSitesHandler.cs" />
     <Compile Include="Handlers\CustomApi\Site\GetSingleSiteHandler.cs" />
     <Compile Include="Handlers\CustomApi\Site\SetSiteHandler.cs" />
+    <Compile Include="Handlers\DeliveryPhase\AcceptOrRejectPaymentProportion.cs" />
     <Compile Include="Handlers\DeliveryPhase\SendNotificationUrbWantsAdditionalPaymentsForPhaseHandler.cs" />
     <Compile Include="Handlers\HomeType\CalculatePercentageValueOfNDSSStandardHandler.cs" />
     <Compile Include="Handlers\HomeType\CreateDocumentLocationOnCreateHandler.cs" />
@@ -249,6 +251,7 @@
     <Compile Include="Plugins\CustomApi\Site\GetMultipleSitesPlugin.cs" />
     <Compile Include="Plugins\CustomApi\Site\GetSingleSitePlugin.cs" />
     <Compile Include="Plugins\CustomApi\Site\SetSitePlugin.cs" />
+    <Compile Include="Plugins\DeliveryPhase\PreUpdateDeliveryPhase.cs" />
     <Compile Include="Plugins\DeliveryPhase\SendNotificationUrbWantsAdditionalPaymentsForPhasePlugin.cs" />
     <Compile Include="Plugins\HomeType\CreateDocumentLocationOnCreatePlugin.cs" />
     <Compile Include="Plugins\HomeType\HomeTypePreUpdate.cs" />
