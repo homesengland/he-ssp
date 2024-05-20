@@ -5,7 +5,6 @@ using HE.Investments.Common.Contract.Exceptions;
 
 namespace HE.Investment.AHP.Domain.Tests.Scheme.ValueObjects.ApplicationPartnersTests;
 
-// TODO: add tests for null, false confirmation
 public class WithOwnerOfTheLandTests
 {
     [Fact]
