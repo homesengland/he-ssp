@@ -31,13 +31,11 @@ public class ConsortiumMemberController : WorkflowController<ConsortiumMemberWor
 
     private readonly IAhpUserContext _ahpUserContext;
 
-    private readonly IAhpAccessContext _ahpAccessContext;
 
-    public ConsortiumMemberController(IMediator mediator, IAhpUserContext ahpUserContext, IAhpAccessContext ahpAccessContext)
+    public ConsortiumMemberController(IMediator mediator, IAhpUserContext ahpUserContext)
     {
         _mediator = mediator;
         _ahpUserContext = ahpUserContext;
-        _ahpAccessContext = ahpAccessContext;
     }
 
     [HttpGet("back")]
@@ -182,14 +180,10 @@ public class ConsortiumMemberController : WorkflowController<ConsortiumMemberWor
     }
 
     [HttpGet("contact-homes-england")]
+    [WorkflowState(ConsortiumMemberWorkflowState.ContactHomesEngland)]
     [AuthorizeWithCompletedProfile(AhpAccessContext.ViewConsortium)]
     public async Task<IActionResult> ContactHomesEngland(string consortiumId, CancellationToken cancellationToken)
     {
-        if (await _ahpAccessContext.IsConsortiumLeadPartner())
-        {
-            return RedirectToAction("PageNotFound", "Home");
-        }
-
         var availableProgrammes = await _mediator.Send(new GetAvailableProgrammesQuery(), cancellationToken);
 
         return View(new ConsortiumSelectedProgrammeModel(consortiumId, availableProgrammes.FirstOrDefault()!));
@@ -201,8 +195,9 @@ public class ConsortiumMemberController : WorkflowController<ConsortiumMemberWor
                            ?? routeData?.GetPropertyValue<string>("consortiumId")
                            ?? string.Empty;
         var consortium = await GetConsortiumDetails(consortiumId, false, CancellationToken.None);
+        var userAccount = await _ahpUserContext.GetSelectedAccount();
 
-        return new ConsortiumMemberWorkflow(consortium, currentState);
+        return new ConsortiumMemberWorkflow(consortium, userAccount.Organisation?.OrganisationId, currentState);
     }
 
     private async Task<ConsortiumDetails> GetConsortiumDetails(string consortiumId, bool fetchAddress, CancellationToken cancellationToken)
