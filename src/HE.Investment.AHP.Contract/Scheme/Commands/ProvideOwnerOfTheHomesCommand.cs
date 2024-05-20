@@ -5,4 +5,4 @@ using MediatR;
 
 namespace HE.Investment.AHP.Contract.Scheme.Commands;
 
-public record ProvideOwnerOfTheHomesCommand(AhpApplicationId ApplicationId, OrganisationId OrganisationId) : IRequest<OperationResult>, IUpdateSchemeCommand;
+public record ProvideOwnerOfTheHomesCommand(AhpApplicationId ApplicationId, OrganisationId OrganisationId, bool? IsPartnerConfirmed) : IRequest<OperationResult>, IUpdateSchemeCommand;

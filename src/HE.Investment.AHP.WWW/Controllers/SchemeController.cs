@@ -3,6 +3,7 @@ using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.Application.Queries;
 using HE.Investment.AHP.Contract.Common;
 using HE.Investment.AHP.Contract.Common.Enums;
+using HE.Investment.AHP.Contract.Common.Queries;
 using HE.Investment.AHP.Contract.Scheme;
 using HE.Investment.AHP.Contract.Scheme.Commands;
 using HE.Investment.AHP.Contract.Scheme.Queries;
@@ -12,8 +13,11 @@ using HE.Investment.AHP.WWW.Models.Scheme;
 using HE.Investment.AHP.WWW.Models.Scheme.Factories;
 using HE.Investment.AHP.WWW.Workflows;
 using HE.Investments.Account.Shared.Authorization.Attributes;
+using HE.Investments.AHP.Consortium.Contract;
+using HE.Investments.AHP.Consortium.Contract.Queries;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Exceptions;
+using HE.Investments.Common.Contract.Pagination;
 using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.WWW.Controllers;
 using HE.Investments.Common.WWW.Extensions;
@@ -90,6 +94,90 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
         var scheme = await GetScheme(applicationId, cancellationToken);
 
         return View(scheme);
+    }
+
+    [HttpGet("developing-partner")]
+    public async Task<IActionResult> DevelopingPartner([FromRoute] string applicationId, [FromQuery] int? page, CancellationToken cancellationToken)
+    {
+        return View(await GetSelectPartnerModel(applicationId, page, cancellationToken));
+    }
+
+    [HttpGet("developing-partner-confirm/{organisationId}")]
+    public async Task<IActionResult> DevelopingPartnerConfirm([FromRoute] string applicationId, [FromRoute] string organisationId, CancellationToken cancellationToken)
+    {
+        return View(await GetConfirmPartnerModel(applicationId, organisationId, x => x.DevelopingPartner?.OrganisationId, cancellationToken));
+    }
+
+    [HttpPost("developing-partner-confirm/{organisationId}")]
+    public async Task<IActionResult> DevelopingPartnerConfirm([FromRoute] string applicationId, [FromRoute] string organisationId, [FromForm] bool? isPartnerConfirmed, [FromQuery] string? workflow, CancellationToken cancellationToken)
+    {
+        return await this.ExecuteCommand<(OrganisationDetails Organisation, bool? IsConfirmed)>(
+            _mediator,
+            new ProvideDevelopingPartnerCommand(AhpApplicationId.From(applicationId), OrganisationId.From(organisationId), isPartnerConfirmed),
+            async () => await this.ReturnToTaskListOrContinue(() =>
+                Task.FromResult<IActionResult>(isPartnerConfirmed == true ? RedirectToAction("PartnerDetails", new { applicationId, workflow }) : RedirectToAction("DevelopingPartner", new { applicationId, workflow }))),
+            async () =>
+            {
+                var (organisation, _) = await GetConfirmPartnerModel(applicationId, organisationId, x => x.DevelopingPartner?.OrganisationId, cancellationToken);
+                return View((organisation, isPartnerConfirmed));
+            },
+            cancellationToken);
+    }
+
+    [HttpGet("owner-of-the-land")]
+    public async Task<IActionResult> OwnerOfTheLand([FromRoute] string applicationId, [FromQuery] int? page, CancellationToken cancellationToken)
+    {
+        return View(await GetSelectPartnerModel(applicationId, page, cancellationToken));
+    }
+
+    [HttpGet("owner-of-the-land-confirm/{organisationId}")]
+    public async Task<IActionResult> OwnerOfTheLandConfirm([FromRoute] string applicationId, [FromRoute] string organisationId, CancellationToken cancellationToken)
+    {
+        return View(await GetConfirmPartnerModel(applicationId, organisationId, x => x.OwnerOfTheLand?.OrganisationId, cancellationToken));
+    }
+
+    [HttpPost("owner-of-the-land-confirm/{organisationId}")]
+    public async Task<IActionResult> OwnerOfTheLandConfirm([FromRoute] string applicationId, [FromRoute] string organisationId, [FromForm] bool? isPartnerConfirmed, [FromQuery] string? workflow, CancellationToken cancellationToken)
+    {
+        return await this.ExecuteCommand<(OrganisationDetails Organisation, bool? IsConfirmed)>(
+            _mediator,
+            new ProvideOwnerOfTheLandCommand(AhpApplicationId.From(applicationId), OrganisationId.From(organisationId), isPartnerConfirmed),
+            async () => await this.ReturnToTaskListOrContinue(() =>
+                Task.FromResult<IActionResult>(isPartnerConfirmed == true ? RedirectToAction("PartnerDetails", new { applicationId, workflow }) : RedirectToAction("OwnerOfTheLand", new { applicationId, workflow }))),
+            async () =>
+            {
+                var (organisation, _) = await GetConfirmPartnerModel(applicationId, organisationId, x => x.OwnerOfTheLand?.OrganisationId, cancellationToken);
+                return View((organisation, isPartnerConfirmed));
+            },
+            cancellationToken);
+    }
+
+    [HttpGet("owner-of-the-homes")]
+    public async Task<IActionResult> OwnerOfTheHomes([FromRoute] string applicationId, [FromQuery] int? page, CancellationToken cancellationToken)
+    {
+        return View(await GetSelectPartnerModel(applicationId, page, cancellationToken));
+    }
+
+    [HttpGet("owner-of-the-homes-confirm/{organisationId}")]
+    public async Task<IActionResult> OwnerOfTheHomesConfirm([FromRoute] string applicationId, [FromRoute] string organisationId, CancellationToken cancellationToken)
+    {
+        return View(await GetConfirmPartnerModel(applicationId, organisationId, x => x.OwnerOfTheHomes?.OrganisationId, cancellationToken));
+    }
+
+    [HttpPost("owner-of-the-homes-confirm/{organisationId}")]
+    public async Task<IActionResult> OwnerOfTheHomesConfirm([FromRoute] string applicationId, [FromRoute] string organisationId, [FromForm] bool? isPartnerConfirmed, [FromQuery] string? workflow, CancellationToken cancellationToken)
+    {
+        return await this.ExecuteCommand<(OrganisationDetails Organisation, bool? IsConfirmed)>(
+            _mediator,
+            new ProvideOwnerOfTheHomesCommand(AhpApplicationId.From(applicationId), OrganisationId.From(organisationId), isPartnerConfirmed),
+            async () => await this.ReturnToTaskListOrContinue(() =>
+                Task.FromResult<IActionResult>(isPartnerConfirmed == true ? RedirectToAction("PartnerDetails", new { applicationId, workflow }) : RedirectToAction("OwnerOfTheHomes", new { applicationId, workflow }))),
+            async () =>
+            {
+                var (organisation, _) = await GetConfirmPartnerModel(applicationId, organisationId, x => x.OwnerOfTheHomes?.OrganisationId, cancellationToken);
+                return View((organisation, isPartnerConfirmed));
+            },
+            cancellationToken);
     }
 
     [WorkflowState(SchemeWorkflowState.Affordability)]
@@ -349,6 +437,30 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
 
     private async Task<Scheme> GetScheme(string applicationId, CancellationToken cancellationToken, bool includeFiles = false)
     {
-        return await _mediator.Send(new GetApplicationSchemeQuery(AhpApplicationId.From(applicationId), includeFiles), cancellationToken);
+        var scheme = await _mediator.Send(new GetApplicationSchemeQuery(AhpApplicationId.From(applicationId), includeFiles), cancellationToken);
+        ViewBag.ApplicationName = scheme.Application.Name;
+
+        return scheme;
+    }
+
+    private async Task<SelectPartnerModel> GetSelectPartnerModel(string applicationId, int? page, CancellationToken cancellationToken)
+    {
+        var scheme = await GetScheme(applicationId, cancellationToken);
+        var partners = await _mediator.Send(new GetConsortiumMembersQuery(new PaginationRequest(page ?? 1)), cancellationToken);
+
+        return new SelectPartnerModel(scheme.Application.Id.Value, scheme.Application.Name, partners);
+    }
+
+    private async Task<(OrganisationDetails Organisation, bool? IsConfirmed)> GetConfirmPartnerModel(
+        string applicationId,
+        string organisationId,
+        Func<Scheme, string?> getSelectedPartnerId,
+        CancellationToken cancellationToken)
+    {
+        var scheme = await GetScheme(applicationId, cancellationToken);
+        var organisationDetails = await _mediator.Send(new GetOrganisationDetailsQuery(OrganisationId.From(organisationId)), cancellationToken);
+        var currentlySelectedPartner = getSelectedPartnerId(scheme);
+
+        return (organisationDetails, organisationDetails.OrganisationId == currentlySelectedPartner ? true : null);
     }
 }

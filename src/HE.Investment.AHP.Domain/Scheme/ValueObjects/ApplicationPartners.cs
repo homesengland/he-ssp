@@ -4,6 +4,7 @@ using HE.Investment.AHP.Domain.Site.ValueObjects;
 using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Exceptions;
+using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Domain;
 using Org::HE.Investments.Organisation.ValueObjects;
 
@@ -15,12 +16,12 @@ public class ApplicationPartners : ValueObject, IQuestion
         InvestmentsOrganisation developingPartner,
         InvestmentsOrganisation ownerOfTheLand,
         InvestmentsOrganisation ownerOfTheHomes,
-        bool? isConfirmed = null)
+        bool? areAllPartnersConfirmed = null)
     {
         DevelopingPartner = developingPartner;
         OwnerOfTheLand = ownerOfTheLand;
         OwnerOfTheHomes = ownerOfTheHomes;
-        IsConfirmed = isConfirmed;
+        AreAllPartnersConfirmed = areAllPartnersConfirmed;
     }
 
     public InvestmentsOrganisation DevelopingPartner { get; }
@@ -29,7 +30,7 @@ public class ApplicationPartners : ValueObject, IQuestion
 
     public InvestmentsOrganisation OwnerOfTheHomes { get; }
 
-    public bool? IsConfirmed { get; }
+    public bool? AreAllPartnersConfirmed { get; }
 
     public static ApplicationPartners ConfirmedPartner(OrganisationBasicInfo organisation)
     {
@@ -53,29 +54,29 @@ public class ApplicationPartners : ValueObject, IQuestion
         return new ApplicationPartners(sitePartners.DevelopingPartner!, sitePartners.OwnerOfTheLand!, sitePartners.OwnerOfTheHomes!);
     }
 
-    public ApplicationPartners WithDevelopingPartner(InvestmentsOrganisation developingPartner)
+    public ApplicationPartners WithDevelopingPartner(InvestmentsOrganisation developingPartner, bool? isPartnerConfirmed)
     {
-        return new ApplicationPartners(developingPartner, OwnerOfTheLand, OwnerOfTheHomes, developingPartner == DevelopingPartner ? IsConfirmed : null);
+        return Create(developingPartner, OwnerOfTheLand, OwnerOfTheHomes, isPartnerConfirmed, "developing partner");
     }
 
-    public ApplicationPartners WithOwnerOfTheLand(InvestmentsOrganisation ownerOfTheLand)
+    public ApplicationPartners WithOwnerOfTheLand(InvestmentsOrganisation ownerOfTheLand, bool? isPartnerConfirmed)
     {
-        return new ApplicationPartners(DevelopingPartner, ownerOfTheLand, OwnerOfTheHomes, ownerOfTheLand == OwnerOfTheLand ? IsConfirmed : null);
+        return Create(DevelopingPartner, ownerOfTheLand, OwnerOfTheHomes, isPartnerConfirmed, "owner of the land during development");
     }
 
-    public ApplicationPartners WithOwnerOfTheHomes(InvestmentsOrganisation ownerOfTheHomes)
+    public ApplicationPartners WithOwnerOfTheHomes(InvestmentsOrganisation ownerOfTheHomes, bool? isPartnerConfirmed)
     {
-        return new ApplicationPartners(DevelopingPartner, OwnerOfTheLand, ownerOfTheHomes, ownerOfTheHomes == OwnerOfTheHomes ? IsConfirmed : null);
+        return Create(DevelopingPartner, OwnerOfTheLand, ownerOfTheHomes, isPartnerConfirmed, "owner of the homes after completion");
     }
 
-    public ApplicationPartners WithConfirmation(bool? isConfirmed)
+    public ApplicationPartners WithAllPartnersConfirmation(bool? areAllPartnersConfirmed)
     {
-        return new ApplicationPartners(DevelopingPartner, OwnerOfTheLand, OwnerOfTheHomes, isConfirmed);
+        return new ApplicationPartners(DevelopingPartner, OwnerOfTheLand, OwnerOfTheHomes, areAllPartnersConfirmed);
     }
 
     public bool IsAnswered()
     {
-        return IsConfirmed == true;
+        return AreAllPartnersConfirmed == true;
     }
 
     protected override IEnumerable<object?> GetAtomicValues()
@@ -83,6 +84,34 @@ public class ApplicationPartners : ValueObject, IQuestion
         yield return DevelopingPartner.Id;
         yield return OwnerOfTheLand.Id;
         yield return OwnerOfTheHomes.Id;
-        yield return IsConfirmed;
+        yield return AreAllPartnersConfirmed;
+    }
+
+    private ApplicationPartners Create(
+        InvestmentsOrganisation developingPartner,
+        InvestmentsOrganisation ownerOfTheLand,
+        InvestmentsOrganisation ownerOfTheHomes,
+        bool? isPartnerConfirmed,
+        string partnerType)
+    {
+        if (isPartnerConfirmed == null)
+        {
+            OperationResult.ThrowValidationError(nameof(isPartnerConfirmed), $"Select yes if you want to confirm the {partnerType}");
+        }
+
+        if (isPartnerConfirmed!.Value)
+        {
+            var arePartnersTheSame = developingPartner.Id == DevelopingPartner.Id
+                                     && ownerOfTheLand.Id == OwnerOfTheLand.Id
+                                     && ownerOfTheHomes.Id == OwnerOfTheHomes.Id;
+
+            return new ApplicationPartners(
+                developingPartner,
+                ownerOfTheLand,
+                ownerOfTheHomes,
+                arePartnersTheSame ? AreAllPartnersConfirmed : null);
+        }
+
+        return this;
     }
 }

@@ -17,7 +17,7 @@ public sealed class ProvideOwnerOfTheLandCommandHandler : UpdateSchemeCommandHan
 
     protected override void Update(SchemeEntity scheme, ProvideOwnerOfTheLandCommand request)
     {
-        var applicationPartners = scheme.ApplicationPartners.WithOwnerOfTheLand(new InvestmentsOrganisation(request.OrganisationId, string.Empty));
+        var applicationPartners = scheme.ApplicationPartners.WithOwnerOfTheLand(new InvestmentsOrganisation(request.OrganisationId, string.Empty), request.IsPartnerConfirmed);
         scheme.ProvideApplicationPartners(applicationPartners);
     }
 }
