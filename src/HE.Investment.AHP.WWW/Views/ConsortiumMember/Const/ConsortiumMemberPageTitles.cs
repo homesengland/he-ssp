@@ -17,4 +17,6 @@ public static class ConsortiumMemberPageTitles
     public static string ConsortiumMember(string leadPartnerName) => $"{leadPartnerName} consortium";
 
     public static string RemoveMember(string memberName) => $"Are you sure you want to remove {memberName} from this consortium?";
+
+    public static string ContactHomesEngland(string programmeFullName, string programmeShortName) => $"Apply for {programmeFullName} ({programmeShortName})";
 }

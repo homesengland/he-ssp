@@ -64,7 +64,7 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
             return View("Splash");
         }
 
-        return RedirectToAction("Index", "ConsortiumMember", new { consortiumId = userAccount.Consortium.ConsortiumId });
+        return RedirectToAction("ContactHomesEngland", "ConsortiumMember", new { consortiumId = userAccount.Consortium.ConsortiumId });
     }
 
     [HttpPost("start")]

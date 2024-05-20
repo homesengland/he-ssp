@@ -1,4 +1,5 @@
 using HE.Investment.AHP.Domain.UserContext;
+using HE.Investment.AHP.WWW.Models.Consortium;
 using HE.Investment.AHP.WWW.Models.ConsortiumMember;
 using HE.Investment.AHP.WWW.Views.Shared.Components.OrganisationDetailsComponent;
 using HE.Investment.AHP.WWW.Workflows;
@@ -30,10 +31,13 @@ public class ConsortiumMemberController : WorkflowController<ConsortiumMemberWor
 
     private readonly IAhpUserContext _ahpUserContext;
 
-    public ConsortiumMemberController(IMediator mediator, IAhpUserContext ahpUserContext)
+    private readonly IAhpAccessContext _ahpAccessContext;
+
+    public ConsortiumMemberController(IMediator mediator, IAhpUserContext ahpUserContext, IAhpAccessContext ahpAccessContext)
     {
         _mediator = mediator;
         _ahpUserContext = ahpUserContext;
+        _ahpAccessContext = ahpAccessContext;
     }
 
     [HttpGet("back")]
@@ -175,6 +179,20 @@ public class ConsortiumMemberController : WorkflowController<ConsortiumMemberWor
             async () => await Continue(new { consortiumId }),
             async () => View("RemoveMember", await GetConsortiumMemberDetails(consortiumId, memberId, fetchAddress: false, cancellationToken)),
             cancellationToken);
+    }
+
+    [HttpGet("contact-homes-england")]
+    [AuthorizeWithCompletedProfile(AhpAccessContext.ViewConsortium)]
+    public async Task<IActionResult> ContactHomesEngland(string consortiumId, CancellationToken cancellationToken)
+    {
+        if (await _ahpAccessContext.IsConsortiumLeadPartner())
+        {
+            return RedirectToAction("PageNotFound", "Home");
+        }
+
+        var availableProgrammes = await _mediator.Send(new GetAvailableProgrammesQuery(), cancellationToken);
+
+        return View(new ConsortiumSelectedProgrammeModel(consortiumId, availableProgrammes.FirstOrDefault()!));
     }
 
     protected override async Task<IStateRouting<ConsortiumMemberWorkflowState>> Routing(ConsortiumMemberWorkflowState currentState, object? routeData = null)
