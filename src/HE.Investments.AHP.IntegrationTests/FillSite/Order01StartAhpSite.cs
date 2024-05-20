@@ -1,6 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using HE.Investment.AHP.Contract.Common.Enums;
+using HE.Investment.AHP.Contract.Project;
 using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.WWW.Models.Site;
 using HE.Investment.AHP.WWW.Views.Site.Const;
@@ -577,7 +578,7 @@ public class Order01StartAhpSite : AhpIntegrationTest
         var siteListPage = await TestQuestionPage(
             SitePagesUrl.SiteCheckAnswers(SiteData.SiteId),
             SitePageTitles.CheckAnswers,
-            SitePagesUrl.SiteList,
+            SitePagesUrl.SiteList(MockedProjectId.ProjectId),
             (nameof(IsSectionCompleted), IsSectionCompleted.Yes.ToString()));
 
         siteListPage.HasTitle(SitePageTitles.SiteList)
