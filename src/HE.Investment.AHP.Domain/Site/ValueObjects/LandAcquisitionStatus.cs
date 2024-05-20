@@ -12,7 +12,7 @@ public class LandAcquisitionStatus : ValueObject, IQuestion
 
     public SiteLandAcquisitionStatus? Value { get; }
 
-    public bool IsFullUnconditionalOption => Value is SiteLandAcquisitionStatus.FullOwnership;
+    public bool HasFullLandOwnership => Value is SiteLandAcquisitionStatus.FullOwnership;
 
     public bool IsAnswered()
     {

@@ -6,14 +6,17 @@ public class FinancialDetailsLandStatusModel : FinancialDetailsBaseModel
     {
     }
 
-    public FinancialDetailsLandStatusModel(string applicationId, string applicationName, string? purchasePrice, bool isFullUnconditionalOption)
+    public FinancialDetailsLandStatusModel(string applicationId, string applicationName, string? purchasePrice, string? landAcquisitionStatus, bool hasFullLandOwnership)
         : base(applicationId, applicationName)
     {
         PurchasePrice = purchasePrice;
-        IsFullUnconditionalOption = isFullUnconditionalOption;
+        LandAcquisitionStatus = landAcquisitionStatus;
+        HasFullLandOwnership = hasFullLandOwnership;
     }
 
     public string? PurchasePrice { get; set; }
 
-    public bool IsFullUnconditionalOption { get; set; }
+    public bool HasFullLandOwnership { get; set; }
+
+    public string? LandAcquisitionStatus { get; set; }
 }
