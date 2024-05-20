@@ -11,6 +11,6 @@ namespace HE.Common.IntegrationModel.PortalIntegrationModel
         public string siteName { get; set; }
         public string siteStatus { get; set; }
         public string ahpProjectId { get; set; }
-        public List<AhpApplicationDto> AhpApplications { get; set; }
+        public List<FrontDoorHPApplicationDto> AhpApplications { get; set; }
     }
 }

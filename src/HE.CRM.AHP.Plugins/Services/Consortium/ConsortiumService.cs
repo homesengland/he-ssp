@@ -7,6 +7,7 @@ using DataverseModel;
 using HE.Base.Services;
 using HE.CRM.Common.Repositories.interfaces;
 using HE.CRM.Common.Repositories.Interfaces;
+using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Query;
 
 namespace HE.CRM.AHP.Plugins.Services.Consortium
@@ -96,8 +97,17 @@ namespace HE.CRM.AHP.Plugins.Services.Consortium
 
         private bool IsApplicationPartner(invln_scheme application, string organizationId)
         {
-            if (application.invln_DevelopingPartner.Id == new Guid(organizationId) ||
-                application.invln_OwneroftheHomes.Id == new Guid(organizationId) ||
+            if (application.invln_DevelopingPartner != null &&
+                application.invln_DevelopingPartner.Id == new Guid(organizationId))
+            {
+                return true;
+            }
+            if (application.invln_OwneroftheHomes != null &&
+                application.invln_OwneroftheHomes.Id == new Guid(organizationId))
+            {
+                return true;
+            }
+            if (application.invln_OwneroftheLand != null &&
                 application.invln_OwneroftheLand.Id == new Guid(organizationId))
             {
                 return true;
@@ -110,53 +120,62 @@ namespace HE.CRM.AHP.Plugins.Services.Consortium
             TracingService.Trace("IsOrganizationSitePartner");
             var site = _siteRepository.GetById(new Guid(siteId));
 
-            /* if (site.invln_developingpartner != null)
-                 if (site.invln_developingpartner.Id == new Guid(organizationId))
-                     return true;
+            if (site.invln_developingpartner != null)
+                if (site.invln_developingpartner.Id == new Guid(organizationId))
+                    return true;
 
-             if (site.invln_ownerofthelandduringdevelopment != null)
-                 if (site.invln_ownerofthelandduringdevelopment.Id == new Guid(organizationId))
-                     return true;
+            if (site.invln_ownerofthelandduringdevelopment != null)
+                if (site.invln_ownerofthelandduringdevelopment.Id == new Guid(organizationId))
+                    return true;
 
-             if (site.invln_Ownerofthehomesaftercompletion != null)
-                 if (site.invln_Ownerofthehomesaftercompletion.Id == new Guid(organizationId))
-                     return true;*/
+            if (site.invln_Ownerofthehomesaftercompletion != null)
+                if (site.invln_Ownerofthehomesaftercompletion.Id == new Guid(organizationId))
+                    return true;
+
+            TracingService.Trace("IsOrganizationSitePartner return false");
             return false;
         }
 
         private bool IsConsortiumLeadPartner(invln_Consortium consortium, string organizationId)
         {
             TracingService.Trace("IsConsortiumLeadPartner");
-            TracingService.Trace($"{consortium.Id}");
-            TracingService.Trace($"{consortium.invln_LeadPartner.Id}");
             if (consortium != null)
             {
                 if (consortium.invln_LeadPartner.Id == new Guid(organizationId))
+                {
+                    TracingService.Trace("IsConsortiumLeadPartner return true");
                     return true;
+                }
+
             }
+            TracingService.Trace("IsConsortiumLeadPartner return false");
             return false;
         }
 
         private bool UserHasAccess(string externalUserId, Guid organizationId, string siteId = null, string applicationId = null)
         {
+            TracingService.Trace("Get Contact");
             var contact = CrmRepositoriesFactory.Get<IContactRepository>().GetContactViaExternalId(externalUserId);
+            TracingService.Trace("Get Portal Permition Level");
             List<invln_portalpermissionlevel> ppl = CrmRepositoriesFactory.Get<IPortalPermissionRepository>().GetByAccountAndContact(organizationId, contact.Id);
             int role = GetRole(ppl);
             bool accessToAction = false;
             if (siteId != null)
             {
-                accessToAction = hasUserHavePermitionToProvideOperation(Operation.Get, role, siteId);
+                TracingService.Trace("Check For site");
+                accessToAction = hasUserHavePermitionToProvideOperation(Operation.Get, role, siteId, null, contact.ToEntityReference());
             }
 
             if (applicationId != null)
             {
-                accessToAction = hasUserHavePermitionToProvideOperation(Operation.Get, role, null, applicationId);
+                TracingService.Trace("Check For application");
+                accessToAction = hasUserHavePermitionToProvideOperation(Operation.Get, role, null, applicationId, contact.ToEntityReference());
             }
 
             return accessToAction;
         }
 
-        private bool hasUserHavePermitionToProvideOperation(Operation operation, int role, string siteId = null, string applicationId = null)
+        private bool hasUserHavePermitionToProvideOperation(Operation operation, int role, string siteId = null, string applicationId = null, EntityReference contactId = null)
         {
 
             if (role == (int)invln_Permission.Admin)
@@ -172,16 +191,20 @@ namespace HE.CRM.AHP.Plugins.Services.Consortium
                 if (siteId != null)
                 {
                     var site = _siteRepository.GetById(new Guid(siteId));
-                    if (site.invln_CreatedByContactId == null)
+                    if (site.invln_CreatedByContactId != null)
                     {
-
+                        if (site.invln_CreatedByContactId.Equals(contactId))
+                        {
+                            return true;
+                        }
                     }
                 }
 
                 if (applicationId != null)
                 {
                     var application = _ahpApplicationRepository.GetById(new Guid(applicationId));
-                    //  if (application.invln_contactid.id == )
+                    if (application.invln_contactid.Equals(contactId))
+                        return true;
                 }
             }
 

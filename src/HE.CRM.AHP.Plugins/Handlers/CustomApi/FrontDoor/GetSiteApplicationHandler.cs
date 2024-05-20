@@ -4,6 +4,7 @@ using System.IdentityModel.Metadata;
 using System.Linq;
 using System.Security.Policy;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using DataverseModel;
 using HE.Base.Plugins.Handlers;
@@ -57,14 +58,15 @@ namespace HE.CRM.AHP.Plugins.Handlers.CustomApi.FrontDoor
             var filteredApplication = new List<invln_scheme>();
             foreach (var application in applications)
             {
-                if (_consortiumService.CheckAccess(Operation.Get, RecordType.Application, ExternalUserId, null, null, ConsortiumId, OrganizationId))
+                TracingService.Trace("Start loop for application");
+                if (_consortiumService.CheckAccess(Operation.Get, RecordType.Application, ExternalUserId, null, application.Id.ToString(), ConsortiumId, OrganizationId))
                 {
                     filteredApplication.Add(application);
                 }
             }
 
             var siteApplicationDto = SiteApplicationMapper.MapRegularEntityToDto(site, filteredApplication);
-            //   ExecutionData.SetOutputParameter(invln_getsiteapplicationsResponse.Fields.invln_siteapplication, "success");
+            ExecutionData.SetOutputParameter(invln_getsiteapplicationsResponse.Fields.invln_siteapplication, JsonSerializer.Serialize(siteApplicationDto));
         }
     }
 }
