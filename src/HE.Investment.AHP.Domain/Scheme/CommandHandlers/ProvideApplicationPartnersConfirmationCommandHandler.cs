@@ -14,7 +14,7 @@ public sealed class ProvideApplicationPartnersConfirmationCommandHandler : Updat
 
     protected override void Update(SchemeEntity scheme, ProvideApplicationPartnersConfirmationCommand request)
     {
-        var applicationPartners = scheme.ApplicationPartners.WithAllPartnersConfirmation(request.AreAllPartnersConfirmed);
+        var applicationPartners = scheme.ApplicationPartners.WithPartnersConfirmation(request.ArePartnersConfirmed);
         scheme.ProvideApplicationPartners(applicationPartners);
     }
 }

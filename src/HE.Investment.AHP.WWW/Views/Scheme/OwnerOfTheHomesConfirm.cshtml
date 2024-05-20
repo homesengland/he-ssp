@@ -19,7 +19,7 @@
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
     <vc:page-header caption="@ViewBag.ApplicationName"/>
 
-    <form asp-controller="Scheme" asp-action="OwnerOfTheHomesConfirm" asp-route-workflow=@redirect asp-method="post" novalidate>
+    <form asp-controller="Scheme" asp-action="OwnerOfTheHomesConfirm" asp-route-redirect=@redirect asp-method="post" novalidate>
         <vc:radio-yes-no
             title="@SharedPageTitles.OwnerOfTheHomesConfirm"
             title-type="InputTitleType.PageHeader"

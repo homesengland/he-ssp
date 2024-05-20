@@ -70,6 +70,7 @@ public class SchemeRepository : ISchemeRepository
         dto.developingPartnerId = entity.ApplicationPartners.DevelopingPartner.Id.ToGuidAsString();
         dto.ownerOfTheLandDuringDevelopmentId = entity.ApplicationPartners.OwnerOfTheLand.Id.ToGuidAsString();
         dto.ownerOfTheHomesAfterCompletionId = entity.ApplicationPartners.OwnerOfTheHomes.Id.ToGuidAsString();
+        dto.applicationPartnerConfirmation = entity.ApplicationPartners.ArePartnersConfirmed;
         dto.affordabilityEvidence = entity.AffordabilityEvidence.Evidence;
         dto.discussionsWithLocalStakeholders = entity.StakeholderDiscussions.StakeholderDiscussionsDetails.Report;
         dto.meetingLocalProrities = entity.HousingNeeds.MeetingLocalPriorities;

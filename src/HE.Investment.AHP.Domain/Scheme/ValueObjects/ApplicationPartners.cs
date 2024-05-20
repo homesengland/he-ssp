@@ -10,18 +10,18 @@ using Org::HE.Investments.Organisation.ValueObjects;
 
 namespace HE.Investment.AHP.Domain.Scheme.ValueObjects;
 
-public class ApplicationPartners : ValueObject, IQuestion
+public class ApplicationPartners : ValueObject
 {
     public ApplicationPartners(
         InvestmentsOrganisation developingPartner,
         InvestmentsOrganisation ownerOfTheLand,
         InvestmentsOrganisation ownerOfTheHomes,
-        bool? areAllPartnersConfirmed = null)
+        bool? arePartnersConfirmed = null)
     {
         DevelopingPartner = developingPartner;
         OwnerOfTheLand = ownerOfTheLand;
         OwnerOfTheHomes = ownerOfTheHomes;
-        AreAllPartnersConfirmed = areAllPartnersConfirmed;
+        ArePartnersConfirmed = arePartnersConfirmed;
     }
 
     public InvestmentsOrganisation DevelopingPartner { get; }
@@ -30,7 +30,7 @@ public class ApplicationPartners : ValueObject, IQuestion
 
     public InvestmentsOrganisation OwnerOfTheHomes { get; }
 
-    public bool? AreAllPartnersConfirmed { get; }
+    public bool? ArePartnersConfirmed { get; }
 
     public static ApplicationPartners ConfirmedPartner(OrganisationBasicInfo organisation)
     {
@@ -69,14 +69,19 @@ public class ApplicationPartners : ValueObject, IQuestion
         return Create(DevelopingPartner, OwnerOfTheLand, ownerOfTheHomes, isPartnerConfirmed, "owner of the homes after completion");
     }
 
-    public ApplicationPartners WithAllPartnersConfirmation(bool? areAllPartnersConfirmed)
+    public ApplicationPartners WithPartnersConfirmation(bool? arePartnersConfirmed)
     {
-        return new ApplicationPartners(DevelopingPartner, OwnerOfTheLand, OwnerOfTheHomes, areAllPartnersConfirmed);
+        return new ApplicationPartners(DevelopingPartner, OwnerOfTheLand, OwnerOfTheHomes, arePartnersConfirmed);
     }
 
-    public bool IsAnswered()
+    public void CheckIsComplete()
     {
-        return AreAllPartnersConfirmed == true;
+        if (ArePartnersConfirmed == true)
+        {
+            return;
+        }
+
+        OperationResult.ThrowValidationError(nameof(ArePartnersConfirmed), "Partner Details are not confirmed.");
     }
 
     protected override IEnumerable<object?> GetAtomicValues()
@@ -84,7 +89,7 @@ public class ApplicationPartners : ValueObject, IQuestion
         yield return DevelopingPartner.Id;
         yield return OwnerOfTheLand.Id;
         yield return OwnerOfTheHomes.Id;
-        yield return AreAllPartnersConfirmed;
+        yield return ArePartnersConfirmed;
     }
 
     private ApplicationPartners Create(
@@ -109,7 +114,7 @@ public class ApplicationPartners : ValueObject, IQuestion
                 developingPartner,
                 ownerOfTheLand,
                 ownerOfTheHomes,
-                arePartnersTheSame ? AreAllPartnersConfirmed : null);
+                arePartnersTheSame ? ArePartnersConfirmed : null);
         }
 
         return this;

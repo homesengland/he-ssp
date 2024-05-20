@@ -99,6 +99,7 @@ public class SchemeEntity : DomainEntity
         var operationResult = new OperationResult();
         operationResult.Aggregate(Funding.CheckIsComplete);
         operationResult.Aggregate(AffordabilityEvidence.CheckIsComplete);
+        operationResult.Aggregate(ApplicationPartners.CheckIsComplete);
         operationResult.Aggregate(SalesRisk.CheckIsComplete);
         operationResult.Aggregate(HousingNeeds.CheckIsComplete);
         operationResult.Aggregate(StakeholderDiscussions.CheckIsComplete);

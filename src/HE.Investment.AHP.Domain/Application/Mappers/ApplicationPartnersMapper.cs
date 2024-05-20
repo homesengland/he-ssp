@@ -22,7 +22,7 @@ internal static class ApplicationPartnersMapper
             MapPartner(dto.developingPartnerId, dto.developingPartnerName),
             MapPartner(dto.ownerOfTheLandDuringDevelopmentId, dto.ownerOfTheLandDuringDevelopmentName),
             MapPartner(dto.ownerOfTheHomesAfterCompletionId, dto.ownerOfTheHomesAfterCompletionName),
-            dto.applicationPartnerConfirmation);
+            dto.applicationPartnerConfirmation == true ? true : null);
     }
 
     private static InvestmentsOrganisation MapPartner(string organisationId, string organisationName) =>

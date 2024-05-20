@@ -91,9 +91,19 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
     [HttpGet("partner-details")]
     public async Task<IActionResult> PartnerDetails([FromRoute] string applicationId, CancellationToken cancellationToken)
     {
-        var scheme = await GetScheme(applicationId, cancellationToken);
+        return View(await GetScheme(applicationId, cancellationToken));
+    }
 
-        return View(scheme);
+    [WorkflowState(SchemeWorkflowState.PartnerDetails)]
+    [HttpPost("partner-details")]
+    public async Task<IActionResult> PartnerDetails([FromRoute] string applicationId, [FromForm] bool? arePartnersConfirmed, CancellationToken cancellationToken)
+    {
+        return await this.ExecuteCommand<SchemeViewModel>(
+            _mediator,
+            new ProvideApplicationPartnersConfirmationCommand(AhpApplicationId.From(applicationId), arePartnersConfirmed),
+            async () => await this.ReturnToTaskListOrContinue(async () => await ContinueWithRedirect(new { applicationId })),
+            async () => View("PartnerDetails", await GetScheme(applicationId, cancellationToken) with { ArePartnersConfirmed = arePartnersConfirmed }),
+            cancellationToken);
     }
 
     [HttpGet("developing-partner")]
@@ -109,13 +119,13 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
     }
 
     [HttpPost("developing-partner-confirm/{organisationId}")]
-    public async Task<IActionResult> DevelopingPartnerConfirm([FromRoute] string applicationId, [FromRoute] string organisationId, [FromForm] bool? isPartnerConfirmed, [FromQuery] string? workflow, CancellationToken cancellationToken)
+    public async Task<IActionResult> DevelopingPartnerConfirm([FromRoute] string applicationId, [FromRoute] string organisationId, [FromForm] bool? isPartnerConfirmed, [FromQuery] string? redirect, CancellationToken cancellationToken)
     {
         return await this.ExecuteCommand<(OrganisationDetails Organisation, bool? IsConfirmed)>(
             _mediator,
             new ProvideDevelopingPartnerCommand(AhpApplicationId.From(applicationId), OrganisationId.From(organisationId), isPartnerConfirmed),
             async () => await this.ReturnToTaskListOrContinue(() =>
-                Task.FromResult<IActionResult>(isPartnerConfirmed == true ? RedirectToAction("PartnerDetails", new { applicationId, workflow }) : RedirectToAction("DevelopingPartner", new { applicationId, workflow }))),
+                Task.FromResult<IActionResult>(isPartnerConfirmed == true ? RedirectToAction("PartnerDetails", new { applicationId, redirect }) : RedirectToAction("DevelopingPartner", new { applicationId, redirect }))),
             async () =>
             {
                 var (organisation, _) = await GetConfirmPartnerModel(applicationId, organisationId, x => x.DevelopingPartner?.OrganisationId, cancellationToken);
@@ -137,13 +147,13 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
     }
 
     [HttpPost("owner-of-the-land-confirm/{organisationId}")]
-    public async Task<IActionResult> OwnerOfTheLandConfirm([FromRoute] string applicationId, [FromRoute] string organisationId, [FromForm] bool? isPartnerConfirmed, [FromQuery] string? workflow, CancellationToken cancellationToken)
+    public async Task<IActionResult> OwnerOfTheLandConfirm([FromRoute] string applicationId, [FromRoute] string organisationId, [FromForm] bool? isPartnerConfirmed, [FromQuery] string? redirect, CancellationToken cancellationToken)
     {
         return await this.ExecuteCommand<(OrganisationDetails Organisation, bool? IsConfirmed)>(
             _mediator,
             new ProvideOwnerOfTheLandCommand(AhpApplicationId.From(applicationId), OrganisationId.From(organisationId), isPartnerConfirmed),
             async () => await this.ReturnToTaskListOrContinue(() =>
-                Task.FromResult<IActionResult>(isPartnerConfirmed == true ? RedirectToAction("PartnerDetails", new { applicationId, workflow }) : RedirectToAction("OwnerOfTheLand", new { applicationId, workflow }))),
+                Task.FromResult<IActionResult>(isPartnerConfirmed == true ? RedirectToAction("PartnerDetails", new { applicationId, redirect }) : RedirectToAction("OwnerOfTheLand", new { applicationId, redirect }))),
             async () =>
             {
                 var (organisation, _) = await GetConfirmPartnerModel(applicationId, organisationId, x => x.OwnerOfTheLand?.OrganisationId, cancellationToken);
@@ -165,13 +175,13 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
     }
 
     [HttpPost("owner-of-the-homes-confirm/{organisationId}")]
-    public async Task<IActionResult> OwnerOfTheHomesConfirm([FromRoute] string applicationId, [FromRoute] string organisationId, [FromForm] bool? isPartnerConfirmed, [FromQuery] string? workflow, CancellationToken cancellationToken)
+    public async Task<IActionResult> OwnerOfTheHomesConfirm([FromRoute] string applicationId, [FromRoute] string organisationId, [FromForm] bool? isPartnerConfirmed, [FromQuery] string? redirect, CancellationToken cancellationToken)
     {
         return await this.ExecuteCommand<(OrganisationDetails Organisation, bool? IsConfirmed)>(
             _mediator,
             new ProvideOwnerOfTheHomesCommand(AhpApplicationId.From(applicationId), OrganisationId.From(organisationId), isPartnerConfirmed),
             async () => await this.ReturnToTaskListOrContinue(() =>
-                Task.FromResult<IActionResult>(isPartnerConfirmed == true ? RedirectToAction("PartnerDetails", new { applicationId, workflow }) : RedirectToAction("OwnerOfTheHomes", new { applicationId, workflow }))),
+                Task.FromResult<IActionResult>(isPartnerConfirmed == true ? RedirectToAction("PartnerDetails", new { applicationId, redirect }) : RedirectToAction("OwnerOfTheHomes", new { applicationId, redirect }))),
             async () =>
             {
                 var (organisation, _) = await GetConfirmPartnerModel(applicationId, organisationId, x => x.OwnerOfTheHomes?.OrganisationId, cancellationToken);
