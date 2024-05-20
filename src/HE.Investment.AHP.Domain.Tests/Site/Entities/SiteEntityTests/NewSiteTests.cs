@@ -3,6 +3,7 @@ extern alias Org;
 using FluentAssertions;
 using HE.Investment.AHP.Domain.Site.Entities;
 using HE.Investment.AHP.Domain.Tests.Common.TestData;
+using HE.Investments.FrontDoor.Shared.Project;
 using Org::HE.Investments.Organisation.ValueObjects;
 
 namespace HE.Investment.AHP.Domain.Tests.Site.Entities.SiteEntityTests;
@@ -17,7 +18,7 @@ public class NewSiteTests
         var myOrganisation = new InvestmentsOrganisation(userAccount.SelectedOrganisationId(), userAccount.SelectedOrganisation().RegisteredCompanyName);
 
         // when
-        var result = SiteEntity.NewSite(userAccount, null, null);
+        var result = SiteEntity.NewSite(userAccount, new FrontDoorProjectId("1"), null);
 
         // then
         result.SitePartners.DevelopingPartner.Should().Be(myOrganisation);
@@ -32,7 +33,7 @@ public class NewSiteTests
         var userAccount = AhpUserAccountTestData.UserAccountOneWithConsortium;
 
         // when
-        var result = SiteEntity.NewSite(userAccount, null, null);
+        var result = SiteEntity.NewSite(userAccount, new FrontDoorProjectId("1"), null);
 
         // then
         result.SitePartners.DevelopingPartner.Should().BeNull();

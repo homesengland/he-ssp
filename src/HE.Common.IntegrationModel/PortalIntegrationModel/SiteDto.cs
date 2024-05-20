@@ -45,6 +45,7 @@ namespace HE.Common.IntegrationModel.PortalIntegrationModel
         public OrganizationDetailsDto ownerOfTheHomesAfterCompletion { get; set; }
 
         public string ahpProjectid { get; set; }
+        public string fdProjectid { get; set; }
         public string fdSiteid { get; set; }
     }
 

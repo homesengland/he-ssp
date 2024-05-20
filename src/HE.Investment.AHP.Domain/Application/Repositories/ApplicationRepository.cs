@@ -105,7 +105,7 @@ public class ApplicationRepository : IApplicationRepository
 
     public async Task<PaginationResult<ApplicationWithFundingDetails>> GetSiteApplications(SiteId siteId, UserAccount userAccount, PaginationRequest paginationRequest, CancellationToken cancellationToken)
     {
-        return await GetApplications(userAccount, paginationRequest, a => a.siteId == siteId.Value, cancellationToken);
+        return await GetApplications(userAccount, paginationRequest, a => a.siteId == siteId.ToGuidAsString(), cancellationToken);
     }
 
     public async Task<ApplicationEntity> Save(ApplicationEntity application, OrganisationId organisationId, CancellationToken cancellationToken)

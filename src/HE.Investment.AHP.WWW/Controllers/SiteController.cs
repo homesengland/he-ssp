@@ -139,7 +139,7 @@ public class SiteController : WorkflowController<SiteWorkflowState>
         var result = await _mediator.Send(
             new ProvideNameCommand(
                 SiteId.Create(siteId ?? model.Id),
-                FrontDoorProjectId.Create(fdProjectId),
+                FrontDoorProjectId.Create(fdProjectId) ?? new FrontDoorProjectId(MockedProjectId.ProjectId),
                 FrontDoorSiteId.Create(fdSiteId),
                 model.Name),
             cancellationToken);

@@ -4,5 +4,5 @@ using MediatR;
 
 namespace HE.Investment.AHP.Contract.Site.Commands;
 
-public record ProvideNameCommand(SiteId? SiteId, FrontDoorProjectId? FrontDoorProjectId, FrontDoorSiteId? FrontDoorSiteId, string? Name)
+public record ProvideNameCommand(SiteId? SiteId, FrontDoorProjectId FrontDoorProjectId, FrontDoorSiteId? FrontDoorSiteId, string? Name)
     : IRequest<OperationResult<SiteId>>;
