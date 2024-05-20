@@ -1,6 +1,7 @@
 using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.Site;
 using HE.Investments.Common.Contract;
+using HE.Investments.FrontDoor.Shared.Project;
 
 namespace HE.Investment.AHP.WWW.Tests.Views.Site;
 
@@ -12,7 +13,13 @@ public class DetailsTests : AhpViewTestBase
     public async Task ShouldDisplayView_WhenSiteIsEmpty()
     {
         // given
-        var model = new SiteDetailsModel(new SiteId("123"), "My new Site", "PwC Organisation", null, new(Array.Empty<ApplicationSiteModel>(), 1, 10, 0));
+        var model = new SiteDetailsModel(
+            new SiteId("123"),
+            new FrontDoorProjectId("456"),
+            "My new Site",
+            "PwC Organisation",
+            null,
+            new(Array.Empty<ApplicationSiteModel>(), 1, 10, 0));
 
         // when
         var document = await Render(_viewPath, model);
@@ -37,6 +44,7 @@ public class DetailsTests : AhpViewTestBase
         var application = new ApplicationSiteModel(new AhpApplicationId("321"), "My Application", Tenure.AffordableRent, 10, ApplicationStatus.Draft);
         var model = new SiteDetailsModel(
             new SiteId("123"),
+            new FrontDoorProjectId("456"),
             "My new Site",
             "PwC Organisation",
             "My local authority",

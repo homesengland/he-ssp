@@ -3,6 +3,7 @@ extern alias Org;
 using System.Collections.ObjectModel;
 using System.Globalization;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
+using HE.Investment.AHP.Contract.Project;
 using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Contract.Site.Enums;
 using HE.Investment.AHP.Domain.Site.Entities;
@@ -14,6 +15,7 @@ using HE.Investment.AHP.Domain.Site.ValueObjects.StrategicSite;
 using HE.Investment.AHP.Domain.Site.ValueObjects.TenderingStatus;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.CRM.Mappers;
+using HE.Investments.FrontDoor.Shared.Project;
 using Org::HE.Investments.Organisation.LocalAuthorities.ValueObjects;
 using Org::HE.Investments.Organisation.ValueObjects;
 using LocalAuthority = Org::HE.Investments.Organisation.LocalAuthorities.ValueObjects.LocalAuthority;
@@ -46,6 +48,7 @@ public static class SiteDtoToSiteEntityMapper
     {
         return new SiteEntity(
             SiteId.From(dto.id),
+            new FrontDoorProjectId(string.IsNullOrWhiteSpace(dto.fdProjectid) ? MockedProjectId.ProjectId : dto.fdProjectid),
             new SiteName(dto.name),
             new SitePartners(MapOrganisation(dto.developerPartner), MapOrganisation(dto.ownerOfTheLandDuringDevelopment), MapOrganisation(dto.ownerOfTheHomesAfterCompletion)),
             SiteStatusMapper.ToDomain(dto.status),
@@ -64,7 +67,6 @@ public static class SiteDtoToSiteEntityMapper
             string.IsNullOrWhiteSpace(dto.environmentalImpact) ? null : new EnvironmentalImpact(dto.environmentalImpact),
             CreateMmc(dto.modernMethodsOfConstruction),
             new SiteProcurements(MapCollection(dto.procurementMechanisms, SiteProcurementMapper)),
-            frontDoorProjectId: null, // TODO: use value from CRM when added
             frontDoorSiteId: null);
     }
 
