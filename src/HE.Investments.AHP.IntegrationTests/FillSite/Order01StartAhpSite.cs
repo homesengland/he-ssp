@@ -577,10 +577,26 @@ public class Order01StartAhpSite : AhpIntegrationTest
         var siteListPage = await TestQuestionPage(
             SitePagesUrl.SiteCheckAnswers(SiteData.SiteId),
             SitePageTitles.CheckAnswers,
-            SitePagesUrl.SiteList,
+            "sites",
             (nameof(IsSectionCompleted), IsSectionCompleted.Yes.ToString()));
 
         siteListPage.HasTitle(SitePageTitles.SiteList)
             .HasLinkWithHref(SitePagesUrl.SiteDetails(SiteData.SiteId), out _);
+    }
+
+    [Fact(Skip = AhpConfig.SkipTest)]
+    [Order(39)]
+    public async Task Order39_SiteIsNotEditableAfterCompletion()
+    {
+        var checkAnswersPage = await GetCurrentPage(SitePagesUrl.SiteCheckAnswers(SiteData.SiteId));
+
+        var summaryItems = checkAnswersPage.GetSummaryListItems();
+        foreach (var item in summaryItems)
+        {
+            item.Value.ChangeAnswerLink.Should().BeNull();
+        }
+
+        var result = await TestClient.NavigateTo(SitePagesUrl.SiteName + "?siteId=" + SiteData.SiteId);
+        result.Title.Should().Be("Page not found");
     }
 }

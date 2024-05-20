@@ -1007,7 +1007,9 @@ public class SiteController : WorkflowController<SiteWorkflowState>
         SiteModel? siteModel = null;
         var siteId = Request.GetRouteValue("siteId")
                      ?? routeData?.GetPropertyValue<string>("siteId")
+                     ?? Request.Query.FirstOrDefault(queryParam => queryParam.Key == "siteId").Value.FirstOrDefault()
                      ?? string.Empty;
+
         if (siteId.IsNotNullOrEmpty())
         {
             siteModel = await _mediator.Send(new GetSiteQuery(siteId));
@@ -1080,7 +1082,7 @@ public class SiteController : WorkflowController<SiteWorkflowState>
     {
         var siteId = this.GetSiteIdFromRoute();
         var siteDetails = await GetSiteDetails(siteId.Value, cancellationToken);
-        var isEditable = await _accountAccessContext.CanEditApplication();
+        var isEditable = await _accountAccessContext.CanEditApplication() && siteDetails.Status != SiteStatus.Completed;
         var userAccount = await _accountUserContext.GetSelectedAccount();
         var sections = _siteSummaryViewModelFactory.CreateSiteSummary(siteDetails, userAccount.SelectedOrganisation(), Url, isEditable, useWorkflowRedirection);
 
