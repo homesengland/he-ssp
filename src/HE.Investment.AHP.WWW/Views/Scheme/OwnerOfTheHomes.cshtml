@@ -1,0 +1,30 @@
+@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Links
+@using HE.Investment.AHP.WWW.Extensions
+@using HE.Investment.AHP.WWW.Views.Shared
+@using HE.Investment.AHP.WWW.Views.Shared.Components.ReturnToApplicationLink
+@using HE.Investments.Common.WWW.Components.PageHeader
+@using SelectList = Microsoft.AspNetCore.Mvc.Rendering.SelectList
+@model HE.Investment.AHP.WWW.Models.Scheme.SelectPartnerModel;
+@{
+    ViewData["Title"] = SharedPageTitles.OwnerOfTheHomes;
+    var redirect = Context.Request.Query["redirect"];
+
+    var items = Model.ConsortiumMembers.ToSelectListViewModel(
+        x => Url.Action("OwnerOfTheHomesConfirm", "Scheme", new { Model.ApplicationId, organisationId = x.Value, redirect }));
+}
+
+<gds-div-grid-column-two-thirds>
+    <gds-back-link href="@Url.Action("PartnerDetails", "Scheme", new { Model.ApplicationId, redirect })" class="govuk-!-margin-bottom-8"></gds-back-link>
+    <vc:page-header title="@SharedPageTitles.OwnerOfTheHomes" caption="@Model.ApplicationName"/>
+
+    @foreach (var paragraph in SharedParagraphs.OwnerOfTheHomes)
+    {
+        <gds-p>@paragraph</gds-p>
+    }
+
+    <vc:select-list
+        items="@items"
+        paging-navigation-url="@Url.Action("OwnerOfTheHomes", "Scheme", new { Model.ApplicationId, redirect })"/>
+
+    <vc:return-to-application-link application-id="@Model.ApplicationId" is-editable="false"/>
+</gds-div-grid-column-two-thirds>

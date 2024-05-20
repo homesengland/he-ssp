@@ -17,7 +17,7 @@ public sealed class ProvideDevelopingPartnerCommandHandler : UpdateSchemeCommand
 
     protected override void Update(SchemeEntity scheme, ProvideDevelopingPartnerCommand request)
     {
-        var applicationPartners = scheme.ApplicationPartners.WithDevelopingPartner(new InvestmentsOrganisation(request.OrganisationId, string.Empty));
+        var applicationPartners = scheme.ApplicationPartners.WithDevelopingPartner(new InvestmentsOrganisation(request.OrganisationId, string.Empty), request.IsPartnerConfirmed);
         scheme.ProvideApplicationPartners(applicationPartners);
     }
 }

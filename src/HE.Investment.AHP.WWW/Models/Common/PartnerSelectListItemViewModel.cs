@@ -3,7 +3,7 @@ using HE.Investments.AHP.Consortium.Contract;
 using HE.Investments.Common.WWW.Components;
 using HE.Investments.Common.WWW.Components.SelectList;
 
-namespace HE.Investment.AHP.WWW.Models.Site;
+namespace HE.Investment.AHP.WWW.Models.Common;
 
 public record PartnerSelectListItemViewModel(string Url, ConsortiumMemberDetails Partner)
     : SelectListItemViewModel(

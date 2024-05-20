@@ -2,6 +2,7 @@ using He.AspNetCore.Mvc.Gds.Components.Extensions;
 using HE.Investment.AHP.Contract.Common.Enums;
 using HE.Investment.AHP.Contract.Common.Queries;
 using HE.Investment.AHP.Contract.PrefillData.Queries;
+using HE.Investment.AHP.Contract.Project;
 using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Contract.Site.Commands;
 using HE.Investment.AHP.Contract.Site.Commands.Mmc;
@@ -64,7 +65,7 @@ public class SiteController : WorkflowController<SiteWorkflowState>
     [HttpGet]
     public IActionResult Index()
     {
-        return RedirectToAction("Sites", "Project", new { projectId = "to remove" });
+        return RedirectToAction("Sites", "Project", new { projectId = MockedProjectId.ProjectId });
     }
 
     [HttpGet("select")]

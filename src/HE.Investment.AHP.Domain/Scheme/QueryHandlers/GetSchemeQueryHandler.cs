@@ -1,3 +1,5 @@
+extern alias Org;
+
 using HE.Investment.AHP.Contract.Scheme.Queries;
 using HE.Investment.AHP.Domain.Application.Mappers;
 using HE.Investment.AHP.Domain.Scheme.Entities;
@@ -5,6 +7,7 @@ using HE.Investment.AHP.Domain.Scheme.Repositories;
 using HE.Investment.AHP.Domain.UserContext;
 using HE.Investments.AHP.Consortium.Contract;
 using MediatR;
+using Org::HE.Investments.Organisation.ValueObjects;
 using UploadedFile = HE.Investment.AHP.Contract.Common.UploadedFile;
 
 namespace HE.Investment.AHP.Domain.Scheme.QueryHandlers;
@@ -26,16 +29,15 @@ public class GetSchemeQueryHandler : IRequestHandler<GetApplicationSchemeQuery, 
         var account = await _ahpUserContext.GetSelectedAccount();
         var entity = await _repository.GetByApplicationId(request.ApplicationId, account, request.IncludeFiles, cancellationToken);
 
-        var (developingPartner, ownerOfTheLand, ownerOfTheHomes, arePartnersConfirmed) = GetPartnerDetails(account);
         return new Contract.Scheme.Scheme(
             ApplicationBasicInfoMapper.Map(entity.Application),
             entity.Status,
             entity.Funding.RequiredFunding,
             entity.Funding.HousesToDeliver,
-            developingPartner,
-            ownerOfTheLand,
-            ownerOfTheHomes,
-            arePartnersConfirmed,
+            MapPartner(entity.ApplicationPartners.DevelopingPartner),
+            MapPartner(entity.ApplicationPartners.OwnerOfTheLand),
+            MapPartner(entity.ApplicationPartners.OwnerOfTheHomes),
+            entity.ApplicationPartners.AreAllPartnersConfirmed,
             entity.AffordabilityEvidence.Evidence,
             entity.SalesRisk.Value,
             entity.HousingNeeds.MeetingLocalPriorities,
@@ -55,18 +57,8 @@ public class GetSchemeQueryHandler : IRequestHandler<GetApplicationSchemeQuery, 
         return new UploadedFile(fileContainer.File.Id, fileContainer.File.Name.Value, fileContainer.File.UploadedOn, fileContainer.File.UploadedBy, true);
     }
 
-    private static (OrganisationDetails? DevelopingPartner, OrganisationDetails? OwnerOfTheLand, OrganisationDetails? OwnerOfTheHomes, bool? ArePartnersConfirmed)
-        GetPartnerDetails(AhpUserAccount userAccount)
+    private static OrganisationDetails MapPartner(InvestmentsOrganisation organisation)
     {
-        // TODO: AB#74674 - return Site/Application partners for consortium
-        if (userAccount.Consortium.HasNoConsortium)
-        {
-            return (null, null, null, null);
-        }
-
-        return (new OrganisationDetails("Morelas Developments", string.Empty, string.Empty, string.Empty, string.Empty, string.Empty),
-            new OrganisationDetails("Morelas Ltd.", string.Empty, string.Empty, string.Empty, string.Empty, string.Empty),
-            new OrganisationDetails("Cactus Developments", string.Empty, string.Empty, string.Empty, string.Empty, string.Empty),
-            false);
+        return new OrganisationDetails(organisation.Name, string.Empty, string.Empty, string.Empty, string.Empty, organisation.Id.ToString());
     }
 }

@@ -10,6 +10,7 @@ using HE.Investment.AHP.WWW.Workflows;
 using HE.Investments.Account.Shared.Authorization.Attributes;
 using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Contract.Validators;
+using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Messages;
 using HE.Investments.Common.Validators;
 using HE.Investments.Common.WWW.Controllers;
@@ -54,7 +55,8 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
             applicationId,
             financialDetails.Application.Name,
             CurrencyHelper.InputPoundsPences(financialDetails.PurchasePrice),
-            financialDetails.IsFullUnconditionalOption));
+            financialDetails.LandAcquisitionStatus?.GetDescription(),
+            financialDetails.HasFullLandOwnership));
     }
 
     [HttpPost("land-status")]
@@ -62,7 +64,7 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
     public async Task<IActionResult> LandStatus(string applicationId, FinancialDetailsLandStatusModel model, CancellationToken cancellationToken)
     {
         return await ProvideFinancialDetails(
-            new ProvideLandStatusCommand(AhpApplicationId.From(applicationId), model.PurchasePrice, model.IsFullUnconditionalOption),
+            new ProvideLandStatusCommand(AhpApplicationId.From(applicationId), model.PurchasePrice, model.HasFullLandOwnership),
             model,
             cancellationToken);
     }

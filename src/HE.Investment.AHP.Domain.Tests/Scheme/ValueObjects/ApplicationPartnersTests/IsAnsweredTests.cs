@@ -12,7 +12,7 @@ public class IsAnsweredTests
     {
         // given
         var testCandidate = ApplicationPartnersBuilder.New()
-            .WithConfirmation(true)
+            .WithAllPartnersConfirmation(true)
             .Build();
 
         // when
@@ -29,7 +29,7 @@ public class IsAnsweredTests
     {
         // given
         var testCandidate = ApplicationPartnersBuilder.New()
-            .WithConfirmation(isConfirmed)
+            .WithAllPartnersConfirmation(isConfirmed)
             .Build();
 
         // when

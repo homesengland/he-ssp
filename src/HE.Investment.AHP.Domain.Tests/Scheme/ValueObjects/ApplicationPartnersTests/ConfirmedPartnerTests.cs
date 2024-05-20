@@ -25,7 +25,7 @@ public class ConfirmedPartnerTests
         result.DevelopingPartner.Should().Be(InvestmentsOrganisationTestData.CactusDevelopments);
         result.OwnerOfTheLand.Should().Be(InvestmentsOrganisationTestData.CactusDevelopments);
         result.OwnerOfTheHomes.Should().Be(InvestmentsOrganisationTestData.CactusDevelopments);
-        result.IsConfirmed.Should().BeTrue();
+        result.AreAllPartnersConfirmed.Should().BeTrue();
     }
 
     [Fact]
@@ -38,6 +38,6 @@ public class ConfirmedPartnerTests
         result.DevelopingPartner.Id.Should().Be(InvestmentsOrganisationTestData.CactusDevelopments.Id);
         result.OwnerOfTheLand.Id.Should().Be(InvestmentsOrganisationTestData.CactusDevelopments.Id);
         result.OwnerOfTheHomes.Id.Should().Be(InvestmentsOrganisationTestData.CactusDevelopments.Id);
-        result.IsConfirmed.Should().BeTrue();
+        result.AreAllPartnersConfirmed.Should().BeTrue();
     }
 }

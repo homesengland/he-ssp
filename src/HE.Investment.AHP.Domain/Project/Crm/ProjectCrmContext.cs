@@ -1,4 +1,5 @@
 using HE.Common.IntegrationModel.PortalIntegrationModel;
+using HE.Investment.AHP.Contract.Project;
 using HE.Investment.AHP.Domain.Application.Crm;
 using HE.Investment.AHP.Domain.Site.Crm;
 
@@ -7,11 +8,11 @@ namespace HE.Investment.AHP.Domain.Project.Crm;
 public class ProjectCrmContext : IProjectCrmContext
 {
     private readonly ProjectDto _mockedProjectDto =
-        new() { ProjectId = "885f479a-eed7-4745-817d-9c7968db4852", ProjectName = "Mocked project", };
+        new() { ProjectId = MockedProjectId.ProjectId, ProjectName = "Mocked project", };
 
     private readonly List<ProjectDto> _mockedProjectDtoList =
     [
-        new ProjectDto { ProjectName = "Mocked project", ProjectId = "885f479a-eed7-4745-817d-9c7968db4852" },
+        new ProjectDto { ProjectName = "Mocked project", ProjectId = MockedProjectId.ProjectId },
         new ProjectDto
         {
             ProjectName = "Second project",
