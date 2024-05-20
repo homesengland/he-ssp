@@ -31,7 +31,6 @@ public class ConsortiumMemberController : WorkflowController<ConsortiumMemberWor
 
     private readonly IAhpUserContext _ahpUserContext;
 
-
     public ConsortiumMemberController(IMediator mediator, IAhpUserContext ahpUserContext)
     {
         _mediator = mediator;
@@ -186,7 +185,7 @@ public class ConsortiumMemberController : WorkflowController<ConsortiumMemberWor
     {
         var availableProgrammes = await _mediator.Send(new GetAvailableProgrammesQuery(), cancellationToken);
 
-        return View(new ConsortiumSelectedProgrammeModel(consortiumId, availableProgrammes.FirstOrDefault()!));
+        return View(new ConsortiumSelectedProgrammeModel(consortiumId, availableProgrammes[0]));
     }
 
     protected override async Task<IStateRouting<ConsortiumMemberWorkflowState>> Routing(ConsortiumMemberWorkflowState currentState, object? routeData = null)
