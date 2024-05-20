@@ -36,7 +36,8 @@
         <vc:radio-yes-no title="Are these partner details still correct?"
                          title-type="InputTitleType.InputTitle"
                          hint="You can edit above if they have changed."
-                         field-name="IsConfirmed"/>
+                         field-name="@nameof(Model.ArePartnersConfirmed)"
+                         value="@Model.ArePartnersConfirmed"/>
 
         <vc:form-button/>
         <vc:return-to-application-link application-id="@Model.Application.Id.Value"/>

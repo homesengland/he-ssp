@@ -62,6 +62,6 @@ public class FromSitePartnersTests
         result.DevelopingPartner.Should().Be(InvestmentsOrganisationTestData.CactusDevelopments);
         result.OwnerOfTheLand.Should().Be(InvestmentsOrganisationTestData.MoralesEntertainment);
         result.OwnerOfTheHomes.Should().Be(InvestmentsOrganisationTestData.JjCompany);
-        result.AreAllPartnersConfirmed.Should().BeNull();
+        result.ArePartnersConfirmed.Should().BeNull();
     }
 }

@@ -137,6 +137,7 @@ public class ApplicationRepository : IApplicationRepository
         dto.developingPartnerId = application.ApplicationPartners.DevelopingPartner.Id.ToGuidAsString();
         dto.ownerOfTheLandDuringDevelopmentId = application.ApplicationPartners.OwnerOfTheLand.Id.ToGuidAsString();
         dto.ownerOfTheHomesAfterCompletionId = application.ApplicationPartners.OwnerOfTheHomes.Id.ToGuidAsString();
+        dto.applicationPartnerConfirmation = application.ApplicationPartners.ArePartnersConfirmed;
 
         var id = await _applicationCrmContext.Save(dto, organisationId.ToGuidAsString(), cancellationToken);
         if (application.Id.IsNew)

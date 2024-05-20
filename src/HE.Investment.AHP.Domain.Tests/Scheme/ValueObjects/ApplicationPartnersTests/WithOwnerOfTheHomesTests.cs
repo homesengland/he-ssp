@@ -15,7 +15,7 @@ public class WithOwnerOfTheHomesTests
             .WithDevelopingPartner(InvestmentsOrganisationTestData.JjCompany)
             .WithOwnerOfTheLand(InvestmentsOrganisationTestData.JjCompany)
             .WithOwnerOfTheHomes(InvestmentsOrganisationTestData.JjCompany)
-            .WithAllPartnersConfirmation(true)
+            .WithPartnersConfirmation(true)
             .Build();
 
         // when
@@ -26,7 +26,7 @@ public class WithOwnerOfTheHomesTests
         result.DevelopingPartner.Should().Be(InvestmentsOrganisationTestData.JjCompany);
         result.OwnerOfTheLand.Should().Be(InvestmentsOrganisationTestData.JjCompany);
         result.OwnerOfTheHomes.Should().Be(InvestmentsOrganisationTestData.JjCompany);
-        result.AreAllPartnersConfirmed.Should().BeTrue();
+        result.ArePartnersConfirmed.Should().BeTrue();
     }
 
     [Fact]
@@ -37,7 +37,7 @@ public class WithOwnerOfTheHomesTests
             .WithDevelopingPartner(InvestmentsOrganisationTestData.JjCompany)
             .WithOwnerOfTheLand(InvestmentsOrganisationTestData.JjCompany)
             .WithOwnerOfTheHomes(InvestmentsOrganisationTestData.JjCompany)
-            .WithAllPartnersConfirmation(true)
+            .WithPartnersConfirmation(true)
             .Build();
 
         // when
@@ -48,7 +48,7 @@ public class WithOwnerOfTheHomesTests
         result.DevelopingPartner.Should().Be(InvestmentsOrganisationTestData.JjCompany);
         result.OwnerOfTheLand.Should().Be(InvestmentsOrganisationTestData.JjCompany);
         result.OwnerOfTheHomes.Should().Be(InvestmentsOrganisationTestData.CactusDevelopments);
-        result.AreAllPartnersConfirmed.Should().BeNull();
+        result.ArePartnersConfirmed.Should().BeNull();
     }
 
     [Fact]
@@ -70,7 +70,7 @@ public class WithOwnerOfTheHomesTests
         // given
         var testCandidate = ApplicationPartnersBuilder.New()
             .WithOwnerOfTheHomes(InvestmentsOrganisationTestData.JjCompany)
-            .WithAllPartnersConfirmation(true)
+            .WithPartnersConfirmation(true)
             .Build();
 
         // when
@@ -79,6 +79,6 @@ public class WithOwnerOfTheHomesTests
         // then
         result.Should().Be(testCandidate);
         result.DevelopingPartner.Should().Be(InvestmentsOrganisationTestData.JjCompany);
-        result.AreAllPartnersConfirmed.Should().BeTrue();
+        result.ArePartnersConfirmed.Should().BeTrue();
     }
 }
