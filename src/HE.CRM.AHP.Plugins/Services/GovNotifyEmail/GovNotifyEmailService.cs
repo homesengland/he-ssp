@@ -56,8 +56,7 @@ namespace HE.CRM.AHP.Plugins.Services.GovNotifyEmail
         {
             this.TracingService.Trace(AHPConst.AdjustmentAccepted);
             var emailTemplate = _notificationSettingRepositoryAdmin.GetTemplateViaTypeName(AHPConst.AdjustmentAccepted);
-            var contact = _contactRepositoryAdmin.GetById(ahpApplication.invln_contactid.Id, nameof(Contact.FullName).ToLower(), nameof(Contact.EMailAddress1).ToLower());
-            var account = _accountRepositoryAdmin.GetById(ahpApplication.invln_organisationid.Id, Account.Fields.Name);
+            var contact = _contactRepositoryAdmin.GetById(ahpApplication.invln_contactid.Id, Contact.Fields.FullName, Contact.Fields.EMailAddress1);
             var subject = emailTemplate.invln_subject;
             var govNotParams = new AHP_DELIVERY_PHASE_NOTIFICATION_OF_ADJUSTMENT_ACCEPTED()
             {
