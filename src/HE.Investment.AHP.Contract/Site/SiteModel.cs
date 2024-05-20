@@ -49,4 +49,6 @@ public class SiteModel
     public OrganisationDetails? OwnerOfTheLand { get; set; }
 
     public OrganisationDetails? OwnerOfTheHomes { get; set; }
+
+    public bool IsReadOnly => Status == SiteStatus.Completed;
 }

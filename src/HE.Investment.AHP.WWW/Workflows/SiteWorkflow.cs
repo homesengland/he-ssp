@@ -19,7 +19,7 @@ public class SiteWorkflow : EncodedStateRouting<SiteWorkflowState>
 
     public override bool CanBeAccessed(SiteWorkflowState state, bool? isReadOnlyMode = null)
     {
-        if (isReadOnlyMode == true)
+        if (isReadOnlyMode ?? _siteModel?.IsReadOnly == true)
         {
             return state == SiteWorkflowState.CheckAnswers;
         }
