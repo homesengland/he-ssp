@@ -18,9 +18,9 @@ namespace HE.CRM.Common.DtoMapping
                 fdSiteId = site.invln_HeProjectLocalAuthorityId?.Id.ToString(),
                 ahpProjectId = site.invln_AHPProjectId?.Id.ToString(),
                 siteName = site.invln_HeProjectLocalAuthorityId?.Id.ToString(),
-                siteStatus = site.StatusCode.ToString()
+                siteStatus = site.StatusCode.ToString(),
+                AhpApplications = new List<FrontDoorHPApplicationDto>()
             };
-            siteApp.AhpApplications = new List<FrontDoorHPApplicationDto>();
 
             foreach (var app in applications)
             {
