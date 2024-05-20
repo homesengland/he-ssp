@@ -12,5 +12,6 @@ namespace HE.CRM.Common.Repositories.Interfaces
         bool ApplicationWithGivenNameExists(string name);
         bool ApplicationWithGivenIdExistsForOrganisation(Guid applicationId, Guid organisationId);
         bool ApplicationWithGivenNameAndOrganisationExists(string name, Guid organisationId);
+        List<invln_scheme> GetApplicationsForAhpProject(Guid ahpProjectGuid, invln_Permission contactWebRole, Contact contact, Guid organisationGuid, string consortiumId = null);
     }
 }

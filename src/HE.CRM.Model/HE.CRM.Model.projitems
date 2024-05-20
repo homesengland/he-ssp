@@ -32,6 +32,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getabsoluteahpapplicationfilelocation.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getahpapplication.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getahpapplicationdocumentlocation.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getahpproject.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getahpprojects.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getconsortium.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getconsortiums.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getcontactrole.cs" />
