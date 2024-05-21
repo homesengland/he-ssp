@@ -42,7 +42,7 @@ public class CreateApplicationCommandHandler : IRequestHandler<CreateApplication
 
         var applicationPartners = await GetApplicationPartners(request.SiteId, account, cancellationToken);
         var applicationToCreate = ApplicationEntity.New(
-            new FrontDoorProjectId(MockedProjectId.ProjectId),
+            new FrontDoorProjectId(LegacyProject.ProjectId),
             request.SiteId,
             name,
             new ApplicationTenure(request.Tenure),

@@ -10,6 +10,7 @@ public class CompletedTests : AhpViewTestBase
 
     private readonly ApplicationSubmitModel _model = new(
         "testId",
+        "projectTestId",
         "testName",
         "testNumber",
         "SiteName",

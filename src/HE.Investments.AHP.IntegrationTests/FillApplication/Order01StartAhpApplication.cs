@@ -28,12 +28,12 @@ public class Order01StartAhpApplication : AhpIntegrationTest
     public async Task Order01_ShouldDisplayApplicationList()
     {
         // given & when
-        var mainPage = await TestClient.NavigateTo(ProjectPagesUrl.ProjectApplicationList(MockedProjectId.ProjectId));
+        var mainPage = await TestClient.NavigateTo(ProjectPagesUrl.ProjectApplicationList(LegacyProject.ProjectId));
 
         // then
         mainPage
-            .UrlEndWith(ProjectPagesUrl.ProjectApplicationList(MockedProjectId.ProjectId))
-            .HasTitle(ProjectPageTitles.ApplicationList(MockedProjectId.ProjectName));
+            .UrlEndWith(ProjectPagesUrl.ProjectApplicationList(LegacyProject.ProjectId))
+            .HasTitle(ProjectPageTitles.ApplicationList(LegacyProject.ProjectName));
 
         SaveCurrentPage();
     }
@@ -43,7 +43,7 @@ public class Order01StartAhpApplication : AhpIntegrationTest
     public async Task Order02_ShouldNavigateToApplicationLandingPage()
     {
         // given
-        var startButton = (await GetCurrentPage(ProjectPagesUrl.ProjectApplicationList(MockedProjectId.ProjectId))).GetLinkButton("Start");
+        var startButton = (await GetCurrentPage(ProjectPagesUrl.ProjectApplicationList(LegacyProject.ProjectId))).GetLinkButton("Start");
 
         // when
         var applicationNamePage = await TestClient.NavigateTo(startButton);
