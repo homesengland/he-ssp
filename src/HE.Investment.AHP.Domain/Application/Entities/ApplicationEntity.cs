@@ -9,6 +9,7 @@ using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Errors;
+using HE.Investments.FrontDoor.Shared.Project;
 using ApplicationSection = HE.Investment.AHP.Domain.Application.ValueObjects.ApplicationSection;
 
 namespace HE.Investment.AHP.Domain.Application.Entities;
@@ -22,6 +23,7 @@ public class ApplicationEntity : DomainEntity
     private readonly ApplicationState _applicationState;
 
     public ApplicationEntity(
+        FrontDoorProjectId projectId,
         SiteId siteId,
         AhpApplicationId id,
         ApplicationName name,
@@ -35,6 +37,7 @@ public class ApplicationEntity : DomainEntity
         AuditEntry? lastSubmitted = null,
         RepresentationsAndWarranties? representationsAndWarranties = null)
     {
+        ProjectId = projectId;
         SiteId = siteId;
         Id = id;
         Name = name;
@@ -48,6 +51,8 @@ public class ApplicationEntity : DomainEntity
         _applicationState = applicationStateFactory.Create(status);
         RepresentationsAndWarranties = representationsAndWarranties ?? new RepresentationsAndWarranties(false);
     }
+
+    public FrontDoorProjectId ProjectId { get; }
 
     public SiteId SiteId { get; }
 
@@ -82,11 +87,13 @@ public class ApplicationEntity : DomainEntity
     public bool IsNew => Id.IsNew;
 
     public static ApplicationEntity New(
+        FrontDoorProjectId projectId,
         SiteId siteId,
         ApplicationName name,
         ApplicationTenure tenure,
         ApplicationPartners applicationPartners,
         IApplicationStateFactory applicationStateFactory) => new(
+        projectId,
         siteId,
         AhpApplicationId.New(),
         name,

@@ -2,9 +2,9 @@
 @using HE.Investments.Common.Contract.Pagination
 @using HE.Investments.Common.WWW.Components.PagedTable
 
-@model (List<TableHeaderViewModel> headers, PaginationResult<TableRowViewModel> rows, string ahpProjectId);
+@model (List<TableHeaderViewModel> headers, PaginationResult<TableRowViewModel> rows, string projectId);
 
 <vc:paged-table
     headers="@Model.headers"
     rows="@Model.rows"
-    navigation-url="@Url.Action("Sites", "Project", new { projectId = @Model.ahpProjectId })"/>
+    navigation-url="@Url.Action("Sites", "Project", new { Model.projectId })"/>

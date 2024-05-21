@@ -8,6 +8,7 @@ using HE.Investment.AHP.WWW.Views.Site.Const;
 using HE.Investments.AHP.IntegrationTests.Extensions;
 using HE.Investments.AHP.IntegrationTests.Framework;
 using HE.Investments.AHP.IntegrationTests.Pages;
+using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Constants;
 using HE.Investments.IntegrationTestsFramework.Assertions;
 using HE.Investments.TestsUtils.Extensions;
@@ -575,14 +576,11 @@ public class Order01StartAhpSite : AhpIntegrationTest
     [Order(38)]
     public async Task Order38_CheckAnswersCompleteSite()
     {
-        var siteListPage = await TestQuestionPage(
+        await TestQuestionPage(
             SitePagesUrl.SiteCheckAnswers(SiteData.SiteId),
             SitePageTitles.CheckAnswers,
-            SitePagesUrl.SiteList(MockedProjectId.ProjectId),
+            SitePagesUrl.SiteDetails(ShortGuid.FromString(SiteData.SiteId).Value),
             (nameof(IsSectionCompleted), IsSectionCompleted.Yes.ToString()));
-
-        siteListPage.HasTitle(SitePageTitles.SiteList)
-            .HasLinkWithHref(SitePagesUrl.SiteDetails(SiteData.SiteId), out _);
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]

@@ -45,12 +45,14 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
 
     [HttpGet]
     [WorkflowState(ApplicationWorkflowState.ApplicationsList)]
-    public async Task<IActionResult> Index([FromQuery] int? page, CancellationToken cancellationToken)
+    public IActionResult Index(string? projectId)
     {
-        var applicationsQueryResult = await _mediator.Send(new GetApplicationsQuery(new PaginationRequest(page ?? 1)), cancellationToken);
-        var isReadOnly = !await _ahpAccessContext.CanEditApplication();
+        if (string.IsNullOrEmpty(projectId))
+        {
+            return RedirectToAction("Index", "Projects");
+        }
 
-        return View("Index", new ApplicationsListModel(applicationsQueryResult.OrganisationName, applicationsQueryResult.PaginationResult, isReadOnly));
+        return RedirectToAction("Applications", "Project", new { projectId });
     }
 
     [HttpGet("start")]
@@ -138,6 +140,7 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
 
         var model = new ApplicationSectionsModel(
             applicationId,
+            application.ProjectId.Value,
             _siteName,
             application.Name,
             application.Status,
@@ -294,9 +297,9 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
     }
 
     [HttpGet("{applicationId}/back")]
-    public async Task<IActionResult> Back([FromRoute] string applicationId, ApplicationWorkflowState currentPage)
+    public async Task<IActionResult> Back([FromRoute] string applicationId, string? projectId, ApplicationWorkflowState currentPage)
     {
-        return await Back(currentPage, new { applicationId });
+        return await Back(currentPage, new { applicationId, projectId });
     }
 
     protected override Task<IStateRouting<ApplicationWorkflowState>> Routing(ApplicationWorkflowState currentState, object? routeData = null)

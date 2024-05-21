@@ -1,10 +1,13 @@
 using System.Diagnostics.CodeAnalysis;
+using HE.Investment.AHP.Contract.Project;
 using HE.Investment.AHP.WWW.Views.Application;
+using HE.Investment.AHP.WWW.Views.Project;
 using HE.Investment.AHP.WWW.Views.Site.Const;
 using HE.Investments.AHP.IntegrationTests.Extensions;
 using HE.Investments.AHP.IntegrationTests.Framework;
 using HE.Investments.AHP.IntegrationTests.Pages;
 using HE.Investments.TestsUtils.Extensions;
+using Moq;
 using Xunit;
 using Xunit.Abstractions;
 using Xunit.Extensions.Ordering;
@@ -22,15 +25,15 @@ public class Order01StartAhpApplication : AhpIntegrationTest
 
     [Fact(Skip = AhpConfig.SkipTest)]
     [Order(1)]
-    public async Task Order01_ShouldRedirectToApplicationList_WhenUserIsLoggedIn()
+    public async Task Order01_ShouldDisplayApplicationList()
     {
         // given & when
-        var mainPage = await TestClient.NavigateTo(MainPagesUrl.MainPage);
+        var mainPage = await TestClient.NavigateTo(ProjectPagesUrl.ProjectApplicationList(MockedProjectId.ProjectId));
 
         // then
         mainPage
-            .UrlEndWith(MainPagesUrl.ApplicationList)
-            .HasTitle(ApplicationPageTitles.ApplicationList);
+            .UrlEndWith(ProjectPagesUrl.ProjectApplicationList(MockedProjectId.ProjectId))
+            .HasTitle(ProjectPageTitles.ApplicationList(MockedProjectId.ProjectName));
 
         SaveCurrentPage();
     }
@@ -40,7 +43,7 @@ public class Order01StartAhpApplication : AhpIntegrationTest
     public async Task Order02_ShouldNavigateToApplicationLandingPage()
     {
         // given
-        var startButton = (await GetCurrentPage(MainPagesUrl.ApplicationList)).GetLinkButton("Start");
+        var startButton = (await GetCurrentPage(ProjectPagesUrl.ProjectApplicationList(MockedProjectId.ProjectId))).GetLinkButton("Start");
 
         // when
         var applicationNamePage = await TestClient.NavigateTo(startButton);

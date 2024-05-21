@@ -1,6 +1,7 @@
 using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.WWW.Workflows;
 using HE.Investments.Common.Contract;
+using HE.Investments.FrontDoor.Shared.Project;
 
 namespace HE.Investment.AHP.WWW.Tests.Workflows.ApplicationWorkflowTests;
 
@@ -26,6 +27,7 @@ public static class ApplicationWorkflowFactory
     {
         var application = new Application(
             new AhpApplicationId("new id"),
+            new FrontDoorProjectId("project-id"),
             name,
             tenure,
             status,

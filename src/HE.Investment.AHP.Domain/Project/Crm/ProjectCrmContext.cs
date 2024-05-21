@@ -8,11 +8,11 @@ namespace HE.Investment.AHP.Domain.Project.Crm;
 public class ProjectCrmContext : IProjectCrmContext
 {
     private readonly ProjectDto _mockedProjectDto =
-        new() { ProjectId = MockedProjectId.ProjectId, ProjectName = "Mocked project", };
+        new() { ProjectId = MockedProjectId.ProjectId, ProjectName = MockedProjectId.ProjectName, };
 
     private readonly List<ProjectDto> _mockedProjectDtoList =
     [
-        new ProjectDto { ProjectName = "Mocked project", ProjectId = MockedProjectId.ProjectId },
+        new ProjectDto { ProjectName = MockedProjectId.ProjectName, ProjectId = MockedProjectId.ProjectId },
         new ProjectDto
         {
             ProjectName = "Second project",
