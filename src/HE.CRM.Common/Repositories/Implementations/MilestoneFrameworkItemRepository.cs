@@ -21,6 +21,10 @@ namespace HE.CRM.Common.Repositories.Implementations
             var fetchXml =
             @"<fetch>
 	            <entity name=""invln_milestoneframeworkitem"">
+                    <attribute name=""invln_programmeid"" />
+                    <attribute name=""invln_milestoneframeworkitemname"" />
+                    <attribute name=""invln_ismilestonepayable"" />
+                    <attribute name=""invln_minimumvalue"" />
                     <attribute name=""invln_percentagepaidonmilestone"" />
                     <attribute name=""invln_milestone"" />
 		            <filter type=""and"">
