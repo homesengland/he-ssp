@@ -10,12 +10,18 @@
   <EntityTypesFolder>..\Entities</EntityTypesFolder>
   <ExtensionConfig>
     <ActionPrefixesWhitelist />
-    <ActionsWhitelist>invln_changeahpapplicationstatus|
+    <ActionsWhitelist>invln_canceladdmember|
+invln_changeahpapplicationstatus|
 invln_changeloanapplicationexternalstatus|
 invln_checkifapplicationwithgivennameexists|
+invln_checkiffrontdoorprojectwithgivennameexists|
 invln_checkifloanapplicationwithgivennameexists|
 invln_checkifsitewithgivennameexists|
+invln_checkifsitewithstrategicsitenameexists|
+invln_createahpproject|
 invln_createsinglesitedetail|
+invln_deactivatefrontdoorproject|
+invln_deactivatefrontdoorsite|
 invln_deletedeliveryphase|
 invln_deletehometype|
 invln_deleteloanapplication|
@@ -24,6 +30,8 @@ invln_generaterichtextdocument|
 invln_getabsoluteahpapplicationfilelocation|
 invln_getahpapplication|
 invln_getahpapplicationdocumentlocation|
+invln_getahpproject|
+invln_getahpprojects|
 invln_getconsortium|
 invln_getconsortiums|
 invln_getcontactrole|
@@ -34,6 +42,7 @@ invln_getmultipledeliveryphase|
 invln_getmultiplefrontdoorprojects|
 invln_getmultiplefrontdoorprojectssite|
 invln_getmultiplelocalauthorities|
+invln_getmultiplelocalauthoritiesformodule|
 invln_getmultipleprogramme|
 invln_getmultiplesites|
 invln_getorganisationchangedetails|
@@ -46,11 +55,15 @@ invln_getsingleloanapplicationforaccountandcontact|
 invln_getsingleprogramme|
 invln_getsinglesite|
 invln_getsinglesitedetails|
+invln_getsiteapplications|
 invln_gettemporaryportaldata|
 invln_gettypeofhomeslist|
 invln_invitecontacttojoinexistingorganisation|
+invln_isconsortiumexistforprogrammeandorganisation|
 invln_issiteorapplicationpartner|
 invln_linkcontactwithorganization|
+invln_requestaddingmembertoconsortium|
+invln_requesttoremovemember|
 invln_returnuserprofile|
 invln_savetemporaryportaldata|
 invln_searchlocalauthority|
@@ -62,8 +75,10 @@ invln_sendreminderemailforrefferedbacktoapplicant|
 invln_sendremindertofinalisadraftapplication|
 invln_sendrequesttoassigncontacttoexistingorganisation|
 invln_setahpapplication|
+invln_setconsortium|
 invln_setdeliveryphase|
 invln_setfrontdoorproject|
+invln_setfrontdoorsite|
 invln_sethometype|
 invln_setsite|
 invln_updatesingleloanapplication|
