@@ -39,9 +39,14 @@ public class DraftConsortiumEntity : IConsortiumEntity
 
     public async Task AddMember(InvestmentsOrganisation organisation, IIsPartOfConsortium isPartOfConsortium, CancellationToken cancellationToken)
     {
-        if (await IsPartOfConsortium(organisation, isPartOfConsortium, cancellationToken))
+        if (IsPartOfThisConsortium(organisation))
         {
-            OperationResult.ThrowValidationError("SelectedMember", ConsortiumValidationErrors.IsAlreadyPartOfConsortium);
+            OperationResult.ThrowValidationError("SelectedMember", ConsortiumValidationErrors.IsPartOfThisConsortium);
+        }
+
+        if (await IsPartOfOtherConsortium(organisation, isPartOfConsortium, cancellationToken))
+        {
+            OperationResult.ThrowValidationError("SelectedMember", ConsortiumValidationErrors.IsPartOfOtherConsortium);
         }
 
         Members.Add(new DraftConsortiumMember(organisation.Id, organisation.Name));
@@ -62,18 +67,14 @@ public class DraftConsortiumEntity : IConsortiumEntity
         Members.Remove(GetMember(organisationId));
     }
 
-    private async Task<bool> IsPartOfConsortium(
+    private bool IsPartOfThisConsortium(InvestmentsOrganisation organisation) =>
+        organisation.Id == LeadPartner.Id || Members.Any(x => x.Id == organisation.Id);
+
+    private async Task<bool> IsPartOfOtherConsortium(
         InvestmentsOrganisation organisation,
         IIsPartOfConsortium isPartOfConsortium,
         CancellationToken cancellationToken)
-    {
-        if (organisation.Id == LeadPartner.Id || Members.Any(x => x.Id == organisation.Id))
-        {
-            return true;
-        }
-
-        return await isPartOfConsortium.IsPartOfConsortiumForProgramme(Programme.Id, organisation.Id, cancellationToken);
-    }
+        => await isPartOfConsortium.IsPartOfConsortiumForProgramme(Programme.Id, organisation.Id, cancellationToken);
 
     private DraftConsortiumMember GetMember(OrganisationId organisationId) => Members.SingleOrDefault(x => x.Id == organisationId) ??
                                                                               throw new NotFoundException(nameof(DraftConsortiumMember), organisationId);
