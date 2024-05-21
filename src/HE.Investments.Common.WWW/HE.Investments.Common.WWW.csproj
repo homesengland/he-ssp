@@ -43,6 +43,7 @@
     <EmbeddedResource Include="Components\Table\Table.cshtml"/>
     <EmbeddedResource Include="Components\Link\Link.cshtml"/>
     <EmbeddedResource Include="Components\SummaryItem\SummaryItem.cshtml"/>
+    <EmbeddedResource Include="Components\SummaryList\SummaryList.cshtml"/>
     <EmbeddedResource Include="Components\RadioListWithOr\RadioListWithOr.cshtml"/>
     <EmbeddedResource Include="Components\RadioYesNo\RadioYesNo.cshtml"/>
     <EmbeddedResource Include="Components\RadioListContent\RadioListContent.cshtml"/>
@@ -61,6 +62,7 @@
     <EmbeddedResource Include="Components\ButtonStart\ButtonStart.cshtml"/>
     <EmbeddedResource Include="Components\LinkWorkingAsButton\LinkWorkingAsButton.cshtml"/>
     <EmbeddedResource Include="Components\Notification\Notification.cshtml"/>
+    <EmbeddedResource Include="Components\ListCard\ListCard.cshtml"/>
   </ItemGroup>
 
   <ItemGroup>

@@ -10,6 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\HE.Investments.AHP.Consortium.Contract\HE.Investments.AHP.Consortium.Contract.csproj" />
     <ProjectReference Include="..\HE.Investments.Common.Contract\HE.Investments.Common.Contract.csproj"/>
     <ProjectReference Include="..\HE.Investments.FrontDoor.Shared\HE.Investments.FrontDoor.Shared.csproj"/>
   </ItemGroup>

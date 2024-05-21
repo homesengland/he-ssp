@@ -26,7 +26,7 @@ public record UserAccount(
 
     public OrganisationBasicInfo SelectedOrganisation() => Organisation ?? throw new NotFoundException("User is not connected to any Organisation");
 
-    private bool HasOneOfRole(IEnumerable<UserRole> roles)
+    protected bool HasOneOfRole(IEnumerable<UserRole> roles)
     {
         return roles.Contains(Role());
     }

@@ -1,77 +1,75 @@
 @using HE.Investment.AHP.WWW.Views.ConsortiumMember.Const
 @using HE.Investments.Common.WWW.Components.PageHeader
 @using HE.Investment.AHP.WWW.Routing
+@using HE.Investment.AHP.WWW.Views.Shared.Components.ReturnToAccountLink
+@using HE.Investments.AHP.Consortium.Contract
 @using HE.Investments.AHP.Consortium.Contract.Enums
 @using HE.Investments.Common.Gds
-@model HE.Investments.AHP.Consortium.Contract.ConsortiumDetails
+@using HE.Investments.Common.WWW.Components.SummaryList
+@using HE.Investments.Common.WWW.TagHelpers
+@model HE.Investment.AHP.WWW.Models.ConsortiumMember.ManageConsortiumModel
 @{
-    ViewData["Title"] = ConsortiumMemberPageTitles.ConsortiumManagement(Model.LeadPartner.Details.Name);
+    ViewData["Title"] = ConsortiumMemberPageTitles.ConsortiumManagement(Model.Details.LeadPartner.Details.Name);
     ViewBag.Breadcrumbs = AhpBreadcrumbsBuilder
-        .New()
-        .WithApplicationsList()
+        .Empty()
+        .WithOrganisation(Model.OrganisationName)
+        .WithConsortiumManagement()
+        .WithApplicationsList(Model.Details.Programme.Name)
         .Build();
 
-    var members = Model.Members.Where(x => x.Status == ConsortiumMemberStatus.Active).ToList();
-    var pendingAddition = Model.Members.Where(x => x.Status == ConsortiumMemberStatus.PendingAddition).ToList();
+    var contractedMembers = Model.Details.Members
+        .Where(x => x.Status == ConsortiumMemberStatus.Active)
+        .Select(x => new SummaryListItem(x.Details.Name, Model.CanManageConsortium ? new[] { MemberActionFactory("RemoveMember", "Request to remove", x) } : Array.Empty<SummaryListItemAction>()))
+        .ToList();
+
+    var pendingConsortiumMembers = Model.Details.Members
+        .Where(x => x.Status == ConsortiumMemberStatus.PendingAddition)
+        .Select(x => new SummaryListItem(x.Details.Name))
+        .ToList();
+
+    var requestsToRemove = Model.Details.Members
+        .Where(x => x.Status == ConsortiumMemberStatus.PendingRemoval)
+        .Select(x => new SummaryListItem(x.Details.Name))
+        .ToList();
+
+    SummaryListItemAction MemberActionFactory(string actionName, string displayName, ConsortiumMemberDetails member) =>
+        new(displayName, Url.Action(actionName, "ConsortiumMember", new { consortiumId = Model.Details.ConsortiumId.Value, memberId = member.OrganisationId.ToString() }) ?? string.Empty);
 }
 
 <div class="govuk-grid-column-two-thirds">
-    <vc:page-header title="@ConsortiumMemberPageTitles.ConsortiumManagement(Model.LeadPartner.Details.Name)"/>
+    <vc:page-header title="@ConsortiumMemberPageTitles.ConsortiumManagement(Model.Details.LeadPartner.Details.Name)"/>
 
-    <gds-h2>Add a new member</gds-h2>
-    <gds-p>To add a new member, fill out their details and the request will be reviewed.</gds-p>
-    <link-button
-        button-type="@ButtonType.Standard"
-        action-url="@Url.Action("SearchOrganisation", new { consortiumId = Model.ConsortiumId.Value })">
-        Add new member
-    </link-button>
+    @if (Model.CanManageConsortium)
+    {
+        <gds-h2>Add a new member</gds-h2>
+        <gds-p>To add a new member, fill out their details and the request will be reviewed.</gds-p>
+        <link-button
+            button-type="@ButtonType.Standard"
+            action-url="@Url.Action("SearchOrganisation", new { consortiumId = Model.Details.ConsortiumId.Value })">
+            Add new member
+        </link-button>
+    }
 </div>
 
-@if (members.Any())
+@if (contractedMembers.Any())
 {
-    <div class="govuk-grid-column-two-thirds govuk-!-margin-top-6">
-        <gds-h2>Contracted consortium members</gds-h2>
-        <gds-p>These members have been approved and added to the consortium. You can request to remove or change the members details.</gds-p>
-    </div>
-    <div class="govuk-grid-column-full govuk-!-padding-left-3">
-        <gds-summary-list>
-            <strong class="govuk-!-margin-bottom-3">Name</strong>
-            @foreach (var organisation in members)
-            {
-                <div class="govuk-summary-list__row">
-                    <dt class="govuk-!-padding-top-2 govuk-!-padding-bottom-2">
-                        <div>@organisation.Details.Name</div>
-                    </dt>
-                </div>
-            }
-        </gds-summary-list>
-    </div>
+    <vc:summary-list header="Contracted consortium members"
+                     paragraph="These members have been approved and added to the consortium. You can request to remove or change the members details."
+                     items="@contractedMembers"/>
 }
 
-@if (pendingAddition.Any())
+@if (pendingConsortiumMembers.Any())
 {
-    <div class="govuk-grid-column-two-thirds govuk-!-margin-top-6">
-        <gds-h2>Pending consortium members</gds-h2>
-        <gds-p>New members will be shown here until they are approved internally. You can cancel a request below.</gds-p>
-    </div>
-    <div class="govuk-grid-column-full govuk-!-padding-left-3">
-        <gds-summary-list>
-            <strong class="govuk-!-margin-bottom-3">Name</strong>
-            @foreach (var organisation in pendingAddition)
-            {
-                <div class="govuk-summary-list__row">
-                    <dt class="govuk-!-padding-top-2 govuk-!-padding-bottom-2">
-                        <div>@organisation.Details.Name</div>
-                    </dt>
-                    <dd class="govuk-summary-list__actions">
-                        <gds-link href="@Url.Action("RemoveMember", "ConsortiumMember", new { consortiumId = Model.ConsortiumId.Value, memberId = organisation.OrganisationId.ToString() })">
-                            Cancel request
-                        </gds-link>
-                    </dd>
-                </div>
-            }
-        </gds-summary-list>
-    </div>
+    <vc:summary-list header="Pending consortium members"
+                     paragraph="New members will be shown here until they are approved internally. You can cancel a request below."
+                     items="@pendingConsortiumMembers"/>
+}
+
+@if (requestsToRemove.Any())
+{
+    <vc:summary-list header="Requests to remove"
+                     paragraph="Removed members will be shown here until they are approved internally. You can cancel a request below."
+                     items="@requestsToRemove"/>
 }
 
 <div class="govuk-grid-column-two-thirds govuk-!-margin-top-6">

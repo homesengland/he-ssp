@@ -1,4 +1,3 @@
-using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Domain.Delivery.ValueObjects;
 using HE.Investment.AHP.Domain.Programme;
 using HE.Investments.Common.Contract.Exceptions;

@@ -18,4 +18,4 @@ public class SelectList : ViewComponent
     }
 }
 
-public record SelectListItemViewModel(string Url, string Text, string? Description);
+public record SelectListItemViewModel(string Url, string Text, string? Description, DynamicComponentViewModel? DynamicContent = null);

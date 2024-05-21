@@ -1,6 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using HE.Investment.AHP.Contract.Common.Enums;
+using HE.Investment.AHP.Contract.Project;
 using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.WWW.Models.Site;
 using HE.Investment.AHP.WWW.Views.Site.Const;
@@ -23,6 +24,14 @@ public class Order01StartAhpSite : AhpIntegrationTest
     public Order01StartAhpSite(AhpIntegrationTestFixture fixture, ITestOutputHelper output)
         : base(fixture, output)
     {
+    }
+
+    [Fact(Skip = AhpConfig.SkipTest)]
+    [Order(0)]
+    public async Task Order00_CheckPrerequisites()
+    {
+        var hasConsortium = await AhpCrmContext.HasConsortium(LoginData);
+        hasConsortium.Should().BeFalse("AHP Site tests requires Organisation which does not belong to consortium");
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
@@ -480,10 +489,10 @@ public class Order01StartAhpSite : AhpIntegrationTest
         summary.Should().ContainKey("National Design Guide priorities").WithOnlyValues(SiteData.NationalDesignGuidePriorities);
         summary.Should().ContainKey("Building for a Healthy Life criteria").WithValue(SiteData.BuildingForHealthyLife.ToString());
         summary.Should().ContainKey("Number of green lights").WithValue(SiteData.NumberOfGreenLights);
-        summary.Should().ContainKey("Developing partner").WithValue("TODO");
-        summary.Should().ContainKey("Owner of the land").WithValue("TODO");
-        summary.Should().ContainKey("Owner of the homes").WithValue("TODO");
-        summary.Should().ContainKey("URB - Owner of the homes").WithValue("TODO");
+        summary.Should().NotContainKey("Developing partner");
+        summary.Should().NotContainKey("Owner of the land");
+        summary.Should().NotContainKey("Owner of the homes");
+        summary.Should().NotContainKey("URB - Owner of the homes");
         summary.Should().ContainKey("Land status").WithValue(SiteData.LandAcquisitionStatus);
         summary.Should().ContainKey("Tendering progress for main works contract").WithValue(SiteData.TenderingStatus);
         summary.Should().ContainKey("Name of contractor").WithValue(SiteData.ContractorName);
@@ -549,7 +558,7 @@ public class Order01StartAhpSite : AhpIntegrationTest
         // given
         var checkAnswersPage = await GetCurrentPage(SitePagesUrl.SiteCheckAnswers(SiteData.SiteId));
         checkAnswersPage
-            .UrlEndWith(SitePagesUrl.SiteCheckAnswers(SiteData.SiteId))
+            .UrlWithoutQueryEndsWith(SitePagesUrl.SiteCheckAnswers(SiteData.SiteId))
             .HasTitle(SitePageTitles.CheckAnswers);
 
         // when
@@ -569,10 +578,26 @@ public class Order01StartAhpSite : AhpIntegrationTest
         var siteListPage = await TestQuestionPage(
             SitePagesUrl.SiteCheckAnswers(SiteData.SiteId),
             SitePageTitles.CheckAnswers,
-            SitePagesUrl.SiteList,
+            SitePagesUrl.SiteList(MockedProjectId.ProjectId),
             (nameof(IsSectionCompleted), IsSectionCompleted.Yes.ToString()));
 
         siteListPage.HasTitle(SitePageTitles.SiteList)
             .HasLinkWithHref(SitePagesUrl.SiteDetails(SiteData.SiteId), out _);
+    }
+
+    [Fact(Skip = AhpConfig.SkipTest)]
+    [Order(39)]
+    public async Task Order39_SiteIsNotEditableAfterCompletion()
+    {
+        var checkAnswersPage = await GetCurrentPage(SitePagesUrl.SiteCheckAnswers(SiteData.SiteId));
+
+        var summaryItems = checkAnswersPage.GetSummaryListItems();
+        foreach (var item in summaryItems)
+        {
+            item.Value.ChangeAnswerLink.Should().BeNull();
+        }
+
+        var result = await TestClient.NavigateTo(SitePagesUrl.SiteName + "?siteId=" + SiteData.SiteId);
+        result.Title.Should().Be("Page not found");
     }
 }

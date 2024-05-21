@@ -1,9 +1,7 @@
 extern alias Org;
 
-using System.Globalization;
 using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Contract.Site.Queries;
-using HE.Investment.AHP.Domain.Common.Mappers;
 using HE.Investment.AHP.Domain.PrefillData.Data;
 using HE.Investment.AHP.Domain.PrefillData.Repositories;
 using HE.Investment.AHP.Domain.Site.Entities;
@@ -12,23 +10,25 @@ using HE.Investment.AHP.Domain.Site.Repositories;
 using HE.Investment.AHP.Domain.Site.ValueObjects.Planning;
 using HE.Investment.AHP.Domain.Site.ValueObjects.StrategicSite;
 using HE.Investment.AHP.Domain.Site.ValueObjects.TenderingStatus;
-using HE.Investments.Account.Shared;
+using HE.Investment.AHP.Domain.UserContext;
+using HE.Investments.AHP.Consortium.Contract;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Extensions;
 using MediatR;
+using Org::HE.Investments.Organisation.ValueObjects;
 using SiteTypeDetails = HE.Investment.AHP.Contract.Site.SiteTypeDetails;
 
 namespace HE.Investment.AHP.Domain.Site.QueryHandlers;
 
 public class GetSiteQueryHandler : IRequestHandler<GetSiteQuery, SiteModel>
 {
-    private readonly IAccountUserContext _accountUserContext;
+    private readonly IAhpUserContext _accountUserContext;
 
     private readonly ISiteRepository _siteRepository;
 
     private readonly IAhpPrefillDataRepository _prefillDataRepository;
 
-    public GetSiteQueryHandler(IAccountUserContext accountUserContext, ISiteRepository siteRepository, IAhpPrefillDataRepository prefillDataRepository)
+    public GetSiteQueryHandler(IAhpUserContext accountUserContext, ISiteRepository siteRepository, IAhpPrefillDataRepository prefillDataRepository)
     {
         _accountUserContext = accountUserContext;
         _siteRepository = siteRepository;
@@ -55,6 +55,9 @@ public class GetSiteQueryHandler : IRequestHandler<GetSiteQuery, SiteModel>
             NationalDesignGuidePriorities = site.NationalDesignGuidePriorities.Values.ToList(),
             BuildingForHealthyLife = site.BuildingForHealthyLife,
             NumberOfGreenLights = site.NumberOfGreenLights?.ToString(),
+            DevelopingPartner = CreateOrganisationDetails(site.SitePartners.DevelopingPartner),
+            OwnerOfTheLand = CreateOrganisationDetails(site.SitePartners.OwnerOfTheLand),
+            OwnerOfTheHomes = CreateOrganisationDetails(site.SitePartners.OwnerOfTheHomes),
             LandAcquisitionStatus = site.LandAcquisitionStatus.Value,
             TenderingStatusDetails = CreateSiteTenderingStatusDetails(site.TenderingStatusDetails),
             StrategicSiteDetails = CreateStrategicSiteDetails(site.StrategicSiteDetails),
@@ -64,6 +67,7 @@ public class GetSiteQueryHandler : IRequestHandler<GetSiteQuery, SiteModel>
             EnvironmentalImpact = site.EnvironmentalImpact?.Value,
             SiteProcurements = site.Procurements.Procurements.ToList(),
             ModernMethodsOfConstruction = CreateSiteModernMethodsOfConstruction(site.ModernMethodsOfConstruction),
+            IsConsortiumMember = !userAccount.Consortium.HasNoConsortium,
         };
     }
 
@@ -112,6 +116,11 @@ public class GetSiteQueryHandler : IRequestHandler<GetSiteQuery, SiteModel>
             planningDetails.IsQuestionActive(nameof(planningDetails.LandRegistryDetails)),
             planningDetails.IsAnswered(),
             localAuthorityCode);
+    }
+
+    private static OrganisationDetails? CreateOrganisationDetails(InvestmentsOrganisation? sitePartner)
+    {
+        return sitePartner.IsProvided() ? OrganisationDetails.WithoutAddress(sitePartner!.Id, sitePartner.Name) : null;
     }
 
     private static SiteTenderingStatusDetails CreateSiteTenderingStatusDetails(TenderingStatusDetails tenderingStatusDetails)

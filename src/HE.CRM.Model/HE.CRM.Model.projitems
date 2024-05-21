@@ -12,6 +12,7 @@
     <Content Include="$(MSBuildThisFileDirectory)Settings\EarlyBound.Settings.xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_canceladdmember.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_changeahpapplicationstatus.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_changeloanapplicationexternalstatus.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_checkifapplicationwithgivennameexists.cs" />
@@ -19,6 +20,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_checkifloanapplicationwithgivennameexists.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_checkifsitewithgivennameexists.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_checkifsitewithstrategicsitenameexists.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_createahpproject.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_createsinglesitedetail.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_deactivatefrontdoorproject.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_deactivatefrontdoorsite.cs" />
@@ -30,6 +32,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getabsoluteahpapplicationfilelocation.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getahpapplication.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getahpapplicationdocumentlocation.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getahpproject.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getahpprojects.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getconsortium.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getconsortiums.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getcontactrole.cs" />
@@ -60,6 +64,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_IsConsortiumExistForProgrammeAndOrganisation.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_issiteorapplicationpartner.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_linkcontactwithorganization.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_requestaddingmembertoconsortium.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_requesttoremovemember.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_returnuserprofile.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_savetemporaryportaldata.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_searchlocalauthority.cs" />
@@ -86,8 +92,10 @@
     <Compile Include="$(MSBuildThisFileDirectory)Actions\RetrieveEnvironmentVariableValue.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\UpsertMultiple.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CrmSerialiedParameters\AHP_DELIVERY_PHASE_NOTIFICATION_OF_ADDITIONAL_PAYMENTS_FOR_PHASE.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)crmserialiedparameters\AHP_DELIVERY_PHASE_NOTIFICATION_OF_ADJUSTMENT_ACCEPTED.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CrmSerialiedParameters\AHP_EXTERNAL_APPLICATION_ON_HOLD.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CrmSerialiedParameters\AHP_EXTERNAL_APPLICATION_REFERRED_BACK_TO_APPLICANT.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CrmSerialiedParameters\AHP_EXTERNAL_APPLICATION_REJECTED.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CrmSerialiedParameters\AHP_EXTERNAL_APPLICATION_SUBMITTED.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CrmSerialiedParameters\AHP_EXTERNAL_REMINDER_TO_FINALIZE_APPLICATION_REFERRED_BACK.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CrmSerialiedParameters\AHP_EXTERNAL_REMINDER_TO_FINALIZE_DRAFT_APPLICATION.cs" />

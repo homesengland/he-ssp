@@ -1,7 +1,6 @@
 @using HE.Investments.Common.WWW.Components.FormButton
 @using HE.Investment.AHP.Contract.Site
 @using HE.Investment.AHP.WWW.Views.Shared.Components.AhpWorkflowBackButton
-@using HE.Investment.AHP.WWW.Views.Site;
 @using HE.Investment.AHP.WWW.Views.Site.Const
 @model Section106Dto
 @{
@@ -11,7 +10,7 @@
     <vc:ahp-workflow-back-button current-page="@SiteWorkflowState.Section106GeneralAgreement" />
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
 
-    <form asp-controller="Site" asp-action="Section106GeneralAgreement" asp-route-redirect="@Context.Request.Query["redirect"]" asp-method="post" novalidate>
+    <form asp-controller="Site" asp-action="Section106GeneralAgreement" asp-route-workflow="@Context.Request.Query["workflow"]" asp-method="post" novalidate>
         <vc:page-header title="@SitePageTitles.SiteSection106Agreement" caption="@Model.SiteName"/>
         <gds-p>
             You'll need to provide details of any section 106 agreements (or planning conditions

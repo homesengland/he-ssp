@@ -55,7 +55,7 @@ public class DeliveryPhaseEntity : DomainEntity, IDeliveryPhaseEntity
         CreatedOn = createdOn;
         DeliveryPhaseMilestones = new DeliveryPhaseMilestones(IsOnlyCompletionMilestone, acquisitionMilestone, startOnSiteMilestone, completionMilestone);
         IsAdditionalPaymentRequested = isAdditionalPaymentRequested;
-        _homesToDeliver = homesToDeliver?.ToList() ?? new List<HomesToDeliverInPhase>();
+        _homesToDeliver = homesToDeliver?.ToList() ?? [];
         Tranches = new DeliveryPhaseTranches(
             Id,
             Application,
@@ -226,7 +226,7 @@ public class DeliveryPhaseEntity : DomainEntity, IDeliveryPhaseEntity
                          BuildActivity.IsAnswered() &&
                          reconfigureExistingValid &&
                          Tranches.IsAnswered() &&
-                         _homesToDeliver.Any() &&
+                         _homesToDeliver.Count != 0 &&
                          DeliveryPhaseMilestones.IsAnswered() &&
                          MilestonesTranches.IsAnswered();
 

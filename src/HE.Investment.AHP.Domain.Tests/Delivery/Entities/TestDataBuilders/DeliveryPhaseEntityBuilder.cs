@@ -20,7 +20,7 @@ namespace HE.Investment.AHP.Domain.Tests.Delivery.Entities.TestDataBuilders;
 
 public class DeliveryPhaseEntityBuilder
 {
-    private readonly List<HomesToDeliverInPhase> _homesToDeliver = new();
+    private readonly List<HomesToDeliverInPhase> _homesToDeliver = [];
 
     private readonly ApplicationBasicInfo _applicationBasicInfo = ApplicationBasicInfoTestData.CreateAffordableRentInDraftState();
 
@@ -186,6 +186,8 @@ public class DeliveryPhaseEntityBuilder
             _applicationBasicInfo,
             nameof(ApplicationBasicInfo.Programme),
             new AhpProgramme(
+                "1",
+                "Affordable Homes Programme 2021-2026 Continuous Market Engagement",
                 ProgrammeDatesTestData.ProgrammeDates,
                 milestoneFramework));
         return this;

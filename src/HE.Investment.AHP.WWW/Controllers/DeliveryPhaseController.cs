@@ -14,8 +14,8 @@ using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Validators;
-using HE.Investments.Common.Workflow;
 using HE.Investments.Common.WWW.Controllers;
+using HE.Investments.Common.WWW.Extensions;
 using HE.Investments.Common.WWW.Routing;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -104,8 +104,7 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
             return View("Name", model);
         }
 
-        return await this.ReturnToTaskListOrContinue(
-            async () => await ContinueWithRedirect(new { applicationId, deliveryPhaseId }));
+        return await this.ReturnToTaskListOrContinue(async () => await ContinueWithWorkflow(new { applicationId, deliveryPhaseId }));
     }
 
     [HttpGet("{deliveryPhaseId}/details")]
@@ -185,7 +184,7 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
                 DeliveryPhaseId.From(deliveryPhaseId),
                 model.HomesToDeliver ?? new Dictionary<string, string?>()),
             async () => await this.ReturnToTaskListOrContinue(
-                async () => await ContinueWithRedirect(new { applicationId, deliveryPhaseId })),
+                async () => await ContinueWithWorkflow(new { applicationId, deliveryPhaseId })),
             async () => View("AddHomes", await new AddHomesModelFactory(_mediator).Create(applicationId, deliveryPhaseId, model, cancellationToken)),
             cancellationToken);
     }
@@ -247,7 +246,7 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
         }
 
         return await this.ReturnToTaskListOrContinue(
-            async () => await ContinueWithRedirect(new { applicationId, deliveryPhaseId }));
+            async () => await ContinueWithWorkflow(new { applicationId, deliveryPhaseId }));
     }
 
     [HttpGet("{deliveryPhaseId}/summary-of-delivery/tranche/{trancheType}")]
@@ -288,7 +287,6 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
     {
         var ahpApplicationId = AhpApplicationId.From(applicationId);
         var deliveryId = DeliveryPhaseId.From(deliveryPhaseId);
-        Request.TryGetWorkflowQueryParameter(out var workflow);
 
         IRequest<OperationResult> command = summaryOfDeliveryAmend.TrancheType switch
         {
@@ -314,7 +312,7 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
             return View("SummaryOfDeliveryTranche", summaryOfDeliveryAmend);
         }
 
-        return RedirectToAction("SummaryOfDelivery", new { applicationId, deliveryPhaseId, workflow });
+        return await ContinueWithWorkflow(new { applicationId, deliveryPhaseId });
     }
 
     [HttpGet("{deliveryPhaseId}/remove")]
@@ -476,7 +474,7 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
     {
         if (isCompleted == null)
         {
-            return await DisplayChecksAnswersPage(cancellationToken, new List<string> { "Select whether you have completed this section" });
+            return await DisplayChecksAnswersPage(cancellationToken, ["Select whether you have completed this section"]);
         }
 
         var result = isCompleted == IsSectionCompleted.Yes
@@ -498,17 +496,10 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
             ? await _mediator.Send(new GetDeliveryPhaseDetailsQuery(applicationId, this.GetDeliveryPhaseIdFromRoute()), CancellationToken.None)
             : new DeliveryPhaseDetails(ToApplicationDetails(await _mediator.Send(new GetApplicationQuery(applicationId), CancellationToken.None)), string.Empty, string.Empty, SectionStatus.NotStarted);
 
-        var workflow = new DeliveryPhaseWorkflow(currentState, deliveryPhase, deliveryPhase.Application.IsReadOnly);
-        if (Request.TryGetWorkflowQueryParameter(out var lastEncodedWorkflow))
-        {
-            var lastWorkflow = new EncodedWorkflow<DeliveryPhaseWorkflowState>(lastEncodedWorkflow);
-            var currentWorkflow = workflow.GetEncodedWorkflow();
-            var changedState = currentWorkflow.GetNextChangedWorkflowState(currentState, lastWorkflow);
-
-            return new DeliveryPhaseWorkflow(changedState, deliveryPhase, true);
-        }
-
-        return workflow;
+        return CreateChangedFlowWorkflow(
+            new DeliveryPhaseWorkflow(currentState, deliveryPhase, deliveryPhase.Application.IsReadOnly),
+            currentState,
+            changedState => new DeliveryPhaseWorkflow(changedState, deliveryPhase, true));
     }
 
     private static ApplicationDetails ToApplicationDetails(Application application)
@@ -614,12 +605,11 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
     {
         var applicationId = this.GetApplicationIdFromRoute();
         var deliveryPhaseId = this.GetDeliveryPhaseIdFromRoute();
-        Request.TryGetWorkflowQueryParameter(out var workflow);
 
         return await this.ExecuteCommand<TViewModel>(
             _mediator,
             command,
-            async () => await this.ReturnToTaskListOrContinue(async () => await Continue(new { applicationId = applicationId.Value, deliveryPhaseId, workflow })),
+            async () => await this.ReturnToTaskListOrContinue(async () => await ContinueWithWorkflow(new { applicationId = applicationId.Value, deliveryPhaseId })),
             async () =>
             {
                 var deliveryPhaseDetails = await _mediator.Send(

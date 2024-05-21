@@ -1,4 +1,5 @@
 using HE.Investment.AHP.Contract.Site.Enums;
+using HE.Investments.AHP.Consortium.Contract;
 using HE.Investments.Common.Contract;
 
 namespace HE.Investment.AHP.Contract.Site;
@@ -40,4 +41,14 @@ public class SiteModel
     public IList<SiteProcurement> SiteProcurements { get; set; }
 
     public SiteModernMethodsOfConstruction ModernMethodsOfConstruction { get; set; }
+
+    public bool IsConsortiumMember { get; set; }
+
+    public OrganisationDetails? DevelopingPartner { get; set; }
+
+    public OrganisationDetails? OwnerOfTheLand { get; set; }
+
+    public OrganisationDetails? OwnerOfTheHomes { get; set; }
+
+    public bool IsReadOnly => Status == SiteStatus.Completed;
 }

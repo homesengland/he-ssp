@@ -21,7 +21,7 @@ public class Regions : ValueObject, IQuestion
 
     private Regions()
     {
-        Values = new List<RegionType>();
+        Values = [];
     }
 
     public IList<RegionType> Values { get; }

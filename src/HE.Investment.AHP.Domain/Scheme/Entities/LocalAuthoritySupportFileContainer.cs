@@ -14,7 +14,7 @@ public class LocalAuthoritySupportFileContainer
 
     public LocalAuthoritySupportFileContainer(UploadedFile? uploadedFile)
     {
-        var list = uploadedFile != null ? new List<UploadedFile> { uploadedFile } : new List<UploadedFile>();
+        var list = uploadedFile != null ? [uploadedFile] : new List<UploadedFile>();
         _files = new Files<LocalAuthoritySupportFile>(list, new SingleFileCountPolicy(nameof(LocalAuthoritySupportFile)));
     }
 

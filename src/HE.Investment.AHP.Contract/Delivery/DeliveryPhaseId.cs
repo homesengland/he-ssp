@@ -5,8 +5,8 @@ namespace HE.Investment.AHP.Contract.Delivery;
 
 public record DeliveryPhaseId : StringIdValueObject
 {
-    public DeliveryPhaseId(string id)
-        : base(id)
+    public DeliveryPhaseId(string value)
+        : base(value)
     {
     }
 
@@ -17,8 +17,6 @@ public record DeliveryPhaseId : StringIdValueObject
     public static DeliveryPhaseId New() => new();
 
     public static DeliveryPhaseId From(string value) => new(FromStringToShortGuidAsString(value));
-
-    public static DeliveryPhaseId From(Guid value) => new(FromGuidToShortGuidAsString(value));
 
     public string ToGuidAsString() => Value.ToGuidAsString();
 

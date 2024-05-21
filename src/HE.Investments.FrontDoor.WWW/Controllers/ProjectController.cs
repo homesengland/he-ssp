@@ -4,7 +4,6 @@ using HE.Investments.Common.Contract.Enum;
 using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Validators;
-using HE.Investments.Common.Workflow;
 using HE.Investments.Common.WWW.Controllers;
 using HE.Investments.Common.WWW.Extensions;
 using HE.Investments.Common.WWW.Models.Summary;
@@ -165,7 +164,7 @@ public class ProjectController : WorkflowController<ProjectWorkflowState>
     public async Task<IActionResult> SupportRequiredActivities([FromRoute] string projectId, ProjectDetails model, CancellationToken cancellationToken)
     {
         return await ExecuteProjectCommand(
-            new ProvideSupportActivitiesCommand(FrontDoorProjectId.From(projectId), model.SupportActivityTypes ?? new List<SupportActivityType>()),
+            new ProvideSupportActivitiesCommand(FrontDoorProjectId.From(projectId), model.SupportActivityTypes ?? []),
             nameof(SupportRequiredActivities),
             project =>
             {
@@ -187,7 +186,7 @@ public class ProjectController : WorkflowController<ProjectWorkflowState>
     public async Task<IActionResult> Infrastructure([FromRoute] string projectId, ProjectDetails model, CancellationToken cancellationToken)
     {
         return await ExecuteProjectCommand(
-            new ProvideInfrastructureTypesCommand(FrontDoorProjectId.From(projectId), model.InfrastructureTypes ?? new List<InfrastructureType>()),
+            new ProvideInfrastructureTypesCommand(FrontDoorProjectId.From(projectId), model.InfrastructureTypes ?? []),
             nameof(Infrastructure),
             project =>
             {
@@ -317,7 +316,7 @@ public class ProjectController : WorkflowController<ProjectWorkflowState>
     public async Task<IActionResult> Region([FromRoute] string projectId, ProjectDetails model, CancellationToken cancellationToken)
     {
         return await ExecuteProjectCommand(
-            new ProvideRegionCommand(FrontDoorProjectId.From(projectId), model.Regions ?? new List<RegionType>()),
+            new ProvideRegionCommand(FrontDoorProjectId.From(projectId), model.Regions ?? []),
             nameof(Region),
             project =>
             {
@@ -524,9 +523,9 @@ public class ProjectController : WorkflowController<ProjectWorkflowState>
             return View("CheckAnswers", await CreateProjectSummary(cancellationToken));
         }
 
-        if (applicationType == ApplicationType.Loans)
+        if (applicationType != ApplicationType.Undefined)
         {
-            return RedirectToAction("RedirectToLoans", "LoanApplication", new { fdProjectId = projectId });
+            return RedirectToAction("Redirect", "ConvertProject", new { fdProjectId = projectId, applicationType });
         }
 
         return RedirectToAction("YouNeedToSpeakToHomesEngland", new { projectId });
@@ -542,17 +541,11 @@ public class ProjectController : WorkflowController<ProjectWorkflowState>
     {
         var projectId = routeData?.GetPropertyValue<string>("projectId") ?? this.GetProjectIdFromRoute().Value;
         var project = await GetProjectDetails(projectId, CancellationToken.None);
-        var workflow = new ProjectWorkflow(currentState, project);
-        if (Request.TryGetWorkflowQueryParameter(out var lastEncodedWorkflow))
-        {
-            var lastWorkflow = new EncodedWorkflow<ProjectWorkflowState>(lastEncodedWorkflow);
-            var currentWorkflow = workflow.GetEncodedWorkflow();
-            var changedState = currentWorkflow.GetNextChangedWorkflowState(currentState, lastWorkflow);
 
-            return new ProjectWorkflow(changedState, project, true);
-        }
-
-        return workflow;
+        return CreateChangedFlowWorkflow(
+            new ProjectWorkflow(currentState, project),
+            currentState,
+            changedState => new ProjectWorkflow(changedState, project, true));
     }
 
     private async Task<IActionResult> ExecuteProjectCommand<TViewModel>(

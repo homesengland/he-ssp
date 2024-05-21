@@ -44,4 +44,17 @@ public static class CollectionExtensions
     {
         return source.Count == 0;
     }
+
+    public static TItem? PopItem<TItem>(this List<TItem> items)
+        where TItem : class
+    {
+        if (items.Count > 0)
+        {
+            var result = items[0];
+            items.RemoveAt(0);
+            return result;
+        }
+
+        return null;
+    }
 }

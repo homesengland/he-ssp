@@ -10,10 +10,12 @@ using HE.Investments.Account.Shared.Routing;
 using HE.Investments.Account.WWW.Models.UserOrganisation;
 using HE.Investments.Account.WWW.Routing;
 using HE.Investments.Account.WWW.Utils;
+using HE.Investments.Common;
 using HE.Investments.Common.WWW.Controllers;
 using HE.Investments.Common.WWW.Models;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.FeatureManagement;
 
 namespace HE.Investments.Account.WWW.Controllers;
 
@@ -29,16 +31,20 @@ public class UserOrganisationController : Controller
 
     private readonly ProgrammeUrlConfig _programmeUrlConfig;
 
+    private readonly IFeatureManager _featureManager;
+
     public UserOrganisationController(
         IMediator mediator,
         IProgrammes programmes,
         IAccountAccessContext accountAccessContext,
-        ProgrammeUrlConfig programmeUrlConfig)
+        ProgrammeUrlConfig programmeUrlConfig,
+        IFeatureManager featureManager)
     {
         _mediator = mediator;
         _programmes = programmes;
         _accountAccessContext = accountAccessContext;
         _programmeUrlConfig = programmeUrlConfig;
+        _featureManager = featureManager;
     }
 
     [HttpGet(UserOrganisationAccountEndpoints.DashboardSuffix)]
@@ -135,23 +141,30 @@ public class UserOrganisationController : Controller
 
     private Dictionary<ProgrammeType, ProgrammeModel> GetProgrammes(IList<ProgrammeType> programmeTypes)
     {
-        return programmeTypes.Select(x => _programmes.GetProgramme(x)).ToDictionary(x => x.Type, x => x);
+        return programmeTypes.Select(_programmes.GetProgramme).ToDictionary(x => x.Type, x => x);
     }
 
     private async Task<List<ActionModel>> UserOrganisationActions(string organisationName)
     {
         var canViewOrganisationDetails = await _accountAccessContext.CanAccessOrganisationView();
+        var canSubmitApplicationAndIsNotLimitedUser = await _accountAccessContext.CanSubmitApplication() && canViewOrganisationDetails;
         var userOrganisationActions = new List<ActionModel>();
         if (canViewOrganisationDetails)
         {
-            userOrganisationActions.AddRange(new List<ActionModel>
-            {
+            userOrganisationActions.AddRange(
+            [
                 new("Add or manage users at this Organisation", "Index", "Users", HasAccess: canViewOrganisationDetails),
                 new($"Manage {organisationName} details", "Details", "UserOrganisation", HasAccess: canViewOrganisationDetails),
-            });
+            ]);
         }
 
         userOrganisationActions.Add(new("Manage your account", "GetProfileDetails", "User", new { callback = Url.Action("Index") }, true));
+
+        if (await _featureManager.IsEnabledAsync(FeatureFlags.AhpProgram) && canSubmitApplicationAndIsNotLimitedUser)
+        {
+            userOrganisationActions.Add(new("Add AHP consortium", "Index", "Consortium", HasAccess: canSubmitApplicationAndIsNotLimitedUser));
+        }
+
         return userOrganisationActions;
     }
 }

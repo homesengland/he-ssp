@@ -10,5 +10,6 @@ namespace HE.CRM.Common.Repositories.Interfaces
 
     public interface IConsortiumMemberRepository : ICrmEntityRepository<invln_ConsortiumMember, DataverseContext>
     {
+        invln_ConsortiumMember GetMemberByOrganizstationIdAndConsortiumId(string organizationId, string consortiumId);
     }
 }

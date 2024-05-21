@@ -9,8 +9,11 @@ public class GetAvailableProgrammesQueryHandler : IRequestHandler<GetAvailablePr
     {
         return Task.FromResult(new[]
         {
-            new AvailableProgramme("d5fe3baa-eeae-ee11-a569-0022480041cf", "Affordable Homes Programme 21-26 Continuous Market Engagement"),
-            new AvailableProgramme("48dc841c-673b-4f19-8fd6-11185915669a", "Affordable Homes Programme 21-26 Strategic Partnerships"),
+            new AvailableProgramme(
+                "d5fe3baa-eeae-ee11-a569-0022480041cf",
+                "Affordable Homes Programme 21-26 Continuous Market Engagement",
+                "Affordable Homes Programme 2021-2026 Continuous Market Engagement",
+                "AHP 21-26 CME"),
         });
     }
 }

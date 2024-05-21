@@ -32,6 +32,7 @@ public class GetSiteDetailsQueryHandler : IRequestHandler<GetSiteDetailsQuery, S
 
         return new SiteDetailsModel(
             site.Id,
+            site.FrontDoorProjectId,
             site.Name.Value,
             userAccount.Organisation?.RegisteredCompanyName ?? string.Empty,
             site.LocalAuthority?.Name,

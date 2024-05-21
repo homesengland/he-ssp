@@ -5,8 +5,8 @@ namespace HE.Investments.FrontDoor.Shared.Project;
 
 public record FrontDoorSiteId : StringIdValueObject
 {
-    public FrontDoorSiteId(string id)
-        : base(id)
+    public FrontDoorSiteId(string value)
+        : base(value)
     {
     }
 
@@ -17,8 +17,6 @@ public record FrontDoorSiteId : StringIdValueObject
     public static FrontDoorSiteId New() => new();
 
     public static FrontDoorSiteId From(string value) => new(FromStringToShortGuidAsString(value));
-
-    public static FrontDoorSiteId From(Guid value) => new(FromGuidToShortGuidAsString(value));
 
     public string ToGuidAsString() => Value.IsProvided() ? Value.ToGuidAsString() : Value;
 

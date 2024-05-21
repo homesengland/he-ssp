@@ -12,7 +12,7 @@ internal sealed class LoanApplicationDtoTestBuilder
         _dto = new LoanApplicationDto
         {
             loanApplicationId = LoanApplicationIdTestData.LoanApplicationIdOne.ToString(),
-            siteDetailsList = new List<SiteDetailsDto>(),
+            siteDetailsList = [],
         };
     }
 

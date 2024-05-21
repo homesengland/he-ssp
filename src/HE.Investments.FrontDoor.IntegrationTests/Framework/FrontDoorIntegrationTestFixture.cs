@@ -9,6 +9,6 @@ public class FrontDoorIntegrationTestFixture : IntegrationTestFixture<Program>
 {
     protected override void ConfigureTestServices(IServiceCollection services)
     {
-        services.AddScoped<LoanApplicationConfig, Config.LoanApplicationConfig>();
+        services.AddScoped<ProgrammeUrlConfig, Config.ProgrammeUrlConfig>();
     }
 }

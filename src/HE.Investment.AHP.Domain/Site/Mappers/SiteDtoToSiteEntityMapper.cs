@@ -3,6 +3,7 @@ extern alias Org;
 using System.Collections.ObjectModel;
 using System.Globalization;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
+using HE.Investment.AHP.Contract.Project;
 using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Contract.Site.Enums;
 using HE.Investment.AHP.Domain.Site.Entities;
@@ -12,8 +13,12 @@ using HE.Investment.AHP.Domain.Site.ValueObjects.Mmc;
 using HE.Investment.AHP.Domain.Site.ValueObjects.Planning;
 using HE.Investment.AHP.Domain.Site.ValueObjects.StrategicSite;
 using HE.Investment.AHP.Domain.Site.ValueObjects.TenderingStatus;
+using HE.Investments.Common.Contract;
 using HE.Investments.Common.CRM.Mappers;
+using HE.Investments.FrontDoor.Shared.Project;
 using Org::HE.Investments.Organisation.LocalAuthorities.ValueObjects;
+using Org::HE.Investments.Organisation.ValueObjects;
+using LocalAuthority = Org::HE.Investments.Organisation.LocalAuthorities.ValueObjects.LocalAuthority;
 using Section106Dto = HE.Common.IntegrationModel.PortalIntegrationModel.Section106Dto;
 using SiteModernMethodsOfConstruction = HE.Investment.AHP.Domain.Site.ValueObjects.Mmc.SiteModernMethodsOfConstruction;
 using SiteRuralClassification = HE.Investment.AHP.Domain.Site.ValueObjects.SiteRuralClassification;
@@ -43,10 +48,12 @@ public static class SiteDtoToSiteEntityMapper
     {
         return new SiteEntity(
             SiteId.From(dto.id),
+            new FrontDoorProjectId(string.IsNullOrWhiteSpace(dto.fdProjectid) ? MockedProjectId.ProjectId : dto.fdProjectid),
             new SiteName(dto.name),
+            new SitePartners(MapOrganisation(dto.developerPartner), MapOrganisation(dto.ownerOfTheLandDuringDevelopment), MapOrganisation(dto.ownerOfTheHomesAfterCompletion)),
             SiteStatusMapper.ToDomain(dto.status),
             CreateSection106(dto.section106),
-            CreateLocalAuthority(dto.localAuthority?.id, dto.localAuthority?.name),
+            LocalAuthorityMapper.FromDto(dto.localAuthority),
             CreatePlanningDetails(dto.planningDetails),
             CreateNationalDesignGuidePriorities(dto.nationalDesignGuidePriorities),
             BuildingForHealthyLifeTypeMapper.ToDomain(dto.buildingForHealthyLife),
@@ -60,7 +67,6 @@ public static class SiteDtoToSiteEntityMapper
             string.IsNullOrWhiteSpace(dto.environmentalImpact) ? null : new EnvironmentalImpact(dto.environmentalImpact),
             CreateMmc(dto.modernMethodsOfConstruction),
             new SiteProcurements(MapCollection(dto.procurementMechanisms, SiteProcurementMapper)),
-            frontDoorProjectId: null, // TODO: use value from CRM when added
             frontDoorSiteId: null);
     }
 
@@ -75,13 +81,6 @@ public static class SiteDtoToSiteEntityMapper
                 dto.areAdditionalHomes,
                 dto.areRestrictionsOrObligations,
                 dto.localAuthorityConfirmation);
-    }
-
-    private static LocalAuthority? CreateLocalAuthority(string? id, string? name)
-    {
-        return string.IsNullOrWhiteSpace(id) || string.IsNullOrWhiteSpace(name)
-            ? null
-            : new LocalAuthority(new LocalAuthorityCode(id), name);
     }
 
     private static PlanningDetails CreatePlanningDetails(PlanningDetailsDto dto)
@@ -111,7 +110,7 @@ public static class SiteDtoToSiteEntityMapper
     {
         var priorities = MapCollection(nationalDesignGuidePriorities, NationalDesignGuideMapper);
 
-        return priorities.Any()
+        return priorities.Count != 0
             ? new NationalDesignGuidePriorities(new ReadOnlyCollection<NationalDesignGuidePriority>(priorities))
             : new NationalDesignGuidePriorities();
     }
@@ -119,6 +118,16 @@ public static class SiteDtoToSiteEntityMapper
     private static NumberOfGreenLights? CreateNumberOfGreenLights(int? dto)
     {
         return dto != null ? new NumberOfGreenLights(dto.Value.ToString(CultureInfo.InvariantCulture)) : null;
+    }
+
+    private static InvestmentsOrganisation? MapOrganisation(OrganizationDetailsDto? organisation)
+    {
+        if (string.IsNullOrWhiteSpace(organisation?.organisationId))
+        {
+            return null;
+        }
+
+        return new InvestmentsOrganisation(OrganisationId.From(organisation.organisationId), organisation.registeredCompanyName);
     }
 
     private static TenderingStatusDetails CreateTenderingStatusDetails(TenderingDetailsDto dto)

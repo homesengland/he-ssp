@@ -48,6 +48,11 @@ public class RentToBuyTests : HomeTypesTestBase
 
     private static void AssertView(IHtmlDocument document)
     {
+        IList<string> options = [
+            "Yes",
+            "No",
+        ];
+
         document
             .HasPageHeader("My application - My homes", "Rent to Buy details")
             .HasElementWithText("h2", "Enter the market value of each home")
@@ -63,13 +68,7 @@ public class RentToBuyTests : HomeTypesTestBase
             .HasElementWithText("h2", "Would the target rent plus service charge for these homes exceed 80% of market rent?")
             .HasElementWithText("span", "Help with target rent")
             .HasElementWithText("a", "Find out more information on our Rent Policy Statement (opens in a new tab).")
-            .HasRadio(
-                "TargetRentExceedMarketRent",
-                new[]
-                {
-                    "Yes",
-                    "No",
-                })
+            .HasRadio("TargetRentExceedMarketRent", options)
             .HasSaveAndContinueButton()
             .HasElementWithText("button", "Calculate");
     }

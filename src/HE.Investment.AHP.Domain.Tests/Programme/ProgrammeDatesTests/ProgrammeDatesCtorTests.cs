@@ -1,9 +1,6 @@
 using FluentAssertions;
-using HE.Investment.AHP.Domain.Delivery.ValueObjects;
 using HE.Investment.AHP.Domain.Programme;
-using HE.Investment.AHP.Domain.Tests.Programme.TestData;
 using HE.Investments.Common.Contract.Exceptions;
-using HE.Investments.TestsUtils.TestData;
 
 namespace HE.Investment.AHP.Domain.Tests.Programme.ProgrammeDatesTests;
 

@@ -3,6 +3,7 @@ using HE.Investment.AHP.Contract.Application.Events;
 using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Domain.Application.Factories;
 using HE.Investment.AHP.Domain.Application.ValueObjects;
+using HE.Investment.AHP.Domain.Scheme.ValueObjects;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Contract.Validators;
@@ -26,6 +27,7 @@ public class ApplicationEntity : DomainEntity
         ApplicationName name,
         ApplicationStatus status,
         ApplicationTenure tenure,
+        ApplicationPartners applicationPartners,
         IApplicationStateFactory applicationStateFactory,
         ApplicationReferenceNumber? referenceNumber = null,
         ApplicationSections? sections = null,
@@ -39,9 +41,10 @@ public class ApplicationEntity : DomainEntity
         Status = status;
         ReferenceNumber = referenceNumber ?? new ApplicationReferenceNumber(null);
         Tenure = tenure;
+        ApplicationPartners = applicationPartners;
         LastModified = lastModified;
         LastSubmitted = lastSubmitted;
-        Sections = sections ?? new ApplicationSections(new List<ApplicationSection>());
+        Sections = sections ?? new ApplicationSections([]);
         _applicationState = applicationStateFactory.Create(status);
         RepresentationsAndWarranties = representationsAndWarranties ?? new RepresentationsAndWarranties(false);
     }
@@ -53,6 +56,8 @@ public class ApplicationEntity : DomainEntity
     public ApplicationName Name { get; private set; }
 
     public ApplicationStatus Status { get; private set; }
+
+    public ApplicationPartners ApplicationPartners { get; private set; }
 
     public IEnumerable<AhpApplicationOperation> AllowedOperations => _applicationState.AllowedOperations;
 
@@ -76,12 +81,18 @@ public class ApplicationEntity : DomainEntity
 
     public bool IsNew => Id.IsNew;
 
-    public static ApplicationEntity New(SiteId siteId, ApplicationName name, ApplicationTenure tenure, IApplicationStateFactory applicationStateFactory) => new(
+    public static ApplicationEntity New(
+        SiteId siteId,
+        ApplicationName name,
+        ApplicationTenure tenure,
+        ApplicationPartners applicationPartners,
+        IApplicationStateFactory applicationStateFactory) => new(
         siteId,
         AhpApplicationId.New(),
         name,
         ApplicationStatus.New,
         tenure,
+        applicationPartners,
         applicationStateFactory);
 
     public void SetId(AhpApplicationId newId)

@@ -16,5 +16,14 @@ namespace HE.CRM.Common.Repositories.Implementations
         {
         }
 
+        public invln_ConsortiumMember GetMemberByOrganizstationIdAndConsortiumId(string organizationId, string consortiumId)
+        {
+            var query = new QueryExpression();
+            query.EntityName = invln_ConsortiumMember.EntityLogicalName;
+            query.ColumnSet = new ColumnSet(invln_ConsortiumMember.Fields.Id);
+            query.Criteria.AddCondition(new ConditionExpression(invln_ConsortiumMember.Fields.invln_Partner, ConditionOperator.Equal, organizationId));
+            query.Criteria.AddCondition(new ConditionExpression(invln_ConsortiumMember.Fields.invln_Consortium, ConditionOperator.Equal, consortiumId));
+            return service.RetrieveMultiple(query).Entities.Select(x => x.ToEntity<invln_ConsortiumMember>()).FirstOrDefault();
+        }
     }
 }

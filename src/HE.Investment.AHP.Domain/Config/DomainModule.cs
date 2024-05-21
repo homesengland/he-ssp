@@ -21,11 +21,14 @@ using HE.Investment.AHP.Domain.PrefillData.Repositories;
 using HE.Investment.AHP.Domain.Programme;
 using HE.Investment.AHP.Domain.Programme.Config;
 using HE.Investment.AHP.Domain.Programme.Crm;
+using HE.Investment.AHP.Domain.Project.Crm;
+using HE.Investment.AHP.Domain.Project.Repositories;
 using HE.Investment.AHP.Domain.Scheme.Repositories;
 using HE.Investment.AHP.Domain.Scheme.Services;
 using HE.Investment.AHP.Domain.Scheme.ValueObjects;
 using HE.Investment.AHP.Domain.Site.Crm;
 using HE.Investment.AHP.Domain.Site.Repositories;
+using HE.Investment.AHP.Domain.UserContext;
 using HE.Investments.Account.Shared.Config;
 using HE.Investments.Common;
 using HE.Investments.Common.Extensions;
@@ -48,6 +51,8 @@ public static class DomainModule
         services.AddFrontDoorSharedModule();
         services.AddScoped<IDateTimeProvider, DateTimeProvider>();
         services.AddTransient(typeof(IRequestExceptionHandler<,,>), typeof(DomainValidationHandler<,,>));
+        services.AddScoped<IAhpUserContext, AhpUserContext>();
+        services.AddScoped<IAhpAccessContext, AhpAccessContext>();
 
         services
             .AddProgramme()
@@ -58,7 +63,8 @@ public static class DomainModule
             .AddFinancialDetails()
             .AddDelivery()
             .AddPrefillData()
-            .AddDocuments();
+            .AddDocuments()
+            .AddAhpProjects();
     }
 
     private static IServiceCollection AddHomeTypes(this IServiceCollection services)
@@ -159,9 +165,16 @@ public static class DomainModule
         return services;
     }
 
-    private static void AddDocuments(this IServiceCollection services)
+    private static IServiceCollection AddDocuments(this IServiceCollection services)
     {
         services.AddScoped<IDocumentsCrmContext, DocumentsCrmContext>();
         services.AddSingleton<IAhpDocumentSettings, AhpDocumentSettings>();
+        return services;
+    }
+
+    private static void AddAhpProjects(this IServiceCollection services)
+    {
+        services.AddScoped<IProjectCrmContext, ProjectCrmContext>();
+        services.AddScoped<IProjectRepository, ProjectRepository>();
     }
 }

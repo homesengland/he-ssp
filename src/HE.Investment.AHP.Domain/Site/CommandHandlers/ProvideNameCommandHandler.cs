@@ -3,7 +3,7 @@ using HE.Investment.AHP.Contract.Site.Commands;
 using HE.Investment.AHP.Domain.Site.Entities;
 using HE.Investment.AHP.Domain.Site.Repositories;
 using HE.Investment.AHP.Domain.Site.ValueObjects;
-using HE.Investments.Account.Shared;
+using HE.Investment.AHP.Domain.UserContext;
 using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Extensions;
 using MediatR;
@@ -14,20 +14,20 @@ public class ProvideNameCommandHandler : IRequestHandler<ProvideNameCommand, Ope
 {
     private readonly ISiteRepository _siteRepository;
 
-    private readonly IAccountUserContext _accountUserContext;
+    private readonly IAhpUserContext _ahpUserContext;
 
-    public ProvideNameCommandHandler(ISiteRepository siteRepository, IAccountUserContext accountUserContext)
+    public ProvideNameCommandHandler(ISiteRepository siteRepository, IAhpUserContext ahpUserContext)
     {
         _siteRepository = siteRepository;
-        _accountUserContext = accountUserContext;
+        _ahpUserContext = ahpUserContext;
     }
 
     public async Task<OperationResult<SiteId>> Handle(ProvideNameCommand request, CancellationToken cancellationToken)
     {
-        var userAccount = await _accountUserContext.GetSelectedAccount();
+        var userAccount = await _ahpUserContext.GetSelectedAccount();
         var site = request.SiteId.IsProvided()
             ? await _siteRepository.GetSite(request.SiteId!, userAccount, cancellationToken)
-            : SiteEntity.NewSite(request.FrontDoorProjectId, request.FrontDoorSiteId);
+            : SiteEntity.NewSite(userAccount, request.FrontDoorProjectId, request.FrontDoorSiteId);
         var siteName = new SiteName(request.Name);
 
         await site.ProvideName(siteName, _siteRepository, cancellationToken);

@@ -1,6 +1,7 @@
 extern alias Org;
 
 using HE.Investment.AHP.Contract.Common.Enums;
+using HE.Investment.AHP.Contract.Project;
 using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Contract.Site.Enums;
 using HE.Investment.AHP.Domain.Site.Repositories;
@@ -9,6 +10,7 @@ using HE.Investment.AHP.Domain.Site.ValueObjects.Factories;
 using HE.Investment.AHP.Domain.Site.ValueObjects.Planning;
 using HE.Investment.AHP.Domain.Site.ValueObjects.StrategicSite;
 using HE.Investment.AHP.Domain.Site.ValueObjects.TenderingStatus;
+using HE.Investment.AHP.Domain.UserContext;
 using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Extensions;
@@ -29,7 +31,9 @@ public class SiteEntity : DomainEntity, IQuestion
 
     public SiteEntity(
         SiteId id,
+        FrontDoorProjectId projectId,
         SiteName name,
+        SitePartners sitePartners,
         SiteStatus? status = null,
         Section106? section106 = null,
         LocalAuthority? localAuthority = null,
@@ -46,11 +50,11 @@ public class SiteEntity : DomainEntity, IQuestion
         EnvironmentalImpact? environmentalImpact = null,
         SiteModernMethodsOfConstruction? modernMethodsOfConstruction = null,
         SiteProcurements? siteProcurements = null,
-        FrontDoorProjectId? frontDoorProjectId = null,
         FrontDoorSiteId? frontDoorSiteId = null)
     {
         Id = id;
         Name = name;
+        FrontDoorProjectId = projectId;
         Status = status ?? SiteStatus.InProgress;
         Section106 = section106 ?? new Section106();
         LocalAuthority = localAuthority;
@@ -58,6 +62,7 @@ public class SiteEntity : DomainEntity, IQuestion
         NationalDesignGuidePriorities = nationalDesignGuidePriorities ?? new NationalDesignGuidePriorities();
         BuildingForHealthyLife = buildingForHealthyLife ?? BuildingForHealthyLifeType.Undefined;
         NumberOfGreenLights = numberOfGreenLights;
+        SitePartners = sitePartners;
         LandAcquisitionStatus = landAcquisitionStatus ?? new LandAcquisitionStatus();
         TenderingStatusDetails = tenderingStatusDetails ?? new TenderingStatusDetails();
         StrategicSiteDetails = strategicSiteDetails ?? new StrategicSiteDetails();
@@ -67,13 +72,12 @@ public class SiteEntity : DomainEntity, IQuestion
         EnvironmentalImpact = environmentalImpact;
         ModernMethodsOfConstruction = modernMethodsOfConstruction ?? new SiteModernMethodsOfConstruction();
         Procurements = siteProcurements ?? new SiteProcurements();
-        FrontDoorProjectId = frontDoorProjectId;
         FrontDoorSiteId = frontDoorSiteId;
     }
 
-    public SiteId Id { get; set; }
+    public SiteId Id { get; }
 
-    public FrontDoorProjectId? FrontDoorProjectId { get; }
+    public FrontDoorProjectId FrontDoorProjectId { get; }
 
     public FrontDoorSiteId? FrontDoorSiteId { get; }
 
@@ -92,6 +96,8 @@ public class SiteEntity : DomainEntity, IQuestion
     public BuildingForHealthyLifeType BuildingForHealthyLife { get; private set; }
 
     public NumberOfGreenLights? NumberOfGreenLights { get; private set; }
+
+    public SitePartners SitePartners { get; private set; }
 
     public LandAcquisitionStatus LandAcquisitionStatus { get; private set; }
 
@@ -113,9 +119,13 @@ public class SiteEntity : DomainEntity, IQuestion
 
     public bool IsModified => _modificationTracker.IsModified;
 
-    public static SiteEntity NewSite(FrontDoorProjectId? projectId, FrontDoorSiteId? siteId)
+    public static SiteEntity NewSite(AhpUserAccount userAccount, FrontDoorProjectId projectId, FrontDoorSiteId? siteId)
     {
-        return new SiteEntity(SiteId.New(), new SiteName($"New Site - {Guid.NewGuid()}"), frontDoorProjectId: projectId, frontDoorSiteId: siteId);
+        var sitePartners = userAccount.Consortium.HasNoConsortium
+            ? SitePartners.SinglePartner(userAccount.SelectedOrganisation())
+            : new SitePartners();
+
+        return new SiteEntity(SiteId.New(), projectId, new SiteName($"New Site - {Guid.NewGuid()}"), sitePartners, frontDoorSiteId: siteId);
     }
 
     public async Task ProvideName(SiteName siteName, ISiteNameExist siteNameExist, CancellationToken cancellationToken)
@@ -167,6 +177,11 @@ public class SiteEntity : DomainEntity, IQuestion
     public void ProvideNumberOfGreenLights(NumberOfGreenLights? numberOfGreenLights)
     {
         NumberOfGreenLights = _modificationTracker.Change(NumberOfGreenLights, numberOfGreenLights, MarkAsNotCompleted);
+    }
+
+    public void ProvideSitePartners(SitePartners sitePartners)
+    {
+        SitePartners = _modificationTracker.Change(SitePartners, sitePartners, MarkAsNotCompleted);
     }
 
     public void ProvideLandAcquisitionStatus(LandAcquisitionStatus landAcquisitionStatus)
@@ -251,6 +266,7 @@ public class SiteEntity : DomainEntity, IQuestion
                PlanningDetails.IsAnswered() &&
                NationalDesignGuidePriorities.IsAnswered() &&
                BuildingForHealthyLife != BuildingForHealthyLifeType.Undefined &&
+               SitePartners.IsAnswered() &&
                LandAcquisitionStatus.IsAnswered() &&
                TenderingStatusDetails.IsAnswered() &&
                StrategicSiteDetails.IsProvided() &&
@@ -267,7 +283,7 @@ public class SiteEntity : DomainEntity, IQuestion
     {
         if (BuildingForHealthyLife == BuildingForHealthyLifeType.Yes)
         {
-            yield return () => NumberOfGreenLights.IsProvided();
+            yield return NumberOfGreenLights.IsProvided;
         }
 
         if (StrategicSiteDetails.IsProvided())

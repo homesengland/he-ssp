@@ -2,6 +2,8 @@ using HE.Investment.AHP.Contract.HomeTypes.Enums;
 using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Contract.Site.Enums;
 using HE.Investment.AHP.WWW.Controllers;
+using HE.Investment.AHP.WWW.Workflows;
+using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.WWW.Components.SectionSummary;
@@ -17,17 +19,30 @@ public class SiteSummaryViewModelFactory : ISiteSummaryViewModelFactory
 {
     private delegate string CreateAction(string actionName);
 
-    public IEnumerable<SectionSummaryViewModel> CreateSiteSummary(SiteModel siteDetails, IUrlHelper urlHelper, bool isEditable, bool useWorkflowRedirection)
+    public IEnumerable<SectionSummaryViewModel> CreateSiteSummary(
+        SiteModel siteDetails,
+        OrganisationBasicInfo organisation,
+        IUrlHelper urlHelper,
+        bool isEditable,
+        bool useWorkflowRedirection)
     {
-        string CreateAction(string actionName) => CreateSiteActionUrl(urlHelper, SiteId.From(siteDetails.Id!), actionName, useWorkflowRedirection);
+        var workflow = useWorkflowRedirection
+            ? new SiteWorkflow(SiteWorkflowState.Name, siteDetails).GetEncodedWorkflow().Value
+            : null;
+
+        string CreateAction(string actionName) => CreateSiteActionUrl(urlHelper, SiteId.From(siteDetails.Id!), actionName, workflow);
 
         yield return new SectionSummaryViewModel("Site details", CreateSiteDetailsSummary(siteDetails, CreateAction, isEditable));
         yield return new SectionSummaryViewModel("Section 106", CreateSection106Summary(siteDetails.Section106, CreateAction, isEditable));
         yield return new SectionSummaryViewModel("Location", CreateLocationSummary(siteDetails.LocalAuthority, CreateAction, isEditable));
         yield return new SectionSummaryViewModel("Planning", CreatePlanningSummary(siteDetails.PlanningDetails, CreateAction, isEditable));
         yield return new SectionSummaryViewModel("Design guidelines", CreateDesignGuidelinesSummary(siteDetails, CreateAction, isEditable));
-        yield return new SectionSummaryViewModel("Consortium", CreateConsortiumSummary());
-        yield return new SectionSummaryViewModel("URB", CreateUrbSummary());
+
+        if (siteDetails.IsConsortiumMember)
+        {
+            yield return new SectionSummaryViewModel("Consortium", CreateConsortiumSummary(siteDetails, CreateAction, isEditable));
+        }
+
         yield return new SectionSummaryViewModel("Land details", CreateLandDetailsSummary(siteDetails, CreateAction, isEditable));
         yield return new SectionSummaryViewModel("Site use", CreateSiteUseSummary(siteDetails, CreateAction, isEditable));
         yield return new SectionSummaryViewModel("Modern Methods of Construction (MMC)", CreateMmcSummary(siteDetails.ModernMethodsOfConstruction, CreateAction, isEditable));
@@ -36,10 +51,10 @@ public class SiteSummaryViewModelFactory : ISiteSummaryViewModelFactory
 
     private static List<SectionSummaryItemModel> CreateSiteDetailsSummary(SiteModel site, CreateAction createAction, bool isEditable)
     {
-        return new List<SectionSummaryItemModel>
-        {
+        return
+        [
             new("Site name", site.Name.ToOneElementList(), createAction(nameof(Controller.Name)), IsEditable: isEditable),
-        };
+        ];
     }
 
     private static List<SectionSummaryItemModel> CreateSection106Summary(Section106Dto? section, CreateAction createAction, bool isEditable)
@@ -94,14 +109,14 @@ public class SiteSummaryViewModelFactory : ISiteSummaryViewModelFactory
 
     private static List<SectionSummaryItemModel> CreateLocationSummary(LocalAuthority? localAuthority, CreateAction createAction, bool isEditable)
     {
-        return new List<SectionSummaryItemModel>
-        {
+        return
+        [
             new(
                 "Local authority",
                 localAuthority?.Name.ToOneElementList(),
                 createAction(nameof(Controller.LocalAuthoritySearch)),
                 IsEditable: isEditable),
-        };
+        ];
     }
 
     private static List<SectionSummaryItemModel> CreatePlanningSummary(SitePlanningDetails planning, CreateAction createAction, bool isEditable)
@@ -216,21 +231,26 @@ public class SiteSummaryViewModelFactory : ISiteSummaryViewModelFactory
         return summary;
     }
 
-    private static List<SectionSummaryItemModel> CreateConsortiumSummary()
+    private static List<SectionSummaryItemModel> CreateConsortiumSummary(SiteModel site, CreateAction createAction, bool isEditable)
     {
-        // TODO: AB#65903: Site information - Partner information
-        return new List<SectionSummaryItemModel>
-        {
-            new("Developing partner", "TODO".ToOneElementList()),
-            new("Owner of the land", "TODO".ToOneElementList()),
-            new("Owner of the homes", "TODO".ToOneElementList()),
-        };
-    }
-
-    private static List<SectionSummaryItemModel> CreateUrbSummary()
-    {
-        // TODO: AB#65903: Site information - Partner information
-        return new List<SectionSummaryItemModel> { new("Owner of the homes", "TODO".ToOneElementList()) };
+        return
+        [
+            new(
+                "Developing partner",
+                site.DevelopingPartner?.Name.ToOneElementList(),
+                createAction(nameof(Controller.DevelopingPartner)),
+                IsEditable: isEditable),
+            new(
+                "Owner of the land",
+                site.OwnerOfTheLand?.Name.ToOneElementList(),
+                createAction(nameof(Controller.OwnerOfTheLand)),
+                IsEditable: isEditable),
+            new(
+                "Owner of the homes",
+                site.OwnerOfTheHomes?.Name.ToOneElementList(),
+                createAction(nameof(Controller.OwnerOfTheHomes)),
+                IsEditable: isEditable),
+        ];
     }
 
     private static List<SectionSummaryItemModel> CreateLandDetailsSummary(SiteModel site, CreateAction createAction, bool isEditable)
@@ -400,22 +420,22 @@ public class SiteSummaryViewModelFactory : ISiteSummaryViewModelFactory
 
     private static List<SectionSummaryItemModel> CreateProcurementSummary(SiteModel site, CreateAction createAction, bool isEditable)
     {
-        return new List<SectionSummaryItemModel>
-        {
+        return
+        [
             new(
                 "Procurement mechanisms",
                 site.SiteProcurements.Select(x => x.GetDescription()).ToList(),
                 createAction(nameof(Controller.Procurements)),
                 IsEditable: isEditable),
-        };
+        ];
     }
 
-    private static string CreateSiteActionUrl(IUrlHelper urlHelper, SiteId siteId, string actionName, bool useWorkflowRedirection)
+    private static string CreateSiteActionUrl(IUrlHelper urlHelper, SiteId siteId, string actionName, string? workflow)
     {
         var action = urlHelper.Action(
             actionName,
             new ControllerName(nameof(SiteController)).WithoutPrefix(),
-            new { siteId = siteId.Value, redirect = useWorkflowRedirection ? nameof(SiteController.CheckAnswers) : null });
+            new { siteId = siteId.Value, workflow });
 
         return action ?? string.Empty;
     }

@@ -5,8 +5,8 @@ namespace HE.Investment.AHP.Contract.Application;
 
 public record AhpApplicationId : StringIdValueObject
 {
-    public AhpApplicationId(string id)
-        : base(id)
+    public AhpApplicationId(string value)
+        : base(value)
     {
     }
 

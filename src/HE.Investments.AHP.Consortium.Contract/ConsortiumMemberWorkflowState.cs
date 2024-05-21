@@ -9,4 +9,5 @@ public enum ConsortiumMemberWorkflowState
     AddOrganisation,
     AddMembers,
     RemoveMember,
+    ContactHomesEngland,
 }

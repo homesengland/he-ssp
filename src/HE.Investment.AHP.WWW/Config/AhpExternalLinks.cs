@@ -27,6 +27,10 @@ public class AhpExternalLinks : CommonExternalLinks, IAhpExternalLinks
 
     public string CapitalFundingGuide => GetExternalLink(
         nameof(CapitalFundingGuide),
+        "https://www.gov.uk/guidance/capital-funding-guide");
+
+    public string CapitalFundingGuideProgrammeManagement => GetExternalLink(
+        nameof(CapitalFundingGuideProgrammeManagement),
         "https://www.gov.uk/guidance/capital-funding-guide/6-programme-management");
 
     public string RightToSharedOwnershipInitialGuidanceForRegisteredProviders => GetExternalLink(

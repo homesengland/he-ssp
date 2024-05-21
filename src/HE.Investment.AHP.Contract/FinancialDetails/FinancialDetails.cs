@@ -1,6 +1,6 @@
 using HE.Investment.AHP.Contract.Application;
+using HE.Investment.AHP.Contract.Site.Enums;
 using HE.Investments.Common.Contract;
-using HE.Investments.Common.Contract.Enum;
 
 namespace HE.Investment.AHP.Contract.FinancialDetails;
 
@@ -10,7 +10,9 @@ public class FinancialDetails
 
     public decimal? PurchasePrice { get; set; }
 
-    public bool IsFullUnconditionalOption { get; set; }
+    public SiteLandAcquisitionStatus? LandAcquisitionStatus { get; set; }
+
+    public bool HasFullLandOwnership { get; set; }
 
     public bool? IsSchemaOnPublicLand { get; set; }
 

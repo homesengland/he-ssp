@@ -1,5 +1,4 @@
 using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
 using HE.Investments.Common.Contract.Enum;
 
 namespace HE.Investment.AHP.Contract.Site.Enums;

@@ -1,4 +1,3 @@
-using System.Diagnostics.CodeAnalysis;
 using HE.Investment.AHP.WWW.Models.HomeTypes;
 
 namespace HE.Investment.AHP.WWW.Tests.Views.HomeTypes;
@@ -16,30 +15,29 @@ public class DisabledPeopleClientGroupTests : HomeTypesTestBase
         var document = await RenderHomeTypePage(ViewPath, Model);
 
         // then
+        IList<string> radioOptions = [
+            "PeopleAtRiskOfDomesticViolence",
+            "PeopleWithAlcoholProblems",
+            "PeopleWithDrugProblems",
+            "PeopleWithHivOrAids",
+            "PeopleWithLearningDisabilitiesOrAutism",
+            "PeopleWithMentalHealthProblems",
+            "PeopleWithMultipleComplexNeeds",
+            "PeopleWithPhysicalOrSensoryDisabilities",
+            "MilitaryVeteransWithSupportNeeds",
+            "OffendersAndPeopleAtRiskOfOffending",
+            "HomelessFamiliesWithSupportNeeds",
+            "Refugees",
+            "RoughSleepers",
+            "SingleHomelessPeopleWithSupportNeeds",
+            "TeenageParents",
+            "YoungPeopleAtRisk",
+            "YoungPeopleLeavingCare",
+        ];
+
         document
             .HasPageHeader("My application - My homes", "What client group are the homes for?")
-            .HasRadio(
-                "DisabledPeopleClientGroup",
-                new[]
-                {
-                    "PeopleAtRiskOfDomesticViolence",
-                    "PeopleWithAlcoholProblems",
-                    "PeopleWithDrugProblems",
-                    "PeopleWithHivOrAids",
-                    "PeopleWithLearningDisabilitiesOrAutism",
-                    "PeopleWithMentalHealthProblems",
-                    "PeopleWithMultipleComplexNeeds",
-                    "PeopleWithPhysicalOrSensoryDisabilities",
-                    "MilitaryVeteransWithSupportNeeds",
-                    "OffendersAndPeopleAtRiskOfOffending",
-                    "HomelessFamiliesWithSupportNeeds",
-                    "Refugees",
-                    "RoughSleepers",
-                    "SingleHomelessPeopleWithSupportNeeds",
-                    "TeenageParents",
-                    "YoungPeopleAtRisk",
-                    "YoungPeopleLeavingCare",
-                })
+            .HasRadio("DisabledPeopleClientGroup", radioOptions)
             .HasSaveAndContinueButton();
     }
 }

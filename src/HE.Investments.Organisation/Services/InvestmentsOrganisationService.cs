@@ -2,6 +2,7 @@ using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Extensions;
+using HE.Investments.Organisation.Entities;
 using HE.Investments.Organisation.ValueObjects;
 
 namespace HE.Investments.Organisation.Services;
@@ -29,7 +30,7 @@ public class InvestmentsOrganisationService : IInvestmentsOrganisationService
         var organisation = result.Item ?? throw new NotFoundException("Organisation", organisationIdentifier);
         if (organisation.OrganisationId.IsProvided())
         {
-            return new InvestmentsOrganisation(new OrganisationId(organisation.OrganisationId!), organisation.Name);
+            return new InvestmentsOrganisation(OrganisationId.From(organisation.OrganisationId!), organisation.Name);
         }
 
         var organisationDto = new OrganizationDetailsDto
@@ -40,8 +41,25 @@ public class InvestmentsOrganisationService : IInvestmentsOrganisationService
             companyRegistrationNumber = result.Item.CompanyNumber,
             postalcode = organisation.PostalCode,
         };
-        var organisationId = new OrganisationId(_organisationService.CreateOrganization(organisationDto).ToString());
+        var organisationId = _organisationService.CreateOrganization(organisationDto);
 
-        return new InvestmentsOrganisation(organisationId, organisation.Name);
+        return new InvestmentsOrganisation(OrganisationId.From(organisationId), organisation.Name);
+    }
+
+    public InvestmentsOrganisation CreateOrganisation(IManualOrganisation organisation)
+    {
+        var organisationId = _organisationService.CreateOrganization(
+            new OrganizationDetailsDto
+            {
+                registeredCompanyName = organisation.Name.Value,
+                addressLine1 = organisation.AddressLine1.Value,
+                addressLine2 = organisation.AddressLine2?.Value,
+                city = organisation.TownOrCity.Value,
+                country = null,
+                postalcode = organisation.Postcode.Value,
+                county = organisation.County?.Value,
+            });
+
+        return new InvestmentsOrganisation(OrganisationId.From(organisationId), organisation.Name.Value);
     }
 }

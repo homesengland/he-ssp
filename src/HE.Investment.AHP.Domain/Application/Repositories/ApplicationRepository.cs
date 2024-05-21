@@ -5,6 +5,7 @@ using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Domain.Application.Crm;
 using HE.Investment.AHP.Domain.Application.Entities;
 using HE.Investment.AHP.Domain.Application.Factories;
+using HE.Investment.AHP.Domain.Application.Mappers;
 using HE.Investment.AHP.Domain.Application.ValueObjects;
 using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.FinancialDetails.Mappers;
@@ -104,7 +105,7 @@ public class ApplicationRepository : IApplicationRepository
 
     public async Task<PaginationResult<ApplicationWithFundingDetails>> GetSiteApplications(SiteId siteId, UserAccount userAccount, PaginationRequest paginationRequest, CancellationToken cancellationToken)
     {
-        return await GetApplications(userAccount, paginationRequest, a => a.siteId == siteId.Value, cancellationToken);
+        return await GetApplications(userAccount, paginationRequest, a => a.siteId == siteId.ToGuidAsString(), cancellationToken);
     }
 
     public async Task<ApplicationEntity> Save(ApplicationEntity application, OrganisationId organisationId, CancellationToken cancellationToken)
@@ -133,6 +134,10 @@ public class ApplicationRepository : IApplicationRepository
         dto.organisationId = organisationId.ToGuidAsString();
         dto.applicationStatus = AhpApplicationStatusMapper.MapToCrmStatus(application.Status);
         dto.siteId = application.SiteId.ToGuidAsString();
+        dto.developingPartnerId = application.ApplicationPartners.DevelopingPartner.Id.ToGuidAsString();
+        dto.ownerOfTheLandDuringDevelopmentId = application.ApplicationPartners.OwnerOfTheLand.Id.ToGuidAsString();
+        dto.ownerOfTheHomesAfterCompletionId = application.ApplicationPartners.OwnerOfTheHomes.Id.ToGuidAsString();
+        dto.applicationPartnerConfirmation = application.ApplicationPartners.ArePartnersConfirmed;
 
         var id = await _applicationCrmContext.Save(dto, organisationId.ToGuidAsString(), cancellationToken);
         if (application.Id.IsNew)
@@ -170,16 +175,16 @@ public class ApplicationRepository : IApplicationRepository
             new ApplicationName(application.name ?? "Unknown"),
             applicationStatus,
             ApplicationTenureMapper.ToDomain(application.tenure)!,
+            ApplicationPartnersMapper.ToDomain(application),
             new ApplicationStateFactory(userAccount, previousStatus, application.dateSubmitted.IsProvided()),
             new ApplicationReferenceNumber(application.referenceNumber),
             new ApplicationSections(
-                new List<ApplicationSection>
-                {
+                [
                     new(SectionType.Scheme, SectionStatusMapper.ToDomain(application.schemeInformationSectionCompletionStatus, applicationStatus)),
                     new(SectionType.HomeTypes, SectionStatusMapper.ToDomain(application.homeTypesSectionCompletionStatus, applicationStatus)),
                     new(SectionType.FinancialDetails, SectionStatusMapper.ToDomain(application.financialDetailsSectionCompletionStatus, applicationStatus)),
                     new(SectionType.DeliveryPhases, SectionStatusMapper.ToDomain(application.deliveryPhasesSectionCompletionStatus, applicationStatus)),
-                }),
+                ]),
             new AuditEntry(
                 application.lastExternalModificationBy?.firstName,
                 application.lastExternalModificationBy?.lastName,

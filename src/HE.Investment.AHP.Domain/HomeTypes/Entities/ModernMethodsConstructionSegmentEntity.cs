@@ -22,9 +22,9 @@ public class ModernMethodsConstructionSegmentEntity : DomainEntity, IHomeTypeSeg
         SiteUsingModernMethodsOfConstruction = siteUsingModernMethodsOfConstruction;
         _modificationTracker = new ModificationTracker(() => SegmentModified?.Invoke());
         ModernMethodsConstructionApplied = modernMethodsConstructionApplied;
-        ModernMethodsConstructionCategories = modernMethodsConstructionCategories?.ToList() ?? new List<ModernMethodsConstructionCategoriesType>();
-        ModernMethodsConstruction2DSubcategories = modernMethodsConstruction2DSubcategories?.ToList() ?? new List<ModernMethodsConstruction2DSubcategoriesType>();
-        ModernMethodsConstruction3DSubcategories = modernMethodsConstruction3DSubcategories?.ToList() ?? new List<ModernMethodsConstruction3DSubcategoriesType>();
+        ModernMethodsConstructionCategories = modernMethodsConstructionCategories?.ToList() ?? [];
+        ModernMethodsConstruction2DSubcategories = modernMethodsConstruction2DSubcategories?.ToList() ?? [];
+        ModernMethodsConstruction3DSubcategories = modernMethodsConstruction3DSubcategories?.ToList() ?? [];
     }
 
     public event EntityModifiedEventHandler SegmentModified;
@@ -123,17 +123,17 @@ public class ModernMethodsConstructionSegmentEntity : DomainEntity, IHomeTypeSeg
     {
         if (ModernMethodsConstructionApplied == YesNoType.Yes)
         {
-            yield return () => ModernMethodsConstructionCategories.Any();
+            yield return () => ModernMethodsConstructionCategories.Count != 0;
         }
 
         if (ModernMethodsConstructionCategories.Contains(ModernMethodsConstructionCategoriesType.Category1PreManufacturing3DPrimaryStructuralSystems))
         {
-            yield return () => ModernMethodsConstruction3DSubcategories.Any();
+            yield return () => ModernMethodsConstruction3DSubcategories.Count != 0;
         }
 
         if (ModernMethodsConstructionCategories.Contains(ModernMethodsConstructionCategoriesType.Category2PreManufacturing2DPrimaryStructuralSystems))
         {
-            yield return () => ModernMethodsConstruction2DSubcategories.Any();
+            yield return () => ModernMethodsConstruction2DSubcategories.Count != 0;
         }
     }
 }

@@ -52,7 +52,7 @@ public abstract class PlanningDetails : ValueObject, IQuestion
 
     public bool IsAnswered()
     {
-        return ActiveFields.Any()
+        return ActiveFields.Count != 0
                && (!IsQuestionActive(nameof(ReferenceNumber)) || ReferenceNumber.IsProvided())
                && (!IsQuestionActive(nameof(DetailedPlanningApprovalDate)) || DetailedPlanningApprovalDate.IsProvided())
                && (!IsQuestionActive(nameof(RequiredFurtherSteps)) || RequiredFurtherSteps.IsProvided())

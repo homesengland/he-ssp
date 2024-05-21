@@ -18,10 +18,10 @@ public class SaveExitPlanCommandHandler : SaveHomeTypeSegmentCommandHandlerBase<
     {
     }
 
-    protected override IReadOnlyCollection<HomeTypeSegmentType> SegmentTypes => new[] { HomeTypeSegmentType.SupportedHousingInformation };
+    protected override IReadOnlyCollection<HomeTypeSegmentType> SegmentTypes => [HomeTypeSegmentType.SupportedHousingInformation];
 
-    protected override IEnumerable<Action<SaveExitPlanCommand, IHomeTypeEntity>> SaveActions => new[]
-    {
+    protected override IEnumerable<Action<SaveExitPlanCommand, IHomeTypeEntity>> SaveActions =>
+    [
         (SaveExitPlanCommand request, IHomeTypeEntity homeType) =>
         {
             var exitPlan = request.ExitPlan.IsNotProvided()
@@ -29,5 +29,5 @@ public class SaveExitPlanCommandHandler : SaveHomeTypeSegmentCommandHandlerBase<
                 : new MoreInformation(request.ExitPlan!, "exit plan or alternative use");
             homeType.SupportedHousingInformation.ChangeExitPlan(exitPlan);
         },
-    };
+    ];
 }

@@ -24,9 +24,9 @@ public class DesignPlansSegmentEntity : DomainEntity, IHomeTypeSegmentEntity
 
     private readonly List<UploadedFile> _uploadedFiles;
 
-    private readonly List<UploadedFile> _filesToRemove = new();
+    private readonly List<UploadedFile> _filesToRemove = [];
 
-    private readonly List<DesignPlanFileEntity> _filesToUpload = new();
+    private readonly List<DesignPlanFileEntity> _filesToUpload = [];
 
     private readonly ModificationTracker _modificationTracker;
 
@@ -38,9 +38,9 @@ public class DesignPlansSegmentEntity : DomainEntity, IHomeTypeSegmentEntity
     {
         _modificationTracker = new ModificationTracker(() => SegmentModified?.Invoke());
         _application = application;
-        _designPrinciples = designPrinciples?.OrderBy(x => x).ToList() ?? new List<HappiDesignPrincipleType>();
+        _designPrinciples = designPrinciples?.OrderBy(x => x).ToList() ?? [];
         MoreInformation = moreInformation;
-        _uploadedFiles = uploadedFiles?.ToList() ?? new List<UploadedFile>();
+        _uploadedFiles = uploadedFiles?.ToList() ?? [];
     }
 
     public event EntityModifiedEventHandler SegmentModified;
@@ -132,7 +132,7 @@ public class DesignPlansSegmentEntity : DomainEntity, IHomeTypeSegmentEntity
 
     public DesignPlansSegmentEntity Duplicate()
     {
-        return new DesignPlansSegmentEntity(_application, DesignPrinciples, MoreInformation, new List<UploadedFile>());
+        return new DesignPlansSegmentEntity(_application, DesignPrinciples, MoreInformation, []);
     }
 
     public bool IsRequired(HousingType housingType)
@@ -142,7 +142,7 @@ public class DesignPlansSegmentEntity : DomainEntity, IHomeTypeSegmentEntity
 
     public bool IsCompleted(HousingType housingType, Tenure tenure)
     {
-        return DesignPrinciples.Any();
+        return DesignPrinciples.Count != 0;
     }
 
     public void HousingTypeChanged(HousingType sourceHousingType, HousingType targetHousingType)

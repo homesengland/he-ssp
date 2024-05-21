@@ -1,6 +1,7 @@
 using System.Globalization;
 using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.Delivery;
+using HE.Investment.AHP.Contract.Delivery.Enums;
 using HE.Investment.AHP.Contract.Delivery.MilestonePayments;
 using HE.Investment.AHP.WWW.Controllers;
 using HE.Investment.AHP.WWW.Workflows;
@@ -38,12 +39,12 @@ public class DeliveryPhaseCheckAnswersViewModelFactory : IDeliveryPhaseCheckAnsw
                 actionName,
                 encodedWorkflow);
 
-        return new List<SectionSummaryViewModel>
-        {
+        return
+        [
             CreateDeliveryPhaseSummary(deliveryPhase, deliveryPhaseHomes, CreateAction, deliveryPhase.Application.IsEditable),
             CreateMilestonesSummary(deliveryPhase, CreateAction, deliveryPhase.Application.IsEditable),
             CreateMilestonesDatesSummary(deliveryPhase, CreateAction, deliveryPhase.Application.IsEditable),
-        };
+        ];
     }
 
     private static SectionSummaryViewModel CreateDeliveryPhaseSummary(
@@ -68,9 +69,7 @@ public class DeliveryPhaseCheckAnswersViewModelFactory : IDeliveryPhaseCheckAnsw
                 "Build activity type",
                 deliveryPhase.BuildActivityType?.GetDescription().ToOneElementList(),
                 IsEditable: isEditable,
-                ActionUrl: createAction(deliveryPhase.IsReconfiguringExistingNeeded
-                    ? nameof(DeliveryPhaseController.RehabBuildActivityType)
-                    : nameof(DeliveryPhaseController.NewBuildActivityType))),
+                ActionUrl: createAction(GetBuildActivityTypeActionUrl(deliveryPhase))),
         };
 
         items.AddWhen(
@@ -91,6 +90,16 @@ public class DeliveryPhaseCheckAnswersViewModelFactory : IDeliveryPhaseCheckAnsw
         }
 
         return new SectionSummaryViewModel("Delivery phase", items);
+    }
+
+    private static string GetBuildActivityTypeActionUrl(DeliveryPhaseDetails deliveryPhaseDetails)
+    {
+        return deliveryPhaseDetails.TypeOfHomes switch
+        {
+            TypeOfHomes.NewBuild => nameof(DeliveryPhaseController.NewBuildActivityType),
+            TypeOfHomes.Rehab => nameof(DeliveryPhaseController.RehabBuildActivityType),
+            _ => throw new ArgumentOutOfRangeException($"Invalid {nameof(TypeOfHomes)} value: {deliveryPhaseDetails.TypeOfHomes}"),
+        };
     }
 
     private static SectionSummaryViewModel CreateMilestonesSummary(DeliveryPhaseDetails deliveryPhase, CreateAction createAction, bool isEditable)

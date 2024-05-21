@@ -13,9 +13,9 @@ public class NoProgressOnPlanningApplicationPlanningDetails : PlanningDetails
 
     public override SitePlanningStatus? PlanningStatus => SitePlanningStatus.NoProgressOnPlanningApplication;
 
-    protected override IReadOnlyCollection<string> ActiveFields => new[]
-    {
+    protected override IReadOnlyCollection<string> ActiveFields =>
+    [
         nameof(ExpectedPlanningApprovalDate),
         nameof(LandRegistryDetails),
-    };
+    ];
 }

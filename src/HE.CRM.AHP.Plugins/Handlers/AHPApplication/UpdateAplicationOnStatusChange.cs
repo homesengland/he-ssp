@@ -4,6 +4,7 @@ using System.Runtime.Remoting.Messaging;
 using DataverseModel;
 using HE.Base.Plugins.Handlers;
 using HE.CRM.Common.Repositories.Interfaces;
+using Microsoft.Xrm.Sdk;
 
 namespace HE.CRM.AHP.Plugins.Handlers.AHPApplication
 {
@@ -25,19 +26,31 @@ namespace HE.CRM.AHP.Plugins.Handlers.AHPApplication
         public override void DoWork()
         {
             TracingService.Trace("UpdateAplicationOnStatusChange - Do Work");
+
+            if (CurrentState.StatusCode.Value == (int)invln_scheme_StatusCode.ReferredBackToApplicant)
+            {
+                ExecutionData.Target.invln_schemeinformationsectioncompletionstatus = new OptionSetValue((int)invln_AHPSectioncompletionstatusSet.InProgress);
+                ExecutionData.Target.invln_hometypessectioncompletionstatus = new OptionSetValue((int)invln_AHPSectioncompletionstatusSet.InProgress);
+                ExecutionData.Target.invln_financialdetailssectioncompletionstatus = new OptionSetValue((int)invln_AHPSectioncompletionstatusSet.InProgress);
+                ExecutionData.Target.invln_deliveryphasessectioncompletionstatus = new OptionSetValue((int)invln_AHPSectioncompletionstatusSet.InProgress);
+            }
+
             if (CurrentState.StatusCode.Value == (int)invln_scheme_StatusCode.ReferredBackToApplicant)
             {
                 if (CurrentState.invln_representationsandwarrantiesconfirmation != true)
                     return;
                 ExecutionData.Target.invln_representationsandwarrantiesconfirmation = false;
             }
-            if (CurrentState.StatusCode.Value == (int)invln_scheme_StatusCode.ApplicationSubmitted)
+            if (CurrentState.StatusCode.Value == (int)invln_scheme_StatusCode.ApplicationSubmitted ||
+                CurrentState.StatusCode.Value == (int)invln_scheme_StatusCode.UnderReviewPendingAssessment)
             {
                 var hometypes = _homeTypeRepository.GetByAttribute(invln_HomeType.Fields.invln_application,
                     CurrentState.Id,
                     new string[] { invln_HomeType.Fields.invln_PercentageValueofNDSSStandard,
                         invln_HomeType.Fields.invln_prospectiverentasofmarketrent,
-                        invln_HomeType.Fields.invln_FirstTrancheSalesReceipt    });
+                        invln_HomeType.Fields.invln_FirstTrancheSalesReceipt,
+                        invln_HomeType.Fields.invln_SharedOwnershipInitialSale,
+                        invln_HomeType.Fields.invln_proposedrentasaofunsoldshare});
                 if (hometypes == null || hometypes.Count == 0)
                     return;
                 ClearDataBeforeCalculation();

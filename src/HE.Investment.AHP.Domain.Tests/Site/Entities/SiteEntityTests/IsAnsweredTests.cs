@@ -115,6 +115,19 @@ public class IsAnsweredTests
     }
 
     [Fact]
+    public void ShouldReturnFalse_WhenSitePartnersAreNotProvided()
+    {
+        // given
+        var testCandidate = CreateAnsweredSiteBuilder().WithSitePartners(SitePartnersBuilder.New().Build()).Build();
+
+        // when
+        var result = testCandidate.IsAnswered();
+
+        // then
+        result.Should().BeFalse();
+    }
+
+    [Fact]
     public void ShouldReturnFalse_WhenLandAcquisitionStatusIsNotProvided()
     {
         // given

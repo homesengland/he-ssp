@@ -26,13 +26,13 @@ public class SaveDesignPlansCommandHandler : SaveHomeTypeSegmentCommandHandlerBa
         _documentSettings = documentSettings;
     }
 
-    protected override IReadOnlyCollection<HomeTypeSegmentType> SegmentTypes => new[] { HomeTypeSegmentType.DesignPlans };
+    protected override IReadOnlyCollection<HomeTypeSegmentType> SegmentTypes => [HomeTypeSegmentType.DesignPlans];
 
-    protected override IEnumerable<Action<SaveDesignPlansCommand, IHomeTypeEntity>> SaveActions => new[]
-    {
+    protected override IEnumerable<Action<SaveDesignPlansCommand, IHomeTypeEntity>> SaveActions =>
+    [
         (request, homeType) => homeType.DesignPlans.ChangeMoreInformation(request.MoreInformation.IsProvided() ? new MoreInformation(request.MoreInformation!, "information about your design plans") : null),
         SaveDesignPlanFiles,
-    };
+    ];
 
     private DesignPlanFileEntity CreateDesignFile(FileToUpload file)
     {

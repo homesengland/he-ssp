@@ -14,6 +14,8 @@ public interface IAhpExternalLinks
 
     public string CapitalFundingGuide { get; }
 
+    public string CapitalFundingGuideProgrammeManagement { get; }
+
     public string RightToSharedOwnershipInitialGuidanceForRegisteredProviders { get; }
 
     public string MmcIntroduction { get; }

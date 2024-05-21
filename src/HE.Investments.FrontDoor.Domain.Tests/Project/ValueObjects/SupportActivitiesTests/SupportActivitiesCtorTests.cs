@@ -40,7 +40,7 @@ public class SupportActivitiesCtorTests
     public void ShouldThrowDomainValidationException_WhenProvidedValueIsEmpty()
     {
         // given && when
-        var result = () => new SupportActivities(new List<SupportActivityType>());
+        var result = () => new SupportActivities([]);
 
         // then
         result.Should().Throw<DomainValidationException>().WithMessage("Select activities you require support for, or select 'other'");

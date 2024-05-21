@@ -1,3 +1,5 @@
+using HE.Investment.AHP.Domain.UserContext;
+using HE.Investment.AHP.WWW.Models.Consortium;
 using HE.Investment.AHP.WWW.Models.ConsortiumMember;
 using HE.Investment.AHP.WWW.Views.Shared.Components.OrganisationDetailsComponent;
 using HE.Investment.AHP.WWW.Workflows;
@@ -9,10 +11,10 @@ using HE.Investments.AHP.Consortium.Contract.Queries;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Contract.Pagination;
-using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.WWW.Components;
 using HE.Investments.Common.WWW.Controllers;
+using HE.Investments.Common.WWW.Extensions;
 using HE.Investments.Common.WWW.Models;
 using HE.Investments.Common.WWW.Routing;
 using HE.Investments.Organisation.ValueObjects;
@@ -22,14 +24,17 @@ using Microsoft.AspNetCore.Mvc;
 namespace HE.Investment.AHP.WWW.Controllers;
 
 [Route("consortium-member/{consortiumId}")]
-[AuthorizeWithCompletedProfile]
+[AuthorizeWithCompletedProfile(AhpAccessContext.ViewConsortium)]
 public class ConsortiumMemberController : WorkflowController<ConsortiumMemberWorkflowState>
 {
     private readonly IMediator _mediator;
 
-    public ConsortiumMemberController(IMediator mediator)
+    private readonly IAhpUserContext _ahpUserContext;
+
+    public ConsortiumMemberController(IMediator mediator, IAhpUserContext ahpUserContext)
     {
         _mediator = mediator;
+        _ahpUserContext = ahpUserContext;
     }
 
     [HttpGet("back")]
@@ -42,11 +47,18 @@ public class ConsortiumMemberController : WorkflowController<ConsortiumMemberWor
     [WorkflowState(ConsortiumMemberWorkflowState.Index)]
     public async Task<IActionResult> Index(string consortiumId, CancellationToken cancellationToken)
     {
-        return View(await GetConsortiumDetails(consortiumId, fetchAddress: false, cancellationToken));
+        var userAccount = await _ahpUserContext.GetSelectedAccount();
+        var consortium = await GetConsortiumDetails(consortiumId, fetchAddress: false, cancellationToken);
+        var model = new ManageConsortiumModel(consortium, userAccount.Organisation!.RegisteredCompanyName, userAccount.CanManageConsortium);
+
+        return consortium.LeadPartner.OrganisationId != userAccount.SelectedOrganisationId()
+            ? View("MemberDashboard", model)
+            : View(model);
     }
 
     [HttpGet("search-organisation")]
     [WorkflowState(ConsortiumMemberWorkflowState.SearchOrganisation)]
+    [AuthorizeWithCompletedProfile(AhpAccessContext.ManageConsortium)]
     public IActionResult SearchOrganisation()
     {
         return View();
@@ -54,6 +66,7 @@ public class ConsortiumMemberController : WorkflowController<ConsortiumMemberWor
 
     [HttpPost("search-organisation")]
     [WorkflowState(ConsortiumMemberWorkflowState.SearchOrganisation)]
+    [AuthorizeWithCompletedProfile(AhpAccessContext.ManageConsortium)]
     public async Task<IActionResult> SearchOrganisation(string consortiumId, string? phrase, CancellationToken cancellationToken)
     {
         return await this.ExecuteCommand<ProvideSearchOrganisationPhraseCommand>(
@@ -66,6 +79,7 @@ public class ConsortiumMemberController : WorkflowController<ConsortiumMemberWor
 
     [HttpGet("search-result")]
     [WorkflowState(ConsortiumMemberWorkflowState.SearchResult)]
+    [AuthorizeWithCompletedProfile(AhpAccessContext.ManageConsortium)]
     public async Task<IActionResult> SearchResult(string consortiumId, string? phrase, int? page, CancellationToken cancellationToken)
     {
         return await SearchOrganisation(consortiumId, phrase, page, null, cancellationToken);
@@ -73,6 +87,7 @@ public class ConsortiumMemberController : WorkflowController<ConsortiumMemberWor
 
     [HttpPost("search-result")]
     [WorkflowState(ConsortiumMemberWorkflowState.SearchResult)]
+    [AuthorizeWithCompletedProfile(AhpAccessContext.ManageConsortium)]
     public async Task<IActionResult> SearchResult(string consortiumId, SearchOrganisationResultModel model, CancellationToken cancellationToken)
     {
         return await this.ExecuteCommand<SearchOrganisationResultModel>(
@@ -85,6 +100,7 @@ public class ConsortiumMemberController : WorkflowController<ConsortiumMemberWor
 
     [HttpGet("search-no-results")]
     [WorkflowState(ConsortiumMemberWorkflowState.SearchNoResults)]
+    [AuthorizeWithCompletedProfile(AhpAccessContext.ManageConsortium)]
     public IActionResult SearchNoResults()
     {
         return View();
@@ -92,6 +108,7 @@ public class ConsortiumMemberController : WorkflowController<ConsortiumMemberWor
 
     [HttpGet("add-organisation")]
     [WorkflowState(ConsortiumMemberWorkflowState.AddOrganisation)]
+    [AuthorizeWithCompletedProfile(AhpAccessContext.ManageConsortium)]
     public IActionResult AddOrganisation()
     {
         return View(new AddOrganisationModel(null, null, null, null, null, null));
@@ -99,6 +116,7 @@ public class ConsortiumMemberController : WorkflowController<ConsortiumMemberWor
 
     [HttpPost("add-organisation")]
     [WorkflowState(ConsortiumMemberWorkflowState.AddOrganisation)]
+    [AuthorizeWithCompletedProfile(AhpAccessContext.ManageConsortium)]
     public async Task<IActionResult> AddOrganisation(string consortiumId, AddOrganisationModel model, CancellationToken cancellationToken)
     {
         return await this.ExecuteCommand<AddOrganisationModel>(
@@ -118,6 +136,7 @@ public class ConsortiumMemberController : WorkflowController<ConsortiumMemberWor
 
     [HttpGet("add-members")]
     [WorkflowState(ConsortiumMemberWorkflowState.AddMembers)]
+    [AuthorizeWithCompletedProfile(AhpAccessContext.ManageConsortium)]
     public async Task<IActionResult> AddMembers(string consortiumId, CancellationToken cancellationToken)
     {
         return View(await GetConsortiumDetails(consortiumId, fetchAddress: true, cancellationToken));
@@ -125,26 +144,22 @@ public class ConsortiumMemberController : WorkflowController<ConsortiumMemberWor
 
     [HttpPost("add-members")]
     [WorkflowState(ConsortiumMemberWorkflowState.AddMembers)]
+    [AuthorizeWithCompletedProfile(AhpAccessContext.ManageConsortium)]
     public async Task<IActionResult> AddMembers(string consortiumId, [FromForm] AreAllMembersAdded areAllMembersAdded, CancellationToken cancellationToken)
     {
-        if (areAllMembersAdded == AreAllMembersAdded.Yes)
-        {
-            return RedirectToAction("Index", new { consortiumId });
-        }
-
-        if (areAllMembersAdded == AreAllMembersAdded.No)
-        {
-            return RedirectToAction("SearchOrganisation", new { consortiumId });
-        }
-
-        this.AddOrderedErrors<string>(new OperationResult().AddValidationError(
-            nameof(AreAllMembersAdded),
-            "Select whether you have you added all members to this consortium"));
-        return View(await _mediator.Send(new GetConsortiumDetailsQuery(ConsortiumId.From(consortiumId), FetchAddress: true), cancellationToken));
+        return await this.ExecuteCommand<ConsortiumDetails>(
+            _mediator,
+            new AddMembersCommand(ConsortiumId.From(consortiumId), areAllMembersAdded),
+            () => Task.FromResult<IActionResult>(areAllMembersAdded == AreAllMembersAdded.Yes
+                ? RedirectToAction("Index", new { consortiumId })
+                : RedirectToAction("SearchOrganisation", new { consortiumId })),
+            async () => View(await _mediator.Send(new GetConsortiumDetailsQuery(ConsortiumId.From(consortiumId), FetchAddress: true), cancellationToken)),
+            cancellationToken);
     }
 
     [HttpGet("remove-member/{memberId}")]
     [WorkflowState(ConsortiumMemberWorkflowState.RemoveMember)]
+    [AuthorizeWithCompletedProfile(AhpAccessContext.ManageConsortium)]
     public async Task<IActionResult> RemoveMember(string consortiumId, string memberId, CancellationToken cancellationToken)
     {
         return View(await GetConsortiumMemberDetails(consortiumId, memberId, fetchAddress: false, cancellationToken));
@@ -152,6 +167,7 @@ public class ConsortiumMemberController : WorkflowController<ConsortiumMemberWor
 
     [HttpPost("remove-member/{memberId}")]
     [WorkflowState(ConsortiumMemberWorkflowState.RemoveMember)]
+    [AuthorizeWithCompletedProfile(AhpAccessContext.ManageConsortium)]
     public async Task<IActionResult> RemoveMember(string consortiumId, string memberId, [FromForm] bool? isConfirmed, CancellationToken cancellationToken)
     {
         return await this.ExecuteCommand<OrganisationDetails>(
@@ -162,9 +178,25 @@ public class ConsortiumMemberController : WorkflowController<ConsortiumMemberWor
             cancellationToken);
     }
 
+    [HttpGet("contact-homes-england")]
+    [WorkflowState(ConsortiumMemberWorkflowState.ContactHomesEngland)]
+    [AuthorizeWithCompletedProfile(AhpAccessContext.ViewConsortium)]
+    public async Task<IActionResult> ContactHomesEngland(string consortiumId, CancellationToken cancellationToken)
+    {
+        var availableProgrammes = await _mediator.Send(new GetAvailableProgrammesQuery(), cancellationToken);
+
+        return View(new ConsortiumSelectedProgrammeModel(consortiumId, availableProgrammes[0]));
+    }
+
     protected override async Task<IStateRouting<ConsortiumMemberWorkflowState>> Routing(ConsortiumMemberWorkflowState currentState, object? routeData = null)
     {
-        return await Task.FromResult<IStateRouting<ConsortiumMemberWorkflowState>>(new ConsortiumMemberWorkflow(currentState));
+        var consortiumId = Request.GetRouteValue("consortiumId")
+                           ?? routeData?.GetPropertyValue<string>("consortiumId")
+                           ?? string.Empty;
+        var consortium = await GetConsortiumDetails(consortiumId, false, CancellationToken.None);
+        var userAccount = await _ahpUserContext.GetSelectedAccount();
+
+        return new ConsortiumMemberWorkflow(consortium, userAccount.Organisation?.OrganisationId, currentState);
     }
 
     private async Task<ConsortiumDetails> GetConsortiumDetails(string consortiumId, bool fetchAddress, CancellationToken cancellationToken)

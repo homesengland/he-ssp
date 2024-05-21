@@ -22,5 +22,28 @@ namespace HE.CRM.Common.Repositories.Implementations
                     .Where(x => x.invln_Accountid.Id == organisationId && x.invln_Webroleid.Id == adminWebrole).ToList();
             }
         }
+
+        public bool IsContactHaveSelectedWebRoleForOrganisation(Guid contactGuid, Guid organisationGuid, invln_Permission permission)
+        {
+            using (var ctx = new OrganizationServiceContext(service))
+            {
+                var portalPermissionLevel = ctx.CreateQuery<invln_portalpermissionlevel>()
+                    .SingleOrDefault(x => x.invln_Permission.Value == (int)permission);
+
+
+                var portalApp = ctx.CreateQuery<invln_portal>()
+                    .SingleOrDefault(x => x.invln_Portal.Value == (int)invln_Portal1.Common);
+
+
+                var webRole = ctx.CreateQuery<invln_Webrole>()
+                    .Where(x => x.invln_Portalpermissionlevelid.Id == portalPermissionLevel.Id && x.invln_Portalid.Id == portalApp.Id).First();
+
+                if (webRole == null)
+                { return false; }
+
+                return ctx.CreateQuery<invln_contactwebrole>()
+                    .Where(x => x.invln_Contactid.Id == contactGuid && x.invln_Accountid.Id == organisationGuid && x.invln_Webroleid.Id == webRole.Id).ToList().Count() > 0;
+            }
+        }
     }
 }

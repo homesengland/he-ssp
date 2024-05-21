@@ -16,17 +16,16 @@ public class ModernMethodsConstructionTests : HomeTypesTestBase
         var document = await RenderHomeTypePage(ViewPath, Model);
 
         // then
+        IList<string> options = [
+            "Yes",
+            "No",
+        ];
+
         document
             .HasPageHeader("My application - My homes", "Are you using Modern Methods of Construction (MMC) for this home type?")
             .HasElementWithText("span", "Help with Modern Methods of Construction (MMC)")
             .HasElementWithText("a", "Read further information on the MMC categories (opens in a new tab).")
-            .HasRadio(
-                "ModernMethodsConstructionApplied",
-                new[]
-                {
-                    "Yes",
-                    "No",
-                })
+            .HasRadio("ModernMethodsConstructionApplied", options)
             .HasSaveAndContinueButton();
     }
 }

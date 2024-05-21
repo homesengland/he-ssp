@@ -16,11 +16,11 @@ public class SaveSocialRentCommandHandler : SaveHomeTypeSegmentCommandHandlerBas
     {
     }
 
-    protected override IReadOnlyCollection<HomeTypeSegmentType> SegmentTypes => new[] { HomeTypeSegmentType.TenureDetails };
+    protected override IReadOnlyCollection<HomeTypeSegmentType> SegmentTypes => [HomeTypeSegmentType.TenureDetails];
 
-    protected override IEnumerable<Action<SaveSocialRentCommand, IHomeTypeEntity>> SaveActions => new[]
-    {
+    protected override IEnumerable<Action<SaveSocialRentCommand, IHomeTypeEntity>> SaveActions =>
+    [
         (SaveSocialRentCommand request, IHomeTypeEntity homeType) => homeType.TenureDetails.ChangeMarketValue(request.MarketValue),
         (request, homeType) => homeType.TenureDetails.ChangeRentPerWeek(request.RentPerWeek),
-    };
+    ];
 }

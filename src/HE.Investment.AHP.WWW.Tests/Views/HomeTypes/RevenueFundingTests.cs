@@ -1,4 +1,3 @@
-using System.Diagnostics.CodeAnalysis;
 using HE.Investment.AHP.Contract.HomeTypes.Enums;
 using HE.Investment.AHP.WWW.Models.HomeTypes;
 
@@ -18,34 +17,33 @@ public class RevenueFundingTests : HomeTypesTestBase
         var document = await RenderHomeTypePage(ViewPath, model);
 
         // then
+        IList<string> options = [
+            "Charity",
+            "ClinicalCommissioningGroupLocalAreaTeam",
+            "CrimeAndDisorderReductionPartnerships",
+            "DepartmentForEducation",
+            "DrugsActionTeam",
+            "HealthAndWellBeingBoard",
+            "HomeOffice",
+            "HousingDepartment",
+            "LocalAreaAgreements",
+            "NationalLottery",
+            "NhsEngland",
+            "NhsTrust",
+            "OtherHealthSource",
+            "OtherLocalAuthoritySource",
+            "ProbationService",
+            "ProvidersReserves",
+            "SocialServicesDepartment",
+            "SupportingPeople",
+            "YouthOffendingTeams",
+            "Other",
+        ];
+
         document
             .HasPageHeader("My application - My homes", "Where are you receiving revenue funding from for these homes?")
             .HasElementWithText("span", "Select all that apply.")
-            .HasCheckboxes(
-                "Sources",
-                new[]
-                {
-                    "Charity",
-                    "ClinicalCommissioningGroupLocalAreaTeam",
-                    "CrimeAndDisorderReductionPartnerships",
-                    "DepartmentForEducation",
-                    "DrugsActionTeam",
-                    "HealthAndWellBeingBoard",
-                    "HomeOffice",
-                    "HousingDepartment",
-                    "LocalAreaAgreements",
-                    "NationalLottery",
-                    "NhsEngland",
-                    "NhsTrust",
-                    "OtherHealthSource",
-                    "OtherLocalAuthoritySource",
-                    "ProbationService",
-                    "ProvidersReserves",
-                    "SocialServicesDepartment",
-                    "SupportingPeople",
-                    "YouthOffendingTeams",
-                    "Other",
-                })
+            .HasCheckboxes("Sources", options)
             .HasSaveAndContinueButton();
     }
 
@@ -55,30 +53,29 @@ public class RevenueFundingTests : HomeTypesTestBase
         // given
         var model = new RevenueFundingModel("My application", "My homes")
         {
-            Sources = new List<RevenueFundingSourceType>
-            {
+            Sources =
+            [
                 RevenueFundingSourceType.SocialServicesDepartment,
                 RevenueFundingSourceType.Charity,
                 RevenueFundingSourceType.NationalLottery,
-            },
+            ],
         };
 
         // when
         var document = await RenderHomeTypePage(ViewPath, model);
 
         // then
+        IList<string> checkedValues = [
+            "Charity",
+            "NationalLottery",
+            "SocialServicesDepartment",
+        ];
+
         document
             .HasElementWithText("span", "My application - My homes")
             .HasElementWithText("h1", "Where are you receiving revenue funding from for these homes?")
             .HasElementWithText("span", "Select all that apply.")
-            .HasCheckedCheckboxes(
-                "Sources",
-                new[]
-                {
-                    "Charity",
-                    "NationalLottery",
-                    "SocialServicesDepartment",
-                })
+            .HasCheckedCheckboxes("Sources", checkedValues)
             .HasSaveAndContinueButton();
     }
 }

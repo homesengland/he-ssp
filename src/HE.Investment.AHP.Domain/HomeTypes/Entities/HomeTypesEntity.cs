@@ -6,6 +6,7 @@ using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Domain;
+using HE.Investments.Common.Extensions;
 
 namespace HE.Investment.AHP.Domain.HomeTypes.Entities;
 
@@ -15,7 +16,7 @@ public class HomeTypesEntity
 
     private readonly List<HomeTypeEntity> _homeTypes;
 
-    private readonly List<HomeTypeEntity> _toRemove = new();
+    private readonly List<HomeTypeEntity> _toRemove = [];
 
     private readonly ModificationTracker _statusModificationTracker = new();
 
@@ -45,17 +46,7 @@ public class HomeTypesEntity
         return homeType;
     }
 
-    public IHomeTypeEntity? PopRemovedHomeType()
-    {
-        if (_toRemove.Any())
-        {
-            var result = _toRemove[0];
-            _toRemove.RemoveAt(0);
-            return result;
-        }
-
-        return null;
-    }
+    public IHomeTypeEntity? PopRemovedHomeType() => _toRemove.PopItem();
 
     public void Remove(HomeTypeId homeTypeId, RemoveHomeTypeAnswer removeAnswer, IHomeTypeConsumer homeTypeConsumer)
     {
@@ -97,17 +88,17 @@ public class HomeTypesEntity
 
         if (finishAnswer == FinishHomeTypesAnswer.Yes)
         {
-            if (!_homeTypes.Any())
+            if (_homeTypes.Count == 0)
             {
                 throw new DomainValidationException(
-                    new OperationResult().AddValidationErrors(new List<ErrorItem>
-                    {
+                    new OperationResult().AddValidationErrors(
+                    [
                         new("HomeTypes", "Home Types cannot be completed because at least one Home Type needs to be added"),
-                    }));
+                    ]));
             }
 
             var notCompletedHomeTypes = _homeTypes.Where(x => x.Status != SectionStatus.Completed).ToList();
-            if (notCompletedHomeTypes.Any())
+            if (notCompletedHomeTypes.Count != 0)
             {
                 throw new DomainValidationException(new OperationResult().AddValidationErrors(
                     notCompletedHomeTypes.Select(x => new ErrorItem($"HomeType-{x.Id}", $"Complete {x.Name.Value} to save and continue")).ToList()));
@@ -146,13 +137,13 @@ public class HomeTypesEntity
     private string? ValidateNameUniqueness(string? name, HomeTypeEntity? entity = null)
     {
         if ((entity == null && _homeTypes.Exists(x => x.Name.Value == name))
-            || (entity != null && _homeTypes.Except(new[] { entity }).Any(x => x.Name.Value == name)))
+            || (entity != null && _homeTypes.Except([entity]).Any(x => x.Name.Value == name)))
         {
             throw new DomainValidationException(
-                new OperationResult().AddValidationErrors(new List<ErrorItem>
-                {
+                new OperationResult().AddValidationErrors(
+                [
                     new(nameof(HomeTypeName), "Enter a different name. Home types cannot have the same name"),
-                }));
+                ]));
         }
 
         return name;
