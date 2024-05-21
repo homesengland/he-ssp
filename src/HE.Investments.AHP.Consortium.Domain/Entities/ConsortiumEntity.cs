@@ -2,18 +2,20 @@ extern alias Org;
 
 using HE.Investments.AHP.Consortium.Contract;
 using HE.Investments.AHP.Consortium.Contract.Enums;
+using HE.Investments.AHP.Consortium.Contract.Events;
 using HE.Investments.AHP.Consortium.Domain.Repositories;
 using HE.Investments.AHP.Consortium.Domain.ValueObjects;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Contract.Validators;
+using HE.Investments.Common.Domain;
 using HE.Investments.Common.Errors;
 using HE.Investments.Common.Extensions;
 using Org::HE.Investments.Organisation.ValueObjects;
 
 namespace HE.Investments.AHP.Consortium.Domain.Entities;
 
-public class ConsortiumEntity : IConsortiumEntity
+public class ConsortiumEntity : DomainEntity, IConsortiumEntity
 {
     private readonly List<ConsortiumMember> _members;
 
@@ -67,6 +69,8 @@ public class ConsortiumEntity : IConsortiumEntity
         var member = new ConsortiumMember(organisation.Id, organisation.Name, ConsortiumMemberStatus.PendingAddition);
         _members.Add(member);
         _joinRequests.Add(member);
+
+        Publish(new ConsortiumMemberChangedEvent(Id, organisation.Id));
     }
 
     public bool AddMembersFromDraft(DraftConsortiumEntity draftConsortium, AreAllMembersAdded? requestAreAllMembersAdded)
@@ -91,6 +95,8 @@ public class ConsortiumEntity : IConsortiumEntity
             var member = new ConsortiumMember(draftMember.Id, draftMember.OrganisationName, ConsortiumMemberStatus.PendingAddition);
             _members.Add(member);
             _joinRequests.Add(member);
+
+            Publish(new ConsortiumMemberChangedEvent(Id, draftMember.Id));
         }
 
         return true;
@@ -113,6 +119,8 @@ public class ConsortiumEntity : IConsortiumEntity
         _removeRequests.Add(organisationId);
         _members.Remove(member);
         _members.Add(new ConsortiumMember(member.Id, member.OrganisationName, ConsortiumMemberStatus.PendingRemoval));
+
+        Publish(new ConsortiumMemberChangedEvent(Id, organisationId));
     }
 
     public OrganisationId? PopJoinRequest() => _joinRequests.PopItem()?.Id;

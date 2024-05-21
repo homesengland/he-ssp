@@ -67,7 +67,7 @@ internal sealed class AhpUserContext(
         {
             consortiumCachedEntity = _consortia[organisationId!] = new CachedEntity<AhpConsortiumBasicInfo>(
                 cacheService,
-                $"ahp-consortium-{organisationId}",
+                AhpCacheKeys.OrganisationConsortium(organisationId!),
                 async () => await GetAhpConsortiumInfo(organisationId!));
         }
 
