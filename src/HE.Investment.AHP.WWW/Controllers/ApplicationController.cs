@@ -30,16 +30,13 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
     private readonly string _siteName = "Test Site";
     private readonly IMediator _mediator;
     private readonly IApplicationSummaryViewModelFactory _applicationSummaryViewModelFactory;
-    private readonly IAhpAccessContext _ahpAccessContext;
 
     public ApplicationController(
         IMediator mediator,
-        IApplicationSummaryViewModelFactory applicationSummaryViewModelFactory,
-        IAhpAccessContext ahpAccessContext)
+        IApplicationSummaryViewModelFactory applicationSummaryViewModelFactory)
     {
         _mediator = mediator;
         _applicationSummaryViewModelFactory = applicationSummaryViewModelFactory;
-        _ahpAccessContext = ahpAccessContext;
     }
 
     [HttpGet]
