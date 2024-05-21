@@ -51,7 +51,7 @@ public class Order01StartAhpApplication : AhpIntegrationTest
         // then
         applicationNamePage
             .UrlEndWith(ApplicationPagesUrl.Start)
-            .HasTitle(ApplicationPageTitles.Start);
+            .HasTitle(ApplicationPageTitles.Start("Affordable Homes Programme 2021-2026 Continuous Market Engagement", "AHP 21-26 CME"));
 
         SaveCurrentPage();
     }

@@ -1,0 +1,84 @@
+@using HE.Investment.AHP.WWW.Views.Application;
+@using HE.Investment.AHP.WWW.Config;
+@using HE.Investment.AHP.WWW.Models.Project;
+@inject IAhpExternalLinks ExternalLinks
+
+@model ProjectBasicModel;
+@{
+    var title = ApplicationPageTitles.Start(Model.SelectedProgramme.FullName, Model.SelectedProgramme.ShortName);
+    ViewData["Title"] = title;
+}
+
+<div class="govuk-grid-column-three-quarters">
+    <vc:page-header title="@title" additional-css-class="govuk-!-padding-top-9"/>
+
+    <div class="govuk-heading-s">
+        @Model.SelectedProgramme.FullName
+    </div>
+
+    <div class="govuk-!-padding-bottom-8">
+        <gds-p>
+            Based on your answers, we would like to invite you to apply for the @Model.SelectedProgramme.FullName (@Model.SelectedProgramme.ShortName).
+        </gds-p>
+        <gds-p>
+            Before continuing, you should read and understand our
+            <a href="@ExternalLinks.ApplyForAffordableHousingFunding" target="_blank">
+                latest AHP 21-26 CME guidance (opens in a new tab)
+            </a>.
+        </gds-p>
+        <gds-p>
+            If you feel this is not the right support for your project, you can talk to Homes England about other support we offer. You can find more information about different funds
+            <a href="@ExternalLinks.ApplyForAffordableHousingFundingApplySection" target="_blank">
+                on our website (opens in a new tab)
+            </a>.
+        </gds-p>
+
+        <gds-p>
+            You can contact us by:<br/>
+            Telephone: 0300 1234 500 (weekdays from 9am to 5pm)<br/>
+            Email: <a href="mailto:enquiries@homesengland.gov.uk">enquiries@homesengland.gov.uk</a>
+        </gds-p>
+
+        <div class="govuk-heading-s">
+            Consortium applications
+        </div>
+
+        <gds-p>
+            If you intend to apply as part of consortium, you need to
+            <a href="@Url.Action("Index", "Consortium")">
+                create a consortium before you apply
+            </a>.
+        </gds-p>
+
+        <div class="govuk-heading-s">
+            Your application
+        </div>
+
+        <gds-p>
+            As part of your application, you will need to provide details about your scheme. For
+            example:
+            <ul class="govuk-list govuk-list govuk-list--bullet">
+                <li>location</li>
+                <li>tenure</li>
+                <li>planning</li>
+                <li>costs</li>
+                <li>land</li>
+                <li>number of homes</li>
+                <li>delivery forecasts</li>
+                <li>grant required</li>
+            </ul>
+        </gds-p>
+        <gds-p>
+            You will be able to save and return to this application at any time. If you not have the
+            information to answer a question, you can continue but will have to answer it later.
+        </gds-p>
+        <gds-p>
+            By starting this application, you are confirming that any information you provide is
+            truthful and accurate to the best of your knowledge.
+        </gds-p>
+    </div>
+
+    <form asp-controller="Project" asp-action="StartPost" asp-route-fdProjectId="@Model.Id" asp-method="post" novalidate>
+        <gds-button-start type="submit">Start now</gds-button-start>
+    </form>
+</div>

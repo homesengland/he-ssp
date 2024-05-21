@@ -13,6 +13,7 @@ using HE.Investment.AHP.Domain.UserContext;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Pagination;
 using HE.Investments.Common.CRM.Mappers;
+using HE.Investments.FrontDoor.Shared.Project.Data;
 
 namespace HE.Investment.AHP.Domain.Project.Repositories;
 
@@ -93,6 +94,20 @@ public class ProjectRepository : IProjectRepository
             projects.totalItemsCount);
     }
 
+    public async Task<AhpProjectId> CreateProject(ProjectPrefillData frontDoorProject, AhpUserAccount userAccount, CancellationToken cancellationToken)
+    {
+        var projectId = await _projectCrmContext.CreateProject(
+            userAccount.UserGlobalId.ToString(),
+            userAccount.SelectedOrganisationId().ToGuidAsString(),
+            userAccount.Consortium.ConsortiumId.ToString(),
+            frontDoorProject.Id.ToGuidAsString(),
+            frontDoorProject.Name,
+            CreateProjectSitesDto(frontDoorProject.Sites),
+            cancellationToken);
+
+        return AhpProjectId.From(projectId);
+    }
+
     private AhpProjectSites CreateAhpProjectEntity(ProjectDto projectDto)
     {
         var sites = projectDto.Sites?
@@ -107,5 +122,14 @@ public class ProjectRepository : IProjectRepository
             AhpProjectId.From(projectDto.ProjectId),
             new AhpProjectName(projectDto.ProjectName),
             sites);
+    }
+
+    private List<SiteDto> CreateProjectSitesDto(IList<SitePrefillData>? sites)
+    {
+        return sites?.Select(x => new SiteDto
+        {
+            id = x.Id.ToString(),
+            name = x.Name.ToString(),
+        }).ToList() ?? [];
     }
 }

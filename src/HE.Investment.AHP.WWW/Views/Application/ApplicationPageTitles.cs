@@ -6,8 +6,6 @@ public static class ApplicationPageTitles
 
     public const string ApplicationName = "Name your application";
 
-    public const string Start = "Apply for Affordable Homes Programme 2021-2026 Continuous Market Engagement (AHP 21-26 CME)";
-
     public const string Tenure = "What is the tenure of the homes on this application?";
 
     public const string OnHold = "Tell us why you are putting your application on hold";
@@ -25,4 +23,6 @@ public static class ApplicationPageTitles
     public const string CompletedSecondTitle = "Application submitted";
 
     public const string SubmitConfirm = "Confirm the following";
+
+    public static string Start(string programmeFullName, string programmeShortName) => $"Apply for {programmeFullName} ({programmeShortName})";
 }

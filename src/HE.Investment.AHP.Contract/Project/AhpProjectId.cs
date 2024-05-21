@@ -1,4 +1,5 @@
 using HE.Investments.Common.Contract;
+using HE.Investments.Common.Extensions;
 
 namespace HE.Investment.AHP.Contract.Project;
 
@@ -15,9 +16,11 @@ public record AhpProjectId : StringIdValueObject
 
     public static AhpProjectId New() => new();
 
-    public static AhpProjectId From(string value) => new(value);
+    public static AhpProjectId From(string value) => new(FromStringToShortGuidAsString(value));
 
-    public static AhpProjectId From(Guid value) => new(value.ToString());
+    public static AhpProjectId From(Guid value) => new(FromGuidToShortGuidAsString(value));
+
+    public string ToGuidAsString() => Value.ToGuidAsString();
 
     public override string ToString()
     {
