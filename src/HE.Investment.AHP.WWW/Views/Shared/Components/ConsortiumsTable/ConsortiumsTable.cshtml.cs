@@ -15,7 +15,7 @@ public class ConsortiumsTable : ViewComponent
     {
         var tableHeaders = new List<TableHeaderViewModel>
         {
-            new("Consortium name", CellWidth.OneHalf),
+            new("Programme name", CellWidth.OneHalf),
             new("Lead Partner", CellWidth.OneThird),
             new("Membership status", CellWidth.OneEighth),
         };
