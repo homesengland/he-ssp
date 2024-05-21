@@ -1,5 +1,6 @@
 using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.Application.Commands;
+using HE.Investment.AHP.Contract.Project;
 using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Domain.Application.Entities;
 using HE.Investment.AHP.Domain.Application.Factories;
@@ -10,6 +11,7 @@ using HE.Investment.AHP.Domain.Site.Repositories;
 using HE.Investment.AHP.Domain.UserContext;
 using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Contract.Validators;
+using HE.Investments.FrontDoor.Shared.Project;
 using MediatR;
 
 namespace HE.Investment.AHP.Domain.Application.CommandHandlers;
@@ -40,6 +42,7 @@ public class CreateApplicationCommandHandler : IRequestHandler<CreateApplication
 
         var applicationPartners = await GetApplicationPartners(request.SiteId, account, cancellationToken);
         var applicationToCreate = ApplicationEntity.New(
+            new FrontDoorProjectId(MockedProjectId.ProjectId),
             request.SiteId,
             name,
             new ApplicationTenure(request.Tenure),

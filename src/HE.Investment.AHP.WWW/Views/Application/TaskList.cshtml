@@ -16,7 +16,7 @@
     var completeSectionsCount = Model.Sections.Count(s => s.SectionStatus == SectionStatus.Completed);
 }
 <div class="govuk-grid-column-two-thirds">
-    <vc:ahp-workflow-back-button current-page="@ApplicationWorkflowState.TaskList"/>
+    <vc:ahp-workflow-back-button current-page="@ApplicationWorkflowState.TaskList" project-id="@Model.ProjectId"/>
 
     @if (Model.Status == ApplicationStatus.ReferredBackToApplicant)
     {

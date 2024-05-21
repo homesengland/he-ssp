@@ -998,7 +998,7 @@ public class SiteController : WorkflowController<SiteWorkflowState>
         return await this.ExecuteCommand<SiteSummaryViewModel>(
             _mediator,
             new CompleteSiteCommand(SiteId.From(siteId), isSectionCompleted),
-            () => Task.FromResult<IActionResult>(RedirectToAction("Index")),
+            () => Task.FromResult<IActionResult>(RedirectToAction("Details", new { siteId })),
             async () => View("CheckAnswers", await CreateSiteSummary(cancellationToken, isSectionCompleted)),
             cancellationToken);
     }

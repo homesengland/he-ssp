@@ -1,3 +1,5 @@
+using HE.Investments.Common.Contract.Pagination;
+
 namespace HE.Investment.AHP.Contract.Project;
 
 public record ProjectDetailsModel(
@@ -5,5 +7,5 @@ public record ProjectDetailsModel(
     string ProjectName,
     string ProgrammeName,
     string OrganisationName,
-    IList<ApplicationProjectModel> Applications,
+    PaginationResult<ApplicationProjectModel> Applications,
     bool IsReadOnly);
