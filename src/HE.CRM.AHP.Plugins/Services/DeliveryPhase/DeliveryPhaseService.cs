@@ -18,6 +18,7 @@ namespace HE.CRM.AHP.Plugins.Services.DeliveryPhase
         private readonly IContactRepository _contactRepository;
         private readonly IAhpApplicationRepository _ahpApplicationRepository;
         private readonly IMilestoneFrameworkItemRepository _ahpMilestoneFrameworkItemRepository;
+        private readonly IAccountRepository _accountRepository;
 
         public DeliveryPhaseService(CrmServiceArgs args) : base(args)
         {
@@ -26,6 +27,7 @@ namespace HE.CRM.AHP.Plugins.Services.DeliveryPhase
             _ahpApplicationRepository = CrmRepositoriesFactory.Get<IAhpApplicationRepository>();
             _homesInDeliveryPhaseRepository = CrmRepositoriesFactory.Get<IHomesInDeliveryPhaseRepository>();
             _ahpMilestoneFrameworkItemRepository = CrmRepositoriesFactory.Get<IMilestoneFrameworkItemRepository>();
+            _accountRepository = CrmRepositoriesFactory.Get<IAccountRepository>();
         }
 
         public void DeleteDeliveryPhase(string applicationId, string organisationId, string deliveryPhaseId, string externalUserId)
@@ -172,6 +174,7 @@ namespace HE.CRM.AHP.Plugins.Services.DeliveryPhase
                 return;
             }
 
+            var account = _accountRepository.GetById(application.invln_organisationid, Account.Fields.invln_UnregisteredBody);
             TracingService.Trace($"numberOfHouseApplication: {application.invln_noofhomes.Value}");
             var numberOfHouseApplication = application.invln_noofhomes.Value;
             TracingService.Trace($"numberOfHousePhase: {deliveryPhaseMapped.invln_NoofHomes.Value}");
@@ -185,15 +188,28 @@ namespace HE.CRM.AHP.Plugins.Services.DeliveryPhase
             var completionPercentageValue = milestones
                     .FirstOrDefault(x => x.invln_milestone.Value == (int)invln_Milestone.PC).invln_percentagepaidonmilestone.Value / 100;
             var fundingForPhase = (fundingRequired / numberOfHouseApplication) * numberOfHousePhase;
-            if (deliveryPhaseToUpdateOrCreate == null)
+
+            if (account.invln_UnregisteredBody == true)
             {
-                TracingService.Trace($"CalculateFundings");
-                CalculateFundings(deliveryPhaseMapped, acquisitionPercentageValue, startOnSitePercentageValue, completionPercentageValue, fundingForPhase);
+                deliveryPhaseToUpdateOrCreate.invln_CompletionValue = new Money((fundingRequired / numberOfHouseApplication) * numberOfHousePhase);
+                deliveryPhaseToUpdateOrCreate.invln_StartOnSiteValue = new Money(0);
+                deliveryPhaseToUpdateOrCreate.invln_AcquisitionValue = new Money(0);
+                deliveryPhaseToUpdateOrCreate.invln_CompletionPercentageValue = 1;
+                deliveryPhaseToUpdateOrCreate.invln_StartOnSitePercentageValue = 0;
+                deliveryPhaseToUpdateOrCreate.invln_AcquisitionPercentageValue = 0;
             }
             else
             {
-                TracingService.Trace($"CalculateFundings");
-                CalculateFundings(deliveryPhaseToUpdateOrCreate, acquisitionPercentageValue, startOnSitePercentageValue, completionPercentageValue, fundingForPhase);
+                if (deliveryPhaseToUpdateOrCreate == null)
+                {
+                    TracingService.Trace($"CalculateFundings");
+                    CalculateFundings(deliveryPhaseMapped, acquisitionPercentageValue, startOnSitePercentageValue, completionPercentageValue, fundingForPhase);
+                }
+                else
+                {
+                    TracingService.Trace($"CalculateFundings");
+                    CalculateFundings(deliveryPhaseToUpdateOrCreate, acquisitionPercentageValue, startOnSitePercentageValue, completionPercentageValue, fundingForPhase);
+                }
             }
         }
 
