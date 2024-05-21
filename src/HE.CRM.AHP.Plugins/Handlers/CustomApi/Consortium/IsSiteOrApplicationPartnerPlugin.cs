@@ -28,7 +28,7 @@ namespace HE.CRM.AHP.Plugins.Handlers.CustomApi.Consortium
 
         public override bool CanWork()
         {
-            return string.IsNullOrEmpty(ConsortiumId) && string.IsNullOrEmpty(OrganizationId);
+            return !string.IsNullOrEmpty(ConsortiumId) && !string.IsNullOrEmpty(OrganizationId);
         }
 
         public override void DoWork()
@@ -39,17 +39,17 @@ namespace HE.CRM.AHP.Plugins.Handlers.CustomApi.Consortium
             if (isSitePartner)
             {
                 ExecutionData.SetOutputParameter(invln_issiteorapplicationpartnerResponse
-                    .Fields.invln_consortiumpartnerstatus, PartnerType.SitePartner);
+                    .Fields.invln_consortiumpartnerstatus, (int)PartnerType.SitePartner);
             }
             else if (isApplicationPartner)
             {
                 ExecutionData.SetOutputParameter(invln_issiteorapplicationpartnerResponse
-                    .Fields.invln_consortiumpartnerstatus, PartnerType.ApplicationPartner);
+                    .Fields.invln_consortiumpartnerstatus, (int)PartnerType.ApplicationPartner);
             }
             else
             {
                 ExecutionData.SetOutputParameter(invln_issiteorapplicationpartnerResponse
-                    .Fields.invln_consortiumpartnerstatus, PartnerType.None);
+                    .Fields.invln_consortiumpartnerstatus, (int)PartnerType.None);
             }
 
         }
@@ -57,14 +57,13 @@ namespace HE.CRM.AHP.Plugins.Handlers.CustomApi.Consortium
         private bool SitePartner(Guid accountId)
         {
             var applications = _applicationRepository.GetByConsortiumId(new Guid(ConsortiumId));
-            return applications.Any(x => x.invln_DevelopingPartner.Id == accountId);
-
+            return applications.Any(x => x.invln_DevelopingPartner != null && x.invln_DevelopingPartner.Id == accountId);
         }
 
         private bool AppPartner(Guid accountId)
         {
             var sites = _siteRepository.GetbyConsortiumId(new Guid(ConsortiumId));
-            return sites.Any(x => x.invln_developingpartner.Id == accountId);
+            return sites.Any(x => x.invln_developingpartner != null && x.invln_developingpartner.Id == accountId);
         }
     }
 }

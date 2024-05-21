@@ -88,7 +88,6 @@ namespace HE.CRM.Common.Repositories.Implementations
 
             query_invln_sites.LinkCriteria.AddCondition(invln_Sites.Fields.invln_AHPProjectId, ConditionOperator.Equal, query_invln_sites_invln_ahpprojectid);
 
-
             if (contactWebRole == invln_Permission.Limiteduser)
             {
                 var query_invln_contactid = contact.Id.ToString();
@@ -108,7 +107,6 @@ namespace HE.CRM.Common.Repositories.Implementations
         public List<invln_scheme> GetByConsortiumId(Guid consortiumId)
         {
             var query = new QueryExpression(invln_scheme.EntityLogicalName);
-            query.TopCount = 50;
             query.ColumnSet.AddColumn(invln_scheme.Fields.invln_DevelopingPartner);
             var query_invln_sites = query.AddLink(
                 invln_Sites.EntityLogicalName,
