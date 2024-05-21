@@ -105,7 +105,9 @@ namespace HE.CRM.Common.Repositories.Implementations
         public List<invln_Sites> GetbyConsortiumId(Guid consortiumId)
         {
             var query = new QueryExpression(invln_Sites.EntityLogicalName);
-            query.ColumnSet = new ColumnSet(invln_Sites.Fields.invln_developingpartner);
+            query.ColumnSet = new ColumnSet(invln_Sites.Fields.invln_developingpartner,
+                invln_Sites.Fields.invln_ownerofthelandduringdevelopment,
+                invln_Sites.Fields.invln_Ownerofthehomesaftercompletion);
             var query_invln_ahpproject = query.AddLink(
                 invln_ahpproject.EntityLogicalName,
                 invln_Sites.Fields.invln_AHPProjectId,

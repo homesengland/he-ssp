@@ -57,13 +57,17 @@ namespace HE.CRM.AHP.Plugins.Handlers.CustomApi.Consortium
         private bool SitePartner(Guid accountId)
         {
             var applications = _applicationRepository.GetByConsortiumId(new Guid(ConsortiumId));
-            return applications.Any(x => x.invln_DevelopingPartner != null && x.invln_DevelopingPartner.Id == accountId);
+            return applications.Any(x => (x.invln_DevelopingPartner != null && x.invln_DevelopingPartner.Id == accountId) ||
+                                         (x.invln_OwneroftheHomes != null && x.invln_OwneroftheHomes.Id == accountId) ||
+                                         (x.invln_OwneroftheLand != null && x.invln_OwneroftheLand.Id == accountId));
         }
 
         private bool AppPartner(Guid accountId)
         {
             var sites = _siteRepository.GetbyConsortiumId(new Guid(ConsortiumId));
-            return sites.Any(x => x.invln_developingpartner != null && x.invln_developingpartner.Id == accountId);
+            return sites.Any(x => (x.invln_developingpartner != null && x.invln_developingpartner.Id == accountId) ||
+                                  (x.invln_ownerofthelandduringdevelopment != null && x.invln_ownerofthelandduringdevelopment.Id == accountId) ||
+                                  (x.invln_Ownerofthehomesaftercompletion != null && x.invln_Ownerofthehomesaftercompletion.Id == accountId));
         }
     }
 }
