@@ -13,29 +13,35 @@ namespace DataverseModel
 	
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
-	public enum invln_Procurementmechanisms
+	public enum AIPluginSubType
 	{
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Bulkpurchaseofcomponents = 858110002,
+		CertifiedConnector = 1,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Largescalecontractprocurementasindividualprovider = 858110000,
+		Conversational = 5,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Largescalecontractprocurementthroughconsortium = 858110001,
+		CustomApi = 6,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Noneoftheabove = 858111000,
+		CustomConnector = 8,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Other = 858110005,
+		Dataverse = 0,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Partneringarrangementswithcontractor = 858110004,
+		Flow = 3,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Partneringsupplychain = 858110003,
+		Prompt = 4,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		QA = 2,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		RestApi = 7,
 	}
 }
 #pragma warning restore CS1591

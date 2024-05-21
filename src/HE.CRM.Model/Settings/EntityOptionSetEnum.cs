@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace DataverseModel
+namespace HE.Investments.Common.CRM.Model
 {
 	
 	

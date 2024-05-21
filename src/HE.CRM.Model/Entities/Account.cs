@@ -715,7 +715,6 @@ namespace DataverseModel
 			public const string FollowEmail = "followemail";
 			public const string FollowEmailName = "followemailname";
 			public const string FtpSiteURL = "ftpsiteurl";
-			public const string he_Account_Account_he_Pipeline = "he_Account_Account_he_Pipeline";
 			public const string Referencinghe_account_account_UltimateParent = "he_account_account_UltimateParent";
 			public const string he_account_keyaccountmanager_systemuser = "he_account_keyaccountmanager_systemuser";
 			public const string he_automaticsearch = "he_automaticsearch";
@@ -778,6 +777,7 @@ namespace DataverseModel
 			public const string invln_addressverificationtype = "invln_addressverificationtype";
 			public const string invln_addressverificationtypeName = "invln_addressverificationtypename";
 			public const string invln_ahpcontract_Partner_account = "invln_ahpcontract_Partner_account";
+			public const string invln_ahpproject_AccountId_account = "invln_ahpproject_AccountId_account";
 			public const string invln_Comments = "invln_comments";
 			public const string invln_consortium_LeadPartner_account = "invln_consortium_LeadPartner_account";
 			public const string invln_consortiummember_Partner_account = "invln_consortiummember_Partner_account";
@@ -881,6 +881,7 @@ namespace DataverseModel
 			public const string msdyn_accountkpiidName = "msdyn_accountkpiidname";
 			public const string msdyn_gdproptout = "msdyn_gdproptout";
 			public const string msdyn_gdproptoutName = "msdyn_gdproptoutname";
+			public const string msdyn_PrimaryTimeZone = "msdyn_primarytimezone";
 			public const string msdyn_salesaccelerationinsightid = "msdyn_salesaccelerationinsightid";
 			public const string msdyn_salesaccelerationinsightidName = "msdyn_salesaccelerationinsightidname";
 			public const string msdyn_segmentid = "msdyn_segmentid";
@@ -5671,6 +5672,26 @@ namespace DataverseModel
 		}
 		
 		/// <summary>
+		/// Indicates the primary time zone that the client works on.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("msdyn_primarytimezone")]
+		public System.Nullable<int> msdyn_PrimaryTimeZone
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<int>>("msdyn_primarytimezone");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("msdyn_PrimaryTimeZone");
+				this.SetAttributeValue("msdyn_primarytimezone", value);
+				this.OnPropertyChanged("msdyn_PrimaryTimeZone");
+			}
+		}
+		
+		/// <summary>
 		/// Sales Acceleration Insights ID
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("msdyn_salesaccelerationinsightid")]
@@ -7373,26 +7394,6 @@ namespace DataverseModel
 		}
 		
 		/// <summary>
-		/// 1:N he_Account_Account_he_Pipeline
-		/// </summary>
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("he_Account_Account_he_Pipeline")]
-		public System.Collections.Generic.IEnumerable<DataverseModel.he_Pipeline> he_Account_Account_he_Pipeline
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetRelatedEntities<DataverseModel.he_Pipeline>("he_Account_Account_he_Pipeline", null);
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("he_Account_Account_he_Pipeline");
-				this.SetRelatedEntities<DataverseModel.he_Pipeline>("he_Account_Account_he_Pipeline", null, value);
-				this.OnPropertyChanged("he_Account_Account_he_Pipeline");
-			}
-		}
-		
-		/// <summary>
 		/// 1:N he_account_account_UltimateParent
 		/// </summary>
 		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("he_account_account_UltimateParent", Microsoft.Xrm.Sdk.EntityRole.Referenced)]
@@ -7489,6 +7490,26 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_ahpcontract_Partner_account");
 				this.SetRelatedEntities<DataverseModel.invln_ahpcontract>("invln_ahpcontract_Partner_account", null, value);
 				this.OnPropertyChanged("invln_ahpcontract_Partner_account");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N invln_ahpproject_AccountId_account
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_ahpproject_AccountId_account")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_ahpproject> invln_ahpproject_AccountId_account
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_ahpproject>("invln_ahpproject_AccountId_account", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_ahpproject_AccountId_account");
+				this.SetRelatedEntities<DataverseModel.invln_ahpproject>("invln_ahpproject_AccountId_account", null, value);
+				this.OnPropertyChanged("invln_ahpproject_AccountId_account");
 			}
 		}
 		

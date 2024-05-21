@@ -13,29 +13,26 @@ namespace DataverseModel
 	
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
-	public enum invln_Procurementmechanisms
+	public enum botComponentcollectionsharingroletype
 	{
 		
+		/// <summary>
+		/// Chatbot user has access to the content of the component collection
+		/// </summary>
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Bulkpurchaseofcomponents = 858110002,
+		Chatbotuser = 1,
 		
+		/// <summary>
+		/// Can author the component collection
+		/// </summary>
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Largescalecontractprocurementasindividualprovider = 858110000,
+		Componentcollectionauthor = 3,
 		
+		/// <summary>
+		/// Has access to the content of the component collection and can add component collection to the copilot
+		/// </summary>
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Largescalecontractprocurementthroughconsortium = 858110001,
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Noneoftheabove = 858111000,
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Other = 858110005,
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Partneringarrangementswithcontractor = 858110004,
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Partneringsupplychain = 858110003,
+		Componentcollectionuser = 2,
 	}
 }
 #pragma warning restore CS1591

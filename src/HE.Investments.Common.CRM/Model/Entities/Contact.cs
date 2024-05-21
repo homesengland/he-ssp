@@ -654,7 +654,6 @@ namespace HE.Investments.Common.CRM.Model
 			public const string he_isverifiedName = "he_isverifiedname";
 			public const string he_marketingsend = "he_marketingsend";
 			public const string he_marketingsendName = "he_marketingsendname";
-			public const string he_pipeline_portalowner_contact = "he_pipeline_portalowner_contact";
 			public const string he_PrefixID = "he_prefixid";
 			public const string Home2 = "home2";
 			public const string ImportSequenceNumber = "importsequencenumber";
@@ -676,6 +675,12 @@ namespace HE.Investments.Common.CRM.Model
 			public const string invln_Note = "invln_note";
 			public const string invln_PEP = "invln_pep";
 			public const string invln_pepName = "invln_pepname";
+			public const string invln_PrimaryContactforGrowth = "invln_primarycontactforgrowth";
+			public const string invln_primarycontactforgrowthName = "invln_primarycontactforgrowthname";
+			public const string invln_PrimaryContactforProviderManagement = "invln_primarycontactforprovidermanagement";
+			public const string invln_primarycontactforprovidermanagementName = "invln_primarycontactforprovidermanagementname";
+			public const string invln_PrimaryContactforProviderServices = "invln_primarycontactforproviderservices";
+			public const string invln_primarycontactforproviderservicesName = "invln_primarycontactforproviderservicesname";
 			public const string invln_role = "invln_role";
 			public const string invln_roleName = "invln_rolename";
 			public const string invln_scheme_submitedby_contact = "invln_scheme_submitedby_contact";
@@ -737,6 +742,7 @@ namespace HE.Investments.Common.CRM.Model
 			public const string msdyn_orgchangestatus = "msdyn_orgchangestatus";
 			public const string msdyn_orgchangestatusName = "msdyn_orgchangestatusname";
 			public const string msdyn_portaltermsagreementdate = "msdyn_portaltermsagreementdate";
+			public const string msdyn_PrimaryTimeZone = "msdyn_primarytimezone";
 			public const string msdyn_segmentid = "msdyn_segmentid";
 			public const string msdyn_segmentidName = "msdyn_segmentidname";
 			public const string msft_DataState = "msft_datastate";
@@ -4866,6 +4872,108 @@ namespace HE.Investments.Common.CRM.Model
 			}
 		}
 		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_primarycontactforgrowth")]
+		public System.Nullable<bool> invln_PrimaryContactforGrowth
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("invln_primarycontactforgrowth");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_PrimaryContactforGrowth");
+				this.SetAttributeValue("invln_primarycontactforgrowth", value);
+				this.OnPropertyChanged("invln_PrimaryContactforGrowth");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_primarycontactforgrowthname")]
+		public string invln_primarycontactforgrowthName
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				if (this.FormattedValues.Contains("invln_primarycontactforgrowth"))
+				{
+					return this.FormattedValues["invln_primarycontactforgrowth"];
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_primarycontactforprovidermanagement")]
+		public System.Nullable<bool> invln_PrimaryContactforProviderManagement
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("invln_primarycontactforprovidermanagement");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_PrimaryContactforProviderManagement");
+				this.SetAttributeValue("invln_primarycontactforprovidermanagement", value);
+				this.OnPropertyChanged("invln_PrimaryContactforProviderManagement");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_primarycontactforprovidermanagementname")]
+		public string invln_primarycontactforprovidermanagementName
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				if (this.FormattedValues.Contains("invln_primarycontactforprovidermanagement"))
+				{
+					return this.FormattedValues["invln_primarycontactforprovidermanagement"];
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_primarycontactforproviderservices")]
+		public System.Nullable<bool> invln_PrimaryContactforProviderServices
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("invln_primarycontactforproviderservices");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_PrimaryContactforProviderServices");
+				this.SetAttributeValue("invln_primarycontactforproviderservices", value);
+				this.OnPropertyChanged("invln_PrimaryContactforProviderServices");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_primarycontactforproviderservicesname")]
+		public string invln_primarycontactforproviderservicesName
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				if (this.FormattedValues.Contains("invln_primarycontactforproviderservices"))
+				{
+					return this.FormattedValues["invln_primarycontactforproviderservices"];
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+		}
+		
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_role")]
 		public virtual Microsoft.Xrm.Sdk.OptionSetValue invln_role
 		{
@@ -5827,6 +5935,26 @@ namespace HE.Investments.Common.CRM.Model
 				this.OnPropertyChanging("msdyn_portaltermsagreementdate");
 				this.SetAttributeValue("msdyn_portaltermsagreementdate", value);
 				this.OnPropertyChanged("msdyn_portaltermsagreementdate");
+			}
+		}
+		
+		/// <summary>
+		/// Indicates the primary time zone that the contact works on.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("msdyn_primarytimezone")]
+		public System.Nullable<int> msdyn_PrimaryTimeZone
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<int>>("msdyn_primarytimezone");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("msdyn_PrimaryTimeZone");
+				this.SetAttributeValue("msdyn_primarytimezone", value);
+				this.OnPropertyChanged("msdyn_PrimaryTimeZone");
 			}
 		}
 		
@@ -7411,26 +7539,6 @@ namespace HE.Investments.Common.CRM.Model
 				this.OnPropertyChanging("Referencedcontact_parent_contact");
 				this.SetRelatedEntities<HE.Investments.Common.CRM.Model.Contact>("contact_parent_contact", Microsoft.Xrm.Sdk.EntityRole.Referenced, value);
 				this.OnPropertyChanged("Referencedcontact_parent_contact");
-			}
-		}
-		
-		/// <summary>
-		/// 1:N he_pipeline_portalowner_contact
-		/// </summary>
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("he_pipeline_portalowner_contact")]
-		public System.Collections.Generic.IEnumerable<HE.Investments.Common.CRM.Model.he_Pipeline> he_pipeline_portalowner_contact
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetRelatedEntities<HE.Investments.Common.CRM.Model.he_Pipeline>("he_pipeline_portalowner_contact", null);
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("he_pipeline_portalowner_contact");
-				this.SetRelatedEntities<HE.Investments.Common.CRM.Model.he_Pipeline>("he_pipeline_portalowner_contact", null, value);
-				this.OnPropertyChanged("he_pipeline_portalowner_contact");
 			}
 		}
 		

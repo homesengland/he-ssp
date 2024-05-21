@@ -715,7 +715,6 @@ namespace HE.Investments.Common.CRM.Model
 			public const string FollowEmail = "followemail";
 			public const string FollowEmailName = "followemailname";
 			public const string FtpSiteURL = "ftpsiteurl";
-			public const string he_Account_Account_he_Pipeline = "he_Account_Account_he_Pipeline";
 			public const string Referencinghe_account_account_UltimateParent = "he_account_account_UltimateParent";
 			public const string he_account_keyaccountmanager_systemuser = "he_account_keyaccountmanager_systemuser";
 			public const string he_automaticsearch = "he_automaticsearch";
@@ -881,6 +880,7 @@ namespace HE.Investments.Common.CRM.Model
 			public const string msdyn_accountkpiidName = "msdyn_accountkpiidname";
 			public const string msdyn_gdproptout = "msdyn_gdproptout";
 			public const string msdyn_gdproptoutName = "msdyn_gdproptoutname";
+			public const string msdyn_PrimaryTimeZone = "msdyn_primarytimezone";
 			public const string msdyn_salesaccelerationinsightid = "msdyn_salesaccelerationinsightid";
 			public const string msdyn_salesaccelerationinsightidName = "msdyn_salesaccelerationinsightidname";
 			public const string msdyn_segmentid = "msdyn_segmentid";
@@ -5671,6 +5671,26 @@ namespace HE.Investments.Common.CRM.Model
 		}
 		
 		/// <summary>
+		/// Indicates the primary time zone that the client works on.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("msdyn_primarytimezone")]
+		public System.Nullable<int> msdyn_PrimaryTimeZone
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<int>>("msdyn_primarytimezone");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("msdyn_PrimaryTimeZone");
+				this.SetAttributeValue("msdyn_primarytimezone", value);
+				this.OnPropertyChanged("msdyn_PrimaryTimeZone");
+			}
+		}
+		
+		/// <summary>
 		/// Sales Acceleration Insights ID
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("msdyn_salesaccelerationinsightid")]
@@ -7369,26 +7389,6 @@ namespace HE.Investments.Common.CRM.Model
 				this.OnPropertyChanging("contact_customer_accounts");
 				this.SetRelatedEntities<HE.Investments.Common.CRM.Model.Contact>("contact_customer_accounts", null, value);
 				this.OnPropertyChanged("contact_customer_accounts");
-			}
-		}
-		
-		/// <summary>
-		/// 1:N he_Account_Account_he_Pipeline
-		/// </summary>
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("he_Account_Account_he_Pipeline")]
-		public System.Collections.Generic.IEnumerable<HE.Investments.Common.CRM.Model.he_Pipeline> he_Account_Account_he_Pipeline
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetRelatedEntities<HE.Investments.Common.CRM.Model.he_Pipeline>("he_Account_Account_he_Pipeline", null);
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("he_Account_Account_he_Pipeline");
-				this.SetRelatedEntities<HE.Investments.Common.CRM.Model.he_Pipeline>("he_Account_Account_he_Pipeline", null, value);
-				this.OnPropertyChanged("he_Account_Account_he_Pipeline");
 			}
 		}
 		

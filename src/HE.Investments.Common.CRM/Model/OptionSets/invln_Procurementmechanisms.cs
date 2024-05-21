@@ -20,10 +20,10 @@ namespace HE.Investments.Common.CRM.Model
 		Bulkpurchaseofcomponents = 858110002,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Largescalecontractprocurement_858110000 = 858110000,
+		Largescalecontractprocurementasindividualprovider = 858110000,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Largescalecontractprocurement_858110001 = 858110001,
+		Largescalecontractprocurementthroughconsortium = 858110001,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Noneoftheabove = 858111000,

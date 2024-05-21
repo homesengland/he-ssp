@@ -293,9 +293,9 @@ namespace HE.Investments.Common.CRM.Model
 			public const string invln_scheme_DevelopingPartner_account = "invln_scheme_DevelopingPartner_account";
 			public const string invln_scheme_GrowthManager_systemuser = "invln_scheme_GrowthManager_systemuser";
 			public const string invln_scheme_GrowthTeam_team = "invln_scheme_GrowthTeam_team";
-			public const string invln_scheme_HELocalAuthorityID_he_localauthori = "invln_scheme_HELocalAuthorityID_he_localauthori";
 			public const string invln_scheme_invln_Externalcommses = "invln_scheme_invln_Externalcommses";
 			public const string invln_scheme_invln_govnotifyemails = "invln_scheme_invln_govnotifyemails";
+			public const string invln_scheme_LocalAuthority_invln_ahglocalautho = "invln_scheme_LocalAuthority_invln_ahglocalautho";
 			public const string invln_scheme_OwneroftheHomes_account = "invln_scheme_OwneroftheHomes_account";
 			public const string invln_scheme_OwneroftheLand_account = "invln_scheme_OwneroftheLand_account";
 			public const string invln_scheme_ProviderNameNew_account = "invln_scheme_ProviderNameNew_account";
@@ -334,6 +334,8 @@ namespace HE.Investments.Common.CRM.Model
 			public const string invln_workscostsm2 = "invln_workscostsm2";
 			public const string invln_workscostsm2asapercentoftheareaavgscore = "invln_workscostsm2asapercentoftheareaavgscore";
 			public const string invln_worksm2asapercentageofareaavg = "invln_worksm2asapercentageofareaavg";
+			public const string invln_WorkssCostsm2 = "invln_worksscostsm2";
+			public const string invln_worksscostsm2_Base = "invln_worksscostsm2_base";
 			public const string lk_invln_scheme_createdby = "lk_invln_scheme_createdby";
 			public const string lk_invln_scheme_createdonbehalfby = "lk_invln_scheme_createdonbehalfby";
 			public const string lk_invln_scheme_modifiedby = "lk_invln_scheme_modifiedby";
@@ -3597,6 +3599,36 @@ namespace HE.Investments.Common.CRM.Model
 			}
 		}
 		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_worksscostsm2")]
+		public Microsoft.Xrm.Sdk.Money invln_WorkssCostsm2
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_worksscostsm2");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_WorkssCostsm2");
+				this.SetAttributeValue("invln_worksscostsm2", value);
+				this.OnPropertyChanged("invln_WorkssCostsm2");
+			}
+		}
+		
+		/// <summary>
+		/// Value of the Works Costs/m2 in base currency.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_worksscostsm2_base")]
+		public Microsoft.Xrm.Sdk.Money invln_worksscostsm2_Base
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_worksscostsm2_base");
+			}
+		}
+		
 		/// <summary>
 		/// Unique identifier of the user who modified the record.
 		/// </summary>
@@ -4347,23 +4379,23 @@ namespace HE.Investments.Common.CRM.Model
 		}
 		
 		/// <summary>
-		/// N:1 invln_scheme_HELocalAuthorityID_he_localauthori
+		/// N:1 invln_scheme_LocalAuthority_invln_ahglocalautho
 		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_helocalauthorityid")]
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_scheme_HELocalAuthorityID_he_localauthori")]
-		public HE.Investments.Common.CRM.Model.he_LocalAuthority invln_scheme_HELocalAuthorityID_he_localauthori
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_localauthority")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_scheme_LocalAuthority_invln_ahglocalautho")]
+		public HE.Investments.Common.CRM.Model.invln_AHGLocalAuthorities invln_scheme_LocalAuthority_invln_ahglocalautho
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
 			get
 			{
-				return this.GetRelatedEntity<HE.Investments.Common.CRM.Model.he_LocalAuthority>("invln_scheme_HELocalAuthorityID_he_localauthori", null);
+				return this.GetRelatedEntity<HE.Investments.Common.CRM.Model.invln_AHGLocalAuthorities>("invln_scheme_LocalAuthority_invln_ahglocalautho", null);
 			}
 			[System.Diagnostics.DebuggerNonUserCode()]
 			set
 			{
-				this.OnPropertyChanging("invln_scheme_HELocalAuthorityID_he_localauthori");
-				this.SetRelatedEntity<HE.Investments.Common.CRM.Model.he_LocalAuthority>("invln_scheme_HELocalAuthorityID_he_localauthori", null, value);
-				this.OnPropertyChanged("invln_scheme_HELocalAuthorityID_he_localauthori");
+				this.OnPropertyChanging("invln_scheme_LocalAuthority_invln_ahglocalautho");
+				this.SetRelatedEntity<HE.Investments.Common.CRM.Model.invln_AHGLocalAuthorities>("invln_scheme_LocalAuthority_invln_ahglocalautho", null, value);
+				this.OnPropertyChanged("invln_scheme_LocalAuthority_invln_ahglocalautho");
 			}
 		}
 		

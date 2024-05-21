@@ -49,6 +49,7 @@ invln_getsinglesitedetails|
 invln_gettemporaryportaldata|
 invln_gettypeofhomeslist|
 invln_invitecontacttojoinexistingorganisation|
+invln_issiteorapplicationpartner|
 invln_linkcontactwithorganization|
 invln_returnuserprofile|
 invln_savetemporaryportaldata|
@@ -93,6 +94,7 @@ environmentvariabledefinition|
 environmentvariablevalue|
 invln_ahglocalauthorities|
 invln_ahpcontract|
+invln_ahpproject|
 invln_ahpstatuschange|
 invln_borrowerpreviousschemes|
 invln_comment|
