@@ -1,13 +1,12 @@
 using System.Diagnostics.CodeAnalysis;
 using HE.Investment.AHP.Contract.Project;
 using HE.Investment.AHP.WWW.Views.Application;
-using HE.Investment.AHP.WWW.Views.Project;
+using HE.Investment.AHP.WWW.Views.Project.Const;
 using HE.Investment.AHP.WWW.Views.Site.Const;
 using HE.Investments.AHP.IntegrationTests.Extensions;
 using HE.Investments.AHP.IntegrationTests.Framework;
 using HE.Investments.AHP.IntegrationTests.Pages;
 using HE.Investments.TestsUtils.Extensions;
-using Moq;
 using Xunit;
 using Xunit.Abstractions;
 using Xunit.Extensions.Ordering;
