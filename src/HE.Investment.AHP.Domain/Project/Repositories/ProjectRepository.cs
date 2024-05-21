@@ -1,6 +1,7 @@
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.Project;
+using HE.Investment.AHP.Contract.Project.Events;
 using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Domain.Application.Repositories;
 using HE.Investment.AHP.Domain.Application.ValueObjects;
@@ -13,6 +14,7 @@ using HE.Investment.AHP.Domain.UserContext;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Pagination;
 using HE.Investments.Common.CRM.Mappers;
+using HE.Investments.Common.Infrastructure.Events;
 using HE.Investments.FrontDoor.Shared.Project.Data;
 
 namespace HE.Investment.AHP.Domain.Project.Repositories;
@@ -23,9 +25,12 @@ public class ProjectRepository : IProjectRepository
 
     private readonly SiteStatusMapper _siteStatusMapper = new();
 
-    public ProjectRepository(IProjectCrmContext projectCrmContext)
+    private readonly IEventDispatcher _eventDispatcher;
+
+    public ProjectRepository(IProjectCrmContext projectCrmContext, IEventDispatcher eventDispatcher)
     {
         _projectCrmContext = projectCrmContext;
+        _eventDispatcher = eventDispatcher;
     }
 
     public async Task<AhpProjectApplications> GetProject(AhpProjectId id, AhpUserAccount userAccount, CancellationToken cancellationToken)
@@ -104,6 +109,8 @@ public class ProjectRepository : IProjectRepository
             frontDoorProject.Name,
             CreateProjectSitesDto(frontDoorProject.Sites),
             cancellationToken);
+
+        await _eventDispatcher.Publish(new AhpProjectHasBeenCreatedEvent(frontDoorProject.Id), cancellationToken);
 
         return AhpProjectId.From(projectId);
     }
