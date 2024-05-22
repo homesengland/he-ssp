@@ -4,7 +4,7 @@ using HE.Investments.Common.CRM.Model;
 
 namespace HE.Investments.FrontDoor.Domain.Project.Crm.Mappers;
 
-internal sealed class PlanningStatusMapper : EnumMapper<SitePlanningStatus>
+public sealed class PlanningStatusMapper : EnumMapper<SitePlanningStatus>
 {
     protected override IDictionary<SitePlanningStatus, int?> Mapping => new Dictionary<SitePlanningStatus, int?>
     {

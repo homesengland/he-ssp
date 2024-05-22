@@ -3,6 +3,7 @@ using System.Diagnostics.CodeAnalysis;
 using HE.Investments.FrontDoor.IntegrationTests.FillProject.Data;
 using HE.Investments.FrontDoor.WWW;
 using HE.Investments.IntegrationTestsFramework;
+using HE.Investments.IntegrationTestsFramework.Auth;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -24,6 +25,7 @@ public class FrontDoorIntegrationTest : IntegrationTestBase<Program>, IDisposabl
         InitStopwatch();
         fixture.CheckUserLoginData();
         fixture.MockUserAccount();
+        LoginData = fixture.LoginData;
     }
 
     public ProjectData ProjectData { get; private set; }
@@ -33,6 +35,8 @@ public class FrontDoorIntegrationTest : IntegrationTestBase<Program>, IDisposabl
     public SiteData SecondSiteData => ProjectData.SecondSiteData;
 
     public Stopwatch Stopwatch { get; private set; }
+
+    protected ILoginData LoginData { get; }
 
     public void Dispose()
     {
