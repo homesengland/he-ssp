@@ -12,6 +12,6 @@ namespace HE.CRM.AHP.Plugins.Services.AhpProject
     {
         string CreateRecordFromPortal(string externalContactId, string organisationId, string heProjectId, string ahpProjectName, string consortiumId);
         AhpProjectDto GetAhpProjectWithApplicationsAndSites(string externalContactId, string organisationId, string ahpProjectId, string heProjectId, string consortiumId);
-        List<AhpProjectDto> GetAhpProjectsWithSites(string externalContactId, string organisationId, string consortiumId);
+        PagedResponseDto<AhpProjectDto> GetAhpProjectsWithSites(string externalContactId, string organisationId, string consortiumId, PagingRequestDto paging);
     }
 }

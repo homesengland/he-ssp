@@ -109,10 +109,11 @@ namespace HE.CRM.AHP.Plugins.Services.AhpProject
             return result;
         }
 
-        public List<AhpProjectDto> GetAhpProjectsWithSites(string externalContactId, string organisationId, string consortiumId = null)
+        public PagedResponseDto<AhpProjectDto> GetAhpProjectsWithSites(string externalContactId, string organisationId, string consortiumId = null, PagingRequestDto paging = null)
         {
             TracingService.Trace("GetAhpProjectsWithSites");
-            List<AhpProjectDto> result = new List<AhpProjectDto>();
+
+            PagedResponseDto<AhpProjectDto> result = new PagedResponseDto<AhpProjectDto>();
             Contact contact = null;
             contact = _contactRepository.GetContactViaExternalId(externalContactId);
 
@@ -121,30 +122,20 @@ namespace HE.CRM.AHP.Plugins.Services.AhpProject
             if (consortiumId == null || (consortiumId != null && contactWebRole == invln_Permission.Limiteduser))
             {
                 TracingService.Trace("No Consortium or Consortium with Limiteduser");
-                var ahpProjects = GetAhpProjectsAndCheckPermission(contactWebRole, contact, organisationId);
+                var ahpProjectsDto = GetAhpProjectsAndCheckPermission(contactWebRole, contact, organisationId, null, paging);
 
-                if (ahpProjects != null)
+                if (ahpProjectsDto != null)
                 {
-                    ahpProjects.OrderBy(x => x.CreatedOn);
-                    TracingService.Trace($"Core records OrderBy.");
-                    foreach (var project in ahpProjects)
+                    foreach (var ahpProjectDto in ahpProjectsDto.items)
                     {
-                        if (CheckAccessToAhpProject(contactWebRole, project, contact, organisationId) == null)
-                        {
-                            TracingService.Trace("Access to AhpProject checked");
-                            ahpProjects.Remove(project);
-                        }
-                        else
-                        {
-                            var listOfSites = _siteRepository.GetSitesForAhpProject(project.Id, contactWebRole, contact, new Guid(organisationId), consortiumId);
-                            var listOfSitesDto = listOfSites.Select(x => SiteMapper.ToDto(x)).ToList();
-                            TracingService.Trace($"List of Sites downloaded.");
-                            var SitesDto = AhpProjectMapper.MapRegularEntityToDto(project, listOfSitesDto, null);
-                            TracingService.Trace($"Record mapped.");
-                            result.Add(SitesDto);
-                            TracingService.Trace($"Record added to the list.");
-                        }
+                        var listOfSites = _siteRepository.GetSitesForAhpProject(new Guid(ahpProjectDto.AhpProjectId), contactWebRole, contact, new Guid(organisationId), consortiumId);
+                        var listOfSitesDto = listOfSites.Select(x => SiteMapper.ToDto(x)).ToList();
+                        TracingService.Trace($"List of Sites downloaded.");
+
+                        ahpProjectDto.ListOfSites = listOfSitesDto;
+                        TracingService.Trace($"Record added to the list.");
                     }
+                    result = ahpProjectsDto;
                 }
                 return result;
             }
@@ -157,22 +148,21 @@ namespace HE.CRM.AHP.Plugins.Services.AhpProject
                     return null;
                 }
 
-                var ahpProjects = GetAhpProjectsForConsortium(consortiumId);
-                if (ahpProjects != null)
+                var ahpProjectsDto = GetAhpProjectsForConsortium(consortiumId, paging);
+                if (ahpProjectsDto != null)
                 {
-                    ahpProjects.OrderBy(x => x.CreatedOn);
-                    TracingService.Trace($"Core records OrderBy.");
-                    foreach (var project in ahpProjects)
+                    foreach (var ahpProjectDto in ahpProjectsDto.items)
                     {
-                        var listOfSites = _siteRepository.GetSitesForAhpProject(project.Id, contactWebRole, contact, new Guid(organisationId), consortiumId);
+                        TracingService.Trace($"List of Sites searching.");
+                        var listOfSites = _siteRepository.GetSitesForAhpProject(new Guid(ahpProjectDto.AhpProjectId), contactWebRole, contact, new Guid(organisationId), consortiumId);
                         var listOfSitesAfterChecked = CheckSitesForsConsortium(listOfSites, new Guid(organisationId));
                         var listOfSitesDto = listOfSitesAfterChecked.Select(x => SiteMapper.ToDto(x)).ToList();
                         TracingService.Trace($"List of Sites downloaded.");
-                        var SitesDto = AhpProjectMapper.MapRegularEntityToDto(project, listOfSitesDto, null);
-                        TracingService.Trace($"Record mapped.");
-                        result.Add(SitesDto);
+
+                        ahpProjectDto.ListOfSites = listOfSitesDto;
                         TracingService.Trace($"Record added to the list.");
                     }
+                    result = ahpProjectsDto;
                 }
                 return result;
             }
@@ -238,9 +228,10 @@ namespace HE.CRM.AHP.Plugins.Services.AhpProject
             return ahpProject;
         }
 
-        private List<invln_ahpproject> GetAhpProjectsAndCheckPermission(invln_Permission contactWebRole, Contact contact, string organisationId, string consortiumId = null)
+        private PagedResponseDto<AhpProjectDto> GetAhpProjectsAndCheckPermission(invln_Permission contactWebRole, Contact contact, string organisationId, string consortiumId = null, PagingRequestDto paging = null)
         {
             TracingService.Trace("GetAhpProjectsAndCheckPermission");
+            PagedResponseDto<AhpProjectDto> result = new PagedResponseDto<AhpProjectDto>();
             List<invln_ahpproject> ahpProjects = null;
             var fieldsAhpProject = new string[] { invln_ahpproject.Fields.invln_Name, invln_ahpproject.Fields.invln_ahpprojectId, invln_ahpproject.Fields.invln_HeProjectId, invln_ahpproject.Fields.invln_ContactId, invln_ahpproject.Fields.invln_AccountId, invln_ahpproject.Fields.CreatedOn };
 
@@ -260,7 +251,45 @@ namespace HE.CRM.AHP.Plugins.Services.AhpProject
             }
             TracingService.Trace("Core records downloaded");
 
-            return ahpProjects;
+            ahpProjects.OrderBy(x => x.CreatedOn);
+            TracingService.Trace($"Core records OrderBy.");
+
+            foreach (var project in ahpProjects)
+            {
+                if (CheckAccessToAhpProject(contactWebRole, project, contact, organisationId) == null)
+                {
+                    TracingService.Trace("Access to AhpProject checked");
+                    ahpProjects.Remove(project);
+                }
+            }
+
+            if (paging != null)
+            {
+                TracingService.Trace($"Paging found.");
+                result.paging = paging;
+                result.totalItemsCount = ahpProjects.Count();
+                var pageSize = paging.pageSize;
+                var pagenumber = paging.pageNumber;
+                var startIndex = (pageSize * pagenumber) - pageSize;
+                var countrRange = startIndex + pageSize <= (result.totalItemsCount - 1) ? pagenumber : result.totalItemsCount - startIndex;
+
+                var ahpProjectsPage = ahpProjects.GetRange(startIndex, countrRange);
+
+                var ahpProjectsPageDto = ahpProjectsPage.Select(x => AhpProjectMapper.MapRegularEntityToDto(x)).ToList();
+                TracingService.Trace($"Records mapped.");
+
+                result.items = ahpProjectsPageDto;
+            }
+            else
+            {
+                var ahpProjectsDto = ahpProjects.Select(x => AhpProjectMapper.MapRegularEntityToDto(x)).ToList();
+                TracingService.Trace($"Record mapped.");
+
+                result.items = ahpProjectsDto;
+            }
+
+            TracingService.Trace($"Return AhpProjects.");
+            return result;
         }
 
 
@@ -352,13 +381,13 @@ namespace HE.CRM.AHP.Plugins.Services.AhpProject
             return result;
         }
 
-        private List<invln_ahpproject> GetAhpProjectsForConsortium(string consortiumId)
+        private PagedResponseDto<AhpProjectDto> GetAhpProjectsForConsortium(string consortiumId, PagingRequestDto paging)
         {
-            TracingService.Trace("GetAhpProjectForConsortium");
-            List<invln_ahpproject> ahpProjects = null;
+            TracingService.Trace("GetAhpProjectsForConsortium");
+            PagedResponseDto<AhpProjectDto> result = new PagedResponseDto<AhpProjectDto>();
             var fieldsAhpProject = new string[] { invln_ahpproject.Fields.invln_Name, invln_ahpproject.Fields.invln_ahpprojectId, invln_ahpproject.Fields.invln_HeProjectId, invln_ahpproject.Fields.invln_ContactId, invln_ahpproject.Fields.invln_AccountId, invln_ahpproject.Fields.CreatedOn };
 
-            ahpProjects = _ahpProjectRepository.GetByAttribute(invln_ahpproject.Fields.invln_ConsortiumId, new Guid(consortiumId), fieldsAhpProject).ToList();
+            var ahpProjects = _ahpProjectRepository.GetByAttribute(invln_ahpproject.Fields.invln_ConsortiumId, new Guid(consortiumId), fieldsAhpProject).ToList();
 
             if (ahpProjects == null)
             {
@@ -367,7 +396,35 @@ namespace HE.CRM.AHP.Plugins.Services.AhpProject
             }
             TracingService.Trace("Core records downloaded");
 
-            return ahpProjects;
+            ahpProjects.OrderByDescending(x => x.CreatedOn);
+            TracingService.Trace($"Core records OrderBy.");
+            if (paging != null)
+            {
+                TracingService.Trace($"Paging found.");
+                result.paging = paging;
+                result.totalItemsCount = ahpProjects.Count();
+                var pageSize = paging.pageSize;
+                var pagenumber = paging.pageNumber;
+                var startIndex = (pageSize * pagenumber) - pageSize;
+                var countrRange = startIndex + pageSize <= (result.totalItemsCount - 1) ? pagenumber : result.totalItemsCount - startIndex;
+
+                var ahpProjectsPage = ahpProjects.GetRange(startIndex, countrRange);
+
+                var ahpProjectsPageDto = ahpProjectsPage.Select(x => AhpProjectMapper.MapRegularEntityToDto(x)).ToList();
+                TracingService.Trace($"Records mapped.");
+
+                result.items = ahpProjectsPageDto;
+            }
+            else
+            {
+                var ahpProjectsDto = ahpProjects.Select(x => AhpProjectMapper.MapRegularEntityToDto(x)).ToList();
+                TracingService.Trace($"Records mapped.");
+
+                result.items = ahpProjectsDto;
+            }
+
+            TracingService.Trace($"Return AhpProjects for Consortium.");
+            return result;
         }
     }
 }
