@@ -1,4 +1,3 @@
-
 extern alias Org;
 
 using Org::HE.Investments.Organisation.LocalAuthorities.ValueObjects;
