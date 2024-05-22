@@ -2,7 +2,6 @@ using System.Diagnostics.CodeAnalysis;
 using HE.Investment.AHP.Contract.Project;
 using HE.Investment.AHP.WWW.Models.Application;
 using HE.Investment.AHP.WWW.Views.Application;
-using HE.Investment.AHP.WWW.Views.Project;
 using HE.Investment.AHP.WWW.Views.Project.Const;
 using HE.Investments.AHP.IntegrationTests.Extensions;
 using HE.Investments.AHP.IntegrationTests.Framework;

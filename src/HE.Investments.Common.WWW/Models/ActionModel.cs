@@ -1,3 +1,3 @@
 namespace HE.Investments.Common.WWW.Models;
 
-public record ActionModel(string Label, string Action, string Controller, object? Values = null, bool HasAccess = false);
+public record ActionModel(string Label, string Action, string Controller, object? Values = null, bool HasAccess = false, string? DataTestId = null);

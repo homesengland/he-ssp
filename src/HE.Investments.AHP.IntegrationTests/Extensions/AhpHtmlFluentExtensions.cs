@@ -1,7 +1,9 @@
 using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
 using FluentAssertions;
+using HE.Investments.Common.Contract;
 using HE.Investments.Common.WWW.Extensions;
+using HE.Investments.Organisation.ValueObjects;
 using HE.Investments.TestsUtils.Extensions;
 
 namespace HE.Investments.AHP.IntegrationTests.Extensions;
@@ -46,6 +48,20 @@ public static class AhpHtmlFluentExtensions
         link.Should().NotBeNull();
 
         firstNavigationButton = link!;
+
+        return htmlDocument;
+    }
+
+    public static IHtmlDocument HasPartnerSelectItems(this IHtmlDocument htmlDocument, out IList<(InvestmentsOrganisation Organisation, IHtmlAnchorElement Link)> items)
+    {
+        var selectList = htmlDocument.GetElementByTestId("select-list");
+        var links = selectList.GetElementsByClassName("govuk-link");
+
+        items = links.OfType<IHtmlAnchorElement>()
+            .Select(x => (Organisation: new InvestmentsOrganisation(OrganisationId.From(x.Href.Split("/")[^1]), x.Text().Trim()), Link: x))
+            .ToList();
+
+        items.Should().NotBeEmpty();
 
         return htmlDocument;
     }
