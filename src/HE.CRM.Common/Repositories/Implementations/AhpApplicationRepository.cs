@@ -121,5 +121,25 @@ namespace HE.CRM.Common.Repositories.Implementations
 
             return service.RetrieveMultiple(query).Entities.Select(x => x.ToEntity<invln_scheme>()).ToList();
         }
+
+        public List<invln_scheme> GetByConsortiumId(Guid consortiumId)
+        {
+            var query = new QueryExpression(invln_scheme.EntityLogicalName);
+            query.ColumnSet = new ColumnSet(invln_scheme.Fields.invln_DevelopingPartner,
+                invln_scheme.Fields.invln_OwneroftheHomes,
+                invln_scheme.Fields.invln_OwneroftheLand);
+            var query_invln_sites = query.AddLink(
+                invln_Sites.EntityLogicalName,
+                invln_scheme.Fields.invln_Site,
+                invln_Sites.Fields.invln_SitesId);
+            var query_invln_sites_invln_ahpproject = query_invln_sites.AddLink(
+                invln_ahpproject.EntityLogicalName,
+                invln_Sites.Fields.invln_AHPProjectId,
+                invln_ahpproject.Fields.invln_ahpprojectId);
+
+            query_invln_sites_invln_ahpproject.LinkCriteria.AddCondition(invln_ahpproject.Fields.invln_ConsortiumId, ConditionOperator.Equal, consortiumId);
+
+            return service.RetrieveMultiple(query).Entities.Select(x => x.ToEntity<invln_scheme>()).ToList();
+        }
     }
 }

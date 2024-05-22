@@ -159,7 +159,14 @@ public class Order01CompleteUserProfile : AccountIntegrationTest
         var organisationsList = await TestClient.SubmitButton(continueButton, ("IsConfirmed", "True"));
 
         // then
-        organisationsList.HasTitle(UserOrganisationPageTitles.OrganisationDetails(FreshProfileData.OrganisationName));
+        organisationsList
+            .UrlEndWith(MainPagesUrl.Dashboard)
+            .HasTitle(UserOrganisationPageTitles.OrganisationDetails(FreshProfileData.OrganisationName))
+            .HasNoElementWithTestId("manage-users-link")
+            .HasNoElementWithTestId("manage-organisation-link")
+            .HasLinkWithTestId("manage-profile-link", out _)
+            .HasNoElementWithTestId("manage-consortium-link");
+
         SaveCurrentPage();
     }
 }

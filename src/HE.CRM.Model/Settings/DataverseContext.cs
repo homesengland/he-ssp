@@ -95,6 +95,17 @@ namespace DataverseModel
 		}
 		
 		/// <summary>
+		/// Gets a binding to the set of all <see cref="DataverseModel.invln_ahpproject"/> entities.
+		/// </summary>
+		public System.Linq.IQueryable<DataverseModel.invln_ahpproject> invln_ahpprojectSet
+		{
+			get
+			{
+				return this.CreateQuery<DataverseModel.invln_ahpproject>();
+			}
+		}
+		
+		/// <summary>
 		/// Gets a binding to the set of all <see cref="DataverseModel.invln_AHPStatusChange"/> entities.
 		/// </summary>
 		public System.Linq.IQueryable<DataverseModel.invln_AHPStatusChange> invln_AHPStatusChangeSet

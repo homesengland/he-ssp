@@ -43,13 +43,11 @@ namespace HE.CRM.Common.Repositories.Implementations
 	                </entity>
                 </fetch>";
 
-
             //var result = service.RetrieveMultiple(new FetchExpression(fetchXml));
 
             EntityCollection result = service.RetrieveMultiple(new FetchExpression(fetchXml));
             return result.Entities.Select(x => x.ToEntity<invln_Sites>()).SingleOrDefault();
         }
-
 
         public bool Exist(string name)
         {
@@ -94,7 +92,6 @@ namespace HE.CRM.Common.Repositories.Implementations
 	                </entity>
                 </fetch>";
 
-
             var result = service.RetrieveMultiple(new FetchExpression(fetchXml));
 
             return new PagedResponseDto<invln_Sites>
@@ -103,6 +100,21 @@ namespace HE.CRM.Common.Repositories.Implementations
                 items = result.Entities.Select(x => x.ToEntity<invln_Sites>()).AsEnumerable().ToList(),
                 totalItemsCount = result.TotalRecordCount,
             };
+        }
+
+        public List<invln_Sites> GetbyConsortiumId(Guid consortiumId)
+        {
+            var query = new QueryExpression(invln_Sites.EntityLogicalName);
+            query.ColumnSet = new ColumnSet(invln_Sites.Fields.invln_developingpartner,
+                invln_Sites.Fields.invln_ownerofthelandduringdevelopment,
+                invln_Sites.Fields.invln_Ownerofthehomesaftercompletion);
+            var query_invln_ahpproject = query.AddLink(
+                invln_ahpproject.EntityLogicalName,
+                invln_Sites.Fields.invln_AHPProjectId,
+                invln_ahpproject.Fields.invln_ahpprojectId);
+
+            query_invln_ahpproject.LinkCriteria.AddCondition(invln_ahpproject.Fields.invln_ConsortiumId, ConditionOperator.Equal, consortiumId);
+            return service.RetrieveMultiple(query).Entities.Select(x => x.ToEntity<invln_Sites>()).ToList();
         }
 
         public List<invln_Sites> GetSitesForAhpProject(Guid ahpProjectGuid, invln_Permission contactWebRole, Contact contact, Guid organisationGuid, string consortiumId = null)

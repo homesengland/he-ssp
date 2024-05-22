@@ -79,7 +79,7 @@ public class OrganizationService : IOrganizationService
             organizationDetailsDto.city = account.GetStringAttribute(AccountEntity.Properties.City);
             organizationDetailsDto.postalcode = account.GetStringAttribute(AccountEntity.Properties.PostalCode);
             organizationDetailsDto.country = account.GetStringAttribute(AccountEntity.Properties.Country);
-            organizationDetailsDto.isUnregisteredBody = account.GetBooleanAttribute(AccountEntity.Properties.UnregisteredBody) ?? false;
+            organizationDetailsDto.isUnregisteredBody = account.GetBooleanAttribute(AccountEntity.Properties.UnregisteredBody) ?? true;
 
             if (isAhpEnabled)
             {

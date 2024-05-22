@@ -22,6 +22,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)dtomapping\ProgrammeMapper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)dtomapping\SiteDetailsDtoMapper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DtoMapping\SiteMapper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)enums\AccountEnum.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\DateTimeExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\Entities\EntityExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\Entities\OptionSetValueCollectionExtensions.cs" />
@@ -108,5 +109,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\ISystemUserRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\ITeamRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\IWebRoleRepository.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="$(MSBuildThisFileDirectory)Enums\" />
   </ItemGroup>
 </Project>

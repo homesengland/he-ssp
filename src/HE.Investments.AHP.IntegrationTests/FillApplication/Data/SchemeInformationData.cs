@@ -1,3 +1,4 @@
+using HE.Investments.Organisation.ValueObjects;
 using HE.Investments.TestsUtils.Extensions;
 
 namespace HE.Investments.AHP.IntegrationTests.FillApplication.Data;
@@ -14,6 +15,12 @@ public class SchemeInformationData
     public decimal RequiredFunding { get; private set; }
 
     public int HousesToDeliver { get; private set; }
+
+    public InvestmentsOrganisation DevelopingPartner { get; set; }
+
+    public InvestmentsOrganisation OwnerOfTheLand { get; set; }
+
+    public InvestmentsOrganisation OwnerOfTheHomes { get; set; }
 
     public string Affordability { get; private set; }
 

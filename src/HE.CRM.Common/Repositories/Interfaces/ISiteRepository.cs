@@ -13,5 +13,6 @@ namespace HE.CRM.Common.Repositories.Interfaces
         bool Exist(string name);
         bool StrategicSiteNameExists(string strategicSiteName, Guid organisationGuid);
         List<invln_Sites> GetSitesForAhpProject(Guid ahpProjectGuid, invln_Permission contactWebRole, Contact contact, Guid organisationGuid, string consortiumId = null);
+        List<invln_Sites> GetbyConsortiumId(Guid guid);
     }
 }

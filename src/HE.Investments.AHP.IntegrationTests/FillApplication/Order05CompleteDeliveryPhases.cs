@@ -7,7 +7,6 @@ using HE.Investments.AHP.IntegrationTests.Extensions;
 using HE.Investments.AHP.IntegrationTests.FillApplication.Data;
 using HE.Investments.AHP.IntegrationTests.Framework;
 using HE.Investments.AHP.IntegrationTests.Pages;
-using HE.Investments.Common.Extensions;
 using HE.Investments.Common.WWW.Extensions;
 using HE.Investments.IntegrationTestsFramework.Assertions;
 using HE.Investments.TestsUtils.Extensions;
