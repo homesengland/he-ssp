@@ -4,6 +4,7 @@ using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Contract.Site.Enums;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Enum;
+using HE.Investments.Organisation.ValueObjects;
 using HE.Investments.TestsUtils.Extensions;
 
 namespace HE.Investments.AHP.IntegrationTests.FillSite.Data;
@@ -54,6 +55,12 @@ public class SiteData
     public BuildingForHealthyLifeType BuildingForHealthyLife => BuildingForHealthyLifeType.Yes;
 
     public string NumberOfGreenLights => "5";
+
+    public InvestmentsOrganisation DevelopingPartner { get; set; }
+
+    public InvestmentsOrganisation OwnerOfTheLand { get; set; }
+
+    public InvestmentsOrganisation OwnerOfTheHomes { get; set; }
 
     public SiteLandAcquisitionStatus LandAcquisitionStatus => SiteLandAcquisitionStatus.ConditionalAcquisition;
 

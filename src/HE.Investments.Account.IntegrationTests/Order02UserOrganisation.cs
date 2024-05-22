@@ -38,7 +38,8 @@ public class Order02UserOrganisation : AccountIntegrationTest
             .HasMatchingTitle(".+'s Homes England account$")
             .HasActionLink(MainPagesUrl.UserOrganisationDetails, out _)
             .HasActionLink(MainPagesUrl.ManageUsers, out _)
-            .HasActionLink(MainPagesUrl.ProfileDetails, out _);
+            .HasActionLink(MainPagesUrl.ProfileDetails, out _)
+            .HasLinkWithTestId("manage-consortium-link", out _);
         SaveCurrentPage();
     }
 

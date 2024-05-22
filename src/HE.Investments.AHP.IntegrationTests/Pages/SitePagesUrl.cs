@@ -48,6 +48,18 @@ public static class SitePagesUrl
 
     public static string SiteProvideNumberOfGreenLights(string siteId) => $"ahp/site/{siteId}/number-of-green-lights";
 
+    public static string SiteDevelopingPartner(string siteId) => $"ahp/site/{siteId}/developing-partner";
+
+    public static string SiteDevelopingPartnerConfirmation(string siteId, string organisationId) => $"ahp/site/{siteId}/developing-partner-confirm/{organisationId}";
+
+    public static string SiteOwnerOfTheLand(string siteId) => $"ahp/site/{siteId}/owner-of-the-land";
+
+    public static string SiteOwnerOfTheLandConfirmation(string siteId, string organisationId) => $"ahp/site/{siteId}/owner-of-the-land-confirm/{organisationId}";
+
+    public static string SiteOwnerOfTheHomes(string siteId) => $"ahp/site/{siteId}/owner-of-the-homes";
+
+    public static string SiteOwnerOfTheHomesConfirmation(string siteId, string organisationId) => $"ahp/site/{siteId}/owner-of-the-homes-confirm/{organisationId}";
+
     public static string SiteLandAcquisitionStatus(string siteId) => $"ahp/site/{siteId}/land-acquisition-status";
 
     public static string SiteConfirm(string siteId) => $"ahp/site/{siteId}/confirm-select";
