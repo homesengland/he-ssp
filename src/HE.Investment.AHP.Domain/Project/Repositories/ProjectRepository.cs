@@ -40,7 +40,7 @@ public class ProjectRepository : IProjectRepository
             id.ToString(),
             userAccount.UserGlobalId.ToString(),
             userAccount.SelectedOrganisationId().ToString(),
-            userAccount.Consortium.ConsortiumId.ToString(),
+            userAccount.Consortium.GetConsortiumIdAsString(),
             cancellationToken);
 
         var applications = project.Applications?
@@ -66,7 +66,7 @@ public class ProjectRepository : IProjectRepository
             id.ToString(),
             userAccount.UserGlobalId.ToString(),
             userAccount.SelectedOrganisationId().ToString(),
-            userAccount.Consortium.ConsortiumId.ToString(),
+            userAccount.Consortium.GetConsortiumIdAsString(),
             cancellationToken);
 
         return new AhpProjectSites(
@@ -89,7 +89,7 @@ public class ProjectRepository : IProjectRepository
         var projects = await _projectCrmContext.GetProjects(
             userAccount.UserGlobalId.ToString(),
             userAccount.SelectedOrganisationId().ToGuidAsString(),
-            ShortGuid.ToGuidAsString(userAccount.Consortium.ConsortiumId.ToString()),
+            userAccount.Consortium.GetConsortiumIdAsString(),
             paging,
             cancellationToken);
 
@@ -105,7 +105,7 @@ public class ProjectRepository : IProjectRepository
         var projectId = await _projectCrmContext.CreateProject(
             userAccount.UserGlobalId.ToString(),
             userAccount.SelectedOrganisationId().ToGuidAsString(),
-            userAccount.Consortium.ConsortiumId.Value.ToGuidAsString(),
+            userAccount.Consortium.GetConsortiumIdAsString(),
             frontDoorProject.Id.ToGuidAsString(),
             frontDoorProject.Name,
             CreateProjectSitesDto(frontDoorProject.Sites),
