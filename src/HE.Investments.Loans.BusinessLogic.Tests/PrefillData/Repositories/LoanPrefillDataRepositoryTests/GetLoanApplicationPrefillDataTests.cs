@@ -1,4 +1,5 @@
 using HE.Investments.Account.Shared.User;
+using HE.Investments.Common.Contract.Enum;
 using HE.Investments.Common.Tests.TestData;
 using HE.Investments.FrontDoor.Shared.Project;
 using HE.Investments.FrontDoor.Shared.Project.Contract;
@@ -94,6 +95,6 @@ public class GetLoanApplicationPrefillDataTests : TestBase<LoanPrefillDataReposi
                 ProjectId,
                 projectName ?? "Empty",
                 activityTypes?.ToList() ?? [],
-                siteId != null ? new FrontDoorSiteId(siteId) : null));
+                siteId != null ? new List<SitePrefillData> { new(FrontDoorSiteId.From(siteId), "Site name", null, SitePlanningStatus.Undefined, null) } : null));
     }
 }

@@ -13,13 +13,15 @@ public class AhpProjectApplication : ValueObject
         ApplicationName name,
         ApplicationStatus applicationStatus,
         SchemeFunding funding,
-        Tenure tenure)
+        Tenure tenure,
+        DateTime? lastModificationOn)
     {
         Id = id;
         Name = name;
         ApplicationStatus = applicationStatus;
         Funding = funding;
         Tenure = tenure;
+        LastModificationOn = lastModificationOn;
     }
 
     public AhpApplicationId Id { get; }
@@ -31,6 +33,8 @@ public class AhpProjectApplication : ValueObject
     public SchemeFunding Funding { get; }
 
     public Tenure Tenure { get; }
+
+    public DateTime? LastModificationOn { get; }
 
     protected override IEnumerable<object?> GetAtomicValues()
     {

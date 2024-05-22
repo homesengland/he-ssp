@@ -16,7 +16,7 @@
 
     <gds-div-grid-column-two-thirds class="govuk-!-padding-left-0">
         @{
-            var applications = Model.Applications.Select(x =>
+            var applications = Model.Applications.Items.Select(x =>
                 new ListCardItemModel(
                     x.Name,
                     new DynamicComponentViewModel(nameof(ApplicationStatusTagComponent), new { applicationStatus = x.Status }),
@@ -33,27 +33,5 @@
         }
     </gds-div-grid-column-two-thirds>
 
-    <he-div-grid-column-full class="govuk-!-padding-left-0">
-        <gds-h2>Apply for @Model.ProgrammeName</gds-h2>
-        <gds-p>
-            Start a new Affordable Homes Programme application on this project.
-            This will not affect any of your previous applications.
-            You will be asked to choose a site for this application, you can have more than one application per site.
-        </gds-p>
-        <link-button button-type="@ButtonType.Start"
-                     action-url="@Url.Action("Start", "Application")"
-                     is-disabled="@Model.IsReadOnly">
-            Start
-        </link-button>
-    </he-div-grid-column-full>
-
-    <div class="govuk-!-width-two-thirds govuk-!-padding-left-0">
-        <gds-h2>View sites</gds-h2>
-        <gds-p>
-            View a list of your competed and in progress sites.
-        </gds-p>
-        <link-button action-url="@Url.Action("Sites", "Project", new { projectId = Model.ProjectId })" button-type="@ButtonType.Secondary">
-            View
-        </link-button>
-    </div>
+    @await Html.PartialAsync("Partials/_ProjectStartAppAndViewSites", (Model.ProgrammeName, Model.ProjectId.Value, Model.IsReadOnly))
 </div>

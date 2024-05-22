@@ -65,7 +65,7 @@ public class SiteController : WorkflowController<SiteWorkflowState>
     [HttpGet]
     public IActionResult Index()
     {
-        return RedirectToAction("Sites", "Project", new { projectId = MockedProjectId.ProjectId });
+        return RedirectToAction("Sites", "Project", new { projectId = LegacyProject.ProjectId });
     }
 
     [HttpGet("select")]
@@ -139,7 +139,7 @@ public class SiteController : WorkflowController<SiteWorkflowState>
         var result = await _mediator.Send(
             new ProvideNameCommand(
                 SiteId.Create(siteId ?? model.Id),
-                FrontDoorProjectId.Create(fdProjectId) ?? new FrontDoorProjectId(MockedProjectId.ProjectId),
+                FrontDoorProjectId.Create(fdProjectId) ?? new FrontDoorProjectId(LegacyProject.ProjectId),
                 FrontDoorSiteId.Create(fdSiteId),
                 model.Name),
             cancellationToken);
@@ -998,7 +998,7 @@ public class SiteController : WorkflowController<SiteWorkflowState>
         return await this.ExecuteCommand<SiteSummaryViewModel>(
             _mediator,
             new CompleteSiteCommand(SiteId.From(siteId), isSectionCompleted),
-            () => Task.FromResult<IActionResult>(RedirectToAction("Index")),
+            () => Task.FromResult<IActionResult>(RedirectToAction("Details", new { siteId })),
             async () => View("CheckAnswers", await CreateSiteSummary(cancellationToken, isSectionCompleted)),
             cancellationToken);
     }

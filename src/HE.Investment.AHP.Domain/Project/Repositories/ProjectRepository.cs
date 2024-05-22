@@ -1,6 +1,7 @@
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.Project;
+using HE.Investment.AHP.Contract.Project.Events;
 using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Domain.Application.Repositories;
 using HE.Investment.AHP.Domain.Application.ValueObjects;
@@ -13,6 +14,8 @@ using HE.Investment.AHP.Domain.UserContext;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Pagination;
 using HE.Investments.Common.CRM.Mappers;
+using HE.Investments.Common.Infrastructure.Events;
+using HE.Investments.FrontDoor.Shared.Project.Data;
 
 namespace HE.Investment.AHP.Domain.Project.Repositories;
 
@@ -22,12 +25,15 @@ public class ProjectRepository : IProjectRepository
 
     private readonly SiteStatusMapper _siteStatusMapper = new();
 
-    public ProjectRepository(IProjectCrmContext projectCrmContext)
+    private readonly IEventDispatcher _eventDispatcher;
+
+    public ProjectRepository(IProjectCrmContext projectCrmContext, IEventDispatcher eventDispatcher)
     {
         _projectCrmContext = projectCrmContext;
+        _eventDispatcher = eventDispatcher;
     }
 
-    public async Task<AhpProjectApplications> GetProject(AhpProjectId id, AhpUserAccount userAccount, CancellationToken cancellationToken)
+    public async Task<AhpProjectApplications> GetProjectApplications(AhpProjectId id, AhpUserAccount userAccount, CancellationToken cancellationToken)
     {
         var project = await _projectCrmContext.GetProject(
             id.ToString(),
@@ -43,7 +49,8 @@ public class ProjectRepository : IProjectRepository
                 new ApplicationName(x.ApplicationName),
                 ApplicationStatusMapper.MapToPortalStatus(x.ApplicationStatus),
                 new SchemeFunding((int?)x.RequiredFunding, x.NoOfHomes),
-                ApplicationTenureMapper.ToDomain(x.Tenure)!.Value))
+                ApplicationTenureMapper.ToDomain(x.Tenure)!.Value,
+                x.LastModificationDate))
             .ToList();
 
         return new AhpProjectApplications(
@@ -92,6 +99,22 @@ public class ProjectRepository : IProjectRepository
             projects.totalItemsCount);
     }
 
+    public async Task<AhpProjectId> CreateProject(ProjectPrefillData frontDoorProject, AhpUserAccount userAccount, CancellationToken cancellationToken)
+    {
+        var projectId = await _projectCrmContext.CreateProject(
+            userAccount.UserGlobalId.ToString(),
+            userAccount.SelectedOrganisationId().ToGuidAsString(),
+            userAccount.Consortium.ConsortiumId.ToString(),
+            frontDoorProject.Id.ToGuidAsString(),
+            frontDoorProject.Name,
+            CreateProjectSitesDto(frontDoorProject.Sites),
+            cancellationToken);
+
+        await _eventDispatcher.Publish(new AhpProjectHasBeenCreatedEvent(frontDoorProject.Id), cancellationToken);
+
+        return AhpProjectId.From(projectId);
+    }
+
     private AhpProjectSites CreateAhpProjectEntity(ProjectDto projectDto)
     {
         var sites = projectDto.Sites?
@@ -106,5 +129,14 @@ public class ProjectRepository : IProjectRepository
             AhpProjectId.From(projectDto.ProjectId),
             new AhpProjectName(projectDto.ProjectName),
             sites);
+    }
+
+    private List<SiteDto> CreateProjectSitesDto(IList<SitePrefillData>? sites)
+    {
+        return sites?.Select(x => new SiteDto
+        {
+            id = x.Id.ToString(),
+            name = x.Name.ToString(),
+        }).ToList() ?? [];
     }
 }

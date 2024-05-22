@@ -61,9 +61,14 @@ public class ConsortiumEntity : DomainEntity, IConsortiumEntity
 
     public async Task AddMember(InvestmentsOrganisation organisation, IIsPartOfConsortium isPartOfConsortium, CancellationToken cancellationToken)
     {
-        if (await IsPartOfConsortium(organisation, isPartOfConsortium, cancellationToken))
+        if (IsPartOfThisConsortium(organisation))
         {
-            OperationResult.ThrowValidationError("SelectedMember", ConsortiumValidationErrors.IsAlreadyPartOfConsortium);
+            OperationResult.ThrowValidationError("SelectedMember", ConsortiumValidationErrors.IsPartOfThisConsortium);
+        }
+
+        if (await IsPartOfOtherConsortium(organisation, isPartOfConsortium, cancellationToken))
+        {
+            OperationResult.ThrowValidationError("SelectedMember", ConsortiumValidationErrors.IsPartOfOtherConsortium);
         }
 
         var member = new ConsortiumMember(organisation.Id, organisation.Name, ConsortiumMemberStatus.PendingAddition);
@@ -137,18 +142,14 @@ public class ConsortiumEntity : DomainEntity, IConsortiumEntity
         Id = newId;
     }
 
-    private async Task<bool> IsPartOfConsortium(
+    private bool IsPartOfThisConsortium(InvestmentsOrganisation organisation) =>
+        organisation.Id == LeadPartner.Id || Members.Any(x => x.Id == organisation.Id);
+
+    private async Task<bool> IsPartOfOtherConsortium(
         InvestmentsOrganisation organisation,
         IIsPartOfConsortium isPartOfConsortium,
         CancellationToken cancellationToken)
-    {
-        if (organisation.Id == LeadPartner.Id || Members.Any(x => x.Id == organisation.Id))
-        {
-            return true;
-        }
-
-        return await isPartOfConsortium.IsPartOfConsortiumForProgramme(Programme.Id, organisation.Id, cancellationToken);
-    }
+        => await isPartOfConsortium.IsPartOfConsortiumForProgramme(Programme.Id, organisation.Id, cancellationToken);
 
     private ConsortiumMember GetMember(OrganisationId organisationId) => Members.SingleOrDefault(x => x.Id == organisationId) ??
                                                                          throw new NotFoundException(nameof(ConsortiumMember), organisationId);

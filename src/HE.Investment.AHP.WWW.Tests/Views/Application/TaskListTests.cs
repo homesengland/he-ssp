@@ -142,6 +142,7 @@ public class TaskListTests : AhpViewTestBase
     {
         return new ApplicationSectionsModel(
             "A1",
+            "P1",
             "some site",
             "application xyz",
             status,

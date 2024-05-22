@@ -131,20 +131,27 @@ namespace HE.CRM.Common.Repositories.Implementations
                 invln_Sites.Fields.invln_externalsitestatus,
                 invln_Sites.Fields.invln_AHPProjectId,
                 invln_Sites.Fields.invln_HeProjectLocalAuthorityId,
-                invln_Sites.Fields.ModifiedOn
+                invln_Sites.Fields.ModifiedOn,
+                invln_Sites.Fields.invln_developingpartner,
+                invln_Sites.Fields.invln_ownerofthelandduringdevelopment,
+                invln_Sites.Fields.invln_Ownerofthehomesaftercompletion
+
                 );
 
             query.Criteria.AddCondition(invln_Sites.Fields.invln_AHPProjectId, ConditionOperator.Equal, query_invln_ahpprojectid);
 
-            if (contactWebRole == invln_Permission.Limiteduser)
+            if (consortiumId == null)
             {
-                var query_invln_contactid = contact.Id.ToString();
-                query.Criteria.AddCondition(invln_Sites.Fields.invln_CreatedByContactId, ConditionOperator.Equal, query_invln_contactid);
-            }
-            else
-            {
-                var query_invln_organisationid = organisationGuid.ToString();
-                query.Criteria.AddCondition(invln_Sites.Fields.invln_AccountId, ConditionOperator.Equal, query_invln_organisationid);
+                if (contactWebRole == invln_Permission.Limiteduser)
+                {
+                    var query_invln_contactid = contact.Id.ToString();
+                    query.Criteria.AddCondition(invln_Sites.Fields.invln_CreatedByContactId, ConditionOperator.Equal, query_invln_contactid);
+                }
+                else
+                {
+                    var query_invln_organisationid = organisationGuid.ToString();
+                    query.Criteria.AddCondition(invln_Sites.Fields.invln_AccountId, ConditionOperator.Equal, query_invln_organisationid);
+                }
             }
 
             return service.RetrieveMultiple(query).Entities.Select(x => x.ToEntity<invln_Sites>()).ToList();

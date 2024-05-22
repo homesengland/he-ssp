@@ -1,6 +1,7 @@
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.Application.Events;
+using HE.Investment.AHP.Contract.Project;
 using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Domain.Application.Crm;
 using HE.Investment.AHP.Domain.Application.Entities;
@@ -19,6 +20,7 @@ using HE.Investments.Common.CRM.Mappers;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Infrastructure.Events;
+using HE.Investments.FrontDoor.Shared.Project;
 using ApplicationSection = HE.Investment.AHP.Domain.Application.ValueObjects.ApplicationSection;
 
 namespace HE.Investment.AHP.Domain.Application.Repositories;
@@ -170,6 +172,7 @@ public class ApplicationRepository : IApplicationRepository
             : null;
 
         return new ApplicationEntity(
+            new FrontDoorProjectId(string.IsNullOrEmpty(application.fdProjectId) ? LegacyProject.ProjectId : application.fdProjectId),
             string.IsNullOrEmpty(application.siteId) ? SiteId.New() : SiteId.From(application.siteId),
             AhpApplicationId.From(application.id),
             new ApplicationName(application.name ?? "Unknown"),
@@ -198,6 +201,7 @@ public class ApplicationRepository : IApplicationRepository
         var otherApplicationCosts = OtherApplicationCostsMapper.MapToOtherApplicationCosts(ahpApplicationDto);
 
         return new ApplicationWithFundingDetails(
+            new FrontDoorProjectId(string.IsNullOrEmpty(ahpApplicationDto.fdProjectId) ? LegacyProject.ProjectId : ahpApplicationDto.fdProjectId),
             string.IsNullOrEmpty(ahpApplicationDto.siteId) ? SiteId.New() : SiteId.From(ahpApplicationDto.siteId),
             AhpApplicationId.From(ahpApplicationDto.id),
             ahpApplicationDto.name,

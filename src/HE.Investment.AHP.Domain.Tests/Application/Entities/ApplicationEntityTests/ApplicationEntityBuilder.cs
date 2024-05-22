@@ -7,6 +7,7 @@ using HE.Investment.AHP.Domain.Scheme.ValueObjects;
 using HE.Investments.Account.Shared.User;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Tests.TestData;
+using HE.Investments.FrontDoor.Shared.Project;
 using Moq;
 using ApplicationSection = HE.Investment.AHP.Domain.Application.ValueObjects.ApplicationSection;
 
@@ -14,6 +15,8 @@ namespace HE.Investment.AHP.Domain.Tests.Application.Entities.ApplicationEntityT
 
 public class ApplicationEntityBuilder
 {
+    private readonly FrontDoorProjectId _projectId = new("project-1");
+
     private readonly SiteId _siteId = new("site-1");
 
     private readonly AhpApplicationId _id = new("1");
@@ -79,6 +82,7 @@ public class ApplicationEntityBuilder
     public ApplicationEntity Build()
     {
         return new ApplicationEntity(
+            _projectId,
             _siteId,
             _id,
             _name,
