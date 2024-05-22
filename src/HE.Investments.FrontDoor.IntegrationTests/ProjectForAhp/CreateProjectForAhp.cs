@@ -1,5 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using AngleSharp;
+using AngleSharp.Dom;
 using FluentAssertions;
 using HE.Investments.Account.Api.Contract.User;
 using HE.Investments.Account.Shared;
@@ -57,5 +58,6 @@ public class CreateProjectForAhp : FrontDoorIntegrationTest
 
         // then
         nextPage.ToHtml().Should().Contain("Eligibility for Ahp");
+        Output.WriteLine(nextPage.Body?.GetDescendants()?.FirstOrDefault()?.TextContent);
     }
 }
