@@ -8,8 +8,10 @@ using HE.Investment.AHP.Domain.UserContext;
 using HE.Investment.AHP.WWW.Extensions;
 using HE.Investment.AHP.WWW.Models.Application;
 using HE.Investment.AHP.WWW.Models.Application.Factories;
+using HE.Investment.AHP.WWW.Models.Project;
 using HE.Investment.AHP.WWW.Workflows;
 using HE.Investments.Account.Shared.Authorization.Attributes;
+using HE.Investments.AHP.Consortium.Contract.Queries;
 using HE.Investments.Common.Contract.Pagination;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Validators;
@@ -28,19 +30,13 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
     private readonly string _siteName = "Test Site";
     private readonly IMediator _mediator;
     private readonly IApplicationSummaryViewModelFactory _applicationSummaryViewModelFactory;
-    private readonly IAhpAccessContext _ahpAccessContext;
-    private readonly IAhpUserContext _ahpUserContext;
 
     public ApplicationController(
         IMediator mediator,
-        IApplicationSummaryViewModelFactory applicationSummaryViewModelFactory,
-        IAhpAccessContext ahpAccessContext,
-        IAhpUserContext ahpUserContext)
+        IApplicationSummaryViewModelFactory applicationSummaryViewModelFactory)
     {
         _mediator = mediator;
         _applicationSummaryViewModelFactory = applicationSummaryViewModelFactory;
-        _ahpAccessContext = ahpAccessContext;
-        _ahpUserContext = ahpUserContext;
     }
 
     [HttpGet]
@@ -58,29 +54,25 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
     [HttpGet("start")]
     [WorkflowState(ApplicationWorkflowState.Start)]
     [AuthorizeWithCompletedProfile(AhpAccessContext.EditApplications)]
-    public async Task<IActionResult> Start()
+    public async Task<IActionResult> Start([FromRoute] string fdProjectId, CancellationToken cancellationToken)
     {
-        var userAccount = await _ahpUserContext.GetSelectedAccount();
-        if (userAccount.Consortium.HasNoConsortium || await _ahpAccessContext.IsConsortiumLeadPartner())
-        {
-            return View("Splash");
-        }
+        var availableProgrammes = await _mediator.Send(new GetAvailableProgrammesQuery(), cancellationToken);
 
-        return RedirectToAction("ContactHomesEngland", "ConsortiumMember", new { consortiumId = userAccount.Consortium.ConsortiumId });
+        return View("Splash", new ProjectBasicModel(fdProjectId, availableProgrammes[0]));
     }
 
     [HttpPost("start")]
     [WorkflowState(ApplicationWorkflowState.Start)]
     [AuthorizeWithCompletedProfile(AhpAccessContext.EditApplications)]
-    public async Task<IActionResult> StartPost(CancellationToken cancellationToken)
+    public async Task<IActionResult> StartPost([FromRoute] string fdProjectId, CancellationToken cancellationToken)
     {
         var response = await _mediator.Send(new GetSiteListQuery(new PaginationRequest(1, 1)), cancellationToken);
         if (response.Page.Items.Any())
         {
-            return RedirectToAction("Select", "Site");
+            return RedirectToAction("Select", "Site", new { fdProjectId });
         }
 
-        return RedirectToAction("Start", "Site");
+        return RedirectToAction("Start", "Site", new { fdProjectId });
     }
 
     [WorkflowState(ApplicationWorkflowState.ApplicationName)]

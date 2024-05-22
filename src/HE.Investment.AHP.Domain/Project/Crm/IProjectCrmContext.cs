@@ -24,4 +24,13 @@ public interface IProjectCrmContext
         string organisationId,
         string? consortiumId,
         CancellationToken cancellationToken);
+
+    Task<string> CreateProject(
+        string userId,
+        string organisationId,
+        string? consortiumId,
+        string frontDoorProjectId,
+        string projectName,
+        IList<SiteDto> sites,
+        CancellationToken cancellationToken);
 }
