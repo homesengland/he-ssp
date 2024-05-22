@@ -42,7 +42,6 @@ public class ConvertProjectController : Controller
             };
         }
 
-
         return Redirect(urlWithRouteData);
     }
 }
