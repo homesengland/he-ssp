@@ -6,6 +6,7 @@ using HE.Investment.AHP.WWW.Views.Delivery.Const;
 using HE.Investment.AHP.WWW.Views.FinancialDetails.Consts;
 using HE.Investment.AHP.WWW.Views.HomeTypes.Const;
 using HE.Investment.AHP.WWW.Views.Project;
+using HE.Investment.AHP.WWW.Views.Project.Const;
 using HE.Investment.AHP.WWW.Views.Scheme.Const;
 using HE.Investments.AHP.IntegrationTests.Framework;
 using HE.Investments.AHP.IntegrationTests.Pages;
