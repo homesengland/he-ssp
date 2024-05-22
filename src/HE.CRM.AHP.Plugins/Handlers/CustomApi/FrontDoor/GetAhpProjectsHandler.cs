@@ -16,6 +16,7 @@ namespace HE.CRM.AHP.Plugins.Handlers.CustomApi.FrontDoor
         private string externalContactId => ExecutionData.GetInputParameter<string>(invln_getahpprojectsRequest.Fields.invln_userid);
         private string organisationId => ExecutionData.GetInputParameter<string>(invln_getahpprojectsRequest.Fields.invln_accountid);
         private string consortiumId => ExecutionData.GetInputParameter<string>(invln_getahpprojectsRequest.Fields.invln_consortiumid);
+        private string pagingRequest => ExecutionData.GetInputParameter<string>(invln_getahpprojectsRequest.Fields.invln_pagingrequest);
 
         public override bool CanWork()
         {
@@ -41,7 +42,13 @@ namespace HE.CRM.AHP.Plugins.Handlers.CustomApi.FrontDoor
         public override void DoWork()
         {
             TracingService.Trace("GetAhpProjectHandler");
-            List<AhpProjectDto> ahpProjectDto = CrmServicesFactory.Get<IAhpProjectService>().GetAhpProjectsWithSites(externalContactId, organisationId, consortiumId);
+
+            PagingRequestDto paging = null;
+            if (pagingRequest != null)
+            {
+                paging = JsonSerializer.Deserialize<PagingRequestDto>(pagingRequest);
+            }
+            PagedResponseDto<AhpProjectDto> ahpProjectDto = CrmServicesFactory.Get<IAhpProjectService>().GetAhpProjectsWithSites(externalContactId, organisationId, consortiumId, paging);
 
             this.TracingService.Trace("Send Response");
             ExecutionData.SetOutputParameter(invln_getahpprojectsResponse.Fields.invln_listOfAhpProjects, JsonSerializer.Serialize(ahpProjectDto));

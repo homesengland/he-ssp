@@ -22,6 +22,7 @@ namespace HE.Investments.Common.CRM.Model
 			public const string invln_userid = "invln_userid";
 			public const string invln_accountid = "invln_accountid";
 			public const string invln_consortiumid = "invln_consortiumid";
+			public const string invln_pagingrequest = "invln_pagingrequest";
 		}
 		
 		public const string ActionLogicalName = "invln_getahpprojects";
@@ -80,6 +81,25 @@ namespace HE.Investments.Common.CRM.Model
 			set
 			{
 				this.Parameters["invln_consortiumid"] = value;
+			}
+		}
+		
+		public string invln_pagingrequest
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_pagingrequest"))
+				{
+					return ((string)(this.Parameters["invln_pagingrequest"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_pagingrequest"] = value;
 			}
 		}
 		
