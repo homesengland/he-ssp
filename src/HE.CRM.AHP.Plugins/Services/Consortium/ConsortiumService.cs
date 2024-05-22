@@ -163,19 +163,19 @@ namespace HE.CRM.AHP.Plugins.Services.Consortium
             if (siteId != null)
             {
                 TracingService.Trace("Check For site");
-                accessToAction = hasUserHavePermitionToProvideOperation(Operation.Get, role, siteId, null, contact.ToEntityReference());
+                accessToAction = HasUserHavePermitionToProvideOperation(Operation.Get, role, siteId, null, contact.ToEntityReference());
             }
 
             if (applicationId != null)
             {
                 TracingService.Trace("Check For application");
-                accessToAction = hasUserHavePermitionToProvideOperation(Operation.Get, role, null, applicationId, contact.ToEntityReference());
+                accessToAction = HasUserHavePermitionToProvideOperation(Operation.Get, role, null, applicationId, contact.ToEntityReference());
             }
 
             return accessToAction;
         }
 
-        private bool hasUserHavePermitionToProvideOperation(Operation operation, int role, string siteId = null, string applicationId = null, EntityReference contactId = null)
+        private bool HasUserHavePermitionToProvideOperation(Operation operation, int role, string siteId = null, string applicationId = null, EntityReference contactId = null)
         {
 
             if (role == (int)invln_Permission.Admin)
@@ -202,7 +202,7 @@ namespace HE.CRM.AHP.Plugins.Services.Consortium
 
                 if (applicationId != null)
                 {
-                    var application = _ahpApplicationRepository.GetById(new Guid(applicationId));
+                    var application = _ahpApplicationRepository.GetById(new Guid(applicationId), invln_scheme.Fields.invln_contactid);
                     if (application.invln_contactid.Equals(contactId))
                         return true;
                 }
@@ -216,13 +216,13 @@ namespace HE.CRM.AHP.Plugins.Services.Consortium
             if (ppl.Any(x => x.invln_Permission.Value == (int)invln_Permission.Admin))
                 return (int)invln_Permission.Admin;
             if (ppl.Any(x => x.invln_Permission.Value == (int)invln_Permission.Enhanced))
-                return (int)invln_Permission.Admin;
+                return (int)invln_Permission.Enhanced;
             if (ppl.Any(x => x.invln_Permission.Value == (int)invln_Permission.Inputonly))
-                return (int)invln_Permission.Admin;
+                return (int)invln_Permission.Inputonly;
             if (ppl.Any(x => x.invln_Permission.Value == (int)invln_Permission.Viewonly))
-                return (int)invln_Permission.Admin;
+                return (int)invln_Permission.Viewonly;
             if (ppl.Any(x => x.invln_Permission.Value == (int)invln_Permission.Limiteduser))
-                return (int)invln_Permission.Admin;
+                return (int)invln_Permission.Limiteduser;
             return -1;
         }
     }
