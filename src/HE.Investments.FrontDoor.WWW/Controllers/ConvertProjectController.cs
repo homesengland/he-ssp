@@ -27,7 +27,12 @@ public class ConvertProjectController : Controller
     {
         if (await _featureManager.IsEnabledAsync(FeatureFlags.StayInCurrentApplication, cancellationToken))
         {
-            return RedirectToAction("Index", "Projects");
+            return applicationType switch
+            {
+                ApplicationType.Loans => Content("Eligibility for Loan"),
+                ApplicationType.Ahp => Content("Eligibility for Ahp"),
+                _ => Content("Not supported"),
+            };
         }
 
         var urlWithRouteData = applicationType switch
