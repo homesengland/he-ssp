@@ -142,6 +142,7 @@
     <Compile Include="Handlers\CustomApi\Site\GetSingleSiteHandler.cs" />
     <Compile Include="Handlers\CustomApi\Site\SetSiteHandler.cs" />
     <Compile Include="Handlers\DeliveryPhase\AcceptOrRejectPaymentProportion.cs" />
+    <Compile Include="Handlers\DeliveryPhase\ChangeNumberOfHomes.cs" />
     <Compile Include="Handlers\DeliveryPhase\SendNotificationUrbWantsAdditionalPaymentsForPhaseHandler.cs" />
     <Compile Include="Handlers\HomeType\CalculatePercentageValueOfNDSSStandardHandler.cs" />
     <Compile Include="Handlers\HomeType\CreateDocumentLocationOnCreateHandler.cs" />
