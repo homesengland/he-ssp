@@ -64,7 +64,6 @@ namespace DataverseModel
 			public const string invln_ahpproject_AccountId_account = "invln_ahpproject_AccountId_account";
 			public const string invln_ahpproject_ConsortiumId_invln_consortium = "invln_ahpproject_ConsortiumId_invln_consortium";
 			public const string invln_ahpproject_ContactId_contact = "invln_ahpproject_ContactId_contact";
-			public const string invln_ahpproject_HeProjectId_he_pipeline = "invln_ahpproject_HeProjectId_he_pipeline";
 			public const string invln_ahpprojectId = "invln_ahpprojectid";
 			public const string Id = "invln_ahpprojectid";
 			public const string invln_ConsortiumId = "invln_consortiumid";
@@ -980,27 +979,6 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_ahpproject_ContactId_contact");
 				this.SetRelatedEntity<DataverseModel.Contact>("invln_ahpproject_ContactId_contact", null, value);
 				this.OnPropertyChanged("invln_ahpproject_ContactId_contact");
-			}
-		}
-		
-		/// <summary>
-		/// N:1 invln_ahpproject_HeProjectId_he_pipeline
-		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_heprojectid")]
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_ahpproject_HeProjectId_he_pipeline")]
-		public DataverseModel.he_Pipeline invln_ahpproject_HeProjectId_he_pipeline
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetRelatedEntity<DataverseModel.he_Pipeline>("invln_ahpproject_HeProjectId_he_pipeline", null);
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("invln_ahpproject_HeProjectId_he_pipeline");
-				this.SetRelatedEntity<DataverseModel.he_Pipeline>("invln_ahpproject_HeProjectId_he_pipeline", null, value);
-				this.OnPropertyChanged("invln_ahpproject_HeProjectId_he_pipeline");
 			}
 		}
 		

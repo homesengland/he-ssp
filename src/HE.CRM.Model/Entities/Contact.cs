@@ -657,6 +657,7 @@ namespace DataverseModel
 			public const string he_PrefixID = "he_prefixid";
 			public const string Home2 = "home2";
 			public const string ImportSequenceNumber = "importsequencenumber";
+			public const string invln_ahpproject_ContactId_contact = "invln_ahpproject_ContactId_contact";
 			public const string invln_ahpstatuschange_changedby_contact = "invln_ahpstatuschange_changedby_contact";
 			public const string invln_consortium_Createdby_contact = "invln_consortium_Createdby_contact";
 			public const string invln_contact_invln_contactwebrole_Contactid = "invln_contact_invln_contactwebrole_Contactid";
@@ -742,6 +743,7 @@ namespace DataverseModel
 			public const string msdyn_orgchangestatus = "msdyn_orgchangestatus";
 			public const string msdyn_orgchangestatusName = "msdyn_orgchangestatusname";
 			public const string msdyn_portaltermsagreementdate = "msdyn_portaltermsagreementdate";
+			public const string msdyn_PrimaryTimeZone = "msdyn_primarytimezone";
 			public const string msdyn_segmentid = "msdyn_segmentid";
 			public const string msdyn_segmentidName = "msdyn_segmentidname";
 			public const string msft_DataState = "msft_datastate";
@@ -5938,6 +5940,26 @@ namespace DataverseModel
 		}
 		
 		/// <summary>
+		/// Indicates the primary time zone that the contact works on.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("msdyn_primarytimezone")]
+		public System.Nullable<int> msdyn_PrimaryTimeZone
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<int>>("msdyn_primarytimezone");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("msdyn_PrimaryTimeZone");
+				this.SetAttributeValue("msdyn_primarytimezone", value);
+				this.OnPropertyChanged("msdyn_PrimaryTimeZone");
+			}
+		}
+		
+		/// <summary>
 		/// Unique identifier for Segment associated with contact.
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("msdyn_segmentid")]
@@ -7518,6 +7540,26 @@ namespace DataverseModel
 				this.OnPropertyChanging("Referencedcontact_parent_contact");
 				this.SetRelatedEntities<DataverseModel.Contact>("contact_parent_contact", Microsoft.Xrm.Sdk.EntityRole.Referenced, value);
 				this.OnPropertyChanged("Referencedcontact_parent_contact");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N invln_ahpproject_ContactId_contact
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_ahpproject_ContactId_contact")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_ahpproject> invln_ahpproject_ContactId_contact
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_ahpproject>("invln_ahpproject_ContactId_contact", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_ahpproject_ContactId_contact");
+				this.SetRelatedEntities<DataverseModel.invln_ahpproject>("invln_ahpproject_ContactId_contact", null, value);
+				this.OnPropertyChanged("invln_ahpproject_ContactId_contact");
 			}
 		}
 		

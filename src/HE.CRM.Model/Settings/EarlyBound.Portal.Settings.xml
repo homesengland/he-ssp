@@ -55,6 +55,7 @@ invln_gettemporaryportaldata|
 invln_gettypeofhomeslist|
 invln_invitecontacttojoinexistingorganisation|
 invln_isconsortiumexistforprogrammeandorganisation|
+invln_issiteorapplicationpartner|
 invln_linkcontactwithorganization|
 invln_requestaddingmembertoconsortium|
 invln_requesttoremovemember|
