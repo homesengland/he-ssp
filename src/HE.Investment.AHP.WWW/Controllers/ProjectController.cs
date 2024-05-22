@@ -41,7 +41,7 @@ public class ProjectController : Controller
             return View(new ProjectBasicModel(fdProjectId, availableProgrammes[0]));
         }
 
-        return RedirectToAction("ContactHomesEngland", "ConsortiumMember", new { consortiumId = userAccount.Consortium.ConsortiumId });
+        return RedirectToAction("ContactHomesEngland", "ConsortiumMember", new { consortiumId = userAccount.Consortium.ConsortiumId.Value });
     }
 
     [HttpPost("start")]

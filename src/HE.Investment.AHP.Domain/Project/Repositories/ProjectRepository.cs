@@ -14,6 +14,7 @@ using HE.Investment.AHP.Domain.UserContext;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Pagination;
 using HE.Investments.Common.CRM.Mappers;
+using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Infrastructure.Events;
 using HE.Investments.FrontDoor.Shared.Project.Data;
 
@@ -104,7 +105,7 @@ public class ProjectRepository : IProjectRepository
         var projectId = await _projectCrmContext.CreateProject(
             userAccount.UserGlobalId.ToString(),
             userAccount.SelectedOrganisationId().ToGuidAsString(),
-            userAccount.Consortium.ConsortiumId.ToString(),
+            userAccount.Consortium.ConsortiumId.Value.ToGuidAsString(),
             frontDoorProject.Id.ToGuidAsString(),
             frontDoorProject.Name,
             CreateProjectSitesDto(frontDoorProject.Sites),

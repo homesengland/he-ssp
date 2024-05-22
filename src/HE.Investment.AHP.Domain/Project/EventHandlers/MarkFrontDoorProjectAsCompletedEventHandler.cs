@@ -1,6 +1,5 @@
 using HE.Investment.AHP.Contract.Project.Events;
 using HE.Investments.Common.Infrastructure.Events;
-using HE.Investments.FrontDoor.Shared.Project;
 using HE.Investments.FrontDoor.Shared.Project.Repositories;
 
 namespace HE.Investment.AHP.Domain.Project.EventHandlers;
@@ -16,6 +15,6 @@ public class MarkFrontDoorProjectAsCompletedEventHandler : IEventHandler<AhpProj
 
     public async Task Handle(AhpProjectHasBeenCreatedEvent domainEvent, CancellationToken cancellationToken)
     {
-        await _repository.MarkProjectAsUsed(new FrontDoorProjectId(domainEvent.FrontDoorProjectId.ToGuidAsString()), cancellationToken);
+        await _repository.MarkProjectAsUsed(domainEvent.FrontDoorProjectId, cancellationToken);
     }
 }
