@@ -1,10 +1,12 @@
 using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.Site;
 using HE.Investments.Common.Contract;
+using HE.Investments.FrontDoor.Shared.Project;
 
 namespace HE.Investment.AHP.Domain.Application.ValueObjects;
 
 public record ApplicationWithFundingDetails(
+    FrontDoorProjectId ProjectId,
     SiteId SiteId,
     AhpApplicationId ApplicationId,
     string ApplicationName,

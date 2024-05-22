@@ -24,6 +24,7 @@ public class GetApplicationDetailsQueryHandler : IRequestHandler<GetApplicationD
         var application = await _repository.GetApplicationWithFundingDetailsById(request.ApplicationId, account, cancellationToken);
 
         return new ApplicationExtendedDetails(
+            application.ProjectId,
             application.SiteId,
             application.ApplicationId,
             application.ApplicationName,

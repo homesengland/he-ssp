@@ -1,6 +1,6 @@
 namespace HE.Investment.AHP.Contract.Project;
 
-public static class MockedProjectId
+public static class LegacyProject
 {
     /// <summary>
     /// TODO: Remove as part of Task 98275: [Portal] Wire up.

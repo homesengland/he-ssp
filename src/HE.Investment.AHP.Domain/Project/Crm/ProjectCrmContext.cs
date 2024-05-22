@@ -12,11 +12,11 @@ namespace HE.Investment.AHP.Domain.Project.Crm;
 public class ProjectCrmContext : IProjectCrmContext
 {
     private readonly ProjectDto _mockedProjectDto =
-        new() { ProjectId = MockedProjectId.ProjectId, ProjectName = MockedProjectId.ProjectName, };
+        new() { ProjectId = LegacyProject.ProjectId, ProjectName = LegacyProject.ProjectName, };
 
     private readonly List<ProjectDto> _mockedProjectDtoList =
     [
-        new ProjectDto { ProjectName = MockedProjectId.ProjectName, ProjectId = MockedProjectId.ProjectId },
+        new ProjectDto { ProjectName = LegacyProject.ProjectName, ProjectId = LegacyProject.ProjectId },
         new ProjectDto
         {
             ProjectName = "Second project",

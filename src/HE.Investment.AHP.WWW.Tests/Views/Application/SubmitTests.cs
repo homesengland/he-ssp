@@ -11,6 +11,7 @@ public class SubmitTests : AhpViewTestBase
 
     private readonly ApplicationSubmitModel _model = new(
         "testId",
+        "projectTestId",
         "testName",
         "testNumber",
         "SiteName",

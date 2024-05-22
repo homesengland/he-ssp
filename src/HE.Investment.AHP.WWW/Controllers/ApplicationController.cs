@@ -322,6 +322,7 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
 
         return new ApplicationSubmitModel(
             application.ApplicationId.Value,
+            application.ProjectId.Value,
             application.ApplicationName,
             application.ReferenceNumber,
             siteBasicModel.Name,

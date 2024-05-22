@@ -53,7 +53,7 @@
 
     @await Html.PartialAsync("Partials/_TaskListRequestChangeStatusSection.cshtml", Model)
 
-    <vc:return-to-applications-list-link/>
+    <vc:return-to-applications-list-link project-id="@Model.ProjectId"/>
 </div>
 <div class="govuk-grid-column-one-third">
     <vc:help-panel email-address="@ContactInfo.Email" phone-number="@ContactInfo.Phone"/>

@@ -33,7 +33,7 @@ public class ProjectRepository : IProjectRepository
         _eventDispatcher = eventDispatcher;
     }
 
-    public async Task<AhpProjectApplications> GetProject(AhpProjectId id, AhpUserAccount userAccount, CancellationToken cancellationToken)
+    public async Task<AhpProjectApplications> GetProjectApplications(AhpProjectId id, AhpUserAccount userAccount, CancellationToken cancellationToken)
     {
         var project = await _projectCrmContext.GetProject(
             id.ToString(),
