@@ -11,7 +11,7 @@ public interface IProjectCrmContext
         string? consortiumId,
         CancellationToken cancellationToken);
 
-    Task<PagedResponseDto<ProjectDto>> GetProjects(
+    Task<PagedResponseDto<AhpProjectDto>> GetProjects(
         string userId,
         string organisationId,
         string? consortiumId,

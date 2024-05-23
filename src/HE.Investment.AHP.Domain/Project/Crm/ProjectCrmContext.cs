@@ -5,6 +5,7 @@ using HE.Investment.AHP.Contract.Project;
 using HE.Investment.AHP.Domain.Application.Crm;
 using HE.Investment.AHP.Domain.Site.Crm;
 using HE.Investments.Common.CRM.Model;
+using HE.Investments.Common.CRM.Serialization;
 using HE.Investments.Common.CRM.Services;
 
 namespace HE.Investment.AHP.Domain.Project.Crm;
@@ -13,33 +14,6 @@ public class ProjectCrmContext : IProjectCrmContext
 {
     private readonly ProjectDto _mockedProjectDto =
         new() { ProjectId = LegacyProject.ProjectId, ProjectName = LegacyProject.ProjectName, };
-
-    private readonly List<ProjectDto> _mockedProjectDtoList =
-    [
-        new ProjectDto { ProjectName = LegacyProject.ProjectName, ProjectId = LegacyProject.ProjectId },
-        new ProjectDto
-        {
-            ProjectName = "Second project",
-            ProjectId = Guid.NewGuid().ToString(),
-            Sites =
-            [
-                new SiteDto { id = Guid.NewGuid().ToString(), name = "first new site", status = 858110001, },
-                new SiteDto { id = Guid.NewGuid().ToString(), name = "second new site", status = 858110000, },
-                new SiteDto { id = Guid.NewGuid().ToString(), name = "third new site", status = 858110001, },
-            ],
-        },
-        new ProjectDto
-        {
-            ProjectName = "Third project",
-            ProjectId = Guid.NewGuid().ToString(),
-            Sites =
-            [
-                new SiteDto { id = Guid.NewGuid().ToString(), name = "first new site", status = 858110001, },
-                new SiteDto { id = Guid.NewGuid().ToString(), name = "second new site", status = 858110000, },
-            ],
-        },
-        new ProjectDto { ProjectName = "Fourth project", ProjectId = Guid.NewGuid().ToString() },
-    ];
 
     private readonly IApplicationCrmContext _applicationCrmContext;
 
@@ -82,22 +56,25 @@ public class ProjectCrmContext : IProjectCrmContext
         return _mockedProjectDto;
     }
 
-    public async Task<PagedResponseDto<ProjectDto>> GetProjects(
+    public async Task<PagedResponseDto<AhpProjectDto>> GetProjects(
         string userId,
         string organisationId,
         string? consortiumId,
         PagingRequestDto pagination,
         CancellationToken cancellationToken)
     {
-        var sites = await _siteCrmContext.GetUserSites(userId, new PagingRequestDto { pageNumber = 1, pageSize = 100 }, cancellationToken);
-        _mockedProjectDtoList[0].Sites = sites.items;
-
-        return new PagedResponseDto<ProjectDto>
+        var request = new invln_getahpprojectsRequest
         {
-            items = pagination.pageNumber == 1 ? _mockedProjectDtoList[..3] : _mockedProjectDtoList[3..],
-            totalItemsCount = 4,
-            paging = new PagingRequestDto { pageNumber = pagination.pageNumber, pageSize = pagination.pageSize, },
+            invln_userid = userId,
+            invln_accountid = organisationId,
+            invln_consortiumid = null,
+            invln_pagingrequest = CrmResponseSerializer.Serialize(pagination),
         };
+
+        return await _service.ExecuteAsync<invln_getahpprojectsRequest, invln_getahpprojectsResponse, PagedResponseDto<AhpProjectDto>>(
+            request,
+            r => r.invln_listOfAhpProjects,
+            cancellationToken);
     }
 
     public async Task<ProjectSitesDto> GetProjectSites(
@@ -120,7 +97,7 @@ public class ProjectCrmContext : IProjectCrmContext
         IList<SiteDto> sites,
         CancellationToken cancellationToken)
     {
-        var request = new invln_createahpprojectRequest()
+        var request = new invln_createahpprojectRequest
         {
             invln_userid = userId,
             invln_accountid = organisationId,

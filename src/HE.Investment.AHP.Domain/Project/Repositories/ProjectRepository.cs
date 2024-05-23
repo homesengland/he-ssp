@@ -11,10 +11,8 @@ using HE.Investment.AHP.Domain.Scheme.ValueObjects;
 using HE.Investment.AHP.Domain.Site.Mappers;
 using HE.Investment.AHP.Domain.Site.ValueObjects;
 using HE.Investment.AHP.Domain.UserContext;
-using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Pagination;
 using HE.Investments.Common.CRM.Mappers;
-using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Infrastructure.Events;
 using HE.Investments.FrontDoor.Shared.Project.Data;
 
@@ -116,9 +114,9 @@ public class ProjectRepository : IProjectRepository
         return AhpProjectId.From(projectId);
     }
 
-    private AhpProjectSites CreateAhpProjectEntity(ProjectDto projectDto)
+    private AhpProjectSites CreateAhpProjectEntity(AhpProjectDto ahpProjectDto)
     {
-        var sites = projectDto.Sites?
+        var sites = ahpProjectDto.ListOfSites?
             .Select(s => new AhpProjectSite(
                 SiteId.From(s.id),
                 new SiteName(s.name),
@@ -127,8 +125,8 @@ public class ProjectRepository : IProjectRepository
             .ToList();
 
         return new AhpProjectSites(
-            AhpProjectId.From(projectDto.ProjectId),
-            new AhpProjectName(projectDto.ProjectName),
+            AhpProjectId.From(ahpProjectDto.AhpProjectId),
+            new AhpProjectName(ahpProjectDto.AhpProjectName),
             sites);
     }
 
