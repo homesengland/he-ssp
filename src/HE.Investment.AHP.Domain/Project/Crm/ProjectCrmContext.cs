@@ -6,14 +6,12 @@ using HE.Investment.AHP.Domain.Application.Crm;
 using HE.Investment.AHP.Domain.Site.Crm;
 using HE.Investments.Common.CRM.Model;
 using HE.Investments.Common.CRM.Services;
+using HE.Investments.Common.Extensions;
 
 namespace HE.Investment.AHP.Domain.Project.Crm;
 
 public class ProjectCrmContext : IProjectCrmContext
 {
-    private readonly ProjectDto _mockedProjectDto =
-        new() { ProjectId = LegacyProject.ProjectId, ProjectName = LegacyProject.ProjectName, };
-
     private readonly List<ProjectDto> _mockedProjectDtoList =
     [
         new ProjectDto { ProjectName = LegacyProject.ProjectName, ProjectId = LegacyProject.ProjectId },
@@ -41,45 +39,37 @@ public class ProjectCrmContext : IProjectCrmContext
         new ProjectDto { ProjectName = "Fourth project", ProjectId = Guid.NewGuid().ToString() },
     ];
 
-    private readonly IApplicationCrmContext _applicationCrmContext;
-
     private readonly ISiteCrmContext _siteCrmContext;
 
     private readonly ICrmService _service;
 
     private readonly JsonSerializerOptions _serializerOptions = new() { DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull };
 
-    public ProjectCrmContext(IApplicationCrmContext applicationCrmContext, ISiteCrmContext siteCrmContext, ICrmService service)
+    public ProjectCrmContext(ISiteCrmContext siteCrmContext, ICrmService service)
     {
-        _applicationCrmContext = applicationCrmContext;
         _siteCrmContext = siteCrmContext;
         _service = service;
     }
 
-    public async Task<ProjectDto> GetProject(
+    public async Task<AhpProjectDto> GetProject(
         string projectId,
         string userId,
         string organisationId,
         string? consortiumId,
         CancellationToken cancellationToken)
     {
-        var applications = await _applicationCrmContext.GetUserApplications(organisationId, cancellationToken);
-        _mockedProjectDto.Applications = applications
-            .Where(x => x.tenure.HasValue)
-            .Select(x =>
-                new ProjectApplicationDto
-                {
-                    ApplicationId = x.id,
-                    ApplicationStatus = x.applicationStatus,
-                    ApplicationName = x.name,
-                    LastModificationDate = x.lastExternalModificationOn,
-                    RequiredFunding = x.fundingRequested,
-                    NoOfHomes = x.noOfHomes,
-                    Tenure = x.tenure,
-                })
-            .ToList();
+        var request = new invln_getahpprojectRequest
+        {
+            invln_userid = userId,
+            invln_accountid = organisationId.TryToGuidAsString(),
+            invln_consortiumid = consortiumId?.TryToGuidAsString() ?? string.Empty,
+            invln_ahpprojectid = projectId.TryToGuidAsString(),
+        };
 
-        return _mockedProjectDto;
+        return await _service.ExecuteAsync<invln_getahpprojectRequest, invln_getahpprojectResponse, AhpProjectDto>(
+            request,
+            r => r.invln_ahpProjectApplications,
+            cancellationToken);
     }
 
     public async Task<PagedResponseDto<ProjectDto>> GetProjects(
@@ -98,17 +88,6 @@ public class ProjectCrmContext : IProjectCrmContext
             totalItemsCount = 4,
             paging = new PagingRequestDto { pageNumber = pagination.pageNumber, pageSize = pagination.pageSize, },
         };
-    }
-
-    public async Task<ProjectSitesDto> GetProjectSites(
-        string projectId,
-        string userId,
-        string organisationId,
-        string? consortiumId,
-        CancellationToken cancellationToken)
-    {
-        var sites = await _siteCrmContext.GetUserSites(userId, new PagingRequestDto { pageNumber = 1, pageSize = 100 }, cancellationToken);
-        return new ProjectSitesDto { ProjectId = _mockedProjectDto.ProjectId, ProjectName = _mockedProjectDto.ProjectName, Sites = sites.items, };
     }
 
     public async Task<string> CreateProject(

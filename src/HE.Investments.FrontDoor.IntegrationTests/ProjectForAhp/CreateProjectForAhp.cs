@@ -26,26 +26,14 @@ public class CreateProjectForAhp : FrontDoorIntegrationTest
     public CreateProjectForAhp(FrontDoorIntegrationTestFixture fixture, ITestOutputHelper output)
         : base(fixture, output)
     {
-        _dataManipulator = fixture.ServiceProvider.GetRequiredService<DataManipulator>();
     }
 
     [Fact(Skip = FrontDoorConfig.SkipTest)]
     [Order(1)]
-    public async Task ProjectShouldShouldBeEligibilityForAhp()
+    public async Task ProjectShouldBeEligibleForAhp()
     {
         // given
-        var userAccount = new UserAccount(
-            UserGlobalId.From(LoginData.UserGlobalId),
-            LoginData.Email,
-            new OrganisationBasicInfo(
-                OrganisationId.From(LoginData.OrganisationId),
-                string.Empty,
-                string.Empty,
-                string.Empty,
-                false),
-            [UserRole.Admin]);
-
-        var projectId = await _dataManipulator.CreateProjectEligibleForAhp(userAccount);
+        var projectId = await InCrm.FrontDoorProjectEligibleForAhpExist(LoginData);
         var currentPage = await TestClient.NavigateTo(ProjectPagesUrl.CheckAnswers(projectId));
 
         // when
@@ -57,7 +45,8 @@ public class CreateProjectForAhp : FrontDoorIntegrationTest
         var nextPage = await TestClient.SubmitButton(continueButton);
 
         // then
-        nextPage.ToHtml().Should().Contain("Eligibility for Ahp");
-        Output.WriteLine(nextPage.Body?.GetDescendants()?.FirstOrDefault()?.TextContent);
+        var displayedText = nextPage.GetFirstPreformattedText();
+        displayedText.Should().Contain("Eligibility for Ahp");
+        Output.WriteLine(displayedText);
     }
 }

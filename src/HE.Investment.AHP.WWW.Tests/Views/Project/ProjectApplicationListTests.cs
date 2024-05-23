@@ -5,6 +5,7 @@ using HE.Investment.AHP.Contract.Project;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Pagination;
 using HE.Investments.Common.Extensions;
+using HE.Investments.FrontDoor.Shared.Project;
 
 namespace HE.Investment.AHP.WWW.Tests.Views.Project;
 
@@ -17,7 +18,7 @@ public class ProjectApplicationListTests : AhpViewTestBase
     {
         // given
         var applicationListModel = new ProjectDetailsModel(
-            new AhpProjectId("project-id"),
+            new FrontDoorProjectId("project-id"),
             "Carq",
             "Affordable Homes Programme Continuous Market Engagement 2021-2026",
             "Organisation Name",
@@ -39,7 +40,7 @@ public class ProjectApplicationListTests : AhpViewTestBase
         var application2 = new ApplicationProjectModel(AhpApplicationId.From("2"), "Application 2", ApplicationStatus.Draft, 266468, null);
 
         var applicationListModel = new ProjectDetailsModel(
-            new AhpProjectId("project-id"),
+            new FrontDoorProjectId("project-id"),
             "Carq",
             "Affordable Homes Programme Continuous Market Engagement 2021-2026",
             "Organisation Name",

@@ -1,7 +1,6 @@
 extern alias Org;
 
 using HE.Common.IntegrationModel.PortalIntegrationModel;
-using HE.Investments.Account.Shared.User;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Enum;
 using HE.Investments.FrontDoor.Domain.Project.Crm;
@@ -10,6 +9,7 @@ using HE.Investments.FrontDoor.Domain.Project.ValueObjects;
 using HE.Investments.FrontDoor.Domain.Site.Crm;
 using HE.Investments.FrontDoor.IntegrationTests.FillProject.Data;
 using HE.Investments.FrontDoor.Shared.Project.Contract;
+using HE.Investments.IntegrationTestsFramework.Auth;
 using HE.Investments.TestsUtils.Extensions;
 
 namespace HE.Investments.FrontDoor.IntegrationTests.Framework;
@@ -26,15 +26,15 @@ public class DataManipulator
         _siteCrmContext = siteCrmContext;
     }
 
-    public async Task<string> CreateProjectEligibleForAhp(UserAccount userAccount)
+    public async Task<string> FrontDoorProjectEligibleForAhpExist(ILoginData loginData)
     {
         var projectDate = new ProjectData();
         var projectDto = new FrontDoorProjectDto
         {
             ProjectName = "IT Project".WithTimestampSuffix(),
             ProjectSupportsHousingDeliveryinEngland = true,
-            OrganisationId = ShortGuid.ToGuid(userAccount.SelectedOrganisationId().Value),
-            externalId = userAccount.UserGlobalId.Value,
+            OrganisationId = ShortGuid.ToGuid(loginData.OrganisationId),
+            externalId = loginData.UserGlobalId,
             ActivitiesinThisProject = new SupportActivitiesMapper().Map(new SupportActivities([projectDate.ActivityType])),
             AmountofAffordableHomes = new AffordableHomesAmountMapper().ToDto(AffordableHomesAmount.OnlyAffordableHomes),
             InfrastructureDelivered = new ProjectInfrastructureMapper().Map(new ProjectInfrastructure([InfrastructureType.IDoNotKnow])),
@@ -48,7 +48,7 @@ public class DataManipulator
             StartofProjectYear = 2024,
         };
 
-        var projectId = await _projectCrmContext.Save(projectDto, userAccount, CancellationToken.None);
+        var projectId = await _projectCrmContext.Save(projectDto, loginData.UserGlobalId, loginData.OrganisationId, CancellationToken.None);
         var siteDto = new FrontDoorProjectSiteDto
         {
             SiteName = $"Site for {projectDto.ProjectName}",
@@ -58,7 +58,7 @@ public class DataManipulator
             LocalAuthorityName = LocalAuthorities.Oxford.Name,
         };
 
-        await _siteCrmContext.Save(projectId, siteDto, userAccount, CancellationToken.None);
+        await _siteCrmContext.Save(projectId, siteDto, loginData.UserGlobalId, loginData.OrganisationId, CancellationToken.None);
         return projectId;
     }
 }

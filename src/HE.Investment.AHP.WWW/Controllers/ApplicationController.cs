@@ -2,6 +2,8 @@ using System.Globalization;
 using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.Application.Commands;
 using HE.Investment.AHP.Contract.Application.Queries;
+using HE.Investment.AHP.Contract.Project;
+using HE.Investment.AHP.Contract.Project.Queries;
 using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Contract.Site.Queries;
 using HE.Investment.AHP.Domain.UserContext;
@@ -64,15 +66,9 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
     [HttpPost("start")]
     [WorkflowState(ApplicationWorkflowState.Start)]
     [AuthorizeWithCompletedProfile(AhpAccessContext.EditApplications)]
-    public async Task<IActionResult> StartPost([FromRoute] string fdProjectId, CancellationToken cancellationToken)
+    public IActionResult StartPost([FromRoute] string fdProjectId)
     {
-        var response = await _mediator.Send(new GetSiteListQuery(new PaginationRequest(1, 1)), cancellationToken);
-        if (response.Page.Items.Any())
-        {
-            return RedirectToAction("Select", "Site", new { fdProjectId });
-        }
-
-        return RedirectToAction("Start", "Site", new { fdProjectId });
+        return RedirectToAction("Select", "Site", new { fdProjectId });
     }
 
     [WorkflowState(ApplicationWorkflowState.ApplicationName)]

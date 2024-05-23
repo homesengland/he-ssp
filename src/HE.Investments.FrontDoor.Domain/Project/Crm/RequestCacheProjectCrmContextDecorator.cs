@@ -45,9 +45,9 @@ internal sealed class RequestCacheProjectCrmContextDecorator : IProjectCrmContex
         return await _decorated.IsThereProjectWithName(projectName, organisationId, cancellationToken);
     }
 
-    public async Task<string> Save(FrontDoorProjectDto dto, UserAccount userAccount, CancellationToken cancellationToken)
+    public async Task<string> Save(FrontDoorProjectDto dto, string userGlobalId, string organisationId, CancellationToken cancellationToken)
     {
-        dto.ProjectId = await _decorated.Save(dto, userAccount, cancellationToken);
+        dto.ProjectId = await _decorated.Save(dto, userGlobalId, organisationId, cancellationToken);
         _cache.ReplaceCache(dto.ProjectId, dto);
 
         return dto.ProjectId;

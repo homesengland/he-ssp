@@ -3,6 +3,7 @@ using HE.Investment.AHP.Contract.Common.Enums;
 using HE.Investment.AHP.Contract.Common.Queries;
 using HE.Investment.AHP.Contract.PrefillData.Queries;
 using HE.Investment.AHP.Contract.Project;
+using HE.Investment.AHP.Contract.Project.Queries;
 using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Contract.Site.Commands;
 using HE.Investment.AHP.Contract.Site.Commands.Mmc;
@@ -68,10 +69,10 @@ public class SiteController : WorkflowController<SiteWorkflowState>
         return RedirectToAction("Sites", "Project", new { projectId = LegacyProject.ProjectId });
     }
 
-    [HttpGet("select")]
-    public async Task<IActionResult> Select([FromQuery] int? page, CancellationToken cancellationToken)
+    [HttpGet("{projectId}/select")]
+    public async Task<IActionResult> Select([FromQuery] int? page, string projectId, CancellationToken cancellationToken)
     {
-        var response = await _mediator.Send(new GetSiteListQuery(new PaginationRequest(page ?? 1)), cancellationToken);
+        var response = await _mediator.Send(new GetProjectSitesQuery(new FrontDoorProjectId(projectId), new PaginationRequest(page ?? 1)), cancellationToken);
         return View("Select", response);
     }
 

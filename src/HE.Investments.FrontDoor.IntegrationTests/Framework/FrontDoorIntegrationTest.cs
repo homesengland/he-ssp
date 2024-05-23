@@ -4,6 +4,7 @@ using HE.Investments.FrontDoor.IntegrationTests.FillProject.Data;
 using HE.Investments.FrontDoor.WWW;
 using HE.Investments.IntegrationTestsFramework;
 using HE.Investments.IntegrationTestsFramework.Auth;
+using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -15,6 +16,7 @@ namespace HE.Investments.FrontDoor.IntegrationTests.Framework;
 [Collection(nameof(FrontDoorIntegrationTestSharedContext))]
 public class FrontDoorIntegrationTest : IntegrationTestBase<Program>, IDisposable
 {
+    private readonly DataManipulator _dataManipulator;
 
     protected FrontDoorIntegrationTest(FrontDoorIntegrationTestFixture fixture, ITestOutputHelper output)
         : base(fixture)
@@ -25,6 +27,7 @@ public class FrontDoorIntegrationTest : IntegrationTestBase<Program>, IDisposabl
         fixture.CheckUserLoginData();
         fixture.MockUserAccount();
         LoginData = fixture.LoginData;
+        _dataManipulator = fixture.ServiceProvider.GetRequiredService<DataManipulator>();
     }
 
     public ProjectData ProjectData { get; private set; }
@@ -38,6 +41,8 @@ public class FrontDoorIntegrationTest : IntegrationTestBase<Program>, IDisposabl
     protected ILoginData LoginData { get; }
 
     protected ITestOutputHelper Output { get; }
+
+    protected DataManipulator InCrm => _dataManipulator;
 
     public void Dispose()
     {

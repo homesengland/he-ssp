@@ -62,18 +62,18 @@ public class ProjectController : Controller
     [HttpGet("{projectId}")]
     public async Task<IActionResult> Details(string projectId)
     {
-        return View("Details", await _mediator.Send(new GetProjectDetailsQuery(new AhpProjectId(projectId), new PaginationRequest(1, 100))));
+        return View("Details", await _mediator.Send(new GetProjectDetailsQuery(new FrontDoorProjectId(projectId), new PaginationRequest(1, 100))));
     }
 
     [HttpGet("{projectId}/applications")]
     public async Task<IActionResult> Applications(string projectId, int? page)
     {
-        return View("ListOfApplications", await _mediator.Send(new GetProjectDetailsQuery(new AhpProjectId(projectId), new PaginationRequest(page ?? 1))));
+        return View("ListOfApplications", await _mediator.Send(new GetProjectDetailsQuery(new FrontDoorProjectId(projectId), new PaginationRequest(page ?? 1))));
     }
 
     [HttpGet("{projectId}/sites")]
     public async Task<IActionResult> Sites(string projectId, [FromQuery] int? page)
     {
-        return View("ListOfSites", await _mediator.Send(new GetProjectSitesQuery(new AhpProjectId(projectId), new PaginationRequest(page ?? 1))));
+        return View("ListOfSites", await _mediator.Send(new GetProjectSitesQuery(new FrontDoorProjectId(projectId), new PaginationRequest(page ?? 1))));
     }
 }
