@@ -53,7 +53,9 @@ namespace HE.CRM.AHP.Plugins.Services.Consortium
             if (applicationId != null)
             {
                 TracingService.Trace("Check Access to Application");
-                var application = _ahpApplicationRepository.GetById(new Guid(applicationId));
+                var application = _ahpApplicationRepository.GetById(new Guid(applicationId),
+                    new string[] {invln_scheme.Fields.invln_DevelopingPartner, invln_scheme.Fields.invln_OwneroftheHomes,
+                    invln_scheme.Fields.invln_OwneroftheLand});
                 isLeadPartner = IsConsortiumLeadPartner(consortium, organizationId);
                 isAppPartner = IsApplicationPartner(application, organizationId);
             }
@@ -118,7 +120,9 @@ namespace HE.CRM.AHP.Plugins.Services.Consortium
         private bool IsOrganizationSitePartner(string siteId, string organizationId)
         {
             TracingService.Trace("IsOrganizationSitePartner");
-            var site = _siteRepository.GetById(new Guid(siteId));
+            var site = _siteRepository.GetById(new Guid(siteId),
+                new string[] {invln_Sites.Fields.invln_developingpartner, invln_Sites.Fields.invln_ownerofthelandduringdevelopment,
+                invln_Sites.Fields.invln_Ownerofthehomesaftercompletion});
 
             if (site.invln_developingpartner != null)
                 if (site.invln_developingpartner.Id == new Guid(organizationId))

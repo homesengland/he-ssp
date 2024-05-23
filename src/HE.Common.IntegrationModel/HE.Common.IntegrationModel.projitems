@@ -9,6 +9,7 @@
     <Import_RootNamespace>HE.Common.IntegrationModel</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Enums\AccountEnum.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)PortalIntegrationModel\AhgLocalAuthorityDto.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)PortalIntegrationModel\AhpApplicationDto.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)portalintegrationmodel\AHPSiteApplicationDto.cs" />
