@@ -7,6 +7,7 @@ using HE.Investment.AHP.Domain.Site.Crm;
 using HE.Investments.Common.CRM.Model;
 using HE.Investments.Common.CRM.Serialization;
 using HE.Investments.Common.CRM.Services;
+using HE.Investments.Common.Extensions;
 
 namespace HE.Investment.AHP.Domain.Project.Crm;
 
@@ -67,7 +68,7 @@ public class ProjectCrmContext : IProjectCrmContext
         {
             invln_userid = userId,
             invln_accountid = organisationId,
-            invln_consortiumid = null,
+            invln_consortiumid = consortiumId?.TryToGuidAsString()!,
             invln_pagingrequest = CrmResponseSerializer.Serialize(pagination),
         };
 
