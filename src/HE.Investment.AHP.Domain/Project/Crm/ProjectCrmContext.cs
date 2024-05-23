@@ -62,8 +62,8 @@ public class ProjectCrmContext : IProjectCrmContext
         {
             invln_userid = userId,
             invln_accountid = organisationId.TryToGuidAsString(),
-            invln_consortiumid = consortiumId?.TryToGuidAsString() ?? string.Empty,
-            invln_ahpprojectid = projectId.TryToGuidAsString(),
+            invln_consortiumid = consortiumId?.TryToGuidAsString()!,
+            invln_heprojectid = projectId.TryToGuidAsString(),
         };
 
         return await _service.ExecuteAsync<invln_getahpprojectRequest, invln_getahpprojectResponse, AhpProjectDto>(

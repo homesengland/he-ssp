@@ -64,12 +64,12 @@ public class SiteController : WorkflowController<SiteWorkflowState>
     }
 
     [HttpGet]
-    public IActionResult Index()
+    public IActionResult Index(string projectId)
     {
-        return RedirectToAction("Sites", "Project", new { projectId = LegacyProject.ProjectId });
+        return RedirectToAction("Sites", "Project", new { projectId });
     }
 
-    [HttpGet("{projectId}/select")]
+    [HttpGet("select")]
     public async Task<IActionResult> Select([FromQuery] int? page, string projectId, CancellationToken cancellationToken)
     {
         var response = await _mediator.Send(new GetProjectSitesQuery(new FrontDoorProjectId(projectId), new PaginationRequest(page ?? 1)), cancellationToken);

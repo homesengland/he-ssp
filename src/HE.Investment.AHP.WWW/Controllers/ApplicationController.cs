@@ -56,19 +56,19 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
     [HttpGet("start")]
     [WorkflowState(ApplicationWorkflowState.Start)]
     [AuthorizeWithCompletedProfile(AhpAccessContext.EditApplications)]
-    public async Task<IActionResult> Start([FromRoute] string fdProjectId, CancellationToken cancellationToken)
+    public async Task<IActionResult> Start([FromQuery] string projectId, CancellationToken cancellationToken)
     {
         var availableProgrammes = await _mediator.Send(new GetAvailableProgrammesQuery(), cancellationToken);
 
-        return View("Splash", new ProjectBasicModel(fdProjectId, availableProgrammes[0]));
+        return View("Splash", new ProjectBasicModel(projectId, availableProgrammes[0]));
     }
 
     [HttpPost("start")]
     [WorkflowState(ApplicationWorkflowState.Start)]
     [AuthorizeWithCompletedProfile(AhpAccessContext.EditApplications)]
-    public IActionResult StartPost([FromRoute] string fdProjectId)
+    public IActionResult StartPost([FromRoute] string projectId)
     {
-        return RedirectToAction("Select", "Site", new { fdProjectId });
+        return RedirectToAction("Select", "Site", new { projectId });
     }
 
     [WorkflowState(ApplicationWorkflowState.ApplicationName)]

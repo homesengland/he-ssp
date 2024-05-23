@@ -26,7 +26,10 @@ public class Order01StartAhpApplication : AhpIntegrationTest
     [Order(1)]
     public async Task Order01_ShouldDisplayApplicationList()
     {
-        // given & when
+        // given
+
+
+        // when
         var mainPage = await TestClient.NavigateTo(ProjectPagesUrl.ProjectApplicationList(LegacyProject.ProjectId));
 
         // then
