@@ -31,7 +31,7 @@ public abstract class UpdateSchemeCommandHandler<TCommand> : IRequestHandler<TCo
 
         Update(scheme, request);
 
-        await _repository.Save(scheme, account.SelectedOrganisationId(), cancellationToken);
+        await _repository.Save(scheme, account, cancellationToken);
 
         return new OperationResult<AhpApplicationId?>(request.ApplicationId);
     }

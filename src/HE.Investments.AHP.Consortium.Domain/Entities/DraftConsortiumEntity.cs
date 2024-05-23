@@ -52,19 +52,23 @@ public class DraftConsortiumEntity : IConsortiumEntity
         Members.Add(new DraftConsortiumMember(organisation.Id, organisation.Name));
     }
 
-    public void RemoveMember(OrganisationId organisationId, bool? isConfirmed)
+    public Task RemoveMember(
+        OrganisationId organisationId,
+        bool? isConfirmed,
+        IConsortiumPartnerStatusProvider consortiumPartnerStatusProvider,
+        CancellationToken cancellationToken)
     {
         if (isConfirmed.IsNotProvided())
         {
             OperationResult.ThrowValidationError(nameof(isConfirmed), ConsortiumValidationErrors.RemoveConfirmationNotSelected);
         }
 
-        if (isConfirmed == false)
+        if (isConfirmed == true)
         {
-            return;
+            Members.Remove(GetMember(organisationId));
         }
 
-        Members.Remove(GetMember(organisationId));
+        return Task.CompletedTask;
     }
 
     private bool IsPartOfThisConsortium(InvestmentsOrganisation organisation) =>

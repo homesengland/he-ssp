@@ -9,5 +9,5 @@ public interface ISchemeRepository
 {
     Task<SchemeEntity> GetByApplicationId(AhpApplicationId id, UserAccount userAccount, bool includeFiles, CancellationToken cancellationToken);
 
-    Task<SchemeEntity> Save(SchemeEntity entity, OrganisationId organisationId, CancellationToken cancellationToken);
+    Task<SchemeEntity> Save(SchemeEntity entity, UserAccount userAccount, CancellationToken cancellationToken);
 }

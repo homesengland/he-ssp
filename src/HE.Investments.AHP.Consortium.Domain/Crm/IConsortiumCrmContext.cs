@@ -19,6 +19,8 @@ public interface IConsortiumCrmContext
 
     Task<bool> IsConsortiumExistForProgrammeAndOrganisation(string programmeId, string organisationId, CancellationToken cancellationToken);
 
+    Task<int> GetConsortiumPartnerStatus(string consortiumId, string organisationId, CancellationToken cancellationToken);
+
     Task CreateJoinConsortiumRequest(string consortiumId, string organisationId, string userId, CancellationToken cancellationToken);
 
     Task CreateRemoveFromConsortiumRequest(string consortiumId, string organisationId, string userId, CancellationToken cancellationToken);

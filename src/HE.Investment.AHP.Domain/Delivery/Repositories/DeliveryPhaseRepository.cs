@@ -106,13 +106,13 @@ public class DeliveryPhaseRepository : IDeliveryPhaseRepository
         return entity.Id;
     }
 
-    public async Task Save(DeliveryPhasesEntity deliveryPhases, OrganisationId organisationId, CancellationToken cancellationToken)
+    public async Task Save(DeliveryPhasesEntity deliveryPhases, UserAccount userAccount, CancellationToken cancellationToken)
     {
         if (deliveryPhases.IsStatusChanged)
         {
             await _sectionStatusChanger.ChangeSectionStatus(
                 deliveryPhases.Application.Id,
-                organisationId,
+                userAccount,
                 SectionType.DeliveryPhases,
                 deliveryPhases.Status,
                 cancellationToken);
@@ -120,13 +120,13 @@ public class DeliveryPhaseRepository : IDeliveryPhaseRepository
 
         foreach (var deliveryPhase in deliveryPhases.DeliveryPhases.Where(x => x.IsModified))
         {
-            await Save(deliveryPhase, organisationId, cancellationToken);
+            await Save(deliveryPhase, userAccount.SelectedOrganisationId(), cancellationToken);
         }
 
         var deliveryPhaseToRemove = deliveryPhases.PopRemovedDeliveryPhase();
         while (deliveryPhaseToRemove != null)
         {
-            await _crmContext.Remove(deliveryPhases.Application.Id.Value, deliveryPhaseToRemove.Id.Value, organisationId.Value, cancellationToken);
+            await _crmContext.Remove(deliveryPhases.Application.Id.Value, deliveryPhaseToRemove.Id.Value, userAccount.SelectedOrganisationId().ToGuidAsString(), cancellationToken);
             await _eventDispatcher.Publish(new DeliveryPhaseHasBeenRemovedEvent(deliveryPhaseToRemove.Application.Id), cancellationToken);
 
             deliveryPhaseToRemove = deliveryPhases.PopRemovedDeliveryPhase();

@@ -63,7 +63,7 @@ public class ProjectCrmContext : IProjectCrmContext
         string? consortiumId,
         CancellationToken cancellationToken)
     {
-        var applications = await _applicationCrmContext.GetUserApplications(organisationId, cancellationToken);
+        var applications = await _applicationCrmContext.GetUserApplications(organisationId, userId, cancellationToken);
         _mockedProjectDto.Applications = applications
             .Where(x => x.tenure.HasValue)
             .Select(x =>

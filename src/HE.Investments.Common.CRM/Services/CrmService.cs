@@ -35,7 +35,7 @@ public class CrmService : ICrmService
         return getResponse(response);
     }
 
-    public async Task<bool> ExecuteAsync<TRequest, TResponse>(TRequest request, Func<TResponse, bool> getResponse, CancellationToken cancellationToken)
+    public async Task<TResult> ExecuteAsync<TRequest, TResponse, TResult>(TRequest request, Func<TResponse, TResult> getResponse, CancellationToken cancellationToken)
         where TRequest : OrganizationRequest
         where TResponse : OrganizationResponse
     {

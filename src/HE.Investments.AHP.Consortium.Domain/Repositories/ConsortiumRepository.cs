@@ -88,6 +88,16 @@ public class ConsortiumRepository : IConsortiumRepository
         return await _crmContext.IsConsortiumExistForProgrammeAndOrganisation(programmeId.ToString(), organisationId.ToString(), cancellationToken);
     }
 
+    public async Task<ConsortiumPartnerStatus> GetConsortiumPartnerStatus(ConsortiumId consortiumId, OrganisationId organisationId, CancellationToken cancellationToken)
+    {
+        return await _crmContext.GetConsortiumPartnerStatus(consortiumId.Value, organisationId.Value, cancellationToken) switch
+        {
+            1 => ConsortiumPartnerStatus.SitePartner,
+            2 => ConsortiumPartnerStatus.ApplicationPartner,
+            _ => ConsortiumPartnerStatus.None,
+        };
+    }
+
     private static async Task SaveMemberRequests(
         ConsortiumEntity consortiumEntity,
         UserAccount userAccount,
