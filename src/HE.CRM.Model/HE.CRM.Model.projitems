@@ -58,6 +58,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getsingleprogramme.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getsinglesite.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getsinglesitedetails.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getsiteapplications.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_gettemporaryportaldata.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_gettypeofhomeslist.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_invitecontacttojoinexistingorganisation.cs" />

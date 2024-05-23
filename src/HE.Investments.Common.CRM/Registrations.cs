@@ -39,6 +39,7 @@ public static class Registrations
                 _ => Task.FromResult(cachedAuthToken));
         });
         services.AddScoped<ICrmService, CrmService>();
+        services.Decorate<ICrmService, CrmServiceExceptionDecorator>();
     }
 
     private static bool IsTokenExpired(JwtSecurityToken token, IDateTimeProvider dateTimeProvider)

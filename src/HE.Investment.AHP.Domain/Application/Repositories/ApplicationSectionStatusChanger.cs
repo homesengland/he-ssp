@@ -1,5 +1,6 @@
 using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Domain.Application.Crm;
+using HE.Investments.Account.Shared.User;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Domain;
 
@@ -16,12 +17,13 @@ public class ApplicationSectionStatusChanger : IApplicationSectionStatusChanger
 
     public async Task ChangeSectionStatus(
         AhpApplicationId applicationId,
-        OrganisationId organisationId,
+        UserAccount userAccount,
         SectionType sectionType,
         SectionStatus targetStatus,
         CancellationToken cancellationToken)
     {
-        var dto = await _crmContext.GetOrganisationApplicationById(applicationId.Value, organisationId.Value, cancellationToken);
+        var organisationId = userAccount.SelectedOrganisationId().ToGuidAsString();
+        var dto = await _crmContext.GetOrganisationApplicationById(applicationId.Value, organisationId, cancellationToken);
         var dtoStatus = SectionStatusMapper.ToDto(targetStatus);
         var modificationTracker = new ModificationTracker();
 
@@ -45,7 +47,7 @@ public class ApplicationSectionStatusChanger : IApplicationSectionStatusChanger
 
         if (modificationTracker.IsModified)
         {
-            await _crmContext.Save(dto, organisationId.Value, cancellationToken);
+            await _crmContext.Save(dto, organisationId, userAccount.UserGlobalId.ToString(), cancellationToken);
         }
     }
 }

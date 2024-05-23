@@ -40,7 +40,7 @@ public class SaveFinishHomeTypesAnswerCommandHandler : HomeTypeCommandHandlerBas
 
         if (!request.IsCheckOnly)
         {
-            await _repository.Save(homeTypes, account.SelectedOrganisationId(), cancellationToken);
+            await _repository.Save(homeTypes, account, cancellationToken);
         }
 
         return OperationResult.Success();

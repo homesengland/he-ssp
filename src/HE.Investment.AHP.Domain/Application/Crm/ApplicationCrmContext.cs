@@ -6,7 +6,6 @@ using HE.Investments.Common.CRM.Model;
 using HE.Investments.Common.CRM.Serialization;
 using HE.Investments.Common.CRM.Services;
 using HE.Investments.Common.Extensions;
-using HE.Investments.Common.User;
 
 namespace HE.Investment.AHP.Domain.Application.Crm;
 
@@ -84,12 +83,9 @@ public class ApplicationCrmContext : IApplicationCrmContext
 
     private readonly ICrmService _service;
 
-    private readonly IUserContext _userContext;
-
-    public ApplicationCrmContext(ICrmService service, IUserContext userContext)
+    public ApplicationCrmContext(ICrmService service)
     {
         _service = service;
-        _userContext = userContext;
     }
 
     public async Task<AhpApplicationDto> GetOrganisationApplicationById(string id, string organisationId, CancellationToken cancellationToken)
@@ -104,11 +100,11 @@ public class ApplicationCrmContext : IApplicationCrmContext
         return await Get(request, cancellationToken);
     }
 
-    public async Task<AhpApplicationDto> GetUserApplicationById(string id, string organisationId, CancellationToken cancellationToken)
+    public async Task<AhpApplicationDto> GetUserApplicationById(string id, string organisationId, string userId, CancellationToken cancellationToken)
     {
         var request = new invln_getahpapplicationRequest
         {
-            invln_userid = _userContext.UserGlobalId,
+            invln_userid = userId,
             invln_organisationid = organisationId.TryToGuidAsString(),
             invln_applicationid = id.ToGuidAsString(),
             invln_appfieldstoretrieve = ApplicationCrmFields,
@@ -150,11 +146,11 @@ public class ApplicationCrmContext : IApplicationCrmContext
         return await GetAll(request, cancellationToken);
     }
 
-    public async Task<IList<AhpApplicationDto>> GetUserApplications(string organisationId, CancellationToken cancellationToken)
+    public async Task<IList<AhpApplicationDto>> GetUserApplications(string organisationId, string userId, CancellationToken cancellationToken)
     {
         var request = new invln_getmultipleahpapplicationsRequest
         {
-            inlvn_userid = _userContext.UserGlobalId,
+            inlvn_userid = userId,
             invln_organisationid = organisationId.TryToGuidAsString(),
             invln_appfieldstoretrieve = ApplicationListCrmFields,
         };
@@ -162,11 +158,11 @@ public class ApplicationCrmContext : IApplicationCrmContext
         return await GetAll(request, cancellationToken);
     }
 
-    public async Task<string> Save(AhpApplicationDto dto, string organisationId, CancellationToken cancellationToken)
+    public async Task<string> Save(AhpApplicationDto dto, string organisationId, string userId, CancellationToken cancellationToken)
     {
         var request = new invln_setahpapplicationRequest
         {
-            invln_userid = _userContext.UserGlobalId,
+            invln_userid = userId,
             invln_organisationid = organisationId.TryToGuidAsString(),
             invln_application = CrmResponseSerializer.Serialize(dto),
             invln_fieldstoupdate = ApplicationCrmFields,
@@ -181,6 +177,7 @@ public class ApplicationCrmContext : IApplicationCrmContext
     public async Task ChangeApplicationStatus(
         string applicationId,
         string organisationId,
+        string userId,
         ApplicationStatus applicationStatus,
         string? changeReason,
         bool representationsAndWarranties,
@@ -192,7 +189,7 @@ public class ApplicationCrmContext : IApplicationCrmContext
         {
             invln_applicationid = applicationId.ToGuidAsString(),
             invln_organisationid = organisationId.TryToGuidAsString(),
-            invln_userid = _userContext.UserGlobalId,
+            invln_userid = userId,
             invln_newapplicationstatus = crmStatus,
             invln_changereason = changeReason ?? string.Empty,
             invln_representationsandwarranties = representationsAndWarranties,
