@@ -47,7 +47,7 @@ namespace HE.CRM.AHP.Plugins.Services.Consortium
                     invln_Consortium.Fields.invln_LeadPartner});
 
             bool isLeadPartner = false;
-            bool isSidePartner = false;
+            bool isSitePartner = false;
             bool isAppPartner = false;
 
             if (applicationId != null)
@@ -64,18 +64,18 @@ namespace HE.CRM.AHP.Plugins.Services.Consortium
             {
                 TracingService.Trace("Check Access to Site");
                 isLeadPartner = IsConsortiumLeadPartner(consortium, organizationId);
-                isSidePartner = IsOrganizationSitePartner(siteId, organizationId);
+                isSitePartner = IsOrganizationSitePartner(siteId, organizationId);
             }
 
             if (isLeadPartner)
                 return true;
-            if (isSidePartner && operation == Operation.Get && (recordtype == RecordType.Site
+            if (isSitePartner && operation == Operation.Get && (recordtype == RecordType.Site
                 || recordtype == RecordType.Application))
             {
                 return true;
             }
 
-            if (isSidePartner && operation == Operation.Get && (recordtype == RecordType.AHPProject
+            if (isSitePartner && operation == Operation.Get && (recordtype == RecordType.AHPProject
                 || recordtype == RecordType.Application))
             {
                 return true;
@@ -93,8 +93,7 @@ namespace HE.CRM.AHP.Plugins.Services.Consortium
                 return true;
             }
             TracingService.Trace("Check web role");
-            UserHasAccess(externalUserId, new Guid(organizationId), siteId, applicationId);
-            return false;
+            return UserHasAccess(externalUserId, new Guid(organizationId), siteId, applicationId);
         }
 
         private bool IsApplicationPartner(invln_scheme application, string organizationId)
@@ -167,19 +166,19 @@ namespace HE.CRM.AHP.Plugins.Services.Consortium
             if (siteId != null)
             {
                 TracingService.Trace("Check For site");
-                accessToAction = HasUserHavePermitionToProvideOperation(Operation.Get, role, siteId, null, contact.ToEntityReference());
+                accessToAction = HasUserHavePermissionToProvideOperation(Operation.Get, role, siteId, null, contact.ToEntityReference());
             }
 
             if (applicationId != null)
             {
                 TracingService.Trace("Check For application");
-                accessToAction = HasUserHavePermitionToProvideOperation(Operation.Get, role, null, applicationId, contact.ToEntityReference());
+                accessToAction = HasUserHavePermissionToProvideOperation(Operation.Get, role, null, applicationId, contact.ToEntityReference());
             }
 
             return accessToAction;
         }
 
-        private bool HasUserHavePermitionToProvideOperation(Operation operation, int role, string siteId = null, string applicationId = null, EntityReference contactId = null)
+        private bool HasUserHavePermissionToProvideOperation(Operation operation, int role, string siteId = null, string applicationId = null, EntityReference contactId = null)
         {
 
             if (role == (int)invln_Permission.Admin)
