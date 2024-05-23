@@ -107,7 +107,11 @@ public class ConsortiumEntity : DomainEntity, IConsortiumEntity
         return true;
     }
 
-    public void RemoveMember(OrganisationId organisationId, bool? isConfirmed)
+    public async Task RemoveMember(
+        OrganisationId organisationId,
+        bool? isConfirmed,
+        IConsortiumPartnerStatusProvider consortiumPartnerStatusProvider,
+        CancellationToken cancellationToken)
     {
         if (isConfirmed.IsNotProvided())
         {
@@ -120,6 +124,16 @@ public class ConsortiumEntity : DomainEntity, IConsortiumEntity
         }
 
         var member = GetMember(organisationId);
+        var partnerStatus = await consortiumPartnerStatusProvider.GetConsortiumPartnerStatus(Id, member.Id, cancellationToken);
+        if (partnerStatus == ConsortiumPartnerStatus.SitePartner)
+        {
+            OperationResult.ThrowValidationError(nameof(isConfirmed), ConsortiumValidationErrors.IsSitePartner);
+        }
+
+        if (partnerStatus == ConsortiumPartnerStatus.ApplicationPartner)
+        {
+            OperationResult.ThrowValidationError(nameof(isConfirmed), ConsortiumValidationErrors.IsApplicationPartner);
+        }
 
         _removeRequests.Add(organisationId);
         _members.Remove(member);

@@ -38,6 +38,14 @@ public class IntegrationTestFixture<TProgram> : WebApplicationFactory<TProgram>
 
     protected Lazy<IServiceScope> Scope { get; }
 
+    public async Task<IList<string>> VerifyPrerequisites()
+    {
+        var prerequisites = Scope.Value.ServiceProvider.GetServices<IIntegrationTestPrerequisite>();
+        var results = await Task.WhenAll(prerequisites.Select(x => x.Verify(LoginData)));
+
+        return results.Where(x => !string.IsNullOrEmpty(x)).Select(x => x!).ToList();
+    }
+
     public void ProvideLoginData(ILoginData loginData)
     {
         LoginData.Change(loginData);

@@ -48,7 +48,7 @@ public class CreateApplicationCommandHandler : IRequestHandler<CreateApplication
             new ApplicationTenure(request.Tenure),
             applicationPartners,
             new ApplicationStateFactory(account));
-        var application = await _repository.Save(applicationToCreate, account.SelectedOrganisationId(), cancellationToken);
+        var application = await _repository.Save(applicationToCreate, account, cancellationToken);
 
         return new OperationResult<AhpApplicationId>(application.Id);
     }

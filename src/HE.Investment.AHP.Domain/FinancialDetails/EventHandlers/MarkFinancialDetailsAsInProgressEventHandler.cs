@@ -29,6 +29,6 @@ public class MarkFinancialDetailsAsInProgressEventHandler : IEventHandler<Scheme
         }
 
         financialDetails.MarkAsNotCompleted();
-        await _financialDetailsRepository.Save(financialDetails, account.SelectedOrganisationId(), cancellationToken);
+        await _financialDetailsRepository.Save(financialDetails, account, cancellationToken);
     }
 }

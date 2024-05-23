@@ -119,13 +119,13 @@ public class HomeTypeRepository : IHomeTypeRepository
         return homeType;
     }
 
-    public async Task Save(HomeTypesEntity homeTypes, OrganisationId organisationId, CancellationToken cancellationToken)
+    public async Task Save(HomeTypesEntity homeTypes, UserAccount userAccount, CancellationToken cancellationToken)
     {
         if (homeTypes.IsStatusChanged)
         {
             await _sectionStatusChanger.ChangeSectionStatus(
                 homeTypes.Application.Id,
-                organisationId,
+                userAccount,
                 SectionType.HomeTypes,
                 homeTypes.Status,
                 cancellationToken);
@@ -134,7 +134,7 @@ public class HomeTypeRepository : IHomeTypeRepository
         var homeTypeToRemove = homeTypes.PopRemovedHomeType();
         while (homeTypeToRemove != null)
         {
-            await _homeTypeCrmContext.Remove(homeTypes.Application.Id.Value, homeTypeToRemove.Id.Value, organisationId.Value, cancellationToken);
+            await _homeTypeCrmContext.Remove(homeTypes.Application.Id.Value, homeTypeToRemove.Id.Value, userAccount.SelectedOrganisationId().ToGuidAsString(), cancellationToken);
             await _eventDispatcher.Publish(
                 new HomeTypeHasBeenRemovedEvent(homeTypeToRemove.Application.Id, homeTypeToRemove.Id),
                 cancellationToken);

@@ -1,48 +1,52 @@
+using HE.Investment.AHP.Domain.Application.Crm;
+using HE.Investment.AHP.Domain.Programme.Config;
+using HE.Investments.AHP.Consortium.Contract;
+using HE.Investments.AHP.Consortium.Domain.Crm;
 using HE.Investments.Common.Contract;
-using HE.Investments.Common.CRM.Mappers;
-using HE.Investments.Common.CRM.Model;
-using HE.Investments.Common.CRM.Services;
-using HE.Investments.Common.Extensions;
 using HE.Investments.IntegrationTestsFramework.Auth;
 
 namespace HE.Investments.AHP.IntegrationTests.Crm;
 
 public class AhpCrmContext
 {
-    private readonly ICrmService _service;
+    private readonly IApplicationCrmContext _applicationCrmContext;
 
-    public AhpCrmContext(ICrmService service)
+    private readonly IConsortiumCrmContext _consortiumCrmContext;
+
+    private readonly string _ahpProgrammeId;
+
+    public AhpCrmContext(
+        IApplicationCrmContext applicationCrmContext,
+        IConsortiumCrmContext consortiumCrmContext,
+        IProgrammeSettings programmeSettings)
     {
-        _service = service;
+        _applicationCrmContext = applicationCrmContext;
+        _consortiumCrmContext = consortiumCrmContext;
+        _ahpProgrammeId = programmeSettings.AhpProgrammeId;
     }
 
     public async Task ChangeApplicationStatus(string applicationId, ApplicationStatus applicationStatus, ILoginData loginData)
     {
-        var crmStatus = AhpApplicationStatusMapper.MapToCrmStatus(applicationStatus);
-
-        var request = new invln_changeahpapplicationstatusRequest
-        {
-            invln_applicationid = applicationId.ToGuidAsString(),
-            invln_organisationid = loginData.OrganisationId,
-            invln_userid = loginData.UserGlobalId,
-            invln_newapplicationstatus = crmStatus,
-            invln_changereason = "[IntegrationTests]",
-        };
-
-        await _service.ExecuteAsync<invln_changeahpapplicationstatusRequest, invln_changeahpapplicationstatusResponse>(
-            request,
-            r => r.ResponseName,
+        await _applicationCrmContext.ChangeApplicationStatus(
+            applicationId,
+            loginData.OrganisationId,
+            loginData.UserGlobalId,
+            applicationStatus,
+            "[IntegrationTests]",
+            true,
             CancellationToken.None);
     }
 
-    public async Task<bool> HasConsortium(ILoginData loginData)
+    public async Task<(ConsortiumId Id, bool IsLeadPartner)?> GetAhpConsortium(ILoginData loginData)
     {
-        var request = new invln_getconsortiumsRequest { invln_organisationid = loginData.OrganisationId };
-        var response = await _service.ExecuteAsync<invln_getconsortiumsRequest, invln_getconsortiumsResponse>(
-            request,
-            r => r.invln_consortiums,
-            CancellationToken.None);
+        var consortia = await _consortiumCrmContext.GetConsortiumsListByMemberId(loginData.OrganisationId, CancellationToken.None);
+        var consortium = consortia.FirstOrDefault(x => x.programmeId == _ahpProgrammeId);
 
-        return !string.IsNullOrWhiteSpace(response);
+        if (consortium == null)
+        {
+            return null;
+        }
+
+        return (ConsortiumId.From(consortium.id), consortium.leadPartnerId == loginData.OrganisationId);
     }
 }
