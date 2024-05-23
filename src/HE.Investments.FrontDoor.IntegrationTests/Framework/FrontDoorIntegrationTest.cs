@@ -15,7 +15,6 @@ namespace HE.Investments.FrontDoor.IntegrationTests.Framework;
 [Collection(nameof(FrontDoorIntegrationTestSharedContext))]
 public class FrontDoorIntegrationTest : IntegrationTestBase<Program>, IDisposable
 {
-
     protected FrontDoorIntegrationTest(FrontDoorIntegrationTestFixture fixture, ITestOutputHelper output)
         : base(fixture)
     {

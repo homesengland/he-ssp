@@ -57,7 +57,7 @@ public class UserOrganisationTests : AccountViewTestBase
             programmesToAccess:
             [
                 new(
-                    new ProgrammeModel(ProgrammeType.Ahp, "P1", "Desc1", "Title", "V"),
+                    new ProgrammeModel(ProgrammeType.Ahp, "P1", "Desc1", "Title", "Label", "V"),
                     []),
             ]);
 
@@ -106,7 +106,7 @@ public class UserOrganisationTests : AccountViewTestBase
         return
         [
             new(
-                new ProgrammeModel(ProgrammeType.Ahp, "P1", "Desc1", "Title", "V"),
+                new ProgrammeModel(ProgrammeType.Ahp, "P1", "Desc1", "Title", "Label", "V"),
                 [new("1", "AP1", ApplicationStatus.Withdrawn, "http://localhost/app/")]),
         ];
     }
