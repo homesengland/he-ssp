@@ -189,7 +189,7 @@ namespace HE.CRM.AHP.Plugins.Services.DeliveryPhase
                     .FirstOrDefault(x => x.invln_milestone.Value == (int)invln_Milestone.PC).invln_percentagepaidonmilestone.Value / 100;
             var fundingForPhase = (fundingRequired / numberOfHouseApplication) * numberOfHousePhase;
 
-            if (account.invln_UnregisteredBody == true)
+            if (account.invln_UnregisteredBody == true || account.invln_UnregisteredBody == null)
             {
                 deliveryPhaseToUpdateOrCreate.invln_CompletionValue = new Money((fundingRequired / numberOfHouseApplication) * numberOfHousePhase);
                 deliveryPhaseToUpdateOrCreate.invln_StartOnSiteValue = new Money(0);
