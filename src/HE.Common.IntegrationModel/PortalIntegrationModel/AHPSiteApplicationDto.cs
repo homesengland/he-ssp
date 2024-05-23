@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Security.Policy;
 
 namespace HE.Common.IntegrationModel.PortalIntegrationModel
 {
@@ -12,5 +11,6 @@ namespace HE.Common.IntegrationModel.PortalIntegrationModel
         public string siteStatus { get; set; }
         public string ahpProjectId { get; set; }
         public List<FrontDoorHPApplicationDto> AhpApplications { get; set; }
+
     }
 }

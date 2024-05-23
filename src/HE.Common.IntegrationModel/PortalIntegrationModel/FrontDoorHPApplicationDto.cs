@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Security.Policy;
-
 namespace HE.Common.IntegrationModel.PortalIntegrationModel
 {
     public class FrontDoorHPApplicationDto
