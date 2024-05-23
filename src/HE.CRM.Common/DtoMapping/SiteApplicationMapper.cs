@@ -10,9 +10,9 @@ namespace HE.CRM.Common.DtoMapping
 {
     public class SiteApplicationMapper
     {
-        public static AHPSiteApplicationDto MapRegularEntityToDto(invln_Sites site, List<invln_scheme> applications)
+        public static AhpSiteApplicationDto MapRegularEntityToDto(invln_Sites site, List<invln_scheme> applications)
         {
-            var siteApp = new AHPSiteApplicationDto
+            var siteApp = new AhpSiteApplicationDto
             {
                 SiteId = site.Id.ToString(),
                 fdSiteId = site.invln_HeProjectLocalAuthorityId?.Id.ToString(),
