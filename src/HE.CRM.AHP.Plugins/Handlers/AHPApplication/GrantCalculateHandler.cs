@@ -23,18 +23,18 @@ namespace HE.CRM.AHP.Plugins.Handlers.AHPApplication
 
         public override bool CanWork()
         {
-            //TracingService.Trace($"CanWork: statuscodeName={Target.statuscodeName}({Target.StatusCode.Value}), valueChanged={ValueChanged(invln_scheme.Fields.StatusCode)}");
-            //Logger.Trace($"CanWork: statuscodeName={Target.statuscodeName}({Target.StatusCode.Value}), valueChanged={ValueChanged(invln_scheme.Fields.StatusCode)}");
             var disabledStatusesForCalculation = new List<int>()
             {
                 (int)invln_scheme_StatusCode.Draft,
                 (int)invln_scheme_StatusCode.Deleted,
                 (int)invln_scheme_StatusCode.Inactive
             };
-            var isSubmitting = (base.CurrentState.StatusCode.Value == (int)invln_scheme_StatusCode.ApplicationSubmitted) && ValueChanged(invln_scheme.Fields.StatusCode);
+            var currentStatuCode = CurrentState.StatusCode.Value;
+
+            var isSubmitting = (currentStatuCode == (int)invln_scheme_StatusCode.ApplicationSubmitted) && ValueChanged(invln_scheme.Fields.StatusCode);
             return isSubmitting ||
                 (
-                    !disabledStatusesForCalculation.Contains(Target.StatusCode.Value) &&
+                    !disabledStatusesForCalculation.Contains(currentStatuCode) &&
                         (
                             ValueChanged(invln_scheme.Fields.invln_fundingrequired) ||
                             ValueChanged(invln_scheme.Fields.invln_noofhomes) ||

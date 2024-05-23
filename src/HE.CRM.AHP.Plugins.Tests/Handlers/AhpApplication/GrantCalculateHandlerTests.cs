@@ -39,7 +39,7 @@ namespace HE.CRM.AHP.Plugins.Tests.Handlers.AhpApplication
 
             fakedContext.Initialize(ahpApplicationTarget);
 
-            Asset("Update", (int)StageEnum.PreOperation);
+            Asset("Update", (int)StageEnum.PostOperation);
 
             // Act
 
@@ -67,7 +67,7 @@ namespace HE.CRM.AHP.Plugins.Tests.Handlers.AhpApplication
 
             fakedContext.Initialize(ahpApplicationTarget);
 
-            Asset("Update", (int)StageEnum.PreOperation);
+            Asset("Update", (int)StageEnum.PostOperation);
 
             // Act
 
@@ -96,7 +96,7 @@ namespace HE.CRM.AHP.Plugins.Tests.Handlers.AhpApplication
 
             fakedContext.Initialize(ahpApplicationTarget);
 
-            Asset("Update", (int)StageEnum.PreOperation);
+            Asset("Update", (int)StageEnum.PostOperation);
 
             // Act
 
@@ -125,7 +125,7 @@ namespace HE.CRM.AHP.Plugins.Tests.Handlers.AhpApplication
 
             fakedContext.Initialize(ahpApplicationTarget);
 
-            Asset("Update", (int)StageEnum.PreOperation);
+            Asset("Update", (int)StageEnum.PostOperation);
 
             // Act
 
@@ -218,6 +218,7 @@ namespace HE.CRM.AHP.Plugins.Tests.Handlers.AhpApplication
 
             Target = ahpApplication;
 
+#pragma warning disable CS0618 // Type or member is obsolete
             fakedContext.Initialize(
                 new List<Entity>()
                 {
@@ -231,8 +232,9 @@ namespace HE.CRM.AHP.Plugins.Tests.Handlers.AhpApplication
                     grantbenchmark3
                 }
             );
+#pragma warning restore CS0618 // Type or member is obsolete
 
-            Asset("Update", (int)StageEnum.PreOperation);
+            Asset("Update", (int)StageEnum.PostOperation);
 
             // Act
 
@@ -246,9 +248,40 @@ namespace HE.CRM.AHP.Plugins.Tests.Handlers.AhpApplication
             // Assert
 
             Assert.AreEqual(25000, applicationResult.invln_grantperunit.Value);
-            Assert.AreEqual((decimal)65.79, applicationResult.invln_grantasapercentageoftotalschemecosts.Value, (decimal)0.01);
+            Assert.AreEqual((decimal)65.79, applicationResult.invln_grantasaoftotalschemecosts.Value, (decimal)0.01);
             Assert.AreEqual((decimal)43.86, applicationResult.invln_regionalbenchmarkagainstthegrantperunit.Value, (decimal)0.01);
             Assert.AreEqual(21250, applicationResult.invln_WorkssCostsm2.Value);
+        }
+
+        [TestMethod]
+        public void CanWork_UpdateFundingrequired_SkipWork()
+        {
+            var ahpApplicationPreImage = new invln_scheme()
+            {
+                Id = Guid.NewGuid(),
+                StatusCode = new OptionSetValue((int)invln_scheme_StatusCode.Draft)
+            };
+
+            var ahpApplicationTarget = ahpApplicationPreImage.Clone<invln_scheme>();
+            ahpApplicationTarget.invln_fundingrequired = new Money(12000);
+            ahpApplicationTarget.invln_noofhomes = 4;
+
+            PreImage = ahpApplicationPreImage;
+            Target = ahpApplicationTarget;
+
+            fakedContext.Initialize(
+                ahpApplicationTarget
+            );
+
+            Asset("Update", (int)StageEnum.PostOperation);
+
+            // Act
+
+            var canWork = handler.CanWork();
+
+            // Assert
+
+            Assert.AreEqual(false, canWork);
         }
     }
 }
