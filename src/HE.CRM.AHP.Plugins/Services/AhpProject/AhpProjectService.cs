@@ -26,7 +26,7 @@ namespace HE.CRM.AHP.Plugins.Services.AhpProject
         private readonly IContactWebroleRepository _contactWebroleRepository;
         private readonly IConsortiumMemberRepository _consortiumMemberRepository;
         private readonly IHeLocalAuthorityRepository _heLocalAuthorityRepository;
-
+        private readonly IConsortiumRepository _consortiumRepository;
 
         public AhpProjectService(CrmServiceArgs args) : base(args)
         {
@@ -37,6 +37,7 @@ namespace HE.CRM.AHP.Plugins.Services.AhpProject
             _contactWebroleRepository = CrmRepositoriesFactory.Get<IContactWebroleRepository>();
             _consortiumMemberRepository = CrmRepositoriesFactory.Get<IConsortiumMemberRepository>();
             _heLocalAuthorityRepository = CrmRepositoriesFactory.Get<IHeLocalAuthorityRepository>();
+            _consortiumRepository = CrmRepositoriesFactory.Get<IConsortiumRepository>();
         }
 
         public string CreateRecordFromPortal(string externalContactId, string organisationId, string heProjectId, string ahpProjectName, string consortiumId)
@@ -302,21 +303,28 @@ namespace HE.CRM.AHP.Plugins.Services.AhpProject
 
         private bool IsOrganisationMemberOfConsortium(string organisation, string consortium)
         {
-            var consortiumMembers = _consortiumMemberRepository.GetByAttribute(invln_ConsortiumMember.Fields.invln_Consortium, new Guid(consortium)).ToList();
-            if (consortiumMembers == null)
+            var consortiumCRM = _consortiumRepository.GetById(new Guid(consortium), new string[] { invln_Consortium.Fields.invln_LeadPartner });
+            if (consortiumCRM == null)
             {
-                TracingService.Trace("Consortium has no members");
+                TracingService.Trace("Consortium does not exist");
                 return false;
             }
-            TracingService.Trace($"ConsortiumMember downloaded.");
 
+            var isOrganisationLeadPartenr = consortiumCRM.invln_LeadPartner.Id == new Guid(organisation);
+            var consortiumMembers = _consortiumMemberRepository.GetByAttribute(invln_ConsortiumMember.Fields.invln_Consortium, new Guid(consortium)).ToList();
             invln_ConsortiumMember consortiumMember = null;
-            consortiumMember = consortiumMembers.Find(x => x.invln_Partner.Id == new Guid(organisation));
-            if ( consortiumMember == null)
+            if (consortiumMembers != null)
+            {
+                TracingService.Trace($"ConsortiumMember downloaded.");
+                consortiumMember = consortiumMembers.Find(x => x.invln_Partner.Id == new Guid(organisation));
+            }
+
+            if (isOrganisationLeadPartenr == false && consortiumMember == null)
             {
                 TracingService.Trace("Organisation is not a member of Consortium");
                 return false;
             }
+
             TracingService.Trace("Organisation is a member of Consortium");
             return true;
         }
