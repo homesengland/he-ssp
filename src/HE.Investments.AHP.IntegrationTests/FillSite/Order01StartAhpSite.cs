@@ -29,14 +29,6 @@ public class Order01StartAhpSite : AhpIntegrationTest
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
-    [Order(0)]
-    public async Task Order00_CheckPrerequisites()
-    {
-        var hasConsortium = await AhpCrmContext.HasConsortium(LoginData);
-        hasConsortium.Should().BeTrue("AHP tests requires Organisation which is Consortium Lead Partner");
-    }
-
-    [Fact(Skip = AhpConfig.SkipTest)]
     [Order(1)]
     public async Task Order01_ShouldOpenStartSite()
     {

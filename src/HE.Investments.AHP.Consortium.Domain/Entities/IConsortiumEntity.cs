@@ -10,5 +10,9 @@ public interface IConsortiumEntity
 {
     Task AddMember(InvestmentsOrganisation organisation, IIsPartOfConsortium isPartOfConsortium, CancellationToken cancellationToken);
 
-    void RemoveMember(OrganisationId organisationId, bool? isConfirmed);
+    Task RemoveMember(
+        OrganisationId organisationId,
+        bool? isConfirmed,
+        IConsortiumPartnerStatusProvider consortiumPartnerStatusProvider,
+        CancellationToken cancellationToken);
 }

@@ -11,7 +11,6 @@ using HE.Investment.AHP.Domain.Scheme.Repositories;
 using HE.Investment.AHP.Domain.Scheme.ValueObjects;
 using HE.Investment.AHP.Domain.Site.Repositories;
 using HE.Investments.Account.Shared.User;
-using HE.Investments.Common.Contract;
 using HE.Investments.Common.Extensions;
 
 namespace HE.Investment.AHP.Domain.FinancialDetails.Repositories;
@@ -46,7 +45,7 @@ public class FinancialDetailsRepository : IFinancialDetailsRepository
                 id.Value,
                 organisationId,
                 cancellationToken)
-            : await _crmContext.GetUserApplicationById(id.Value, organisationId, cancellationToken);
+            : await _crmContext.GetUserApplicationById(id.Value, organisationId, userAccount.UserGlobalId.ToString(), cancellationToken);
         var applicationBasicInfo = await _applicationRepository.GetApplicationBasicInfo(id, userAccount, cancellationToken);
         var schemeFunding = (await _schemeRepository.GetByApplicationId(id, userAccount, false, cancellationToken)).Funding;
         var siteBasicInfo = await _siteRepository.GetSiteBasicInfo(SiteId.From(application.siteId), userAccount, cancellationToken);
@@ -54,14 +53,15 @@ public class FinancialDetailsRepository : IFinancialDetailsRepository
         return CreateEntity(application, applicationBasicInfo, siteBasicInfo, schemeFunding);
     }
 
-    public async Task<FinancialDetailsEntity> Save(FinancialDetailsEntity financialDetails, OrganisationId organisationId, CancellationToken cancellationToken)
+    public async Task<FinancialDetailsEntity> Save(FinancialDetailsEntity financialDetails, UserAccount userAccount, CancellationToken cancellationToken)
     {
         if (!financialDetails.IsModified)
         {
             return financialDetails;
         }
 
-        var dto = await _crmContext.GetOrganisationApplicationById(financialDetails.ApplicationBasicInfo.Id.Value, organisationId.Value, cancellationToken);
+        var organisationId = userAccount.SelectedOrganisationId().ToGuidAsString();
+        var dto = await _crmContext.GetOrganisationApplicationById(financialDetails.ApplicationBasicInfo.Id.Value, organisationId, cancellationToken);
         dto.actualAcquisitionCost = financialDetails.LandStatus.PurchasePrice?.Value;
         dto.expectedAcquisitionCost = financialDetails.LandStatus.ExpectedPurchasePrice?.Value;
         dto.isPublicLand = financialDetails.LandValue.IsPublicLand;
@@ -73,7 +73,7 @@ public class FinancialDetailsRepository : IFinancialDetailsRepository
         ExpectedContributionsToSchemeMapper.MapFromExpectedContributions(financialDetails.ExpectedContributions, dto);
         PublicGrantsMapper.MapFromPublicGrants(financialDetails.PublicGrants, dto);
 
-        _ = await _crmContext.Save(dto, organisationId.Value, cancellationToken);
+        _ = await _crmContext.Save(dto, organisationId, userAccount.UserGlobalId.ToString(), cancellationToken);
 
         return financialDetails;
     }

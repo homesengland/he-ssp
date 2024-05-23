@@ -1,8 +1,10 @@
 using FluentAssertions;
 using HE.Investments.AHP.Consortium.Domain.Entities;
+using HE.Investments.AHP.Consortium.Domain.Repositories;
 using HE.Investments.AHP.Consortium.Domain.Tests.TestData;
 using HE.Investments.AHP.Consortium.Domain.Tests.TestObjectBuilders;
 using HE.Investments.Common.Contract.Exceptions;
+using Moq;
 using Xunit;
 
 namespace HE.Investments.AHP.Consortium.Domain.Tests.Entities.DraftConsortiumEntityTests;
@@ -10,7 +12,7 @@ namespace HE.Investments.AHP.Consortium.Domain.Tests.Entities.DraftConsortiumEnt
 public class RemoveMemberTests
 {
     [Fact]
-    public void ShouldThrowException_WhenConfirmationIsNotProvided()
+    public async Task ShouldThrowException_WhenConfirmationIsNotProvided()
     {
         // given
         var testCandidate = new DraftConsortiumEntityBuilder()
@@ -19,14 +21,18 @@ public class RemoveMemberTests
             .Build();
 
         // when
-        var removeMember = () => testCandidate.RemoveMember(InvestmentsOrganisationTestData.CactusDevelopments.Id, null);
+        var removeMember = () => testCandidate.RemoveMember(
+            InvestmentsOrganisationTestData.CactusDevelopments.Id,
+            null,
+            It.IsAny<IConsortiumPartnerStatusProvider>(),
+            CancellationToken.None);
 
         // then
-        removeMember.Should().Throw<DomainValidationException>();
+        await removeMember.Should().ThrowAsync<DomainValidationException>();
     }
 
     [Fact]
-    public void ShouldDoNothing_WhenConfirmationIsNo()
+    public async Task ShouldDoNothing_WhenConfirmationIsNo()
     {
         // given
         var testCandidate = new DraftConsortiumEntityBuilder()
@@ -35,7 +41,11 @@ public class RemoveMemberTests
             .Build();
 
         // when
-        testCandidate.RemoveMember(InvestmentsOrganisationTestData.CactusDevelopments.Id, false);
+        await testCandidate.RemoveMember(
+            InvestmentsOrganisationTestData.CactusDevelopments.Id,
+            false,
+            It.IsAny<IConsortiumPartnerStatusProvider>(),
+            CancellationToken.None);
 
         // then
         testCandidate.Members.Should()
@@ -46,7 +56,7 @@ public class RemoveMemberTests
     }
 
     [Fact]
-    public void ShouldThrowException_WhenMemberIsNotPartOfConsortium()
+    public async Task ShouldThrowException_WhenMemberIsNotPartOfConsortium()
     {
         // given
         var testCandidate = new DraftConsortiumEntityBuilder()
@@ -54,14 +64,18 @@ public class RemoveMemberTests
             .Build();
 
         // when
-        var removeMember = () => testCandidate.RemoveMember(InvestmentsOrganisationTestData.CactusDevelopments.Id, true);
+        var removeMember = () => testCandidate.RemoveMember(
+            InvestmentsOrganisationTestData.CactusDevelopments.Id,
+            true,
+            It.IsAny<IConsortiumPartnerStatusProvider>(),
+            CancellationToken.None);
 
         // then
-        removeMember.Should().Throw<NotFoundException>();
+        await removeMember.Should().ThrowAsync<NotFoundException>();
     }
 
     [Fact]
-    public void ShouldRemoveConsortiumMember_WhenConfirmationIsYes()
+    public async Task ShouldRemoveConsortiumMember_WhenConfirmationIsYes()
     {
         // given
         var testCandidate = new DraftConsortiumEntityBuilder()
@@ -70,7 +84,11 @@ public class RemoveMemberTests
             .Build();
 
         // when
-        testCandidate.RemoveMember(InvestmentsOrganisationTestData.CactusDevelopments.Id, true);
+        await testCandidate.RemoveMember(
+            InvestmentsOrganisationTestData.CactusDevelopments.Id,
+            true,
+            It.IsAny<IConsortiumPartnerStatusProvider>(),
+            CancellationToken.None);
 
         // then
         testCandidate.Members.Should().BeEmpty();

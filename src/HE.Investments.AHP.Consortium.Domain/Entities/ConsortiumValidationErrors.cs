@@ -6,5 +6,9 @@ internal static class ConsortiumValidationErrors
 
     public const string IsPartOfOtherConsortium = "The organisation you are trying to add is already added or being added to another consortium";
 
+    public const string IsSitePartner = "This organisation is a Site Partner";
+
+    public const string IsApplicationPartner = "This organisation is an Application Partner";
+
     public const string RemoveConfirmationNotSelected = "Select whether you want to remove this organisation from consortium";
 }

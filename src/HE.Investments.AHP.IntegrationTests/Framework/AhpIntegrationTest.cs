@@ -12,7 +12,7 @@ using Xunit.Abstractions;
 namespace HE.Investments.AHP.IntegrationTests.Framework;
 
 [Collection(nameof(AhpIntegrationTestSharedContext))]
-public class AhpIntegrationTest : IntegrationTestBase<Program>, IAsyncLifetime
+public class AhpIntegrationTest : IntegrationTestBase<Program>
 {
     private readonly ITestOutputHelper _output;
 
@@ -41,15 +41,11 @@ public class AhpIntegrationTest : IntegrationTestBase<Program>, IAsyncLifetime
 
     protected ILoginData LoginData { get; }
 
-    public virtual Task InitializeAsync()
+    public override async Task DisposeAsync()
     {
-        return Task.CompletedTask;
-    }
+        await base.DisposeAsync();
 
-    public Task DisposeAsync()
-    {
         _output.WriteLine($"Elapsed time: {Stopwatch.Elapsed.TotalSeconds} sec");
-        return Task.CompletedTask;
     }
 
     public async Task ChangeApplicationStatus(string applicationId, ApplicationStatus applicationStatus)

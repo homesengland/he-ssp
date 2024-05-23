@@ -38,7 +38,7 @@ public abstract class FinancialDetailsCommandHandlerBase
             return domainValidationException.OperationResult;
         }
 
-        await _repository.Save(financialDetails, account.SelectedOrganisationId(), cancellationToken);
+        await _repository.Save(financialDetails, account, cancellationToken);
         return OperationResult.Success();
     }
 }

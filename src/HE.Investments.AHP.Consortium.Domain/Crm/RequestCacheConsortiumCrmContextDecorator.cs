@@ -39,6 +39,11 @@ public class RequestCacheConsortiumCrmContextDecorator : IConsortiumCrmContext
         return await _decorated.IsConsortiumExistForProgrammeAndOrganisation(programmeId, organisationId, cancellationToken);
     }
 
+    public async Task<int> GetConsortiumPartnerStatus(string consortiumId, string organisationId, CancellationToken cancellationToken)
+    {
+        return await _decorated.GetConsortiumPartnerStatus(consortiumId, organisationId, cancellationToken);
+    }
+
     public async Task CreateJoinConsortiumRequest(string consortiumId, string organisationId, string userId, CancellationToken cancellationToken)
     {
         _cache.Delete(consortiumId.ToGuidAsString());

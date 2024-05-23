@@ -1,11 +1,14 @@
+using System.Globalization;
+using System.Text;
 using AngleSharp.Html.Dom;
 using HE.Investments.IntegrationTestsFramework.Config;
 using HE.Investments.TestsUtils.Extensions;
 using Microsoft.FeatureManagement;
+using Xunit;
 
 namespace HE.Investments.IntegrationTestsFramework;
 
-public class IntegrationTestBase<TProgram>
+public class IntegrationTestBase<TProgram> : IAsyncLifetime
     where TProgram : class
 {
     private readonly IntegrationTestFixture<TProgram> _fixture;
@@ -19,6 +22,30 @@ public class IntegrationTestBase<TProgram>
     protected IntegrationTestClient TestClient { get; }
 
     protected IFeatureManager FeatureManager => _fixture.FeatureManager;
+
+    public virtual async Task InitializeAsync()
+    {
+        var prerequisiteCheckResult = GetSharedDataOrNull<IList<string>>(CommonKeys.PrerequisiteCheckResult) ?? await _fixture.VerifyPrerequisites();
+        SetSharedData(CommonKeys.PrerequisiteCheckResult, prerequisiteCheckResult);
+
+        if (prerequisiteCheckResult.Count > 0)
+        {
+            var errorBuilder = new StringBuilder();
+            errorBuilder.AppendLine("Integration tests prerequisite check failed:");
+
+            foreach (var result in prerequisiteCheckResult)
+            {
+                errorBuilder.AppendLine(CultureInfo.InvariantCulture, $" - {result}");
+            }
+
+            Assert.Fail(errorBuilder.ToString());
+        }
+    }
+
+    public virtual Task DisposeAsync()
+    {
+        return Task.CompletedTask;
+    }
 
     protected void SaveCurrentPage()
     {

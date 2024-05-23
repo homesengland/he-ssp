@@ -21,7 +21,6 @@ using HE.Investments.Common.Domain;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Infrastructure.Events;
 using HE.Investments.FrontDoor.Shared.Project;
-using ApplicationSection = HE.Investment.AHP.Domain.Application.ValueObjects.ApplicationSection;
 
 namespace HE.Investment.AHP.Domain.Application.Repositories;
 
@@ -59,11 +58,16 @@ public class ApplicationRepository : IApplicationRepository
         return await _applicationCrmContext.IsNameExist(applicationName.Value, organisationId.ToGuidAsString(), cancellationToken);
     }
 
-    public async Task<bool> IsExist(AhpApplicationId applicationId, OrganisationId organisationId, CancellationToken cancellationToken)
+    public async Task<bool> IsExist(AhpApplicationId applicationId, UserAccount userAccount, CancellationToken cancellationToken)
     {
         try
         {
-            var application = await _applicationCrmContext.GetUserApplicationById(applicationId.ToGuidAsString(), organisationId.ToGuidAsString(), cancellationToken);
+            var application = await _applicationCrmContext.GetUserApplicationById(
+                applicationId.ToGuidAsString(),
+                userAccount.SelectedOrganisationId().ToGuidAsString(),
+                userAccount.UserGlobalId.ToString(),
+                cancellationToken);
+
             return application.IsProvided();
         }
         catch (NotFoundException)
@@ -110,13 +114,14 @@ public class ApplicationRepository : IApplicationRepository
         return await GetApplications(userAccount, paginationRequest, a => a.siteId == siteId.ToGuidAsString(), cancellationToken);
     }
 
-    public async Task<ApplicationEntity> Save(ApplicationEntity application, OrganisationId organisationId, CancellationToken cancellationToken)
+    public async Task<ApplicationEntity> Save(ApplicationEntity application, UserAccount userAccount, CancellationToken cancellationToken)
     {
         if (application.IsStatusModified)
         {
             await _applicationCrmContext.ChangeApplicationStatus(
                 application.Id.ToGuidAsString(),
-                organisationId.ToGuidAsString(),
+                userAccount.SelectedOrganisationId().ToGuidAsString(),
+                userAccount.UserGlobalId.ToString(),
                 application.Status,
                 application.ChangeStatusReason,
                 application.RepresentationsAndWarranties.Value,
@@ -128,12 +133,13 @@ public class ApplicationRepository : IApplicationRepository
             return application;
         }
 
+        var organisationId = userAccount.SelectedOrganisationId().ToGuidAsString();
         var dto = application.Id.IsNew
             ? new AhpApplicationDto { programmeId = _settings.AhpProgrammeId }
-            : await _applicationCrmContext.GetOrganisationApplicationById(application.Id.ToGuidAsString(), organisationId.ToGuidAsString(), cancellationToken);
+            : await _applicationCrmContext.GetOrganisationApplicationById(application.Id.ToGuidAsString(), organisationId, cancellationToken);
         dto.name = application.Name.Value;
         dto.tenure = ApplicationTenureMapper.ToDto(application.Tenure);
-        dto.organisationId = organisationId.ToGuidAsString();
+        dto.organisationId = organisationId;
         dto.applicationStatus = AhpApplicationStatusMapper.MapToCrmStatus(application.Status);
         dto.siteId = application.SiteId.ToGuidAsString();
         dto.developingPartnerId = application.ApplicationPartners.DevelopingPartner.Id.ToGuidAsString();
@@ -141,7 +147,7 @@ public class ApplicationRepository : IApplicationRepository
         dto.ownerOfTheHomesAfterCompletionId = application.ApplicationPartners.OwnerOfTheHomes.Id.ToGuidAsString();
         dto.applicationPartnerConfirmation = application.ApplicationPartners.ArePartnersConfirmed;
 
-        var id = await _applicationCrmContext.Save(dto, organisationId.ToGuidAsString(), cancellationToken);
+        var id = await _applicationCrmContext.Save(dto, organisationId, userAccount.UserGlobalId.ToString(), cancellationToken);
         if (application.Id.IsNew)
         {
             var applicationId = AhpApplicationId.From(id);
@@ -224,7 +230,7 @@ public class ApplicationRepository : IApplicationRepository
         var organisationId = userAccount.SelectedOrganisationId().ToGuidAsString();
         var applications = userAccount.CanViewAllApplications()
             ? await _applicationCrmContext.GetOrganisationApplications(organisationId, cancellationToken)
-            : await _applicationCrmContext.GetUserApplications(organisationId, cancellationToken);
+            : await _applicationCrmContext.GetUserApplications(organisationId, userAccount.UserGlobalId.ToString(), cancellationToken);
 
         var filtered = applications
             .Where(x => filter == null || filter(x))
@@ -240,6 +246,6 @@ public class ApplicationRepository : IApplicationRepository
         var organisationId = userAccount.SelectedOrganisationId().ToGuidAsString();
         return userAccount.CanViewAllApplications()
             ? await _applicationCrmContext.GetOrganisationApplicationById(id.ToGuidAsString(), organisationId, cancellationToken)
-            : await _applicationCrmContext.GetUserApplicationById(id.ToGuidAsString(), organisationId, cancellationToken);
+            : await _applicationCrmContext.GetUserApplicationById(id.ToGuidAsString(), organisationId, userAccount.UserGlobalId.ToString(), cancellationToken);
     }
 }

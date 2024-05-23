@@ -21,5 +21,5 @@ public interface IDeliveryPhaseRepository
 
     Task<DeliveryPhaseId> Save(IDeliveryPhaseEntity deliveryPhase, OrganisationId organisationId, CancellationToken cancellationToken);
 
-    Task Save(DeliveryPhasesEntity deliveryPhases, OrganisationId organisationId, CancellationToken cancellationToken);
+    Task Save(DeliveryPhasesEntity deliveryPhases, UserAccount userAccount, CancellationToken cancellationToken);
 }
