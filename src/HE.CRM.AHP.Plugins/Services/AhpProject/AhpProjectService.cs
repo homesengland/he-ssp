@@ -12,6 +12,7 @@ using Microsoft.Xrm.Sdk;
 using System.IdentityModel.Metadata;
 using Microsoft.Xrm.Sdk.Query;
 using HE.CRM.Common.DtoMapping;
+using System.Security.Policy;
 
 namespace HE.CRM.AHP.Plugins.Services.AhpProject
 {
@@ -24,6 +25,7 @@ namespace HE.CRM.AHP.Plugins.Services.AhpProject
         private readonly IAhpApplicationRepository _ahpApplicationRepository;
         private readonly IContactWebroleRepository _contactWebroleRepository;
         private readonly IConsortiumMemberRepository _consortiumMemberRepository;
+        private readonly IHeLocalAuthorityRepository _heLocalAuthorityRepository;
 
 
         public AhpProjectService(CrmServiceArgs args) : base(args)
@@ -34,6 +36,7 @@ namespace HE.CRM.AHP.Plugins.Services.AhpProject
             _ahpApplicationRepository = CrmRepositoriesFactory.Get<IAhpApplicationRepository>();
             _contactWebroleRepository = CrmRepositoriesFactory.Get<IContactWebroleRepository>();
             _consortiumMemberRepository = CrmRepositoriesFactory.Get<IConsortiumMemberRepository>();
+            _heLocalAuthorityRepository = CrmRepositoriesFactory.Get<IHeLocalAuthorityRepository>();
         }
 
         public string CreateRecordFromPortal(string externalContactId, string organisationId, string heProjectId, string ahpProjectName, string consortiumId)
@@ -70,7 +73,7 @@ namespace HE.CRM.AHP.Plugins.Services.AhpProject
                     var listOfAppsDto = listOfApps.Select(x => AhpApplicationMapper.MapRegularEntityToDto(x)).ToList();
 
                     var listOfSites = _siteRepository.GetSitesForAhpProject(ahpProject.Id, contactWebRole, contact, new Guid(organisationId), consortiumId);
-                    var listOfSitesDto = listOfSites.Select(x => SiteMapper.ToDto(x)).ToList();
+                    var listOfSitesDto = listOfSites.Select(x => SiteMapper.ToDto(x, GetHeLaForSite(x.invln_HeLocalAuthorityId?.Id.ToString()))).ToList();
 
                     result = AhpProjectMapper.MapRegularEntityToDto(ahpProject, listOfSitesDto, listOfAppsDto);
                 }
@@ -96,7 +99,7 @@ namespace HE.CRM.AHP.Plugins.Services.AhpProject
                     var listOfSites = _siteRepository.GetSitesForAhpProject(ahpProject.Id, contactWebRole, contact, new Guid(organisationId), consortiumId);
                     TracingService.Trace($"List of Sites downloaded.");
                     var listOfSitesAfterChecked = CheckSitesForsConsortium(listOfSites, new Guid(organisationId));
-                    var listOfSitesDto = listOfSitesAfterChecked.Select(x => SiteMapper.ToDto(x)).ToList();
+                    var listOfSitesDto = listOfSitesAfterChecked.Select(x => SiteMapper.ToDto(x, GetHeLaForSite(x.invln_HeLocalAuthorityId?.Id.ToString()))).ToList();
                     TracingService.Trace($"Records mapped.");
 
                     result = AhpProjectMapper.MapRegularEntityToDto(ahpProject, listOfSitesDto, listOfAppsDto);
@@ -129,7 +132,7 @@ namespace HE.CRM.AHP.Plugins.Services.AhpProject
                     foreach (var ahpProjectDto in ahpProjectsDto.items)
                     {
                         var listOfSites = _siteRepository.GetSitesForAhpProject(new Guid(ahpProjectDto.AhpProjectId), contactWebRole, contact, new Guid(organisationId), consortiumId);
-                        var listOfSitesDto = listOfSites.Select(x => SiteMapper.ToDto(x)).ToList();
+                        var listOfSitesDto = listOfSites.Select(x => SiteMapper.ToDto(x, GetHeLaForSite(x.invln_HeLocalAuthorityId?.Id.ToString()))).ToList();
                         TracingService.Trace($"List of Sites downloaded.");
 
                         ahpProjectDto.ListOfSites = listOfSitesDto;
@@ -156,7 +159,7 @@ namespace HE.CRM.AHP.Plugins.Services.AhpProject
                         TracingService.Trace($"List of Sites searching.");
                         var listOfSites = _siteRepository.GetSitesForAhpProject(new Guid(ahpProjectDto.AhpProjectId), contactWebRole, contact, new Guid(organisationId), consortiumId);
                         var listOfSitesAfterChecked = CheckSitesForsConsortium(listOfSites, new Guid(organisationId));
-                        var listOfSitesDto = listOfSitesAfterChecked.Select(x => SiteMapper.ToDto(x)).ToList();
+                        var listOfSitesDto = listOfSitesAfterChecked.Select(x => SiteMapper.ToDto(x, GetHeLaForSite(x.invln_HeLocalAuthorityId?.Id.ToString()))).ToList();
                         TracingService.Trace($"List of Sites downloaded.");
 
                         ahpProjectDto.ListOfSites = listOfSitesDto;
@@ -177,10 +180,12 @@ namespace HE.CRM.AHP.Plugins.Services.AhpProject
             if (_contactWebroleRepository.IsContactHaveSelectedWebRoleForOrganisation(contact.Id, new Guid(organisationId), invln_Permission.Limiteduser))
             {
                 contactWebRole = invln_Permission.Limiteduser;
+                TracingService.Trace("WebRole Limiteduser");
             };
             if (!_contactWebroleRepository.IsContactHaveSelectedWebRoleForOrganisation(contact.Id, new Guid(organisationId), invln_Permission.Limiteduser))
             {
                 contactWebRole = invln_Permission.Admin;
+                TracingService.Trace("WebRole other than Limiteduser");
             };
             TracingService.Trace("WebRole checked");
             return contactWebRole;
@@ -258,7 +263,7 @@ namespace HE.CRM.AHP.Plugins.Services.AhpProject
             {
                 if (CheckAccessToAhpProject(contactWebRole, project, contact, organisationId) == null)
                 {
-                    TracingService.Trace("Access to AhpProject checked");
+                    TracingService.Trace("AhpProject removed from the list.");
                     ahpProjects.Remove(project);
                 }
             }
@@ -271,7 +276,7 @@ namespace HE.CRM.AHP.Plugins.Services.AhpProject
                 var pageSize = paging.pageSize;
                 var pagenumber = paging.pageNumber;
                 var startIndex = (pageSize * pagenumber) - pageSize;
-                var countrRange = startIndex + pageSize <= (result.totalItemsCount - 1) ? pagenumber : result.totalItemsCount - startIndex;
+                var countrRange = startIndex + pageSize <= (result.totalItemsCount - 1) ? pageSize : result.totalItemsCount - startIndex;
 
                 var ahpProjectsPage = ahpProjects.GetRange(startIndex, countrRange);
 
@@ -425,6 +430,16 @@ namespace HE.CRM.AHP.Plugins.Services.AhpProject
 
             TracingService.Trace($"Return AhpProjects for Consortium.");
             return result;
+        }
+
+        private he_LocalAuthority GetHeLaForSite(string id = null)
+        {
+            if (id == null)
+            {
+                return null;
+            }
+            return _heLocalAuthorityRepository.GetById(new Guid(id), new string[] { nameof(he_LocalAuthority.he_LocalAuthorityId).ToLower(), nameof(he_LocalAuthority.he_Name).ToLower(), nameof(he_LocalAuthority.he_GSSCode).ToLower() });
+
         }
     }
 }
