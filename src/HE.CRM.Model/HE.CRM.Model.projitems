@@ -32,6 +32,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getabsoluteahpapplicationfilelocation.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getahpapplication.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getahpapplicationdocumentlocation.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getahpproject.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getahpprojects.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getconsortium.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getconsortiums.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getcontactrole.cs" />
@@ -61,6 +63,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_gettypeofhomeslist.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_invitecontacttojoinexistingorganisation.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_IsConsortiumExistForProgrammeAndOrganisation.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_issiteorapplicationpartner.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_linkcontactwithorganization.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_requestaddingmembertoconsortium.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_requesttoremovemember.cs" />
@@ -90,6 +93,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Actions\RetrieveEnvironmentVariableValue.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\UpsertMultiple.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CrmSerialiedParameters\AHP_DELIVERY_PHASE_NOTIFICATION_OF_ADDITIONAL_PAYMENTS_FOR_PHASE.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)crmserialiedparameters\AHP_DELIVERY_PHASE_NOTIFICATION_OF_ADJUSTMENT_ACCEPTED.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CrmSerialiedParameters\AHP_EXTERNAL_APPLICATION_ON_HOLD.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CrmSerialiedParameters\AHP_EXTERNAL_APPLICATION_REFERRED_BACK_TO_APPLICANT.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CrmSerialiedParameters\AHP_EXTERNAL_APPLICATION_REJECTED.cs" />
@@ -123,6 +127,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Entities\he_ProjectLocalAuthority.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_AHGLocalAuthorities.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_ahpcontract.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_ahpproject.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_AHPStatusChange.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_BorrowerPreviousSchemes.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_Cashflow.cs" />

@@ -25,7 +25,7 @@
             checkbox="@(new ExtendedSelectListItem("By submitting this application for funding, I confirm the statement above.", "checked", false))"/>
 
         <vc:form-button text="Accept and submit"/>
-        <vc:return-to-applications-list-link/>
+        <vc:return-to-applications-list-link project-id="@Model.ProjectId" />
     </form>
 
 </div>

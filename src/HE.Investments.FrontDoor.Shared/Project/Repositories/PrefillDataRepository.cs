@@ -35,7 +35,7 @@ internal sealed class PrefillDataRepository : IPrefillDataRepository
             ? await _crmContext.GetProjectSites(projectId.Value, cancellationToken)
             : null;
 
-        return Map(project, sites?.items.FirstOrDefault());
+        return Map(project, sites?.items);
     }
 
     public async Task<SitePrefillData> GetSitePrefillData(FrontDoorProjectId projectId, FrontDoorSiteId siteId, CancellationToken cancellationToken)
@@ -55,12 +55,22 @@ internal sealed class PrefillDataRepository : IPrefillDataRepository
         await _crmContext.DeactivateProject(projectId.Value, cancellationToken);
     }
 
-    private ProjectPrefillData Map(FrontDoorProjectDto project, FrontDoorProjectSiteDto? site)
+    private ProjectPrefillData Map(FrontDoorProjectDto project, IList<FrontDoorProjectSiteDto>? frontDoorSites)
     {
+        var sites = frontDoorSites?
+            .Select(x =>
+                new SitePrefillData(
+                    FrontDoorSiteId.From(x.SiteId),
+                    x.SiteName,
+                    x.NumberofHomesEnabledBuilt,
+                    DomainEnumMapper.Map(x.PlanningStatus, FrontDoorProjectEnumMapping.PlanningStatus, SitePlanningStatus.Undefined)!.Value,
+                    x.LocalAuthorityName))
+            .ToList() ?? [];
+
         return new ProjectPrefillData(
             FrontDoorProjectId.From(project.ProjectId),
             project.ProjectName,
             new ReadOnlyCollection<SupportActivityType>(DomainEnumMapper.Map(project.ActivitiesinThisProject, FrontDoorProjectEnumMapping.ActivityType)),
-            site.IsProvided() ? FrontDoorSiteId.From(site!.SiteId) : null);
+            sites);
     }
 }

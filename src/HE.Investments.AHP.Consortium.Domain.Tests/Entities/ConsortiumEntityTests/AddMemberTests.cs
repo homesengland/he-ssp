@@ -24,7 +24,8 @@ public class AddMemberTests
         var addMember = () => testCandidate.AddMember(InvestmentsOrganisationTestData.JjCompany, isPartOfConsortium, CancellationToken.None);
 
         // then
-        await addMember.Should().ThrowAsync<DomainValidationException>();
+        await addMember.Should().ThrowAsync<DomainValidationException>()
+            .WithMessage("The organisation you are trying to add is already added or being added as a member of this consortium");
     }
 
     [Fact]
@@ -42,7 +43,8 @@ public class AddMemberTests
         var addMember = () => testCandidate.AddMember(InvestmentsOrganisationTestData.CactusDevelopments, isPartOfConsortium, CancellationToken.None);
 
         // then
-        await addMember.Should().ThrowAsync<DomainValidationException>();
+        await addMember.Should().ThrowAsync<DomainValidationException>()
+            .WithMessage("The organisation you are trying to add is already added or being added as a member of this consortium");
     }
 
     [Fact]
@@ -59,7 +61,8 @@ public class AddMemberTests
         var addMember = () => testCandidate.AddMember(InvestmentsOrganisationTestData.CactusDevelopments, isPartOfConsortium, CancellationToken.None);
 
         // then
-        await addMember.Should().ThrowAsync<DomainValidationException>();
+        await addMember.Should().ThrowAsync<DomainValidationException>()
+            .WithMessage("The organisation you are trying to add is already added or being added to another consortium");
     }
 
     [Fact]
@@ -68,6 +71,30 @@ public class AddMemberTests
         // given
         var testCandidate = new ConsortiumEntityBuilder()
             .WithLeadPartner(InvestmentsOrganisationTestData.JjCompany)
+            .Build();
+        var isPartOfConsortium = IsPartOfConsortiumBuilder.New().IsNotPartOfConsortium().Build();
+
+        // when
+        await testCandidate.AddMember(InvestmentsOrganisationTestData.CactusDevelopments, isPartOfConsortium, CancellationToken.None);
+
+        // then
+        var member = testCandidate.Members.Should().HaveCount(1).And.Subject.Single();
+
+        member.Id.Should().Be(InvestmentsOrganisationTestData.CactusDevelopments.Id);
+        member.OrganisationName.Should().Be(InvestmentsOrganisationTestData.CactusDevelopments.Name);
+        member.Status.Should().Be(ConsortiumMemberStatus.PendingAddition);
+
+        testCandidate.PopJoinRequest().Should().Be(InvestmentsOrganisationTestData.CactusDevelopments.Id);
+        testCandidate.PopJoinRequest().Should().BeNull();
+    }
+
+    [Fact]
+    public async Task ShouldAddPendingMember_WhenMemberWasPreviouslyInThisConsortium()
+    {
+        // given
+        var testCandidate = new ConsortiumEntityBuilder()
+            .WithLeadPartner(InvestmentsOrganisationTestData.JjCompany)
+            .WithMember(InvestmentsOrganisationTestData.CactusDevelopments, ConsortiumMemberStatus.Inactive)
             .Build();
         var isPartOfConsortium = IsPartOfConsortiumBuilder.New().IsNotPartOfConsortium().Build();
 

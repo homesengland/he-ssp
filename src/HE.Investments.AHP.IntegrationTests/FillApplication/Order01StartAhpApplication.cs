@@ -1,5 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
+using HE.Investment.AHP.Contract.Project;
 using HE.Investment.AHP.WWW.Views.Application;
+using HE.Investment.AHP.WWW.Views.Project.Const;
 using HE.Investment.AHP.WWW.Views.Site.Const;
 using HE.Investments.AHP.IntegrationTests.Extensions;
 using HE.Investments.AHP.IntegrationTests.Framework;
@@ -22,15 +24,15 @@ public class Order01StartAhpApplication : AhpIntegrationTest
 
     [Fact(Skip = AhpConfig.SkipTest)]
     [Order(1)]
-    public async Task Order01_ShouldRedirectToApplicationList_WhenUserIsLoggedIn()
+    public async Task Order01_ShouldDisplayApplicationList()
     {
         // given & when
-        var mainPage = await TestClient.NavigateTo(MainPagesUrl.MainPage);
+        var mainPage = await TestClient.NavigateTo(ProjectPagesUrl.ProjectApplicationList(LegacyProject.ProjectId));
 
         // then
         mainPage
-            .UrlEndWith(MainPagesUrl.ApplicationList)
-            .HasTitle(ApplicationPageTitles.ApplicationList);
+            .UrlEndWith(ProjectPagesUrl.ProjectApplicationList(LegacyProject.ProjectId))
+            .HasTitle(ProjectPageTitles.ApplicationList(LegacyProject.ProjectName));
 
         SaveCurrentPage();
     }
@@ -40,7 +42,7 @@ public class Order01StartAhpApplication : AhpIntegrationTest
     public async Task Order02_ShouldNavigateToApplicationLandingPage()
     {
         // given
-        var startButton = (await GetCurrentPage(MainPagesUrl.ApplicationList)).GetLinkButton("Start");
+        var startButton = (await GetCurrentPage(ProjectPagesUrl.ProjectApplicationList(LegacyProject.ProjectId))).GetLinkButton("Start");
 
         // when
         var applicationNamePage = await TestClient.NavigateTo(startButton);
@@ -48,7 +50,7 @@ public class Order01StartAhpApplication : AhpIntegrationTest
         // then
         applicationNamePage
             .UrlEndWith(ApplicationPagesUrl.Start)
-            .HasTitle(ApplicationPageTitles.Start);
+            .HasTitle(ApplicationPageTitles.Start("Affordable Homes Programme 2021-2026 Continuous Market Engagement", "AHP 21-26 CME"));
 
         SaveCurrentPage();
     }

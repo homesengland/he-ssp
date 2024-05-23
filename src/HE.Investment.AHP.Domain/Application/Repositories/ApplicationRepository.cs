@@ -1,10 +1,12 @@
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.Application.Events;
+using HE.Investment.AHP.Contract.Project;
 using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Domain.Application.Crm;
 using HE.Investment.AHP.Domain.Application.Entities;
 using HE.Investment.AHP.Domain.Application.Factories;
+using HE.Investment.AHP.Domain.Application.Mappers;
 using HE.Investment.AHP.Domain.Application.ValueObjects;
 using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.FinancialDetails.Mappers;
@@ -18,6 +20,7 @@ using HE.Investments.Common.CRM.Mappers;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Infrastructure.Events;
+using HE.Investments.FrontDoor.Shared.Project;
 using ApplicationSection = HE.Investment.AHP.Domain.Application.ValueObjects.ApplicationSection;
 
 namespace HE.Investment.AHP.Domain.Application.Repositories;
@@ -104,7 +107,7 @@ public class ApplicationRepository : IApplicationRepository
 
     public async Task<PaginationResult<ApplicationWithFundingDetails>> GetSiteApplications(SiteId siteId, UserAccount userAccount, PaginationRequest paginationRequest, CancellationToken cancellationToken)
     {
-        return await GetApplications(userAccount, paginationRequest, a => a.siteId == siteId.Value, cancellationToken);
+        return await GetApplications(userAccount, paginationRequest, a => a.siteId == siteId.ToGuidAsString(), cancellationToken);
     }
 
     public async Task<ApplicationEntity> Save(ApplicationEntity application, OrganisationId organisationId, CancellationToken cancellationToken)
@@ -133,6 +136,10 @@ public class ApplicationRepository : IApplicationRepository
         dto.organisationId = organisationId.ToGuidAsString();
         dto.applicationStatus = AhpApplicationStatusMapper.MapToCrmStatus(application.Status);
         dto.siteId = application.SiteId.ToGuidAsString();
+        dto.developingPartnerId = application.ApplicationPartners.DevelopingPartner.Id.ToGuidAsString();
+        dto.ownerOfTheLandDuringDevelopmentId = application.ApplicationPartners.OwnerOfTheLand.Id.ToGuidAsString();
+        dto.ownerOfTheHomesAfterCompletionId = application.ApplicationPartners.OwnerOfTheHomes.Id.ToGuidAsString();
+        dto.applicationPartnerConfirmation = application.ApplicationPartners.ArePartnersConfirmed;
 
         var id = await _applicationCrmContext.Save(dto, organisationId.ToGuidAsString(), cancellationToken);
         if (application.Id.IsNew)
@@ -165,21 +172,22 @@ public class ApplicationRepository : IApplicationRepository
             : null;
 
         return new ApplicationEntity(
+            new FrontDoorProjectId(string.IsNullOrEmpty(application.fdProjectId) ? LegacyProject.ProjectId : application.fdProjectId),
             string.IsNullOrEmpty(application.siteId) ? SiteId.New() : SiteId.From(application.siteId),
             AhpApplicationId.From(application.id),
             new ApplicationName(application.name ?? "Unknown"),
             applicationStatus,
             ApplicationTenureMapper.ToDomain(application.tenure)!,
+            ApplicationPartnersMapper.ToDomain(application),
             new ApplicationStateFactory(userAccount, previousStatus, application.dateSubmitted.IsProvided()),
             new ApplicationReferenceNumber(application.referenceNumber),
             new ApplicationSections(
-                new List<ApplicationSection>
-                {
+                [
                     new(SectionType.Scheme, SectionStatusMapper.ToDomain(application.schemeInformationSectionCompletionStatus, applicationStatus)),
                     new(SectionType.HomeTypes, SectionStatusMapper.ToDomain(application.homeTypesSectionCompletionStatus, applicationStatus)),
                     new(SectionType.FinancialDetails, SectionStatusMapper.ToDomain(application.financialDetailsSectionCompletionStatus, applicationStatus)),
                     new(SectionType.DeliveryPhases, SectionStatusMapper.ToDomain(application.deliveryPhasesSectionCompletionStatus, applicationStatus)),
-                }),
+                ]),
             new AuditEntry(
                 application.lastExternalModificationBy?.firstName,
                 application.lastExternalModificationBy?.lastName,
@@ -193,6 +201,7 @@ public class ApplicationRepository : IApplicationRepository
         var otherApplicationCosts = OtherApplicationCostsMapper.MapToOtherApplicationCosts(ahpApplicationDto);
 
         return new ApplicationWithFundingDetails(
+            new FrontDoorProjectId(string.IsNullOrEmpty(ahpApplicationDto.fdProjectId) ? LegacyProject.ProjectId : ahpApplicationDto.fdProjectId),
             string.IsNullOrEmpty(ahpApplicationDto.siteId) ? SiteId.New() : SiteId.From(ahpApplicationDto.siteId),
             AhpApplicationId.From(ahpApplicationDto.id),
             ahpApplicationDto.name,

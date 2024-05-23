@@ -1,5 +1,6 @@
 using System.Globalization;
 using HE.Investment.AHP.Contract.Application;
+using HE.Investment.AHP.Contract.Project;
 using HE.Investment.AHP.WWW.Controllers;
 using HE.Investments.Common.Contract.Pagination;
 using HE.Investments.Common.Messages;
@@ -16,14 +17,13 @@ namespace HE.Investment.AHP.WWW.Views.Shared.Components.ApplicationsTable;
 
 public class ApplicationsTable : ViewComponent
 {
-    public Task<IViewComponentResult> InvokeAsync(PaginationResult<ApplicationBasicDetails> applications)
+    public Task<IViewComponentResult> InvokeAsync(PaginationResult<ApplicationProjectModel> applications, string projectId)
     {
         var tableHeaders = new List<TableHeaderViewModel>
         {
             new("Name", CellWidth.OneThird),
             new("Units", CellWidth.OneEighth),
             new("Grant", CellWidth.OneEighth),
-            new("Local authority", CellWidth.OneFifth),
             new("Status", CellWidth.OneFifth),
         };
 
@@ -34,7 +34,6 @@ public class ApplicationsTable : ViewComponent
                     new(Component: CreateLinkComponent(x)),
                     new(x.Unit?.ToString(CultureInfo.InvariantCulture)),
                     new(x.Grant.DisplayPounds()),
-                    new(x.LocalAuthority ?? GenericMessages.NotProvided),
                     new(Component: CreateApplicationStatusComponent(x)),
                 };
 
@@ -44,10 +43,10 @@ public class ApplicationsTable : ViewComponent
 
         var rows = new PaginationResult<TableRowViewModel>(applicationsPage, applications.CurrentPage, applications.ItemsPerPage, applications.TotalItems);
 
-        return Task.FromResult<IViewComponentResult>(View("ApplicationsTable", (tableHeaders, rows)));
+        return Task.FromResult<IViewComponentResult>(View("ApplicationsTable", (tableHeaders, rows, projectId)));
     }
 
-    private static DynamicComponentViewModel CreateLinkComponent(ApplicationBasicDetails application)
+    private static DynamicComponentViewModel CreateLinkComponent(ApplicationProjectModel application)
     {
         return new DynamicComponentViewModel(
             nameof(Link),
@@ -61,7 +60,7 @@ public class ApplicationsTable : ViewComponent
             });
     }
 
-    private static DynamicComponentViewModel CreateApplicationStatusComponent(ApplicationBasicDetails application)
+    private static DynamicComponentViewModel CreateApplicationStatusComponent(ApplicationProjectModel application)
     {
         return new DynamicComponentViewModel(nameof(ApplicationStatusTagComponent), new { applicationStatus = application.Status });
     }

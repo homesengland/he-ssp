@@ -16,11 +16,11 @@ public class SaveModernMethodsConstructionCommandHandler : SaveHomeTypeSegmentCo
     {
     }
 
-    protected override IReadOnlyCollection<HomeTypeSegmentType> SegmentTypes => new[] { HomeTypeSegmentType.ModernMethodsConstruction };
+    protected override IReadOnlyCollection<HomeTypeSegmentType> SegmentTypes => [HomeTypeSegmentType.ModernMethodsConstruction];
 
-    protected override IEnumerable<Action<SaveModernMethodsConstructionCommand, IHomeTypeEntity>> SaveActions => new[]
-    {
+    protected override IEnumerable<Action<SaveModernMethodsConstructionCommand, IHomeTypeEntity>> SaveActions =>
+    [
         (SaveModernMethodsConstructionCommand request, IHomeTypeEntity entity) =>
             entity.ModernMethodsConstruction.ChangeModernMethodsConstructionApplied(request.ModernMethodsConstructionApplied),
-    };
+    ];
 }

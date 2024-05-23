@@ -3,6 +3,7 @@ using System.Diagnostics.CodeAnalysis;
 using HE.Investments.FrontDoor.IntegrationTests.FillProject.Data;
 using HE.Investments.FrontDoor.WWW;
 using HE.Investments.IntegrationTestsFramework;
+using HE.Investments.IntegrationTestsFramework.Auth;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -14,16 +15,16 @@ namespace HE.Investments.FrontDoor.IntegrationTests.Framework;
 [Collection(nameof(FrontDoorIntegrationTestSharedContext))]
 public class FrontDoorIntegrationTest : IntegrationTestBase<Program>, IDisposable
 {
-    private readonly ITestOutputHelper _output;
 
     protected FrontDoorIntegrationTest(FrontDoorIntegrationTestFixture fixture, ITestOutputHelper output)
         : base(fixture)
     {
-        _output = output;
+        Output = output;
         SetProjectData();
         InitStopwatch();
         fixture.CheckUserLoginData();
         fixture.MockUserAccount();
+        LoginData = fixture.LoginData;
     }
 
     public ProjectData ProjectData { get; private set; }
@@ -34,9 +35,13 @@ public class FrontDoorIntegrationTest : IntegrationTestBase<Program>, IDisposabl
 
     public Stopwatch Stopwatch { get; private set; }
 
+    protected ILoginData LoginData { get; }
+
+    protected ITestOutputHelper Output { get; }
+
     public void Dispose()
     {
-        _output.WriteLine($"Elapsed time: {Stopwatch.Elapsed.TotalSeconds} sec");
+        Output.WriteLine($"Elapsed time: {Stopwatch.Elapsed.TotalSeconds} sec");
     }
 
     private void SetProjectData()

@@ -6,8 +6,8 @@ namespace HE.Investments.Loans.WWW.Models;
 
 public static class FormOption
 {
-    public static List<SelectItemWithSummaryLabel> LoanResolution { get; } = new()
-    {
+    public static List<SelectItemWithSummaryLabel> LoanResolution { get; } =
+    [
         new()
         {
             Value = "refinance",
@@ -20,17 +20,17 @@ public static class FormOption
             Text = "Repay - you’re planning to build the homes and sell them when complete, using the sales income to repay the loan",
             SummaryLabel = "Repay",
         },
-    };
+    ];
 
-    public static List<SelectListItem> FundingPurposes { get; } = new()
-    {
+    public static List<SelectListItem> FundingPurposes { get; } =
+    [
         SelectListHelper.FromEnum(FundingPurpose.BuildingNewHomes, "Building new homes"),
         SelectListHelper.FromEnum(FundingPurpose.BuildingInfrastructure, "Building infrastructure only"),
         SelectListHelper.FromEnum(FundingPurpose.Other, "Other"),
-    };
+    ];
 
-    public static List<SelectListItem> SiteAdditionalSource { get; } = new()
-    {
+    public static List<SelectListItem> SiteAdditionalSource { get; } =
+    [
         new SelectListItem
         {
             Value = "customerEstimate",
@@ -46,10 +46,10 @@ public static class FormOption
             Value = "ricsRedBookValuation",
             Text = "RICS Red Book valuation",
         },
-    };
+    ];
 
-    public static List<SelectListItem> SiteTypeHomesCheckbox { get; } = new()
-    {
+    public static List<SelectListItem> SiteTypeHomesCheckbox { get; } =
+    [
         new SelectListItem
         {
             Value = "apartmentsOrFlats",
@@ -75,10 +75,10 @@ public static class FormOption
             Value = "other",
             Text = "Other",
         },
-    };
+    ];
 
-    public static List<SelectListItem> CheckAnswersCompletion { get; } = new()
-    {
+    public static List<SelectListItem> CheckAnswersCompletion { get; } =
+    [
         new SelectListItem
         {
             Value = "Yes",
@@ -89,10 +89,10 @@ public static class FormOption
             Value = "No",
             Text = "No, I`ll come back later",
         },
-    };
+    ];
 
-    public static List<SelectListItem> SiteType { get; } = new()
-    {
+    public static List<SelectListItem> SiteType { get; } =
+    [
         new SelectListItem
         {
             Value = "greenfield",
@@ -103,10 +103,10 @@ public static class FormOption
             Value = "brownfield",
             Text = "Brownfield",
         },
-    };
+    ];
 
-    public static List<SelectListItem> PermissionStatus { get; } = new()
-    {
+    public static List<SelectListItem> PermissionStatus { get; } =
+    [
         new SelectListItem
         {
             Value = "notSubmitted",
@@ -127,10 +127,10 @@ public static class FormOption
             Value = "receivedFull",
             Text = "Received full planning permission",
         },
-    };
+    ];
 
-    public static List<SelectListItem> SiteLocation { get; } = new()
-    {
+    public static List<SelectListItem> SiteLocation { get; } =
+    [
         new SelectListItem
         {
             Value = "coordinates",
@@ -141,10 +141,10 @@ public static class FormOption
             Value = "landRegistryTitleNumber",
             Text = "Land Registry title number",
         },
-    };
+    ];
 
-    public static List<SelectListItem> GrantFunding { get; } = new()
-    {
+    public static List<SelectListItem> GrantFunding { get; } =
+    [
         new SelectListItem
         {
             Value = "Yes",
@@ -160,19 +160,19 @@ public static class FormOption
             Value = "doNotKnow",
             Text = "Do not know",
         },
-    };
+    ];
 
-    public static List<string> LocationDescription { get; } = new()
-    {
+    public static List<string> LocationDescription { get; } =
+    [
         "To find your project coordinates, use any online digital mapping service, such as Google Maps. " +
         "Find your project location and then right-click anywhere within the land boundary. This will provide the X/Y coordinates.",
         "You can find the title number on HM Land Registry documents, or correspondence with your solicitor when you purchased the land. " +
         "If you have multiple title numbers, separate these with a comma.",
-    };
+    ];
 
-    public static List<string> LocationDetailsNames { get; } = new()
-    {
+    public static List<string> LocationDetailsNames { get; } =
+    [
         "LocationCoordinates",
         "LocationLandRegistry",
-    };
+    ];
 }

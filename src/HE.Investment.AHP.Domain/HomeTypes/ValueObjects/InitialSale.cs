@@ -27,8 +27,8 @@ public class InitialSale : ValueObject
                 isCalculation ? ValidationErrorMessage.MustBeProvidedForCalculation(DisplayName) : ValidationErrorMessage.MustProvideRequiredField(DisplayName)),
             NumberParseResult.ValueNotANumber => ThrowValidationError(nameof(InitialSale), ValidationErrorMessage.MustBeTheWholeNumber(DisplayName, null)),
             NumberParseResult.ValueInvalidPrecision => ThrowValidationError(nameof(InitialSale), ValidationErrorMessage.MustBeTheWholeNumber(DisplayName, null)),
-            NumberParseResult.ValueTooHigh => ThrowValidationError(nameof(InitialSale), ValidationErrorMessage.MustProvideTheLowerNumber(DisplayName, maxValue)),
-            NumberParseResult.ValueTooLow => ThrowValidationError(nameof(InitialSale), ValidationErrorMessage.MustProvideTheHigherNumber(DisplayName, minValue)),
+            NumberParseResult.ValueTooHigh => ThrowValidationError(nameof(InitialSale), ValidationErrorMessage.MustProvideNumberBetween(DisplayName, minValue, maxValue)),
+            NumberParseResult.ValueTooLow => ThrowValidationError(nameof(InitialSale), ValidationErrorMessage.MustProvideNumberBetween(DisplayName, minValue, maxValue)),
             NumberParseResult.SuccessfullyParsed => parsedValue!.Value / 100m,
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, null),
         };
@@ -36,14 +36,11 @@ public class InitialSale : ValueObject
 
     public InitialSale(decimal value)
     {
-        if (value < MinValue)
+        if (value is < MinValue or > MaxValue)
         {
-            ThrowValidationError(nameof(InitialSale), ValidationErrorMessage.MustProvideTheHigherNumber(DisplayName, MinValue.ToPercentage100()));
-        }
-
-        if (value > MaxValue)
-        {
-            ThrowValidationError(nameof(InitialSale), ValidationErrorMessage.MustProvideTheLowerNumber(DisplayName, MaxValue.ToPercentage100()));
+            ThrowValidationError(
+                nameof(InitialSale),
+                ValidationErrorMessage.MustProvideNumberBetween(DisplayName, MinValue.ToPercentage100(), MaxValue.ToPercentage100()));
         }
 
         Value = value;

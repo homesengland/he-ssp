@@ -2,6 +2,7 @@ using He.AspNetCore.Mvc.Gds.Components.Extensions;
 using HE.Investment.AHP.Contract.Common.Enums;
 using HE.Investment.AHP.Contract.Common.Queries;
 using HE.Investment.AHP.Contract.PrefillData.Queries;
+using HE.Investment.AHP.Contract.Project;
 using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Contract.Site.Commands;
 using HE.Investment.AHP.Contract.Site.Commands.Mmc;
@@ -45,20 +46,26 @@ public class SiteController : WorkflowController<SiteWorkflowState>
 
     private readonly IAccountAccessContext _accountAccessContext;
 
+    private readonly IAccountUserContext _accountUserContext;
+
     private readonly ISiteSummaryViewModelFactory _siteSummaryViewModelFactory;
 
-    public SiteController(IMediator mediator, IAccountAccessContext accountAccessContext, ISiteSummaryViewModelFactory siteSummaryViewModelFactory)
+    public SiteController(
+        IMediator mediator,
+        IAccountAccessContext accountAccessContext,
+        IAccountUserContext accountUserContext,
+        ISiteSummaryViewModelFactory siteSummaryViewModelFactory)
     {
         _mediator = mediator;
         _accountAccessContext = accountAccessContext;
+        _accountUserContext = accountUserContext;
         _siteSummaryViewModelFactory = siteSummaryViewModelFactory;
     }
 
     [HttpGet]
-    public async Task<IActionResult> Index([FromQuery] int? page, CancellationToken cancellationToken)
+    public IActionResult Index()
     {
-        var response = await _mediator.Send(new GetSiteListQuery(new PaginationRequest(page ?? 1)), cancellationToken);
-        return View("Index", response);
+        return RedirectToAction("Sites", "Project", new { projectId = LegacyProject.ProjectId });
     }
 
     [HttpGet("select")]
@@ -132,7 +139,7 @@ public class SiteController : WorkflowController<SiteWorkflowState>
         var result = await _mediator.Send(
             new ProvideNameCommand(
                 SiteId.Create(siteId ?? model.Id),
-                FrontDoorProjectId.Create(fdProjectId),
+                FrontDoorProjectId.Create(fdProjectId) ?? new FrontDoorProjectId(LegacyProject.ProjectId),
                 FrontDoorSiteId.Create(fdSiteId),
                 model.Name),
             cancellationToken);
@@ -494,7 +501,7 @@ public class SiteController : WorkflowController<SiteWorkflowState>
         return await ExecuteSiteCommand(
             new ProvideNationalDesignGuidePrioritiesCommand(
                 this.GetSiteIdFromRoute(),
-                (IReadOnlyCollection<NationalDesignGuidePriority>)(model.DesignPriorities ?? new List<NationalDesignGuidePriority>())),
+                (IReadOnlyCollection<NationalDesignGuidePriority>)(model.DesignPriorities ?? [])),
             nameof(NationalDesignGuide),
             _ => model,
             cancellationToken);
@@ -991,7 +998,7 @@ public class SiteController : WorkflowController<SiteWorkflowState>
         return await this.ExecuteCommand<SiteSummaryViewModel>(
             _mediator,
             new CompleteSiteCommand(SiteId.From(siteId), isSectionCompleted),
-            () => Task.FromResult<IActionResult>(RedirectToAction("Index")),
+            () => Task.FromResult<IActionResult>(RedirectToAction("Details", new { siteId })),
             async () => View("CheckAnswers", await CreateSiteSummary(cancellationToken, isSectionCompleted)),
             cancellationToken);
     }
@@ -1001,7 +1008,9 @@ public class SiteController : WorkflowController<SiteWorkflowState>
         SiteModel? siteModel = null;
         var siteId = Request.GetRouteValue("siteId")
                      ?? routeData?.GetPropertyValue<string>("siteId")
+                     ?? Request.Query.FirstOrDefault(queryParam => queryParam.Key == "siteId").Value.FirstOrDefault()
                      ?? string.Empty;
+
         if (siteId.IsNotNullOrEmpty())
         {
             siteModel = await _mediator.Send(new GetSiteQuery(siteId));
@@ -1074,8 +1083,9 @@ public class SiteController : WorkflowController<SiteWorkflowState>
     {
         var siteId = this.GetSiteIdFromRoute();
         var siteDetails = await GetSiteDetails(siteId.Value, cancellationToken);
-        var isEditable = await _accountAccessContext.CanEditApplication();
-        var sections = _siteSummaryViewModelFactory.CreateSiteSummary(siteDetails, Url, isEditable, useWorkflowRedirection);
+        var isEditable = await _accountAccessContext.CanEditApplication() && siteDetails.Status != SiteStatus.Completed;
+        var userAccount = await _accountUserContext.GetSelectedAccount();
+        var sections = _siteSummaryViewModelFactory.CreateSiteSummary(siteDetails, userAccount.SelectedOrganisation(), Url, isEditable, useWorkflowRedirection);
 
         return new SiteSummaryViewModel(
             siteId.Value,

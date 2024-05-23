@@ -151,18 +151,39 @@ public class UserOrganisationController : Controller
         var userOrganisationActions = new List<ActionModel>();
         if (canViewOrganisationDetails)
         {
-            userOrganisationActions.AddRange(new List<ActionModel>
-            {
-                new("Add or manage users at this Organisation", "Index", "Users", HasAccess: canViewOrganisationDetails),
-                new($"Manage {organisationName} details", "Details", "UserOrganisation", HasAccess: canViewOrganisationDetails),
-            });
+            userOrganisationActions.AddRange(
+            [
+                new(
+                    "Add or manage users at this Organisation",
+                    "Index",
+                    "Users",
+                    HasAccess: canViewOrganisationDetails,
+                    DataTestId: "manage-users-link"),
+                new(
+                    $"Manage {organisationName} details",
+                    "Details",
+                    "UserOrganisation",
+                    HasAccess: canViewOrganisationDetails,
+                    DataTestId: "manage-organisation-link"),
+            ]);
         }
 
-        userOrganisationActions.Add(new("Manage your account", "GetProfileDetails", "User", new { callback = Url.Action("Index") }, true));
+        userOrganisationActions.Add(new(
+            "Manage your account",
+            "GetProfileDetails",
+            "User",
+            new { callback = Url.Action("Index") },
+            HasAccess: true,
+            DataTestId: "manage-profile-link"));
 
         if (await _featureManager.IsEnabledAsync(FeatureFlags.AhpProgram) && canSubmitApplicationAndIsNotLimitedUser)
         {
-            userOrganisationActions.Add(new("Add AHP consortium", "Index", "Consortium", HasAccess: canSubmitApplicationAndIsNotLimitedUser));
+            userOrganisationActions.Add(new(
+                "Add AHP consortium",
+                "Index",
+                "Consortium",
+                HasAccess: canSubmitApplicationAndIsNotLimitedUser,
+                DataTestId: "manage-consortium-link"));
         }
 
         return userOrganisationActions;

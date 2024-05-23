@@ -1,12 +1,14 @@
 using HE.Investments.Account.Shared.User;
 using HE.Investments.AHP.Consortium.Contract;
 using HE.Investments.AHP.Consortium.Contract.Enums;
+using HE.Investments.AHP.Consortium.Contract.Events;
 using HE.Investments.AHP.Consortium.Domain.Crm;
 using HE.Investments.AHP.Consortium.Domain.Entities;
 using HE.Investments.AHP.Consortium.Domain.Mappers;
 using HE.Investments.AHP.Consortium.Domain.ValueObjects;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Exceptions;
+using HE.Investments.Common.Infrastructure.Events;
 
 namespace HE.Investments.AHP.Consortium.Domain.Repositories;
 
@@ -14,9 +16,12 @@ public class ConsortiumRepository : IConsortiumRepository
 {
     private readonly IConsortiumCrmContext _crmContext;
 
-    public ConsortiumRepository(IConsortiumCrmContext crmContext)
+    private readonly IEventDispatcher _eventDispatcher;
+
+    public ConsortiumRepository(IConsortiumCrmContext crmContext, IEventDispatcher eventDispatcher)
     {
         _crmContext = crmContext;
+        _eventDispatcher = eventDispatcher;
     }
 
     public async Task<ConsortiumEntity> GetConsortium(ConsortiumId consortiumId, UserAccount userAccount, CancellationToken cancellationToken)
@@ -34,7 +39,7 @@ public class ConsortiumRepository : IConsortiumRepository
             return new ConsortiumEntity(
                 consortiumId,
                 new ConsortiumName(consortiumDto.name),
-                new ProgrammeSlim(ProgrammeId.From(consortiumDto.programmeId), "AHP CME"),
+                new ProgrammeSlim(ProgrammeId.From(consortiumDto.programmeId), consortiumDto.programmeName),
                 new ConsortiumMember(OrganisationId.From(consortiumDto.leadPartnerId), consortiumDto.leadPartnerName, ConsortiumMemberStatus.Active),
                 members);
         }
@@ -68,9 +73,12 @@ public class ConsortiumRepository : IConsortiumRepository
                 cancellationToken);
 
             consortiumEntity.SetId(ConsortiumId.From(consortiumId));
+
+            await _eventDispatcher.Publish(new ConsortiumMemberChangedEvent(consortiumEntity.Id, consortiumEntity.LeadPartner.Id), cancellationToken);
         }
 
         await SaveConsortiumMemberRequests(consortiumEntity, userAccount, cancellationToken);
+        await _eventDispatcher.Publish(consortiumEntity, cancellationToken);
 
         return consortiumEntity;
     }

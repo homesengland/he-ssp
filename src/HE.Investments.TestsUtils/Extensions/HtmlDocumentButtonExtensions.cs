@@ -59,6 +59,15 @@ public static class HtmlDocumentButtonExtensions
         return htmlDocument;
     }
 
+    public static IHtmlDocument HasDefaultButton(this IHtmlDocument htmlDocument, string text)
+    {
+        var buttons = HasButton(htmlDocument, "button");
+
+        _ = HtmlElementFilters.WithText(buttons, text);
+
+        return htmlDocument;
+    }
+
     public static IHtmlButtonElement GetStartButton(
         this IHtmlDocument htmlDocument,
         string? text = null)

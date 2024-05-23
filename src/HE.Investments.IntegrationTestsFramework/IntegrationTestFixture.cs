@@ -32,7 +32,9 @@ public class IntegrationTestFixture<TProgram> : WebApplicationFactory<TProgram>
 
     public IConfiguration Configuration { get; }
 
-    public IFeatureManager FeatureManager => Scope.Value.ServiceProvider.GetRequiredService<IFeatureManager>();
+    public IFeatureManager FeatureManager => ServiceProvider.GetRequiredService<IFeatureManager>();
+
+    public IServiceProvider ServiceProvider => Scope.Value.ServiceProvider;
 
     protected Lazy<IServiceScope> Scope { get; }
 

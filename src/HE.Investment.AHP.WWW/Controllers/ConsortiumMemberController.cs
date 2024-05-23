@@ -1,4 +1,5 @@
 using HE.Investment.AHP.Domain.UserContext;
+using HE.Investment.AHP.WWW.Models.Consortium;
 using HE.Investment.AHP.WWW.Models.ConsortiumMember;
 using HE.Investment.AHP.WWW.Views.Shared.Components.OrganisationDetailsComponent;
 using HE.Investment.AHP.WWW.Workflows;
@@ -177,14 +178,25 @@ public class ConsortiumMemberController : WorkflowController<ConsortiumMemberWor
             cancellationToken);
     }
 
+    [HttpGet("contact-homes-england")]
+    [WorkflowState(ConsortiumMemberWorkflowState.ContactHomesEngland)]
+    [AuthorizeWithCompletedProfile(AhpAccessContext.ViewConsortium)]
+    public async Task<IActionResult> ContactHomesEngland(string consortiumId, CancellationToken cancellationToken)
+    {
+        var availableProgrammes = await _mediator.Send(new GetAvailableProgrammesQuery(), cancellationToken);
+
+        return View(new ConsortiumSelectedProgrammeModel(consortiumId, availableProgrammes[0]));
+    }
+
     protected override async Task<IStateRouting<ConsortiumMemberWorkflowState>> Routing(ConsortiumMemberWorkflowState currentState, object? routeData = null)
     {
         var consortiumId = Request.GetRouteValue("consortiumId")
                            ?? routeData?.GetPropertyValue<string>("consortiumId")
                            ?? string.Empty;
         var consortium = await GetConsortiumDetails(consortiumId, false, CancellationToken.None);
+        var userAccount = await _ahpUserContext.GetSelectedAccount();
 
-        return new ConsortiumMemberWorkflow(consortium, currentState);
+        return new ConsortiumMemberWorkflow(consortium, userAccount.Organisation?.OrganisationId, currentState);
     }
 
     private async Task<ConsortiumDetails> GetConsortiumDetails(string consortiumId, bool fetchAddress, CancellationToken cancellationToken)

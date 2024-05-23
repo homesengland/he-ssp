@@ -12,5 +12,5 @@ public static class UserAccountTestData
         UserGlobalId.From("UserOne"),
         "User@one.com",
         new OrganisationBasicInfo(new OrganisationId(GuidTestData.GuidTwo.ToString()), "AccountOne", "4321", "London", false),
-        new[] { UserRole.Limited });
+        [UserRole.Limited]);
 }

@@ -12,10 +12,10 @@ public class TaskListTests : AhpViewTestBase
 
     private readonly ModificationDetails _testModificationDetails = new("Jan", "Kowalski", new DateTime(2023, 11, 29, 0, 0, 0, DateTimeKind.Unspecified));
 
-    private readonly IList<ApplicationSection> _testSections = new List<ApplicationSection>
-    {
+    private readonly IList<ApplicationSection> _testSections =
+    [
         new(SectionType.Scheme, SectionStatus.Completed), new(SectionType.FinancialDetails, SectionStatus.Completed),
-    };
+    ];
 
     public static IEnumerable<object[]> AllApplicationStatuses()
     {
@@ -29,7 +29,7 @@ public class TaskListTests : AhpViewTestBase
     public async Task ShouldDisplayView_WhenSectionsAreMissing()
     {
         // given
-        var model = CreateApplicationSectionsModel(new List<ApplicationSection>(), _testModificationDetails);
+        var model = CreateApplicationSectionsModel([], _testModificationDetails);
 
         // when
         var document = await Render(_viewPath, model);
@@ -43,12 +43,11 @@ public class TaskListTests : AhpViewTestBase
     {
         // given
         var model = CreateApplicationSectionsModel(
-            new List<ApplicationSection>
-            {
+            [
                 new(SectionType.Scheme, SectionStatus.NotStarted),
                 new(SectionType.HomeTypes, SectionStatus.Completed),
                 new(SectionType.FinancialDetails, SectionStatus.InProgress),
-            },
+            ],
             _testModificationDetails);
 
         // when
@@ -143,13 +142,14 @@ public class TaskListTests : AhpViewTestBase
     {
         return new ApplicationSectionsModel(
             "A1",
+            "P1",
             "some site",
             "application xyz",
             status,
-            new[] { AhpApplicationOperation.Modification, AhpApplicationOperation.Submit },
+            [AhpApplicationOperation.Modification, AhpApplicationOperation.Submit],
             "Ref1",
             modificationDetails,
             submissionDetails,
-            sections ?? new List<ApplicationSection>());
+            sections ?? []);
     }
 }

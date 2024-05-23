@@ -3,11 +3,14 @@ using FluentAssertions;
 using HE.Investment.AHP.Contract.Common.Enums;
 using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.WWW.Models.Site;
+using HE.Investment.AHP.WWW.Views.Shared;
 using HE.Investment.AHP.WWW.Views.Site.Const;
 using HE.Investments.AHP.IntegrationTests.Extensions;
 using HE.Investments.AHP.IntegrationTests.Framework;
 using HE.Investments.AHP.IntegrationTests.Pages;
+using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Constants;
+using HE.Investments.Common.Contract.Enum;
 using HE.Investments.IntegrationTestsFramework.Assertions;
 using HE.Investments.TestsUtils.Extensions;
 using Xunit;
@@ -23,6 +26,14 @@ public class Order01StartAhpSite : AhpIntegrationTest
     public Order01StartAhpSite(AhpIntegrationTestFixture fixture, ITestOutputHelper output)
         : base(fixture, output)
     {
+    }
+
+    [Fact(Skip = AhpConfig.SkipTest)]
+    [Order(0)]
+    public async Task Order00_CheckPrerequisites()
+    {
+        var hasConsortium = await AhpCrmContext.HasConsortium(LoginData);
+        hasConsortium.Should().BeTrue("AHP tests requires Organisation which is Consortium Lead Partner");
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
@@ -276,13 +287,118 @@ public class Order01StartAhpSite : AhpIntegrationTest
         await TestQuestionPage(
             SitePagesUrl.SiteProvideNumberOfGreenLights(SiteData.SiteId),
             SitePageTitles.NumberOfGreenLights,
-            SitePagesUrl.SiteLandAcquisitionStatus(SiteData.SiteId),
+            SitePagesUrl.SiteDevelopingPartner(SiteData.SiteId),
             (nameof(SiteModel.NumberOfGreenLights), SiteData.NumberOfGreenLights));
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
     [Order(19)]
-    public async Task Order19_ShouldProvideLandAcquisitionStatus()
+    public async Task Order19_ShouldSelectDevelopingPartner()
+    {
+        // given
+        var currentPage = await GetCurrentPage(SitePagesUrl.SiteDevelopingPartner(SiteData.SiteId));
+        currentPage
+            .UrlEndWith(SitePagesUrl.SiteDevelopingPartner(SiteData.SiteId))
+            .HasTitle(SharedPageTitles.DevelopingPartner)
+            .HasBackLink(out _)
+            .HasPartnerSelectItems(out var partners);
+
+        var (developingPartner, confirmLink) = partners.PickNthItem(0);
+
+        // when
+        var nextPage = await TestClient.NavigateTo(confirmLink);
+
+        // then
+        nextPage.UrlEndWith(SitePagesUrl.SiteDevelopingPartnerConfirmation(SiteData.SiteId, developingPartner.Id.Value));
+        SiteData.DevelopingPartner = developingPartner;
+
+        SaveCurrentPage();
+    }
+
+    [Fact(Skip = AhpConfig.SkipTest)]
+    [Order(20)]
+    public async Task Order20_ShouldConfirmDevelopingPartner()
+    {
+        await TestQuestionPage(
+            SitePagesUrl.SiteDevelopingPartnerConfirmation(SiteData.SiteId, SiteData.DevelopingPartner.Id.Value),
+            SharedPageTitles.DevelopingPartnerConfirm,
+            SitePagesUrl.SiteOwnerOfTheLand(SiteData.SiteId),
+            ("isConfirmed", YesNoType.Yes.ToBoolAnswer()));
+    }
+
+    [Fact(Skip = AhpConfig.SkipTest)]
+    [Order(21)]
+    public async Task Order21_ShouldSelectOwnerOfTheLand()
+    {
+        // given
+        var currentPage = await GetCurrentPage(SitePagesUrl.SiteOwnerOfTheLand(SiteData.SiteId));
+        currentPage
+            .UrlEndWith(SitePagesUrl.SiteOwnerOfTheLand(SiteData.SiteId))
+            .HasTitle(SharedPageTitles.OwnerOfTheLand)
+            .HasBackLink(out _)
+            .HasPartnerSelectItems(out var partners);
+
+        var (ownerOfTheLand, confirmLink) = partners.PickNthItem(1);
+
+        // when
+        var nextPage = await TestClient.NavigateTo(confirmLink);
+
+        // then
+        nextPage.UrlEndWith(SitePagesUrl.SiteOwnerOfTheLandConfirmation(SiteData.SiteId, ownerOfTheLand.Id.Value));
+        SiteData.OwnerOfTheLand = ownerOfTheLand;
+
+        SaveCurrentPage();
+    }
+
+    [Fact(Skip = AhpConfig.SkipTest)]
+    [Order(22)]
+    public async Task Order22_ShouldConfirmOwnerOfTheLand()
+    {
+        await TestQuestionPage(
+            SitePagesUrl.SiteOwnerOfTheLandConfirmation(SiteData.SiteId, SiteData.OwnerOfTheLand.Id.Value),
+            SharedPageTitles.OwnerOfTheLandConfirm,
+            SitePagesUrl.SiteOwnerOfTheHomes(SiteData.SiteId),
+            ("isConfirmed", YesNoType.Yes.ToBoolAnswer()));
+    }
+
+    [Fact(Skip = AhpConfig.SkipTest)]
+    [Order(23)]
+    public async Task Order23_ShouldSelectOwnerOfTheHomes()
+    {
+        // given
+        var currentPage = await GetCurrentPage(SitePagesUrl.SiteOwnerOfTheHomes(SiteData.SiteId));
+        currentPage
+            .UrlEndWith(SitePagesUrl.SiteOwnerOfTheHomes(SiteData.SiteId))
+            .HasTitle(SharedPageTitles.OwnerOfTheHomes)
+            .HasBackLink(out _)
+            .HasPartnerSelectItems(out var partners);
+
+        var (ownerOfTheHomes, confirmLink) = partners.PickNthItem(2);
+
+        // when
+        var nextPage = await TestClient.NavigateTo(confirmLink);
+
+        // then
+        nextPage.UrlEndWith(SitePagesUrl.SiteOwnerOfTheHomesConfirmation(SiteData.SiteId, ownerOfTheHomes.Id.Value));
+        SiteData.OwnerOfTheHomes = ownerOfTheHomes;
+
+        SaveCurrentPage();
+    }
+
+    [Fact(Skip = AhpConfig.SkipTest)]
+    [Order(24)]
+    public async Task Order24_ShouldConfirmOwnerOfTheHomes()
+    {
+        await TestQuestionPage(
+            SitePagesUrl.SiteOwnerOfTheHomesConfirmation(SiteData.SiteId, SiteData.OwnerOfTheHomes.Id.Value),
+            SharedPageTitles.OwnerOfTheHomesConfirm,
+            SitePagesUrl.SiteLandAcquisitionStatus(SiteData.SiteId),
+            ("isConfirmed", YesNoType.Yes.ToBoolAnswer()));
+    }
+
+    [Fact(Skip = AhpConfig.SkipTest)]
+    [Order(25)]
+    public async Task Order25_ShouldProvideLandAcquisitionStatus()
     {
         await TestQuestionPage(
             SitePagesUrl.SiteLandAcquisitionStatus(SiteData.SiteId),
@@ -292,8 +408,8 @@ public class Order01StartAhpSite : AhpIntegrationTest
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
-    [Order(20)]
-    public async Task Order20_ShouldProvideTenderingStatus()
+    [Order(26)]
+    public async Task Order26_ShouldProvideTenderingStatus()
     {
         await TestQuestionPage(
             SitePagesUrl.SiteTenderingStatus(SiteData.SiteId),
@@ -303,8 +419,8 @@ public class Order01StartAhpSite : AhpIntegrationTest
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
-    [Order(21)]
-    public async Task Order21_ShouldProvideContractorDetails()
+    [Order(27)]
+    public async Task Order27_ShouldProvideContractorDetails()
     {
         await TestQuestionPage(
             SitePagesUrl.SiteContractorDetails(SiteData.SiteId),
@@ -315,8 +431,8 @@ public class Order01StartAhpSite : AhpIntegrationTest
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
-    [Order(22)]
-    public async Task Order22_ShouldProvideStrategicSite()
+    [Order(28)]
+    public async Task Order28_ShouldProvideStrategicSite()
     {
         await TestQuestionPage(
             SitePagesUrl.SiteStrategicSite(SiteData.SiteId),
@@ -327,8 +443,8 @@ public class Order01StartAhpSite : AhpIntegrationTest
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
-    [Order(23)]
-    public async Task Order23_ShouldProvideSiteType()
+    [Order(29)]
+    public async Task Order29_ShouldProvideSiteType()
     {
         await TestQuestionPage(
             SitePagesUrl.SiteType(SiteData.SiteId),
@@ -340,8 +456,8 @@ public class Order01StartAhpSite : AhpIntegrationTest
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
-    [Order(24)]
-    public async Task Order24_ShouldProvideSiteUse()
+    [Order(30)]
+    public async Task Order30_ShouldProvideSiteUse()
     {
         await TestQuestionPage(
             SitePagesUrl.SiteUse(SiteData.SiteId),
@@ -352,8 +468,8 @@ public class Order01StartAhpSite : AhpIntegrationTest
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
-    [Order(25)]
-    public async Task Order25_ShouldProvideTravellerPitchType()
+    [Order(31)]
+    public async Task Order31_ShouldProvideTravellerPitchType()
     {
         await TestQuestionPage(
             SitePagesUrl.SiteTravellerPitchType(SiteData.SiteId),
@@ -363,8 +479,8 @@ public class Order01StartAhpSite : AhpIntegrationTest
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
-    [Order(26)]
-    public async Task Order26_ShouldProvideRuralClassification()
+    [Order(32)]
+    public async Task Order32_ShouldProvideRuralClassification()
     {
         await TestQuestionPage(
             SitePagesUrl.SiteRuralClassification(SiteData.SiteId),
@@ -375,8 +491,8 @@ public class Order01StartAhpSite : AhpIntegrationTest
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
-    [Order(27)]
-    public async Task Order27_ShouldProvideEnvironmentalImpact()
+    [Order(33)]
+    public async Task Order33_ShouldProvideEnvironmentalImpact()
     {
         await TestQuestionPage(
             SitePagesUrl.SiteEnvironmentalImpact(SiteData.SiteId),
@@ -386,8 +502,8 @@ public class Order01StartAhpSite : AhpIntegrationTest
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
-    [Order(28)]
-    public async Task Order28_ShouldProvideSiteMmcUsing()
+    [Order(34)]
+    public async Task Order34_ShouldProvideSiteMmcUsing()
     {
         await TestQuestionPage(
             SitePagesUrl.SiteMmcUsing(SiteData.SiteId),
@@ -397,8 +513,8 @@ public class Order01StartAhpSite : AhpIntegrationTest
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
-    [Order(29)]
-    public async Task Order29_ShouldProvideSiteMmcInformation()
+    [Order(35)]
+    public async Task Order35_ShouldProvideSiteMmcInformation()
     {
         await TestQuestionPage(
             SitePagesUrl.SiteMmcInformation(SiteData.SiteId),
@@ -409,8 +525,8 @@ public class Order01StartAhpSite : AhpIntegrationTest
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
-    [Order(30)]
-    public async Task Order30_ShouldProvideSiteMmcCategories()
+    [Order(36)]
+    public async Task Order36_ShouldProvideSiteMmcCategories()
     {
         await TestQuestionPage(
             SitePagesUrl.SiteMmcCategories(SiteData.SiteId),
@@ -420,8 +536,8 @@ public class Order01StartAhpSite : AhpIntegrationTest
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
-    [Order(31)]
-    public async Task Order31_ShouldProvideSiteMmcCategory3D()
+    [Order(37)]
+    public async Task Order37_ShouldProvideSiteMmcCategory3D()
     {
         await TestQuestionPage(
             SitePagesUrl.SiteMmcCategory3D(SiteData.SiteId),
@@ -431,8 +547,8 @@ public class Order01StartAhpSite : AhpIntegrationTest
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
-    [Order(32)]
-    public async Task Order32_ShouldProvideSiteMmcCategory2D()
+    [Order(38)]
+    public async Task Order38_ShouldProvideSiteMmcCategory2D()
     {
         await TestQuestionPage(
             SitePagesUrl.SiteMmcCategory2D(SiteData.SiteId),
@@ -442,8 +558,8 @@ public class Order01StartAhpSite : AhpIntegrationTest
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
-    [Order(33)]
-    public async Task Order33_ShouldProvideProcurements()
+    [Order(39)]
+    public async Task Order39_ShouldProvideProcurements()
     {
         await TestQuestionPage(
             SitePagesUrl.SiteProcurements(SiteData.SiteId),
@@ -453,8 +569,8 @@ public class Order01StartAhpSite : AhpIntegrationTest
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
-    [Order(34)]
-    public async Task Order34_CheckAnswersHasValidSummary()
+    [Order(40)]
+    public async Task Order40_CheckAnswersHasValidSummary()
     {
         // given
         var checkAnswersPage = await GetCurrentPage(SitePagesUrl.SiteCheckAnswers(SiteData.SiteId));
@@ -480,10 +596,10 @@ public class Order01StartAhpSite : AhpIntegrationTest
         summary.Should().ContainKey("National Design Guide priorities").WithOnlyValues(SiteData.NationalDesignGuidePriorities);
         summary.Should().ContainKey("Building for a Healthy Life criteria").WithValue(SiteData.BuildingForHealthyLife.ToString());
         summary.Should().ContainKey("Number of green lights").WithValue(SiteData.NumberOfGreenLights);
-        summary.Should().ContainKey("Developing partner").WithValue("TODO");
-        summary.Should().ContainKey("Owner of the land").WithValue("TODO");
-        summary.Should().ContainKey("Owner of the homes").WithValue("TODO");
-        summary.Should().ContainKey("URB - Owner of the homes").WithValue("TODO");
+        summary.Should().ContainKey("Developing partner").WithValue(SiteData.DevelopingPartner.Name);
+        summary.Should().ContainKey("Owner of the land").WithValue(SiteData.OwnerOfTheLand.Name);
+        summary.Should().ContainKey("Owner of the homes").WithValue(SiteData.OwnerOfTheHomes.Name);
+        summary.Should().NotContainKey("URB - Owner of the homes");
         summary.Should().ContainKey("Land status").WithValue(SiteData.LandAcquisitionStatus);
         summary.Should().ContainKey("Tendering progress for main works contract").WithValue(SiteData.TenderingStatus);
         summary.Should().ContainKey("Name of contractor").WithValue(SiteData.ContractorName);
@@ -508,8 +624,8 @@ public class Order01StartAhpSite : AhpIntegrationTest
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
-    [Order(35)]
-    public async Task Order35_CheckAnswersChangeMmcAnswer()
+    [Order(41)]
+    public async Task Order41_CheckAnswersChangeMmcAnswer()
     {
         // given
         var checkAnswersPage = await GetCurrentPage(SitePagesUrl.SiteCheckAnswers(SiteData.SiteId));
@@ -531,8 +647,8 @@ public class Order01StartAhpSite : AhpIntegrationTest
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
-    [Order(36)]
-    public async Task Order36_ShouldProvideSiteMmcUsing()
+    [Order(42)]
+    public async Task Order42_ShouldProvideSiteMmcUsing()
     {
         var mmcUsing = SiteData.ChangeMmcUsingAnswer();
         await TestQuestionPage(
@@ -543,8 +659,8 @@ public class Order01StartAhpSite : AhpIntegrationTest
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
-    [Order(37)]
-    public async Task Order37_CheckAnswersHasValidSummaryAfterChangingMmc()
+    [Order(43)]
+    public async Task Order43_CheckAnswersHasValidSummaryAfterChangingMmc()
     {
         // given
         var checkAnswersPage = await GetCurrentPage(SitePagesUrl.SiteCheckAnswers(SiteData.SiteId));
@@ -563,16 +679,29 @@ public class Order01StartAhpSite : AhpIntegrationTest
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
-    [Order(38)]
-    public async Task Order38_CheckAnswersCompleteSite()
+    [Order(44)]
+    public async Task Order44_CheckAnswersCompleteSite()
     {
-        var siteListPage = await TestQuestionPage(
+        await TestQuestionPage(
             SitePagesUrl.SiteCheckAnswers(SiteData.SiteId),
             SitePageTitles.CheckAnswers,
-            SitePagesUrl.SiteList,
+            SitePagesUrl.SiteDetails(ShortGuid.FromString(SiteData.SiteId).Value),
             (nameof(IsSectionCompleted), IsSectionCompleted.Yes.ToString()));
+    }
 
-        siteListPage.HasTitle(SitePageTitles.SiteList)
-            .HasLinkWithHref(SitePagesUrl.SiteDetails(SiteData.SiteId), out _);
+    [Fact(Skip = AhpConfig.SkipTest)]
+    [Order(45)]
+    public async Task Order45_SiteIsNotEditableAfterCompletion()
+    {
+        var checkAnswersPage = await GetCurrentPage(SitePagesUrl.SiteCheckAnswers(SiteData.SiteId));
+
+        var summaryItems = checkAnswersPage.GetSummaryListItems();
+        foreach (var item in summaryItems)
+        {
+            item.Value.ChangeAnswerLink.Should().BeNull();
+        }
+
+        var result = await TestClient.NavigateTo(SitePagesUrl.SiteName + "?siteId=" + SiteData.SiteId);
+        result.Title.Should().Be("Page not found");
     }
 }

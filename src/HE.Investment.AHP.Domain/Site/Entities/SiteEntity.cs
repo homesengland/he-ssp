@@ -1,6 +1,7 @@
 extern alias Org;
 
 using HE.Investment.AHP.Contract.Common.Enums;
+using HE.Investment.AHP.Contract.Project;
 using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Contract.Site.Enums;
 using HE.Investment.AHP.Domain.Site.Repositories;
@@ -30,6 +31,7 @@ public class SiteEntity : DomainEntity, IQuestion
 
     public SiteEntity(
         SiteId id,
+        FrontDoorProjectId projectId,
         SiteName name,
         SitePartners sitePartners,
         SiteStatus? status = null,
@@ -48,11 +50,11 @@ public class SiteEntity : DomainEntity, IQuestion
         EnvironmentalImpact? environmentalImpact = null,
         SiteModernMethodsOfConstruction? modernMethodsOfConstruction = null,
         SiteProcurements? siteProcurements = null,
-        FrontDoorProjectId? frontDoorProjectId = null,
         FrontDoorSiteId? frontDoorSiteId = null)
     {
         Id = id;
         Name = name;
+        FrontDoorProjectId = projectId;
         Status = status ?? SiteStatus.InProgress;
         Section106 = section106 ?? new Section106();
         LocalAuthority = localAuthority;
@@ -70,13 +72,12 @@ public class SiteEntity : DomainEntity, IQuestion
         EnvironmentalImpact = environmentalImpact;
         ModernMethodsOfConstruction = modernMethodsOfConstruction ?? new SiteModernMethodsOfConstruction();
         Procurements = siteProcurements ?? new SiteProcurements();
-        FrontDoorProjectId = frontDoorProjectId;
         FrontDoorSiteId = frontDoorSiteId;
     }
 
-    public SiteId Id { get; set; }
+    public SiteId Id { get; }
 
-    public FrontDoorProjectId? FrontDoorProjectId { get; }
+    public FrontDoorProjectId FrontDoorProjectId { get; }
 
     public FrontDoorSiteId? FrontDoorSiteId { get; }
 
@@ -118,13 +119,13 @@ public class SiteEntity : DomainEntity, IQuestion
 
     public bool IsModified => _modificationTracker.IsModified;
 
-    public static SiteEntity NewSite(AhpUserAccount userAccount, FrontDoorProjectId? projectId, FrontDoorSiteId? siteId)
+    public static SiteEntity NewSite(AhpUserAccount userAccount, FrontDoorProjectId projectId, FrontDoorSiteId? siteId)
     {
         var sitePartners = userAccount.Consortium.HasNoConsortium
             ? SitePartners.SinglePartner(userAccount.SelectedOrganisation())
             : new SitePartners();
 
-        return new SiteEntity(SiteId.New(), new SiteName($"New Site - {Guid.NewGuid()}"), sitePartners, frontDoorProjectId: projectId, frontDoorSiteId: siteId);
+        return new SiteEntity(SiteId.New(), projectId, new SiteName($"New Site - {Guid.NewGuid()}"), sitePartners, frontDoorSiteId: siteId);
     }
 
     public async Task ProvideName(SiteName siteName, ISiteNameExist siteNameExist, CancellationToken cancellationToken)

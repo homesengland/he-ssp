@@ -11,8 +11,8 @@ public class SupportActivitiesEqualityTests
     public void ShouldTwoSupportActivitiesBeEqual_WhenThereIsOneElement()
     {
         // given
-        var first = new SupportActivities(new[] { SupportActivityType.AcquiringLand });
-        var second = new SupportActivities(new[] { SupportActivityType.AcquiringLand });
+        var first = new SupportActivities([SupportActivityType.AcquiringLand]);
+        var second = new SupportActivities([SupportActivityType.AcquiringLand]);
 
         // when
         var result = first == second;
@@ -25,8 +25,8 @@ public class SupportActivitiesEqualityTests
     public void ShouldTwoSupportActivitiesBeEqual_WhenThereAreMoreThanOneElement()
     {
         // given
-        var first = new SupportActivities(new[] { SupportActivityType.AcquiringLand, SupportActivityType.DevelopingHomes });
-        var second = new SupportActivities(new[] { SupportActivityType.DevelopingHomes, SupportActivityType.AcquiringLand });
+        var first = new SupportActivities([SupportActivityType.AcquiringLand, SupportActivityType.DevelopingHomes]);
+        var second = new SupportActivities([SupportActivityType.DevelopingHomes, SupportActivityType.AcquiringLand]);
 
         // when
         var result = first == second;
@@ -39,8 +39,8 @@ public class SupportActivitiesEqualityTests
     public void ShouldTwoSupportActivitiesBeNotEqual_WhenThereAreMoreThanOneElement()
     {
         // given
-        var first = new SupportActivities(new[] { SupportActivityType.SellingLandToHomesEngland, SupportActivityType.DevelopingHomes });
-        var second = new SupportActivities(new[] { SupportActivityType.DevelopingHomes, SupportActivityType.AcquiringLand });
+        var first = new SupportActivities([SupportActivityType.SellingLandToHomesEngland, SupportActivityType.DevelopingHomes]);
+        var second = new SupportActivities([SupportActivityType.DevelopingHomes, SupportActivityType.AcquiringLand]);
 
         // when
         var result = first == second;

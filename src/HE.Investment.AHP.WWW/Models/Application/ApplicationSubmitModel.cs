@@ -2,6 +2,7 @@ namespace HE.Investment.AHP.WWW.Models.Application;
 
 public record ApplicationSubmitModel(
     string ApplicationId,
+    string ProjectId,
     string ApplicationName,
     string ReferenceNumber,
     string SiteName,

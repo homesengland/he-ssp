@@ -27,6 +27,11 @@ public class SchemeWorkflow : IStateRouting<SchemeWorkflowState>
 
     public Task<bool> StateCanBeAccessed(SchemeWorkflowState nextState)
     {
+        if (nextState == SchemeWorkflowState.PartnerDetails && !_scheme.IsConsortiumMember)
+        {
+            return Task.FromResult(false);
+        }
+
         return Task.FromResult(true);
     }
 
@@ -46,6 +51,8 @@ public class SchemeWorkflow : IStateRouting<SchemeWorkflowState>
         {
             { RequiredFunding: var x } when x.IsNotProvided() => SchemeWorkflowState.Funding,
             { HousesToDeliver: var x } when x.IsNotProvided() => SchemeWorkflowState.Funding,
+            { IsConsortiumMember: true, ArePartnersConfirmed: var arePartnersConfirmed } when arePartnersConfirmed != true =>
+                SchemeWorkflowState.PartnerDetails,
             { AffordabilityEvidence: var x } when x.IsNotProvided() => SchemeWorkflowState.Affordability,
             { SalesRisk: var x } when x.IsNotProvided() => SchemeWorkflowState.SalesRisk,
             { MeetingLocalPriorities: var x } when x.IsNotProvided() => SchemeWorkflowState.HousingNeeds,
@@ -60,21 +67,33 @@ public class SchemeWorkflow : IStateRouting<SchemeWorkflowState>
         _machine.Configure(SchemeWorkflowState.Start)
             .Permit(Trigger.Continue, SchemeWorkflowState.Funding);
 
-        ConfigureStep(SchemeWorkflowState.Funding, SchemeWorkflowState.Affordability, SchemeWorkflowState.Start);
-        ConfigureStep(SchemeWorkflowState.Affordability, SchemeWorkflowState.SalesRisk, SchemeWorkflowState.Funding);
-        ConfigureStep(SchemeWorkflowState.SalesRisk, SchemeWorkflowState.HousingNeeds, SchemeWorkflowState.Affordability);
-        ConfigureStep(SchemeWorkflowState.HousingNeeds, SchemeWorkflowState.StakeholderDiscussions, SchemeWorkflowState.SalesRisk);
-        ConfigureStep(SchemeWorkflowState.StakeholderDiscussions, SchemeWorkflowState.CheckAnswers, SchemeWorkflowState.HousingNeeds);
+        _machine.Configure(SchemeWorkflowState.Funding)
+            .PermitIf(Trigger.Continue, SchemeWorkflowState.Affordability, () => !_scheme.IsConsortiumMember)
+            .PermitIf(Trigger.Continue, SchemeWorkflowState.PartnerDetails, () => _scheme.IsConsortiumMember)
+            .Permit(Trigger.Back, SchemeWorkflowState.Start);
+
+        _machine.Configure(SchemeWorkflowState.PartnerDetails)
+            .Permit(Trigger.Continue, SchemeWorkflowState.Affordability)
+            .Permit(Trigger.Back, SchemeWorkflowState.Funding);
+
+        _machine.Configure(SchemeWorkflowState.Affordability)
+            .Permit(Trigger.Continue, SchemeWorkflowState.SalesRisk)
+            .PermitIf(Trigger.Back, SchemeWorkflowState.Funding, () => !_scheme.IsConsortiumMember)
+            .PermitIf(Trigger.Back, SchemeWorkflowState.PartnerDetails, () => _scheme.IsConsortiumMember);
+
+        _machine.Configure(SchemeWorkflowState.SalesRisk)
+            .Permit(Trigger.Continue, SchemeWorkflowState.HousingNeeds)
+            .Permit(Trigger.Back, SchemeWorkflowState.Affordability);
+
+        _machine.Configure(SchemeWorkflowState.HousingNeeds)
+            .Permit(Trigger.Continue, SchemeWorkflowState.StakeholderDiscussions)
+            .Permit(Trigger.Back, SchemeWorkflowState.SalesRisk);
+
+        _machine.Configure(SchemeWorkflowState.StakeholderDiscussions)
+            .Permit(Trigger.Continue, SchemeWorkflowState.CheckAnswers)
+            .Permit(Trigger.Back, SchemeWorkflowState.HousingNeeds);
 
         _machine.Configure(SchemeWorkflowState.CheckAnswers)
             .Permit(Trigger.Back, SchemeWorkflowState.StakeholderDiscussions);
-    }
-
-    private void ConfigureStep(SchemeWorkflowState current, SchemeWorkflowState next, SchemeWorkflowState previous)
-    {
-        _machine.Configure(current)
-            .PermitIf(Trigger.Continue, next)
-            .PermitIf(Trigger.Back, previous)
-            .Permit(Trigger.Change, SchemeWorkflowState.CheckAnswers);
     }
 }

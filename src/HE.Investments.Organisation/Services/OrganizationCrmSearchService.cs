@@ -79,6 +79,6 @@ internal class OrganizationCrmSearchService : IOrganizationCrmSearchService
             return organizationDtoList;
         }
 
-        return new List<OrganizationDetailsDto>();
+        return [];
     }
 }

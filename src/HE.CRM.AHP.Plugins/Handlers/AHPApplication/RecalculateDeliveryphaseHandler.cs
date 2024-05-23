@@ -30,11 +30,13 @@ namespace HE.CRM.AHP.Plugins.Handlers.AHPApplication
 
         public override bool CanWork()
         {
+            TracingService.Trace("Can Work");
             return ValueChanged(invln_scheme.Fields.invln_noofhomes) || ValueChanged(invln_scheme.Fields.invln_fundingrequired);
         }
 
         public override void DoWork()
         {
+            TracingService.Trace("Do Work");
             var contact = _contactRepository.GetById(CurrentState.invln_contactid);
             var milestones = _milestonesRepository.
                     GetByAttribute(invln_milestoneframeworkitem.Fields.invln_programmeId, CurrentState.invln_programmelookup.Id).ToList();

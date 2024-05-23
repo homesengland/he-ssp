@@ -8,8 +8,10 @@ using HE.Investment.AHP.Domain.UserContext;
 using HE.Investment.AHP.WWW.Extensions;
 using HE.Investment.AHP.WWW.Models.Application;
 using HE.Investment.AHP.WWW.Models.Application.Factories;
+using HE.Investment.AHP.WWW.Models.Project;
 using HE.Investment.AHP.WWW.Workflows;
 using HE.Investments.Account.Shared.Authorization.Attributes;
+using HE.Investments.AHP.Consortium.Contract.Queries;
 using HE.Investments.Common.Contract.Pagination;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Validators;
@@ -28,57 +30,49 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
     private readonly string _siteName = "Test Site";
     private readonly IMediator _mediator;
     private readonly IApplicationSummaryViewModelFactory _applicationSummaryViewModelFactory;
-    private readonly IAhpAccessContext _ahpAccessContext;
-    private readonly IAhpUserContext _ahpUserContext;
 
     public ApplicationController(
         IMediator mediator,
-        IApplicationSummaryViewModelFactory applicationSummaryViewModelFactory,
-        IAhpAccessContext ahpAccessContext,
-        IAhpUserContext ahpUserContext)
+        IApplicationSummaryViewModelFactory applicationSummaryViewModelFactory)
     {
         _mediator = mediator;
         _applicationSummaryViewModelFactory = applicationSummaryViewModelFactory;
-        _ahpAccessContext = ahpAccessContext;
-        _ahpUserContext = ahpUserContext;
     }
 
     [HttpGet]
     [WorkflowState(ApplicationWorkflowState.ApplicationsList)]
-    public async Task<IActionResult> Index([FromQuery] int? page, CancellationToken cancellationToken)
+    public IActionResult Index(string? projectId)
     {
-        var applicationsQueryResult = await _mediator.Send(new GetApplicationsQuery(new PaginationRequest(page ?? 1)), cancellationToken);
-        var isReadOnly = !await _ahpAccessContext.CanEditApplication();
+        if (string.IsNullOrEmpty(projectId))
+        {
+            return RedirectToAction("Index", "Projects");
+        }
 
-        return View("Index", new ApplicationsListModel(applicationsQueryResult.OrganisationName, applicationsQueryResult.PaginationResult, isReadOnly));
+        return RedirectToAction("Applications", "Project", new { projectId });
     }
 
     [HttpGet("start")]
     [WorkflowState(ApplicationWorkflowState.Start)]
     [AuthorizeWithCompletedProfile(AhpAccessContext.EditApplications)]
-    public async Task<IActionResult> Start()
+    public async Task<IActionResult> Start([FromRoute] string fdProjectId, CancellationToken cancellationToken)
     {
-        var userAccount = await _ahpUserContext.GetSelectedAccount();
-        if (userAccount.Consortium.HasNoConsortium || await _ahpAccessContext.CanManageConsortium())
-        {
-            return View("Splash");
-        }
+        var availableProgrammes = await _mediator.Send(new GetAvailableProgrammesQuery(), cancellationToken);
 
-        return RedirectToAction("Index", "ConsortiumMember", new { consortiumId = userAccount.Consortium.ConsortiumId });
+        return View("Splash", new ProjectBasicModel(fdProjectId, availableProgrammes[0]));
     }
 
     [HttpPost("start")]
     [WorkflowState(ApplicationWorkflowState.Start)]
     [AuthorizeWithCompletedProfile(AhpAccessContext.EditApplications)]
-    public async Task<IActionResult> StartPost(CancellationToken cancellationToken)
+    public async Task<IActionResult> StartPost([FromRoute] string fdProjectId, CancellationToken cancellationToken)
     {
         var response = await _mediator.Send(new GetSiteListQuery(new PaginationRequest(1, 1)), cancellationToken);
         if (response.Page.Items.Any())
         {
-            return RedirectToAction("Select", "Site");
+            return RedirectToAction("Select", "Site", new { fdProjectId });
         }
 
-        return RedirectToAction("Start", "Site");
+        return RedirectToAction("Start", "Site", new { fdProjectId });
     }
 
     [WorkflowState(ApplicationWorkflowState.ApplicationName)]
@@ -138,6 +132,7 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
 
         var model = new ApplicationSectionsModel(
             applicationId,
+            application.ProjectId.Value,
             _siteName,
             application.Name,
             application.Status,
@@ -294,9 +289,9 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
     }
 
     [HttpGet("{applicationId}/back")]
-    public async Task<IActionResult> Back([FromRoute] string applicationId, ApplicationWorkflowState currentPage)
+    public async Task<IActionResult> Back([FromRoute] string applicationId, string? projectId, ApplicationWorkflowState currentPage)
     {
-        return await Back(currentPage, new { applicationId });
+        return await Back(currentPage, new { applicationId, projectId });
     }
 
     protected override Task<IStateRouting<ApplicationWorkflowState>> Routing(ApplicationWorkflowState currentState, object? routeData = null)
@@ -327,6 +322,7 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
 
         return new ApplicationSubmitModel(
             application.ApplicationId.Value,
+            application.ProjectId.Value,
             application.ApplicationName,
             application.ReferenceNumber,
             siteBasicModel.Name,

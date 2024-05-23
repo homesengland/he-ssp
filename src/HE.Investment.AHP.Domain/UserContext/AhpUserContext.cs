@@ -20,7 +20,7 @@ internal sealed class AhpUserContext(
 {
     private readonly ProgrammeId _ahpProgrammeId = new(programmeSettings.AhpProgrammeId);
 
-    private readonly Dictionary<OrganisationId, CachedEntity<AhpConsortiumBasicInfo>> _consortia = new();
+    private readonly Dictionary<OrganisationId, CachedEntity<AhpConsortiumBasicInfo>> _consortia = [];
 
     public bool IsLogged => accountUserContext.IsLogged;
 
@@ -67,7 +67,7 @@ internal sealed class AhpUserContext(
         {
             consortiumCachedEntity = _consortia[organisationId!] = new CachedEntity<AhpConsortiumBasicInfo>(
                 cacheService,
-                $"ahp-consortium-{organisationId}",
+                AhpCacheKeys.OrganisationConsortium(organisationId!),
                 async () => await GetAhpConsortiumInfo(organisationId!));
         }
 

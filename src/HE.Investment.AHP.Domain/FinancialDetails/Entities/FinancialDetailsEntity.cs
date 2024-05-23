@@ -72,7 +72,7 @@ public class FinancialDetailsEntity : IQuestion
 
     public void ProvideLandStatus(LandStatus landStatus)
     {
-        if (SiteBasicInfo.LandAcquisitionStatus.IsFullUnconditionalOption && landStatus.ExpectedPurchasePrice.IsProvided())
+        if (SiteBasicInfo.LandAcquisitionStatus.HasFullLandOwnership && landStatus.ExpectedPurchasePrice.IsProvided())
         {
             OperationResult.New()
                 .AddValidationError(nameof(LandStatus), "Expected purchase price cannot be provided for unconditional land status")

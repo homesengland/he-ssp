@@ -17,10 +17,10 @@ public class DetailedPlanningApprovalGrantedPlanningDetails : PlanningDetails
 
     public override SitePlanningStatus? PlanningStatus => SitePlanningStatus.DetailedPlanningApprovalGranted;
 
-    protected override IReadOnlyCollection<string> ActiveFields => new[]
-    {
+    protected override IReadOnlyCollection<string> ActiveFields =>
+    [
         nameof(ReferenceNumber),
         nameof(DetailedPlanningApprovalDate),
         nameof(IsGrantFundingForAllHomesCoveredByApplication),
-    };
+    ];
 }

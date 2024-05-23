@@ -50,18 +50,6 @@ public static class SitePageTitles
 
     public const string NumberOfGreenLights = "Enter the number of green lights the design of your site scored";
 
-    public const string DevelopingPartner = "Select the developing partner";
-
-    public const string DevelopingPartnerConfirm = "Is this the developing partner?";
-
-    public const string OwnerOfTheLand = "Select the owner of the land during development";
-
-    public const string OwnerOfTheLandConfirm = "Is this the owner of the land during development?";
-
-    public const string OwnerOfTheHomes = "Select the owner of the homes after completion";
-
-    public const string OwnerOfTheHomesConfirm = "Is this the owner of the homes after completion?";
-
     public const string LandAcquisitionStatus = "What is the status of your land acquisition?";
 
     public const string TenderingStatus = "What progress have you made in the tendering for your main works contract?";

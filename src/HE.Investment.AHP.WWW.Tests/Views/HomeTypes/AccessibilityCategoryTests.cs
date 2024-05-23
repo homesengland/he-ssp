@@ -1,4 +1,3 @@
-using System.Diagnostics.CodeAnalysis;
 using HE.Investment.AHP.WWW.Models.HomeTypes;
 
 namespace HE.Investment.AHP.WWW.Tests.Views.HomeTypes;
@@ -15,19 +14,18 @@ public class AccessibilityCategoryTests : HomeTypesTestBase
         // given & when
         var document = await RenderHomeTypePage(ViewPath, Model);
 
+        IList<string> options = [
+            "M4(1) Category 1: Visitable dwellings",
+            "M4(2) Category 2: Accessible and adaptable dwellings",
+            "M4(3) Category 3: Wheelchair user dwellings"
+        ];
+
         // then
         document
             .HasPageHeader("My application - My homes", "Which accessibility categories do the homes meet?")
             .HasElementWithText("span", "What are the accessibility categories?")
             .HasElementWithText("a", "Read the Building Regulations to find out more (opens in a new tab).")
-            .HasRadio(
-                "AccessibilityCategory",
-                new[]
-                {
-                    "M4(1) Category 1: Visitable dwellings",
-                    "M4(2) Category 2: Accessible and adaptable dwellings",
-                    "M4(3) Category 3: Wheelchair user dwellings",
-                })
+            .HasRadio("AccessibilityCategory", options)
             .HasSaveAndContinueButton();
     }
 }
