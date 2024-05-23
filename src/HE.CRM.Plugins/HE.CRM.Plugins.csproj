@@ -319,6 +319,8 @@
     <None Include="app.config" />
     <None Include="azure-pipelines-build-export.yml" />
     <None Include="key.snk" />
+    <None Include="loans-crm-deploy-nonprod-pipeline.yml" />
+    <None Include="loans-crm-deploy-prod-pipeline.yml" />
     <None Include="packages.config" />
     <None Include="spkl.json" />
     <None Include="spkl\deploy-plugins-register.bat" />
