@@ -99,6 +99,7 @@
     <Compile Include="Handlers\AHPApplication\ChangeExternalStatusOnInternalStatusChangeHandler.cs" />
     <Compile Include="Handlers\AHPApplication\CheckIfApplicationWithNewNameExistsHandler.cs" />
     <Compile Include="Handlers\AHPApplication\CreateDocumentLocationOnCreateHandler.cs" />
+    <Compile Include="Handlers\AHPApplication\GrantCalculateHandler.cs" />
     <Compile Include="Handlers\AHPApplication\UpdateAplicationOnStatusChange.cs" />
     <Compile Include="Handlers\AHPApplication\UpdateLocalAuthorityWhenSiteIsChanged.cs" />
     <Compile Include="Handlers\AHPApplication\RecalculateDeliveryphaseHandler.cs" />
@@ -211,6 +212,7 @@
     <Compile Include="HE.Base\Services\ICrmServicesFactory.cs" />
     <Compile Include="Plugins\AhpApplication\ChangeExternalStatusOnInternalStatusChangePlugin.cs" />
     <Compile Include="Plugins\AhpApplication\CheckIfApplicationWithNewNameExistsPlugin.cs" />
+    <Compile Include="Plugins\AhpApplication\PostUpdate.cs" />
     <Compile Include="Plugins\AhpApplication\CreateDocumentLocationOnCreatePlugin.cs" />
     <Compile Include="Plugins\AhpStatusChange\SendNotificationOnCreatePlugin.cs" />
     <Compile Include="Plugins\ContactWebrole\SendNotificationOnAdminRoleGrantedPlugin.cs" />

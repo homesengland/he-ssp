@@ -28,5 +28,7 @@ namespace HE.CRM.AHP.Plugins.Services.Application
         void SendReminderEmailForFinaliseDraftApplication(Guid applicationId);
 
         void ChangeExternalStatus(invln_scheme target, invln_scheme preImage);
+
+        void GrantCalculate(Guid applicationId);
     }
 }

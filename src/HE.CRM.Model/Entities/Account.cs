@@ -880,6 +880,7 @@ namespace DataverseModel
 			public const string msdyn_accountkpiidName = "msdyn_accountkpiidname";
 			public const string msdyn_gdproptout = "msdyn_gdproptout";
 			public const string msdyn_gdproptoutName = "msdyn_gdproptoutname";
+			public const string msdyn_PrimaryTimeZone = "msdyn_primarytimezone";
 			public const string msdyn_salesaccelerationinsightid = "msdyn_salesaccelerationinsightid";
 			public const string msdyn_salesaccelerationinsightidName = "msdyn_salesaccelerationinsightidname";
 			public const string msdyn_segmentid = "msdyn_segmentid";
@@ -5666,6 +5667,26 @@ namespace DataverseModel
 				{
 					return default(string);
 				}
+			}
+		}
+		
+		/// <summary>
+		/// Indicates the primary time zone that the client works on.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("msdyn_primarytimezone")]
+		public System.Nullable<int> msdyn_PrimaryTimeZone
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<int>>("msdyn_primarytimezone");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("msdyn_PrimaryTimeZone");
+				this.SetAttributeValue("msdyn_primarytimezone", value);
+				this.OnPropertyChanged("msdyn_PrimaryTimeZone");
 			}
 		}
 		

@@ -742,6 +742,7 @@ namespace DataverseModel
 			public const string msdyn_orgchangestatus = "msdyn_orgchangestatus";
 			public const string msdyn_orgchangestatusName = "msdyn_orgchangestatusname";
 			public const string msdyn_portaltermsagreementdate = "msdyn_portaltermsagreementdate";
+			public const string msdyn_PrimaryTimeZone = "msdyn_primarytimezone";
 			public const string msdyn_segmentid = "msdyn_segmentid";
 			public const string msdyn_segmentidName = "msdyn_segmentidname";
 			public const string msft_DataState = "msft_datastate";
@@ -5934,6 +5935,26 @@ namespace DataverseModel
 				this.OnPropertyChanging("msdyn_portaltermsagreementdate");
 				this.SetAttributeValue("msdyn_portaltermsagreementdate", value);
 				this.OnPropertyChanged("msdyn_portaltermsagreementdate");
+			}
+		}
+		
+		/// <summary>
+		/// Indicates the primary time zone that the contact works on.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("msdyn_primarytimezone")]
+		public System.Nullable<int> msdyn_PrimaryTimeZone
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<int>>("msdyn_primarytimezone");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("msdyn_PrimaryTimeZone");
+				this.SetAttributeValue("msdyn_primarytimezone", value);
+				this.OnPropertyChanged("msdyn_PrimaryTimeZone");
 			}
 		}
 		
