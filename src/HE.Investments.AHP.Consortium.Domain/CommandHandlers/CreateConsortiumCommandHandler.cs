@@ -5,6 +5,7 @@ using HE.Investments.AHP.Consortium.Contract.Enums;
 using HE.Investments.AHP.Consortium.Domain.Entities;
 using HE.Investments.AHP.Consortium.Domain.Repositories;
 using HE.Investments.AHP.Consortium.Domain.ValueObjects;
+using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Validators;
 using MediatR;
 
