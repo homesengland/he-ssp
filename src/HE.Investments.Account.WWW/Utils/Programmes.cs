@@ -24,7 +24,7 @@ public class Programmes : IProgrammes
             : throw new InvalidEnumArgumentException($"Programme for {programmeType} does not exist.");
     }
 
-    public string GetApplicationUrl(ProgrammeType programmeType, HeApplicationId applicationId)
+    public string GetApplicationUrl(ProgrammeType programmeType, HeApplianceId applicationId)
     {
         if (programmeType == ProgrammeType.Ahp)
         {
@@ -47,15 +47,19 @@ public class Programmes : IProgrammes
                 ProgrammeType.Loans, new(
                     ProgrammeType.Loans,
                     "Levelling Up Home Building Fund",
+                    "Applications",
                     "Start a new Levelling Up Home Building Fund application. This will not affect any of your previous applications.",
+                    "View all applications",
                     $"{_programmeUrlConfig.Loans}/dashboard")
             },
             {
                 ProgrammeType.Ahp, new(
                     ProgrammeType.Ahp,
-                    "Affordable Homes Programme 2021-2026 Continuous Market Engagement",
+                    "Affordable Homes Programme Continuous Market Engagement 2021-2026",
+                    null,
                     "Start a new Affordable Homes Programme application. This will not affect any of your previous applications.",
-                    $"{_programmeUrlConfig.Ahp}/application")
+                    "View all projects",
+                    $"{_programmeUrlConfig.Ahp}/projects")
             },
         };
     }

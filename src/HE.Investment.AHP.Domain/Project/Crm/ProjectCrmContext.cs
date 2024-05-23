@@ -124,7 +124,7 @@ public class ProjectCrmContext : IProjectCrmContext
         {
             invln_userid = userId,
             invln_accountid = organisationId,
-            invln_consortiumid = consortiumId ?? string.Empty,
+            invln_consortiumid = null, //fix for non consortiums
             invln_heprojectid = frontDoorProjectId,
             invln_projectname = projectName,
             invln_listofsites = JsonSerializer.Serialize(sites, _serializerOptions),

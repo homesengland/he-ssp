@@ -48,7 +48,7 @@
 
     <div class="govuk-grid-column-full govuk-!-padding-0">
 
-        @if ((!Model.ProgrammesToAccess.Any() || Model.ProgrammesToAccess.All(p => !p.Applications.Any())) && !Model.Projects.Any())
+        @if ((!Model.ProgrammesToAccess.Any() || Model.ProgrammesToAccess.All(p => !p.Appliances.Any())) && !Model.Projects.Any())
         {
             <gds-p>
                 You have not applied for any support. Select start a new project to apply for support.
@@ -66,18 +66,20 @@
                 <vc:list-card model="@items"></vc:list-card>
             }
 
-            @if (Model.ProgrammesToAccess.Any(p => p.Applications.Any()))
+            @if (Model.ProgrammesToAccess.Any(p => p.Appliances.Any()))
             {
                 @foreach (var programmeToAccess in Model.ProgrammesToAccess)
                 {
                     var items = new ListCardModel(
                         programmeToAccess.Programme.Name,
-                        programmeToAccess.Applications.Select(x =>
+                        programmeToAccess.Appliances.Select(x =>
                             new ListCardItemModel(
                                 x.Name,
-                                new DynamicComponentViewModel(nameof(ApplicationStatusTagComponent), new { ApplicationStatus = x.Status }), x.Url)).ToList(),
-                        Title: "Applications",
-                        ViewAllUrl: programmeToAccess.Programme.ViewAllApplicationsUrl);
+                                x.Status != null ? new DynamicComponentViewModel(nameof(ApplicationStatusTagComponent), new { ApplicationStatus = x.Status }) : null,
+                                x.Url)).ToList(),
+                        Title: programmeToAccess.Programme.Title,
+                        ViewAllLabel: programmeToAccess.Programme.ViewAllAppliancesLabel,
+                        ViewAllUrl: programmeToAccess.Programme.ViewAllAppliancesUrl);
                         <vc:list-card model="@items"></vc:list-card>
                 }
             }

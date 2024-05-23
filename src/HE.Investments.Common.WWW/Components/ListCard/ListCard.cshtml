@@ -32,9 +32,12 @@
                                 <a href="@item.Url">@item.Name</a>
                             </strong>
                         </dt>
-                        <dd class="govuk-summary-list__actions">
-                            <vc:dynamic-component component="@item.StatusComponent"/>
-                        </dd>
+                        @if (@item.StatusComponent != null)
+                        {
+                            <dd class="govuk-summary-list__actions">
+                                <vc:dynamic-component component="@item.StatusComponent"/>
+                            </dd>
+                        }
                     </div>
                 }
 
@@ -49,7 +52,7 @@
                         }
                         <strong>
                             <a class="govuk-!-margin-bottom-0" href="@Model.ViewAllUrl">
-                                View all applications
+                                @Model.ViewAllLabel
                             </a>
                         </strong>
                     </div>
