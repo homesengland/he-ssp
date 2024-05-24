@@ -1,10 +1,7 @@
-extern alias Org;
-
 using HE.Investments.Common.Contract.Pagination;
 using HE.Investments.FrontDoor.Contract.LocalAuthority.Queries;
+using HE.Investments.Organisation.LocalAuthorities.Repositories;
 using MediatR;
-
-using Org::HE.Investments.Organisation.LocalAuthorities.Repositories;
 
 namespace HE.Investments.FrontDoor.Domain.LocalAuthority.QueryHandlers;
 

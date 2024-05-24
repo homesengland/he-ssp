@@ -1,5 +1,3 @@
-extern alias Org;
-
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Enum;

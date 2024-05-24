@@ -1,13 +1,11 @@
-extern alias Org;
-
 using HE.Investments.AHP.Consortium.Contract;
 using HE.Investments.AHP.Consortium.Contract.Enums;
 using HE.Investments.AHP.Consortium.Domain.Entities;
 using HE.Investments.AHP.Consortium.Domain.Tests.TestData;
 using HE.Investments.AHP.Consortium.Domain.ValueObjects;
+using HE.Investments.Organisation.ValueObjects;
 using HE.Investments.TestsUtils;
 using HE.Investments.TestsUtils.TestFramework;
-using Org::HE.Investments.Organisation.ValueObjects;
 
 namespace HE.Investments.AHP.Consortium.Domain.Tests.TestObjectBuilders;
 

@@ -1,5 +1,3 @@
-extern alias Org;
-
 using System.Diagnostics.CodeAnalysis;
 using HE.Investments.Account.Shared;
 using HE.Investments.AHP.Consortium.Contract;
@@ -8,7 +6,7 @@ using HE.Investments.AHP.Consortium.Domain.Entities;
 using HE.Investments.AHP.Consortium.Domain.Repositories;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Validators;
-using Org::HE.Investments.Organisation.Services;
+using HE.Investments.Organisation.Services;
 
 namespace HE.Investments.AHP.Consortium.Domain.CommandHandlers;
 

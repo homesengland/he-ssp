@@ -1,5 +1,3 @@
-extern alias Org;
-
 using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Contract.Site.Enums;
 using HE.Investment.AHP.Domain.Site.Entities;
@@ -10,7 +8,7 @@ using HE.Investment.AHP.Domain.Site.ValueObjects.TenderingStatus;
 using HE.Investment.AHP.Domain.Tests.Common.TestData;
 using HE.Investments.FrontDoor.Shared.Project;
 using HE.Investments.TestsUtils.TestFramework;
-using LocalAuthority = Org::HE.Investments.Organisation.LocalAuthorities.ValueObjects.LocalAuthority;
+using LocalAuthority = HE.Investments.Organisation.LocalAuthorities.ValueObjects.LocalAuthority;
 using SiteModernMethodsOfConstruction = HE.Investment.AHP.Domain.Site.ValueObjects.Mmc.SiteModernMethodsOfConstruction;
 using SiteRuralClassification = HE.Investment.AHP.Domain.Site.ValueObjects.SiteRuralClassification;
 using SiteTypeDetails = HE.Investment.AHP.Domain.Site.ValueObjects.SiteTypeDetails;

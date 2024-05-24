@@ -1,7 +1,4 @@
-extern alias Org;
-
 using FluentAssertions;
-using HE.Investments.Account.Api.Contract.User;
 using HE.Investments.Account.Domain.Organisation.Repositories;
 using HE.Investments.Account.Domain.Tests.Organisation.TestData;
 using HE.Investments.Account.Domain.Tests.Organisation.TestObjectBuilder;

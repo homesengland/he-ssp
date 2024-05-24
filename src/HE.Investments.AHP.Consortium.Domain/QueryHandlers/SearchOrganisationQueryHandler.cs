@@ -1,13 +1,11 @@
-extern alias Org;
-
 using HE.Investments.AHP.Consortium.Contract;
 using HE.Investments.AHP.Consortium.Contract.Queries;
 using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Contract.Pagination;
+using HE.Investments.Organisation.CompaniesHouse.Contract;
+using HE.Investments.Organisation.Contract;
+using HE.Investments.Organisation.Services;
 using MediatR;
-using IOrganisationSearchService = Org::HE.Investments.Organisation.Services.IOrganisationSearchService;
-using OrganisationSearchItem = Org::HE.Investments.Organisation.Contract.OrganisationSearchItem;
-using PagingQueryParams = Org::HE.Investments.Organisation.CompaniesHouse.Contract.PagingQueryParams;
 
 namespace HE.Investments.AHP.Consortium.Domain.QueryHandlers;
 

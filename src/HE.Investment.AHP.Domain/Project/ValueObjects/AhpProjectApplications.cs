@@ -1,4 +1,3 @@
-using HE.Investment.AHP.Contract.Project;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Extensions;
 using HE.Investments.FrontDoor.Shared.Project;

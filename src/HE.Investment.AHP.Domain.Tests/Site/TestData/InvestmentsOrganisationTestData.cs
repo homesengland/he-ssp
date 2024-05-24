@@ -1,7 +1,5 @@
-extern alias Org;
-
 using HE.Investments.Common.Contract;
-using InvestmentsOrganisation = Org::HE.Investments.Organisation.ValueObjects.InvestmentsOrganisation;
+using InvestmentsOrganisation = HE.Investments.Organisation.ValueObjects.InvestmentsOrganisation;
 
 namespace HE.Investment.AHP.Domain.Tests.Site.TestData;
 

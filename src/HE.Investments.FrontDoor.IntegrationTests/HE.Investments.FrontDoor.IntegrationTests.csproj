@@ -15,9 +15,6 @@
     <ProjectReference Include="..\HE.Investments.FrontDoor.WWW\HE.Investments.FrontDoor.WWW.csproj"/>
     <ProjectReference Include="..\HE.Investments.IntegrationTestsFramework\HE.Investments.IntegrationTestsFramework.csproj"/>
     <ProjectReference Include="..\HE.Investments.TestsUtils\HE.Investments.TestsUtils.csproj"/>
-    <ProjectReference Include="..\HE.Investments.Organisation\HE.Investments.Organisation.csproj">
-      <Aliases>Org</Aliases>
-    </ProjectReference>
   </ItemGroup>
 
 </Project>

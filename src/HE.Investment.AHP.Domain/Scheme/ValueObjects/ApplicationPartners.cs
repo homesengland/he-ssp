@@ -1,12 +1,10 @@
-extern alias Org;
-
 using HE.Investment.AHP.Domain.Site.ValueObjects;
 using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Domain;
-using Org::HE.Investments.Organisation.ValueObjects;
+using HE.Investments.Organisation.ValueObjects;
 
 namespace HE.Investment.AHP.Domain.Scheme.ValueObjects;
 

@@ -2,7 +2,6 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investment.AHP.Contract.Project;
-using HE.Investment.AHP.Domain.Application.Crm;
 using HE.Investment.AHP.Domain.Site.Crm;
 using HE.Investments.Common.CRM.Model;
 using HE.Investments.Common.CRM.Services;

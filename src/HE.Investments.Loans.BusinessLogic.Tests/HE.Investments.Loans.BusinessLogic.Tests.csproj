@@ -14,9 +14,6 @@
     <ProjectReference Include="..\HE.Investments.Common.Tests\HE.Investments.Common.Tests.csproj"/>
     <ProjectReference Include="..\HE.Investments.Loans.BusinessLogic\HE.Investments.Loans.BusinessLogic.csproj"/>
     <ProjectReference Include="..\HE.Investments.Loans.Common.Tests\HE.Investments.Loans.Common.Tests.csproj"/>
-    <ProjectReference Include="..\HE.Investments.Organisation\HE.Investments.Organisation.csproj">
-      <Aliases>Org</Aliases>
-    </ProjectReference>
     <ProjectReference Include="..\HE.Investments.TestsUtils\HE.Investments.TestsUtils.csproj"/>
   </ItemGroup>
 

@@ -1,7 +1,4 @@
-extern alias Org;
-
-using Org::HE.Investments.Organisation.LocalAuthorities.ValueObjects;
-using LocalAuthority = Org::HE.Investments.Organisation.LocalAuthorities.ValueObjects.LocalAuthority;
+using HE.Investments.Organisation.LocalAuthorities.ValueObjects;
 
 namespace HE.Investments.Loans.BusinessLogic.Tests.Projects.TestData;
 

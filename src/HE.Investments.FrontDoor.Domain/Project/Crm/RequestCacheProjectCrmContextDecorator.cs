@@ -1,5 +1,4 @@
 using HE.Common.IntegrationModel.PortalIntegrationModel;
-using HE.Investments.Account.Shared.User;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Infrastructure.Cache;
 
