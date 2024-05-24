@@ -319,6 +319,7 @@
     <None Include="app.config" />
     <None Include="azure-pipelines-build-export.yml" />
     <None Include="key.snk" />
+    <None Include="loans-crm-build-export-pipeline.yml" />
     <None Include="loans-crm-deploy-nonprod-pipeline.yml" />
     <None Include="loans-crm-deploy-prod-pipeline.yml" />
     <None Include="packages.config" />
