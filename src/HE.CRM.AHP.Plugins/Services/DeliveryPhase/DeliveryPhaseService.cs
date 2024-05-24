@@ -278,7 +278,7 @@ namespace HE.CRM.AHP.Plugins.Services.DeliveryPhase
         {
             if (df == null)
             {
-                TracingService.Trace("Delivery face not exist yet skip recalculation");
+                TracingService.Trace("Delivery phase not exist yet skip recalculation");
                 return;
             }
 
