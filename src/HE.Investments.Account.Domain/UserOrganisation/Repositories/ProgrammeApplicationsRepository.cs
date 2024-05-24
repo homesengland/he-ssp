@@ -25,7 +25,7 @@ public class ProgrammeApplicationsRepository : IProgrammeApplicationsRepository
         return
         [
             new(ProgrammeType.Loans, await GetLoansApplications(userAccount, cancellationToken)),
-            new(ProgrammeType.Ahp, await GetAhpProgrammes(userAccount, cancellationToken)),
+            new(ProgrammeType.Ahp, await GetAhpProjects(userAccount, cancellationToken)),
         ];
     }
 
@@ -82,7 +82,7 @@ public class ProgrammeApplicationsRepository : IProgrammeApplicationsRepository
             .ToList();
     }
 
-    private async Task<IList<UserAppliance>> GetAhpProgrammes(UserAccount userAccount, CancellationToken cancellationToken)
+    private async Task<IList<UserAppliance>> GetAhpProjects(UserAccount userAccount, CancellationToken cancellationToken)
     {
         var request = new invln_getahpprojectsRequest
         {
