@@ -3,6 +3,7 @@ using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Domain.Application.Entities;
 using HE.Investment.AHP.Domain.Application.ValueObjects;
 using HE.Investment.AHP.Domain.Common;
+using HE.Investment.AHP.Domain.UserContext;
 using HE.Investments.Account.Shared.User;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Pagination;
@@ -20,16 +21,11 @@ public interface IApplicationRepository
 
     Task<ApplicationBasicInfo> GetApplicationBasicInfo(AhpApplicationId id, UserAccount userAccount, CancellationToken cancellationToken);
 
-    Task<PaginationResult<ApplicationWithFundingDetails>> GetApplicationsWithFundingDetails(
-        UserAccount userAccount,
-        PaginationRequest paginationRequest,
-        CancellationToken cancellationToken);
-
     Task<ApplicationWithFundingDetails> GetApplicationWithFundingDetailsById(AhpApplicationId id, UserAccount userAccount, CancellationToken cancellationToken);
 
     Task<PaginationResult<ApplicationWithFundingDetails>> GetSiteApplications(
         SiteId siteId,
-        UserAccount userAccount,
+        AhpUserAccount userAccount,
         PaginationRequest paginationRequest,
         CancellationToken cancellationToken);
 

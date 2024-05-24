@@ -3,7 +3,7 @@ using HE.Investment.AHP.Contract.Site.Queries;
 using HE.Investment.AHP.Domain.Application.Repositories;
 using HE.Investment.AHP.Domain.Application.ValueObjects;
 using HE.Investment.AHP.Domain.Site.Repositories;
-using HE.Investments.Account.Shared;
+using HE.Investment.AHP.Domain.UserContext;
 using HE.Investments.Common.Contract.Pagination;
 using MediatR;
 
@@ -11,13 +11,13 @@ namespace HE.Investment.AHP.Domain.Site.QueryHandlers;
 
 public class GetSiteDetailsQueryHandler : IRequestHandler<GetSiteDetailsQuery, SiteDetailsModel>
 {
-    private readonly IAccountUserContext _accountUserContext;
+    private readonly IAhpUserContext _accountUserContext;
 
     private readonly ISiteRepository _siteRepository;
 
     private readonly IApplicationRepository _applicationRepository;
 
-    public GetSiteDetailsQueryHandler(IAccountUserContext accountUserContext, ISiteRepository siteRepository, IApplicationRepository applicationRepository)
+    public GetSiteDetailsQueryHandler(IAhpUserContext accountUserContext, ISiteRepository siteRepository, IApplicationRepository applicationRepository)
     {
         _accountUserContext = accountUserContext;
         _siteRepository = siteRepository;
