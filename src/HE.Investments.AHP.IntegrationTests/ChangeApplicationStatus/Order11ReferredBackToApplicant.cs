@@ -18,7 +18,7 @@ using Xunit.Extensions.Ordering;
 
 namespace HE.Investments.AHP.IntegrationTests.ChangeApplicationStatus;
 
-[Order(11)]
+[Order(12)]
 [SuppressMessage("xUnit", "xUnit1004", Justification = "Waits for DevOps configuration - #76791")]
 public class Order11ReferredBackToApplicant : AhpIntegrationTest
 {
@@ -151,8 +151,8 @@ public class Order11ReferredBackToApplicant : AhpIntegrationTest
 
         // then
         applicationsPage
-            .UrlEndWith(ProjectPagesUrl.ProjectApplicationList(ApplicationData.ProjectId))
-            .HasTitle(ProjectPageTitles.ApplicationList(ApplicationData.ProjectName));
+            .UrlEndWith(ProjectPagesUrl.ProjectApplicationList(ProjectData.ProjectId))
+            .HasTitle(ProjectPageTitles.ApplicationList(ProjectData.ProjectName));
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
