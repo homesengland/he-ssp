@@ -3,7 +3,7 @@
 
 @model ProjectBasicModel;
 @{
-    var title = ApplicationPageTitles.Start(Model.SelectedProgramme.FullName, Model.SelectedProgramme.ShortName);
+    var title = ApplicationPageTitles.Start(Model.SelectedProgramme.Name, Model.SelectedProgramme.ShortName);
     ViewData["Title"] = title;
 }
 

@@ -18,7 +18,7 @@
     <ProjectReference Include="..\HE.Investments.Common.CRM\HE.Investments.Common.CRM.csproj"/>
     <ProjectReference Include="..\HE.Investments.Common\HE.Investments.Common.csproj"/>
     <ProjectReference Include="..\HE.Investments.DocumentService\HE.Investments.DocumentService.csproj"/>
+    <ProjectReference Include="..\HE.Investments.Programme.Contract\HE.Investments.Programme.Contract.csproj" />
   </ItemGroup>
-
 
 </Project>

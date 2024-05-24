@@ -1,22 +1,19 @@
 using HE.Investments.Common.Contract.Enum;
-using HE.Investments.FrontDoor.Domain.Programme.Repository;
 using HE.Investments.FrontDoor.Domain.Project;
 using HE.Investments.FrontDoor.Domain.Site;
 using HE.Investments.FrontDoor.Domain.Site.Utilities;
 using HE.Investments.FrontDoor.Shared.Project.Contract;
+using HE.Investments.Programme.Contract.Enums;
 using AffordableHomesAmountType = HE.Investments.FrontDoor.Shared.Project.Contract.AffordableHomesAmount;
 
 namespace HE.Investments.FrontDoor.Domain.Services.Strategies;
 
 public class AhpProjectConversionStrategy : IProjectConversionStrategy
 {
-    private readonly IProgrammeRepository _programmeRepository;
-
     private readonly IProgrammeAvailabilityService _programmeAvailability;
 
-    public AhpProjectConversionStrategy(IProgrammeRepository programmeRepository, IProgrammeAvailabilityService programmeAvailability)
+    public AhpProjectConversionStrategy(IProgrammeAvailabilityService programmeAvailability)
     {
-        _programmeRepository = programmeRepository;
         _programmeAvailability = programmeAvailability;
     }
 
@@ -44,13 +41,8 @@ public class AhpProjectConversionStrategy : IProjectConversionStrategy
                    or RequiredFundingOption.MoreThan50Mln
                && project.IsProfit.Value is true or false;
 
-        if (isProjectValid)
-        {
-            var programmes = await _programmeRepository.GetProgrammes(cancellationToken);
-            isProjectValid = _programmeAvailability.IsStartDateValidForAnyProgramme(programmes, project.ExpectedStartDate.Value);
-        }
-
-        return isProjectValid;
+        return isProjectValid &&
+               await _programmeAvailability.IsStartDateValidForProgramme(ProgrammeType.Ahp, project.ExpectedStartDate.Value, cancellationToken);
     }
 
     private bool AreSitesValidForAhpProject(ProjectSitesEntity projectSites)

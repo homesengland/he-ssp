@@ -15,7 +15,9 @@ using HE.Investments.FrontDoor.WWW.Routing;
 using HE.Investments.Organisation.Config;
 using HE.Investments.Organisation.LocalAuthorities;
 using HE.Investments.Organisation.LocalAuthorities.Repositories;
+using HE.Investments.Programme.Domain.Config;
 using Microsoft.PowerPlatform.Dataverse.Client;
+using DomainModule = HE.Investments.FrontDoor.Domain.Config.DomainModule;
 
 namespace HE.Investments.FrontDoor.WWW.Config;
 
@@ -37,6 +39,7 @@ public static class FrontDoorWebModule
 
         AddConfiguration(services);
         services.AddDomainModule();
+        services.AddProgrammeSubdomainModule();
         services.AddHttpUserContext();
         services.AddEventInfrastructure();
     }

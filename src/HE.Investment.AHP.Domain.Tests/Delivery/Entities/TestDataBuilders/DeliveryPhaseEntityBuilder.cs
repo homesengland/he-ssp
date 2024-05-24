@@ -6,14 +6,11 @@ using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.Delivery.Entities;
 using HE.Investment.AHP.Domain.Delivery.Tranches;
 using HE.Investment.AHP.Domain.Delivery.ValueObjects;
-using HE.Investment.AHP.Domain.Programme;
 using HE.Investment.AHP.Domain.Scheme.ValueObjects;
 using HE.Investment.AHP.Domain.Tests.Application.TestData;
-using HE.Investment.AHP.Domain.Tests.Programme.TestData;
 using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Tests.TestData;
-using HE.Investments.TestsUtils;
 using HE.Investments.TestsUtils.TestData;
 
 namespace HE.Investment.AHP.Domain.Tests.Delivery.Entities.TestDataBuilders;
@@ -177,19 +174,6 @@ public class DeliveryPhaseEntityBuilder
     public DeliveryPhaseEntityBuilder WithoutCompletionMilestone()
     {
         _completionMilestone = null;
-        return this;
-    }
-
-    public DeliveryPhaseEntityBuilder WithMilestoneFramework(MilestoneFramework milestoneFramework)
-    {
-        PrivatePropertySetter.SetPropertyWithNoSetter(
-            _applicationBasicInfo,
-            nameof(ApplicationBasicInfo.Programme),
-            new AhpProgramme(
-                "1",
-                "Affordable Homes Programme 2021-2026 Continuous Market Engagement",
-                ProgrammeDatesTestData.ProgrammeDates,
-                milestoneFramework));
         return this;
     }
 

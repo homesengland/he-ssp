@@ -13,13 +13,14 @@ using HE.Investment.AHP.WWW.Models.Application.Factories;
 using HE.Investment.AHP.WWW.Models.Project;
 using HE.Investment.AHP.WWW.Workflows;
 using HE.Investments.Account.Shared.Authorization.Attributes;
-using HE.Investments.AHP.Consortium.Contract.Queries;
 using HE.Investments.Common.Contract.Pagination;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Validators;
 using HE.Investments.Common.WWW.Controllers;
 using HE.Investments.Common.WWW.Helpers;
 using HE.Investments.Common.WWW.Routing;
+using HE.Investments.Programme.Contract.Enums;
+using HE.Investments.Programme.Contract.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -58,7 +59,7 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
     [AuthorizeWithCompletedProfile(AhpAccessContext.EditApplications)]
     public async Task<IActionResult> Start([FromQuery] string projectId, CancellationToken cancellationToken)
     {
-        var availableProgrammes = await _mediator.Send(new GetAvailableProgrammesQuery(), cancellationToken);
+        var availableProgrammes = await _mediator.Send(new GetProgrammesQuery(ProgrammeType.Ahp), cancellationToken);
 
         return View("Splash", new ProjectBasicModel(projectId, availableProgrammes[0]));
     }

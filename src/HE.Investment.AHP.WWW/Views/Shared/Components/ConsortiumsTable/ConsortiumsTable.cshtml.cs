@@ -6,6 +6,7 @@ using HE.Investments.Common.WWW.Components;
 using HE.Investments.Common.WWW.Components.Link;
 using HE.Investments.Common.WWW.Components.Table;
 using HE.Investments.Common.WWW.Utils;
+using HE.Investments.Programme.Contract;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HE.Investment.AHP.WWW.Views.Shared.Components.ConsortiumsTable;
@@ -37,7 +38,7 @@ public class ConsortiumsTable : ViewComponent
         return Task.FromResult<IViewComponentResult>(View("ConsortiumsTable", (tableHeaders, rows)));
     }
 
-    private static DynamicComponentViewModel CreateLinkComponent(ProgrammeSlim programme, ConsortiumId consortiumId)
+    private static DynamicComponentViewModel CreateLinkComponent(Programme programme, ConsortiumId consortiumId)
     {
         return new DynamicComponentViewModel(
             nameof(Link),

@@ -1,10 +1,12 @@
 using HE.Investment.AHP.Contract.Project;
 using HE.Investment.AHP.Contract.Project.Queries;
-using HE.Investment.AHP.Domain.Programme;
+using HE.Investment.AHP.Domain.Config;
 using HE.Investment.AHP.Domain.Project.Repositories;
 using HE.Investment.AHP.Domain.UserContext;
 using HE.Investments.Common.Contract.Pagination;
 using HE.Investments.Common.Extensions;
+using HE.Investments.Programme.Contract;
+using HE.Investments.Programme.Contract.Queries;
 using MediatR;
 
 namespace HE.Investment.AHP.Domain.Project.QueryHandlers;
@@ -13,24 +15,29 @@ public class GetProjectDetailsQueryHandler : IRequestHandler<GetProjectDetailsQu
 {
     private readonly IProjectRepository _projectRepository;
 
+    private readonly IMediator _mediator;
+
     private readonly IAhpUserContext _userContext;
 
-    private readonly IAhpProgrammeRepository _programmeRepository;
+    private readonly IProgrammeSettings _programmeSettings;
 
     public GetProjectDetailsQueryHandler(
         IProjectRepository projectRepository,
+        IMediator mediator,
         IAhpUserContext userContext,
-        IAhpProgrammeRepository programmeRepository)
+        IProgrammeSettings programmeSettings)
     {
         _projectRepository = projectRepository;
+        _mediator = mediator;
         _userContext = userContext;
-        _programmeRepository = programmeRepository;
+        _programmeSettings = programmeSettings;
     }
 
     public async Task<ProjectDetailsModel> Handle(GetProjectDetailsQuery request, CancellationToken cancellationToken)
     {
         var userAccount = await _userContext.GetSelectedAccount();
         var project = await _projectRepository.GetProjectApplications(request.ProjectId, userAccount, cancellationToken);
+        var programme = await _mediator.Send(new GetProgrammeQuery(ProgrammeId.From(_programmeSettings.AhpProgrammeId)), cancellationToken);
 
         var applications = project.Applications
             .OrderByDescending(x => x.LastModificationOn)
@@ -45,7 +52,7 @@ public class GetProjectDetailsQueryHandler : IRequestHandler<GetProjectDetailsQu
         return new ProjectDetailsModel(
             project.Id,
             project.Name.Value,
-            (await _programmeRepository.GetProgramme(cancellationToken)).Name,
+            programme.Name,
             userAccount.Organisation!.RegisteredCompanyName,
             new PaginationResult<ApplicationProjectModel>(
                 applications.TakePage(request.ApplicationPaginationRequest).ToList(),

@@ -5,9 +5,10 @@ using HE.Investment.AHP.Contract.Site.Queries;
 using HE.Investment.AHP.Domain.UserContext;
 using HE.Investment.AHP.WWW.Models.Project;
 using HE.Investments.Account.Shared.Authorization.Attributes;
-using HE.Investments.AHP.Consortium.Contract.Queries;
 using HE.Investments.Common.Contract.Pagination;
 using HE.Investments.FrontDoor.Shared.Project;
+using HE.Investments.Programme.Contract.Enums;
+using HE.Investments.Programme.Contract.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -37,7 +38,7 @@ public class ProjectController : Controller
         var userAccount = await _ahpUserContext.GetSelectedAccount();
         if (userAccount.Consortium.HasNoConsortium || await _ahpAccessContext.IsConsortiumLeadPartner())
         {
-            var availableProgrammes = await _mediator.Send(new GetAvailableProgrammesQuery(), cancellationToken);
+            var availableProgrammes = await _mediator.Send(new GetProgrammesQuery(ProgrammeType.Ahp), cancellationToken);
             return View(new ProjectBasicModel(fdProjectId, availableProgrammes[0]));
         }
 

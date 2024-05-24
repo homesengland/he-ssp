@@ -10,7 +10,7 @@
     var title = ConsortiumPageTitles.Programme;
     ViewData["Title"] = title;
     var availableProgrammes = Model.AvailableProgrammes
-        .Select(p => new ExtendedSelectListItem(p.ProgrammeName, p.ProgrammeId, false))
+        .Select(p => new ExtendedSelectListItem(p.Name, p.Id.Value, false))
         .ToList();
 }
 
