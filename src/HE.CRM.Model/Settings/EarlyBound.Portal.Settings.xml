@@ -10,13 +10,15 @@
   <EntityTypesFolder>..\..\HE.Investments.Common.CRM\Model\Entities\</EntityTypesFolder>
   <ExtensionConfig>
     <ActionPrefixesWhitelist />
-    <ActionsWhitelist>invln_changeahpapplicationstatus|
+    <ActionsWhitelist>invln_canceladdmember|
+invln_changeahpapplicationstatus|
 invln_changeloanapplicationexternalstatus|
 invln_checkifapplicationwithgivennameexists|
 invln_checkiffrontdoorprojectwithgivennameexists|
 invln_checkifloanapplicationwithgivennameexists|
 invln_checkifsitewithgivennameexists|
 invln_checkifsitewithstrategicsitenameexists|
+invln_createahpproject|
 invln_createsinglesitedetail|
 invln_deactivatefrontdoorproject|
 invln_deactivatefrontdoorsite|
@@ -28,6 +30,8 @@ invln_generaterichtextdocument|
 invln_getabsoluteahpapplicationfilelocation|
 invln_getahpapplication|
 invln_getahpapplicationdocumentlocation|
+invln_getahpproject|
+invln_getahpprojects|
 invln_getconsortium|
 invln_getconsortiums|
 invln_getcontactrole|
@@ -51,6 +55,7 @@ invln_getsingleloanapplicationforaccountandcontact|
 invln_getsingleprogramme|
 invln_getsinglesite|
 invln_getsinglesitedetails|
+invln_getsiteapplications|
 invln_gettemporaryportaldata|
 invln_gettypeofhomeslist|
 invln_invitecontacttojoinexistingorganisation|
