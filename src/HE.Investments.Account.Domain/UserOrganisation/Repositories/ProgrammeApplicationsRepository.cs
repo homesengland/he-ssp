@@ -79,7 +79,7 @@ public class ProgrammeApplicationsRepository : IProgrammeApplicationsRepository
         return loanApplications.Select(a => new UserApplication(
                 HeApplicationId.From(a.loanApplicationId),
                 a.ApplicationName,
-                ApplicationStatusMapper.MapToPortalStatus(a.loanApplicationExternalStatus)))
+                LoanApplicationStatusMapper.MapToPortalStatus(a.loanApplicationExternalStatus)))
             .ToList();
     }
 

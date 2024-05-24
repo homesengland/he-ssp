@@ -31,7 +31,7 @@ public class MoveToDraftTests : TestBase<LoanApplicationRepository>
 
         RegisterDependency(organizationServiceMock);
 
-        var crmDraftStatus = ApplicationStatusMapper.MapToCrmStatus(ApplicationStatus.Draft);
+        var crmDraftStatus = LoanApplicationStatusMapper.MapToCrmStatus(ApplicationStatus.Draft);
 
         // when
         await TestCandidate.MoveToDraft(loanApplicationId, CancellationToken.None);
