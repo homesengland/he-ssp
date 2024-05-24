@@ -10,6 +10,7 @@ using HE.Investments.AHP.Consortium.Domain.QueryHandlers;
 using HE.Investments.AHP.Consortium.Domain.Repositories;
 using HE.Investments.AHP.Consortium.Domain.Tests.TestData;
 using HE.Investments.AHP.Consortium.Domain.Tests.TestObjectBuilders;
+using HE.Investments.Common.Contract;
 using HE.Investments.Common.Tests.TestData;
 using HE.Investments.TestsUtils.TestFramework;
 using Moq;
