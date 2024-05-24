@@ -33,7 +33,7 @@ public class WithdrawSubmittedTests : TestBase<LoanApplicationRepository>
         RegisterDependency(organizationServiceMock);
 
         var withdrawReason = WithdrawReasonTestData.WithdrawReasonOne;
-        var crmWithdrawnStatus = ApplicationStatusMapper.MapToCrmStatus(ApplicationStatus.Withdrawn);
+        var crmWithdrawnStatus = LoanApplicationStatusMapper.MapToCrmStatus(ApplicationStatus.Withdrawn);
 
         // when
         await TestCandidate.WithdrawSubmitted(loanApplicationId, withdrawReason, CancellationToken.None);
