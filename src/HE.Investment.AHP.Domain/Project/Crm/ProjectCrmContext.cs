@@ -62,7 +62,6 @@ public class ProjectCrmContext : IProjectCrmContext
         {
             invln_userid = userId,
             invln_accountid = organisationId.TryToGuidAsString(),
-            invln_consortiumid = consortiumId?.TryToGuidAsString()!,
             invln_heprojectid = projectId.TryToGuidAsString(),
         };
 
@@ -99,11 +98,11 @@ public class ProjectCrmContext : IProjectCrmContext
         IList<SiteDto> sites,
         CancellationToken cancellationToken)
     {
-        var request = new invln_createahpprojectRequest()
+        var request = new invln_createahpprojectRequest
         {
             invln_userid = userId,
-            invln_accountid = organisationId,
-            invln_consortiumid = consortiumId ?? string.Empty,
+            invln_accountid = organisationId.ToGuidAsString(),
+            invln_consortiumid = consortiumId?.ToGuidAsString()!,
             invln_heprojectid = frontDoorProjectId,
             invln_projectname = projectName,
             invln_listofsites = JsonSerializer.Serialize(sites, _serializerOptions),

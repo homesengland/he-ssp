@@ -1,7 +1,6 @@
 extern alias Org;
 
 using HE.Common.IntegrationModel.PortalIntegrationModel;
-using HE.Investments.Account.Shared.User;
 
 namespace HE.Investments.FrontDoor.Domain.Project.Crm;
 

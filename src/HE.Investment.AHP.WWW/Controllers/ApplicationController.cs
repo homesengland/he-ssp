@@ -66,7 +66,7 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
     [HttpPost("start")]
     [WorkflowState(ApplicationWorkflowState.Start)]
     [AuthorizeWithCompletedProfile(AhpAccessContext.EditApplications)]
-    public IActionResult StartPost([FromRoute] string projectId)
+    public IActionResult StartPost([FromQuery] string projectId)
     {
         return RedirectToAction("Select", "Site", new { projectId });
     }

@@ -92,7 +92,7 @@ public class ProjectCrmContext : IProjectCrmContext
         var request = new invln_setfrontdoorprojectRequest
         {
             invln_userid = userGlobalId,
-            invln_organisationid = organisationId,
+            invln_organisationid = organisationId.ToGuidAsString(),
             invln_entityfieldsparameters = CrmResponseSerializer.Serialize(dto),
             invln_frontdoorprojectid = dto.ProjectId.IsProvided() ? dto.ProjectId.ToGuidAsString() : string.Empty,
             invln_usehetables = "true",

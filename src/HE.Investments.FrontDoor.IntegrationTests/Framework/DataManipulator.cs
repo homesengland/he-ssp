@@ -28,14 +28,13 @@ public class DataManipulator
 
     public async Task<string> FrontDoorProjectEligibleForAhpExist(ILoginData loginData)
     {
-        var projectDate = new ProjectData();
         var projectDto = new FrontDoorProjectDto
         {
             ProjectName = "IT Project".WithTimestampSuffix(),
             ProjectSupportsHousingDeliveryinEngland = true,
             OrganisationId = ShortGuid.ToGuid(loginData.OrganisationId),
             externalId = loginData.UserGlobalId,
-            ActivitiesinThisProject = new SupportActivitiesMapper().Map(new SupportActivities([projectDate.ActivityType])),
+            ActivitiesinThisProject = new SupportActivitiesMapper().Map(new SupportActivities([SupportActivityType.DevelopingHomes])),
             AmountofAffordableHomes = new AffordableHomesAmountMapper().ToDto(AffordableHomesAmount.OnlyAffordableHomes),
             InfrastructureDelivered = new ProjectInfrastructureMapper().Map(new ProjectInfrastructure([InfrastructureType.IDoNotKnow])),
             PreviousResidentialBuildingExperience = 1,

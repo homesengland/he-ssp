@@ -6,9 +6,9 @@ public static class SitePagesUrl
 
     public const string SiteName = "/ahp/site/name";
 
-    public const string SiteSelect = "ahp/site/select";
-
     public static string SiteList(string projectId) => $"ahp/project/{projectId}/sites";
+
+    public static string SiteSelect(string projectId) => $"ahp/site/select?projectid={projectId}";
 
     public static string SiteDetails(string siteId) => $"ahp/site/{siteId}";
 

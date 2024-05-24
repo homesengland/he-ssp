@@ -21,8 +21,6 @@ namespace HE.Investments.FrontDoor.IntegrationTests.ProjectForAhp;
 [SuppressMessage("xUnit", "xUnit1004", Justification = "Waits for DevOps configuration - #76791")]
 public class CreateProjectForAhp : FrontDoorIntegrationTest
 {
-    private readonly DataManipulator _dataManipulator;
-
     public CreateProjectForAhp(FrontDoorIntegrationTestFixture fixture, ITestOutputHelper output)
         : base(fixture, output)
     {

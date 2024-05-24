@@ -16,8 +16,6 @@ namespace HE.Investments.FrontDoor.IntegrationTests.Framework;
 [Collection(nameof(FrontDoorIntegrationTestSharedContext))]
 public class FrontDoorIntegrationTest : IntegrationTestBase<Program>, IDisposable
 {
-    private readonly DataManipulator _dataManipulator;
-
     protected FrontDoorIntegrationTest(FrontDoorIntegrationTestFixture fixture, ITestOutputHelper output)
         : base(fixture)
     {
@@ -27,7 +25,7 @@ public class FrontDoorIntegrationTest : IntegrationTestBase<Program>, IDisposabl
         fixture.CheckUserLoginData();
         fixture.MockUserAccount();
         LoginData = fixture.LoginData;
-        _dataManipulator = fixture.ServiceProvider.GetRequiredService<DataManipulator>();
+        InCrm = fixture.ServiceProvider.GetRequiredService<DataManipulator>();
     }
 
     public ProjectData ProjectData { get; private set; }
@@ -42,7 +40,7 @@ public class FrontDoorIntegrationTest : IntegrationTestBase<Program>, IDisposabl
 
     protected ITestOutputHelper Output { get; }
 
-    protected DataManipulator InCrm => _dataManipulator;
+    protected DataManipulator InCrm { get; }
 
     public void Dispose()
     {
