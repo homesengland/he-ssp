@@ -456,6 +456,7 @@ namespace DataverseModel
 			public const string invln_account_ProviderManagementLead_systemuser = "invln_account_ProviderManagementLead_systemuser";
 			public const string invln_ahglocalauthorities_GrowthManager_systemu = "invln_ahglocalauthorities_GrowthManager_systemu";
 			public const string invln_ahpcontract_ContractLead_systemuser = "invln_ahpcontract_ContractLead_systemuser";
+			public const string invln_deliveryphase_Approvedby_systemuser = "invln_deliveryphase_Approvedby_systemuser";
 			public const string invln_externalcomms_systemuser_createdby = "invln_externalcomms_systemuser_createdby";
 			public const string invln_externalcomms_systemuser_createdonbehalfby = "invln_externalcomms_systemuser_createdonbehalfby";
 			public const string invln_externalcomms_systemuser_modifiedby = "invln_externalcomms_systemuser_modifiedby";
@@ -504,6 +505,10 @@ namespace DataverseModel
 			public const string lk_invln_ahpcontract_createdonbehalfby = "lk_invln_ahpcontract_createdonbehalfby";
 			public const string lk_invln_ahpcontract_modifiedby = "lk_invln_ahpcontract_modifiedby";
 			public const string lk_invln_ahpcontract_modifiedonbehalfby = "lk_invln_ahpcontract_modifiedonbehalfby";
+			public const string lk_invln_ahpproject_createdby = "lk_invln_ahpproject_createdby";
+			public const string lk_invln_ahpproject_createdonbehalfby = "lk_invln_ahpproject_createdonbehalfby";
+			public const string lk_invln_ahpproject_modifiedby = "lk_invln_ahpproject_modifiedby";
+			public const string lk_invln_ahpproject_modifiedonbehalfby = "lk_invln_ahpproject_modifiedonbehalfby";
 			public const string lk_invln_ahpstatuschange_createdby = "lk_invln_ahpstatuschange_createdby";
 			public const string lk_invln_ahpstatuschange_createdonbehalfby = "lk_invln_ahpstatuschange_createdonbehalfby";
 			public const string lk_invln_ahpstatuschange_modifiedby = "lk_invln_ahpstatuschange_modifiedby";
@@ -771,6 +776,7 @@ namespace DataverseModel
 			public const string user_environmentvariablevalue = "user_environmentvariablevalue";
 			public const string user_invln_ahglocalauthorities = "user_invln_ahglocalauthorities";
 			public const string user_invln_ahpcontract = "user_invln_ahpcontract";
+			public const string user_invln_ahpproject = "user_invln_ahpproject";
 			public const string user_invln_ahpstatuschange = "user_invln_ahpstatuschange";
 			public const string user_invln_borrowerpreviousschemes = "user_invln_borrowerpreviousschemes";
 			public const string user_invln_comment = "user_invln_comment";
@@ -4524,6 +4530,26 @@ namespace DataverseModel
 		}
 		
 		/// <summary>
+		/// 1:N invln_deliveryphase_Approvedby_systemuser
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_deliveryphase_Approvedby_systemuser")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_DeliveryPhase> invln_deliveryphase_Approvedby_systemuser
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_DeliveryPhase>("invln_deliveryphase_Approvedby_systemuser", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_deliveryphase_Approvedby_systemuser");
+				this.SetRelatedEntities<DataverseModel.invln_DeliveryPhase>("invln_deliveryphase_Approvedby_systemuser", null, value);
+				this.OnPropertyChanged("invln_deliveryphase_Approvedby_systemuser");
+			}
+		}
+		
+		/// <summary>
 		/// 1:N invln_externalcomms_systemuser_createdby
 		/// </summary>
 		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_externalcomms_systemuser_createdby")]
@@ -5280,6 +5306,86 @@ namespace DataverseModel
 				this.OnPropertyChanging("lk_invln_ahpcontract_modifiedonbehalfby");
 				this.SetRelatedEntities<DataverseModel.invln_ahpcontract>("lk_invln_ahpcontract_modifiedonbehalfby", null, value);
 				this.OnPropertyChanged("lk_invln_ahpcontract_modifiedonbehalfby");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N lk_invln_ahpproject_createdby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_invln_ahpproject_createdby")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_ahpproject> lk_invln_ahpproject_createdby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_ahpproject>("lk_invln_ahpproject_createdby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("lk_invln_ahpproject_createdby");
+				this.SetRelatedEntities<DataverseModel.invln_ahpproject>("lk_invln_ahpproject_createdby", null, value);
+				this.OnPropertyChanged("lk_invln_ahpproject_createdby");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N lk_invln_ahpproject_createdonbehalfby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_invln_ahpproject_createdonbehalfby")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_ahpproject> lk_invln_ahpproject_createdonbehalfby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_ahpproject>("lk_invln_ahpproject_createdonbehalfby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("lk_invln_ahpproject_createdonbehalfby");
+				this.SetRelatedEntities<DataverseModel.invln_ahpproject>("lk_invln_ahpproject_createdonbehalfby", null, value);
+				this.OnPropertyChanged("lk_invln_ahpproject_createdonbehalfby");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N lk_invln_ahpproject_modifiedby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_invln_ahpproject_modifiedby")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_ahpproject> lk_invln_ahpproject_modifiedby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_ahpproject>("lk_invln_ahpproject_modifiedby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("lk_invln_ahpproject_modifiedby");
+				this.SetRelatedEntities<DataverseModel.invln_ahpproject>("lk_invln_ahpproject_modifiedby", null, value);
+				this.OnPropertyChanged("lk_invln_ahpproject_modifiedby");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N lk_invln_ahpproject_modifiedonbehalfby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_invln_ahpproject_modifiedonbehalfby")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_ahpproject> lk_invln_ahpproject_modifiedonbehalfby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_ahpproject>("lk_invln_ahpproject_modifiedonbehalfby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("lk_invln_ahpproject_modifiedonbehalfby");
+				this.SetRelatedEntities<DataverseModel.invln_ahpproject>("lk_invln_ahpproject_modifiedonbehalfby", null, value);
+				this.OnPropertyChanged("lk_invln_ahpproject_modifiedonbehalfby");
 			}
 		}
 		
@@ -9040,6 +9146,26 @@ namespace DataverseModel
 				this.OnPropertyChanging("user_invln_ahpcontract");
 				this.SetRelatedEntities<DataverseModel.invln_ahpcontract>("user_invln_ahpcontract", null, value);
 				this.OnPropertyChanged("user_invln_ahpcontract");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N user_invln_ahpproject
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("user_invln_ahpproject")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_ahpproject> user_invln_ahpproject
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_ahpproject>("user_invln_ahpproject", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("user_invln_ahpproject");
+				this.SetRelatedEntities<DataverseModel.invln_ahpproject>("user_invln_ahpproject", null, value);
+				this.OnPropertyChanged("user_invln_ahpproject");
 			}
 		}
 		

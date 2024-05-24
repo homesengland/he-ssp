@@ -24,9 +24,9 @@ public class SiteUseTests : AhpViewTestBase
             .HasPageHeader(siteName)
             .HasHeader2("Are the homes part of street front infill?")
             .HasHint("Street front infill sites are commonly known as the development of gaps between existing developments or the replacement of existing properties. This can include commercial and other non-residential.")
-            .HasRadio(nameof(SiteUseDetails.IsPartOfStreetFrontInfill), new[] { "True", "False" })
+            .HasRadio(nameof(SiteUseDetails.IsPartOfStreetFrontInfill), ["True", "False"])
             .HasHeader2("Is this application for a traveller pitch site?")
-            .HasRadio(nameof(SiteUseDetails.IsForTravellerPitchSite), new[] { "True", "False" })
+            .HasRadio(nameof(SiteUseDetails.IsForTravellerPitchSite), ["True", "False"])
             .HasSaveAndContinueButton()
             .HasBackLink(out _, false);
     }

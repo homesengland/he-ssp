@@ -18,6 +18,7 @@ namespace HE.CRM.Common.DtoMapping
                 id = entity.invln_SitesId?.ToString(),
                 name = entity.invln_sitename,
                 status = entity.invln_externalsitestatus?.Value,
+                fdProjectid = entity.invln_AHPProjectId?.ToString(),
                 section106 = new Section106Dto
                 {
                     isAgreement106 = entity.invln_s106agreementinplace,
@@ -108,6 +109,8 @@ namespace HE.CRM.Common.DtoMapping
                     registeredCompanyName = entity.invln_Ownerofthehomesaftercompletion?.Name,
                     organisationId = entity.invln_Ownerofthehomesaftercompletion?.Id.ToString()
                 },
+                fdSiteid = entity.invln_HeProjectLocalAuthorityId?.Id.ToString(),
+                fdSiteidName = entity.invln_HeProjectLocalAuthorityId?.Name,
             };
 
             if (localAuthority != null)
@@ -223,6 +226,16 @@ namespace HE.CRM.Common.DtoMapping
             if (!string.IsNullOrEmpty(accountId) && Guid.TryParse(accountId, out Guid accountGUID))
             {
                 site.invln_AccountId = new EntityReference(Account.EntityLogicalName, accountGUID);
+            }
+
+            if (dto.fdSiteid != null)
+            {
+                site.invln_HeProjectLocalAuthorityId = new EntityReference(he_ProjectLocalAuthority.EntityLogicalName, new Guid(dto.fdSiteid));
+            }
+
+            if (dto.ahpProjectid != null)
+            {
+                site.invln_AHPProjectId = new EntityReference(invln_ahpproject.EntityLogicalName, new Guid(dto.ahpProjectid));
             }
 
             return site;

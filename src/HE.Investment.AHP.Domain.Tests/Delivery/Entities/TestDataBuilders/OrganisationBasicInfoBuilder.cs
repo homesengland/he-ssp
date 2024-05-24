@@ -1,22 +1,21 @@
 using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract;
+using HE.Investments.TestsUtils.TestFramework;
 
 namespace HE.Investment.AHP.Domain.Tests.Delivery.Entities.TestDataBuilders;
 
-public class OrganisationBasicInfoBuilder
+public class OrganisationBasicInfoBuilder : TestObjectBuilder<OrganisationBasicInfoBuilder, OrganisationBasicInfo>
 {
-    private readonly OrganisationId _organisationId = new("00000000-0000-0000-0000-000000000001");
-    private bool _isUnregisteredBody;
-
-    public OrganisationBasicInfoBuilder WithUnregisteredBody()
+    public OrganisationBasicInfoBuilder()
+        : base(new OrganisationBasicInfo(new("00000000-0000-0000-0000-000000000001"), "AccountOne", "1234", "London", false))
     {
-        _isUnregisteredBody = true;
-
-        return this;
     }
 
-    public OrganisationBasicInfo Build()
-    {
-        return new OrganisationBasicInfo(_organisationId, "AccountOne", "1234", "London", _isUnregisteredBody);
-    }
+    protected override OrganisationBasicInfoBuilder Builder => this;
+
+    public OrganisationBasicInfoBuilder WithUnregisteredBody() => SetProperty(x => x.IsUnregisteredBody, true);
+
+    public OrganisationBasicInfoBuilder WithId(OrganisationId value) => SetProperty(x => x.OrganisationId, value);
+
+    public OrganisationBasicInfoBuilder WithName(string value) => SetProperty(x => x.RegisteredCompanyName, value);
 }

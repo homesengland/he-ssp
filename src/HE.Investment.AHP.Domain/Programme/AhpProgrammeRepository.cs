@@ -1,5 +1,3 @@
-extern alias Org;
-
 using HE.Investment.AHP.Domain.Delivery.ValueObjects;
 using HE.Investment.AHP.Domain.Programme.Config;
 using HE.Investment.AHP.Domain.Programme.Crm;
@@ -33,6 +31,8 @@ public class AhpProgrammeRepository : IAhpProgrammeRepository
                          throw new InvalidOperationException("Milestone framework does not have Completion percentage set.");
 
         return new AhpProgramme(
+            _settings.AhpProgrammeId,
+            programme.name,
             new ProgrammeDates(
                 DateOnly.FromDateTime(programme.startOn ?? throw new InvalidOperationException("Ahp programme does not have Start Date set.")),
                 DateOnly.FromDateTime(programme.endOn ?? throw new InvalidOperationException("Ahp programme does not have End Date set.")),

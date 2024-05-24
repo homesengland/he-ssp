@@ -6,6 +6,8 @@ public static class SchemeInformationPageTitles
 
     public const string FundingDetails = "Funding details";
 
+    public const string PartnerDetails = "Partner details";
+
     public const string Affordability = "Affordability of Shared Ownership";
 
     public const string SalesRisk = "Sales risk of Shared Ownership";

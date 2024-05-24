@@ -28,7 +28,8 @@ public static class SiteWorkflowFactory
         IList<SiteProcurement>? procurements = null,
         SiteRuralClassification? ruralClassification = null,
         EnvironmentalImpact? environmentalImpact = null,
-        SiteModernMethodsOfConstruction? modernMethodsOfConstruction = null)
+        SiteModernMethodsOfConstruction? modernMethodsOfConstruction = null,
+        bool isConsortiumMember = false)
     {
         var site = new SiteModel
         {
@@ -37,17 +38,18 @@ public static class SiteWorkflowFactory
             LocalAuthority = localAuthority,
             PlanningDetails = planningDetails ?? new SitePlanningDetails(SitePlanningStatus.Undefined),
             TenderingStatusDetails = tenderingStatusDetails ?? new SiteTenderingStatusDetails(null, null, null, null),
-            NationalDesignGuidePriorities = nationalDesignGuidePriorities ?? new List<NationalDesignGuidePriority>(),
+            NationalDesignGuidePriorities = nationalDesignGuidePriorities ?? [],
             BuildingForHealthyLife = buildingForHealthyLife,
             NumberOfGreenLights = numberOfGreenLights?.ToString(),
             LandAcquisitionStatus = landAcquisitionStatus,
             StrategicSiteDetails = strategicSite ?? new StrategicSite(false, null),
             SiteTypeDetails = siteTypeDetails ?? new ContractSiteTypeDetails(null, null, null, true),
             SiteUseDetails = siteUseDetails ?? new SiteUseDetails(null, null, TravellerPitchSiteType.Undefined),
-            SiteProcurements = procurements ?? new List<SiteProcurement>(),
+            SiteProcurements = procurements ?? [],
             RuralClassification = ruralClassification ?? new SiteRuralClassification(null, null),
             EnvironmentalImpact = environmentalImpact?.Value,
             ModernMethodsOfConstruction = modernMethodsOfConstruction ?? new SiteModernMethodsOfConstruction(),
+            IsConsortiumMember = isConsortiumMember,
         };
 
         return new SiteWorkflow(currentSiteWorkflowState, site);

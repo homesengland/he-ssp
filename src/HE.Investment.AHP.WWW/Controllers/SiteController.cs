@@ -1,6 +1,9 @@
 using He.AspNetCore.Mvc.Gds.Components.Extensions;
 using HE.Investment.AHP.Contract.Common.Enums;
+using HE.Investment.AHP.Contract.Common.Queries;
 using HE.Investment.AHP.Contract.PrefillData.Queries;
+using HE.Investment.AHP.Contract.Project;
+using HE.Investment.AHP.Contract.Project.Queries;
 using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Contract.Site.Commands;
 using HE.Investment.AHP.Contract.Site.Commands.Mmc;
@@ -15,6 +18,8 @@ using HE.Investment.AHP.WWW.Models.Site.Factories;
 using HE.Investment.AHP.WWW.Workflows;
 using HE.Investments.Account.Shared;
 using HE.Investments.Account.Shared.Authorization.Attributes;
+using HE.Investments.AHP.Consortium.Contract;
+using HE.Investments.AHP.Consortium.Contract.Queries;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Constants;
 using HE.Investments.Common.Contract.Enum;
@@ -42,26 +47,32 @@ public class SiteController : WorkflowController<SiteWorkflowState>
 
     private readonly IAccountAccessContext _accountAccessContext;
 
+    private readonly IAccountUserContext _accountUserContext;
+
     private readonly ISiteSummaryViewModelFactory _siteSummaryViewModelFactory;
 
-    public SiteController(IMediator mediator, IAccountAccessContext accountAccessContext, ISiteSummaryViewModelFactory siteSummaryViewModelFactory)
+    public SiteController(
+        IMediator mediator,
+        IAccountAccessContext accountAccessContext,
+        IAccountUserContext accountUserContext,
+        ISiteSummaryViewModelFactory siteSummaryViewModelFactory)
     {
         _mediator = mediator;
         _accountAccessContext = accountAccessContext;
+        _accountUserContext = accountUserContext;
         _siteSummaryViewModelFactory = siteSummaryViewModelFactory;
     }
 
     [HttpGet]
-    public async Task<IActionResult> Index([FromQuery] int? page, CancellationToken cancellationToken)
+    public IActionResult Index(string projectId)
     {
-        var response = await _mediator.Send(new GetSiteListQuery(new PaginationRequest(page ?? 1)), cancellationToken);
-        return View("Index", response);
+        return RedirectToAction("Sites", "Project", new { projectId });
     }
 
     [HttpGet("select")]
-    public async Task<IActionResult> Select([FromQuery] int? page, CancellationToken cancellationToken)
+    public async Task<IActionResult> Select([FromQuery] int? page, [FromQuery] string projectId, CancellationToken cancellationToken)
     {
-        var response = await _mediator.Send(new GetSiteListQuery(new PaginationRequest(page ?? 1)), cancellationToken);
+        var response = await _mediator.Send(new GetProjectSitesQuery(new FrontDoorProjectId(projectId), new PaginationRequest(page ?? 1)), cancellationToken);
         return View("Select", response);
     }
 
@@ -129,7 +140,7 @@ public class SiteController : WorkflowController<SiteWorkflowState>
         var result = await _mediator.Send(
             new ProvideNameCommand(
                 SiteId.Create(siteId ?? model.Id),
-                FrontDoorProjectId.Create(fdProjectId),
+                FrontDoorProjectId.Create(fdProjectId) ?? new FrontDoorProjectId(LegacyProject.ProjectId),
                 FrontDoorSiteId.Create(fdSiteId),
                 model.Name),
             cancellationToken);
@@ -491,7 +502,7 @@ public class SiteController : WorkflowController<SiteWorkflowState>
         return await ExecuteSiteCommand(
             new ProvideNationalDesignGuidePrioritiesCommand(
                 this.GetSiteIdFromRoute(),
-                (IReadOnlyCollection<NationalDesignGuidePriority>)(model.DesignPriorities ?? new List<NationalDesignGuidePriority>())),
+                (IReadOnlyCollection<NationalDesignGuidePriority>)(model.DesignPriorities ?? [])),
             nameof(NationalDesignGuide),
             _ => model,
             cancellationToken);
@@ -536,6 +547,99 @@ public class SiteController : WorkflowController<SiteWorkflowState>
                 model.NumberOfGreenLights),
             nameof(NumberOfGreenLights),
             _ => model,
+            cancellationToken);
+    }
+
+    [HttpGet("{siteId}/developing-partner")]
+    [WorkflowState(SiteWorkflowState.DevelopingPartner)]
+    public async Task<IActionResult> DevelopingPartner([FromRoute] string siteId, [FromQuery] int? page, CancellationToken cancellationToken)
+    {
+        return View(await GetSelectPartnerModel(siteId, page, cancellationToken));
+    }
+
+    [HttpGet("{siteId}/developing-partner-confirm/{organisationId}")]
+    [WorkflowState(SiteWorkflowState.DevelopingPartnerConfirm)]
+    public async Task<IActionResult> DevelopingPartnerConfirm([FromRoute] string siteId, [FromRoute] string organisationId, CancellationToken cancellationToken)
+    {
+        return View(await GetConfirmPartnerModel(siteId, organisationId, x => x.DevelopingPartner?.OrganisationId, cancellationToken));
+    }
+
+    [HttpPost("{siteId}/developing-partner-confirm/{organisationId}")]
+    [WorkflowState(SiteWorkflowState.DevelopingPartnerConfirm)]
+    public async Task<IActionResult> DevelopingPartnerConfirm([FromRoute] string siteId, [FromRoute] string organisationId, [FromForm] bool? isConfirmed, [FromQuery] string? workflow, CancellationToken cancellationToken)
+    {
+        return await this.ExecuteCommand<(OrganisationDetails Organisation, bool? IsConfirmed)>(
+            _mediator,
+            new ProvideDevelopingPartnerCommand(SiteId.From(siteId), OrganisationId.From(organisationId), isConfirmed),
+            async () => await this.ReturnToSitesListOrContinue(async () =>
+                isConfirmed == true ? await ContinueWithWorkflow(new { siteId }) : RedirectToAction("DevelopingPartner", new { siteId, workflow })),
+            async () =>
+            {
+                var (organisation, _) = await GetConfirmPartnerModel(siteId, organisationId, x => x.DevelopingPartner?.OrganisationId, cancellationToken);
+                return View((organisation, isConfirmed));
+            },
+            cancellationToken);
+    }
+
+    [HttpGet("{siteId}/owner-of-the-land")]
+    [WorkflowState(SiteWorkflowState.OwnerOfTheLand)]
+    public async Task<IActionResult> OwnerOfTheLand([FromRoute] string siteId, [FromQuery] int? page, CancellationToken cancellationToken)
+    {
+        return View(await GetSelectPartnerModel(siteId, page, cancellationToken));
+    }
+
+    [HttpGet("{siteId}/owner-of-the-land-confirm/{organisationId}")]
+    [WorkflowState(SiteWorkflowState.OwnerOfTheLandConfirm)]
+    public async Task<IActionResult> OwnerOfTheLandConfirm([FromRoute] string siteId, [FromRoute] string organisationId, CancellationToken cancellationToken)
+    {
+        return View(await GetConfirmPartnerModel(siteId, organisationId, x => x.OwnerOfTheLand?.OrganisationId, cancellationToken));
+    }
+
+    [HttpPost("{siteId}/owner-of-the-land-confirm/{organisationId}")]
+    [WorkflowState(SiteWorkflowState.OwnerOfTheLandConfirm)]
+    public async Task<IActionResult> OwnerOfTheLandConfirm([FromRoute] string siteId, [FromRoute] string organisationId, [FromForm] bool? isConfirmed, [FromQuery] string? workflow, CancellationToken cancellationToken)
+    {
+        return await this.ExecuteCommand<(OrganisationDetails Organisation, bool? IsConfirmed)>(
+            _mediator,
+            new ProvideOwnerOfTheLandCommand(SiteId.From(siteId), OrganisationId.From(organisationId), isConfirmed),
+            async () => await this.ReturnToSitesListOrContinue(async () =>
+                isConfirmed == true ? await ContinueWithWorkflow(new { siteId }) : RedirectToAction("OwnerOfTheLand", new { siteId, workflow })),
+            async () =>
+            {
+                var (organisation, _) = await GetConfirmPartnerModel(siteId, organisationId, x => x.OwnerOfTheLand?.OrganisationId, cancellationToken);
+                return View((organisation, isConfirmed));
+            },
+            cancellationToken);
+    }
+
+    [HttpGet("{siteId}/owner-of-the-homes")]
+    [WorkflowState(SiteWorkflowState.OwnerOfTheHomes)]
+    public async Task<IActionResult> OwnerOfTheHomes([FromRoute] string siteId, [FromQuery] int? page, CancellationToken cancellationToken)
+    {
+        return View(await GetSelectPartnerModel(siteId, page, cancellationToken));
+    }
+
+    [HttpGet("{siteId}/owner-of-the-homes-confirm/{organisationId}")]
+    [WorkflowState(SiteWorkflowState.OwnerOfTheHomesConfirm)]
+    public async Task<IActionResult> OwnerOfTheHomesConfirm([FromRoute] string siteId, [FromRoute] string organisationId, CancellationToken cancellationToken)
+    {
+        return View(await GetConfirmPartnerModel(siteId, organisationId, x => x.OwnerOfTheHomes?.OrganisationId, cancellationToken));
+    }
+
+    [HttpPost("{siteId}/owner-of-the-homes-confirm/{organisationId}")]
+    [WorkflowState(SiteWorkflowState.OwnerOfTheHomesConfirm)]
+    public async Task<IActionResult> OwnerOfTheHomesConfirm([FromRoute] string siteId, [FromRoute] string organisationId, [FromForm] bool? isConfirmed, [FromQuery] string? workflow, CancellationToken cancellationToken)
+    {
+        return await this.ExecuteCommand<(OrganisationDetails Organisation, bool? IsConfirmed)>(
+            _mediator,
+            new ProvideOwnerOfTheHomesCommand(SiteId.From(siteId), OrganisationId.From(organisationId), isConfirmed),
+            async () => await this.ReturnToSitesListOrContinue(async () =>
+                isConfirmed == true ? await ContinueWithWorkflow(new { siteId }) : RedirectToAction("OwnerOfTheHomes", new { siteId, workflow })),
+            async () =>
+            {
+                var (organisation, _) = await GetConfirmPartnerModel(siteId, organisationId, x => x.OwnerOfTheHomes?.OrganisationId, cancellationToken);
+                return View((organisation, isConfirmed));
+            },
             cancellationToken);
     }
 
@@ -895,7 +999,7 @@ public class SiteController : WorkflowController<SiteWorkflowState>
         return await this.ExecuteCommand<SiteSummaryViewModel>(
             _mediator,
             new CompleteSiteCommand(SiteId.From(siteId), isSectionCompleted),
-            () => Task.FromResult<IActionResult>(RedirectToAction("Index")),
+            () => Task.FromResult<IActionResult>(RedirectToAction("Details", new { siteId })),
             async () => View("CheckAnswers", await CreateSiteSummary(cancellationToken, isSectionCompleted)),
             cancellationToken);
     }
@@ -905,7 +1009,9 @@ public class SiteController : WorkflowController<SiteWorkflowState>
         SiteModel? siteModel = null;
         var siteId = Request.GetRouteValue("siteId")
                      ?? routeData?.GetPropertyValue<string>("siteId")
+                     ?? Request.Query.FirstOrDefault(queryParam => queryParam.Key == "siteId").Value.FirstOrDefault()
                      ?? string.Empty;
+
         if (siteId.IsNotNullOrEmpty())
         {
             siteModel = await _mediator.Send(new GetSiteQuery(siteId));
@@ -978,13 +1084,35 @@ public class SiteController : WorkflowController<SiteWorkflowState>
     {
         var siteId = this.GetSiteIdFromRoute();
         var siteDetails = await GetSiteDetails(siteId.Value, cancellationToken);
-        var isEditable = await _accountAccessContext.CanEditApplication();
-        var sections = _siteSummaryViewModelFactory.CreateSiteSummary(siteDetails, Url, isEditable, useWorkflowRedirection);
+        var isEditable = await _accountAccessContext.CanEditApplication() && siteDetails.Status != SiteStatus.Completed;
+        var userAccount = await _accountUserContext.GetSelectedAccount();
+        var sections = _siteSummaryViewModelFactory.CreateSiteSummary(siteDetails, userAccount.SelectedOrganisation(), Url, isEditable, useWorkflowRedirection);
 
         return new SiteSummaryViewModel(
             siteId.Value,
             isSectionCompleted ?? (siteDetails.Status == SiteStatus.Completed ? IsSectionCompleted.Yes : IsSectionCompleted.Undefied),
             sections.ToList(),
             isEditable);
+    }
+
+    private async Task<SelectPartnerModel> GetSelectPartnerModel(string siteId, int? page, CancellationToken cancellationToken)
+    {
+        var site = await GetSiteBasicDetails(siteId, cancellationToken);
+        var partners = await _mediator.Send(new GetConsortiumMembersQuery(new PaginationRequest(page ?? 1)), cancellationToken);
+
+        return new SelectPartnerModel(site.Id, site.Name, partners);
+    }
+
+    private async Task<(OrganisationDetails Organisation, bool? IsConfirmed)> GetConfirmPartnerModel(
+        string siteId,
+        string organisationId,
+        Func<SiteModel, string?> getSelectedPartnerId,
+        CancellationToken cancellationToken)
+    {
+        var site = await GetSiteDetails(siteId, cancellationToken);
+        var organisationDetails = await _mediator.Send(new GetOrganisationDetailsQuery(OrganisationId.From(organisationId)), cancellationToken);
+        var currentlySelectedPartner = getSelectedPartnerId(site);
+
+        return (organisationDetails, organisationDetails.OrganisationId == currentlySelectedPartner ? true : null);
     }
 }

@@ -1,5 +1,4 @@
 using HE.Investments.FrontDoor.WWW;
-using HE.Investments.FrontDoor.WWW.Config;
 using HE.Investments.IntegrationTestsFramework;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -9,6 +8,6 @@ public class FrontDoorIntegrationTestFixture : IntegrationTestFixture<Program>
 {
     protected override void ConfigureTestServices(IServiceCollection services)
     {
-        services.AddScoped<LoanApplicationConfig, Config.LoanApplicationConfig>();
+        services.AddScoped<DataManipulator>();
     }
 }

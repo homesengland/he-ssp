@@ -1,8 +1,6 @@
-extern alias Org;
-
+using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investments.Common.CRM.Model;
 using HE.Investments.Common.CRM.Services;
-using Org::HE.Common.IntegrationModel.PortalIntegrationModel;
 
 namespace HE.Investment.AHP.Domain.Programme.Crm;
 
@@ -28,12 +26,12 @@ public class ProgrammeCrmContext : IProgrammeCrmContext
             cancellationToken);
 
         // TODO: #88889 Use Milestone framework from CRM
-        response.milestoneFrameworkItem = new List<MilestoneFrameworkItemDto>
-        {
+        response.milestoneFrameworkItem =
+        [
             new() { milestone = 1, name = "Acquisition", percentPaid = 0.5m },
             new() { milestone = 2, name = "StartOnSite", percentPaid = 0.4m },
             new() { milestone = 3, name = "Completion", percentPaid = 0.1m },
-        };
+        ];
 
         return response;
     }

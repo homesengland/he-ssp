@@ -1,7 +1,5 @@
-extern alias Org;
-
+using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investments.Common.Infrastructure.Cache.Interfaces;
-using Org::HE.Common.IntegrationModel.PortalIntegrationModel;
 
 namespace HE.Investment.AHP.Domain.Programme.Crm;
 

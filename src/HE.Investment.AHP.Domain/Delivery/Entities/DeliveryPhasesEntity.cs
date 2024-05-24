@@ -19,7 +19,7 @@ public class DeliveryPhasesEntity : IHomeTypeConsumer
 {
     private readonly List<DeliveryPhaseEntity> _deliveryPhases;
 
-    private readonly List<DeliveryPhaseEntity> _toRemove = new();
+    private readonly List<DeliveryPhaseEntity> _toRemove = [];
 
     private readonly List<HomesToDeliver> _homesToDeliver;
 
@@ -71,7 +71,7 @@ public class DeliveryPhasesEntity : IHomeTypeConsumer
 
     public void ProvideHomesToBeDeliveredInPhase(DeliveryPhaseId deliveryPhaseId, IReadOnlyCollection<HomesToDeliverInPhase> homesToDeliver)
     {
-        if (!_homesToDeliver.Any())
+        if (_homesToDeliver.Count == 0)
         {
             OperationResult.ThrowValidationError(nameof(HomesToDeliver), "You must add at least 1 home type in home types section");
         }
@@ -94,7 +94,7 @@ public class DeliveryPhasesEntity : IHomeTypeConsumer
             }
         }
 
-        if (errors.Any())
+        if (errors.Count != 0)
         {
             OperationResult.New().AddValidationErrors(errors).CheckErrors();
         }
@@ -148,7 +148,7 @@ public class DeliveryPhasesEntity : IHomeTypeConsumer
 
         if (isDeliveryCompleted == IsDeliveryCompleted.Yes)
         {
-            if (!_deliveryPhases.Any())
+            if (_deliveryPhases.Count == 0)
             {
                 OperationResult.ThrowValidationError(
                     "DeliveryPhases",
@@ -156,7 +156,7 @@ public class DeliveryPhasesEntity : IHomeTypeConsumer
             }
 
             var notCompletedDeliveryPhases = _deliveryPhases.Where(x => x.Status != SectionStatus.Completed).ToList();
-            if (notCompletedDeliveryPhases.Any())
+            if (notCompletedDeliveryPhases.Count != 0)
             {
                 OperationResult.New()
                     .AddValidationErrors(notCompletedDeliveryPhases
@@ -188,7 +188,7 @@ public class DeliveryPhasesEntity : IHomeTypeConsumer
     private DeliveryPhaseName ValidateNameUniqueness(DeliveryPhaseName name, DeliveryPhaseEntity? entity = null)
     {
         if ((entity == null && _deliveryPhases.Exists(x => x.Name == name))
-            || (entity != null && _deliveryPhases.Except(new[] { entity }).Any(x => x.Name == name)))
+            || (entity != null && _deliveryPhases.Except([entity]).Any(x => x.Name == name)))
         {
             OperationResult.ThrowValidationError(nameof(DeliveryPhaseName), "Provided delivery phase name is already in use. Delivery phase name should be unique.");
         }

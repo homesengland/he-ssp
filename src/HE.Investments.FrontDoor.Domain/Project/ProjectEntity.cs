@@ -1,20 +1,16 @@
-extern alias Org;
-
 using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Errors;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Messages;
-using HE.Investments.Common.Utils;
 using HE.Investments.FrontDoor.Contract.Project.Events;
 using HE.Investments.FrontDoor.Domain.Project.Repository;
 using HE.Investments.FrontDoor.Domain.Project.ValueObjects;
 using HE.Investments.FrontDoor.Shared.Project;
 using HE.Investments.FrontDoor.Shared.Project.Contract;
-using AffordableHomesAmountType = HE.Investments.FrontDoor.Shared.Project.Contract.AffordableHomesAmount;
 using ProjectGeographicFocus = HE.Investments.FrontDoor.Domain.Project.ValueObjects.ProjectGeographicFocus;
-using ProjectLocalAuthority = Org::HE.Investments.Organisation.LocalAuthorities.ValueObjects.LocalAuthority;
+using ProjectLocalAuthority = HE.Investments.Organisation.LocalAuthorities.ValueObjects.LocalAuthority;
 
 namespace HE.Investments.FrontDoor.Domain.Project;
 
@@ -222,23 +218,6 @@ public class ProjectEntity : DomainEntity
         }
     }
 
-    public bool IsProjectValidForLoanApplication()
-    {
-        return SupportActivities.Values.Count == 1
-               && SupportActivities.Values.Contains(SupportActivityType.DevelopingHomes)
-               && AffordableHomesAmount.AffordableHomesAmount is AffordableHomesAmountType.OnlyOpenMarketHomes
-                   or AffordableHomesAmountType.OpenMarkedAndRequiredAffordableHomes
-               && OrganisationHomesBuilt?.Value <= 2000
-               && IsSiteIdentified?.Value == true
-               && IsSupportRequired?.Value == true
-               && IsFundingRequired?.Value == true
-               && RequiredFunding.Value is RequiredFundingOption.Between250KAnd1Mln
-                   or RequiredFundingOption.Between1MlnAnd5Mln
-                   or RequiredFundingOption.Between5MlnAnd10Mln
-               && IsProfit.Value == true
-               && DateTimeUtil.IsDateWithinXYearsFromNow(ExpectedStartDate.Value?.ToDateTime(TimeOnly.MinValue), 2);
-    }
-
     private static async Task<ProjectName> ValidateProjectNameUniqueness(
         ProjectName projectName,
         IProjectNameExists projectNameExists,
@@ -321,7 +300,7 @@ public class ProjectEntity : DomainEntity
 
         if (SupportActivities.Values.Count == 1 && SupportActivities.Values.Contains(SupportActivityType.ProvidingInfrastructure))
         {
-            yield return () => Infrastructure.IsAnswered();
+            yield return Infrastructure.IsAnswered;
         }
 
         if (IsSiteIdentified?.Value == false)
@@ -331,12 +310,12 @@ public class ProjectEntity : DomainEntity
 
         if (GeographicFocus.GeographicFocus == Shared.Project.Contract.ProjectGeographicFocus.Regional)
         {
-            yield return () => Regions.IsAnswered();
+            yield return Regions.IsAnswered;
         }
 
         if (GeographicFocus.GeographicFocus == Shared.Project.Contract.ProjectGeographicFocus.SpecificLocalAuthority)
         {
-            yield return () => LocalAuthority.IsProvided();
+            yield return LocalAuthority.IsProvided;
         }
 
         if (IsFundingRequired?.Value == true)

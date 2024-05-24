@@ -1,0 +1,27 @@
+@using HE.Investments.Common.WWW.Components.PageHeader
+@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Links
+@using HE.Investment.AHP.WWW.Views.Project.Const
+@using HE.Investment.AHP.WWW.Views.Shared.Components.ApplicationsTable
+@model HE.Investment.AHP.Contract.Project.ProjectDetailsModel
+@{
+    var title = ProjectPageTitles.ApplicationList(Model.ProjectName);
+    ViewData["Title"] = title;
+}
+<div class="govuk-grid-column-two-thirds govuk-!-padding-top-4">
+    <vc:notification/>
+</div>
+
+<div class="govuk-grid-column-full">
+    <gds-back-link href="@Url.Action("Details", "Project", new { projectId = Model.ProjectId })" class="govuk-!-margin-bottom-8"></gds-back-link>
+    <vc:page-header title="@title" caption="@Model.OrganisationName"/>
+
+    @if (Model.Applications.TotalItems > 0)
+    {
+        <gds-h2>@($"{Model.ProgrammeName} applications")</gds-h2>
+        <gds-p>View applications linked to this project.</gds-p>
+        <vc:applications-table applications="@Model.Applications" project-id="@Model.ProjectId.Value"/>
+    }
+
+    @await Html.PartialAsync("~/Views/Project/Partials/_ProjectStartAppAndViewSites.cshtml", (Model.ProgrammeName, Model.ProjectId.Value, Model.IsReadOnly))
+
+</div>

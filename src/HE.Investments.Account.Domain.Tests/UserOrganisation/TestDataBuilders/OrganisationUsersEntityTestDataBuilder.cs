@@ -6,9 +6,9 @@ namespace HE.Investments.Account.Domain.Tests.UserOrganisation.TestDataBuilders;
 
 public class OrganisationUsersEntityTestDataBuilder
 {
-    private readonly List<EmailAddress> _users = new();
+    private readonly List<EmailAddress> _users = [];
 
-    private readonly List<EmailAddress> _invitations = new();
+    private readonly List<EmailAddress> _invitations = [];
 
     public OrganisationUsersEntityTestDataBuilder WithActiveUser(string emailAddress)
     {

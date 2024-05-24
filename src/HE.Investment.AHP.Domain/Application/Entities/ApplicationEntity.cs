@@ -3,12 +3,13 @@ using HE.Investment.AHP.Contract.Application.Events;
 using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Domain.Application.Factories;
 using HE.Investment.AHP.Domain.Application.ValueObjects;
+using HE.Investment.AHP.Domain.Scheme.ValueObjects;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Errors;
-using ApplicationSection = HE.Investment.AHP.Domain.Application.ValueObjects.ApplicationSection;
+using HE.Investments.FrontDoor.Shared.Project;
 
 namespace HE.Investment.AHP.Domain.Application.Entities;
 
@@ -21,11 +22,13 @@ public class ApplicationEntity : DomainEntity
     private readonly ApplicationState _applicationState;
 
     public ApplicationEntity(
+        FrontDoorProjectId projectId,
         SiteId siteId,
         AhpApplicationId id,
         ApplicationName name,
         ApplicationStatus status,
         ApplicationTenure tenure,
+        ApplicationPartners applicationPartners,
         IApplicationStateFactory applicationStateFactory,
         ApplicationReferenceNumber? referenceNumber = null,
         ApplicationSections? sections = null,
@@ -33,18 +36,22 @@ public class ApplicationEntity : DomainEntity
         AuditEntry? lastSubmitted = null,
         RepresentationsAndWarranties? representationsAndWarranties = null)
     {
+        ProjectId = projectId;
         SiteId = siteId;
         Id = id;
         Name = name;
         Status = status;
         ReferenceNumber = referenceNumber ?? new ApplicationReferenceNumber(null);
         Tenure = tenure;
+        ApplicationPartners = applicationPartners;
         LastModified = lastModified;
         LastSubmitted = lastSubmitted;
-        Sections = sections ?? new ApplicationSections(new List<ApplicationSection>());
+        Sections = sections ?? new ApplicationSections([]);
         _applicationState = applicationStateFactory.Create(status);
         RepresentationsAndWarranties = representationsAndWarranties ?? new RepresentationsAndWarranties(false);
     }
+
+    public FrontDoorProjectId ProjectId { get; }
 
     public SiteId SiteId { get; }
 
@@ -53,6 +60,8 @@ public class ApplicationEntity : DomainEntity
     public ApplicationName Name { get; private set; }
 
     public ApplicationStatus Status { get; private set; }
+
+    public ApplicationPartners ApplicationPartners { get; private set; }
 
     public IEnumerable<AhpApplicationOperation> AllowedOperations => _applicationState.AllowedOperations;
 
@@ -76,12 +85,20 @@ public class ApplicationEntity : DomainEntity
 
     public bool IsNew => Id.IsNew;
 
-    public static ApplicationEntity New(SiteId siteId, ApplicationName name, ApplicationTenure tenure, IApplicationStateFactory applicationStateFactory) => new(
+    public static ApplicationEntity New(
+        FrontDoorProjectId projectId,
+        SiteId siteId,
+        ApplicationName name,
+        ApplicationTenure tenure,
+        ApplicationPartners applicationPartners,
+        IApplicationStateFactory applicationStateFactory) => new(
+        projectId,
         siteId,
         AhpApplicationId.New(),
         name,
         ApplicationStatus.New,
         tenure,
+        applicationPartners,
         applicationStateFactory);
 
     public void SetId(AhpApplicationId newId)

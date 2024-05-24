@@ -1,5 +1,3 @@
-extern alias Org;
-
 using FluentAssertions;
 using HE.Investments.AHP.Consortium.Domain.Entities;
 using HE.Investments.AHP.Consortium.Domain.Tests.TestData;
@@ -24,7 +22,9 @@ public class AddMemberTests
         var addMember = () => testCandidate.AddMember(InvestmentsOrganisationTestData.JjCompany, isPartOfConsortium, CancellationToken.None);
 
         // then
-        await addMember.Should().ThrowAsync<DomainValidationException>();
+        await addMember.Should()
+            .ThrowAsync<DomainValidationException>()
+            .WithMessage("The organisation you are trying to add is already added or being added as a member of this consortium");
     }
 
     [Fact]
@@ -42,7 +42,9 @@ public class AddMemberTests
         var addMember = () => testCandidate.AddMember(InvestmentsOrganisationTestData.CactusDevelopments, isPartOfConsortium, CancellationToken.None);
 
         // then
-        await addMember.Should().ThrowAsync<DomainValidationException>();
+        await addMember.Should()
+            .ThrowAsync<DomainValidationException>()
+            .WithMessage("The organisation you are trying to add is already added or being added as a member of this consortium");
     }
 
     [Fact]
@@ -59,7 +61,9 @@ public class AddMemberTests
         var addMember = () => testCandidate.AddMember(InvestmentsOrganisationTestData.CactusDevelopments, isPartOfConsortium, CancellationToken.None);
 
         // then
-        await addMember.Should().ThrowAsync<DomainValidationException>();
+        await addMember.Should()
+            .ThrowAsync<DomainValidationException>()
+            .WithMessage("The organisation you are trying to add is already added or being added to another consortium");
     }
 
     [Fact]

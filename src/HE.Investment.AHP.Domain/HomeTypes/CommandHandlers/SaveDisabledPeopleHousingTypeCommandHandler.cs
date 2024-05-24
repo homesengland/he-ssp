@@ -16,11 +16,11 @@ public class SaveDisabledPeopleHousingTypeCommandHandler : SaveHomeTypeSegmentCo
     {
     }
 
-    protected override IReadOnlyCollection<HomeTypeSegmentType> SegmentTypes => new[] { HomeTypeSegmentType.DisabledAndVulnerablePeople };
+    protected override IReadOnlyCollection<HomeTypeSegmentType> SegmentTypes => [HomeTypeSegmentType.DisabledAndVulnerablePeople];
 
-    protected override IEnumerable<Action<SaveDisabledPeopleHousingTypeCommand, IHomeTypeEntity>> SaveActions => new[]
-    {
+    protected override IEnumerable<Action<SaveDisabledPeopleHousingTypeCommand, IHomeTypeEntity>> SaveActions =>
+    [
         (SaveDisabledPeopleHousingTypeCommand request, IHomeTypeEntity homeType) =>
             homeType.DisabledPeopleHomeTypeDetails.ChangeHousingType(request.HousingType),
-    };
+    ];
 }

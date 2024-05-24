@@ -6,6 +6,7 @@
 @using HE.Investments.Common.WWW.Components.ApplicationStatusTagComponent
 @using Microsoft.FeatureManagement
 @using System.Threading
+@using HE.Investments.Common.WWW.Components.ListCard
 @inject IFeatureManager FeatureManager
 @model HE.Investments.Account.WWW.Models.UserOrganisation.UserOrganisationModel;
 @{
@@ -47,7 +48,7 @@
 
     <div class="govuk-grid-column-full govuk-!-padding-0">
 
-        @if ((!Model.ProgrammesToAccess.Any() || Model.ProgrammesToAccess.All(p => !p.Applications.Any())) && !Model.Projects.Any())
+        @if ((!Model.ProgrammesToAccess.Any() || Model.ProgrammesToAccess.All(p => !p.Appliances.Any())) && !Model.Projects.Any())
         {
             <gds-p>
                 You have not applied for any support. Select start a new project to apply for support.
@@ -57,29 +58,30 @@
         <gds-div-grid-column-two-thirds class="govuk-!-padding-left-0 govuk-!-padding-right-6">
             @if (Model.Projects.Any())
             {
-                @await Html.PartialAsync(
-                           "/Views/UserOrganisation/_ListCard.cshtml",
-                           new ListCardModel("New projects", Model.Projects.Select(
-                               x => new ListCardItemModel(
-                                   x.Name,
-                                   new DynamicComponentViewModel(nameof(ProjectStatusTagComponent), x.Status),
-                                   x.Url)).ToList()))
+                var items = new ListCardModel("New projects", Model.Projects.Select(
+                    x => new ListCardItemModel(
+                        x.Name,
+                        new DynamicComponentViewModel(nameof(ProjectStatusTagComponent), x.Status),
+                        x.Url)).ToList());
+                <vc:list-card model="@items"></vc:list-card>
             }
 
-            @if (Model.ProgrammesToAccess.Any(p => p.Applications.Any()))
+            @if (Model.ProgrammesToAccess.Any(p => p.Appliances.Any()))
             {
                 @foreach (var programmeToAccess in Model.ProgrammesToAccess)
                 {
-                    @await Html.PartialAsync(
-                               "/Views/UserOrganisation/_ListCard.cshtml",
-                               new ListCardModel(
-                                   programmeToAccess.Programme.Name,
-                                   programmeToAccess.Applications.Select(x =>
-                                       new ListCardItemModel(
-                                           x.Name,
-                                           new DynamicComponentViewModel(nameof(ApplicationStatusTagComponent), new { ApplicationStatus = x.Status }), x.Url)).ToList(),
-                                   Title: "Applications",
-                                   ViewAllUrl: programmeToAccess.Programme.ViewAllApplicationsUrl))
+                    var items = new ListCardModel(
+                        programmeToAccess.Programme.Name,
+                        programmeToAccess.Appliances.Select(x =>
+                            new ListCardItemModel(
+                                x.Name,
+                                x.Status != null ? new DynamicComponentViewModel(nameof(ApplicationStatusTagComponent), new { ApplicationStatus = x.Status }) : null,
+                                x.Url)).ToList(),
+                        Title: programmeToAccess.Programme.Title,
+                        ViewAllLabel: programmeToAccess.Programme.ViewAllAppliancesLabel,
+                        ViewAllUrl: programmeToAccess.Programme.ViewAllAppliancesUrl,
+                        ItemsToDisplayCount: programmeToAccess.Programme.ItemsToDisplayCount);
+                        <vc:list-card model="@items"></vc:list-card>
                 }
             }
 

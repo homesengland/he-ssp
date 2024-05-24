@@ -16,10 +16,10 @@ public class SaveRevenueFundingCommandHandler : SaveHomeTypeSegmentCommandHandle
     {
     }
 
-    protected override IReadOnlyCollection<HomeTypeSegmentType> SegmentTypes => new[] { HomeTypeSegmentType.SupportedHousingInformation };
+    protected override IReadOnlyCollection<HomeTypeSegmentType> SegmentTypes => [HomeTypeSegmentType.SupportedHousingInformation];
 
-    protected override IEnumerable<Action<SaveRevenueFundingCommand, IHomeTypeEntity>> SaveActions => new[]
-    {
+    protected override IEnumerable<Action<SaveRevenueFundingCommand, IHomeTypeEntity>> SaveActions =>
+    [
         (SaveRevenueFundingCommand request, IHomeTypeEntity homeType) => homeType.SupportedHousingInformation.ChangeSources(request.Sources),
-    };
+    ];
 }

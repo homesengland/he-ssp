@@ -5,5 +5,6 @@ public enum InputTitleType
     PageHeader,
     InputTitle,
     SmallInputFieldsetLegend,
+    InputBoldDescription,
     InputDescription,
 }

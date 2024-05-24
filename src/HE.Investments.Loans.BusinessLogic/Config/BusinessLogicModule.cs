@@ -1,5 +1,3 @@
-extern alias Org;
-
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using HE.Investments.Account.Shared.Config;
@@ -20,11 +18,11 @@ using HE.Investments.Loans.BusinessLogic.PrefillData.Repositories;
 using HE.Investments.Loans.BusinessLogic.Projects.Repositories;
 using HE.Investments.Loans.BusinessLogic.Security.Repositories;
 using HE.Investments.Loans.Contract.Application.ValueObjects;
+using HE.Investments.Organisation.LocalAuthorities;
+using HE.Investments.Organisation.LocalAuthorities.Repositories;
 using MediatR.Pipeline;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.PowerPlatform.Dataverse.Client;
-using Org::HE.Investments.Organisation.LocalAuthorities;
-using Org::HE.Investments.Organisation.LocalAuthorities.Repositories;
 
 namespace HE.Investments.Loans.BusinessLogic.Config;
 

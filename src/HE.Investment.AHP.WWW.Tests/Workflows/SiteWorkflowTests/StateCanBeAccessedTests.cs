@@ -137,22 +137,28 @@ public class StateCanBeAccessedTests
     [Fact]
     public async Task ShouldReturnTrue_WhenMethodCalledForMmc3DCategoryForSelected3DCategory()
     {
-        var modernMethodsOfConstruction = new SiteModernMethodsOfConstruction(SiteUsingModernMethodsOfConstruction.Yes, new List<ModernMethodsConstructionCategoriesType>
-        {
+        IList<ModernMethodsConstructionCategoriesType> modernMethodsConstructionCategories = [
             ModernMethodsConstructionCategoriesType.Category1PreManufacturing3DPrimaryStructuralSystems,
-        });
+        ];
+
+        var modernMethodsOfConstruction = new SiteModernMethodsOfConstruction(
+            SiteUsingModernMethodsOfConstruction.Yes,
+            modernMethodsConstructionCategories);
+
         await Test(SiteWorkflowState.Mmc3DCategory, modernMethodsOfConstruction);
     }
 
     [Fact]
     public async Task ShouldReturnTrue_WhenMethodCalledForMmc2DCategoryForSelected2DCategory()
     {
+        IList<ModernMethodsConstructionCategoriesType> modernMethodsConstructionCategories = [
+            ModernMethodsConstructionCategoriesType.Category2PreManufacturing2DPrimaryStructuralSystems,
+        ];
+
         var modernMethodsOfConstruction = new SiteModernMethodsOfConstruction(
             SiteUsingModernMethodsOfConstruction.Yes,
-            new List<ModernMethodsConstructionCategoriesType>
-            {
-                ModernMethodsConstructionCategoriesType.Category2PreManufacturing2DPrimaryStructuralSystems,
-            });
+            modernMethodsConstructionCategories);
+
         await Test(SiteWorkflowState.Mmc2DCategory, modernMethodsOfConstruction);
     }
 

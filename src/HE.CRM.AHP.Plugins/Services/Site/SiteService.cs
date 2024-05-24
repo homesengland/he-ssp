@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Policy;
+using System.Text.Json;
 using System.Xml.Linq;
 using DataverseModel;
 using HE.Base.Services;
@@ -122,6 +123,26 @@ namespace HE.CRM.AHP.Plugins.Services.Site
 
             return siteId;
         }
+
+
+        public bool CreateRecordsWithAhpProject(List<SiteDto> listOfSites, Guid ahpProjectId, string externalContactId, string organisationId)
+        {
+            var isSitesCreated = true;
+            foreach (var site in listOfSites)
+            {
+                site.ahpProjectid = ahpProjectId.ToString();
+                var fieldsToSet = invln_Sites.Fields.invln_sitename;
+
+                var idCreated = Save(string.Empty, site, fieldsToSet, externalContactId, organisationId);
+                isSitesCreated = Guid.TryParse(idCreated, out var siteId);
+                if (!isSitesCreated)
+                {
+                    break;
+                }
+            }
+            return isSitesCreated;
+        }
+
 
         private string GetFetchXmlConditionForGivenField(string fieldValue, string fieldName)
         {

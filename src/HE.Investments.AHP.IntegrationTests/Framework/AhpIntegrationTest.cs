@@ -12,7 +12,7 @@ using Xunit.Abstractions;
 namespace HE.Investments.AHP.IntegrationTests.Framework;
 
 [Collection(nameof(AhpIntegrationTestSharedContext))]
-public class AhpIntegrationTest : IntegrationTestBase<Program>, IAsyncLifetime
+public class AhpIntegrationTest : IntegrationTestBase<Program>
 {
     private readonly ITestOutputHelper _output;
 
@@ -37,24 +37,20 @@ public class AhpIntegrationTest : IntegrationTestBase<Program>, IAsyncLifetime
 
     public Stopwatch Stopwatch { get; private set; }
 
-    protected AhpApplicationCrmContext AhpApplicationCrmContext => _fixture.AhpApplicationCrmContext;
+    protected AhpCrmContext AhpCrmContext => _fixture.AhpCrmContext;
 
-    private ILoginData LoginData { get; }
+    protected ILoginData LoginData { get; }
 
-    public Task InitializeAsync()
+    public override async Task DisposeAsync()
     {
-        return Task.CompletedTask;
-    }
+        await base.DisposeAsync();
 
-    public Task DisposeAsync()
-    {
         _output.WriteLine($"Elapsed time: {Stopwatch.Elapsed.TotalSeconds} sec");
-        return Task.CompletedTask;
     }
 
     public async Task ChangeApplicationStatus(string applicationId, ApplicationStatus applicationStatus)
     {
-        await AhpApplicationCrmContext.ChangeApplicationStatus(applicationId, applicationStatus, LoginData);
+        await AhpCrmContext.ChangeApplicationStatus(applicationId, applicationStatus, LoginData);
     }
 
     private void SetApplicationData()

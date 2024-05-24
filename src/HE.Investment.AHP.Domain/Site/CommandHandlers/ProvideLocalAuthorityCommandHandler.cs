@@ -1,12 +1,10 @@
-extern alias Org;
-
 using HE.Investment.AHP.Contract.Site.Commands;
 using HE.Investment.AHP.Domain.Site.Repositories;
 using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Extensions;
+using HE.Investments.Organisation.LocalAuthorities.ValueObjects;
 using MediatR;
-using Org::HE.Investments.Organisation.LocalAuthorities.ValueObjects;
 
 namespace HE.Investment.AHP.Domain.Site.CommandHandlers;
 

@@ -1,25 +1,25 @@
-extern alias Org;
-
 using HE.Investments.AHP.Consortium.Contract;
 using HE.Investments.AHP.Consortium.Contract.Enums;
+using HE.Investments.AHP.Consortium.Contract.Events;
 using HE.Investments.AHP.Consortium.Domain.Repositories;
 using HE.Investments.AHP.Consortium.Domain.ValueObjects;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Contract.Validators;
+using HE.Investments.Common.Domain;
 using HE.Investments.Common.Errors;
 using HE.Investments.Common.Extensions;
-using Org::HE.Investments.Organisation.ValueObjects;
+using HE.Investments.Organisation.ValueObjects;
 
 namespace HE.Investments.AHP.Consortium.Domain.Entities;
 
-public class ConsortiumEntity : IConsortiumEntity
+public class ConsortiumEntity : DomainEntity, IConsortiumEntity
 {
     private readonly List<ConsortiumMember> _members;
 
-    private readonly List<ConsortiumMember> _joinRequests = new();
+    private readonly List<ConsortiumMember> _joinRequests = [];
 
-    private readonly List<OrganisationId> _removeRequests = new();
+    private readonly List<OrganisationId> _removeRequests = [];
 
     public ConsortiumEntity(ConsortiumId id, ConsortiumName name, ProgrammeSlim programme, ConsortiumMember leadPartner, IEnumerable<ConsortiumMember>? members)
     {
@@ -40,7 +40,7 @@ public class ConsortiumEntity : IConsortiumEntity
 
     public IEnumerable<ConsortiumMember> ActiveMembers => _members.Where(x => x.Status is ConsortiumMemberStatus.Active);
 
-    public IEnumerable<ConsortiumMember> Members => _members;
+    public IEnumerable<ConsortiumMember> Members => _members.Where(x => x.Status != ConsortiumMemberStatus.Inactive);
 
     public static async Task<ConsortiumEntity> New(ProgrammeSlim programme, ConsortiumMember leadPartner, IIsPartOfConsortium isPartOfConsortium)
     {
@@ -59,14 +59,21 @@ public class ConsortiumEntity : IConsortiumEntity
 
     public async Task AddMember(InvestmentsOrganisation organisation, IIsPartOfConsortium isPartOfConsortium, CancellationToken cancellationToken)
     {
-        if (await IsPartOfConsortium(organisation, isPartOfConsortium, cancellationToken))
+        if (IsPartOfThisConsortium(organisation))
         {
-            OperationResult.ThrowValidationError("SelectedMember", ConsortiumValidationErrors.IsAlreadyPartOfConsortium);
+            OperationResult.ThrowValidationError("SelectedMember", ConsortiumValidationErrors.IsPartOfThisConsortium);
+        }
+
+        if (await IsPartOfOtherConsortium(organisation, isPartOfConsortium, cancellationToken))
+        {
+            OperationResult.ThrowValidationError("SelectedMember", ConsortiumValidationErrors.IsPartOfOtherConsortium);
         }
 
         var member = new ConsortiumMember(organisation.Id, organisation.Name, ConsortiumMemberStatus.PendingAddition);
         _members.Add(member);
         _joinRequests.Add(member);
+
+        Publish(new ConsortiumMemberChangedEvent(Id, organisation.Id));
     }
 
     public bool AddMembersFromDraft(DraftConsortiumEntity draftConsortium, AreAllMembersAdded? requestAreAllMembersAdded)
@@ -91,12 +98,18 @@ public class ConsortiumEntity : IConsortiumEntity
             var member = new ConsortiumMember(draftMember.Id, draftMember.OrganisationName, ConsortiumMemberStatus.PendingAddition);
             _members.Add(member);
             _joinRequests.Add(member);
+
+            Publish(new ConsortiumMemberChangedEvent(Id, draftMember.Id));
         }
 
         return true;
     }
 
-    public void RemoveMember(OrganisationId organisationId, bool? isConfirmed)
+    public async Task RemoveMember(
+        OrganisationId organisationId,
+        bool? isConfirmed,
+        IConsortiumPartnerStatusProvider consortiumPartnerStatusProvider,
+        CancellationToken cancellationToken)
     {
         if (isConfirmed.IsNotProvided())
         {
@@ -109,10 +122,22 @@ public class ConsortiumEntity : IConsortiumEntity
         }
 
         var member = GetMember(organisationId);
+        var partnerStatus = await consortiumPartnerStatusProvider.GetConsortiumPartnerStatus(Id, member.Id, cancellationToken);
+        if (partnerStatus == ConsortiumPartnerStatus.SitePartner)
+        {
+            OperationResult.ThrowValidationError(nameof(isConfirmed), ConsortiumValidationErrors.IsSitePartner);
+        }
+
+        if (partnerStatus == ConsortiumPartnerStatus.ApplicationPartner)
+        {
+            OperationResult.ThrowValidationError(nameof(isConfirmed), ConsortiumValidationErrors.IsApplicationPartner);
+        }
 
         _removeRequests.Add(organisationId);
         _members.Remove(member);
         _members.Add(new ConsortiumMember(member.Id, member.OrganisationName, ConsortiumMemberStatus.PendingRemoval));
+
+        Publish(new ConsortiumMemberChangedEvent(Id, organisationId));
     }
 
     public OrganisationId? PopJoinRequest() => _joinRequests.PopItem()?.Id;
@@ -129,19 +154,15 @@ public class ConsortiumEntity : IConsortiumEntity
         Id = newId;
     }
 
-    private async Task<bool> IsPartOfConsortium(
+    private bool IsPartOfThisConsortium(InvestmentsOrganisation organisation) =>
+        organisation.Id == LeadPartner.Id || Members.Any(x => x.Id == organisation.Id);
+
+    private async Task<bool> IsPartOfOtherConsortium(
         InvestmentsOrganisation organisation,
         IIsPartOfConsortium isPartOfConsortium,
         CancellationToken cancellationToken)
-    {
-        if (organisation.Id == LeadPartner.Id || _members.Exists(x => x.Id == organisation.Id))
-        {
-            return true;
-        }
+        => await isPartOfConsortium.IsPartOfConsortiumForProgramme(Programme.Id, organisation.Id, cancellationToken);
 
-        return await isPartOfConsortium.IsPartOfConsortiumForProgramme(Programme.Id, organisation.Id, cancellationToken);
-    }
-
-    private ConsortiumMember GetMember(OrganisationId organisationId) => _members.SingleOrDefault(x => x.Id == organisationId) ??
+    private ConsortiumMember GetMember(OrganisationId organisationId) => Members.SingleOrDefault(x => x.Id == organisationId) ??
                                                                          throw new NotFoundException(nameof(ConsortiumMember), organisationId);
 }

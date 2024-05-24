@@ -21,6 +21,12 @@ namespace HE.CRM.Common.Repositories.Implementations
             var fetchXml =
             @"<fetch>
 	            <entity name=""invln_milestoneframeworkitem"">
+                    <attribute name=""invln_programmeid"" />
+                    <attribute name=""invln_milestoneframeworkitemname"" />
+                    <attribute name=""invln_ismilestonepayable"" />
+                    <attribute name=""invln_minimumvalue"" />
+                    <attribute name=""invln_percentagepaidonmilestone"" />
+                    <attribute name=""invln_milestone"" />
 		            <filter type=""and"">
 			            <condition attribute=""invln_programmeid"" operator=""eq"" value=""" + programmeId + @""" />
 		            </filter>
@@ -28,7 +34,7 @@ namespace HE.CRM.Common.Repositories.Implementations
             </fetch>";
 
             EntityCollection result = service.RetrieveMultiple(new FetchExpression(fetchXml));
-            var milestoneFrameworkItem =  result.Entities.Select(x => x.ToEntity<invln_milestoneframeworkitem>()).AsEnumerable().ToList();
+            var milestoneFrameworkItem = result.Entities.Select(x => x.ToEntity<invln_milestoneframeworkitem>()).AsEnumerable().ToList();
             return milestoneFrameworkItem;
         }
     }

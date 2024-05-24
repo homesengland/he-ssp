@@ -127,6 +127,7 @@ namespace DataverseModel
 			public const string team_environmentvariablevalue = "team_environmentvariablevalue";
 			public const string team_invln_ahglocalauthorities = "team_invln_ahglocalauthorities";
 			public const string team_invln_ahpcontract = "team_invln_ahpcontract";
+			public const string team_invln_ahpproject = "team_invln_ahpproject";
 			public const string team_invln_ahpstatuschange = "team_invln_ahpstatuschange";
 			public const string team_invln_borrowerpreviousschemes = "team_invln_borrowerpreviousschemes";
 			public const string team_invln_comment = "team_invln_comment";
@@ -1411,6 +1412,26 @@ namespace DataverseModel
 				this.OnPropertyChanging("team_invln_ahpcontract");
 				this.SetRelatedEntities<DataverseModel.invln_ahpcontract>("team_invln_ahpcontract", null, value);
 				this.OnPropertyChanged("team_invln_ahpcontract");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N team_invln_ahpproject
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("team_invln_ahpproject")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_ahpproject> team_invln_ahpproject
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_ahpproject>("team_invln_ahpproject", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("team_invln_ahpproject");
+				this.SetRelatedEntities<DataverseModel.invln_ahpproject>("team_invln_ahpproject", null, value);
+				this.OnPropertyChanged("team_invln_ahpproject");
 			}
 		}
 		

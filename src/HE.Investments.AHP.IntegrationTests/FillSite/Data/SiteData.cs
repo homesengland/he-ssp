@@ -4,6 +4,7 @@ using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Contract.Site.Enums;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Enum;
+using HE.Investments.Organisation.ValueObjects;
 using HE.Investments.TestsUtils.Extensions;
 
 namespace HE.Investments.AHP.IntegrationTests.FillSite.Data;
@@ -44,16 +45,22 @@ public class SiteData
 
     public YesNoType IsGrantFundingForAllHomesCoveredByTitleNumber => YesNoType.Yes;
 
-    public IReadOnlyCollection<NationalDesignGuidePriority> NationalDesignGuidePriorities => new[]
-    {
+    public IReadOnlyCollection<NationalDesignGuidePriority> NationalDesignGuidePriorities =>
+    [
         NationalDesignGuidePriority.Nature,
         NationalDesignGuidePriority.Movement,
         NationalDesignGuidePriority.Resources,
-    };
+    ];
 
     public BuildingForHealthyLifeType BuildingForHealthyLife => BuildingForHealthyLifeType.Yes;
 
     public string NumberOfGreenLights => "5";
+
+    public InvestmentsOrganisation DevelopingPartner { get; set; }
+
+    public InvestmentsOrganisation OwnerOfTheLand { get; set; }
+
+    public InvestmentsOrganisation OwnerOfTheHomes { get; set; }
 
     public SiteLandAcquisitionStatus LandAcquisitionStatus => SiteLandAcquisitionStatus.ConditionalAcquisition;
 
@@ -91,18 +98,18 @@ public class SiteData
 
     public string InformationImpact { get; private set; }
 
-    public IReadOnlyCollection<ModernMethodsConstructionCategoriesType> MmcCategories { get; private set; } = new[]
-    {
+    public IReadOnlyCollection<ModernMethodsConstructionCategoriesType> MmcCategories { get; private set; } =
+    [
         ModernMethodsConstructionCategoriesType.Category1PreManufacturing3DPrimaryStructuralSystems,
         ModernMethodsConstructionCategoriesType.Category2PreManufacturing2DPrimaryStructuralSystems,
         ModernMethodsConstructionCategoriesType.Category6TraditionalBuildingProductLedSiteLabourReductionOrProductivityImprovements,
-    };
+    ];
 
     public ModernMethodsConstruction3DSubcategoriesType Mmc3DSubcategory { get; private set; } = ModernMethodsConstruction3DSubcategoriesType.StructuralChassisOnly;
 
     public ModernMethodsConstruction2DSubcategoriesType Mmc2DSubcategory { get; private set; } = ModernMethodsConstruction2DSubcategoriesType.FurtherEnhancedConsolidation;
 
-    public IReadOnlyCollection<SiteProcurement> Procurements => new[] { SiteProcurement.BulkPurchaseOfComponents, SiteProcurement.PartneringSupplyChain };
+    public IReadOnlyCollection<SiteProcurement> Procurements => [SiteProcurement.BulkPurchaseOfComponents, SiteProcurement.PartneringSupplyChain];
 
     public string GenerateSiteName()
     {
@@ -127,7 +134,7 @@ public class SiteData
     public SiteUsingModernMethodsOfConstruction ChangeMmcUsingAnswer()
     {
         UsingMmc = SiteUsingModernMethodsOfConstruction.OnlyForSomeHomes;
-        MmcCategories = new List<ModernMethodsConstructionCategoriesType>();
+        MmcCategories = [];
         Mmc2DSubcategory = ModernMethodsConstruction2DSubcategoriesType.Undefined;
         Mmc3DSubcategory = ModernMethodsConstruction3DSubcategoriesType.Undefined;
         return UsingMmc;

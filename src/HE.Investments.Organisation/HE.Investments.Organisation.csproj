@@ -25,11 +25,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\HE.Common.IntegrationModel.Crm\HE.Common.IntegrationModel.Crm.csproj" />
     <ProjectReference Include="..\HE.Investments.Common.Contract\HE.Investments.Common.Contract.csproj"/>
     <ProjectReference Include="..\HE.Investments.Common.CRM\HE.Investments.Common.CRM.csproj"/>
     <ProjectReference Include="..\HE.Investments.Common\HE.Investments.Common.csproj"/>
   </ItemGroup>
-
-  <Import Project="..\HE.Common.IntegrationModel\HE.Common.IntegrationModel.projitems" Label="Shared"/>
 
 </Project>

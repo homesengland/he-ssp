@@ -3,9 +3,11 @@ using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Domain.Application.Entities;
 using HE.Investment.AHP.Domain.Application.Factories;
 using HE.Investment.AHP.Domain.Application.ValueObjects;
+using HE.Investment.AHP.Domain.Scheme.ValueObjects;
 using HE.Investments.Account.Shared.User;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Tests.TestData;
+using HE.Investments.FrontDoor.Shared.Project;
 using Moq;
 using ApplicationSection = HE.Investment.AHP.Domain.Application.ValueObjects.ApplicationSection;
 
@@ -13,6 +15,8 @@ namespace HE.Investment.AHP.Domain.Tests.Application.Entities.ApplicationEntityT
 
 public class ApplicationEntityBuilder
 {
+    private readonly FrontDoorProjectId _projectId = new("project-1");
+
     private readonly SiteId _siteId = new("site-1");
 
     private readonly AhpApplicationId _id = new("1");
@@ -78,13 +82,15 @@ public class ApplicationEntityBuilder
     public ApplicationEntity Build()
     {
         return new ApplicationEntity(
+            _projectId,
             _siteId,
             _id,
             _name,
             _status,
             new ApplicationTenure(Tenure.AffordableRent),
+            ApplicationPartners.ConfirmedPartner(OrganisationId.From("cd7e3fb6-bff0-43ee-b65c-54db77d81f4c")),
             new ApplicationStateFactory(_userAccount, _previousStatus, _wasSubmitted),
             _reference,
-            new ApplicationSections(_sections ?? new List<ApplicationSection>()));
+            new ApplicationSections(_sections ?? []));
     }
 }

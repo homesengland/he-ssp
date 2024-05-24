@@ -20,7 +20,7 @@ public class UploadFilesTests
         // when
         var upload = () => testCandidate.UploadFiles(
             fileService,
-            new[] { new OrganisationMoreInformationFile("test.pdf", 1000, 10, new MemoryStream()) },
+            [new OrganisationMoreInformationFile("test.pdf", 1000, 10, new MemoryStream())],
             CancellationToken.None);
 
         // then
@@ -37,7 +37,7 @@ public class UploadFilesTests
         // when
         var upload = () => testCandidate.UploadFiles(
             fileService,
-            new[] { new OrganisationMoreInformationFile("test-1.pdf", 1000, 10, new MemoryStream()) },
+            [new OrganisationMoreInformationFile("test-1.pdf", 1000, 10, new MemoryStream())],
             CancellationToken.None);
 
         // then
@@ -50,10 +50,10 @@ public class UploadFilesTests
         // given
         var fileService = FileServiceMockTestBuilder.Build<LoanApplicationId>(5);
         var testCandidate = CompanyStructureEntityTestBuilder.New().WithStatus(SectionStatus.Completed).Build();
-        var file = new OrganisationMoreInformationFile("new-test.pdf", 1000, 10, new MemoryStream());
+        using var file = new OrganisationMoreInformationFile("new-test.pdf", 1000, 10, new MemoryStream());
 
         // when
-        var result = await testCandidate.UploadFiles(fileService, new[] { file }, CancellationToken.None);
+        var result = await testCandidate.UploadFiles(fileService, [file], CancellationToken.None);
 
         // then
         var uploadedFile = result.Should().HaveCount(1).And.Subject.Single();

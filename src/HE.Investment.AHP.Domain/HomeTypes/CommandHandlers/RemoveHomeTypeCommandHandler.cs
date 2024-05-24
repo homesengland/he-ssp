@@ -39,7 +39,7 @@ public class RemoveHomeTypeCommandHandler : HomeTypeCommandHandlerBase, IRequest
             return new OperationResult(validationErrors);
         }
 
-        await _repository.Save(homeTypes, account.SelectedOrganisationId(), cancellationToken);
+        await _repository.Save(homeTypes, account, cancellationToken);
         return OperationResult.Success();
     }
 }

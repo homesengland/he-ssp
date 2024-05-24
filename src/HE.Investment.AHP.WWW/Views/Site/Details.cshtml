@@ -7,7 +7,7 @@
     ViewData["Title"] = Model.SiteName;
 }
 <div class="govuk-grid-column-full">
-    <gds-back-link href="@Url.Action("Index", "Site")" class="govuk-!-margin-bottom-8"></gds-back-link>
+    <gds-back-link href="@Url.Action("Index", "Site", new { projectId = Model.ProjectId.Value })" class="govuk-!-margin-bottom-8"></gds-back-link>
     <vc:page-header title="@Model.SiteName" caption="@Model.OrganisationName"/>
 
     @if (!string.IsNullOrWhiteSpace(Model.LocalAuthorityName))
@@ -23,14 +23,6 @@
         </div>
     }
 
-    <div class="govuk-!-width-two-thirds">
-        <gds-h2>View details of this site</gds-h2>
-        <gds-p>View or edit this site's details. You cannot edit the details for a site if an application connected to it has already been submitted.</gds-p>
-        <link-button action-url="@Url.Action("ContinueAnswering", "Site", new { siteId = Model.SiteId.Value })" button-type="@ButtonType.Secondary">
-            View details
-        </link-button>
-    </div>
-
     @if (Model.Applications.TotalItems > 0)
     {
         <gds-h2>Applications on this site</gds-h2>
@@ -39,6 +31,15 @@
     }
 
     <gds-p>
-        To begin a new application, return to <gds-link data-testId="application-list" href="@Url.Action("Index", "Application")">your list of applications</gds-link>.
+        To begin a new application on this site, return to <gds-link data-testId="application-list" href="@Url.Action("Applications", "Project", new { projectId = Model.ProjectId.Value })">your list of all applications</gds-link>.
     </gds-p>
+
+    <div class="govuk-!-margin-top-8">
+        <gds-h2>View details of this site</gds-h2>
+        <gds-p>View or edit this site's details. You cannot edit the details for a site if an application connected to it has already been submitted.</gds-p>
+        <link-button action-url="@Url.Action("ContinueAnswering", "Site", new { siteId = Model.SiteId.Value })" button-type="@ButtonType.Secondary">
+            View details
+        </link-button>
+    </div>
+
 </div>

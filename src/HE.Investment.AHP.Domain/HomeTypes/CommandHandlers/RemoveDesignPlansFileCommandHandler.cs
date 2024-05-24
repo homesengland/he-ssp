@@ -16,10 +16,10 @@ public class RemoveDesignPlansFileCommandHandler : SaveHomeTypeSegmentCommandHan
     {
     }
 
-    protected override IReadOnlyCollection<HomeTypeSegmentType> SegmentTypes => new[] { HomeTypeSegmentType.DesignPlans };
+    protected override IReadOnlyCollection<HomeTypeSegmentType> SegmentTypes => [HomeTypeSegmentType.DesignPlans];
 
-    protected override IEnumerable<Action<RemoveDesignPlansFileCommand, IHomeTypeEntity>> SaveActions => new[]
-    {
+    protected override IEnumerable<Action<RemoveDesignPlansFileCommand, IHomeTypeEntity>> SaveActions =>
+    [
         (RemoveDesignPlansFileCommand request, IHomeTypeEntity homeType) => homeType.DesignPlans.MarkFileToRemove(request.FileId),
-    };
+    ];
 }

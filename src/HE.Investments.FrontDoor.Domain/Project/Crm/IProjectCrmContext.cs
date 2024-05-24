@@ -1,7 +1,4 @@
-extern alias Org;
-
 using HE.Common.IntegrationModel.PortalIntegrationModel;
-using HE.Investments.Account.Shared.User;
 
 namespace HE.Investments.FrontDoor.Domain.Project.Crm;
 
@@ -17,5 +14,5 @@ public interface IProjectCrmContext
 
     Task<bool> IsThereProjectWithName(string projectName, string organisationId, CancellationToken cancellationToken);
 
-    Task<string> Save(FrontDoorProjectDto dto, UserAccount userAccount, CancellationToken cancellationToken);
+    Task<string> Save(FrontDoorProjectDto dto, string userGlobalId, string organisationId, CancellationToken cancellationToken);
 }

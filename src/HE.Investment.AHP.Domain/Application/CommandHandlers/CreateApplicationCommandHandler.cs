@@ -1,12 +1,17 @@
 using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.Application.Commands;
+using HE.Investment.AHP.Contract.Project;
+using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Domain.Application.Entities;
 using HE.Investment.AHP.Domain.Application.Factories;
 using HE.Investment.AHP.Domain.Application.Repositories;
 using HE.Investment.AHP.Domain.Application.ValueObjects;
-using HE.Investments.Account.Shared;
+using HE.Investment.AHP.Domain.Scheme.ValueObjects;
+using HE.Investment.AHP.Domain.Site.Repositories;
+using HE.Investment.AHP.Domain.UserContext;
 using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Contract.Validators;
+using HE.Investments.FrontDoor.Shared.Project;
 using MediatR;
 
 namespace HE.Investment.AHP.Domain.Application.CommandHandlers;
@@ -14,26 +19,55 @@ namespace HE.Investment.AHP.Domain.Application.CommandHandlers;
 public class CreateApplicationCommandHandler : IRequestHandler<CreateApplicationCommand, OperationResult<AhpApplicationId>>
 {
     private readonly IApplicationRepository _repository;
-    private readonly IAccountUserContext _accountUserContext;
 
-    public CreateApplicationCommandHandler(IApplicationRepository repository, IAccountUserContext accountUserContext)
+    private readonly ISiteRepository _siteRepository;
+
+    private readonly IAhpUserContext _ahpUserContext;
+
+    public CreateApplicationCommandHandler(IApplicationRepository repository, ISiteRepository siteRepository, IAhpUserContext ahpUserContext)
     {
         _repository = repository;
-        _accountUserContext = accountUserContext;
+        _siteRepository = siteRepository;
+        _ahpUserContext = ahpUserContext;
     }
 
     public async Task<OperationResult<AhpApplicationId>> Handle(CreateApplicationCommand request, CancellationToken cancellationToken)
     {
         var name = new ApplicationName(request.Name);
-        var account = await _accountUserContext.GetSelectedAccount();
+        var account = await _ahpUserContext.GetSelectedAccount();
         if (await _repository.IsNameExist(name, account.SelectedOrganisationId(), cancellationToken))
         {
             throw new FoundException("Name", "There is already an application with this name. Enter a different name");
         }
 
-        var applicationToCreate = ApplicationEntity.New(request.SiteId, name, new ApplicationTenure(request.Tenure), new ApplicationStateFactory(account));
-        var application = await _repository.Save(applicationToCreate, account.SelectedOrganisationId(), cancellationToken);
+        var applicationPartners = await GetApplicationPartners(request.SiteId, account, cancellationToken);
+        var applicationToCreate = ApplicationEntity.New(
+            new FrontDoorProjectId(LegacyProject.ProjectId),
+            request.SiteId,
+            name,
+            new ApplicationTenure(request.Tenure),
+            applicationPartners,
+            new ApplicationStateFactory(account));
+        var application = await _repository.Save(applicationToCreate, account, cancellationToken);
 
         return new OperationResult<AhpApplicationId>(application.Id);
+    }
+
+    private async Task<ApplicationPartners> GetApplicationPartners(SiteId siteId, AhpUserAccount userAccount, CancellationToken cancellationToken)
+    {
+        if (userAccount.Consortium.HasNoConsortium)
+        {
+            return ApplicationPartners.ConfirmedPartner(userAccount.SelectedOrganisation());
+        }
+
+        var site = await _siteRepository.GetSite(siteId, userAccount, cancellationToken);
+
+        // TODO: Fix when Site Completion will be part of the flow
+        if (!site.SitePartners.IsAnswered())
+        {
+            return ApplicationPartners.ConfirmedPartner(userAccount.SelectedOrganisation());
+        }
+
+        return ApplicationPartners.FromSitePartners(site.SitePartners);
     }
 }

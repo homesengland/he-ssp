@@ -48,6 +48,6 @@ public static class FrontDoorWebModule
         services.AddAppConfiguration<ContactInfoOptions>("ContactInfo");
         services.AddAppConfiguration<IDataverseConfig, DataverseConfig>("Dataverse");
         services.AddScoped<IProjectSummaryViewModelFactory, ProjectSummaryViewModelFactory>();
-        services.AddAppConfiguration<LoanApplicationConfig>("LoanApplicationService");
+        services.AddAppConfiguration<ProgrammeUrlConfig>("ProgrammeUrl");
     }
 }

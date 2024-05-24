@@ -1,5 +1,6 @@
 using HE.Investment.AHP.WWW.Controllers;
 using HE.Investments.AHP.Consortium.Contract;
+using HE.Investments.Common.Contract;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.WWW.Components;
 using HE.Investments.Common.WWW.Components.Link;
@@ -15,7 +16,7 @@ public class ConsortiumsTable : ViewComponent
     {
         var tableHeaders = new List<TableHeaderViewModel>
         {
-            new("Consortium name", CellWidth.OneHalf),
+            new("Programme name", CellWidth.OneHalf),
             new("Lead Partner", CellWidth.OneThird),
             new("Membership status", CellWidth.OneEighth),
         };

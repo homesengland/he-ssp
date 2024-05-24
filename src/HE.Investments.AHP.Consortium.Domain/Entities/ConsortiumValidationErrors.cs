@@ -2,8 +2,13 @@ namespace HE.Investments.AHP.Consortium.Domain.Entities;
 
 internal static class ConsortiumValidationErrors
 {
-    public const string IsAlreadyPartOfConsortium =
-        "This organisation cannot be added to your consortium. Check you have selected the correct organisation. If it is correct, contact your Growth Manager";
+    public const string IsPartOfThisConsortium = "The organisation you are trying to add is already added or being added as a member of this consortium";
+
+    public const string IsPartOfOtherConsortium = "The organisation you are trying to add is already added or being added to another consortium";
+
+    public const string IsSitePartner = "This organisation is a Site Partner";
+
+    public const string IsApplicationPartner = "This organisation is an Application Partner";
 
     public const string RemoveConfirmationNotSelected = "Select whether you want to remove this organisation from consortium";
 }

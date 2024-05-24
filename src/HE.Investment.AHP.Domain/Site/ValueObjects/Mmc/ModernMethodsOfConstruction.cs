@@ -15,17 +15,17 @@ public class ModernMethodsOfConstruction : ValueObject, IQuestion
         IEnumerable<ModernMethodsConstruction2DSubcategoriesType>? modernMethodsConstruction2DSubcategories = null,
         IEnumerable<ModernMethodsConstruction3DSubcategoriesType>? modernMethodsConstruction3DSubcategories = null)
     {
-        _modernMethodsConstructionCategories = modernMethodsConstructionCategories?.ToList() ?? new List<ModernMethodsConstructionCategoriesType>();
-        _modernMethodsConstruction2DSubcategories = modernMethodsConstruction2DSubcategories?.ToList() ?? new List<ModernMethodsConstruction2DSubcategoriesType>();
-        _modernMethodsConstruction3DSubcategories = modernMethodsConstruction3DSubcategories?.ToList() ?? new List<ModernMethodsConstruction3DSubcategoriesType>();
+        _modernMethodsConstructionCategories = modernMethodsConstructionCategories?.ToList() ?? [];
+        _modernMethodsConstruction2DSubcategories = modernMethodsConstruction2DSubcategories?.ToList() ?? [];
+        _modernMethodsConstruction3DSubcategories = modernMethodsConstruction3DSubcategories?.ToList() ?? [];
 
-        if (_modernMethodsConstruction2DSubcategories.Any() &&
+        if (_modernMethodsConstruction2DSubcategories.Count != 0 &&
             !_modernMethodsConstructionCategories.Contains(ModernMethodsConstructionCategoriesType.Category2PreManufacturing2DPrimaryStructuralSystems))
         {
             throw new DomainValidationException("2D subcategory can be selected only when 2D category is selected.");
         }
 
-        if (_modernMethodsConstruction3DSubcategories.Any() &&
+        if (_modernMethodsConstruction3DSubcategories.Count != 0 &&
             !_modernMethodsConstructionCategories.Contains(ModernMethodsConstructionCategoriesType.Category1PreManufacturing3DPrimaryStructuralSystems))
         {
             throw new DomainValidationException("3D subcategory can be selected only when 3D category is selected.");
@@ -42,15 +42,15 @@ public class ModernMethodsOfConstruction : ValueObject, IQuestion
     {
         if (_modernMethodsConstructionCategories.Contains(ModernMethodsConstructionCategoriesType.Category1PreManufacturing3DPrimaryStructuralSystems))
         {
-            return ModernMethodsConstruction3DSubcategories.Any();
+            return ModernMethodsConstruction3DSubcategories.Count != 0;
         }
 
         if (_modernMethodsConstructionCategories.Contains(ModernMethodsConstructionCategoriesType.Category2PreManufacturing2DPrimaryStructuralSystems))
         {
-            return ModernMethodsConstruction2DSubcategories.Any();
+            return ModernMethodsConstruction2DSubcategories.Count != 0;
         }
 
-        return ModernMethodsConstructionCategories.Any();
+        return ModernMethodsConstructionCategories.Count != 0;
     }
 
     protected override IEnumerable<object?> GetAtomicValues()

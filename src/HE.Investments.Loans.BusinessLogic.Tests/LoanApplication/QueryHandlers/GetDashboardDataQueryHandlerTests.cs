@@ -29,7 +29,7 @@ public class GetDashboardDataQueryHandlerTests : TestBase<GetDashboardDataQueryH
 
         LoanApplicationRepositoryTestBuilder
             .New()
-            .ReturnLoanApplications(userAccount, new List<LoanApplicationEntity> { loanApplicationOne, loanApplicationTwo, loanApplicationThree })
+            .ReturnLoanApplications(userAccount, [loanApplicationOne, loanApplicationTwo, loanApplicationThree])
             .BuildMockAndRegister(this);
 
         // when

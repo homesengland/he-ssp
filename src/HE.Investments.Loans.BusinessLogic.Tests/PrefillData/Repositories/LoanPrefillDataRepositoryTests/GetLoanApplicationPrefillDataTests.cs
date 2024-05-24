@@ -1,4 +1,5 @@
 using HE.Investments.Account.Shared.User;
+using HE.Investments.Common.Contract.Enum;
 using HE.Investments.Common.Tests.TestData;
 using HE.Investments.FrontDoor.Shared.Project;
 using HE.Investments.FrontDoor.Shared.Project.Contract;
@@ -39,7 +40,7 @@ public class GetLoanApplicationPrefillDataTests : TestBase<LoanPrefillDataReposi
     public async Task ShouldReturnBuildingNewHomesFundingPurpose_WhenActivityTypeIsDevelopingHomes()
     {
         // given
-        MockPrefillDataRepository(activityTypes: new[] { SupportActivityType.DevelopingHomes });
+        MockPrefillDataRepository(activityTypes: [SupportActivityType.DevelopingHomes]);
 
         // when
         var result = await TestCandidate.GetLoanApplicationPrefillData(ProjectId, UserAccount, CancellationToken.None);
@@ -53,7 +54,7 @@ public class GetLoanApplicationPrefillDataTests : TestBase<LoanPrefillDataReposi
     public async Task ShouldReturnNullFundingPurpose_WhenThereAreMultipleActivityTypes()
     {
         // given
-        MockPrefillDataRepository(activityTypes: new[] { SupportActivityType.DevelopingHomes, SupportActivityType.ProvidingInfrastructure });
+        MockPrefillDataRepository(activityTypes: [SupportActivityType.DevelopingHomes, SupportActivityType.ProvidingInfrastructure]);
 
         // when
         var result = await TestCandidate.GetLoanApplicationPrefillData(ProjectId, UserAccount, CancellationToken.None);
@@ -72,7 +73,7 @@ public class GetLoanApplicationPrefillDataTests : TestBase<LoanPrefillDataReposi
     public async Task ShouldReturnNullFundingPurpose_WhenActivityTypeIs(SupportActivityType activityType)
     {
         // given
-        MockPrefillDataRepository(activityTypes: new[] { activityType });
+        MockPrefillDataRepository(activityTypes: [activityType]);
 
         // when
         var result = await TestCandidate.GetLoanApplicationPrefillData(ProjectId, UserAccount, CancellationToken.None);
@@ -93,7 +94,7 @@ public class GetLoanApplicationPrefillDataTests : TestBase<LoanPrefillDataReposi
             .ReturnsAsync(new ProjectPrefillData(
                 ProjectId,
                 projectName ?? "Empty",
-                activityTypes?.ToList() ?? new List<SupportActivityType>(),
-                siteId != null ? new FrontDoorSiteId(siteId) : null));
+                activityTypes?.ToList() ?? [],
+                siteId != null ? new List<SitePrefillData> { new(FrontDoorSiteId.From(siteId), "Site name", null, SitePlanningStatus.Undefined, null) } : null));
     }
 }

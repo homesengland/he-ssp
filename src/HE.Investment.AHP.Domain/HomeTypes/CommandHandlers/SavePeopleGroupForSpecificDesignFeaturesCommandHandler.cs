@@ -16,11 +16,11 @@ public class SavePeopleGroupForSpecificDesignFeaturesCommandHandler : SaveHomeTy
     {
     }
 
-    protected override IReadOnlyCollection<HomeTypeSegmentType> SegmentTypes => new[] { HomeTypeSegmentType.HomeInformation };
+    protected override IReadOnlyCollection<HomeTypeSegmentType> SegmentTypes => [HomeTypeSegmentType.HomeInformation];
 
-    protected override IEnumerable<Action<SavePeopleGroupForSpecificDesignFeaturesCommand, IHomeTypeEntity>> SaveActions => new[]
-    {
+    protected override IEnumerable<Action<SavePeopleGroupForSpecificDesignFeaturesCommand, IHomeTypeEntity>> SaveActions =>
+    [
         (SavePeopleGroupForSpecificDesignFeaturesCommand request, IHomeTypeEntity entity) =>
             entity.HomeInformation.ChangePeopleGroupForSpecificDesignFeatures(request.PeopleGroupForSpecificDesignFeatures),
-    };
+    ];
 }

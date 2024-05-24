@@ -5,9 +5,9 @@ namespace HE.Investment.AHP.Domain.Tests.Site.TestDataBuilders;
 
 public class ModernMethodsOfConstructionBuilder
 {
-    private readonly List<ModernMethodsConstructionCategoriesType> _modernMethodsConstructionCategories = new();
-    private readonly List<ModernMethodsConstruction2DSubcategoriesType> _modernMethodsConstruction2DSubcategories = new();
-    private readonly List<ModernMethodsConstruction3DSubcategoriesType> _modernMethodsConstruction3DSubcategories = new();
+    private readonly List<ModernMethodsConstructionCategoriesType> _modernMethodsConstructionCategories = [];
+    private readonly List<ModernMethodsConstruction2DSubcategoriesType> _modernMethodsConstruction2DSubcategories = [];
+    private readonly List<ModernMethodsConstruction3DSubcategoriesType> _modernMethodsConstruction3DSubcategories = [];
 
     public static ModernMethodsOfConstructionBuilder New() => new();
 
@@ -45,8 +45,8 @@ public class ModernMethodsOfConstructionBuilder
                 ModernMethodsConstructionCategoriesType.Category5PreManufacturingNonStructuralAssembliesAndSubAssemblies,
                 ModernMethodsConstructionCategoriesType.Category6TraditionalBuildingProductLedSiteLabourReductionOrProductivityImprovements,
             }.ToList(),
-            new List<ModernMethodsConstruction2DSubcategoriesType>(),
-            new List<ModernMethodsConstruction3DSubcategoriesType>());
+            [],
+            []);
     }
 
     public ModernMethodsOfConstruction Build()

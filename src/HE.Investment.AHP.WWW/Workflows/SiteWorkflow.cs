@@ -19,7 +19,7 @@ public class SiteWorkflow : EncodedStateRouting<SiteWorkflowState>
 
     public override bool CanBeAccessed(SiteWorkflowState state, bool? isReadOnlyMode = null)
     {
-        if (isReadOnlyMode == true)
+        if (isReadOnlyMode ?? _siteModel?.IsReadOnly == true)
         {
             return state == SiteWorkflowState.CheckAnswers;
         }
@@ -28,23 +28,29 @@ public class SiteWorkflow : EncodedStateRouting<SiteWorkflowState>
         {
             SiteWorkflowState.Start => true,
             SiteWorkflowState.Name => true,
+            SiteWorkflowState.Section106GeneralAgreement => true,
+            SiteWorkflowState.Section106AffordableHousing => _siteModel?.Section106?.GeneralAgreement == true,
+            SiteWorkflowState.Section106OnlyAffordableHousing => _siteModel?.Section106?.AffordableHousing == true,
+            SiteWorkflowState.Section106AdditionalAffordableHousing => _siteModel?.Section106?.OnlyAffordableHousing == false,
+            SiteWorkflowState.Section106CapitalFundingEligibility => _siteModel?.Section106?.GeneralAgreement == true,
+            SiteWorkflowState.Section106LocalAuthorityConfirmation => _siteModel?.Section106?.AdditionalAffordableHousing == true,
+            SiteWorkflowState.Section106Ineligible => _siteModel?.Section106?.IsIneligible == true,
             SiteWorkflowState.LocalAuthoritySearch => true,
             SiteWorkflowState.LocalAuthorityResult => true,
             SiteWorkflowState.LocalAuthorityConfirm => true,
             SiteWorkflowState.LocalAuthorityReset => true,
             SiteWorkflowState.PlanningStatus => true,
             SiteWorkflowState.PlanningDetails => true,
-            SiteWorkflowState.Section106GeneralAgreement => true,
-            SiteWorkflowState.Section106AffordableHousing => _siteModel?.Section106?.GeneralAgreement == true,
-            SiteWorkflowState.Section106AdditionalAffordableHousing => _siteModel?.Section106?.OnlyAffordableHousing == false,
-            SiteWorkflowState.Section106OnlyAffordableHousing => _siteModel?.Section106?.AffordableHousing == true,
-            SiteWorkflowState.Section106CapitalFundingEligibility => _siteModel?.Section106?.GeneralAgreement == true,
-            SiteWorkflowState.Section106LocalAuthorityConfirmation => _siteModel?.Section106?.AdditionalAffordableHousing == true,
-            SiteWorkflowState.Section106Ineligible => _siteModel?.Section106?.IsIneligible == true,
+            SiteWorkflowState.LandRegistry => IsLandTitleRegistered(),
             SiteWorkflowState.NationalDesignGuide => true,
             SiteWorkflowState.BuildingForHealthyLife => true,
             SiteWorkflowState.NumberOfGreenLights => IsBuildingForHealthyLife(),
-            SiteWorkflowState.LandRegistry => IsLandTitleRegistered(),
+            SiteWorkflowState.DevelopingPartner => IsConsortiumMember(),
+            SiteWorkflowState.DevelopingPartnerConfirm => IsConsortiumMember(),
+            SiteWorkflowState.OwnerOfTheLand => IsConsortiumMember(),
+            SiteWorkflowState.OwnerOfTheLandConfirm => IsConsortiumMember(),
+            SiteWorkflowState.OwnerOfTheHomes => IsConsortiumMember(),
+            SiteWorkflowState.OwnerOfTheHomesConfirm => IsConsortiumMember(),
             SiteWorkflowState.LandAcquisitionStatus => true,
             SiteWorkflowState.TenderingStatus => true,
             SiteWorkflowState.ContractorDetails => IsConditionalOrUnconditionalWorksContract(),
@@ -151,17 +157,45 @@ public class SiteWorkflow : EncodedStateRouting<SiteWorkflowState>
 
         Machine.Configure(SiteWorkflowState.BuildingForHealthyLife)
             .PermitIf(Trigger.Continue, SiteWorkflowState.NumberOfGreenLights, IsBuildingForHealthyLife)
-            .PermitIf(Trigger.Continue, SiteWorkflowState.LandAcquisitionStatus, () => !IsBuildingForHealthyLife())
+            .PermitIf(Trigger.Continue, SiteWorkflowState.LandAcquisitionStatus, () => !IsBuildingForHealthyLife() && !IsConsortiumMember())
+            .PermitIf(Trigger.Continue, SiteWorkflowState.DevelopingPartner, () => !IsBuildingForHealthyLife() && IsConsortiumMember())
             .Permit(Trigger.Back, SiteWorkflowState.NationalDesignGuide);
 
         Machine.Configure(SiteWorkflowState.NumberOfGreenLights)
-            .Permit(Trigger.Continue, SiteWorkflowState.LandAcquisitionStatus)
+            .PermitIf(Trigger.Continue, SiteWorkflowState.LandAcquisitionStatus, () => !IsConsortiumMember())
+            .PermitIf(Trigger.Continue, SiteWorkflowState.DevelopingPartner, IsConsortiumMember)
             .Permit(Trigger.Back, SiteWorkflowState.BuildingForHealthyLife);
+
+        Machine.Configure(SiteWorkflowState.DevelopingPartner)
+            .Permit(Trigger.Continue, SiteWorkflowState.DevelopingPartnerConfirm)
+            .PermitIf(Trigger.Back, SiteWorkflowState.NumberOfGreenLights, IsBuildingForHealthyLife)
+            .PermitIf(Trigger.Back, SiteWorkflowState.BuildingForHealthyLife, () => !IsBuildingForHealthyLife());
+
+        Machine.Configure(SiteWorkflowState.DevelopingPartnerConfirm)
+            .Permit(Trigger.Continue, SiteWorkflowState.OwnerOfTheLand)
+            .Permit(Trigger.Back, SiteWorkflowState.DevelopingPartner);
+
+        Machine.Configure(SiteWorkflowState.OwnerOfTheLand)
+            .Permit(Trigger.Continue, SiteWorkflowState.OwnerOfTheLandConfirm)
+            .Permit(Trigger.Back, SiteWorkflowState.DevelopingPartner);
+
+        Machine.Configure(SiteWorkflowState.OwnerOfTheLandConfirm)
+            .Permit(Trigger.Continue, SiteWorkflowState.OwnerOfTheHomes)
+            .Permit(Trigger.Back, SiteWorkflowState.OwnerOfTheLand);
+
+        Machine.Configure(SiteWorkflowState.OwnerOfTheHomes)
+            .Permit(Trigger.Continue, SiteWorkflowState.OwnerOfTheHomesConfirm)
+            .Permit(Trigger.Back, SiteWorkflowState.OwnerOfTheLand);
+
+        Machine.Configure(SiteWorkflowState.OwnerOfTheHomesConfirm)
+            .Permit(Trigger.Continue, SiteWorkflowState.LandAcquisitionStatus)
+            .Permit(Trigger.Back, SiteWorkflowState.OwnerOfTheHomes);
 
         Machine.Configure(SiteWorkflowState.LandAcquisitionStatus)
             .Permit(Trigger.Continue, SiteWorkflowState.TenderingStatus)
-            .PermitIf(Trigger.Back, SiteWorkflowState.NumberOfGreenLights, IsBuildingForHealthyLife)
-            .PermitIf(Trigger.Back, SiteWorkflowState.BuildingForHealthyLife, () => !IsBuildingForHealthyLife());
+            .PermitIf(Trigger.Back, SiteWorkflowState.NumberOfGreenLights, () => IsBuildingForHealthyLife() && !IsConsortiumMember())
+            .PermitIf(Trigger.Back, SiteWorkflowState.BuildingForHealthyLife, () => !IsBuildingForHealthyLife() && !IsConsortiumMember())
+            .PermitIf(Trigger.Back, SiteWorkflowState.OwnerOfTheHomes, IsConsortiumMember);
 
         Machine.Configure(SiteWorkflowState.TenderingStatus)
             .PermitIf(Trigger.Continue, SiteWorkflowState.ContractorDetails, IsConditionalOrUnconditionalWorksContract)
@@ -270,6 +304,8 @@ public class SiteWorkflow : EncodedStateRouting<SiteWorkflowState>
     private bool IsNotApplicableOrMissing() => _siteModel?.TenderingStatusDetails.TenderingStatus is SiteTenderingStatus.NotApplicable or null;
 
     private bool IsBuildingForHealthyLife() => _siteModel?.BuildingForHealthyLife is BuildingForHealthyLifeType.Yes;
+
+    private bool IsConsortiumMember() => _siteModel?.IsConsortiumMember == true;
 
     private bool IsForTravellerPitchSite() => _siteModel?.SiteUseDetails.IsForTravellerPitchSite == true;
 

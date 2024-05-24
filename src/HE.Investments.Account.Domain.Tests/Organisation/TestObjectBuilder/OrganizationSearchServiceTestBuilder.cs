@@ -1,10 +1,7 @@
-extern alias Org;
-
+using HE.Investments.Organisation.Contract;
+using HE.Investments.Organisation.Services;
 using HE.Investments.TestsUtils.TestFramework;
 using Moq;
-using GetOrganizationByCompaniesHouseNumberResult = Org::HE.Investments.Organisation.Contract.GetOrganizationByCompaniesHouseNumberResult;
-using IOrganisationSearchService = Org::HE.Investments.Organisation.Services.IOrganisationSearchService;
-using OrganisationSearchItem = Org::HE.Investments.Organisation.Contract.OrganisationSearchItem;
 
 namespace HE.Investments.Account.Domain.Tests.Organisation.TestObjectBuilder;
 

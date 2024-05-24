@@ -1,5 +1,3 @@
-extern alias Org;
-
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investments.Loans.BusinessLogic.Projects.Entities;
 using HE.Investments.Loans.Contract.Application.ValueObjects;

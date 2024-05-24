@@ -86,6 +86,7 @@
       <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
     </Reference>
     <Reference Include="System.Web" />
+    <Reference Include="System.Workflow.Runtime" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -94,6 +95,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\AHPConst.cs" />
     <Compile Include="CrmPluginRegistrationAttribute.cs" />
     <Compile Include="Handlers\AHPApplication\ChangeExternalStatusOnInternalStatusChangeHandler.cs" />
     <Compile Include="Handlers\AHPApplication\CheckIfApplicationWithNewNameExistsHandler.cs" />
@@ -111,9 +113,14 @@
     <Compile Include="Handlers\CustomApi\Consortium\IsConsortiumExistForProgrammeAndOrganisation.cs" />
     <Compile Include="Handlers\CustomApi\Consortium\RemoveMemberFromConsortiumHandler.cs" />
     <Compile Include="Handlers\CustomApi\Consortium\RequestAddingMemberToConsortiumHandler.cs" />
+    <Compile Include="Handlers\CustomApi\Consortium\IsSiteOrApplicationPartnerPlugin.cs" />
     <Compile Include="Handlers\CustomApi\Consortium\SetConsortiumHandler.cs" />
     <Compile Include="Handlers\CustomApi\DeleteDeliveryPhaseHandler.cs" />
     <Compile Include="Handlers\CustomApi\DeleteHomeTypeHandler.cs" />
+    <Compile Include="Handlers\CustomApi\FrontDoor\GetAhpProjectHandler.cs" />
+    <Compile Include="Handlers\CustomApi\FrontDoor\GetAhpProjectsHandler.cs" />
+    <Compile Include="Handlers\CustomApi\FrontDoor\SetAhpProjectHandler.cs" />
+    <Compile Include="Handlers\CustomApi\FrontDoor\GetSiteApplicationHandler.cs" />
     <Compile Include="Handlers\CustomApi\GetAbsoluteAhpApplicationFileLocationHandler.cs" />
     <Compile Include="Handlers\CustomApi\GetAhpApplicationFileLocationHandler.cs" />
     <Compile Include="Handlers\CustomApi\GetApplicationHandler.cs" />
@@ -137,6 +144,8 @@
     <Compile Include="Handlers\CustomApi\Site\GetMultipleSitesHandler.cs" />
     <Compile Include="Handlers\CustomApi\Site\GetSingleSiteHandler.cs" />
     <Compile Include="Handlers\CustomApi\Site\SetSiteHandler.cs" />
+    <Compile Include="Handlers\DeliveryPhase\AcceptOrRejectPaymentProportion.cs" />
+    <Compile Include="Handlers\DeliveryPhase\ChangeNumberOfHomes.cs" />
     <Compile Include="Handlers\DeliveryPhase\SendNotificationUrbWantsAdditionalPaymentsForPhaseHandler.cs" />
     <Compile Include="Handlers\HomeType\CalculatePercentageValueOfNDSSStandardHandler.cs" />
     <Compile Include="Handlers\HomeType\CreateDocumentLocationOnCreateHandler.cs" />
@@ -215,11 +224,16 @@
     <Compile Include="Plugins\CustomApi\Consortium\GetConsortiumsByOrganisationPlugin.cs" />
     <Compile Include="Plugins\CustomApi\Consortium\GetConsortiumPlugin.cs" />
     <Compile Include="Plugins\CustomApi\Consortium\IsConsortiumExist.cs" />
+    <Compile Include="Plugins\CustomApi\Consortium\IsSiteOrApplicationPartnerHandler.cs" />
     <Compile Include="Plugins\CustomApi\Consortium\RemoveMemberFromConsortiumPlugin.cs" />
     <Compile Include="Plugins\CustomApi\Consortium\RequestAddingMemberToConsortiumPlugin.cs" />
     <Compile Include="Plugins\CustomApi\Consortium\SetConsortiumPlugin.cs" />
     <Compile Include="Plugins\CustomApi\DeleteDeliveryPhasePlugin.cs" />
     <Compile Include="Plugins\CustomApi\DeleteHomeTypePlugin.cs" />
+    <Compile Include="Plugins\CustomApi\FrontDoor\GetAhpProjectPlugin.cs" />
+    <Compile Include="Plugins\CustomApi\FrontDoor\GetAhpProjectsPlugin.cs" />
+    <Compile Include="Plugins\CustomApi\FrontDoor\SetAhpProjectPlugin.cs" />
+    <Compile Include="Plugins\CustomApi\FrontDoor\GetSiteApplicationPlugin.cs" />
     <Compile Include="Plugins\CustomApi\GetMultipleDeliveryPhasePlugin.cs" />
     <Compile Include="Plugins\CustomApi\GetMultipleProgrammePlugin.cs" />
     <Compile Include="Plugins\CustomApi\GetSingleDeliveryPhasePlugin.cs" />
@@ -243,6 +257,7 @@
     <Compile Include="Plugins\CustomApi\Site\GetMultipleSitesPlugin.cs" />
     <Compile Include="Plugins\CustomApi\Site\GetSingleSitePlugin.cs" />
     <Compile Include="Plugins\CustomApi\Site\SetSitePlugin.cs" />
+    <Compile Include="Plugins\DeliveryPhase\PreUpdateDeliveryPhase.cs" />
     <Compile Include="Plugins\DeliveryPhase\SendNotificationUrbWantsAdditionalPaymentsForPhasePlugin.cs" />
     <Compile Include="Plugins\HomeType\CreateDocumentLocationOnCreatePlugin.cs" />
     <Compile Include="Plugins\HomeType\HomeTypePreUpdate.cs" />
@@ -251,6 +266,8 @@
     <Compile Include="Plugins\Programme\PreValidation.cs" />
     <Compile Include="Plugins\Site\SitePreUpdate.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\AhpProject\AhpProjectService.cs" />
+    <Compile Include="Services\AhpProject\IAhpProjectService.cs" />
     <Compile Include="Services\AhpStatusChange\AhpStatusChangeService.cs" />
     <Compile Include="Services\AhpStatusChange\IAhpStatusChangeService.cs" />
     <Compile Include="Services\Application\ApplicationService.cs" />
@@ -315,7 +332,6 @@
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
-  <Import Project="..\HE.Common.IntegrationModel\HE.Common.IntegrationModel.projitems" Label="Shared" />
   <Import Project="..\HE.CRM.Common\HE.CRM.Common.projitems" Label="Shared" />
   <Import Project="..\HE.CRM.Model\HE.CRM.Model.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

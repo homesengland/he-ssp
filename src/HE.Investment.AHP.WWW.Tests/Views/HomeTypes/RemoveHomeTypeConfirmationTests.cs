@@ -41,7 +41,7 @@ public class RemoveHomeTypeConfirmationTests : HomeTypesTestBase
     {
         document
             .HasPageHeader("My application - My homes", "Are you sure you want to remove this home type?")
-            .HasRadio("RemoveHomeTypeAnswer", new[] { "Yes", "No" })
+            .HasRadio("RemoveHomeTypeAnswer", ["Yes", "No"])
             .HasSaveAndContinueButton()
             .HasElementWithText("button", "Save and return to application");
     }

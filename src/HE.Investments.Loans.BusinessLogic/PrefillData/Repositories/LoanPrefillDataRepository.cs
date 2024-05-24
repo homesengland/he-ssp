@@ -30,7 +30,7 @@ public class LoanPrefillDataRepository : ILoanPrefillDataRepository
 
         return new LoanApplicationPrefillData(
             projectId,
-            prefillData.SiteId,
+            prefillData.Sites?.FirstOrDefault()?.Id,
             prefillData.Name,
             MapFundingPurpose(prefillData.SupportActivities));
     }

@@ -1,10 +1,12 @@
+using HE.Investment.AHP.Contract.Common;
 using HE.Investment.AHP.Contract.Scheme.Queries;
 using HE.Investment.AHP.Domain.Application.Mappers;
 using HE.Investment.AHP.Domain.Scheme.Entities;
 using HE.Investment.AHP.Domain.Scheme.Repositories;
-using HE.Investments.Account.Shared;
+using HE.Investment.AHP.Domain.UserContext;
+using HE.Investments.AHP.Consortium.Contract;
+using HE.Investments.Organisation.ValueObjects;
 using MediatR;
-using UploadedFile = HE.Investment.AHP.Contract.Common.UploadedFile;
 
 namespace HE.Investment.AHP.Domain.Scheme.QueryHandlers;
 
@@ -12,17 +14,17 @@ public class GetSchemeQueryHandler : IRequestHandler<GetApplicationSchemeQuery, 
 {
     private readonly ISchemeRepository _repository;
 
-    private readonly IAccountUserContext _accountUserContext;
+    private readonly IAhpUserContext _ahpUserContext;
 
-    public GetSchemeQueryHandler(ISchemeRepository repository, IAccountUserContext accountUserContext)
+    public GetSchemeQueryHandler(ISchemeRepository repository, IAhpUserContext ahpUserContext)
     {
         _repository = repository;
-        _accountUserContext = accountUserContext;
+        _ahpUserContext = ahpUserContext;
     }
 
     public async Task<Contract.Scheme.Scheme> Handle(GetApplicationSchemeQuery request, CancellationToken cancellationToken)
     {
-        var account = await _accountUserContext.GetSelectedAccount();
+        var account = await _ahpUserContext.GetSelectedAccount();
         var entity = await _repository.GetByApplicationId(request.ApplicationId, account, request.IncludeFiles, cancellationToken);
 
         return new Contract.Scheme.Scheme(
@@ -30,12 +32,17 @@ public class GetSchemeQueryHandler : IRequestHandler<GetApplicationSchemeQuery, 
             entity.Status,
             entity.Funding.RequiredFunding,
             entity.Funding.HousesToDeliver,
+            MapPartner(entity.ApplicationPartners.DevelopingPartner),
+            MapPartner(entity.ApplicationPartners.OwnerOfTheLand),
+            MapPartner(entity.ApplicationPartners.OwnerOfTheHomes),
+            entity.ApplicationPartners.ArePartnersConfirmed,
             entity.AffordabilityEvidence.Evidence,
             entity.SalesRisk.Value,
             entity.HousingNeeds.MeetingLocalPriorities,
             entity.HousingNeeds.MeetingLocalHousingNeed,
             entity.StakeholderDiscussions.StakeholderDiscussionsDetails.Report,
-            CreateFile(entity.StakeholderDiscussions.LocalAuthoritySupportFileContainer));
+            CreateFile(entity.StakeholderDiscussions.LocalAuthoritySupportFileContainer),
+            !account.Consortium.HasNoConsortium);
     }
 
     private static UploadedFile? CreateFile(LocalAuthoritySupportFileContainer fileContainer)
@@ -46,5 +53,10 @@ public class GetSchemeQueryHandler : IRequestHandler<GetApplicationSchemeQuery, 
         }
 
         return new UploadedFile(fileContainer.File.Id, fileContainer.File.Name.Value, fileContainer.File.UploadedOn, fileContainer.File.UploadedBy, true);
+    }
+
+    private static OrganisationDetails MapPartner(InvestmentsOrganisation organisation)
+    {
+        return new OrganisationDetails(organisation.Name, string.Empty, string.Empty, string.Empty, string.Empty, organisation.Id.ToString());
     }
 }

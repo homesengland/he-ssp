@@ -39,12 +39,12 @@ public class DeliveryPhaseCheckAnswersViewModelFactory : IDeliveryPhaseCheckAnsw
                 actionName,
                 encodedWorkflow);
 
-        return new List<SectionSummaryViewModel>
-        {
+        return
+        [
             CreateDeliveryPhaseSummary(deliveryPhase, deliveryPhaseHomes, CreateAction, deliveryPhase.Application.IsEditable),
             CreateMilestonesSummary(deliveryPhase, CreateAction, deliveryPhase.Application.IsEditable),
             CreateMilestonesDatesSummary(deliveryPhase, CreateAction, deliveryPhase.Application.IsEditable),
-        };
+        ];
     }
 
     private static SectionSummaryViewModel CreateDeliveryPhaseSummary(

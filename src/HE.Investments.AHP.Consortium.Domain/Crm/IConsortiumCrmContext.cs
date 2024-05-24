@@ -1,6 +1,4 @@
-extern alias Org;
-
-using Org::HE.Common.IntegrationModel.PortalIntegrationModel;
+using HE.Common.IntegrationModel.PortalIntegrationModel;
 
 namespace HE.Investments.AHP.Consortium.Domain.Crm;
 
@@ -18,6 +16,8 @@ public interface IConsortiumCrmContext
         CancellationToken cancellationToken);
 
     Task<bool> IsConsortiumExistForProgrammeAndOrganisation(string programmeId, string organisationId, CancellationToken cancellationToken);
+
+    Task<int> GetConsortiumPartnerStatus(string consortiumId, string organisationId, CancellationToken cancellationToken);
 
     Task CreateJoinConsortiumRequest(string consortiumId, string organisationId, string userId, CancellationToken cancellationToken);
 

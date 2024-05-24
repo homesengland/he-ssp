@@ -1,4 +1,5 @@
 using HE.Investments.AHP.Consortium.Contract;
+using HE.Investments.Common.Contract;
 using HE.Investments.Common.WWW.Routing;
 using Stateless;
 
@@ -8,11 +9,14 @@ public class ConsortiumMemberWorkflow : IStateRouting<ConsortiumMemberWorkflowSt
 {
     private readonly ConsortiumDetails _consortium;
 
+    private readonly OrganisationId? _selectedOrganisationId;
+
     private readonly StateMachine<ConsortiumMemberWorkflowState, Trigger> _machine;
 
-    public ConsortiumMemberWorkflow(ConsortiumDetails consortium, ConsortiumMemberWorkflowState currentWorkflowState)
+    public ConsortiumMemberWorkflow(ConsortiumDetails consortium, OrganisationId? selectedOrganisationId, ConsortiumMemberWorkflowState currentWorkflowState)
     {
         _consortium = consortium;
+        _selectedOrganisationId = selectedOrganisationId;
         _machine = new StateMachine<ConsortiumMemberWorkflowState, Trigger>(currentWorkflowState);
         ConfigureTransitions();
     }
@@ -34,6 +38,7 @@ public class ConsortiumMemberWorkflow : IStateRouting<ConsortiumMemberWorkflowSt
             ConsortiumMemberWorkflowState.AddOrganisation => true,
             ConsortiumMemberWorkflowState.AddMembers => _consortium.IsDraft,
             ConsortiumMemberWorkflowState.RemoveMember => true,
+            ConsortiumMemberWorkflowState.ContactHomesEngland => !IsConsortiumLeadPartner(),
             _ => false,
         });
     }
@@ -68,5 +73,10 @@ public class ConsortiumMemberWorkflow : IStateRouting<ConsortiumMemberWorkflowSt
             .PermitIf(Trigger.Continue, ConsortiumMemberWorkflowState.Index, () => !_consortium.IsDraft)
             .PermitIf(Trigger.Back, ConsortiumMemberWorkflowState.AddMembers, () => _consortium.IsDraft)
             .PermitIf(Trigger.Back, ConsortiumMemberWorkflowState.Index, () => !_consortium.IsDraft);
+    }
+
+    private bool IsConsortiumLeadPartner()
+    {
+        return _consortium.LeadPartner.OrganisationId == _selectedOrganisationId;
     }
 }

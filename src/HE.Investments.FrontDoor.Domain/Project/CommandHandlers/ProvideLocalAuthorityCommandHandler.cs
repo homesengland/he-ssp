@@ -1,9 +1,7 @@
-extern alias Org;
-
 using HE.Investments.Account.Shared;
 using HE.Investments.FrontDoor.Contract.Project.Commands;
 using HE.Investments.FrontDoor.Domain.Project.Repository;
-using ProjectLocalAuthority = Org::HE.Investments.Organisation.LocalAuthorities.ValueObjects.LocalAuthority;
+using ProjectLocalAuthority = HE.Investments.Organisation.LocalAuthorities.ValueObjects.LocalAuthority;
 
 namespace HE.Investments.FrontDoor.Domain.Project.CommandHandlers;
 

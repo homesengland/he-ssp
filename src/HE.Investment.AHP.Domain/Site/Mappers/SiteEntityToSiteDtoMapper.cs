@@ -1,7 +1,4 @@
-extern alias Org;
-
 using HE.Common.IntegrationModel.PortalIntegrationModel;
-using HE.Investment.AHP.Domain.Delivery.ValueObjects;
 using HE.Investment.AHP.Domain.Site.Entities;
 using HE.Investment.AHP.Domain.Site.ValueObjects;
 using HE.Investment.AHP.Domain.Site.ValueObjects.Mmc;
@@ -9,6 +6,8 @@ using HE.Investment.AHP.Domain.Site.ValueObjects.Planning;
 using HE.Investment.AHP.Domain.Site.ValueObjects.StrategicSite;
 using HE.Investment.AHP.Domain.Site.ValueObjects.TenderingStatus;
 using HE.Investments.Common.CRM.Mappers;
+using HE.Investments.Common.Extensions;
+using HE.Investments.Organisation.ValueObjects;
 using Section106 = HE.Investment.AHP.Domain.Site.ValueObjects.Section106;
 using Section106Dto = HE.Common.IntegrationModel.PortalIntegrationModel.Section106Dto;
 
@@ -43,6 +42,9 @@ public static class SiteEntityToSiteDtoMapper
             nationalDesignGuidePriorities = MapCollection(entity.NationalDesignGuidePriorities.Values, NationalDesignGuideMapper),
             buildingForHealthyLife = BuildingForHealthyLifeTypeMapper.ToDto(entity.BuildingForHealthyLife),
             numberOfGreenLights = entity.NumberOfGreenLights?.Value,
+            developerPartner = MapPartner(entity.SitePartners.DevelopingPartner),
+            ownerOfTheLandDuringDevelopment = MapPartner(entity.SitePartners.OwnerOfTheLand),
+            ownerOfTheHomesAfterCompletion = MapPartner(entity.SitePartners.OwnerOfTheHomes),
             landStatus = entity.LandAcquisitionStatus.Value == null ? null : SiteLandAcquisitionStatusMapper.ToDto(entity.LandAcquisitionStatus.Value.Value),
             tenderingDetails = CreateTenderingDetails(entity.TenderingStatusDetails),
             strategicSiteDetails = CreateStrategicSiteDetails(entity.StrategicSiteDetails),
@@ -84,6 +86,20 @@ public static class SiteEntityToSiteDtoMapper
             isLandRegistryTitleNumber = planningDetails.LandRegistryDetails?.IsLandRegistryTitleNumberRegistered,
             landRegistryTitleNumber = planningDetails.LandRegistryDetails?.TitleNumber?.Value,
             isGrantFundingForAllHomesCoveredByTitleNumber = planningDetails.LandRegistryDetails?.IsGrantFundingForAllHomesCoveredByTitleNumber,
+        };
+    }
+
+    private static OrganizationDetailsDto? MapPartner(InvestmentsOrganisation? partner)
+    {
+        if (partner.IsNotProvided())
+        {
+            return null;
+        }
+
+        return new OrganizationDetailsDto
+        {
+            organisationId = partner!.Id.ToGuidAsString(),
+            registeredCompanyName = partner.Name,
         };
     }
 

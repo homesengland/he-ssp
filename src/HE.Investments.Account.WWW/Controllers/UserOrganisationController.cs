@@ -66,9 +66,9 @@ public class UserOrganisationController : Controller
                     p => new ProgrammeToAccessModel(
                         programmeModels[p.Type],
                         p.Applications.Select(a =>
-                                new UserApplicationModel(
+                                new UserApplianceModel(
                                         a.Id.Value,
-                                        a.ApplicationName,
+                                        a.Name,
                                         a.Status,
                                         _programmes.GetApplicationUrl(p.Type, a.Id)))
                             .ToList()))
@@ -141,7 +141,7 @@ public class UserOrganisationController : Controller
 
     private Dictionary<ProgrammeType, ProgrammeModel> GetProgrammes(IList<ProgrammeType> programmeTypes)
     {
-        return programmeTypes.Select(x => _programmes.GetProgramme(x)).ToDictionary(x => x.Type, x => x);
+        return programmeTypes.Select(_programmes.GetProgramme).ToDictionary(x => x.Type, x => x);
     }
 
     private async Task<List<ActionModel>> UserOrganisationActions(string organisationName)
@@ -151,18 +151,39 @@ public class UserOrganisationController : Controller
         var userOrganisationActions = new List<ActionModel>();
         if (canViewOrganisationDetails)
         {
-            userOrganisationActions.AddRange(new List<ActionModel>
-            {
-                new("Add or manage users at this Organisation", "Index", "Users", HasAccess: canViewOrganisationDetails),
-                new($"Manage {organisationName} details", "Details", "UserOrganisation", HasAccess: canViewOrganisationDetails),
-            });
+            userOrganisationActions.AddRange(
+            [
+                new(
+                    "Add or manage users at this Organisation",
+                    "Index",
+                    "Users",
+                    HasAccess: canViewOrganisationDetails,
+                    DataTestId: "manage-users-link"),
+                new(
+                    $"Manage {organisationName} details",
+                    "Details",
+                    "UserOrganisation",
+                    HasAccess: canViewOrganisationDetails,
+                    DataTestId: "manage-organisation-link"),
+            ]);
         }
 
-        userOrganisationActions.Add(new("Manage your account", "GetProfileDetails", "User", new { callback = Url.Action("Index") }, true));
+        userOrganisationActions.Add(new(
+            "Manage your account",
+            "GetProfileDetails",
+            "User",
+            new { callback = Url.Action("Index") },
+            HasAccess: true,
+            DataTestId: "manage-profile-link"));
 
         if (await _featureManager.IsEnabledAsync(FeatureFlags.AhpProgram) && canSubmitApplicationAndIsNotLimitedUser)
         {
-            userOrganisationActions.Add(new("Add AHP consortium", "Index", "Consortium", HasAccess: canSubmitApplicationAndIsNotLimitedUser));
+            userOrganisationActions.Add(new(
+                "Add AHP consortium",
+                "Index",
+                "Consortium",
+                HasAccess: canSubmitApplicationAndIsNotLimitedUser,
+                DataTestId: "manage-consortium-link"));
         }
 
         return userOrganisationActions;

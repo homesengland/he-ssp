@@ -1,5 +1,3 @@
-extern alias Org;
-
 using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Contract.Site.Enums;
 using HE.Investment.AHP.Domain.Site.Entities;
@@ -7,8 +5,10 @@ using HE.Investment.AHP.Domain.Site.ValueObjects;
 using HE.Investment.AHP.Domain.Site.ValueObjects.Planning;
 using HE.Investment.AHP.Domain.Site.ValueObjects.StrategicSite;
 using HE.Investment.AHP.Domain.Site.ValueObjects.TenderingStatus;
+using HE.Investment.AHP.Domain.Tests.Common.TestData;
+using HE.Investments.FrontDoor.Shared.Project;
 using HE.Investments.TestsUtils.TestFramework;
-using LocalAuthority = Org::HE.Investments.Organisation.LocalAuthorities.ValueObjects.LocalAuthority;
+using LocalAuthority = HE.Investments.Organisation.LocalAuthorities.ValueObjects.LocalAuthority;
 using SiteModernMethodsOfConstruction = HE.Investment.AHP.Domain.Site.ValueObjects.Mmc.SiteModernMethodsOfConstruction;
 using SiteRuralClassification = HE.Investment.AHP.Domain.Site.ValueObjects.SiteRuralClassification;
 using SiteTypeDetails = HE.Investment.AHP.Domain.Site.ValueObjects.SiteTypeDetails;
@@ -19,7 +19,7 @@ namespace HE.Investment.AHP.Domain.Tests.Site.TestDataBuilders;
 public class SiteEntityBuilder : TestObjectBuilder<SiteEntityBuilder, SiteEntity>
 {
     private SiteEntityBuilder()
-        : base(SiteEntity.NewSite(null, null))
+        : base(SiteEntity.NewSite(AhpUserAccountTestData.UserAccountOneNoConsortium, new FrontDoorProjectId("1"), null))
     {
     }
 
@@ -41,6 +41,8 @@ public class SiteEntityBuilder : TestObjectBuilder<SiteEntityBuilder, SiteEntity
     public SiteEntityBuilder WithBuildingForHealthyLife(BuildingForHealthyLifeType value) => SetProperty(x => x.BuildingForHealthyLife, value);
 
     public SiteEntityBuilder WithNumberOfGreenLights(NumberOfGreenLights? value) => SetProperty(x => x.NumberOfGreenLights, value);
+
+    public SiteEntityBuilder WithSitePartners(SitePartners value) => SetProperty(x => x.SitePartners, value);
 
     public SiteEntityBuilder WithLandAcquisitionStatus(LandAcquisitionStatus value) => SetProperty(x => x.LandAcquisitionStatus, value);
 

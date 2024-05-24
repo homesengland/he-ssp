@@ -1,5 +1,3 @@
-extern alias Org;
-
 using HE.Investments.Account.Shared.User;
 using HE.Investments.AHP.Consortium.Contract;
 using HE.Investments.AHP.Consortium.Domain.Entities;
@@ -38,7 +36,7 @@ public class DraftConsortiumRepository : IDraftConsortiumRepository
             consortium.Name,
             consortium.Programme,
             new DraftConsortiumMember(consortium.LeadPartner.Id, consortium.LeadPartner.OrganisationName),
-            new List<DraftConsortiumMember>());
+            []);
 
         _cache.SetValue(StorageKey(consortium.Id, userAccount), ToDto(draftConsortium));
     }

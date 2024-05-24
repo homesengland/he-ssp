@@ -16,5 +16,7 @@ namespace HE.CRM.AHP.Plugins.Services.Site
         bool StrategicSiteNameExists(string strategicSiteName, Guid organisationGuid);
 
         string Save(string siteId, SiteDto site, string fieldsToSet, string externalContactId, string accountId);
+
+        bool CreateRecordsWithAhpProject(List<SiteDto> listOfSites, Guid ahpProjectId, string externalContactId, string organisationId);
     }
 }

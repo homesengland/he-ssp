@@ -1,4 +1,4 @@
-﻿using HE.Investment.AHP.Contract.Application;
+using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.Common.Enums;
 using HE.Investments.Common.WWW.Models.Summary;
 
@@ -9,13 +9,13 @@ public class HomeTypeSummaryModel : HomeTypeBasicModel, ISummaryViewModel
     public HomeTypeSummaryModel(string applicationName, string homeTypeName)
         : base(applicationName, homeTypeName)
     {
-        AllowedOperations = new List<AhpApplicationOperation>();
+        AllowedOperations = [];
     }
 
     public HomeTypeSummaryModel()
         : base(string.Empty, string.Empty)
     {
-        AllowedOperations = new List<AhpApplicationOperation>();
+        AllowedOperations = [];
     }
 
     public IsSectionCompleted IsSectionCompleted { get; set; }

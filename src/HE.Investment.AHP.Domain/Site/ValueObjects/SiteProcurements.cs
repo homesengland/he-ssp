@@ -8,14 +8,14 @@ public class SiteProcurements : ValueObject, IQuestion
 {
     public SiteProcurements(IList<SiteProcurement>? procurements = null)
     {
-        Procurements = new ReadOnlyCollection<SiteProcurement>(procurements ?? new List<SiteProcurement>());
+        Procurements = new ReadOnlyCollection<SiteProcurement>(procurements ?? []);
     }
 
     public IReadOnlyCollection<SiteProcurement> Procurements { get; }
 
     public bool IsAnswered()
     {
-        return Procurements.Any();
+        return Procurements.Count != 0;
     }
 
     protected override IEnumerable<object?> GetAtomicValues()

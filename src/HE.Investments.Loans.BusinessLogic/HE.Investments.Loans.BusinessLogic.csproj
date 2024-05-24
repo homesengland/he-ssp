@@ -18,9 +18,6 @@
     <ProjectReference Include="..\HE.Investments.Loans.Contract\HE.Investments.Loans.Contract.csproj"/>
     <ProjectReference Include="..\HE.Investments.Account.Shared\HE.Investments.Account.Shared.csproj"/>
     <ProjectReference Include="..\HE.Investments.DocumentService\HE.Investments.DocumentService.csproj"/>
-    <ProjectReference Include="..\HE.Investments.Organisation\HE.Investments.Organisation.csproj">
-      <Aliases>Org</Aliases>
-    </ProjectReference>
   </ItemGroup>
 
   <ItemGroup>
@@ -28,6 +25,5 @@
       <_Parameter1>HE.Investments.Loans.BusinessLogic.Tests</_Parameter1>
     </AssemblyAttribute>
   </ItemGroup>
-  <Import Project="..\HE.Common.IntegrationModel\HE.Common.IntegrationModel.projitems" Label="Shared"/>
 
 </Project>

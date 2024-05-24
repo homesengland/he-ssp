@@ -13,4 +13,15 @@ public static class PlanningStatusDivision
                or SitePlanningStatus.OutlinePlanningApplicationSubmitted
                or SitePlanningStatus.PlanningDiscussionsUnderwayWithThePlanningOffice;
     }
+
+    public static bool IsStatusAllowedForAhpProject(SitePlanningStatus status)
+    {
+        return status is SitePlanningStatus.DetailedPlanningApprovalGranted
+            or SitePlanningStatus.DetailedPlanningApprovalGrantedWithFurtherSteps
+            or SitePlanningStatus.DetailedPlanningApplicationSubmitted
+            or SitePlanningStatus.OutlinePlanningApprovalGranted
+            or SitePlanningStatus.OutlinePlanningApplicationSubmitted
+            or SitePlanningStatus.PlanningDiscussionsUnderwayWithThePlanningOffice
+            or SitePlanningStatus.NoPlanningRequired;
+    }
 }

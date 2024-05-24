@@ -28,7 +28,7 @@ public class SupportedHousingInformationSegmentEntity : DomainEntity, IHomeTypeS
         LocalCommissioningBodiesConsulted = localCommissioningBodiesConsulted;
         ShortStayAccommodation = shortStayAccommodation;
         RevenueFundingType = revenueFundingType;
-        _revenueFundingSources = revenueFundingSources?.ToList() ?? new List<RevenueFundingSourceType>();
+        _revenueFundingSources = revenueFundingSources?.ToList() ?? [];
         MoveOnArrangements = moveOnArrangements;
         TypologyLocationAndDesign = typologyLocationAndDesign;
         ExitPlan = exitPlan;
@@ -147,12 +147,12 @@ public class SupportedHousingInformationSegmentEntity : DomainEntity, IHomeTypeS
     {
         if (RevenueFundingType == RevenueFundingType.RevenueFundingNeededAndIdentified)
         {
-            yield return () => RevenueFundingSources.Any();
+            yield return () => RevenueFundingSources.Count != 0;
         }
 
         if (ShortStayAccommodation == YesNoType.Yes)
         {
-            yield return () => MoveOnArrangements.IsProvided();
+            yield return MoveOnArrangements.IsProvided;
         }
     }
 }

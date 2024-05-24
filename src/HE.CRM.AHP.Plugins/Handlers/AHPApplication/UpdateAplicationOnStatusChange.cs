@@ -41,13 +41,16 @@ namespace HE.CRM.AHP.Plugins.Handlers.AHPApplication
                     return;
                 ExecutionData.Target.invln_representationsandwarrantiesconfirmation = false;
             }
-            if (CurrentState.StatusCode.Value == (int)invln_scheme_StatusCode.ApplicationSubmitted)
+            if (CurrentState.StatusCode.Value == (int)invln_scheme_StatusCode.ApplicationSubmitted ||
+                CurrentState.StatusCode.Value == (int)invln_scheme_StatusCode.UnderReviewPendingAssessment)
             {
                 var hometypes = _homeTypeRepository.GetByAttribute(invln_HomeType.Fields.invln_application,
                     CurrentState.Id,
                     new string[] { invln_HomeType.Fields.invln_PercentageValueofNDSSStandard,
                         invln_HomeType.Fields.invln_prospectiverentasofmarketrent,
-                        invln_HomeType.Fields.invln_FirstTrancheSalesReceipt    });
+                        invln_HomeType.Fields.invln_FirstTrancheSalesReceipt,
+                        invln_HomeType.Fields.invln_SharedOwnershipInitialSale,
+                        invln_HomeType.Fields.invln_proposedrentasaofunsoldshare});
                 if (hometypes == null || hometypes.Count == 0)
                     return;
                 ClearDataBeforeCalculation();
@@ -66,18 +69,18 @@ namespace HE.CRM.AHP.Plugins.Handlers.AHPApplication
             if (CurrentState.invln_Tenure.Value == (int)invln_Tenure.Affordablerent ||
                 CurrentState.invln_Tenure.Value == (int)invln_Tenure.Renttobuy)
             {
-                ExecutionData.Target.invln_MaxRentasofMarketRentoftheHomeTypeson = homeTypeWithMaxValue.invln_prospectiverentasofmarketrent;
-                ExecutionData.Target.invln_MinRentasofMarketRentoftheHomeTypeson = homeTypeWithMinValue.invln_prospectiverentasofmarketrent;
+                ExecutionData.Target.invln_MaxRentasofMarketRentoftheHomeTypeson = homeTypeWithMaxValue.invln_prospectiverentasofmarketrent * 100;
+                ExecutionData.Target.invln_MinRentasofMarketRentoftheHomeTypeson = homeTypeWithMinValue.invln_prospectiverentasofmarketrent * 100;
             }
 
             if (CurrentState.invln_Tenure.Value == (int)invln_Tenure.Sharedownership ||
                 CurrentState.invln_Tenure.Value == (int)invln_Tenure.OPSO ||
                 CurrentState.invln_Tenure.Value == (int)invln_Tenure.HOLD)
             {
-                ExecutionData.Target.invln_MaxAssumedFirstTrancheSaleoftheHomesType = homeTypeWithMaxValue.invln_SharedOwnershipInitialSale;
-                ExecutionData.Target.invln_MinAssumedFirstTrancheSaleoftheHomesType = homeTypeWithMinValue.invln_SharedOwnershipInitialSale;
-                ExecutionData.Target.invln_MaxRentasofUnsoldEquityfortheHomeTypes = homeTypeWithMaxValue.invln_proposedrentasaofunsoldshare;
-                ExecutionData.Target.invln_MinRentasofUnsoldEquityfortheHomeTypes = homeTypeWithMinValue.invln_proposedrentasaofunsoldshare;
+                ExecutionData.Target.invln_MaxAssumedFirstTrancheSaleoftheHomesType = homeTypeWithMaxValue.invln_SharedOwnershipInitialSale * 100;
+                ExecutionData.Target.invln_MinAssumedFirstTrancheSaleoftheHomesType = homeTypeWithMinValue.invln_SharedOwnershipInitialSale * 100;
+                ExecutionData.Target.invln_MaxRentasofUnsoldEquityfortheHomeTypes = homeTypeWithMaxValue.invln_proposedrentasaofunsoldshare * 100;
+                ExecutionData.Target.invln_MinRentasofUnsoldEquityfortheHomeTypes = homeTypeWithMinValue.invln_proposedrentasaofunsoldshare * 100;
             }
         }
 

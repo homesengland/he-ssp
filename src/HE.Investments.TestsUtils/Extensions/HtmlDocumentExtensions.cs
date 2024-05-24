@@ -1,4 +1,5 @@
 using System.Text;
+using System.Web;
 using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
 using FluentAssertions;
@@ -286,6 +287,6 @@ public static class HtmlDocumentExtensions
         }
 
         var value = valueBuilder.ToString();
-        return value;
+        return HttpUtility.HtmlDecode(value);
     }
 }

@@ -16,10 +16,10 @@ public class SaveHappiDesignPrinciplesCommandHandler : SaveHomeTypeSegmentComman
     {
     }
 
-    protected override IReadOnlyCollection<HomeTypeSegmentType> SegmentTypes => new[] { HomeTypeSegmentType.DesignPlans };
+    protected override IReadOnlyCollection<HomeTypeSegmentType> SegmentTypes => [HomeTypeSegmentType.DesignPlans];
 
-    protected override IEnumerable<Action<SaveHappiDesignPrinciplesCommand, IHomeTypeEntity>> SaveActions => new[]
-    {
+    protected override IEnumerable<Action<SaveHappiDesignPrinciplesCommand, IHomeTypeEntity>> SaveActions =>
+    [
         (SaveHappiDesignPrinciplesCommand request, IHomeTypeEntity homeType) => homeType.DesignPlans.ChangeDesignPrinciples(request.DesignPrinciples),
-    };
+    ];
 }

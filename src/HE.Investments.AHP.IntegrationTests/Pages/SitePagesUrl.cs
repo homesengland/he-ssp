@@ -2,13 +2,13 @@ namespace HE.Investments.AHP.IntegrationTests.Pages;
 
 public static class SitePagesUrl
 {
-    public const string SiteList = "/ahp/site";
-
     public const string SiteStart = "/ahp/site/start";
 
     public const string SiteName = "/ahp/site/name";
 
-    public const string SiteSelect = "ahp/site/select";
+    public static string SiteList(string projectId) => $"ahp/project/{projectId}/sites";
+
+    public static string SiteSelect(string projectId) => $"ahp/site/select?projectid={projectId}";
 
     public static string SiteDetails(string siteId) => $"ahp/site/{siteId}";
 
@@ -47,6 +47,18 @@ public static class SitePagesUrl
     public static string SiteBuildingForHealthyLife(string siteId) => $"ahp/site/{siteId}/building-for-a-healthy-life";
 
     public static string SiteProvideNumberOfGreenLights(string siteId) => $"ahp/site/{siteId}/number-of-green-lights";
+
+    public static string SiteDevelopingPartner(string siteId) => $"ahp/site/{siteId}/developing-partner";
+
+    public static string SiteDevelopingPartnerConfirmation(string siteId, string organisationId) => $"ahp/site/{siteId}/developing-partner-confirm/{organisationId}";
+
+    public static string SiteOwnerOfTheLand(string siteId) => $"ahp/site/{siteId}/owner-of-the-land";
+
+    public static string SiteOwnerOfTheLandConfirmation(string siteId, string organisationId) => $"ahp/site/{siteId}/owner-of-the-land-confirm/{organisationId}";
+
+    public static string SiteOwnerOfTheHomes(string siteId) => $"ahp/site/{siteId}/owner-of-the-homes";
+
+    public static string SiteOwnerOfTheHomesConfirmation(string siteId, string organisationId) => $"ahp/site/{siteId}/owner-of-the-homes-confirm/{organisationId}";
 
     public static string SiteLandAcquisitionStatus(string siteId) => $"ahp/site/{siteId}/land-acquisition-status";
 

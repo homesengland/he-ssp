@@ -1,7 +1,4 @@
-extern alias Org;
-
-using Org::HE.Investments.Organisation.LocalAuthorities.ValueObjects;
-using LocalAuthority = Org::HE.Investments.Organisation.LocalAuthorities.ValueObjects.LocalAuthority;
+using HE.Investments.Organisation.LocalAuthorities.ValueObjects;
 
 namespace HE.Investments.Loans.BusinessLogic.Tests.Projects.TestData;
 
@@ -13,12 +10,12 @@ internal static class LocalAuthorityTestData
     public static readonly LocalAuthority LocalAuthorityFour = new(LocalAuthorityCode.From("4"), "Brighton");
     public static readonly LocalAuthority LocalAuthorityFive = new(LocalAuthorityCode.From("5"), "Leicester");
 
-    public static readonly IList<LocalAuthority> LocalAuthoritiesList = new List<LocalAuthority>
-    {
+    public static readonly IList<LocalAuthority> LocalAuthoritiesList =
+    [
         LocalAuthorityOne,
         LocalAuthorityTwo,
         LocalAuthorityThree,
         LocalAuthorityFour,
         LocalAuthorityFive,
-    };
+    ];
 }

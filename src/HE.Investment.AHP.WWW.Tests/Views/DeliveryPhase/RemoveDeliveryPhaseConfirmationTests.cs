@@ -46,7 +46,7 @@ public class RemoveDeliveryPhaseConfirmationTests : AhpViewTestBase
         document
             .HasPageHeader("My application - Phase one", "Are you sure you want to remove this delivery phase?")
             .HasHint("By removing this delivery phase, any homes you have assigned to this phase will need to be added to another phase.")
-            .HasRadio("RemoveDeliveryPhaseAnswer", new[] { "Yes", "No" })
+            .HasRadio("RemoveDeliveryPhaseAnswer", ["Yes", "No"])
             .HasSaveAndContinueButton()
             .HasSaveAndReturnToApplicationLink();
     }

@@ -1,0 +1,37 @@
+@using HE.Investments.Common.Gds
+@using HE.Investments.Common.WWW.Components.PageHeader
+@using HE.Investments.Common.WWW.TagHelpers
+@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Links
+@using HE.Investments.Common.Extensions
+@using HE.Investments.Common.WWW.Components.ApplicationStatusTagComponent
+@using HE.Investments.Common.WWW.Components.ListCard
+@model HE.Investment.AHP.Contract.Project.ProjectDetailsModel
+@{
+    var title = Model.ProjectName;
+    ViewData["Title"] = title;
+}
+<div class="govuk-grid-column-full">
+    <gds-back-link href="@Url.Action("Index", "Projects")" class="govuk-!-margin-bottom-8"></gds-back-link>
+    <vc:page-header title="@title" caption="@Model.OrganisationName"/>
+
+    <gds-div-grid-column-two-thirds class="govuk-!-padding-left-0">
+        @{
+            var applications = Model.Applications.Items.Select(x =>
+                new ListCardItemModel(
+                    x.Name,
+                    new DynamicComponentViewModel(nameof(ApplicationStatusTagComponent), new { applicationStatus = x.Status }),
+                    Url.Action("TaskList", "Application", new { applicationId = x.Id.Value })!))
+                    .ToList();
+
+            var description = applications.IsEmpty()
+                ? "Your applications will appear here once added."
+                : "This includes applications awaiting decision, not approved or pending approval.";
+
+            var items = new ListCardModel(Model.ProgrammeName, applications, "Applications", description, "View all applications", Url.Action("Applications", new { projectId = Model.ProjectId }));
+
+            <vc:list-card model="@items"></vc:list-card>
+        }
+    </gds-div-grid-column-two-thirds>
+
+    @await Html.PartialAsync("Partials/_ProjectStartAppAndViewSites", (Model.ProgrammeName, Model.ProjectId.Value, Model.IsReadOnly))
+</div>

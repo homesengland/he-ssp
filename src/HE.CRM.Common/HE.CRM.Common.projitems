@@ -10,6 +10,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)dtomapping\AhpApplicationMapper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)dtomapping\AhpProjectMapper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)dtomapping\ConsortiumMapper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)dtomapping\ContactDtoMapper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DtoMapping\DeliveryPhaseMapper.cs" />
@@ -19,6 +20,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)dtomapping\LoanApplicationDtoMapper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)dtomapping\MilestoneFrameWorkItemMapper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)dtomapping\ProgrammeMapper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)dtomapping\SiteApplicationMapper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)dtomapping\SiteDetailsDtoMapper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DtoMapping\SiteMapper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\DateTimeExtensions.cs" />
@@ -29,6 +31,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Implementations\AccountRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Implementations\AhgLocalAuthorityRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Implementations\AhpApplicationRepository.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Repositories\Implementations\AhpProjectRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\implementations\AhpStatusChangeRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Implementations\ConditionRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)repositories\implementations\ConsortiumRepository.cs" />
@@ -70,6 +73,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\TraceHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\IAhgLocalAuthorityRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\IAhpApplicationRepository.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\IAhpProjectRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\IAhpStatusChangeRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\IConditionRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)repositories\interfaces\IConsortiumrepository.cs" />
