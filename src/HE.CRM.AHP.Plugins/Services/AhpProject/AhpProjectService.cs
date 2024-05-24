@@ -70,7 +70,7 @@ namespace HE.CRM.AHP.Plugins.Services.AhpProject
 
                 if (ahpProject != null)
                 {
-                    var listOfApps = _ahpApplicationRepository.GetApplicationsForAhpProject(ahpProject.Id, contactWebRole, contact, new Guid(organisationId), consortiumId);
+                    var listOfApps = _ahpApplicationRepository.GetApplicationsForAhpProject(ahpProject.Id, contactWebRole, contact, new Guid(organisationId), false, consortiumId);
                     var listOfAppsDto = listOfApps.Select(x => AhpApplicationMapper.MapRegularEntityToDto(x)).ToList();
 
                     var listOfSites = _siteRepository.GetSitesForAhpProject(ahpProject.Id, contactWebRole, contact, new Guid(organisationId), consortiumId);
@@ -88,18 +88,20 @@ namespace HE.CRM.AHP.Plugins.Services.AhpProject
                 {
                     return null;
                 }
+                var isALeadPartner = IsOrganisationALeadPartnerOfConsortium(organisationId, consortiumId);
+                TracingService.Trace($"Is Organisation a Lead Partner Of Consortium: {isALeadPartner}");
 
                 var ahpProject = GetAhpProjectForConsortium(ahpProjectId, heProjectId, consortiumId);
                 if (ahpProject != null)
                 {
-                    var listOfApps = _ahpApplicationRepository.GetApplicationsForAhpProject(ahpProject.Id, contactWebRole, contact, new Guid(organisationId), consortiumId);
+                    var listOfApps = _ahpApplicationRepository.GetApplicationsForAhpProject(ahpProject.Id, contactWebRole, contact, new Guid(organisationId), isALeadPartner, consortiumId);
                     TracingService.Trace($"List of Application downloaded.");
                     var listOfAppsDto = listOfApps.Select(x => AhpApplicationMapper.MapRegularEntityToDto(x)).ToList();
                     TracingService.Trace($"Records mapped.");
 
                     var listOfSites = _siteRepository.GetSitesForAhpProject(ahpProject.Id, contactWebRole, contact, new Guid(organisationId), consortiumId);
                     TracingService.Trace($"List of Sites downloaded.");
-                    var listOfSitesAfterChecked = CheckSitesForsConsortium(listOfSites, new Guid(organisationId));
+                    var listOfSitesAfterChecked = CheckSitesForsConsortium(listOfSites, new Guid(organisationId), isALeadPartner);
                     var listOfSitesDto = listOfSitesAfterChecked.Select(x => SiteMapper.ToDto(x, GetHeLaForSite(x.invln_HeLocalAuthorityId?.Id.ToString()))).ToList();
                     TracingService.Trace($"Records mapped.");
 
@@ -151,6 +153,8 @@ namespace HE.CRM.AHP.Plugins.Services.AhpProject
                 {
                     return null;
                 }
+                var isALeadPartner = IsOrganisationALeadPartnerOfConsortium(organisationId, consortiumId);
+                TracingService.Trace($"Is Organisation a Lead Partner Of Consortium: {isALeadPartner}");
 
                 var ahpProjectsDto = GetAhpProjectsForConsortium(consortiumId, paging);
                 if (ahpProjectsDto != null)
@@ -159,9 +163,10 @@ namespace HE.CRM.AHP.Plugins.Services.AhpProject
                     {
                         TracingService.Trace($"List of Sites searching.");
                         var listOfSites = _siteRepository.GetSitesForAhpProject(new Guid(ahpProjectDto.AhpProjectId), contactWebRole, contact, new Guid(organisationId), consortiumId);
-                        var listOfSitesAfterChecked = CheckSitesForsConsortium(listOfSites, new Guid(organisationId));
-                        var listOfSitesDto = listOfSitesAfterChecked.Select(x => SiteMapper.ToDto(x, GetHeLaForSite(x.invln_HeLocalAuthorityId?.Id.ToString()))).ToList();
                         TracingService.Trace($"List of Sites downloaded.");
+                        var listOfSitesAfterChecked = CheckSitesForsConsortium(listOfSites, new Guid(organisationId), isALeadPartner);
+                        var listOfSitesDto = listOfSitesAfterChecked.Select(x => SiteMapper.ToDto(x, GetHeLaForSite(x.invln_HeLocalAuthorityId?.Id.ToString()))).ToList();
+                        TracingService.Trace($"Records mapped.");
 
                         ahpProjectDto.ListOfSites = listOfSitesDto;
                         TracingService.Trace($"Record added to the list.");
@@ -204,7 +209,7 @@ namespace HE.CRM.AHP.Plugins.Services.AhpProject
             }
             else if (heProjectId != null)
             {
-                ahpProject = _ahpProjectRepository.GetByAttribute(invln_ahpproject.Fields.invln_HeProjectId, new Guid(heProjectId), fieldsAhpProject).First();
+                ahpProject = _ahpProjectRepository.GetByAttribute(invln_ahpproject.Fields.invln_HeProjectId, new Guid(heProjectId), fieldsAhpProject).FirstOrDefault();
             }
 
             if (ahpProject == null)
@@ -257,7 +262,7 @@ namespace HE.CRM.AHP.Plugins.Services.AhpProject
             }
             TracingService.Trace("Core records downloaded");
 
-            ahpProjects.OrderBy(x => x.CreatedOn);
+            ahpProjects = ahpProjects.OrderBy(x => x.CreatedOn).ToList();
             TracingService.Trace($"Core records OrderBy.");
 
             foreach (var project in ahpProjects)
@@ -329,6 +334,18 @@ namespace HE.CRM.AHP.Plugins.Services.AhpProject
             return true;
         }
 
+        private bool IsOrganisationALeadPartnerOfConsortium(string organisation, string consortium)
+        {
+            var consortiumCRM = _consortiumRepository.GetById(new Guid(consortium), new string[] { invln_Consortium.Fields.invln_LeadPartner });
+            if (consortiumCRM == null)
+            {
+                TracingService.Trace("Consortium does not exist");
+                return false;
+            }
+
+            return consortiumCRM.invln_LeadPartner.Id == new Guid(organisation);
+        }
+
         private invln_ahpproject GetAhpProjectForConsortium(string ahpProjectId, string heProjectId, string consortiumId)
         {
             TracingService.Trace("GetAhpProjectForConsortium");
@@ -360,9 +377,15 @@ namespace HE.CRM.AHP.Plugins.Services.AhpProject
             return ahpProject;
         }
 
-        private List<invln_Sites> CheckSitesForsConsortium(List<invln_Sites> listOFSites, Guid organisation)
+        private List<invln_Sites> CheckSitesForsConsortium(List<invln_Sites> listOFSites, Guid organisation, bool isALeadPartner)
         {
             TracingService.Trace("CheckSitesForsConsortium");
+            if (isALeadPartner)
+            {
+                TracingService.Trace("Sites Fors Consortium Checked");
+                return listOFSites;
+            }
+
             List<invln_Sites> result = new List<invln_Sites>();
             List<invln_Sites> otherSites = new List<invln_Sites>();
             foreach (var site in listOFSites)
@@ -409,7 +432,7 @@ namespace HE.CRM.AHP.Plugins.Services.AhpProject
             }
             TracingService.Trace("Core records downloaded");
 
-            ahpProjects.OrderByDescending(x => x.CreatedOn);
+            ahpProjects = ahpProjects.OrderByDescending(x => x.CreatedOn).ToList();
             TracingService.Trace($"Core records OrderBy.");
             if (paging != null)
             {
@@ -419,7 +442,7 @@ namespace HE.CRM.AHP.Plugins.Services.AhpProject
                 var pageSize = paging.pageSize;
                 var pagenumber = paging.pageNumber;
                 var startIndex = (pageSize * pagenumber) - pageSize;
-                var countrRange = startIndex + pageSize <= (result.totalItemsCount - 1) ? pagenumber : result.totalItemsCount - startIndex;
+                var countrRange = startIndex + pageSize <= (result.totalItemsCount - 1) ? pageSize : result.totalItemsCount - startIndex;
 
                 var ahpProjectsPage = ahpProjects.GetRange(startIndex, countrRange);
 
