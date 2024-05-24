@@ -30,6 +30,7 @@ public class ProjectCrmContext : IProjectCrmContext
         {
             invln_userid = userId,
             invln_accountid = organisationId.TryToGuidAsString(),
+            invln_consortiumid = consortiumId?.ToGuidAsString()!,
             invln_heprojectid = projectId.TryToGuidAsString(),
         };
 
