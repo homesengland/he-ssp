@@ -1,6 +1,6 @@
 namespace HE.Common.IntegrationModel.PortalIntegrationModel
 {
-    public class FrontDoorHPApplicationDto
+    public class Ahp_ApplicationDto
     {
         public string applicationId { get; set; }
         public string applicationName { get; set; }

@@ -20,12 +20,12 @@ namespace HE.CRM.Common.DtoMapping
                 siteName = site.invln_HeProjectLocalAuthorityId?.Id.ToString(),
                 siteStatus = site.StatusCode.ToString(),
                 localAuthorityName = site.invln_LocalAuthority?.Name,
-                AhpApplications = new List<FrontDoorHPApplicationDto>(),
+                AhpApplications = new List<Ahp_ApplicationDto>(),
             };
 
             foreach (var app in applications)
             {
-                var ahpApplicationDto = new FrontDoorHPApplicationDto
+                var ahpApplicationDto = new Ahp_ApplicationDto
                 {
                     applicationId = app.Id.ToString(),
                     applicationName = app.invln_schemename,
