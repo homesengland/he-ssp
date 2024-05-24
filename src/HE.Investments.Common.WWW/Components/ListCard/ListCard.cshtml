@@ -1,7 +1,7 @@
 @model HE.Investments.Common.WWW.Components.ListCard.ListCardModel
 @{
     var hasPaging = !string.IsNullOrEmpty(Model.ViewAllUrl);
-    var itemsToDisplayCount = hasPaging ? 5 : int.MaxValue;
+    var itemsToDisplayCount = hasPaging ? Model.ItemsToDisplayCount : int.MaxValue;
     var itemsToDisplay = Model.Items.Take(itemsToDisplayCount).ToList();
     var restItemsCount = Model.Items.Count - itemsToDisplayCount;
 }

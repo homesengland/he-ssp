@@ -8,4 +8,5 @@ public record ProgrammeModel(
     string? Title,
     string Description,
     string ViewAllAppliancesLabel,
-    string ViewAllAppliancesUrl);
+    string ViewAllAppliancesUrl,
+    int ItemsToDisplayCount);

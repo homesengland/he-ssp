@@ -50,7 +50,8 @@ public class Programmes : IProgrammes
                     "Applications",
                     "Start a new Levelling Up Home Building Fund application. This will not affect any of your previous applications.",
                     "View all applications",
-                    $"{_programmeUrlConfig.Loans}/dashboard")
+                    $"{_programmeUrlConfig.Loans}/dashboard",
+                    5)
             },
             {
                 ProgrammeType.Ahp, new(
@@ -59,7 +60,8 @@ public class Programmes : IProgrammes
                     null,
                     "Start a new Affordable Homes Programme application. This will not affect any of your previous applications.",
                     "View all projects",
-                    $"{_programmeUrlConfig.Ahp}/projects")
+                    $"{_programmeUrlConfig.Ahp}/projects",
+                    3)
             },
         };
     }
