@@ -1,19 +1,21 @@
 @using HE.Investment.AHP.WWW.Views.Site.Const
 @using HE.Investments.Common.Contract.Pagination
+@using HE.Investments.Common.WWW.Components.BackLinkWithCallback
+@using HE.Investments.Common.WWW.Components.PageHeader
 @using HE.Investments.Common.WWW.Components.SelectList
 @using SelectList = Microsoft.AspNetCore.Mvc.Rendering.SelectList
-@model HE.Investment.AHP.Contract.Site.SitesListModel
+@model HE.Investment.AHP.Contract.Project.ProjectSitesModel
 
 @{
     ViewData["Title"] = SitePageTitles.SiteSelect;
     var items = new PaginationResult<SelectListItemViewModel>(
-        Model.Page.Items.Select(i => new SelectListItemViewModel(
+        Model.Sites.Items.Select(i => new SelectListItemViewModel(
             Url.Action("ConfirmSelect", "Site", new { siteId = i.Id }) ?? string.Empty,
             i.Name,
             i.LocalAuthorityName)).ToList(),
-        Model.Page.CurrentPage,
-        Model.Page.ItemsPerPage,
-        Model.Page.TotalItems);
+        Model.Sites.CurrentPage,
+        Model.Sites.ItemsPerPage,
+        Model.Sites.TotalItems);
 }
  <div class="govuk-grid-column-full">
     <vc:back-link-with-callback url="@Url.Action("Start", "Application")"/>

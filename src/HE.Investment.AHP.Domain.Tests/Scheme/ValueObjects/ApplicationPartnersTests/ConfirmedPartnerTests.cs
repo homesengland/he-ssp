@@ -1,5 +1,3 @@
-extern alias Org;
-
 using FluentAssertions;
 using HE.Investment.AHP.Domain.Scheme.ValueObjects;
 using HE.Investment.AHP.Domain.Tests.Delivery.Entities.TestDataBuilders;

@@ -2,7 +2,6 @@ using System.Globalization;
 using HE.Investments.Common.Contract.Constants;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Loans.BusinessLogic.Projects.Entities;
-using HE.Investments.Loans.Common.Utils.Constants.FormOption;
 
 namespace HE.Investments.Loans.BusinessLogic.Projects.Repositories.Mappers;
 internal static class GrantFundingStatusMapper

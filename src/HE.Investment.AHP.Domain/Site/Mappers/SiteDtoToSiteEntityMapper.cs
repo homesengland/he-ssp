@@ -1,5 +1,3 @@
-extern alias Org;
-
 using System.Collections.ObjectModel;
 using System.Globalization;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
@@ -16,9 +14,7 @@ using HE.Investment.AHP.Domain.Site.ValueObjects.TenderingStatus;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.CRM.Mappers;
 using HE.Investments.FrontDoor.Shared.Project;
-using Org::HE.Investments.Organisation.LocalAuthorities.ValueObjects;
-using Org::HE.Investments.Organisation.ValueObjects;
-using LocalAuthority = Org::HE.Investments.Organisation.LocalAuthorities.ValueObjects.LocalAuthority;
+using HE.Investments.Organisation.ValueObjects;
 using Section106Dto = HE.Common.IntegrationModel.PortalIntegrationModel.Section106Dto;
 using SiteModernMethodsOfConstruction = HE.Investment.AHP.Domain.Site.ValueObjects.Mmc.SiteModernMethodsOfConstruction;
 using SiteRuralClassification = HE.Investment.AHP.Domain.Site.ValueObjects.SiteRuralClassification;

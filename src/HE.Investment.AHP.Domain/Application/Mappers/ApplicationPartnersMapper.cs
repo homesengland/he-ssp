@@ -1,9 +1,7 @@
-extern alias Org;
-
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investment.AHP.Domain.Scheme.ValueObjects;
 using HE.Investments.Common.Contract;
-using Org::HE.Investments.Organisation.ValueObjects;
+using HE.Investments.Organisation.ValueObjects;
 
 namespace HE.Investment.AHP.Domain.Application.Mappers;
 

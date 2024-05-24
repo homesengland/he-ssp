@@ -25,6 +25,11 @@ public static class BasicHtmlDocumentExtensions
         return FilterByText(htmlDocument.QuerySelectorAll(selector), text);
     }
 
+    public static string? GetFirstPreformattedText(this IHtmlDocument htmlDocument)
+    {
+        return htmlDocument.Body?.GetElementsByTagName("pre").FirstOrDefault()?.TextContent;
+    }
+
     internal static IList<IElement> GetLastChildByTagAndText(this IHtmlDocument htmlDocument, string tagName, string text)
     {
         var elements = htmlDocument.GetElementsByTagName(tagName);

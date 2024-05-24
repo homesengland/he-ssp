@@ -1,10 +1,8 @@
-extern alias Org;
-
 using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Loans.Contract.Projects.Queries;
 using HE.Investments.Loans.Contract.Projects.ViewModels;
+using HE.Investments.Organisation.LocalAuthorities.Repositories;
 using MediatR;
-using Org::HE.Investments.Organisation.LocalAuthorities.Repositories;
 
 namespace HE.Investments.Loans.BusinessLogic.Projects.QueryHandlers;
 

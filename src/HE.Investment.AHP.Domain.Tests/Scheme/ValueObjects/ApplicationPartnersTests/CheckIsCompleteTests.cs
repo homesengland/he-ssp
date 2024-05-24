@@ -1,5 +1,3 @@
-extern alias Org;
-
 using FluentAssertions;
 using HE.Investment.AHP.Domain.Tests.Scheme.TestObjectBuilders;
 using HE.Investments.Common.Contract.Exceptions;

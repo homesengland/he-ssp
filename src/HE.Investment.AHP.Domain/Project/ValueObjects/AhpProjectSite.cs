@@ -1,9 +1,7 @@
-extern alias Org;
-
 using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Domain.Site.ValueObjects;
 using HE.Investments.Common.Domain;
-using Org::HE.Investments.Organisation.LocalAuthorities.ValueObjects;
+using HE.Investments.Organisation.LocalAuthorities.ValueObjects;
 
 namespace HE.Investment.AHP.Domain.Project.ValueObjects;
 

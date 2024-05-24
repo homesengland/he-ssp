@@ -1,5 +1,3 @@
-extern alias Org;
-
 using HE.Investments.Account.Shared.User;
 using HE.Investments.AHP.Consortium.Contract;
 using HE.Investments.AHP.Consortium.Domain.Entities;

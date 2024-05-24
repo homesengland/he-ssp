@@ -1,13 +1,11 @@
-extern alias Org;
-
 using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Loans.BusinessLogic.LoanApplication.Repositories;
 using HE.Investments.Loans.BusinessLogic.Projects.Repositories;
 using HE.Investments.Loans.Contract.Projects.Commands;
+using HE.Investments.Organisation.LocalAuthorities.ValueObjects;
 using MediatR;
-using Org::HE.Investments.Organisation.LocalAuthorities.ValueObjects;
 
 namespace HE.Investments.Loans.BusinessLogic.Projects.CommandHandlers;
 

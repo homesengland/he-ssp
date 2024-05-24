@@ -1,14 +1,12 @@
-extern alias Org;
-
+using HE.Investment.AHP.Contract.Common;
 using HE.Investment.AHP.Contract.Scheme.Queries;
 using HE.Investment.AHP.Domain.Application.Mappers;
 using HE.Investment.AHP.Domain.Scheme.Entities;
 using HE.Investment.AHP.Domain.Scheme.Repositories;
 using HE.Investment.AHP.Domain.UserContext;
 using HE.Investments.AHP.Consortium.Contract;
+using HE.Investments.Organisation.ValueObjects;
 using MediatR;
-using Org::HE.Investments.Organisation.ValueObjects;
-using UploadedFile = HE.Investment.AHP.Contract.Common.UploadedFile;
 
 namespace HE.Investment.AHP.Domain.Scheme.QueryHandlers;
 

@@ -1,7 +1,5 @@
-extern alias Org;
-
+using HE.Investments.Organisation.LocalAuthorities.ValueObjects;
 using HE.Investments.TestsUtils.TestFramework;
-using Org::HE.Investments.Organisation.LocalAuthorities.ValueObjects;
 
 namespace HE.Investment.AHP.Domain.Tests.Site.TestDataBuilders;
 

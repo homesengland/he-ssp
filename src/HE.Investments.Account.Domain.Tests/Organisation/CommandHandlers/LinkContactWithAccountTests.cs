@@ -1,5 +1,3 @@
-extern alias Org;
-
 using FluentAssertions;
 using HE.Investments.Account.Contract.Organisation.Commands;
 using HE.Investments.Account.Domain.Organisation.CommandHandlers;
@@ -7,14 +5,13 @@ using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Errors;
 using HE.Investments.Common.Tests.TestObjectBuilders;
+using HE.Investments.Organisation.Services;
+using HE.Investments.Organisation.ValueObjects;
 using HE.Investments.TestsUtils.TestFramework;
 using Microsoft.PowerPlatform.Dataverse.Client;
 using Moq;
-using Org::HE.Investments.Organisation.Services;
-using Org::HE.Investments.Organisation.ValueObjects;
 using Xunit;
 using static FluentAssertions.FluentActions;
-using IContactService = Org::HE.Investments.Organisation.Services.IContactService;
 
 namespace HE.Investments.Account.Domain.Tests.Organisation.CommandHandlers;
 

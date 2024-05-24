@@ -1,5 +1,3 @@
-extern alias Org;
-
 using HE.Investment.AHP.Contract.HomeTypes;
 using HE.Investment.AHP.Domain.Application.Crm;
 using HE.Investment.AHP.Domain.Application.Repositories;
@@ -35,11 +33,11 @@ using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Infrastructure.Cache.Interfaces;
 using HE.Investments.Common.Utils;
 using HE.Investments.FrontDoor.Shared.Config;
+using HE.Investments.Organisation.LocalAuthorities;
+using HE.Investments.Organisation.LocalAuthorities.Repositories;
 using MediatR.Pipeline;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.PowerPlatform.Dataverse.Client;
-using Org::HE.Investments.Organisation.LocalAuthorities;
-using Org::HE.Investments.Organisation.LocalAuthorities.Repositories;
 
 namespace HE.Investment.AHP.Domain.Config;
 

@@ -11,6 +11,8 @@ public static class ApplicationPagesUrl
     public const string OnHoldSuffix = "/on-hold";
     public const string WithdrawSuffix = "/withdraw";
 
+    public static string ApplicationStart(string projectId) => $"ahp/application/start?projectid={projectId}";
+
     public static string ApplicationName(string siteId) => $"ahp/{siteId}/application/name";
 
     public static string Tenure(string siteId) => $"ahp/{siteId}/application/tenure";

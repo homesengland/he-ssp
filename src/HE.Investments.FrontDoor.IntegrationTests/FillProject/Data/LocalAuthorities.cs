@@ -1,6 +1,4 @@
-extern alias Org;
-
-using Org::HE.Investments.Organisation.LocalAuthorities.ValueObjects;
+using HE.Investments.Organisation.LocalAuthorities.ValueObjects;
 
 namespace HE.Investments.FrontDoor.IntegrationTests.FillProject.Data;
 

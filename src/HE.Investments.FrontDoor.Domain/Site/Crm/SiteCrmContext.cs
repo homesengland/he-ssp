@@ -57,7 +57,7 @@ public class SiteCrmContext : ISiteCrmContext
             cancellationToken);
     }
 
-    public async Task<string> Save(string projectId, FrontDoorProjectSiteDto dto, UserAccount userAccount, CancellationToken cancellationToken)
+    public async Task<string> Save(string projectId, FrontDoorProjectSiteDto dto, string userGlobalId, string organisationId, CancellationToken cancellationToken)
     {
         var request = new invln_setfrontdoorsiteRequest
         {

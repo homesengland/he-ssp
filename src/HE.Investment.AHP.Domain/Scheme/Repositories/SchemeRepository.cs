@@ -1,5 +1,3 @@
-extern alias Org;
-
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Domain.Application.Crm;
