@@ -66,7 +66,7 @@ public class CompanyStructureRepository : ICompanyStructureRepository
             CompanyStructureMapper.MapMoreInformation(loanApplicationDto.existingCompany),
             CompanyStructureMapper.MapHomesBuild(loanApplicationDto.companyExperience),
             SectionStatusMapper.Map(loanApplicationDto.CompanyStructureAndExperienceCompletionStatus),
-            ApplicationStatusMapper.MapToPortalStatus(loanApplicationDto.loanApplicationExternalStatus),
+            LoanApplicationStatusMapper.MapToPortalStatus(loanApplicationDto.loanApplicationExternalStatus),
             _eventDispatcher);
     }
 

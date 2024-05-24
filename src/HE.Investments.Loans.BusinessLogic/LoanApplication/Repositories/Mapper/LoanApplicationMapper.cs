@@ -21,7 +21,7 @@ public static class LoanApplicationMapper
         var model = new LoanApplicationViewModel
         {
             ID = Guid.Parse(loanApplicationDto.loanApplicationId),
-            Status = ApplicationStatusMapper.MapToPortalStatus(loanApplicationDto.loanApplicationExternalStatus),
+            Status = LoanApplicationStatusMapper.MapToPortalStatus(loanApplicationDto.loanApplicationExternalStatus),
             Purpose = FundingPurposeMapper.Map(loanApplicationDto.fundingReason),
             Company = MapToCompanyStructureViewModel(loanApplicationDto),
             Funding = MapToFundingViewModel(loanApplicationDto),

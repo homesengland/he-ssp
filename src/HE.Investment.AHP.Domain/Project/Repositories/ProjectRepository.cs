@@ -47,7 +47,7 @@ public class ProjectRepository : IProjectRepository
             .Select(x => new AhpProjectApplication(
                 AhpApplicationId.From(x.id),
                 new ApplicationName(x.name),
-                ApplicationStatusMapper.MapToPortalStatus(x.applicationStatus),
+                AhpApplicationStatusMapper.MapToPortalStatus(x.applicationStatus),
                 new SchemeFunding((int?)x.fundingRequested, x.noOfHomes),
                 ApplicationTenureMapper.ToDomain(x.tenure)!.Value,
                 x.lastExternalModificationOn))

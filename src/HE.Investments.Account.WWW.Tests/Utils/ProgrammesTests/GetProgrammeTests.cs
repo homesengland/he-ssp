@@ -19,10 +19,10 @@ public class GetProgrammeTests : TestBase<Programmes>
         var result = TestCandidate.GetProgramme(ProgrammeType.Ahp);
 
         // then
-        result.Name.Should().Be("Affordable Homes Programme 2021-2026 Continuous Market Engagement");
+        result.Name.Should().Be("Affordable Homes Programme Continuous Market Engagement 2021-2026");
         result.Description.Should()
             .Be("Start a new Affordable Homes Programme application. This will not affect any of your previous applications.");
-        result.ViewAllApplicationsUrl.Should().Be("https://ahp.com/application");
+        result.ViewAllAppliancesUrl.Should().Be("https://ahp.com/projects");
     }
 
     [Fact]
@@ -38,7 +38,7 @@ public class GetProgrammeTests : TestBase<Programmes>
         result.Name.Should().Be("Levelling Up Home Building Fund");
         result.Description.Should()
             .Be("Start a new Levelling Up Home Building Fund application. This will not affect any of your previous applications.");
-        result.ViewAllApplicationsUrl.Should().Be("https://loans.com/dashboard");
+        result.ViewAllAppliancesUrl.Should().Be("https://loans.com/dashboard");
     }
 
     [Fact]
