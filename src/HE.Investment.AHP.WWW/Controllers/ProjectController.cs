@@ -48,15 +48,15 @@ public class ProjectController : Controller
     [AuthorizeWithCompletedProfile(AhpAccessContext.EditApplications)]
     public async Task<IActionResult> StartPost([FromQuery] string fdProjectId, CancellationToken cancellationToken)
     {
-        var projectId = await _mediator.Send(new CreateAhpProjectCommand(FrontDoorProjectId.From(fdProjectId)), cancellationToken);
+        await _mediator.Send(new CreateAhpProjectCommand(FrontDoorProjectId.From(fdProjectId)), cancellationToken);
 
         var response = await _mediator.Send(new GetSiteListQuery(new PaginationRequest(1, 1)), cancellationToken);
         if (response.Page.Items.Any())
         {
-            return RedirectToAction("Select", "Site", new { projectId });
+            return RedirectToAction("Select", "Site", new { projectId = fdProjectId });
         }
 
-        return RedirectToAction("Start", "Site", new { projectId });
+        return RedirectToAction("Start", "Site", new { projectId = fdProjectId });
     }
 
     [HttpGet("{projectId}")]

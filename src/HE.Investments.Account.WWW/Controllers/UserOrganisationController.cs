@@ -66,9 +66,9 @@ public class UserOrganisationController : Controller
                     p => new ProgrammeToAccessModel(
                         programmeModels[p.Type],
                         p.Applications.Select(a =>
-                                new UserApplicationModel(
+                                new UserApplianceModel(
                                         a.Id.Value,
-                                        a.ApplicationName,
+                                        a.Name,
                                         a.Status,
                                         _programmes.GetApplicationUrl(p.Type, a.Id)))
                             .ToList()))

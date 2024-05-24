@@ -2,14 +2,14 @@ using HE.Investments.Common.Contract;
 
 namespace HE.Investments.Account.Contract.UserOrganisation;
 
-public record HeApplicationId : StringIdValueObject
+public record HeApplianceId : StringIdValueObject
 {
-    private HeApplicationId(string value)
+    private HeApplianceId(string value)
         : base(value)
     {
     }
 
-    public static HeApplicationId From(string value) => new(FromStringToShortGuidAsString(value));
+    public static HeApplianceId From(string value) => new(FromStringToShortGuidAsString(value));
 
     public string ToGuidAsString() => ShortGuid.ToGuidAsString(Value);
 

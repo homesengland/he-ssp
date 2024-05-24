@@ -18,6 +18,7 @@ namespace HE.CRM.Common.DtoMapping
                 id = entity.invln_SitesId?.ToString(),
                 name = entity.invln_sitename,
                 status = entity.invln_externalsitestatus?.Value,
+                fdProjectid = entity.invln_AHPProjectId?.ToString(),
                 section106 = new Section106Dto
                 {
                     isAgreement106 = entity.invln_s106agreementinplace,
