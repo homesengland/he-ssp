@@ -1,6 +1,5 @@
 using System.Globalization;
 using HE.Investment.AHP.Contract.Application;
-using Polly;
 
 namespace HE.Investments.AHP.IntegrationTests.FillApplication.Data;
 
