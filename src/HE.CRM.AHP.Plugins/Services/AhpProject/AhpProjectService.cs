@@ -101,17 +101,7 @@ namespace HE.CRM.AHP.Plugins.Services.AhpProject
 
                     var listOfSites = _siteRepository.GetSitesForAhpProject(ahpProject.Id, contactWebRole, contact, new Guid(organisationId), consortiumId);
                     TracingService.Trace($"List of Sites downloaded.");
-
-                    List<invln_Sites> listOfSitesAfterChecked = new List<invln_Sites>();
-                    if (isALeadPartner == false)
-                    {
-                        listOfSitesAfterChecked = CheckSitesForsConsortium(listOfSites, new Guid(organisationId));
-                    }
-                    else
-                    {
-                        listOfSitesAfterChecked = listOfSites;
-                    }
-
+                    var listOfSitesAfterChecked = CheckSitesForsConsortium(listOfSites, new Guid(organisationId), isALeadPartner);
                     var listOfSitesDto = listOfSitesAfterChecked.Select(x => SiteMapper.ToDto(x, GetHeLaForSite(x.invln_HeLocalAuthorityId?.Id.ToString()))).ToList();
                     TracingService.Trace($"Records mapped.");
 
@@ -174,16 +164,7 @@ namespace HE.CRM.AHP.Plugins.Services.AhpProject
                         TracingService.Trace($"List of Sites searching.");
                         var listOfSites = _siteRepository.GetSitesForAhpProject(new Guid(ahpProjectDto.AhpProjectId), contactWebRole, contact, new Guid(organisationId), consortiumId);
                         TracingService.Trace($"List of Sites downloaded.");
-
-                        List<invln_Sites> listOfSitesAfterChecked = new List<invln_Sites>();
-                        if (isALeadPartner == false)
-                        {
-                            listOfSitesAfterChecked = CheckSitesForsConsortium(listOfSites, new Guid(organisationId));
-                        }
-                        else
-                        {
-                            listOfSitesAfterChecked = listOfSites;
-                        }
+                        var listOfSitesAfterChecked = CheckSitesForsConsortium(listOfSites, new Guid(organisationId), isALeadPartner);
                         var listOfSitesDto = listOfSitesAfterChecked.Select(x => SiteMapper.ToDto(x, GetHeLaForSite(x.invln_HeLocalAuthorityId?.Id.ToString()))).ToList();
                         TracingService.Trace($"Records mapped.");
 
@@ -396,9 +377,15 @@ namespace HE.CRM.AHP.Plugins.Services.AhpProject
             return ahpProject;
         }
 
-        private List<invln_Sites> CheckSitesForsConsortium(List<invln_Sites> listOFSites, Guid organisation)
+        private List<invln_Sites> CheckSitesForsConsortium(List<invln_Sites> listOFSites, Guid organisation, bool isALeadPartner)
         {
             TracingService.Trace("CheckSitesForsConsortium");
+            if (isALeadPartner)
+            {
+                TracingService.Trace("Sites Fors Consortium Checked");
+                return listOFSites;
+            }
+
             List<invln_Sites> result = new List<invln_Sites>();
             List<invln_Sites> otherSites = new List<invln_Sites>();
             foreach (var site in listOFSites)
