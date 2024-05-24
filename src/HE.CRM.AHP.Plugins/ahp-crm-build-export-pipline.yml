@@ -48,7 +48,7 @@ resources:
       ref: "main"
 
 stages:
-  - template: crm-deployment-pipelines/loans-crm-build-export.yml@he-invst-deployment
+  - template: crm-deployment-pipelines/ahp-crm-build-export.yml@he-invst-deployment
     parameters:
       buildAndUpdatePlugins: "${{ parameters.buildAndUpdatePlugins }}"
       buildAndUpdateWebResources: "${{ parameters.buildAndUpdateWebResources }}"

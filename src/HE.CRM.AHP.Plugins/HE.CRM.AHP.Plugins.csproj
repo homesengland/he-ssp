@@ -273,7 +273,7 @@
     <Compile Include="Services\Site\SiteService.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="ahp-crm-build-export-pipline.uml" />
+    <None Include="ahp-crm-build-export-pipline.yml" />
     <None Include="ahp-crm-deploy-nonprod-pipeline.yml" />
     <None Include="ahp-crm-deploy-prod-pipeline.yml" />
     <None Include="app.config" />
