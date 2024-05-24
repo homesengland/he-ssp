@@ -1,3 +1,4 @@
+using HE.Investments.Common.Contract;
 using HE.Investments.Organisation.ValueObjects;
 
 namespace HE.Investments.AHP.Consortium.Contract.Commands;

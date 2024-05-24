@@ -94,7 +94,8 @@ namespace HE.CRM.AHP.Plugins.Services.DeliveryPhase
                 var application = _ahpApplicationRepository.
                     GetById(applicationGuid, new string[] { invln_scheme.Fields.invln_noofhomes,
                                               invln_scheme.Fields.invln_fundingrequired,
-                                              invln_scheme.Fields.invln_programmelookup });
+                                              invln_scheme.Fields.invln_programmelookup,
+                                              invln_scheme.Fields.invln_organisationid});
 
                 TracingService.Trace("Deserialize and Map imput data");
                 var devlieryPhaseDto = JsonSerializer.Deserialize<DeliveryPhaseDto>(deliveryPhase);
@@ -215,14 +216,20 @@ namespace HE.CRM.AHP.Plugins.Services.DeliveryPhase
 
         private void CalculateFundings(invln_DeliveryPhase deliveryPhase, decimal acquisitionPercentageValue, decimal startOnSitePercentageValue, decimal completionPercentageValue, decimal fundingForPhase)
         {
-            var df = _deliveryPhaseRepository.GetById(deliveryPhase.Id,
-                                new string[] { invln_DeliveryPhase.Fields.invln_AcquisitionPercentageValue,
+            TracingService.Trace("Check Delivery Phase");
+            invln_DeliveryPhase df = null;
+            if (deliveryPhase != null)
+            {
+                TracingService.Trace("Get values from Delivery Phase");
+                df = _deliveryPhaseRepository.GetById(deliveryPhase.Id,
+                                    new string[] { invln_DeliveryPhase.Fields.invln_AcquisitionPercentageValue,
                                                invln_DeliveryPhase.Fields.invln_StartOnSitePercentageValue,
                                                invln_DeliveryPhase.Fields.invln_CompletionPercentageValue,
                                                invln_DeliveryPhase.Fields.invln_AcquisitionValue,
                                                invln_DeliveryPhase.Fields.invln_StartOnSiteValue,
                                                invln_DeliveryPhase.Fields.invln_CompletionValue,
-                                });
+                                    });
+            }
 
             if (deliveryPhase.invln_AcquisitionPercentageValue == null && deliveryPhase.invln_StartOnSitePercentageValue == null && deliveryPhase.invln_CompletionPercentageValue == null)
             {
@@ -267,8 +274,14 @@ namespace HE.CRM.AHP.Plugins.Services.DeliveryPhase
             }
         }
 
-        private static void CalculateFieldValue(invln_DeliveryPhase deliveryPhase, decimal fundingForPhase, invln_DeliveryPhase df)
+        private void CalculateFieldValue(invln_DeliveryPhase deliveryPhase, decimal fundingForPhase, invln_DeliveryPhase df)
         {
+            if (df == null)
+            {
+                TracingService.Trace("Delivery phase not exist yet skip recalculation");
+                return;
+            }
+
             if (deliveryPhase.invln_AcquisitionPercentageValue + df.invln_StartOnSitePercentageValue + df.invln_CompletionPercentageValue == 1)
             {
                 var leftOver = fundingForPhase

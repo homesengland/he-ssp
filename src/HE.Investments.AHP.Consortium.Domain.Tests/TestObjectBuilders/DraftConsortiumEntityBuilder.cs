@@ -1,7 +1,7 @@
-using HE.Investments.AHP.Consortium.Contract;
 using HE.Investments.AHP.Consortium.Domain.Entities;
 using HE.Investments.AHP.Consortium.Domain.Tests.TestData;
 using HE.Investments.AHP.Consortium.Domain.ValueObjects;
+using HE.Investments.Common.Contract;
 using HE.Investments.Organisation.ValueObjects;
 using HE.Investments.TestsUtils.TestFramework;
 

@@ -1,5 +1,5 @@
 using HE.Investment.AHP.Domain.UserContext;
-using HE.Investments.AHP.Consortium.Contract;
+using HE.Investments.Common.Contract;
 using HE.Investments.Common.Tests.TestData;
 
 namespace HE.Investment.AHP.Domain.Tests.Common.TestData;

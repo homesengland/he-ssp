@@ -115,9 +115,9 @@ public class ProjectRepository : IProjectRepository
         return AhpProjectId.From(projectId);
     }
 
-    private AhpProjectSites CreateAhpProjectEntity(ProjectDto projectDto)
+    private AhpProjectSites CreateAhpProjectEntity(AhpProjectDto ahpProjectDto)
     {
-        var sites = projectDto.Sites?
+        var sites = ahpProjectDto.ListOfSites?
             .Select(s => new AhpProjectSite(
                 SiteId.From(s.id),
                 new SiteName(s.name),
@@ -126,8 +126,8 @@ public class ProjectRepository : IProjectRepository
             .ToList();
 
         return new AhpProjectSites(
-            FrontDoorProjectId.From(projectDto.ProjectId),
-            new AhpProjectName(projectDto.ProjectName),
+            FrontDoorProjectId.From(ahpProjectDto.FrontDoorProjectId),
+            new AhpProjectName(ahpProjectDto.AhpProjectName),
             sites);
     }
 
