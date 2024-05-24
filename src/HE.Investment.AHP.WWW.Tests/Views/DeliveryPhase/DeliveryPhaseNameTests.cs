@@ -20,7 +20,7 @@ public class DeliveryPhaseNameTests : AhpViewTestBase
         // given & when
         var document = await Render(_viewPath, model, routeData: _routeData);
 
-        // then
+        // thent
         AssertView(document);
     }
 

@@ -40,7 +40,12 @@ public class SiteRepository : ISiteRepository, IRemoveSiteRepository
 
     public async Task<ProjectSiteEntity> Save(ProjectSiteEntity site, UserAccount userAccount, CancellationToken cancellationToken)
     {
-        var siteId = await _siteCrmContext.Save(site.ProjectId.Value, ToDto(site), userAccount, cancellationToken);
+        var siteId = await _siteCrmContext.Save(
+            site.ProjectId.Value,
+            ToDto(site),
+            userAccount.UserGlobalId.Value,
+            userAccount.SelectedOrganisationId().Value,
+            cancellationToken);
         if (site.Id.IsNew)
         {
             site.SetId(FrontDoorSiteId.From(siteId));

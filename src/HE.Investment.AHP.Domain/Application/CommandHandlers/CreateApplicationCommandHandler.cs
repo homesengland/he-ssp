@@ -61,6 +61,13 @@ public class CreateApplicationCommandHandler : IRequestHandler<CreateApplication
         }
 
         var site = await _siteRepository.GetSite(siteId, userAccount, cancellationToken);
+
+        // TODO: Fix when Site Completion will be part of the flow
+        if (!site.SitePartners.IsAnswered())
+        {
+            return ApplicationPartners.ConfirmedPartner(userAccount.SelectedOrganisation());
+        }
+
         return ApplicationPartners.FromSitePartners(site.SitePartners);
     }
 }
