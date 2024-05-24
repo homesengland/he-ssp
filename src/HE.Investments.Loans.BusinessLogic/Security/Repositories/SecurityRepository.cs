@@ -72,7 +72,7 @@ internal class SecurityRepository : ISecurityRepository
             directLoans!,
             directLoansSubordinate!,
             SectionStatusMapper.Map(loanApplicationDto.SecurityDetailsCompletionStatus),
-            ApplicationStatusMapper.MapToPortalStatus(loanApplicationDto.loanApplicationExternalStatus));
+            LoanApplicationStatusMapper.MapToPortalStatus(loanApplicationDto.loanApplicationExternalStatus));
     }
 
     public async Task SaveAsync(SecurityEntity entity, UserAccount userAccount, CancellationToken cancellationToken)

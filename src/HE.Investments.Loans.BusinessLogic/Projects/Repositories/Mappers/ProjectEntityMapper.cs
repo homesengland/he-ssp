@@ -35,7 +35,7 @@ internal static class ProjectEntityMapper
             PublicSectorGrantFundingMapper.MapFromCrm(siteDetailsDto),
             siteDetailsDto.existingLegalCharges.IsProvided() ? new ChargesDebt(siteDetailsDto.existingLegalCharges ?? false, siteDetailsDto.existingLegalChargesInformation) : null,
             siteDetailsDto.affordableHousing.IsProvided() ? new AffordableHomes(siteDetailsDto.affordableHousing.MapToCommonResponse()) : null,
-            ApplicationStatusMapper.MapToPortalStatus(siteDetailsDto.loanApplicationStatus),
+            LoanApplicationStatusMapper.MapToPortalStatus(siteDetailsDto.loanApplicationStatus),
             PlanningPermissionStatusMapper.Map(siteDetailsDto.planningPermissionStatus),
             LocalAuthorityMapper.MapToLocalAuthority(siteDetailsDto.localAuthority?.onsCode, siteDetailsDto.localAuthority?.name));
     }

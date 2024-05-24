@@ -37,7 +37,7 @@ public class ChangeApplicationStatusTests : TestBase<LoanApplicationRepository>
 
         RegisterDependency(organizationServiceMock);
 
-        var crmStatus = ApplicationStatusMapper.MapToCrmStatus(applicationStatus);
+        var crmStatus = LoanApplicationStatusMapper.MapToCrmStatus(applicationStatus);
 
         // when
         await TestCandidate.ChangeApplicationStatus(loanApplicationId, applicationStatus, CancellationToken.None);

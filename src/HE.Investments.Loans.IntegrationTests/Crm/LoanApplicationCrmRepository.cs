@@ -16,7 +16,7 @@ public class LoanApplicationCrmRepository
 
     public async Task ChangeApplicationStatus(string loanApplicationId, ApplicationStatus applicationStatus)
     {
-        var crmStatus = ApplicationStatusMapper.MapToCrmStatus(applicationStatus);
+        var crmStatus = LoanApplicationStatusMapper.MapToCrmStatus(applicationStatus);
 
         var request = new invln_changeloanapplicationexternalstatusRequest
         {
