@@ -13,7 +13,7 @@ namespace DataverseModel
 	
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
-	public enum invln_TenureChoice
+	public enum invln_Tenurechoice
 	{
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]

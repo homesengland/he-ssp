@@ -130,7 +130,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HE.Investments.AHP.Consorti
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HE.Investments.AHP.Consortium.Domain.Tests", "HE.Investments.AHP.Consortium.Domain.Tests\HE.Investments.AHP.Consortium.Domain.Tests.csproj", "{1AC4BF77-8965-4435-9061-80505017B61E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HE.Common.IntegrationModel.Crm", "HE.Common.IntegrationModel.Crm\HE.Common.IntegrationModel.Crm.csproj", "{3F31D22A-A2C7-4772-912E-B8B237BC88A9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HE.Common.IntegrationModel.Crm", "HE.Common.IntegrationModel.Crm\HE.Common.IntegrationModel.Crm.csproj", "{3F31D22A-A2C7-4772-912E-B8B237BC88A9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -631,6 +631,7 @@ Global
 	EndGlobalSection
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		HE.Common.IntegrationModel\HE.Common.IntegrationModel.projitems*{0e5ab8b0-78b3-4550-8f4d-92073af4ac8d}*SharedItemsImports = 5
+		HE.Common.IntegrationModel\HE.Common.IntegrationModel.projitems*{3f31d22a-a2c7-4772-912e-b8b237bc88a9}*SharedItemsImports = 5
 		HE.Common.IntegrationModel\HE.Common.IntegrationModel.projitems*{464f5b11-c934-42c4-b544-40cfcee6c683}*SharedItemsImports = 4
 		HE.CRM.Common\HE.CRM.Common.projitems*{464f5b11-c934-42c4-b544-40cfcee6c683}*SharedItemsImports = 4
 		HE.CRM.Model\HE.CRM.Model.projitems*{464f5b11-c934-42c4-b544-40cfcee6c683}*SharedItemsImports = 4

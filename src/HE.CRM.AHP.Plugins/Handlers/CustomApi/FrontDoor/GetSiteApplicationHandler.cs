@@ -54,7 +54,8 @@ namespace HE.CRM.AHP.Plugins.Handlers.CustomApi.FrontDoor
                 return;
 
             var site = _siteRepository.GetById(new Guid(SiteId));
-            var applications = _ahpApplicationRepository.GetByAttribute(invln_scheme.Fields.invln_Site, site.Id);
+            var applications = _ahpApplicationRepository.GetByAttribute(invln_scheme.Fields.invln_Site, site.Id)
+                .OrderByDescending(x => x.invln_lastexternalmodificationon);
             var filteredApplication = new List<invln_scheme>();
             foreach (var application in applications)
             {
@@ -64,7 +65,6 @@ namespace HE.CRM.AHP.Plugins.Handlers.CustomApi.FrontDoor
                     filteredApplication.Add(application);
                 }
             }
-
             var siteApplicationDto = SiteApplicationMapper.MapRegularEntityToDto(site, filteredApplication);
             ExecutionData.SetOutputParameter(invln_getsiteapplicationsResponse.Fields.invln_siteapplication, JsonSerializer.Serialize(siteApplicationDto));
         }
