@@ -1,9 +1,6 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
-using HE.Investment.AHP.Contract.Project;
-using HE.Investment.AHP.Domain.Application.Crm;
-using HE.Investment.AHP.Domain.Site.Crm;
 using HE.Investments.Common.CRM.Model;
 using HE.Investments.Common.CRM.Serialization;
 using HE.Investments.Common.CRM.Services;
@@ -13,15 +10,12 @@ namespace HE.Investment.AHP.Domain.Project.Crm;
 
 public class ProjectCrmContext : IProjectCrmContext
 {
-    private readonly ISiteCrmContext _siteCrmContext;
-
     private readonly ICrmService _service;
 
     private readonly JsonSerializerOptions _serializerOptions = new() { DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull };
 
-    public ProjectCrmContext(ISiteCrmContext siteCrmContext, ICrmService service)
+    public ProjectCrmContext(ICrmService service)
     {
-        _siteCrmContext = siteCrmContext;
         _service = service;
     }
 
