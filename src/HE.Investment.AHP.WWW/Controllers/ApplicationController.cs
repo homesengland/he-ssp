@@ -2,6 +2,8 @@ using System.Globalization;
 using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.Application.Commands;
 using HE.Investment.AHP.Contract.Application.Queries;
+using HE.Investment.AHP.Contract.Project;
+using HE.Investment.AHP.Contract.Project.Queries;
 using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Contract.Site.Queries;
 using HE.Investment.AHP.Domain.UserContext;
@@ -54,25 +56,19 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
     [HttpGet("start")]
     [WorkflowState(ApplicationWorkflowState.Start)]
     [AuthorizeWithCompletedProfile(AhpAccessContext.EditApplications)]
-    public async Task<IActionResult> Start([FromRoute] string fdProjectId, CancellationToken cancellationToken)
+    public async Task<IActionResult> Start([FromQuery] string projectId, CancellationToken cancellationToken)
     {
         var availableProgrammes = await _mediator.Send(new GetAvailableProgrammesQuery(), cancellationToken);
 
-        return View("Splash", new ProjectBasicModel(fdProjectId, availableProgrammes[0]));
+        return View("Splash", new ProjectBasicModel(projectId, availableProgrammes[0]));
     }
 
     [HttpPost("start")]
     [WorkflowState(ApplicationWorkflowState.Start)]
     [AuthorizeWithCompletedProfile(AhpAccessContext.EditApplications)]
-    public async Task<IActionResult> StartPost([FromRoute] string fdProjectId, CancellationToken cancellationToken)
+    public IActionResult StartPost([FromQuery] string projectId)
     {
-        var response = await _mediator.Send(new GetSiteListQuery(new PaginationRequest(1, 1)), cancellationToken);
-        if (response.Page.Items.Any())
-        {
-            return RedirectToAction("Select", "Site", new { fdProjectId });
-        }
-
-        return RedirectToAction("Start", "Site", new { fdProjectId });
+        return RedirectToAction("Select", "Site", new { projectId });
     }
 
     [WorkflowState(ApplicationWorkflowState.ApplicationName)]

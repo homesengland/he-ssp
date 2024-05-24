@@ -108,6 +108,8 @@ namespace HE.CRM.Common.DtoMapping
                     registeredCompanyName = entity.invln_Ownerofthehomesaftercompletion?.Name,
                     organisationId = entity.invln_Ownerofthehomesaftercompletion?.Id.ToString()
                 },
+                fdSiteid = entity.invln_HeProjectLocalAuthorityId?.Id.ToString(),
+                fdSiteidName = entity.invln_HeProjectLocalAuthorityId?.Name,
             };
 
             if (localAuthority != null)

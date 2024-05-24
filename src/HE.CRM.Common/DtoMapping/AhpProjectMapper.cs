@@ -45,6 +45,8 @@ namespace HE.CRM.Common.dtomapping
             {
                 AhpProjectId = ahpproject.Id.ToString(),
                 AhpProjectName = ahpproject.invln_Name,
+                FrontDoorProjectId = ahpproject.invln_HeProjectId?.Id.ToString(),
+                FrontDoorProjectName = ahpproject.invln_HeProjectId?.Name,
                 ListOfSites = listOfSites,
                 ListOfApplications = listOfApplications
             };

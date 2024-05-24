@@ -518,6 +518,8 @@ public class Order03FrontDoorProjectSiteQuestions : FrontDoorIntegrationTest
         var nextPage = await TestClient.SubmitButton(continueButton);
 
         // then
-        nextPage.ToHtml().Should().Contain("Eligibility for Loan");
+        var displayedText = nextPage.GetFirstPreformattedText();
+        displayedText.Should().Contain("Eligibility for Loan");
+        Output.WriteLine(displayedText);
     }
 }

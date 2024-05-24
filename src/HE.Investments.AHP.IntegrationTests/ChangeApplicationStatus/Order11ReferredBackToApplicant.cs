@@ -151,8 +151,8 @@ public class Order11ReferredBackToApplicant : AhpIntegrationTest
 
         // then
         applicationsPage
-            .UrlEndWith(ProjectPagesUrl.ProjectApplicationList(LegacyProject.ProjectId))
-            .HasTitle(ProjectPageTitles.ApplicationList(LegacyProject.ProjectName));
+            .UrlEndWith(ProjectPagesUrl.ProjectApplicationList(ApplicationData.ProjectId))
+            .HasTitle(ProjectPageTitles.ApplicationList(ApplicationData.ProjectName));
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]

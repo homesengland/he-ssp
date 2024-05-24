@@ -1,9 +1,10 @@
 using HE.Investments.Common.Contract.Pagination;
+using HE.Investments.FrontDoor.Shared.Project;
 
 namespace HE.Investment.AHP.Contract.Project;
 
 public record ProjectDetailsModel(
-    AhpProjectId ProjectId,
+    FrontDoorProjectId ProjectId,
     string ProjectName,
     string ProgrammeName,
     string OrganisationName,

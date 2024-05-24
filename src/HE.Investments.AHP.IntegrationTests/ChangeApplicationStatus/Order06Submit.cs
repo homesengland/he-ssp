@@ -88,8 +88,8 @@ public class Order06Submit : AhpIntegrationTest
 
         // then
         mainPage
-            .UrlEndWith(ProjectPagesUrl.ProjectApplicationList(LegacyProject.ProjectId))
-            .HasTitle(ProjectPageTitles.ApplicationList(LegacyProject.ProjectName))
+            .UrlEndWith(ProjectPagesUrl.ProjectApplicationList(ApplicationData.ProjectId))
+            .HasTitle(ProjectPageTitles.ApplicationList(ApplicationData.ProjectName))
             .HasApplicationInStatus(ApplicationData.ApplicationId, ApplicationStatus.ApplicationSubmitted);
     }
 }
