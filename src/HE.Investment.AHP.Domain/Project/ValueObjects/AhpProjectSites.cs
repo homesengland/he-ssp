@@ -1,5 +1,4 @@
 using System.Collections.ObjectModel;
-using HE.Investment.AHP.Contract.Project;
 using HE.Investments.Common.Domain;
 using HE.Investments.FrontDoor.Shared.Project;
 

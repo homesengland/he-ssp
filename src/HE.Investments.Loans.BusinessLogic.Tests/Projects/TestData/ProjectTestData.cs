@@ -1,11 +1,8 @@
-extern alias Org;
-
 using HE.Investments.Common.Contract.Constants;
 using HE.Investments.Loans.BusinessLogic.Projects.Entities;
 using HE.Investments.Loans.BusinessLogic.Projects.ValueObjects;
 using HE.Investments.Loans.Common.Tests.TestData;
-using HE.Investments.Loans.Common.Utils.Constants.FormOption;
-using Org::HE.Investments.Organisation.LocalAuthorities.ValueObjects;
+using HE.Investments.Organisation.LocalAuthorities.ValueObjects;
 
 namespace HE.Investments.Loans.BusinessLogic.Tests.Projects.TestData;
 

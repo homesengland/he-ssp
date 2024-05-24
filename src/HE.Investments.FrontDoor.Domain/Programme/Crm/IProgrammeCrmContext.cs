@@ -1,6 +1,4 @@
-extern alias Org;
-
-using Org::HE.Common.IntegrationModel.PortalIntegrationModel;
+using HE.Common.IntegrationModel.PortalIntegrationModel;
 
 namespace HE.Investments.FrontDoor.Domain.Programme.Crm;
 

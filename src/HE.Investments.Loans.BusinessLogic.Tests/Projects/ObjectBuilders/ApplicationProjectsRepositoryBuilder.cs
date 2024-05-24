@@ -1,16 +1,13 @@
-extern alias Org;
-
-using System.Globalization;
 using HE.Investments.Account.Shared.User;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Loans.BusinessLogic.Projects.Entities;
 using HE.Investments.Loans.BusinessLogic.Projects.Repositories;
 using HE.Investments.Loans.Common.Utils.Enums;
 using HE.Investments.Loans.Contract.Application.ValueObjects;
+using HE.Investments.Organisation.LocalAuthorities.Repositories;
+using HE.Investments.Organisation.LocalAuthorities.ValueObjects;
 using HE.Investments.TestsUtils.TestFramework;
 using Moq;
-using Org::HE.Investments.Organisation.LocalAuthorities.Repositories;
-using Org::HE.Investments.Organisation.LocalAuthorities.ValueObjects;
 
 namespace HE.Investments.Loans.BusinessLogic.Tests.Projects.ObjectBuilders;
 

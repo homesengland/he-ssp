@@ -1,7 +1,6 @@
 using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Domain.FinancialDetails.Entities;
 using HE.Investments.Account.Shared.User;
-using HE.Investments.Common.Contract;
 
 namespace HE.Investment.AHP.Domain.FinancialDetails.Repositories;
 

@@ -1,13 +1,11 @@
-extern alias Org;
-
+using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investments.Account.Domain.Organisation.Entities;
 using HE.Investments.Account.Domain.Tests.Organisation.TestData;
 using HE.Investments.Account.Shared.User;
 using HE.Investments.Common.Tests.TestData;
+using HE.Investments.Organisation.Services;
 using HE.Investments.TestsUtils.TestFramework;
 using Moq;
-using Org::HE.Common.IntegrationModel.PortalIntegrationModel;
-using Org::HE.Investments.Organisation.Services;
 
 namespace HE.Investments.Account.Domain.Tests.Organisation.TestObjectBuilder;
 

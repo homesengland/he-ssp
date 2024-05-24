@@ -1,10 +1,8 @@
-extern alias Org;
-
 using FluentAssertions;
 using HE.Investment.AHP.Domain.Tests.Site.TestData;
 using HE.Investment.AHP.Domain.Tests.Site.TestDataBuilders;
 using HE.Investments.Common.Contract;
-using Org::HE.Investments.Organisation.ValueObjects;
+using HE.Investments.Organisation.ValueObjects;
 
 namespace HE.Investment.AHP.Domain.Tests.Site.ValueObjects.SitePartnersTests;
 

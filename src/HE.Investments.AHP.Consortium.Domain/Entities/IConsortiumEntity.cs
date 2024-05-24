@@ -1,8 +1,6 @@
-extern alias Org;
-
 using HE.Investments.AHP.Consortium.Domain.Repositories;
 using HE.Investments.Common.Contract;
-using InvestmentsOrganisation = Org::HE.Investments.Organisation.ValueObjects.InvestmentsOrganisation;
+using HE.Investments.Organisation.ValueObjects;
 
 namespace HE.Investments.AHP.Consortium.Domain.Entities;
 

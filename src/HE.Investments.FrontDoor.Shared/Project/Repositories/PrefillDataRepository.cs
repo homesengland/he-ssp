@@ -1,14 +1,11 @@
-extern alias Org;
-
 using System.Collections.ObjectModel;
+using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investments.Account.Shared.User;
 using HE.Investments.Common.Contract.Enum;
 using HE.Investments.Common.CRM.Mappers;
-using HE.Investments.Common.Extensions;
 using HE.Investments.FrontDoor.Shared.Project.Contract;
 using HE.Investments.FrontDoor.Shared.Project.Crm;
 using HE.Investments.FrontDoor.Shared.Project.Data;
-using Org::HE.Common.IntegrationModel.PortalIntegrationModel;
 
 namespace HE.Investments.FrontDoor.Shared.Project.Repositories;
 

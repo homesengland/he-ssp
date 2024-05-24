@@ -1,11 +1,8 @@
 using FluentAssertions;
-using HE.Investments.AHP.Consortium.Contract;
 using HE.Investments.AHP.Consortium.Domain.Entities;
-using HE.Investments.AHP.Consortium.Domain.Repositories;
 using HE.Investments.AHP.Consortium.Domain.Tests.TestData;
 using HE.Investments.AHP.Consortium.Domain.Tests.TestObjectBuilders;
 using HE.Investments.Common.Contract.Exceptions;
-using Moq;
 using Xunit;
 
 namespace HE.Investments.AHP.Consortium.Domain.Tests.Entities.ConsortiumEntityTests;
