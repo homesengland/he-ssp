@@ -12,27 +12,18 @@ namespace DataverseModel
 {
 	
 	
+	/// <summary>
+	/// Application Access.
+	/// </summary>
 	[System.Runtime.Serialization.DataContractAttribute()]
-	public enum invln_Tenurechoice
+	public enum applicationaccess
 	{
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Affordablerent = 858110000,
+		Allowed = 0,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Extracare = 858110005,
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Renttobuy = 858110003,
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Sharedownership = 858110002,
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Socialrent = 858110001,
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Specialistrent = 858110004,
+		Blocked = 1,
 	}
 }
 #pragma warning restore CS1591

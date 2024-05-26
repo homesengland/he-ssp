@@ -35,7 +35,6 @@ namespace HE.CRM.AHP.Plugins.Plugins.AhpApplication
             registeredHandlers.Add(handlerFactory.GetHandler<UpdateLocalAuthorityWhenSiteIsChanged>());
             registeredHandlers.Add(handlerFactory.GetHandler<RecalculateDeliveryphaseHandler>());
             registeredHandlers.Add(handlerFactory.GetHandler<UpdateAplicationOnStatusChange>());
-            registeredHandlers.Add(handlerFactory.GetHandler<GrantCalculateHandler>());
         }
     }
 }

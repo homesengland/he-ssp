@@ -1,19 +1,15 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.Remoting.Metadata.W3cXsd2001;
-using System.Runtime.Remoting.Services;
 using System.Text.Json;
 using DataverseModel;
-using HE.Base.Common.Extensions;
 using HE.Base.Services;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
+using HE.CRM.AHP.Plugins.Repositories;
 using HE.CRM.AHP.Plugins.Services.GovNotifyEmail;
 using HE.CRM.Common.DtoMapping;
 using HE.CRM.Common.Repositories.Interfaces;
 using Microsoft.Xrm.Sdk;
-using Microsoft.Xrm.Sdk.Query;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace HE.CRM.AHP.Plugins.Services.Application
 {
@@ -52,7 +48,7 @@ namespace HE.CRM.AHP.Plugins.Services.Application
 
         public void ChangeApplicationStatus(string organisationId, string contactId, string applicationId, int newStatus, string changeReason, bool representationsandwarranties)
         {
-            TracingService.Trace($"Service ChangeApplicationStatus");
+            Logger.Trace($"Service ChangeApplicationStatus");
             var contact = _contactRepository.GetContactViaExternalId(contactId);
             var application = _applicationRepository.GetById(new Guid(applicationId),
                 new string[] {
@@ -554,7 +550,8 @@ namespace HE.CRM.AHP.Plugins.Services.Application
 
         public void GrantCalculate(Guid applicationId)
         {
-            TracingService.Trace($"ApplicationService.GrantCalculate: {applicationId}");
+            Logger.Trace($"ApplicationService.GrantCalculate: {applicationId}");
+            var grantbenchmarkRepository = CrmRepositoriesFactory.GetSystem<IGrantBenchmarkRepository>();
 
             var applicationColumns = new string[]
             {
@@ -562,13 +559,13 @@ namespace HE.CRM.AHP.Plugins.Services.Application
                 invln_scheme.Fields.invln_noofhomes,
                 invln_scheme.Fields.invln_expectedacquisitioncost,
                 invln_scheme.Fields.invln_actualacquisitioncost,
-                invln_scheme.Fields.invln_oncosts,
-                invln_scheme.Fields.invln_workscosts,
+                invln_scheme.Fields.invln_expectedoncosts,
+                invln_scheme.Fields.invln_expectedonworks,
                 invln_scheme.Fields.invln_Tenure,
                 invln_scheme.Fields.invln_Site,
             };
 
-            TracingService.Trace($"Get application by Id {applicationId}");
+            Logger.Trace($"Get application by Id {applicationId}");
             var application = _ahpApplicationRepositoryAdmin.GetById(applicationId, applicationColumns);
 
             if (application.invln_fundingrequired == null)
@@ -580,11 +577,11 @@ namespace HE.CRM.AHP.Plugins.Services.Application
             if (application.invln_expectedacquisitioncost == null && application.invln_actualacquisitioncost == null)
                 throw new Exception("invln_scheme.invln_expectedacquisitioncost and invln_scheme.invln_actualacquisitioncost are empty");
 
-            //if (application.invln_oncosts == null)
-            //    throw new Exception("invln_scheme.invln_oncosts is empty");
+            if (application.invln_expectedoncosts == null)
+                throw new Exception("invln_scheme.invln_expectedoncosts is empty");
 
-            //if (application.invln_workscosts == null)
-            //    throw new Exception("invln_scheme.invln_workscosts is empty");
+            if (application.invln_expectedonworks == null)
+                throw new Exception("invln_scheme.invln_expectedonworks is empty");
 
             if (application.invln_Tenure == null)
                 throw new Exception("invln_scheme.invln_Tenure is empty");
@@ -594,12 +591,12 @@ namespace HE.CRM.AHP.Plugins.Services.Application
 
             var acquisitionCost = application.invln_expectedacquisitioncost ?? application.invln_actualacquisitioncost;
 
-            var onCosts = application.invln_oncosts != null ? application.invln_oncosts.Value : decimal.Zero;
-            var workCosts = application.invln_workscosts != null ? application.invln_workscosts.Value : decimal.Zero;
+            var expectedOnCosts = application.invln_expectedoncosts.Value;
+            var expectedOnWorks = application.invln_expectedonworks.Value;
 
             var grantPerUnit = fundingRequired / noOfHomes;
 
-            var grantasaoftotalschemecosts = fundingRequired / (acquisitionCost.Value + onCosts + workCosts) * 100;
+            var grantasaoftotalschemecosts = fundingRequired / (acquisitionCost.Value + expectedOnCosts + expectedOnWorks) * 100;
 
             var site = GetSite(application.invln_Site.Id);
             if (site == null)
@@ -608,20 +605,25 @@ namespace HE.CRM.AHP.Plugins.Services.Application
             if (site.invln_GovernmentOfficeRegion == null)
                 throw new Exception($"Site {site.Id} has no set invln_GovernmentOfficeRegion");
 
-            var grantBenchmark = FindRegionalBenchmark(
-                application.invln_Tenure.Value,
-                site.invln_GovernmentOfficeRegion.Value,
-                invln_BenchmarkTable.Table5RegionalBenchmarkGrantPerUnit);
+            var typeOfHousing = GetHomeTypes(applicationId).Select(x => (invln_Typeofhousing)x.invln_typeofhousing.Value).ToList();
 
-            var benchmarkGpu = grantBenchmark.invln_benchmarkgpu;
-            var regionalBenchmarkAgainstTheGrantPerUnit = grantPerUnit / benchmarkGpu.Value * 100;
-            var workCostM2 = CalculateWorksCostM2(application.Id);
+            var tenure = MapApplicationTenureToRegionalBenchmarkTenure((invln_Tenure)application.invln_Tenure.Value, typeOfHousing);
+
+            var grantBenchmark = grantbenchmarkRepository.GetRegionalBenchmarkGrantPerUnit(
+                tenure,
+                site.invln_GovernmentOfficeRegion.Value
+            );
+
+            var regionalBenchmarkGrantPerUnit = grantBenchmark.invln_benchmarkgpu;
+            var regionalBenchmarkAgainstTheGrantPerUnit = grantPerUnit / regionalBenchmarkGrantPerUnit.Value * 100;
+            var workCostM2 = CalculateWorksCostM2(application);
 
             _applicationRepository.Update(new invln_scheme()
             {
                 Id = applicationId,
                 invln_grantperunit = new Money(grantPerUnit),
                 invln_grantasaoftotalschemecosts = grantasaoftotalschemecosts,
+                invln_RegionalBenchmarkGrantPerUnit = regionalBenchmarkGrantPerUnit,
                 invln_regionalbenchmarkagainstthegrantperunit = regionalBenchmarkAgainstTheGrantPerUnit,
                 invln_WorkssCostsm2 = workCostM2.HasValue ? new Money(workCostM2.Value) : null
             });
@@ -629,72 +631,72 @@ namespace HE.CRM.AHP.Plugins.Services.Application
 
         private invln_Sites GetSite(Guid siteId)
         {
-            TracingService.Trace($"Get site by Id {siteId}");
+            Logger.Trace($"Get site by Id {siteId}");
             var sitesRepository = CrmRepositoriesFactory.GetSystemBase<invln_Sites, DataverseContext>();
             return sitesRepository.GetById(siteId);
         }
 
-        private invln_grantbenchmark FindRegionalBenchmark(int tenureId, int governmentOfficeRegionId, invln_BenchmarkTable benchmarkTable)
-        {
-            TracingService.Trace($"FindRegionalBenchmark tenureId: {tenureId}, governmentOfficeRegionId: {governmentOfficeRegionId}, benchmarkTable: {benchmarkTable}");
-
-            var grantBenchmarkRepository = CrmRepositoriesFactory.GetSystemBase<invln_grantbenchmark, DataverseContext>();
-            var query = new QueryExpression(invln_grantbenchmark.EntityLogicalName)
-            {
-                ColumnSet = new ColumnSet(
-                    invln_grantbenchmark.Fields.invln_benchmarkgpu
-                ),
-                Criteria = new FilterExpression(LogicalOperator.And)
-                {
-                    Conditions =
-                    {
-                        new ConditionExpression
-                        {
-                            AttributeName = invln_grantbenchmark.Fields.invln_tenure,
-                            Operator = ConditionOperator.Equal,
-                            Values = { tenureId }
-                        },
-                        new ConditionExpression
-                        {
-                            AttributeName = invln_grantbenchmark.Fields.invln_GovernmentOfficeRegion,
-                            Operator = ConditionOperator.Equal,
-                            Values = { governmentOfficeRegionId }
-                        },
-                        new ConditionExpression()
-                        {
-                            AttributeName = invln_grantbenchmark.Fields.invln_BenchmarkTable,
-                            Operator = ConditionOperator.Equal,
-                            Values = { (int)benchmarkTable }
-                        }
-                    }
-                }
-            };
-
-            return grantBenchmarkRepository.RetrieveAll(query).Entities.Select(e => e.ToEntity<invln_grantbenchmark>()).Single();
-        }
-
         private IEnumerable<invln_HomeType> GetHomeTypes(Guid applicationId)
         {
-            TracingService.Trace($"GetHomeTypes applicationId='{applicationId}'");
+            Logger.Trace($"GetHomeTypes applicationId='{applicationId}'");
             var homeTypesRepository = CrmRepositoriesFactory.GetSystemBase<invln_HomeType, DataverseContext>();
 
             var homeTypesColumns = new string[] {
                     invln_HomeType.Fields.invln_numberofhomeshometype,
-                    invln_HomeType.Fields.invln_floorarea
+                    invln_HomeType.Fields.invln_floorarea,
+                    invln_HomeType.Fields.invln_typeofhousing
             };
             return homeTypesRepository.GetByAttribute(invln_HomeType.Fields.invln_application, applicationId, homeTypesColumns);
         }
 
-        private decimal? CalculateWorksCostM2(Guid applicationId)
+        private decimal? CalculateWorksCostM2(invln_scheme application)
         {
-            var homeTypes = GetHomeTypes(applicationId);
+            var homeTypes = GetHomeTypes(application.Id);
             if (!homeTypes.Any())
             {
-                TracingService.Trace($"Could not find any home types for application '{applicationId}'");
+                Logger.Warn($"Could not find any home types for application '{application.Id}'");
                 return null;
             }
-            var calculationResult = homeTypes.Select(x => x.invln_numberofhomeshometype * x.invln_floorarea).Sum();
+            var sumFloorArea = homeTypes.Select(x => x.invln_numberofhomeshometype * x.invln_floorarea).Sum();
+            var calculationResult = application.invln_expectedonworks.Value / sumFloorArea.Value;
             return calculationResult;
+        }
+
+        private invln_Tenurechoice MapApplicationTenureToRegionalBenchmarkTenure(invln_Tenure ahpApplicationTenure, List<invln_Typeofhousing> typesOfHousing)
+        {
+            var housingForDisabledVulnerableOlderPeopleList = new List<invln_Typeofhousing>()
+            {
+                invln_Typeofhousing.Housingfordisabledandvulnerablepeople,
+                invln_Typeofhousing.Housingforolderpeople
+            };
+
+            var housingForDisabledVulnerableOlderPeople = typesOfHousing.Intersect(housingForDisabledVulnerableOlderPeopleList).Any();
+
+            if (ahpApplicationTenure == invln_Tenure.Sharedownership ||
+                ahpApplicationTenure == invln_Tenure.OPSO ||
+                ahpApplicationTenure == invln_Tenure.HOLD)
+                return invln_Tenurechoice.Sharedownership;
+
+            if (ahpApplicationTenure == invln_Tenure.Renttobuy)
+                return invln_Tenurechoice.Renttobuy;
+
+            if (ahpApplicationTenure == invln_Tenure.Affordablerent)
+            {
+                if (housingForDisabledVulnerableOlderPeople)
+                    return invln_Tenurechoice.Specialistrent;
+
+                return invln_Tenurechoice.Affordablerent;
+            }
+
+            if (ahpApplicationTenure == invln_Tenure.Socialrent)
+            {
+                if (housingForDisabledVulnerableOlderPeople)
+                    return invln_Tenurechoice.Specialistrent;
+
+                return invln_Tenurechoice.Socialrent;
+            }
+
+            throw new Exception($"Unknown tenure value: {ahpApplicationTenure}");
         }
     }
 }

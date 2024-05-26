@@ -262,6 +262,8 @@
     <Compile Include="Plugins\Programme\PreValidation.cs" />
     <Compile Include="Plugins\Site\SitePreUpdate.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\GrantBenchmarkRepository.cs" />
+    <Compile Include="Repositories\IGrantBenchmarkRepository.cs" />
     <Compile Include="Services\AhpProject\AhpProjectService.cs" />
     <Compile Include="Services\AhpProject\IAhpProjectService.cs" />
     <Compile Include="Services\AhpStatusChange\AhpStatusChangeService.cs" />
