@@ -1,5 +1,3 @@
-extern alias Org;
-
 using HE.Investments.AHP.Consortium.Contract;
 using HE.Investments.AHP.Consortium.Contract.Enums;
 using HE.Investments.AHP.Consortium.Contract.Events;
@@ -11,7 +9,7 @@ using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Errors;
 using HE.Investments.Common.Extensions;
-using Org::HE.Investments.Organisation.ValueObjects;
+using HE.Investments.Organisation.ValueObjects;
 
 namespace HE.Investments.AHP.Consortium.Domain.Entities;
 
@@ -61,9 +59,14 @@ public class ConsortiumEntity : DomainEntity, IConsortiumEntity
 
     public async Task AddMember(InvestmentsOrganisation organisation, IIsPartOfConsortium isPartOfConsortium, CancellationToken cancellationToken)
     {
-        if (await IsPartOfConsortium(organisation, isPartOfConsortium, cancellationToken))
+        if (IsPartOfThisConsortium(organisation))
         {
-            OperationResult.ThrowValidationError("SelectedMember", ConsortiumValidationErrors.IsAlreadyPartOfConsortium);
+            OperationResult.ThrowValidationError("SelectedMember", ConsortiumValidationErrors.IsPartOfThisConsortium);
+        }
+
+        if (await IsPartOfOtherConsortium(organisation, isPartOfConsortium, cancellationToken))
+        {
+            OperationResult.ThrowValidationError("SelectedMember", ConsortiumValidationErrors.IsPartOfOtherConsortium);
         }
 
         var member = new ConsortiumMember(organisation.Id, organisation.Name, ConsortiumMemberStatus.PendingAddition);
@@ -102,7 +105,11 @@ public class ConsortiumEntity : DomainEntity, IConsortiumEntity
         return true;
     }
 
-    public void RemoveMember(OrganisationId organisationId, bool? isConfirmed)
+    public async Task RemoveMember(
+        OrganisationId organisationId,
+        bool? isConfirmed,
+        IConsortiumPartnerStatusProvider consortiumPartnerStatusProvider,
+        CancellationToken cancellationToken)
     {
         if (isConfirmed.IsNotProvided())
         {
@@ -115,6 +122,16 @@ public class ConsortiumEntity : DomainEntity, IConsortiumEntity
         }
 
         var member = GetMember(organisationId);
+        var partnerStatus = await consortiumPartnerStatusProvider.GetConsortiumPartnerStatus(Id, member.Id, cancellationToken);
+        if (partnerStatus == ConsortiumPartnerStatus.SitePartner)
+        {
+            OperationResult.ThrowValidationError(nameof(isConfirmed), ConsortiumValidationErrors.IsSitePartner);
+        }
+
+        if (partnerStatus == ConsortiumPartnerStatus.ApplicationPartner)
+        {
+            OperationResult.ThrowValidationError(nameof(isConfirmed), ConsortiumValidationErrors.IsApplicationPartner);
+        }
 
         _removeRequests.Add(organisationId);
         _members.Remove(member);
@@ -137,18 +154,14 @@ public class ConsortiumEntity : DomainEntity, IConsortiumEntity
         Id = newId;
     }
 
-    private async Task<bool> IsPartOfConsortium(
+    private bool IsPartOfThisConsortium(InvestmentsOrganisation organisation) =>
+        organisation.Id == LeadPartner.Id || Members.Any(x => x.Id == organisation.Id);
+
+    private async Task<bool> IsPartOfOtherConsortium(
         InvestmentsOrganisation organisation,
         IIsPartOfConsortium isPartOfConsortium,
         CancellationToken cancellationToken)
-    {
-        if (organisation.Id == LeadPartner.Id || Members.Any(x => x.Id == organisation.Id))
-        {
-            return true;
-        }
-
-        return await isPartOfConsortium.IsPartOfConsortiumForProgramme(Programme.Id, organisation.Id, cancellationToken);
-    }
+        => await isPartOfConsortium.IsPartOfConsortiumForProgramme(Programme.Id, organisation.Id, cancellationToken);
 
     private ConsortiumMember GetMember(OrganisationId organisationId) => Members.SingleOrDefault(x => x.Id == organisationId) ??
                                                                          throw new NotFoundException(nameof(ConsortiumMember), organisationId);

@@ -777,6 +777,7 @@ namespace DataverseModel
 			public const string invln_addressverificationtype = "invln_addressverificationtype";
 			public const string invln_addressverificationtypeName = "invln_addressverificationtypename";
 			public const string invln_ahpcontract_Partner_account = "invln_ahpcontract_Partner_account";
+			public const string invln_ahpproject_AccountId_account = "invln_ahpproject_AccountId_account";
 			public const string invln_Comments = "invln_comments";
 			public const string invln_consortium_LeadPartner_account = "invln_consortium_LeadPartner_account";
 			public const string invln_consortiummember_Partner_account = "invln_consortiummember_Partner_account";
@@ -7489,6 +7490,26 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_ahpcontract_Partner_account");
 				this.SetRelatedEntities<DataverseModel.invln_ahpcontract>("invln_ahpcontract_Partner_account", null, value);
 				this.OnPropertyChanged("invln_ahpcontract_Partner_account");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N invln_ahpproject_AccountId_account
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_ahpproject_AccountId_account")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_ahpproject> invln_ahpproject_AccountId_account
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_ahpproject>("invln_ahpproject_AccountId_account", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_ahpproject_AccountId_account");
+				this.SetRelatedEntities<DataverseModel.invln_ahpproject>("invln_ahpproject_AccountId_account", null, value);
+				this.OnPropertyChanged("invln_ahpproject_AccountId_account");
 			}
 		}
 		

@@ -51,7 +51,7 @@ public class ProjectRepository : IProjectRepository
         }
 
         var dto = _crmMapper.ToDto(project, userAccount);
-        var projectId = await _crmContext.Save(dto, userAccount, cancellationToken);
+        var projectId = await _crmContext.Save(dto, userAccount.UserGlobalId.Value, userAccount.SelectedOrganisationId().Value, cancellationToken);
         if (project.Id.IsNew)
         {
             project.New(FrontDoorProjectId.From(projectId));

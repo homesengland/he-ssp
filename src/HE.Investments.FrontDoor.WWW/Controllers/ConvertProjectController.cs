@@ -25,17 +25,22 @@ public class ConvertProjectController : Controller
     [HttpGet]
     public async Task<IActionResult> Redirect([FromQuery] string fdProjectId, [FromQuery] ApplicationType applicationType, CancellationToken cancellationToken)
     {
-        if (await _featureManager.IsEnabledAsync(FeatureFlags.StayInCurrentApplication, cancellationToken))
-        {
-            return RedirectToAction("Index", "Projects");
-        }
-
         var urlWithRouteData = applicationType switch
         {
             ApplicationType.Loans => $"{_programmeUrlConfig.StartLoanApplication}?fdProjectId={fdProjectId}",
             ApplicationType.Ahp => $"{_programmeUrlConfig.StartAhpProject}?fdProjectId={fdProjectId}",
             _ => string.Empty,
         };
+
+        if (await _featureManager.IsEnabledAsync(FeatureFlags.StayInCurrentApplication, cancellationToken))
+        {
+            return applicationType switch
+            {
+                ApplicationType.Loans => Content($"Eligibility for Loan ({urlWithRouteData})"),
+                ApplicationType.Ahp => Content($"Eligibility for Ahp ({urlWithRouteData})"),
+                _ => Content("Not supported"),
+            };
+        }
 
         return Redirect(urlWithRouteData);
     }

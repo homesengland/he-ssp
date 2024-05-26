@@ -20,6 +20,6 @@ public class IsApplicationExistQueryHandler : IRequestHandler<IsApplicationExist
     {
         var account = await _accountUserContext.GetSelectedAccount();
 
-        return await _repository.IsExist(request.ApplicationId, account.SelectedOrganisationId(), cancellationToken);
+        return await _repository.IsExist(request.ApplicationId, account, cancellationToken);
     }
 }

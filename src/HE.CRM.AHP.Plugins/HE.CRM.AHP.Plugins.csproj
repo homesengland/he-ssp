@@ -86,6 +86,7 @@
       <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
     </Reference>
     <Reference Include="System.Web" />
+    <Reference Include="System.Workflow.Runtime" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -113,12 +114,14 @@
     <Compile Include="Handlers\CustomApi\Consortium\IsConsortiumExistForProgrammeAndOrganisation.cs" />
     <Compile Include="Handlers\CustomApi\Consortium\RemoveMemberFromConsortiumHandler.cs" />
     <Compile Include="Handlers\CustomApi\Consortium\RequestAddingMemberToConsortiumHandler.cs" />
+    <Compile Include="Handlers\CustomApi\Consortium\IsSiteOrApplicationPartnerPlugin.cs" />
     <Compile Include="Handlers\CustomApi\Consortium\SetConsortiumHandler.cs" />
     <Compile Include="Handlers\CustomApi\DeleteDeliveryPhaseHandler.cs" />
     <Compile Include="Handlers\CustomApi\DeleteHomeTypeHandler.cs" />
     <Compile Include="Handlers\CustomApi\FrontDoor\GetAhpProjectHandler.cs" />
     <Compile Include="Handlers\CustomApi\FrontDoor\GetAhpProjectsHandler.cs" />
     <Compile Include="Handlers\CustomApi\FrontDoor\SetAhpProjectHandler.cs" />
+    <Compile Include="Handlers\CustomApi\FrontDoor\GetSiteApplicationHandler.cs" />
     <Compile Include="Handlers\CustomApi\GetAbsoluteAhpApplicationFileLocationHandler.cs" />
     <Compile Include="Handlers\CustomApi\GetAhpApplicationFileLocationHandler.cs" />
     <Compile Include="Handlers\CustomApi\GetApplicationHandler.cs" />
@@ -143,6 +146,7 @@
     <Compile Include="Handlers\CustomApi\Site\GetSingleSiteHandler.cs" />
     <Compile Include="Handlers\CustomApi\Site\SetSiteHandler.cs" />
     <Compile Include="Handlers\DeliveryPhase\AcceptOrRejectPaymentProportion.cs" />
+    <Compile Include="Handlers\DeliveryPhase\ChangeNumberOfHomes.cs" />
     <Compile Include="Handlers\DeliveryPhase\SendNotificationUrbWantsAdditionalPaymentsForPhaseHandler.cs" />
     <Compile Include="Handlers\HomeType\CalculatePercentageValueOfNDSSStandardHandler.cs" />
     <Compile Include="Handlers\HomeType\CreateDocumentLocationOnCreateHandler.cs" />
@@ -222,6 +226,7 @@
     <Compile Include="Plugins\CustomApi\Consortium\GetConsortiumsByOrganisationPlugin.cs" />
     <Compile Include="Plugins\CustomApi\Consortium\GetConsortiumPlugin.cs" />
     <Compile Include="Plugins\CustomApi\Consortium\IsConsortiumExist.cs" />
+    <Compile Include="Plugins\CustomApi\Consortium\IsSiteOrApplicationPartnerHandler.cs" />
     <Compile Include="Plugins\CustomApi\Consortium\RemoveMemberFromConsortiumPlugin.cs" />
     <Compile Include="Plugins\CustomApi\Consortium\RequestAddingMemberToConsortiumPlugin.cs" />
     <Compile Include="Plugins\CustomApi\Consortium\SetConsortiumPlugin.cs" />
@@ -230,6 +235,7 @@
     <Compile Include="Plugins\CustomApi\FrontDoor\GetAhpProjectPlugin.cs" />
     <Compile Include="Plugins\CustomApi\FrontDoor\GetAhpProjectsPlugin.cs" />
     <Compile Include="Plugins\CustomApi\FrontDoor\SetAhpProjectPlugin.cs" />
+    <Compile Include="Plugins\CustomApi\FrontDoor\GetSiteApplicationPlugin.cs" />
     <Compile Include="Plugins\CustomApi\GetMultipleDeliveryPhasePlugin.cs" />
     <Compile Include="Plugins\CustomApi\GetMultipleProgrammePlugin.cs" />
     <Compile Include="Plugins\CustomApi\GetSingleDeliveryPhasePlugin.cs" />
@@ -329,9 +335,9 @@
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
-  <Import Project="..\HE.Common.IntegrationModel\HE.Common.IntegrationModel.projitems" Label="Shared" />
-  <Import Project="..\HE.CRM.Common\HE.CRM.Common.projitems" Label="Shared" />
   <Import Project="..\HE.CRM.Model\HE.CRM.Model.projitems" Label="Shared" />
+  <Import Project="..\HE.CRM.Common\HE.CRM.Common.projitems" Label="Shared" />
+  <Import Project="..\HE.Common.IntegrationModel\HE.Common.IntegrationModel.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\System.Text.Json.6.0.2\build\System.Text.Json.targets" Condition="Exists('..\packages\System.Text.Json.6.0.2\build\System.Text.Json.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

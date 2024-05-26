@@ -62,7 +62,7 @@ public class MarkHomeTypesAsInProgressEventHandler :
 
         await _sectionStatusChanger.ChangeSectionStatus(
             applicationId,
-            account.SelectedOrganisationId(),
+            account,
             SectionType.HomeTypes,
             SectionStatus.InProgress,
             cancellationToken);

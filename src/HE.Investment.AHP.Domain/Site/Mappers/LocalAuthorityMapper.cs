@@ -1,9 +1,7 @@
-extern alias Org;
-
 using HE.Common.IntegrationModel.PortalIntegrationModel;
-using Org::HE.Investments.Organisation.LocalAuthorities.ValueObjects;
+using HE.Investments.Organisation.LocalAuthorities.ValueObjects;
 using ContractLocalAuthority = HE.Investments.Common.Contract.LocalAuthority;
-using OrganisationLocalAuthority = Org::HE.Investments.Organisation.LocalAuthorities.ValueObjects.LocalAuthority;
+using OrganisationLocalAuthority = HE.Investments.Organisation.LocalAuthorities.ValueObjects.LocalAuthority;
 
 namespace HE.Investment.AHP.Domain.Site.Mappers;
 

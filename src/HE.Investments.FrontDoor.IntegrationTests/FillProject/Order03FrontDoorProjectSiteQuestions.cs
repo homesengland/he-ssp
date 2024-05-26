@@ -1,5 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
+using AngleSharp;
 using FluentAssertions;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.WWW.Extensions;
@@ -517,7 +518,8 @@ public class Order03FrontDoorProjectSiteQuestions : FrontDoorIntegrationTest
         var nextPage = await TestClient.SubmitButton(continueButton);
 
         // then
-        nextPage
-            .UrlWithoutQueryNotEndsWith(ProjectPagesUrl.YouNeedToSpeakToHomesEngland(ProjectData.Id));
+        var displayedText = nextPage.GetFirstPreformattedText();
+        displayedText.Should().Contain("Eligibility for Loan");
+        Output.WriteLine(displayedText);
     }
 }

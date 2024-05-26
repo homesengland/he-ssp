@@ -1,6 +1,8 @@
 using System.Diagnostics.CodeAnalysis;
+using HE.Investment.AHP.Contract.Project;
 using HE.Investment.AHP.WWW.Models.Application;
 using HE.Investment.AHP.WWW.Views.Application;
+using HE.Investment.AHP.WWW.Views.Project.Const;
 using HE.Investments.AHP.IntegrationTests.Extensions;
 using HE.Investments.AHP.IntegrationTests.Framework;
 using HE.Investments.AHP.IntegrationTests.Pages;
@@ -86,8 +88,8 @@ public class Order06Submit : AhpIntegrationTest
 
         // then
         mainPage
-            .UrlEndWith(MainPagesUrl.ApplicationList)
-            .HasTitle(ApplicationPageTitles.ApplicationList)
+            .UrlEndWith(ProjectPagesUrl.ProjectApplicationList(ApplicationData.ProjectId))
+            .HasTitle(ProjectPageTitles.ApplicationList(ApplicationData.ProjectName))
             .HasApplicationInStatus(ApplicationData.ApplicationId, ApplicationStatus.ApplicationSubmitted);
     }
 }

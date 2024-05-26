@@ -60,7 +60,7 @@ public abstract class DeliveryCommandHandlerBase<TCommand> : DeliveryCommandHand
         var deliveryPhases = await _repository.GetByApplicationId(request.ApplicationId, account, cancellationToken);
         Perform(deliveryPhases, request);
 
-        await _repository.Save(deliveryPhases, account.SelectedOrganisationId(), cancellationToken);
+        await _repository.Save(deliveryPhases, account, cancellationToken);
         return OperationResult.Success();
     }
 

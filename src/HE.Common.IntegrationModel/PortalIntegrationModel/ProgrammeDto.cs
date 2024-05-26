@@ -8,6 +8,7 @@ namespace HE.Common.IntegrationModel.PortalIntegrationModel
 {
     public class ProgrammeDto
     {
+        public string Id { get; set; }
         public string name { get; set; }
         public System.DateTime? startOn { get; set; }
         public System.DateTime? endOn { get; set; }
@@ -20,6 +21,4 @@ namespace HE.Common.IntegrationModel.PortalIntegrationModel
         public List<MilestoneFrameworkItemDto> milestoneFrameworkItem { get; set; }
     }
 }
-
-
 

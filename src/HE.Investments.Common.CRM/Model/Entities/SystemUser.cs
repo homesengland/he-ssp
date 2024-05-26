@@ -456,6 +456,7 @@ namespace HE.Investments.Common.CRM.Model
 			public const string invln_account_ProviderManagementLead_systemuser = "invln_account_ProviderManagementLead_systemuser";
 			public const string invln_ahglocalauthorities_GrowthManager_systemu = "invln_ahglocalauthorities_GrowthManager_systemu";
 			public const string invln_ahpcontract_ContractLead_systemuser = "invln_ahpcontract_ContractLead_systemuser";
+			public const string invln_deliveryphase_Approvedby_systemuser = "invln_deliveryphase_Approvedby_systemuser";
 			public const string invln_externalcomms_systemuser_createdby = "invln_externalcomms_systemuser_createdby";
 			public const string invln_externalcomms_systemuser_createdonbehalfby = "invln_externalcomms_systemuser_createdonbehalfby";
 			public const string invln_externalcomms_systemuser_modifiedby = "invln_externalcomms_systemuser_modifiedby";
@@ -4520,6 +4521,26 @@ namespace HE.Investments.Common.CRM.Model
 				this.OnPropertyChanging("invln_ahpcontract_ContractLead_systemuser");
 				this.SetRelatedEntities<HE.Investments.Common.CRM.Model.invln_ahpcontract>("invln_ahpcontract_ContractLead_systemuser", null, value);
 				this.OnPropertyChanged("invln_ahpcontract_ContractLead_systemuser");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N invln_deliveryphase_Approvedby_systemuser
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_deliveryphase_Approvedby_systemuser")]
+		public System.Collections.Generic.IEnumerable<HE.Investments.Common.CRM.Model.invln_DeliveryPhase> invln_deliveryphase_Approvedby_systemuser
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<HE.Investments.Common.CRM.Model.invln_DeliveryPhase>("invln_deliveryphase_Approvedby_systemuser", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_deliveryphase_Approvedby_systemuser");
+				this.SetRelatedEntities<HE.Investments.Common.CRM.Model.invln_DeliveryPhase>("invln_deliveryphase_Approvedby_systemuser", null, value);
+				this.OnPropertyChanged("invln_deliveryphase_Approvedby_systemuser");
 			}
 		}
 		

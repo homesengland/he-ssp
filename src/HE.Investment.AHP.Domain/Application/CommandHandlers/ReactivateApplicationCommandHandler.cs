@@ -25,7 +25,7 @@ public class ReactivateApplicationCommandHandler : IRequestHandler<ReactivateApp
 
         application.Reactivate();
 
-        await _applicationRepository.Save(application, account.SelectedOrganisationId(), cancellationToken);
+        await _applicationRepository.Save(application, account, cancellationToken);
         await _applicationRepository.DispatchEvents(application, cancellationToken);
 
         return OperationResult.Success();

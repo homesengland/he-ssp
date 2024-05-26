@@ -108,7 +108,7 @@ namespace HE.CRM.Common.DtoMapping
             return applicationToReturn;
         }
 
-        public static AhpApplicationDto MapRegularEntityToDto(invln_scheme application, string contactExternalId = null)
+        public static AhpApplicationDto MapRegularEntityToDto(invln_scheme application, string contactExternalId = null, invln_Sites site = null)
         {
             var applicationDtoToReturn = new AhpApplicationDto()
             {
@@ -162,8 +162,13 @@ namespace HE.CRM.Common.DtoMapping
                 ownerOfTheLandDuringDevelopmentName = application.invln_OwneroftheLandName,
                 ownerOfTheHomesAfterCompletionId = application.invln_OwneroftheHomes?.Id.ToString(),
                 ownerOfTheHomesAfterCompletionName = application.invln_OwneroftheHomesName,
-                applicationPartnerConfirmation = application.invln_partnerconfirmation
+                applicationPartnerConfirmation = application.invln_partnerconfirmation,
             };
+            if (site.invln_AHPProjectId != null)
+            {
+                applicationDtoToReturn.fdProjectId = site.invln_AHPProjectId.Id.ToString();
+            }
+
             if (application.invln_programmelookup != null)
             {
                 applicationDtoToReturn.programmeId = application.invln_programmelookup.Id.ToString();

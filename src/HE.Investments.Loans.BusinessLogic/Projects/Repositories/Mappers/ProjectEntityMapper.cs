@@ -1,6 +1,3 @@
-extern alias Org;
-
-using System.Globalization;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investments.Common.CRM.Mappers;
 using HE.Investments.Common.Extensions;
@@ -10,7 +7,7 @@ using HE.Investments.Loans.BusinessLogic.LoanApplication.Repositories.Mapper;
 using HE.Investments.Loans.BusinessLogic.Projects.Entities;
 using HE.Investments.Loans.BusinessLogic.Projects.ValueObjects;
 using HE.Investments.Loans.Contract.Application.ValueObjects;
-using LocalAuthorityMapper = Org::HE.Investments.Organisation.LocalAuthorities.Mappers.LocalAuthorityMapper;
+using HE.Investments.Organisation.LocalAuthorities.Mappers;
 
 namespace HE.Investments.Loans.BusinessLogic.Projects.Repositories.Mappers;
 
@@ -38,7 +35,7 @@ internal static class ProjectEntityMapper
             PublicSectorGrantFundingMapper.MapFromCrm(siteDetailsDto),
             siteDetailsDto.existingLegalCharges.IsProvided() ? new ChargesDebt(siteDetailsDto.existingLegalCharges ?? false, siteDetailsDto.existingLegalChargesInformation) : null,
             siteDetailsDto.affordableHousing.IsProvided() ? new AffordableHomes(siteDetailsDto.affordableHousing.MapToCommonResponse()) : null,
-            ApplicationStatusMapper.MapToPortalStatus(siteDetailsDto.loanApplicationStatus),
+            LoanApplicationStatusMapper.MapToPortalStatus(siteDetailsDto.loanApplicationStatus),
             PlanningPermissionStatusMapper.Map(siteDetailsDto.planningPermissionStatus),
             LocalAuthorityMapper.MapToLocalAuthority(siteDetailsDto.localAuthority?.onsCode, siteDetailsDto.localAuthority?.name));
     }

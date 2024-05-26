@@ -6,4 +6,4 @@ public record ProjectPrefillData(
     FrontDoorProjectId Id,
     string Name,
     IReadOnlyCollection<SupportActivityType> SupportActivities,
-    FrontDoorSiteId? SiteId);
+    IList<SitePrefillData>? Sites);

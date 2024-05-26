@@ -1,6 +1,5 @@
 using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract.Validators;
-using HE.Investments.Common.Services.Notifications;
 using HE.Investments.Loans.BusinessLogic.Projects.Notifications;
 using HE.Investments.Loans.BusinessLogic.Projects.Repositories;
 using HE.Investments.Loans.BusinessLogic.Projects.ValueObjects;

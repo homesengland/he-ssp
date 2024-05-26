@@ -1,11 +1,9 @@
-extern alias Org;
-
 using HE.Investments.AHP.Consortium.Contract;
 using HE.Investments.AHP.Consortium.Contract.Queries;
 using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Extensions;
+using HE.Investments.Organisation.Services;
 using MediatR;
-using Org::HE.Investments.Organisation.Services;
 
 namespace HE.Investments.AHP.Consortium.Domain.QueryHandlers;
 

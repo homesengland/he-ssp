@@ -1,5 +1,6 @@
 using HE.Investment.AHP.WWW;
 using HE.Investments.AHP.IntegrationTests.Crm;
+using HE.Investments.AHP.IntegrationTests.Prerequisites;
 using HE.Investments.IntegrationTestsFramework;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -12,5 +13,6 @@ public class AhpIntegrationTestFixture : IntegrationTestFixture<Program>
     protected override void ConfigureTestServices(IServiceCollection services)
     {
         services.AddScoped<AhpCrmContext>();
+        services.AddScoped<IIntegrationTestPrerequisite, IsConsortiumLeadPartnerPrerequisite>();
     }
 }

@@ -4,7 +4,7 @@ using HE.Investments.Common.CRM.Mappers;
 namespace HE.Investments.Loans.BusinessLogic.Tests.Application.Mappers;
 
 [TestClass]
-public class ApplicationStatusMapperTests
+public class LoanApplicationStatusMapperTests
 {
     [TestMethod]
     [DataRow(ApplicationStatus.Draft, 858110000)]
@@ -29,7 +29,7 @@ public class ApplicationStatusMapperTests
     [DataRow(ApplicationStatus.New, 858110018)]
     public void MapPortalStatus_ToCRMStatus(ApplicationStatus status, int expectedStatus)
     {
-        var crmStatus = ApplicationStatusMapper.MapToCrmStatus(status);
+        var crmStatus = LoanApplicationStatusMapper.MapToCrmStatus(status);
 
         crmStatus.Should().Be(expectedStatus);
     }
@@ -57,7 +57,7 @@ public class ApplicationStatusMapperTests
     [DataRow(858110018, ApplicationStatus.New)]
     public void MapCrmStatus_ToPortalStatus(int crmStatus, ApplicationStatus expectedStatus)
     {
-        var portalStatus = ApplicationStatusMapper.MapToPortalStatus(crmStatus);
+        var portalStatus = LoanApplicationStatusMapper.MapToPortalStatus(crmStatus);
 
         portalStatus.Should().Be(expectedStatus);
     }

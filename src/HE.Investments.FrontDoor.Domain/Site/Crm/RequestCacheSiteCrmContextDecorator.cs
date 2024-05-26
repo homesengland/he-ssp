@@ -32,9 +32,9 @@ internal sealed class RequestCacheSiteCrmContextDecorator : ISiteCrmContext
             async () => await _decorated.GetSite(projectId, siteId, userAccount, cancellationToken)))!;
     }
 
-    public async Task<string> Save(string projectId, FrontDoorProjectSiteDto dto, UserAccount userAccount, CancellationToken cancellationToken)
+    public async Task<string> Save(string projectId, FrontDoorProjectSiteDto dto, string userGlobalId, string organisationId, CancellationToken cancellationToken)
     {
-        dto.SiteId = await _decorated.Save(projectId, dto, userAccount, cancellationToken);
+        dto.SiteId = await _decorated.Save(projectId, dto, userGlobalId, organisationId, cancellationToken);
         _siteCache.ReplaceCache(dto.SiteId, dto);
         _sitesCache.Purge();
 

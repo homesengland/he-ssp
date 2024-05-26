@@ -27,7 +27,7 @@
                 ? "Your applications will appear here once added."
                 : "This includes applications awaiting decision, not approved or pending approval.";
 
-            var items = new ListCardModel(Model.ProgrammeName, applications, "Applications", description, Url.Action("Applications", new { projectId = Model.ProjectId }));
+            var items = new ListCardModel(Model.ProgrammeName, applications, "Applications", description, "View all applications", Url.Action("Applications", new { projectId = Model.ProjectId }));
 
             <vc:list-card model="@items"></vc:list-card>
         }

@@ -42,13 +42,13 @@ public class CreateApplicationCommandHandler : IRequestHandler<CreateApplication
 
         var applicationPartners = await GetApplicationPartners(request.SiteId, account, cancellationToken);
         var applicationToCreate = ApplicationEntity.New(
-            new FrontDoorProjectId(MockedProjectId.ProjectId),
+            new FrontDoorProjectId(LegacyProject.ProjectId),
             request.SiteId,
             name,
             new ApplicationTenure(request.Tenure),
             applicationPartners,
             new ApplicationStateFactory(account));
-        var application = await _repository.Save(applicationToCreate, account.SelectedOrganisationId(), cancellationToken);
+        var application = await _repository.Save(applicationToCreate, account, cancellationToken);
 
         return new OperationResult<AhpApplicationId>(application.Id);
     }
@@ -61,6 +61,13 @@ public class CreateApplicationCommandHandler : IRequestHandler<CreateApplication
         }
 
         var site = await _siteRepository.GetSite(siteId, userAccount, cancellationToken);
+
+        // TODO: Fix when Site Completion will be part of the flow
+        if (!site.SitePartners.IsAnswered())
+        {
+            return ApplicationPartners.ConfirmedPartner(userAccount.SelectedOrganisation());
+        }
+
         return ApplicationPartners.FromSitePartners(site.SitePartners);
     }
 }

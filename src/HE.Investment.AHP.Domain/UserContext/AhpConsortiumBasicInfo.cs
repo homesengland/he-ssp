@@ -8,4 +8,6 @@ public record AhpConsortiumBasicInfo(ConsortiumId ConsortiumId, bool IsLeadPartn
     public bool HasNoConsortium => ConsortiumId == ConsortiumId.From(Guid.Empty.ToString());
 
     public static AhpConsortiumBasicInfo NoConsortium => new(ConsortiumId.From(Guid.Empty.ToString()), false, []);
+
+    public string? GetConsortiumIdAsString() => HasNoConsortium ? null : ConsortiumId.Value;
 }

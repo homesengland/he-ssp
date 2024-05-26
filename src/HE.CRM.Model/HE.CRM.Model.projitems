@@ -58,10 +58,12 @@
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getsingleprogramme.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getsinglesite.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getsinglesitedetails.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getsiteapplications.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_gettemporaryportaldata.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_gettypeofhomeslist.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_invitecontacttojoinexistingorganisation.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_IsConsortiumExistForProgrammeAndOrganisation.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_issiteorapplicationpartner.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_linkcontactwithorganization.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_requestaddingmembertoconsortium.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_requesttoremovemember.cs" />

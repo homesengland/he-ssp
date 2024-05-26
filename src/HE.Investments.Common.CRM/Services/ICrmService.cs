@@ -12,7 +12,7 @@ public interface ICrmService
         where TRequest : OrganizationRequest
         where TResponse : OrganizationResponse;
 
-    Task<bool> ExecuteAsync<TRequest, TResponse>(TRequest request, Func<TResponse, bool> getResponse, CancellationToken cancellationToken)
+    Task<TResult> ExecuteAsync<TRequest, TResponse, TResult>(TRequest request, Func<TResponse, TResult> getResponse, CancellationToken cancellationToken)
         where TRequest : OrganizationRequest
         where TResponse : OrganizationResponse;
 }

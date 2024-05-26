@@ -35,7 +35,7 @@ public class CompleteDeliverySectionCommandHandler : DeliveryCommandHandlerBase,
 
         if (!request.IsCheckOnly)
         {
-            await _repository.Save(deliveryPhases, account.SelectedOrganisationId(), cancellationToken);
+            await _repository.Save(deliveryPhases, account, cancellationToken);
         }
 
         return OperationResult.Success();

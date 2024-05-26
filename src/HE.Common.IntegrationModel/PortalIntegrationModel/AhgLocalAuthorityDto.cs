@@ -1,6 +1,5 @@
 namespace HE.Common.IntegrationModel.PortalIntegrationModel
 {
-
     public class AhgLocalAuthorityDto
     {
         public string id { get; set; }

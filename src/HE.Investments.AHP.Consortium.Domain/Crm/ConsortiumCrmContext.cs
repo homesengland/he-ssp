@@ -1,9 +1,7 @@
-extern alias Org;
-
+using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investments.Common.CRM.Model;
 using HE.Investments.Common.CRM.Services;
 using HE.Investments.Common.Extensions;
-using Org::HE.Common.IntegrationModel.PortalIntegrationModel;
 
 namespace HE.Investments.AHP.Consortium.Domain.Crm;
 
@@ -54,10 +52,24 @@ public class ConsortiumCrmContext : IConsortiumCrmContext
         };
 
         return await _service
-            .ExecuteAsync<invln_IsConsortiumExistForProgrammeAndOrganisationRequest, invln_IsConsortiumExistForProgrammeAndOrganisationResponse>(
+            .ExecuteAsync<invln_IsConsortiumExistForProgrammeAndOrganisationRequest, invln_IsConsortiumExistForProgrammeAndOrganisationResponse, bool>(
                 request,
                 x => x.invln_isconsortiumexist,
                 cancellationToken);
+    }
+
+    public async Task<int> GetConsortiumPartnerStatus(string consortiumId, string organisationId, CancellationToken cancellationToken)
+    {
+        var request = new invln_issiteorapplicationpartnerRequest
+        {
+            invln_consortiumid = consortiumId.ToGuidAsString(),
+            invln_organizationid = organisationId.ToGuidAsString(),
+        };
+
+        return await _service.ExecuteAsync<invln_issiteorapplicationpartnerRequest, invln_issiteorapplicationpartnerResponse, int>(
+            request,
+            x => x.invln_consortiumpartnerstatus,
+            cancellationToken);
     }
 
     public async Task<string> CreateConsortium(

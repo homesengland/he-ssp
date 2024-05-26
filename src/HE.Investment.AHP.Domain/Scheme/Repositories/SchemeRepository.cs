@@ -1,5 +1,3 @@
-extern alias Org;
-
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Domain.Application.Crm;
@@ -10,7 +8,6 @@ using HE.Investment.AHP.Domain.Documents.Services;
 using HE.Investment.AHP.Domain.Scheme.Entities;
 using HE.Investment.AHP.Domain.Scheme.ValueObjects;
 using HE.Investments.Account.Shared.User;
-using HE.Investments.Common.Contract;
 using HE.Investments.Common.Infrastructure.Events;
 
 namespace HE.Investment.AHP.Domain.Scheme.Repositories;
@@ -42,7 +39,7 @@ public class SchemeRepository : ISchemeRepository
         var organisationId = userAccount.SelectedOrganisationId().Value;
         var application = userAccount.CanViewAllApplications()
             ? await _crmContext.GetOrganisationApplicationById(id.Value, organisationId, cancellationToken)
-            : await _crmContext.GetUserApplicationById(id.Value, organisationId, cancellationToken);
+            : await _crmContext.GetUserApplicationById(id.Value, organisationId, userAccount.UserGlobalId.ToString(), cancellationToken);
         var applicationBasicInfo = await _applicationRepository.GetApplicationBasicInfo(id, userAccount, cancellationToken);
 
         UploadedFile? file = null;
@@ -56,14 +53,15 @@ public class SchemeRepository : ISchemeRepository
         return CreateEntity(application, applicationBasicInfo, file);
     }
 
-    public async Task<SchemeEntity> Save(SchemeEntity entity, OrganisationId organisationId, CancellationToken cancellationToken)
+    public async Task<SchemeEntity> Save(SchemeEntity entity, UserAccount userAccount, CancellationToken cancellationToken)
     {
         if (!entity.IsModified)
         {
             return entity;
         }
 
-        var dto = await _crmContext.GetOrganisationApplicationById(entity.Application.Id.Value, organisationId.Value, cancellationToken);
+        var organisationId = userAccount.SelectedOrganisationId().ToGuidAsString();
+        var dto = await _crmContext.GetOrganisationApplicationById(entity.Application.Id.Value, organisationId, cancellationToken);
         dto.schemeInformationSectionCompletionStatus = SectionStatusMapper.ToDto(entity.Status);
         dto.fundingRequested = entity.Funding.RequiredFunding;
         dto.noOfHomes = entity.Funding.HousesToDeliver;
@@ -77,7 +75,7 @@ public class SchemeRepository : ISchemeRepository
         dto.meetingLocalHousingNeed = entity.HousingNeeds.MeetingLocalHousingNeed;
         dto.sharedOwnershipSalesRisk = entity.SalesRisk.Value;
 
-        await _crmContext.Save(dto, organisationId.Value, cancellationToken);
+        await _crmContext.Save(dto, organisationId, userAccount.UserGlobalId.ToString(), cancellationToken);
         await entity.StakeholderDiscussions.SaveChanges(entity.Application.Id, _fileService, cancellationToken);
         await _eventDispatcher.Publish(entity, cancellationToken);
 

@@ -16,7 +16,7 @@ public interface IApplicationRepository
 
     Task<bool> IsNameExist(ApplicationName applicationName, OrganisationId organisationId, CancellationToken cancellationToken);
 
-    Task<bool> IsExist(AhpApplicationId applicationId, OrganisationId organisationId, CancellationToken cancellationToken);
+    Task<bool> IsExist(AhpApplicationId applicationId, UserAccount userAccount, CancellationToken cancellationToken);
 
     Task<ApplicationBasicInfo> GetApplicationBasicInfo(AhpApplicationId id, UserAccount userAccount, CancellationToken cancellationToken);
 
@@ -33,7 +33,7 @@ public interface IApplicationRepository
         PaginationRequest paginationRequest,
         CancellationToken cancellationToken);
 
-    Task<ApplicationEntity> Save(ApplicationEntity application, OrganisationId organisationId, CancellationToken cancellationToken);
+    Task<ApplicationEntity> Save(ApplicationEntity application, UserAccount userAccount, CancellationToken cancellationToken);
 
     Task DispatchEvents(DomainEntity domainEntity, CancellationToken cancellationToken);
 }

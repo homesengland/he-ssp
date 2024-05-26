@@ -1,6 +1,5 @@
-extern alias Org;
-
 using FluentAssertions;
+using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investments.Account.Api.Contract.User;
 using HE.Investments.Account.Domain.Tests.UserOrganisation.TestDataBuilders;
 using HE.Investments.Account.Domain.UserOrganisation.Repositories;
@@ -8,11 +7,10 @@ using HE.Investments.Account.Shared;
 using HE.Investments.Account.Shared.User.ValueObjects;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Infrastructure.Events;
+using HE.Investments.Organisation.Services;
 using HE.Investments.TestsUtils.TestFramework;
 using Microsoft.PowerPlatform.Dataverse.Client;
 using Moq;
-using Org::HE.Common.IntegrationModel.PortalIntegrationModel;
-using Org::HE.Investments.Organisation.Services;
 using Xunit;
 
 namespace HE.Investments.Account.Domain.Tests.UserOrganisation.Repositories.OrganisationUsersRepositoryTests;

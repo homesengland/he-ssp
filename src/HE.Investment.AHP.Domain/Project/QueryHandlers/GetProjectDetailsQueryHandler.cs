@@ -2,7 +2,6 @@ using HE.Investment.AHP.Contract.Project;
 using HE.Investment.AHP.Contract.Project.Queries;
 using HE.Investment.AHP.Domain.Programme;
 using HE.Investment.AHP.Domain.Project.Repositories;
-using HE.Investment.AHP.Domain.Project.ValueObjects;
 using HE.Investment.AHP.Domain.UserContext;
 using HE.Investments.Common.Contract.Pagination;
 using HE.Investments.Common.Extensions;
@@ -31,7 +30,7 @@ public class GetProjectDetailsQueryHandler : IRequestHandler<GetProjectDetailsQu
     public async Task<ProjectDetailsModel> Handle(GetProjectDetailsQuery request, CancellationToken cancellationToken)
     {
         var userAccount = await _userContext.GetSelectedAccount();
-        var project = await _projectRepository.GetProject(request.ProjectId, userAccount, cancellationToken);
+        var project = await _projectRepository.GetProjectApplications(request.ProjectId, userAccount, cancellationToken);
 
         var applications = project.Applications
             .OrderByDescending(x => x.LastModificationOn)

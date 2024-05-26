@@ -1,5 +1,3 @@
-extern alias Org;
-
 using HE.Investment.AHP.Domain.Delivery.ValueObjects;
 using HE.Investment.AHP.Domain.Programme.Config;
 using HE.Investment.AHP.Domain.Programme.Crm;

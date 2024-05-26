@@ -12,7 +12,7 @@ namespace HE.Investment.AHP.WWW.Views.Shared.Components.SitesTable;
 
 public class SitesTable : ViewComponent
 {
-    public Task<IViewComponentResult> InvokeAsync(PaginationResult<SiteBasicModel> sites, string ahpProjectId)
+    public Task<IViewComponentResult> InvokeAsync(PaginationResult<SiteBasicModel> sites, string projectId)
     {
         var tableHeaders = new List<TableHeaderViewModel>
         {
@@ -36,7 +36,7 @@ public class SitesTable : ViewComponent
 
         var rows = new PaginationResult<TableRowViewModel>(applicationsPage, sites.CurrentPage, sites.ItemsPerPage, sites.TotalItems);
 
-        return Task.FromResult<IViewComponentResult>(View("SitesTable", (tableHeaders, rows, ahpProjectId)));
+        return Task.FromResult<IViewComponentResult>(View("SitesTable", (tableHeaders, rows, projectId)));
     }
 
     private static DynamicComponentViewModel CreateLinkComponent(SiteBasicModel site)

@@ -1,5 +1,4 @@
 using HE.Common.IntegrationModel.PortalIntegrationModel;
-using HE.Investments.Account.Shared.User;
 using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.CRM.Model;
 using HE.Investments.Common.CRM.Serialization;
@@ -87,12 +86,12 @@ public class ProjectCrmContext : IProjectCrmContext
         return bool.TryParse(response, out var result) && result;
     }
 
-    public async Task<string> Save(FrontDoorProjectDto dto, UserAccount userAccount, CancellationToken cancellationToken)
+    public async Task<string> Save(FrontDoorProjectDto dto, string userGlobalId, string organisationId, CancellationToken cancellationToken)
     {
         var request = new invln_setfrontdoorprojectRequest
         {
-            invln_userid = userAccount.UserGlobalId.ToString(),
-            invln_organisationid = userAccount.SelectedOrganisationId().ToGuidAsString(),
+            invln_userid = userGlobalId,
+            invln_organisationid = organisationId.ToGuidAsString(),
             invln_entityfieldsparameters = CrmResponseSerializer.Serialize(dto),
             invln_frontdoorprojectid = dto.ProjectId.IsProvided() ? dto.ProjectId.ToGuidAsString() : string.Empty,
             invln_usehetables = "true",

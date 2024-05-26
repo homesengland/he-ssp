@@ -5,7 +5,7 @@ using HE.Investments.Common.Contract;
 
 namespace HE.Investments.AHP.Consortium.Domain.Repositories;
 
-public interface IConsortiumRepository : IIsPartOfConsortium
+public interface IConsortiumRepository : IIsPartOfConsortium, IConsortiumPartnerStatusProvider
 {
     Task<ConsortiumEntity> GetConsortium(ConsortiumId consortiumId, UserAccount userAccount, CancellationToken cancellationToken);
 

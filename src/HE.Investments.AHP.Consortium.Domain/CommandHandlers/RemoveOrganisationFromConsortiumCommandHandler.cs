@@ -7,17 +7,19 @@ namespace HE.Investments.AHP.Consortium.Domain.CommandHandlers;
 
 public class RemoveOrganisationFromConsortiumCommandHandler : DraftConsortiumCommandHandlerBase<RemoveOrganisationFromConsortiumCommand>
 {
+    private readonly IConsortiumRepository _repository;
+
     public RemoveOrganisationFromConsortiumCommandHandler(
         IConsortiumRepository repository,
         IDraftConsortiumRepository draftConsortiumRepository,
         IAccountUserContext accountUserContext)
         : base(repository, draftConsortiumRepository, accountUserContext)
     {
+        _repository = repository;
     }
 
-    protected override Task Perform(IConsortiumEntity consortium, RemoveOrganisationFromConsortiumCommand request, CancellationToken cancellationToken)
+    protected override async Task Perform(IConsortiumEntity consortium, RemoveOrganisationFromConsortiumCommand request, CancellationToken cancellationToken)
     {
-        consortium.RemoveMember(request.OrganisationId, request.IsConfirmed);
-        return Task.CompletedTask;
+        await consortium.RemoveMember(request.OrganisationId, request.IsConfirmed, _repository, cancellationToken);
     }
 }

@@ -1,9 +1,7 @@
-extern alias Org;
-
 using HE.Investments.AHP.Consortium.Domain.ValueObjects;
 using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Domain.ValueObjects;
-using Org::HE.Investments.Organisation.Entities;
+using HE.Investments.Organisation.Entities;
 
 namespace HE.Investments.AHP.Consortium.Domain.Entities;
 

@@ -62,7 +62,7 @@ public class MarkDeliveryAsInProgressEventHandler :
 
         await _sectionStatusChanger.ChangeSectionStatus(
             applicationId,
-            account.SelectedOrganisationId(),
+            account,
             SectionType.DeliveryPhases,
             SectionStatus.InProgress,
             cancellationToken);

@@ -1,12 +1,5 @@
-using System.Globalization;
 using HE.Investments.Common.Contract;
-using HE.Investments.Common.Contract.Validators;
-using HE.Investments.Common.Domain;
 using HE.Investments.Common.Domain.ValueObjects;
-using HE.Investments.Common.Extensions;
-using HE.Investments.Common.Messages;
-using HE.Investments.Common.WWW.Extensions;
-using HE.Investments.Loans.BusinessLogic.Projects.Consts;
 
 namespace HE.Investments.Loans.BusinessLogic.Projects.ValueObjects;
 public class StartDate : DateValueObject

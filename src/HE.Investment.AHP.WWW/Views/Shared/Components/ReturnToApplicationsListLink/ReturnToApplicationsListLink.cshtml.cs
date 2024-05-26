@@ -4,8 +4,8 @@ namespace HE.Investment.AHP.WWW.Views.Shared.Components.ReturnToApplicationsList
 
 public class ReturnToApplicationsListLink : ViewComponent
 {
-    public IViewComponentResult Invoke()
+    public IViewComponentResult Invoke(string? projectId = null)
     {
-        return View("ReturnToApplicationsListLink");
+        return View("ReturnToApplicationsListLink", projectId);
     }
 }

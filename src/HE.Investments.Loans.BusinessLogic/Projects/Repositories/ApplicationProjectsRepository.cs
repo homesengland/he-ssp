@@ -5,7 +5,6 @@ using HE.Investments.Common.CRM.Model;
 using HE.Investments.Common.CRM.Serialization;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Infrastructure.Events;
-using HE.Investments.Common.Utils;
 using HE.Investments.Common.WWW.Extensions;
 using HE.Investments.Loans.BusinessLogic.LoanApplication.Repositories.Mapper;
 using HE.Investments.Loans.BusinessLogic.Projects.Entities;

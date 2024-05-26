@@ -25,5 +25,5 @@ public interface IHomeTypeRepository
         OrganisationId organisationId,
         CancellationToken cancellationToken);
 
-    Task Save(HomeTypesEntity homeTypes, OrganisationId organisationId, CancellationToken cancellationToken);
+    Task Save(HomeTypesEntity homeTypes, UserAccount userAccount, CancellationToken cancellationToken);
 }

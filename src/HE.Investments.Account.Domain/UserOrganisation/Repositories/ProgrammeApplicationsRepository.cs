@@ -12,7 +12,6 @@ namespace HE.Investments.Account.Domain.UserOrganisation.Repositories;
 public class ProgrammeApplicationsRepository : IProgrammeApplicationsRepository
 {
     private readonly ICrmService _crmService;
-
     private readonly IFeatureManager _featureManager;
 
     public ProgrammeApplicationsRepository(ICrmService crmService, IFeatureManager featureManager)
@@ -26,7 +25,7 @@ public class ProgrammeApplicationsRepository : IProgrammeApplicationsRepository
         return
         [
             new(ProgrammeType.Loans, await GetLoansApplications(userAccount, cancellationToken)),
-            new(ProgrammeType.Ahp, await GetAhpApplications(userAccount, cancellationToken)),
+            new(ProgrammeType.Ahp, await GetAhpProjects(userAccount, cancellationToken)),
         ];
     }
 
@@ -60,7 +59,7 @@ public class ProgrammeApplicationsRepository : IProgrammeApplicationsRepository
         return applications.Any();
     }
 
-    private async Task<IList<UserApplication>> GetLoansApplications(UserAccount userAccount, CancellationToken cancellationToken)
+    private async Task<IList<UserAppliance>> GetLoansApplications(UserAccount userAccount, CancellationToken cancellationToken)
     {
         var req = new invln_getloanapplicationsforaccountandcontactRequest
         {
@@ -76,31 +75,29 @@ public class ProgrammeApplicationsRepository : IProgrammeApplicationsRepository
             .OrderByDescending(application => application.createdOn ?? DateTime.MinValue)
             .ThenByDescending(x => x.LastModificationOn);
 
-        return loanApplications.Select(a => new UserApplication(
-                HeApplicationId.From(a.loanApplicationId),
+        return loanApplications.Select(a => new UserAppliance(
+                HeApplianceId.From(a.loanApplicationId),
                 a.ApplicationName,
-                ApplicationStatusMapper.MapToPortalStatus(a.loanApplicationExternalStatus)))
+                LoanApplicationStatusMapper.MapToPortalStatus(a.loanApplicationExternalStatus)))
             .ToList();
     }
 
-    private async Task<IList<UserApplication>> GetAhpApplications(UserAccount userAccount, CancellationToken cancellationToken)
+    private async Task<IList<UserAppliance>> GetAhpProjects(UserAccount userAccount, CancellationToken cancellationToken)
     {
-        var request = new invln_getmultipleahpapplicationsRequest
+        var request = new invln_getahpprojectsRequest
         {
-            inlvn_userid = userAccount.CanViewAllApplications() ? string.Empty : userAccount.UserGlobalId.ToString(),
-            invln_organisationid = userAccount.SelectedOrganisationId().ToGuidAsString(),
-            invln_appfieldstoretrieve = $"{nameof(invln_scheme.invln_schemename)},{nameof(invln_scheme.StatusCode)},{nameof(invln_ExternalStatus)}".ToLowerInvariant(),
+            invln_userid = userAccount.UserGlobalId.ToString(),
+            invln_accountid = userAccount.SelectedOrganisationId().ToGuidAsString(),
         };
 
-        var applications = await _crmService.ExecuteAsync<invln_getmultipleahpapplicationsRequest, invln_getmultipleahpapplicationsResponse, IList<AhpApplicationDto>>(
+        var projects = await _crmService.ExecuteAsync<invln_getahpprojectsRequest, invln_getahpprojectsResponse, PagedResponseDto<AhpProjectDto>>(
             request,
-            r => r.invln_ahpapplications,
+            r => string.IsNullOrEmpty(r.invln_listOfAhpProjects) ? "[]" : r.invln_listOfAhpProjects,
             cancellationToken);
 
-        return applications.Select(a => new UserApplication(
-                HeApplicationId.From(a.id),
-                a.name,
-                AhpApplicationStatusMapper.MapToPortalStatus(a.applicationStatus)))
+        return projects.items.Select(a => new UserAppliance(
+                HeApplianceId.From(a.AhpProjectId),
+                a.AhpProjectName))
             .ToList();
     }
 }

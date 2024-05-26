@@ -2,29 +2,31 @@ namespace HE.Investments.AHP.IntegrationTests.Pages;
 
 public static class SchemeInformationPagesUrl
 {
-    public const string SchemeDetails = "/scheme/start";
+    public static string SchemeDetails(string applicationId) => $"ahp/application/{applicationId}/scheme/start";
 
-    public const string FundingDetailsSuffix = "/scheme/funding";
+    public static string FundingDetails(string applicationId) => $"ahp/application/{applicationId}/scheme/funding";
 
-    public const string AffordabilitySuffix = "/scheme/affordability";
+    public static string PartnerDetails(string applicationId) => $"ahp/application/{applicationId}/scheme/partner-details";
 
-    public const string SalesRiskSuffix = "/scheme/sales-risk";
+    public static string DevelopingPartner(string applicationId) => $"ahp/application/{applicationId}/scheme/developing-partner";
 
-    public const string HousingNeedsSuffix = "/scheme/housing-needs";
+    public static string DevelopingPartnerConfirmation(string applicationId, string organisationId) => $"ahp/application/{applicationId}/scheme/developing-partner-confirm/{organisationId}";
 
-    public const string StakeholderDiscussionsSuffix = "/scheme/stakeholder-discussions";
+    public static string OwnerOfTheLand(string applicationId) => $"ahp/application/{applicationId}/scheme/owner-of-the-land";
 
-    public const string CheckAnswersSuffix = "/scheme/check-answers";
+    public static string OwnerOfTheLandConfirmation(string applicationId, string organisationId) => $"ahp/application/{applicationId}/scheme/owner-of-the-land-confirm/{organisationId}";
 
-    public static string FundingDetails(string applicationId) => $"ahp/application/{applicationId}{FundingDetailsSuffix}";
+    public static string OwnerOfTheHomes(string applicationId) => $"ahp/application/{applicationId}/scheme/owner-of-the-homes";
 
-    public static string Affordability(string applicationId) => $"ahp/application/{applicationId}{AffordabilitySuffix}";
+    public static string OwnerOfTheHomesConfirmation(string applicationId, string organisationId) => $"ahp/application/{applicationId}/scheme/owner-of-the-homes-confirm/{organisationId}";
 
-    public static string SalesRisk(string applicationId) => $"ahp/application/{applicationId}{SalesRiskSuffix}";
+    public static string Affordability(string applicationId) => $"ahp/application/{applicationId}/scheme/affordability";
 
-    public static string HousingNeeds(string applicationId) => $"ahp/application/{applicationId}{HousingNeedsSuffix}";
+    public static string SalesRisk(string applicationId) => $"ahp/application/{applicationId}/scheme/sales-risk";
 
-    public static string StakeholderDiscussions(string applicationId) => $"ahp/application/{applicationId}{StakeholderDiscussionsSuffix}";
+    public static string HousingNeeds(string applicationId) => $"ahp/application/{applicationId}/scheme/housing-needs";
 
-    public static string CheckAnswers(string applicationId) => $"ahp/application/{applicationId}{CheckAnswersSuffix}";
+    public static string StakeholderDiscussions(string applicationId) => $"ahp/application/{applicationId}/scheme/stakeholder-discussions";
+
+    public static string CheckAnswers(string applicationId) => $"ahp/application/{applicationId}/scheme/check-answers";
 }

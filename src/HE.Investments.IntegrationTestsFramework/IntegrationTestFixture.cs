@@ -32,9 +32,19 @@ public class IntegrationTestFixture<TProgram> : WebApplicationFactory<TProgram>
 
     public IConfiguration Configuration { get; }
 
-    public IFeatureManager FeatureManager => Scope.Value.ServiceProvider.GetRequiredService<IFeatureManager>();
+    public IFeatureManager FeatureManager => ServiceProvider.GetRequiredService<IFeatureManager>();
+
+    public IServiceProvider ServiceProvider => Scope.Value.ServiceProvider;
 
     protected Lazy<IServiceScope> Scope { get; }
+
+    public async Task<IList<string>> VerifyPrerequisites()
+    {
+        var prerequisites = Scope.Value.ServiceProvider.GetServices<IIntegrationTestPrerequisite>();
+        var results = await Task.WhenAll(prerequisites.Select(x => x.Verify(LoginData)));
+
+        return results.Where(x => !string.IsNullOrEmpty(x)).Select(x => x!).ToList();
+    }
 
     public void ProvideLoginData(ILoginData loginData)
     {

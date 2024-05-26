@@ -1,8 +1,6 @@
-extern alias Org;
-
+using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Infrastructure.Cache;
-using Org::HE.Common.IntegrationModel.PortalIntegrationModel;
 
 namespace HE.Investments.AHP.Consortium.Domain.Crm;
 
@@ -37,6 +35,11 @@ public class RequestCacheConsortiumCrmContextDecorator : IConsortiumCrmContext
     public async Task<bool> IsConsortiumExistForProgrammeAndOrganisation(string programmeId, string organisationId, CancellationToken cancellationToken)
     {
         return await _decorated.IsConsortiumExistForProgrammeAndOrganisation(programmeId, organisationId, cancellationToken);
+    }
+
+    public async Task<int> GetConsortiumPartnerStatus(string consortiumId, string organisationId, CancellationToken cancellationToken)
+    {
+        return await _decorated.GetConsortiumPartnerStatus(consortiumId, organisationId, cancellationToken);
     }
 
     public async Task CreateJoinConsortiumRequest(string consortiumId, string organisationId, string userId, CancellationToken cancellationToken)
