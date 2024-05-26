@@ -162,6 +162,7 @@ namespace DataverseModel
 			public const string invln_sitename = "invln_sitename";
 			public const string invln_SiteReferenceNumber = "invln_sitereferencenumber";
 			public const string invln_sites_AccountId_account = "invln_sites_AccountId_account";
+			public const string invln_sites_AHPProjectId_invln_ahpproject = "invln_sites_AHPProjectId_invln_ahpproject";
 			public const string invln_sites_CreatedByContactId_contact = "invln_sites_CreatedByContactId_contact";
 			public const string invln_sites_developingpartner_account = "invln_sites_developingpartner_account";
 			public const string invln_sites_LocalAuthority_invln_ahglocalauthor = "invln_sites_LocalAuthority_invln_ahglocalauthor";
@@ -2896,6 +2897,27 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_sites_AccountId_account");
 				this.SetRelatedEntity<DataverseModel.Account>("invln_sites_AccountId_account", null, value);
 				this.OnPropertyChanged("invln_sites_AccountId_account");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 invln_sites_AHPProjectId_invln_ahpproject
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_ahpprojectid")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_sites_AHPProjectId_invln_ahpproject")]
+		public DataverseModel.invln_ahpproject invln_sites_AHPProjectId_invln_ahpproject
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<DataverseModel.invln_ahpproject>("invln_sites_AHPProjectId_invln_ahpproject", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_sites_AHPProjectId_invln_ahpproject");
+				this.SetRelatedEntity<DataverseModel.invln_ahpproject>("invln_sites_AHPProjectId_invln_ahpproject", null, value);
+				this.OnPropertyChanged("invln_sites_AHPProjectId_invln_ahpproject");
 			}
 		}
 		
