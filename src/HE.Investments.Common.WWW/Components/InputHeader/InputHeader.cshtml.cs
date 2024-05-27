@@ -11,8 +11,9 @@ public class InputHeader : ViewComponent
         string? title = null,
         InputTitleType? titleType = null,
         string? hint = null,
-        string? paragraph = null)
+        string? paragraph = null,
+        DynamicComponentViewModel? additionalContent = null)
     {
-        return View("InputHeader", (fieldName, title, titleType ?? InputTitleType.InputTitle, hint, paragraph));
+        return View("InputHeader", (fieldName, title, titleType ?? InputTitleType.InputTitle, hint, paragraph, additionalContent));
     }
 }

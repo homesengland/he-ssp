@@ -13,8 +13,9 @@ public class TextInput : ViewComponent
         string? hint = null,
         string? cssClass = null,
         bool? isDisplayed = null,
-        string? paragraph = null)
+        string? paragraph = null,
+        DynamicComponentViewModel? additionalContent = null)
     {
-        return View("TextInput", (fieldName, value, title, titleType, hint, cssClass ?? "govuk-input--width-full", isDisplayed ?? true, paragraph));
+        return View("TextInput", (fieldName, value, title, titleType, hint, cssClass ?? "govuk-input--width-full", isDisplayed ?? true, paragraph, additionalContent));
     }
 }
