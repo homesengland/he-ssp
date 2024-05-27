@@ -56,10 +56,9 @@ namespace HE.CRM.AHP.Plugins.Handlers.AHPApplication
             }
             catch (Exception ex)
             {
-                var sb = new StringBuilder($"An error occurred in plugin handler '{nameof(GrantCalculateHandler)}'");
-                sb.AppendLine($"PrimaryEntityName: {ExecutionData.Context.PrimaryEntityName}, PrimaryEntityId: {ExecutionData.Context.PrimaryEntityId}");
-                sb.AppendLine(ex.Message);
-                Logger.Error(sb.ToString());
+                Logger.Error($"An error occurred in plugin handler '{nameof(GrantCalculateHandler)}'");
+                Logger.Error($"PrimaryEntityName: {ExecutionData.Context.PrimaryEntityName}, PrimaryEntityId: {ExecutionData.Context.PrimaryEntityId}");
+                Logger.Error(ex.Message);
             }
         }
     }
