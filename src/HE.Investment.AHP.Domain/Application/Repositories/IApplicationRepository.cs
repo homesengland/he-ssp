@@ -23,7 +23,7 @@ public interface IApplicationRepository
 
     Task<ApplicationWithFundingDetails> GetApplicationWithFundingDetailsById(AhpApplicationId id, UserAccount userAccount, CancellationToken cancellationToken);
 
-    Task<PaginationResult<ApplicationWithFundingDetails>> GetSiteApplications(
+    Task<PaginationResult<ApplicationBasicDetails>> GetSiteApplications(
         SiteId siteId,
         AhpUserAccount userAccount,
         PaginationRequest paginationRequest,

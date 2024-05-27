@@ -1,7 +1,7 @@
+using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Contract.Site.Queries;
 using HE.Investment.AHP.Domain.Application.Repositories;
-using HE.Investment.AHP.Domain.Application.ValueObjects;
 using HE.Investment.AHP.Domain.Site.Repositories;
 using HE.Investment.AHP.Domain.UserContext;
 using HE.Investments.Common.Contract.Pagination;
@@ -39,7 +39,7 @@ public class GetSiteDetailsQueryHandler : IRequestHandler<GetSiteDetailsQuery, S
             MapApplicationsPage(applications));
     }
 
-    private static PaginationResult<ApplicationSiteModel> MapApplicationsPage(PaginationResult<ApplicationWithFundingDetails> applications)
+    private static PaginationResult<ApplicationSiteModel> MapApplicationsPage(PaginationResult<ApplicationBasicDetails> applications)
     {
         return new PaginationResult<ApplicationSiteModel>(
             applications.Items.Select(MapApplication).ToList(),
@@ -48,13 +48,13 @@ public class GetSiteDetailsQueryHandler : IRequestHandler<GetSiteDetailsQuery, S
             applications.TotalItems);
     }
 
-    private static ApplicationSiteModel MapApplication(ApplicationWithFundingDetails application)
+    private static ApplicationSiteModel MapApplication(ApplicationBasicDetails application)
     {
         return new ApplicationSiteModel(
-            application.ApplicationId,
-            application.ApplicationName,
+            application.Id,
+            application.Name,
             application.Tenure,
-            application.HousesToDeliver,
+            application.Unit,
             application.Status);
     }
 }
