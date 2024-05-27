@@ -243,115 +243,110 @@ namespace HE.CRM.AHP.Plugins.Services.DeliveryPhase
                 deliveryPhase.invln_StartOnSiteValue = new Money(fundingForPhase * deliveryPhase.invln_StartOnSitePercentageValue.Value);
                 deliveryPhase.invln_CompletionValue = new Money(fundingForPhase * deliveryPhase.invln_CompletionPercentageValue.Value);
                 deliveryPhase.invln_sumofcalculatedfounds = new Money(fundingForPhase);
-            }
-            var leftOver = fundingForPhase
+                var leftOver = fundingForPhase
                     - (deliveryPhase.invln_AcquisitionValue.Value
                     + deliveryPhase.invln_StartOnSiteValue.Value
                     + deliveryPhase.invln_CompletionValue.Value);
-            if (leftOver > 0 && (leftOver < fundingForPhase * 0.01m || leftOver < 1))
-            {
-                deliveryPhase.invln_CompletionValue.Value += leftOver;
+                if (leftOver > 0 && (leftOver < fundingForPhase * 0.01m || leftOver < 1))
+                {
+                    deliveryPhase.invln_CompletionValue.Value += leftOver;
+                }
+                deliveryPhase.invln_sumofcalculatedfounds = new Money(deliveryPhase.invln_AcquisitionValue.Value
+                                                            + deliveryPhase.invln_StartOnSiteValue.Value
+                                                            + deliveryPhase.invln_CompletionValue.Value);
             }
-            deliveryPhase.invln_sumofcalculatedfounds = new Money(deliveryPhase.invln_AcquisitionValue.Value
-                                                        + deliveryPhase.invln_StartOnSiteValue.Value
-                                                        + deliveryPhase.invln_CompletionValue.Value);
-        }
-
             else
             {
                 if (deliveryPhase.invln_AcquisitionPercentageValue != null)
                 {
-                    deliveryPhase.invln_AcquisitionValue = private new Money(fundingForPhase* deliveryPhase.invln_AcquisitionPercentageValue.Value);
-
-        private CalculateFieldValue(deliveryPhase, fundingForPhase, df);
-    }
-
+                    deliveryPhase.invln_AcquisitionValue = new Money(fundingForPhase * deliveryPhase.invln_AcquisitionPercentageValue.Value);
+                    CalculateFieldValue(deliveryPhase, fundingForPhase, df);
+                }
                 if (deliveryPhase.invln_StartOnSitePercentageValue != null)
                 {
-                    deliveryPhase.invln_StartOnSiteValue = new Money(fundingForPhase* deliveryPhase.invln_StartOnSitePercentageValue.Value);
-    CalculateFieldValue(deliveryPhase, fundingForPhase, df);
-}
-
-if (deliveryPhase.invln_CompletionPercentageValue != null)
-{
-    deliveryPhase.invln_CompletionValue = new Money(fundingForPhase * deliveryPhase.invln_CompletionPercentageValue.Value);
-    CalculateFieldValue(deliveryPhase, fundingForPhase, df);
-}
-deliveryPhase.invln_sumofcalculatedfounds = new Money(deliveryPhase.invln_AcquisitionValue.Value
-                            + deliveryPhase.invln_StartOnSiteValue.Value
-                            + deliveryPhase.invln_CompletionValue.Value);
+                    deliveryPhase.invln_StartOnSiteValue = new Money(fundingForPhase * deliveryPhase.invln_StartOnSitePercentageValue.Value);
+                    CalculateFieldValue(deliveryPhase, fundingForPhase, df);
+                }
+                if (deliveryPhase.invln_CompletionPercentageValue != null)
+                {
+                    deliveryPhase.invln_CompletionValue = new Money(fundingForPhase * deliveryPhase.invln_CompletionPercentageValue.Value);
+                    CalculateFieldValue(deliveryPhase, fundingForPhase, df);
+                }
+                deliveryPhase.invln_sumofcalculatedfounds = new Money(deliveryPhase.invln_AcquisitionValue.Value
+                                            + deliveryPhase.invln_StartOnSiteValue.Value
+                                            + deliveryPhase.invln_CompletionValue.Value);
             }
         }
 
         private void CalculateFieldValue(invln_DeliveryPhase deliveryPhase, decimal fundingForPhase, invln_DeliveryPhase df)
-{
-    if (df == null)
-    {
-        TracingService.Trace("Delivery phase not exist yet skip recalculation");
-        return;
-    }
-
-    if (deliveryPhase.invln_AcquisitionPercentageValue + df.invln_StartOnSitePercentageValue + df.invln_CompletionPercentageValue == 1)
-    {
-        var leftOver = fundingForPhase
-                        - (deliveryPhase.invln_AcquisitionValue.Value
-                            + df.invln_StartOnSiteValue.Value
-                            + df.invln_CompletionValue.Value);
-        if (leftOver > 0 && (leftOver < fundingForPhase * 0.01m || leftOver < 1))
         {
-            deliveryPhase.invln_CompletionValue.Value += leftOver;
-        }
-    }
-}
-
-private void SetHomesinDeliveryPhase(Dictionary<string, int?> numberOfHomes, Guid deliveryPhaseId)
-{
-    foreach (var numHome in numberOfHomes)
-    {
-        if (Guid.TryParse(numHome.Key, out var homeId))
-        {
-            _homesInDeliveryPhaseRepository.Create(new invln_homesindeliveryphase()
+            if (df == null)
             {
-                invln_deliveryphaselookup = new EntityReference(invln_DeliveryPhase.EntityLogicalName, deliveryPhaseId),
-                invln_hometypelookup = new EntityReference(invln_HomeType.EntityLogicalName, homeId),
-                invln_numberofhomes = numHome.Value
-            });
+                TracingService.Trace("Delivery phase not exist yet skip recalculation");
+                return;
+            }
+
+            if (deliveryPhase.invln_AcquisitionPercentageValue + df.invln_StartOnSitePercentageValue + df.invln_CompletionPercentageValue == 1)
+            {
+                var leftOver = fundingForPhase
+                                - (deliveryPhase.invln_AcquisitionValue.Value
+                                    + df.invln_StartOnSiteValue.Value
+                                    + df.invln_CompletionValue.Value);
+                if (leftOver > 0 && (leftOver < fundingForPhase * 0.01m || leftOver < 1))
+                {
+                    deliveryPhase.invln_CompletionValue.Value += leftOver;
+                }
+            }
         }
-    }
-}
 
-private void DeleteHomesFromDeliveryPhase(Guid deliveryPhaseId)
-{
-    var homesInDeliveryPhase = _homesInDeliveryPhaseRepository.GetHomesInDeliveryPhase(deliveryPhaseId);
-    foreach (var home in homesInDeliveryPhase)
-    {
-        _homesInDeliveryPhaseRepository.Delete(home);
-    }
-}
-
-private void UpdateApplicationModificationFields(Guid applicationId, Guid contactId)
-{
-    var applicationToUpdate = new invln_scheme()
-    {
-        Id = applicationId,
-        invln_lastexternalmodificationon = DateTime.UtcNow,
-        invln_lastexternalmodificationby = new EntityReference(Contact.EntityLogicalName, contactId),
-    };
-    _ahpApplicationRepository.Update(applicationToUpdate);
-}
-
-private string GenerateFetchXmlAttributes(string fieldsToRetrieve)
-{
-    var fields = fieldsToRetrieve.Split(',');
-    var generatedAttribuesFetchXml = "";
-    if (fields.Length > 0)
-    {
-        foreach (var field in fields)
+        private void SetHomesinDeliveryPhase(Dictionary<string, int?> numberOfHomes, Guid deliveryPhaseId)
         {
-            generatedAttribuesFetchXml += $"<attribute name=\"{field}\" />";
+            foreach (var numHome in numberOfHomes)
+            {
+                if (Guid.TryParse(numHome.Key, out var homeId))
+                {
+                    _homesInDeliveryPhaseRepository.Create(new invln_homesindeliveryphase()
+                    {
+                        invln_deliveryphaselookup = new EntityReference(invln_DeliveryPhase.EntityLogicalName, deliveryPhaseId),
+                        invln_hometypelookup = new EntityReference(invln_HomeType.EntityLogicalName, homeId),
+                        invln_numberofhomes = numHome.Value
+                    });
+                }
+            }
         }
-    }
-    return generatedAttribuesFetchXml;
-}
+
+        private void DeleteHomesFromDeliveryPhase(Guid deliveryPhaseId)
+        {
+            var homesInDeliveryPhase = _homesInDeliveryPhaseRepository.GetHomesInDeliveryPhase(deliveryPhaseId);
+            foreach (var home in homesInDeliveryPhase)
+            {
+                _homesInDeliveryPhaseRepository.Delete(home);
+            }
+        }
+
+        private void UpdateApplicationModificationFields(Guid applicationId, Guid contactId)
+        {
+            var applicationToUpdate = new invln_scheme()
+            {
+                Id = applicationId,
+                invln_lastexternalmodificationon = DateTime.UtcNow,
+                invln_lastexternalmodificationby = new EntityReference(Contact.EntityLogicalName, contactId),
+            };
+            _ahpApplicationRepository.Update(applicationToUpdate);
+        }
+
+        private string GenerateFetchXmlAttributes(string fieldsToRetrieve)
+        {
+            var fields = fieldsToRetrieve.Split(',');
+            var generatedAttribuesFetchXml = "";
+            if (fields.Length > 0)
+            {
+                foreach (var field in fields)
+                {
+                    generatedAttribuesFetchXml += $"<attribute name=\"{field}\" />";
+                }
+            }
+            return generatedAttribuesFetchXml;
+        }
     }
 }
