@@ -190,7 +190,9 @@ namespace HE.CRM.AHP.Plugins.Services.DeliveryPhase
                     .FirstOrDefault(x => x.invln_milestone.Value == (int)invln_Milestone.PC).invln_percentagepaidonmilestone.Value / 100;
             var fundingForPhase = (fundingRequired / numberOfHouseApplication) * numberOfHousePhase;
 
-            if (account.invln_UnregisteredBody == true || account.invln_UnregisteredBody == null)
+            if ((account.invln_UnregisteredBody == true || account.invln_UnregisteredBody == null)
+                || (deliveryPhaseMapped.invln_buildactivitytype != null && deliveryPhaseMapped.invln_buildactivitytype.Value == (int)invln_NewBuildActivityType.OffTheShelf)
+                || (deliveryPhaseMapped.invln_rehabactivitytype != null && deliveryPhaseMapped.invln_rehabactivitytype.Value == (int)invln_RehabActivityType.ExistingSatisfactory))
             {
                 deliveryPhaseToUpdateOrCreate.invln_CompletionValue = new Money((fundingRequired / numberOfHouseApplication) * numberOfHousePhase);
                 deliveryPhaseToUpdateOrCreate.invln_StartOnSiteValue = new Money(0);
@@ -198,6 +200,7 @@ namespace HE.CRM.AHP.Plugins.Services.DeliveryPhase
                 deliveryPhaseToUpdateOrCreate.invln_CompletionPercentageValue = 1;
                 deliveryPhaseToUpdateOrCreate.invln_StartOnSitePercentageValue = 0;
                 deliveryPhaseToUpdateOrCreate.invln_AcquisitionPercentageValue = 0;
+                deliveryPhaseToUpdateOrCreate.invln_sumofcalculatedfounds = new Money((fundingRequired / numberOfHouseApplication) * numberOfHousePhase);
             }
             else
             {
@@ -239,6 +242,7 @@ namespace HE.CRM.AHP.Plugins.Services.DeliveryPhase
                 deliveryPhase.invln_AcquisitionValue = new Money(fundingForPhase * deliveryPhase.invln_AcquisitionPercentageValue.Value);
                 deliveryPhase.invln_StartOnSiteValue = new Money(fundingForPhase * deliveryPhase.invln_StartOnSitePercentageValue.Value);
                 deliveryPhase.invln_CompletionValue = new Money(fundingForPhase * deliveryPhase.invln_CompletionPercentageValue.Value);
+                deliveryPhase.invln_sumofcalculatedfounds = new Money(fundingForPhase);
                 var leftOver = fundingForPhase
                     - (deliveryPhase.invln_AcquisitionValue.Value
                     + deliveryPhase.invln_StartOnSiteValue.Value

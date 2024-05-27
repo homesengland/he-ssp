@@ -29,8 +29,12 @@ namespace HE.CRM.Common.Repositories.Implementations
             if (!string.IsNullOrEmpty(fieldsToRetrieve))
             {
                 fieldsToRetrieveParameters = FetchXmlHelper.GenerateAttributes(fieldsToRetrieve);
+                logger.Trace($"fieldsToRetrieveParameters: {fieldsToRetrieveParameters}");
             }
 
+            logger.Trace($"Account Id Filter: {accountIdFilter}");
+            logger.Trace($"Site Id Filter: {siteIdFilter}");
+            logger.Trace($"External Contact Id Filter: {externalContactIdFilter}");
             var fetchXml =
                 $@"<fetch>
 	                <entity name=""invln_sites"">
@@ -42,10 +46,11 @@ namespace HE.CRM.Common.Repositories.Implementations
 		                </link-entity>
 	                </entity>
                 </fetch>";
-
+            logger.Trace($"FetchXml: {fetchXml}");
             //var result = service.RetrieveMultiple(new FetchExpression(fetchXml));
-
+            logger.Trace($"Retrive sites");
             EntityCollection result = service.RetrieveMultiple(new FetchExpression(fetchXml));
+            logger.Trace($"Convert to Sites Entity");
             return result.Entities.Select(x => x.ToEntity<invln_Sites>()).SingleOrDefault();
         }
 
