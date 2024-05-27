@@ -1,9 +1,8 @@
 @using HE.Investments.Common.WWW.Extensions
 @using HE.Investments.Common.WWW.Components.ErrorMessage
 @using HE.Investments.Common.WWW.Components.InputHeader
-@using HE.Investments.Common.WWW.Components
 
-@model (string fieldName, string value, string title, HE.Investments.Common.WWW.Components.InputTitleType? titleType, string hint, string cssClass, bool isDisplayed, string paragraph, DynamicComponentViewModel additionalContent)
+@model (string fieldName, string value, string title, HE.Investments.Common.WWW.Components.InputTitleType? titleType, string hint, string cssClass, bool isDisplayed, string paragraph)
 @{
     var (hasError, errors) = ViewData.ModelState.GetErrors(Model.fieldName);
     var groupClass = hasError ? "govuk-form-group--error" : string.Empty;
@@ -18,8 +17,7 @@
             title="@Model.title"
             title-type="@Model.titleType"
             hint="@Model.hint"
-            paragraph="@Model.paragraph"
-            additional-content="@Model.additionalContent"/>
+            paragraph="@Model.paragraph"/>
 
         <vc:error-message field-name="@Model.fieldName"/>
 
