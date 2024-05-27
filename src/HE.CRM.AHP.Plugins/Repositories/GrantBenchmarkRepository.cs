@@ -16,7 +16,7 @@ namespace HE.CRM.AHP.Plugins.Repositories
             int governmentOfficeRegionId,
             params string[] columns)
         {
-            logger.Trace($"FindRegionalBenchmark tenure: {tenure}), governmentOfficeRegionId: {governmentOfficeRegionId}");
+            logger.Trace($"FindRegionalBenchmark tenure: {tenure}, governmentOfficeRegionId: {governmentOfficeRegionId}");
 
             var benchmarkTable = invln_BenchmarkTable.Table5RegionalBenchmarkGrantPerUnit;
 
