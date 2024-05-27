@@ -7,6 +7,6 @@ namespace HE.Common.IntegrationModel.PortalIntegrationModel
         public int? applicationStatus { get; set; }
         public string requiredFunding { get; set; }
         public string housesToDeliver { get; set; }
-        public string tenure { get; set; }
+        public int? tenure { get; set; }
     }
 }

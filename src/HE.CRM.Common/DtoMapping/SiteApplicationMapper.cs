@@ -32,7 +32,7 @@ namespace HE.CRM.Common.DtoMapping
                     applicationStatus = app.StatusCode?.Value,
                     requiredFunding = app.invln_fundingrequired?.Value.ToString(),
                     housesToDeliver = app.invln_noofhomes == null ? string.Empty : app.invln_noofhomes.Value.ToString(),
-                    tenure = app?.invln_Tenure?.Value.ToString(),
+                    tenure = app?.invln_Tenure?.Value,
                 };
                 siteApp.AhpApplications.Add(ahpApplicationDto);
             }
