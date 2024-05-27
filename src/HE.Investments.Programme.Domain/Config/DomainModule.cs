@@ -11,7 +11,6 @@ public static class DomainModule
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(DomainModule).Assembly));
         services.AddScoped<IProgrammeRepository, ProgrammeRepository>();
         services.AddScoped<IProgrammeCrmContext, ProgrammeCrmContext>();
-        services.Decorate<IProgrammeCrmContext, MockedIdProgrammeCrmContextDecorator>();
         services.Decorate<IProgrammeCrmContext, CacheProgrammeCrmContextDecorator>();
         services.Decorate<IProgrammeCrmContext, RequestCacheProgrammeCrmContextDecorator>();
     }

@@ -33,7 +33,7 @@ public class ProgrammeRepository : IProgrammeRepository
 
     private static ProgrammeEntity MapProgramme(ProgrammeDto programme)
     {
-        var programmeId = ProgrammeId.From(programme.id);
+        var programmeId = ProgrammeId.From(programme.Id);
         return new ProgrammeEntity(
             programmeId,
             programme.name,

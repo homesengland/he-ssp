@@ -34,7 +34,7 @@ public static class ArchitectureTestHelper
             .ToList();
     }
 
-    private class ReferencedAssembly
+    private sealed class ReferencedAssembly
     {
         private const string ProjectNamePrefix = "HE.Investment";
 
