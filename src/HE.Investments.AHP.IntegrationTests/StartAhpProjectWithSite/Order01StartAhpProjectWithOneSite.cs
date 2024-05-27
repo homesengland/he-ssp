@@ -41,6 +41,7 @@ public class Order01StartAhpProjectWithOneSite : AhpIntegrationTest
         nextPage
             .UrlEndWith(SitePagesUrl.SiteSelect(ProjectData.ProjectId))
             .HasTitle(SitePageTitles.SiteSelect);
+
         SaveCurrentPage();
     }
 }

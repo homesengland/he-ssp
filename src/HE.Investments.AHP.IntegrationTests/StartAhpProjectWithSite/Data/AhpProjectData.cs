@@ -10,7 +10,7 @@ public class AhpProjectData
 
     public string GenerateProjectName()
     {
-        ProjectName = $"Project".WithTimestampSuffix() + "(IT)";
+        ProjectName = $"Project".WithTimestampSuffix() + " (IT)";
         return ProjectName;
     }
 
