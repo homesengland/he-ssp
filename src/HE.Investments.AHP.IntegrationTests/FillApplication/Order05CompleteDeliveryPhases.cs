@@ -16,7 +16,7 @@ using Xunit.Extensions.Ordering;
 
 namespace HE.Investments.AHP.IntegrationTests.FillApplication;
 
-[Order(5)]
+[Order(7)]
 [SuppressMessage("xUnit", "xUnit1004", Justification = "Waits for DevOps configuration - #76791")]
 public class Order05CompleteDeliveryPhases : AhpIntegrationTest
 {

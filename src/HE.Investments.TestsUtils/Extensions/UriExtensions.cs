@@ -11,7 +11,14 @@ public static class UriExtensions
 
     public static string GetSiteGuidFromUrl(this string uri)
     {
-        return new Uri(uri).Segments[^2].Trim(UrlPathSeparator);
+        var trueUri = new Uri(uri);
+        var lastBefore = trueUri.Segments[^2].Trim(UrlPathSeparator);
+        if (lastBefore == "site")
+        {
+            return trueUri.Segments[^1].Trim(UrlPathSeparator);
+        }
+
+        return lastBefore;
     }
 
     public static string GetProjectGuidFromUrl(this string uri)

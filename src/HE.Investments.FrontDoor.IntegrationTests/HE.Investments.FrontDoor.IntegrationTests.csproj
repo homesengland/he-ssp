@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\HE.Investments.FrontDoor.IntegrationTests.Utils\HE.Investments.FrontDoor.IntegrationTests.Utils.csproj" />
     <ProjectReference Include="..\HE.Investments.FrontDoor.WWW\HE.Investments.FrontDoor.WWW.csproj"/>
     <ProjectReference Include="..\HE.Investments.IntegrationTestsFramework\HE.Investments.IntegrationTestsFramework.csproj"/>
     <ProjectReference Include="..\HE.Investments.TestsUtils\HE.Investments.TestsUtils.csproj"/>

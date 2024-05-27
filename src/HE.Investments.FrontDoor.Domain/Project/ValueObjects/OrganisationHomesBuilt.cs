@@ -4,9 +4,9 @@ using HE.Investments.Common.Extensions;
 
 namespace HE.Investments.FrontDoor.Domain.Project.ValueObjects;
 
-public class OrganisationHomesBuilt : YourRequiredIntValueObject, IQuestion
+public class OrganisationHomesBuilt : TheRequiredIntValueObject, IQuestion
 {
-    private const string DisplayName = "previous residential building experience";
+    private const string DisplayName = "amount of homes your organisation has built in the last year";
 
     private const int MinValue = 0;
 

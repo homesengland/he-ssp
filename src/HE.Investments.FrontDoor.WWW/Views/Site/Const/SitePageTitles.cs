@@ -4,7 +4,7 @@ public static class SitePageTitles
 {
     public const string Name = "Name your site";
 
-    public const string HomesNumber = "Enter the number of homes you are building or the nearest estimate";
+    public const string HomesNumber = "Enter the number of homes your project will deliver or enable";
 
     public const string LocalAuthorityConfirm = "Confirm your selection";
 

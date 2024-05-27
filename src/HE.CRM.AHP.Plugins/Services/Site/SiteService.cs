@@ -20,8 +20,6 @@ namespace HE.CRM.AHP.Plugins.Services.Site
 
         private readonly IHeLocalAuthorityRepository _heLocalAuthorityRepository;
 
-
-
         public SiteService(CrmServiceArgs args) : base(args)
         {
             _repository = CrmRepositoriesFactory.Get<ISiteRepository>();
@@ -76,12 +74,18 @@ namespace HE.CRM.AHP.Plugins.Services.Site
 
             var site = _repository.GetSingle(siteIdFilter, fieldsToRetrieve, externalContactIdFilter, accountIdFilter);
 
+            if (site == null)
+            {
+                return null;
+            }
             he_LocalAuthority localAuth = null;
+            TracingService.Trace($"Check Local authority");
             if (site.invln_HeLocalAuthorityId != null)
             {
+                TracingService.Trace("Get local authority");
                 localAuth = _heLocalAuthorityRepository.GetById(site.invln_HeLocalAuthorityId.Id, new string[] { nameof(he_LocalAuthority.he_LocalAuthorityId).ToLower(), nameof(he_LocalAuthority.he_Name).ToLower(), nameof(he_LocalAuthority.he_GSSCode).ToLower() });
             }
-
+            TracingService.Trace("Site to Dto");
             return SiteMapper.ToDto(site, localAuth);
         }
 
@@ -124,14 +128,14 @@ namespace HE.CRM.AHP.Plugins.Services.Site
             return siteId;
         }
 
-
         public bool CreateRecordsWithAhpProject(List<SiteDto> listOfSites, Guid ahpProjectId, string externalContactId, string organisationId)
         {
             var isSitesCreated = true;
             foreach (var site in listOfSites)
             {
                 site.ahpProjectid = ahpProjectId.ToString();
-                var fieldsToSet = invln_Sites.Fields.invln_sitename;
+                site.status = (int)invln_Sitestatus.InProgress;
+                var fieldsToSet = "invln_sitesid,invln_accountid,invln_createdbycontactid,invln_sitename,invln_externalsitestatus,invln_s106agreementinplace,invln_developercontributionsforah,invln_siteis100affordable,invln_homesintheapplicationareadditional,invln_anyrestrictionsinthes106,invln_localauthorityconfirmationofadditionality,invln_helocalauthorityid,invln_helocalauthorityidname,invln_planningstatus,invln_planningreferencenumber,invln_detailedplanningapprovaldate,invln_furtherstepsrequired,invln_applicationfordetailedplanningsubmitted,invln_expectedplanningapproval,invln_outlineplanningapprovaldate,invln_planningsubmissiondate,invln_grantfundingforallhomes,invln_landregistrytitle,invln_landregistrytitlenumber,invln_invlngrantfundingforallhomescoveredbytit,invln_nationaldesignguideelements,invln_assessedforbhl,invln_bhlgreentrafficlights,invln_developingpartner,invln_ownerofthelandduringdevelopment,invln_ownerofthehomesaftercompletion,invln_landstatus,invln_workstenderingstatus,invln_maincontractorname,invln_sme,invln_intentiontoworkwithsme,invln_strategicsite,invln_strategicsiten,invln_typeofsite,invln_greenbelt,invln_regensite,invln_streetfrontinfill,invln_travellerpitchsite,invln_travellerpitchsitetype,invln_ruralclassification,invln_ruralexceptionsite,invln_actionstoreduce,invln_mmcuse,invln_mmcplans,invln_mmcexpectedimpact,invln_mmcbarriers,invln_mmcimpact,invln_mmccategories,invln_mmccategory1subcategories,invln_mmccategory2subcategories,invln_procurementmechanisms";
 
                 var idCreated = Save(string.Empty, site, fieldsToSet, externalContactId, organisationId);
                 isSitesCreated = Guid.TryParse(idCreated, out var siteId);
@@ -142,7 +146,6 @@ namespace HE.CRM.AHP.Plugins.Services.Site
             }
             return isSitesCreated;
         }
-
 
         private string GetFetchXmlConditionForGivenField(string fieldValue, string fieldName)
         {

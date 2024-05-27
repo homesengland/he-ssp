@@ -1,6 +1,7 @@
 using HE.Investment.AHP.WWW;
 using HE.Investments.AHP.IntegrationTests.Crm;
 using HE.Investments.AHP.IntegrationTests.Prerequisites;
+using HE.Investments.FrontDoor.IntegrationTests.Utils;
 using HE.Investments.IntegrationTestsFramework;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -13,6 +14,7 @@ public class AhpIntegrationTestFixture : IntegrationTestFixture<Program>
     protected override void ConfigureTestServices(IServiceCollection services)
     {
         services.AddScoped<AhpCrmContext>();
+        services.AddFrontDoorManipulator();
         services.AddScoped<IIntegrationTestPrerequisite, IsConsortiumLeadPartnerPrerequisite>();
     }
 }
