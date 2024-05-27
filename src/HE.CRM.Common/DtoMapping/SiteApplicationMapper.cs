@@ -17,7 +17,7 @@ namespace HE.CRM.Common.DtoMapping
                 SiteId = site.Id.ToString(),
                 fdSiteId = site.invln_HeProjectLocalAuthorityId?.Id.ToString(),
                 ahpProjectId = site.invln_AHPProjectId?.Id.ToString(),
-                siteName = site.invln_HeProjectLocalAuthorityId?.Id.ToString(),
+                siteName = site.invln_sitename.ToString(),
                 siteStatus = site.StatusCode.ToString(),
                 localAuthorityName = site.invln_LocalAuthority?.Name,
                 AhpApplications = new List<AhpApplicationForSiteDto>(),
