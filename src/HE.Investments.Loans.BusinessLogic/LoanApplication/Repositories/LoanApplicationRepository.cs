@@ -99,7 +99,7 @@ public class LoanApplicationRepository : ILoanApplicationRepository, ICanSubmitL
         var loanApplicationDto = CrmResponseSerializer.Deserialize<IList<LoanApplicationDto>>(response.invln_loanapplication)?.FirstOrDefault()
                                  ?? throw new NotFoundException(nameof(LoanApplicationEntity), id.ToString());
 
-        var externalStatus = ApplicationStatusMapper.MapToPortalStatus(loanApplicationDto.loanApplicationExternalStatus);
+        var externalStatus = LoanApplicationStatusMapper.MapToPortalStatus(loanApplicationDto.loanApplicationExternalStatus);
 
         var projects = loanApplicationDto.siteDetailsList.Select(
             site => new ProjectBasicData(
@@ -145,7 +145,7 @@ public class LoanApplicationRepository : ILoanApplicationRepository, ICanSubmitL
                 new UserLoanApplication(
                     LoanApplicationId.From(x.loanApplicationId),
                     LoanApplicationName.CreateOrDefault(x.ApplicationName),
-                    ApplicationStatusMapper.MapToPortalStatus(x.loanApplicationExternalStatus),
+                    LoanApplicationStatusMapper.MapToPortalStatus(x.loanApplicationExternalStatus),
                     x.createdOn,
                     x.LastModificationOn,
                     x.lastModificationByName)).ToList();
@@ -182,7 +182,7 @@ public class LoanApplicationRepository : ILoanApplicationRepository, ICanSubmitL
 
     public async Task ChangeApplicationStatus(LoanApplicationId loanApplicationId, ApplicationStatus applicationStatus, CancellationToken cancellationToken)
     {
-        var crmStatus = ApplicationStatusMapper.MapToCrmStatus(applicationStatus);
+        var crmStatus = LoanApplicationStatusMapper.MapToCrmStatus(applicationStatus);
 
         var request = new invln_changeloanapplicationexternalstatusRequest
         {
@@ -224,7 +224,7 @@ public class LoanApplicationRepository : ILoanApplicationRepository, ICanSubmitL
 
     private async Task ChangeApplicationStatusWithChangeReason(LoanApplicationId loanApplicationId, ApplicationStatus applicationStatus, string changeReason, CancellationToken cancellationToken)
     {
-        var crmStatus = ApplicationStatusMapper.MapToCrmStatus(applicationStatus);
+        var crmStatus = LoanApplicationStatusMapper.MapToCrmStatus(applicationStatus);
 
         var request = new invln_changeloanapplicationexternalstatusRequest
         {

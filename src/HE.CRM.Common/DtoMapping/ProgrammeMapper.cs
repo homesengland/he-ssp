@@ -13,6 +13,7 @@ namespace HE.CRM.Common.DtoMapping
         {
             var programmeDto = new ProgrammeDto()
             {
+                Id = programme.Id.ToString(),
                 name = programme.invln_programmename,
                 startOn = programme.invln_programmestartdate,
                 endOn = programme.invln_programmeenddate,
@@ -36,6 +37,7 @@ namespace HE.CRM.Common.DtoMapping
         {
             var programmeDto = new ProgrammeDto()
             {
+                Id = programme.Id.ToString(),
                 name = programme.invln_programmename,
                 startOn = programme.invln_programmestartdate,
                 endOn = programme.invln_programmeenddate,

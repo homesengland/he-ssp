@@ -72,6 +72,8 @@ namespace DataverseModel
 			public const string Id = "invln_grantbenchmarkid";
 			public const string invln_grantbenchmarkname = "invln_grantbenchmarkname";
 			public const string invln_tenure = "invln_tenure";
+			public const string invln_Tenure2 = "invln_tenure2";
+			public const string invln_tenure2Name = "invln_tenure2name";
 			public const string invln_tenureName = "invln_tenurename";
 			public const string lk_invln_grantbenchmark_createdby = "lk_invln_grantbenchmark_createdby";
 			public const string lk_invln_grantbenchmark_createdonbehalfby = "lk_invln_grantbenchmark_createdonbehalfby";
@@ -518,6 +520,40 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_tenure");
 				this.SetAttributeValue("invln_tenure", value);
 				this.OnPropertyChanged("invln_tenure");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_tenure2")]
+		public virtual Microsoft.Xrm.Sdk.OptionSetValue invln_Tenure2
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_tenure2");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_Tenure2");
+				this.SetAttributeValue("invln_tenure2", value);
+				this.OnPropertyChanged("invln_Tenure2");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_tenure2name")]
+		public string invln_tenure2Name
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				if (this.FormattedValues.Contains("invln_tenure2"))
+				{
+					return this.FormattedValues["invln_tenure2"];
+				}
+				else
+				{
+					return default(string);
+				}
 			}
 		}
 		

@@ -7,7 +7,6 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using DataverseModel;
 using HE.Base.Plugins.Handlers;
-using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.CRM.Common.DtoMapping;
 using HE.CRM.Common.Repositories.Interfaces;
 
@@ -40,7 +39,7 @@ namespace HE.CRM.AHP.Plugins.Handlers.CustomApi.Consortium
             listOfConsortiums.AddRange(consortiesWhereAccountIsAMemer);
             if (listOfConsortiums.Count == 0)
                 return;
-            var listOfConsortiumsDto = new List<ConsortiumDto>();
+            var listOfConsortiumsDto = new List<HE.Common.IntegrationModel.PortalIntegrationModel.ConsortiumDto>();
             foreach (var consortium in listOfConsortiums)
             {
                 listOfConsortiumsDto.Add(ConsortiumMapper.MapRegularEntityToDto(consortium));

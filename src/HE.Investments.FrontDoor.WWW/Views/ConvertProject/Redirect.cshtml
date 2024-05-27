@@ -1,0 +1,14 @@
+@model (string ApplicationType, string RedirectUrl)
+@{
+    ViewData["Title"] = "Eligibility";
+}
+
+<gds-div-grid-column-two-thirds>
+    <vc:page-header title="Eligibility"/>
+    <gds-summary-list>
+        <vc:section-summary-item
+            name="Eligible programme"
+            values="@(new[] { Model.ApplicationType })"
+            action-url="@Model.RedirectUrl"/>
+    </gds-summary-list>
+</gds-div-grid-column-two-thirds>

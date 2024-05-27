@@ -65,13 +65,15 @@ namespace HE.CRM.Common.Repositories.Implementations
             return result.Entities.Select(x => x.ToEntity<invln_scheme>()).ToList();
         }
 
-        public List<invln_scheme> GetApplicationsForAhpProject(Guid ahpProjectGuid, invln_Permission contactWebRole, Contact contact, Guid organisationGuid, string consortiumId = null)
+        public List<invln_scheme> GetApplicationsForAhpProject(Guid ahpProjectGuid, invln_Permission contactWebRole, Contact contact, Guid organisationGuid, bool isLeadPartner, string consortiumId = null)
         {
             var query_invln_sites_invln_ahpprojectid = ahpProjectGuid.ToString();
 
             var query = new QueryExpression(invln_scheme.EntityLogicalName);
             query.Distinct = true;
+            query.AddOrder(invln_scheme.Fields.invln_lastexternalmodificationon, OrderType.Descending);
             query.ColumnSet.AddColumns(
+                invln_scheme.Fields.invln_schemeId,
                 invln_scheme.Fields.invln_applicationid,
                 invln_scheme.Fields.invln_schemename,
                 invln_scheme.Fields.invln_ExternalStatus,
@@ -106,7 +108,7 @@ namespace HE.CRM.Common.Repositories.Implementations
 
                 }
             }
-            else
+            else if (isLeadPartner == false)
             {
                 var query_Or_invln_developingpartner = organisationGuid.ToString();
                 var query_Or_invln_owneroftheland = organisationGuid.ToString();

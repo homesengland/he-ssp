@@ -3,10 +3,10 @@
 @if (Model.isStrong)
 {
     <strong>
-        <a href="@(Url.Action(Model.action, Model.controller, Model.values) ?? string.Empty)"> @Model.text </a>
+        <a href="@(Url.Action(Model.action, Model.controller, Model.values) ?? string.Empty)" class="govuk-link"> @Model.text </a>
     </strong>
 }
 else
 {
-    <a href="@(Url.Action(Model.action, Model.controller, Model.values) ?? string.Empty)"> @Model.text </a>
+    <a href="@(Url.Action(Model.action, Model.controller, Model.values) ?? string.Empty)" class="govuk-link"> @Model.text </a>
 }

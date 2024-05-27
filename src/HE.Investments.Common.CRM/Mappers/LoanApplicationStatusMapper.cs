@@ -3,7 +3,7 @@ using HE.Investments.Common.CRM.Model;
 
 namespace HE.Investments.Common.CRM.Mappers;
 
-public static class ApplicationStatusMapper
+public static class LoanApplicationStatusMapper
 {
     public static int MapToCrmStatus(ApplicationStatus status)
     {

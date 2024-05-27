@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using HE.Investments.FrontDoor.IntegrationTests.FillProject.Data;
+using HE.Investments.FrontDoor.IntegrationTests.Utils;
 using HE.Investments.FrontDoor.WWW;
 using HE.Investments.IntegrationTestsFramework;
 using HE.Investments.IntegrationTestsFramework.Auth;
@@ -25,7 +26,7 @@ public class FrontDoorIntegrationTest : IntegrationTestBase<Program>, IDisposabl
         fixture.CheckUserLoginData();
         fixture.MockUserAccount();
         LoginData = fixture.LoginData;
-        InCrm = fixture.ServiceProvider.GetRequiredService<DataManipulator>();
+        InFrontDoor = fixture.ServiceProvider.GetRequiredService<FrontDoorDataManipulator>();
     }
 
     public ProjectData ProjectData { get; private set; }
@@ -40,7 +41,7 @@ public class FrontDoorIntegrationTest : IntegrationTestBase<Program>, IDisposabl
 
     protected ITestOutputHelper Output { get; }
 
-    protected DataManipulator InCrm { get; }
+    protected FrontDoorDataManipulator InFrontDoor { get; }
 
     public void Dispose()
     {
