@@ -29,7 +29,7 @@ namespace HE.CRM.Common.DtoMapping
                 {
                     applicationId = app.Id.ToString(),
                     applicationName = app.invln_schemename,
-                    applicationStatus = app.StatusCode?.Value,
+                    applicationStatus = app.invln_ExternalStatus?.Value,
                     requiredFunding = app.invln_fundingrequired?.Value.ToString(),
                     housesToDeliver = app?.invln_noofhomes,
                     tenure = app?.invln_Tenure?.Value,
