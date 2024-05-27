@@ -303,9 +303,6 @@ namespace HE.CRM.AHP.Plugins.Services.AhpProject
             return result;
         }
 
-
-
-
         private bool IsOrganisationMemberOfConsortium(string organisation, string consortium)
         {
             var consortiumCRM = _consortiumRepository.GetById(new Guid(consortium), new string[] { invln_Consortium.Fields.invln_LeadPartner });
@@ -358,7 +355,7 @@ namespace HE.CRM.AHP.Plugins.Services.AhpProject
             }
             else if (heProjectId != null)
             {
-                ahpProject = _ahpProjectRepository.GetByAttribute(invln_ahpproject.Fields.invln_HeProjectId, new Guid(heProjectId), fieldsAhpProject).First();
+                ahpProject = _ahpProjectRepository.GetByAttribute(invln_ahpproject.Fields.invln_HeProjectId, new Guid(heProjectId), fieldsAhpProject).FirstOrDefault();
             }
 
             if (ahpProject == null)
@@ -400,13 +397,13 @@ namespace HE.CRM.AHP.Plugins.Services.AhpProject
                 }
             }
 
-            var fieldsAhpApp = new string[] { invln_scheme.Fields.invln_DevelopingPartner, invln_scheme.Fields.invln_OwneroftheLand, invln_scheme.Fields.invln_OwneroftheHomes};
+            var fieldsAhpApp = new string[] { invln_scheme.Fields.invln_DevelopingPartner, invln_scheme.Fields.invln_OwneroftheLand, invln_scheme.Fields.invln_OwneroftheHomes };
             foreach (var site in otherSites)
             {
                 var ahpApps = _ahpApplicationRepository.GetByAttribute(invln_scheme.Fields.invln_Site, organisation, fieldsAhpApp);
                 foreach (var ahpApp in ahpApps)
                 {
-                    if(ahpApp.invln_DevelopingPartner?.Id == organisation || ahpApp.invln_OwneroftheLand?.Id == organisation || ahpApp.invln_OwneroftheHomes?.Id == organisation)
+                    if (ahpApp.invln_DevelopingPartner?.Id == organisation || ahpApp.invln_OwneroftheLand?.Id == organisation || ahpApp.invln_OwneroftheHomes?.Id == organisation)
                     {
                         result.Add(site);
                         break;
