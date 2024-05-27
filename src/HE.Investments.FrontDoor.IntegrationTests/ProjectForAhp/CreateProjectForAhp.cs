@@ -31,7 +31,7 @@ public class CreateProjectForAhp : FrontDoorIntegrationTest
     public async Task ProjectShouldBeEligibleForAhp()
     {
         // given
-        var projectId = await InCrm.FrontDoorProjectEligibleForAhpExist(LoginData);
+        var (projectId, _) = await InFrontDoor.FrontDoorProjectEligibleForAhpExist(LoginData);
         var currentPage = await TestClient.NavigateTo(ProjectPagesUrl.CheckAnswers(projectId));
 
         // when

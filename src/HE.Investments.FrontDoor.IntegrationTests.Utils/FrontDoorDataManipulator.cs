@@ -5,30 +5,33 @@ using HE.Investments.FrontDoor.Domain.Project.Crm;
 using HE.Investments.FrontDoor.Domain.Project.Crm.Mappers;
 using HE.Investments.FrontDoor.Domain.Project.ValueObjects;
 using HE.Investments.FrontDoor.Domain.Site.Crm;
-using HE.Investments.FrontDoor.IntegrationTests.FillProject.Data;
 using HE.Investments.FrontDoor.Shared.Project.Contract;
 using HE.Investments.IntegrationTestsFramework.Auth;
+using HE.Investments.Organisation.LocalAuthorities.ValueObjects;
 using HE.Investments.TestsUtils.Extensions;
+using LocalAuthority = HE.Investments.Organisation.LocalAuthorities.ValueObjects.LocalAuthority;
 
-namespace HE.Investments.FrontDoor.IntegrationTests.Framework;
+namespace HE.Investments.FrontDoor.IntegrationTests.Utils;
 
-public class DataManipulator
+public class FrontDoorDataManipulator
 {
+    public static readonly LocalAuthority Oxford = new(new LocalAuthorityCode("7000178"), "Oxford");
+
     private readonly IProjectCrmContext _projectCrmContext;
 
     private readonly ISiteCrmContext _siteCrmContext;
 
-    public DataManipulator(IProjectCrmContext projectCrmContext, ISiteCrmContext siteCrmContext)
+    public FrontDoorDataManipulator(IProjectCrmContext projectCrmContext, ISiteCrmContext siteCrmContext)
     {
         _projectCrmContext = projectCrmContext;
         _siteCrmContext = siteCrmContext;
     }
 
-    public async Task<string> FrontDoorProjectEligibleForAhpExist(ILoginData loginData)
+    public async Task<(string ProjectId, string SiteId)> FrontDoorProjectEligibleForAhpExist(ILoginData loginData, string? projectName = null, string? siteName = null)
     {
         var projectDto = new FrontDoorProjectDto
         {
-            ProjectName = "IT Project".WithTimestampSuffix(),
+            ProjectName = projectName ?? "IT Project".WithTimestampSuffix(),
             ProjectSupportsHousingDeliveryinEngland = true,
             OrganisationId = ShortGuid.ToGuid(loginData.OrganisationId),
             externalId = loginData.UserGlobalId,
@@ -48,14 +51,14 @@ public class DataManipulator
         var projectId = await _projectCrmContext.Save(projectDto, loginData.UserGlobalId, loginData.OrganisationId, CancellationToken.None);
         var siteDto = new FrontDoorProjectSiteDto
         {
-            SiteName = $"Site for {projectDto.ProjectName}",
+            SiteName = siteName ?? $"Site for {projectDto.ProjectName}",
             NumberofHomesEnabledBuilt = 10,
             PlanningStatus = new PlanningStatusMapper().ToDto(SitePlanningStatus.PlanningDiscussionsUnderwayWithThePlanningOffice),
-            LocalAuthorityCode = LocalAuthorities.Oxford.Code.Value,
-            LocalAuthorityName = LocalAuthorities.Oxford.Name,
+            LocalAuthorityCode = Oxford.Code.Value,
+            LocalAuthorityName = Oxford.Name,
         };
 
-        await _siteCrmContext.Save(projectId, siteDto, loginData.UserGlobalId, loginData.OrganisationId, CancellationToken.None);
-        return projectId;
+        var siteId = await _siteCrmContext.Save(projectId, siteDto, loginData.UserGlobalId, loginData.OrganisationId, CancellationToken.None);
+        return (projectId, siteId);
     }
 }

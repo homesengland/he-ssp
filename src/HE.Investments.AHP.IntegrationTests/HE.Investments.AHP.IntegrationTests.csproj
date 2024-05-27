@@ -14,6 +14,7 @@
   <ItemGroup>
     <ProjectReference Include="..\HE.Investment.AHP.WWW\HE.Investment.AHP.WWW.csproj"/>
     <ProjectReference Include="..\HE.Investments.FrontDoor.Domain\HE.Investments.FrontDoor.Domain.csproj" />
+    <ProjectReference Include="..\HE.Investments.FrontDoor.IntegrationTests.Utils\HE.Investments.FrontDoor.IntegrationTests.Utils.csproj" />
     <ProjectReference Include="..\HE.Investments.IntegrationTestsFramework\HE.Investments.IntegrationTestsFramework.csproj"/>
     <ProjectReference Include="..\HE.Investments.TestsUtils\HE.Investments.TestsUtils.csproj"/>
   </ItemGroup>

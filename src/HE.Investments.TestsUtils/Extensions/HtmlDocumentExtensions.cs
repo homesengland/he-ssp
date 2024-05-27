@@ -58,7 +58,7 @@ public static class HtmlDocumentExtensions
                      ?? htmlDocument.GetElementsByTagName("title").FirstOrDefault();
 
         header.Should().NotBeNull("Page Header does not exist");
-        return header!.InnerHtml.Trim();
+        return HttpUtility.HtmlDecode(header!.InnerHtml.Trim());
     }
 
     public static string GetStatusTagByTestId(this IHtmlDocument htmlDocument, string testId)
