@@ -13,7 +13,8 @@ namespace HE.CRM.AHP.Plugins.Plugins.DeliveryPhase
         invln_DeliveryPhase.EntityLogicalName,
         StageEnum.PreOperation,
         ExecutionModeEnum.Synchronous,
-        invln_DeliveryPhase.Fields.StatusCode + "," + invln_DeliveryPhase.Fields.invln_NoofHomes,
+        invln_DeliveryPhase.Fields.StatusCode + "," + invln_DeliveryPhase.Fields.invln_NoofHomes + "," +
+        invln_DeliveryPhase.Fields.invln_buildactivitytype,
         "HE.CRM.AHP.Plugins.Plugins.DeliveryPhase.PreUpdateDeliveryPhase : PreUpdate of Delivery Phase",
         1,
         IsolationModeEnum.Sandbox,

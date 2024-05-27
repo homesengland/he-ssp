@@ -238,7 +238,7 @@ namespace HE.CRM.AHP.Plugins.Services.Application
                 foreach (var application in applications)
                 {
                     var contact = _contactRepository.GetById(application.invln_contactid.Id, new string[] { Contact.Fields.FirstName, Contact.Fields.LastName, nameof(Contact.invln_externalid).ToLower() });
-                    var site = _siteRepository.GetById(application.invln_Site.Id, invln_Sites.Fields.invln_AHPProjectId);
+                    var site = _siteRepository.GetById(application.invln_Site.Id, invln_Sites.Fields.invln_HeProjectLocalAuthorityId);
                     var applicationDto = AhpApplicationMapper.MapRegularEntityToDto(application, contact.invln_externalid, site);
                     if (application.invln_lastexternalmodificationby != null)
                     {
