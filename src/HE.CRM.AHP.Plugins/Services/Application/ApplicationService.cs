@@ -191,7 +191,7 @@ namespace HE.CRM.AHP.Plugins.Services.Application
         public string GetFileLocationForAhpApplication(string ahpApplicationId, bool isAbsolute)
         {
             var urlToReturn = string.Empty;
-            if (Guid.TryParse(ahpApplicationId, out Guid applicationGuid))
+            if (Guid.TryParse(ahpApplicationId, out var applicationGuid))
             {
                 var relatedDocumentLocation = _sharepointDocumentLocationRepository.GetDocumentLocationRelatedToRecordWithGivenGuid(applicationGuid);
                 if (relatedDocumentLocation != null && relatedDocumentLocation.ParentSiteOrLocation != null)
@@ -569,22 +569,34 @@ namespace HE.CRM.AHP.Plugins.Services.Application
             var application = _ahpApplicationRepositoryAdmin.GetById(applicationId, applicationColumns);
 
             if (application.invln_fundingrequired == null)
+            {
                 throw new Exception("invln_scheme.invln_fundingrequired is empty");
+            }
 
             if (!application.invln_noofhomes.HasValue || application.invln_noofhomes.Value < 1)
+            {
                 throw new Exception("invln_scheme.invln_noofhomes is empty");
+            }
 
             if (application.invln_expectedacquisitioncost == null && application.invln_actualacquisitioncost == null)
+            {
                 throw new Exception("invln_scheme.invln_expectedacquisitioncost and invln_scheme.invln_actualacquisitioncost are empty");
+            }
 
             if (application.invln_expectedoncosts == null)
+            {
                 throw new Exception("invln_scheme.invln_expectedoncosts is empty");
+            }
 
             if (application.invln_expectedonworks == null)
+            {
                 throw new Exception("invln_scheme.invln_expectedonworks is empty");
+            }
 
             if (application.invln_Tenure == null)
+            {
                 throw new Exception("invln_scheme.invln_Tenure is empty");
+            }
 
             var fundingRequired = application.invln_fundingrequired.Value;
             var noOfHomes = application.invln_noofhomes.Value;
@@ -600,10 +612,14 @@ namespace HE.CRM.AHP.Plugins.Services.Application
 
             var site = GetSite(application.invln_Site.Id);
             if (site == null)
+            {
                 throw new Exception($"Could not found site with Id: {application.invln_Site.Id}");
+            }
 
             if (site.invln_GovernmentOfficeRegion == null)
+            {
                 throw new Exception($"Site {site.Id} has no set invln_GovernmentOfficeRegion");
+            }
 
             var typeOfHousing = GetHomeTypes(applicationId).Select(x => (invln_Typeofhousing)x.invln_typeofhousing.Value).ToList();
 
@@ -675,15 +691,21 @@ namespace HE.CRM.AHP.Plugins.Services.Application
             if (ahpApplicationTenure == invln_Tenure.Sharedownership ||
                 ahpApplicationTenure == invln_Tenure.OPSO ||
                 ahpApplicationTenure == invln_Tenure.HOLD)
+            {
                 return invln_Tenurechoice.Sharedownership;
+            }
 
             if (ahpApplicationTenure == invln_Tenure.Renttobuy)
+            {
                 return invln_Tenurechoice.Renttobuy;
+            }
 
             if (ahpApplicationTenure == invln_Tenure.Affordablerent)
             {
                 if (housingForDisabledVulnerableOlderPeople)
+                {
                     return invln_Tenurechoice.Specialistrent;
+                }
 
                 return invln_Tenurechoice.Affordablerent;
             }
@@ -691,7 +713,9 @@ namespace HE.CRM.AHP.Plugins.Services.Application
             if (ahpApplicationTenure == invln_Tenure.Socialrent)
             {
                 if (housingForDisabledVulnerableOlderPeople)
+                {
                     return invln_Tenurechoice.Specialistrent;
+                }
 
                 return invln_Tenurechoice.Socialrent;
             }
