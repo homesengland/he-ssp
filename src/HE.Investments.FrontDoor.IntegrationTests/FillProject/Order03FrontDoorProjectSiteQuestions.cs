@@ -1,6 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
-using AngleSharp;
 using FluentAssertions;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.WWW.Extensions;
@@ -518,8 +517,9 @@ public class Order03FrontDoorProjectSiteQuestions : FrontDoorIntegrationTest
         var nextPage = await TestClient.SubmitButton(continueButton);
 
         // then
-        var displayedText = nextPage.GetFirstPreformattedText();
-        displayedText.Should().Contain("Eligibility for Loan");
-        Output.WriteLine(displayedText);
+        var displayedText = nextPage.GetSummaryListItems();
+        displayedText.Should().ContainKey("Eligible programme").WithValue("Loans");
+
+        Output.WriteLine($"Create Loans Application link: {displayedText["Eligible programme"].ChangeAnswerLink?.Href}");
     }
 }

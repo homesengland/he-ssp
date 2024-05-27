@@ -36,9 +36,9 @@ public class ConvertProjectController : Controller
         {
             return applicationType switch
             {
-                ApplicationType.Loans => Content($"Eligibility for Loan ({urlWithRouteData})"),
-                ApplicationType.Ahp => Content($"Eligibility for Ahp ({urlWithRouteData})"),
-                _ => Content("Not supported"),
+                ApplicationType.Loans => View(("Loans", urlWithRouteData)),
+                ApplicationType.Ahp => View(("AHP", urlWithRouteData)),
+                _ => View(("Not supported", string.Empty)),
             };
         }
 
