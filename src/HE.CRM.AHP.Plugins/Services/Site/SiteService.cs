@@ -20,8 +20,6 @@ namespace HE.CRM.AHP.Plugins.Services.Site
 
         private readonly IHeLocalAuthorityRepository _heLocalAuthorityRepository;
 
-
-
         public SiteService(CrmServiceArgs args) : base(args)
         {
             _repository = CrmRepositoriesFactory.Get<ISiteRepository>();
@@ -76,12 +74,18 @@ namespace HE.CRM.AHP.Plugins.Services.Site
 
             var site = _repository.GetSingle(siteIdFilter, fieldsToRetrieve, externalContactIdFilter, accountIdFilter);
 
+            if (site == null)
+            {
+                return null;
+            }
             he_LocalAuthority localAuth = null;
+            TracingService.Trace($"Check Local authority");
             if (site.invln_HeLocalAuthorityId != null)
             {
+                TracingService.Trace("Get local authority");
                 localAuth = _heLocalAuthorityRepository.GetById(site.invln_HeLocalAuthorityId.Id, new string[] { nameof(he_LocalAuthority.he_LocalAuthorityId).ToLower(), nameof(he_LocalAuthority.he_Name).ToLower(), nameof(he_LocalAuthority.he_GSSCode).ToLower() });
             }
-
+            TracingService.Trace("Site to Dto");
             return SiteMapper.ToDto(site, localAuth);
         }
 
@@ -124,7 +128,6 @@ namespace HE.CRM.AHP.Plugins.Services.Site
             return siteId;
         }
 
-
         public bool CreateRecordsWithAhpProject(List<SiteDto> listOfSites, Guid ahpProjectId, string externalContactId, string organisationId)
         {
             var isSitesCreated = true;
@@ -142,7 +145,6 @@ namespace HE.CRM.AHP.Plugins.Services.Site
             }
             return isSitesCreated;
         }
-
 
         private string GetFetchXmlConditionForGivenField(string fieldValue, string fieldName)
         {
