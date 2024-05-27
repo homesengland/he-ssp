@@ -16,7 +16,7 @@ public static class ProjectPageTitles
 
     public const string Tenure = "What amount of affordable homes are you planning to deliver?";
 
-    public const string OrganisationHomesBuilt = "Previous residential building experience";
+    public const string OrganisationHomesBuilt = "How many homes did your organisation build in the last year?";
 
     public const string IdentifiedSite = "Do you have an identified site?";
 

@@ -102,6 +102,7 @@ public class ListCardTests : ViewComponentTestBase<ListCardTests>
             "Nagłówek",
             applications ?? ApplicationBasicDetailsModels(),
             Title: "Applications",
+            ViewAllLabel: "View all applications",
             ViewAllUrl: "applications/");
     }
 }

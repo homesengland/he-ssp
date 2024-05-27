@@ -5,6 +5,8 @@
 @model ProjectDetails
 @{
     ViewData["Title"] = ProjectPageTitles.OrganisationHomesBuilt;
+    var paragraphs = $"Enter the total number of homes your organisation has built in the last year." +
+                     $"{Environment.NewLine}Enter 0 if your organisation did not build any homes last year. This could be because this is your first build or because you deliver housing in partnership with, or through acquiring properties from, a developer.";
 }
 
 <gds-div-grid-column-two-thirds>
@@ -17,7 +19,7 @@
         <vc:text-input
             title="@ProjectPageTitles.OrganisationHomesBuilt"
             title-type="InputTitleType.PageHeader"
-            paragraph="Enter the total number of homes your organisation has built in the last year. If this is your first build, you can enter 0."
+            paragraph="@paragraphs"
             css-class="govuk-input--width-4"
             field-name="@nameof(Model.OrganisationHomesBuilt)"
             value="@Model.OrganisationHomesBuilt"/>
