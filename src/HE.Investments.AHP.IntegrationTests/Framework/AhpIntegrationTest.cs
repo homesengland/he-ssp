@@ -1,15 +1,14 @@
 using System.Diagnostics;
 using HE.Investment.AHP.WWW;
 using HE.Investments.AHP.IntegrationTests.Crm;
-using HE.Investments.AHP.IntegrationTests.FillApplication.Data;
-using HE.Investments.AHP.IntegrationTests.FillSite.Data;
-using HE.Investments.AHP.IntegrationTests.StartAhpProjectWithSite.Data;
+using HE.Investments.AHP.IntegrationTests.Order01StartAhpProjectWithSite.Data;
+using HE.Investments.AHP.IntegrationTests.Order02FillSite.Data;
+using HE.Investments.AHP.IntegrationTests.Order03FillApplication.Data;
 using HE.Investments.Common.Contract;
 using HE.Investments.FrontDoor.IntegrationTests.Utils;
 using HE.Investments.IntegrationTestsFramework;
 using HE.Investments.IntegrationTestsFramework.Auth;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.VisualBasic.CompilerServices;
 using Xunit;
 using Xunit.Abstractions;
 

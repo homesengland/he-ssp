@@ -1,7 +1,7 @@
 using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
 using FluentAssertions;
-using HE.Investments.AHP.IntegrationTests.FillApplication.Data;
+using HE.Investments.AHP.IntegrationTests.Order03FillApplication.Data;
 using HE.Investments.TestsUtils.Extensions;
 
 namespace HE.Investments.AHP.IntegrationTests.Extensions;
