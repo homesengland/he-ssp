@@ -6,8 +6,6 @@ using HE.Investment.AHP.Domain.Delivery.Crm;
 using HE.Investment.AHP.Domain.Delivery.Entities;
 using HE.Investment.AHP.Domain.Delivery.ValueObjects;
 using HE.Investment.AHP.Domain.HomeTypes.Repositories;
-using HE.Investment.AHP.Domain.Scheme.Repositories;
-using HE.Investment.AHP.Domain.Scheme.ValueObjects;
 using HE.Investments.Account.Shared.User;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Exceptions;
@@ -27,8 +25,6 @@ public class DeliveryPhaseRepository : IDeliveryPhaseRepository
 
     private readonly IHomeTypeRepository _homeTypeRepository;
 
-    private readonly ISchemeRepository _schemeRepository;
-
     private readonly IEventDispatcher _eventDispatcher;
 
     public DeliveryPhaseRepository(
@@ -36,7 +32,6 @@ public class DeliveryPhaseRepository : IDeliveryPhaseRepository
         IDeliveryPhaseCrmMapper crmMapper,
         IApplicationRepository applicationRepository,
         IHomeTypeRepository homeTypeRepository,
-        ISchemeRepository schemeRepository,
         IApplicationSectionStatusChanger sectionStatusChanger,
         IEventDispatcher eventDispatcher)
     {
@@ -44,7 +39,6 @@ public class DeliveryPhaseRepository : IDeliveryPhaseRepository
         _homeTypeRepository = homeTypeRepository;
         _eventDispatcher = eventDispatcher;
         _sectionStatusChanger = sectionStatusChanger;
-        _schemeRepository = schemeRepository;
         _crmContext = crmContext;
         _crmMapper = crmMapper;
     }
@@ -58,11 +52,10 @@ public class DeliveryPhaseRepository : IDeliveryPhaseRepository
             ? await _crmContext.GetAllOrganisationDeliveryPhases(applicationId.Value, organisationId, cancellationToken)
             : await _crmContext.GetAllUserDeliveryPhases(applicationId.Value, organisationId, cancellationToken);
         var homesToDeliver = await GetHomesToDeliver(applicationId, userAccount, cancellationToken);
-        var schemeFunding = await GetSchemeFunding(applicationId, userAccount, cancellationToken);
 
         return new DeliveryPhasesEntity(
             application,
-            deliveryPhases.Select(x => _crmMapper.MapToDomain(application, organisation, x, schemeFunding)).ToList(),
+            deliveryPhases.Select(x => _crmMapper.MapToDomain(application, organisation, x)).ToList(),
             homesToDeliver,
             application.Sections.DeliveryStatus);
     }
@@ -79,11 +72,10 @@ public class DeliveryPhaseRepository : IDeliveryPhaseRepository
         var deliveryPhase = userAccount.CanViewAllApplications()
             ? await _crmContext.GetOrganisationDeliveryPhaseById(applicationId.Value, deliveryPhaseId.Value, organisationId, cancellationToken)
             : await _crmContext.GetUserDeliveryPhaseById(applicationId.Value, deliveryPhaseId.Value, organisationId, cancellationToken);
-        var schemeFunding = await GetSchemeFunding(applicationId, userAccount, cancellationToken);
 
         if (deliveryPhase != null)
         {
-            return _crmMapper.MapToDomain(application, organisation, deliveryPhase, schemeFunding);
+            return _crmMapper.MapToDomain(application, organisation, deliveryPhase);
         }
 
         throw new NotFoundException(nameof(DeliveryPhaseEntity), deliveryPhaseId);
@@ -144,13 +136,5 @@ public class DeliveryPhaseRepository : IDeliveryPhaseRepository
             cancellationToken);
 
         return homeTypes.HomeTypes.Select(x => new HomesToDeliver(x.Id, x.Name, x.HomeInformation.NumberOfHomes?.Value ?? 0));
-    }
-
-    private async Task<SchemeFunding> GetSchemeFunding(
-        AhpApplicationId applicationId,
-        UserAccount userAccount,
-        CancellationToken cancellationToken)
-    {
-        return (await _schemeRepository.GetByApplicationId(applicationId, userAccount, false, cancellationToken)).Funding;
     }
 }

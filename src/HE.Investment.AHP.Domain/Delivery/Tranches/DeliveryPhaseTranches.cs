@@ -19,7 +19,6 @@ public class DeliveryPhaseTranches : IQuestion
         DeliveryPhaseId id,
         ApplicationBasicInfo applicationBasicInfo,
         MilestonesPercentageTranches percentages,
-        decimal grantApportioned,
         bool amendmentsRequested,
         bool? claimMilestone,
         bool isOneTranche)
@@ -27,21 +26,20 @@ public class DeliveryPhaseTranches : IQuestion
         Id = id;
         ApplicationBasicInfo = applicationBasicInfo;
         _amendmentsRequested = amendmentsRequested;
-        GrantApportioned = grantApportioned;
-        PercentagesAmended = percentages;
+        Percentages = percentages;
         ClaimMilestone = claimMilestone;
         IsOneTranche = isOneTranche;
     }
+
+    public event EntityModifiedEventHandler? TranchesAmended;
 
     public DeliveryPhaseId Id { get; }
 
     public ApplicationBasicInfo ApplicationBasicInfo { get; }
 
-    public MilestonesPercentageTranches PercentagesAmended { get; private set; }
+    public MilestonesPercentageTranches Percentages { get; private set; }
 
     public bool IsOneTranche { get; }
-
-    public decimal GrantApportioned { get; }
 
     public bool? ClaimMilestone { get; private set; }
 
@@ -52,25 +50,19 @@ public class DeliveryPhaseTranches : IQuestion
     public void ProvideAcquisitionTranche(string? acquisition)
     {
         CheckIfTranchesCanBeAmended();
-        var percentages = UseMilestonesPercentageTranches();
-        PercentagesAmended =
-            _modificationTracker.Change(PercentagesAmended, percentages.WithAcquisition(WholePercentage.FromString(acquisition)), UnClaimMilestone);
+        Percentages = _modificationTracker.Change(Percentages, Percentages.WithAcquisition(WholePercentage.FromString(acquisition)), UnClaimMilestone, _ => TranchesAmended?.Invoke());
     }
 
     public void ProvideStartOnSiteTranche(string? startOnSite)
     {
         CheckIfTranchesCanBeAmended();
-        var percentages = UseMilestonesPercentageTranches();
-        PercentagesAmended =
-            _modificationTracker.Change(PercentagesAmended, percentages.WithStartOnSite(WholePercentage.FromString(startOnSite)), UnClaimMilestone);
+        Percentages = _modificationTracker.Change(Percentages, Percentages.WithStartOnSite(WholePercentage.FromString(startOnSite)), UnClaimMilestone, _ => TranchesAmended?.Invoke());
     }
 
     public void ProvideCompletionTranche(string? completion)
     {
         CheckIfTranchesCanBeAmended();
-        var percentages = UseMilestonesPercentageTranches();
-        PercentagesAmended =
-            _modificationTracker.Change(PercentagesAmended, percentages.WithCompletion(WholePercentage.FromString(completion)), UnClaimMilestone);
+        Percentages = _modificationTracker.Change(Percentages, Percentages.WithCompletion(WholePercentage.FromString(completion)), UnClaimMilestone, _ => TranchesAmended?.Invoke());
     }
 
     public void ClaimMilestones(bool? understandClaimingMilestones)
@@ -84,27 +76,12 @@ public class DeliveryPhaseTranches : IQuestion
                 "You must confirm you understand this to continue");
         }
 
-        if (!PercentagesAmended.IsSumUpTo100Percentage())
+        if (!Percentages.IsSumUpTo100Percentage())
         {
             OperationResult.ThrowValidationError("Tranches", "Tranche proportions for this delivery phase must add to 100%");
         }
 
-        ClaimMilestone = _modificationTracker.Change(ClaimMilestone, true);
-    }
-
-    public MilestonesPercentageTranches GetPercentageTranches()
-    {
-        if (IsOneTranche)
-        {
-            return MilestonesPercentageTranches.OnlyCompletion;
-        }
-
-        if (CanBeAmended && PercentagesAmended.IsAnyPercentageProvided())
-        {
-            return PercentagesAmended;
-        }
-
-        return UseMilestonesPercentageTranches();
+        ClaimMilestone = _modificationTracker.Change(ClaimMilestone, true, () => TranchesAmended?.Invoke());
     }
 
     public bool IsAnswered()
@@ -114,24 +91,10 @@ public class DeliveryPhaseTranches : IQuestion
             return true;
         }
 
-        return PercentagesAmended.IsSumUpTo100Percentage() && ClaimMilestone.GetValueOrDefault();
+        return Percentages.IsSumUpTo100Percentage() && ClaimMilestone.GetValueOrDefault();
     }
 
-    private MilestonesPercentageTranches UseMilestonesPercentageTranches()
-    {
-        if (!PercentagesAmended.IsAnyPercentageProvided())
-        {
-            // TODO: AB#90826 Use values returned from CRM
-            return new MilestonesPercentageTranches(
-                new WholePercentage(1),
-                new WholePercentage(0),
-                new WholePercentage(0));
-        }
-
-        return PercentagesAmended;
-    }
-
-    private void UnClaimMilestone()
+    public void UnClaimMilestone()
     {
         ClaimMilestone = _modificationTracker.Change(ClaimMilestone, null);
     }

@@ -6,7 +6,6 @@ using HE.Investment.AHP.Contract.HomeTypes;
 using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.Delivery.Crm;
 using HE.Investment.AHP.Domain.Delivery.ValueObjects;
-using HE.Investment.AHP.Domain.Scheme.ValueObjects;
 using HE.Investment.AHP.Domain.Tests.Application.TestData;
 using HE.Investment.AHP.Domain.Tests.Delivery.Entities.TestDataBuilders;
 using HE.Investments.Account.Shared;
@@ -22,8 +21,6 @@ public class MapToDomainTests : TestBase<DeliveryPhaseCrmMapper>
 
     private static readonly OrganisationBasicInfo Organisation = new OrganisationBasicInfoBuilder().Build();
 
-    private static readonly SchemeFunding SchemeFunding = new(1_000_000, 20);
-
     [Fact]
     public void ShouldMapDeliveryPhaseBasicProperties()
     {
@@ -37,7 +34,7 @@ public class MapToDomainTests : TestBase<DeliveryPhaseCrmMapper>
         };
 
         // when
-        var result = TestCandidate.MapToDomain(Application, Organisation, dto, SchemeFunding);
+        var result = TestCandidate.MapToDomain(Application, Organisation, dto);
 
         // then
         result.Id.Should().Be(new DeliveryPhaseId("dp-id-1"));
@@ -70,7 +67,7 @@ public class MapToDomainTests : TestBase<DeliveryPhaseCrmMapper>
         };
 
         // when
-        var result = TestCandidate.MapToDomain(Application, Organisation, dto, SchemeFunding);
+        var result = TestCandidate.MapToDomain(Application, Organisation, dto);
 
         // then
         result.Status.Should().Be(expectedStatus);
@@ -91,7 +88,7 @@ public class MapToDomainTests : TestBase<DeliveryPhaseCrmMapper>
         };
 
         // when
-        var result = TestCandidate.MapToDomain(Application, Organisation, dto, SchemeFunding);
+        var result = TestCandidate.MapToDomain(Application, Organisation, dto);
 
         // then
         result.TypeOfHomes.Should().Be(expectedTypeOfHomes);
@@ -118,7 +115,7 @@ public class MapToDomainTests : TestBase<DeliveryPhaseCrmMapper>
         };
 
         // when
-        var result = TestCandidate.MapToDomain(Application, Organisation, dto, SchemeFunding);
+        var result = TestCandidate.MapToDomain(Application, Organisation, dto);
 
         // then
         result.BuildActivity.Should().NotBeNull();
@@ -144,7 +141,7 @@ public class MapToDomainTests : TestBase<DeliveryPhaseCrmMapper>
         };
 
         // when
-        var result = TestCandidate.MapToDomain(Application, Organisation, dto, SchemeFunding);
+        var result = TestCandidate.MapToDomain(Application, Organisation, dto);
 
         // then
         result.BuildActivity.Should().NotBeNull();
@@ -168,7 +165,7 @@ public class MapToDomainTests : TestBase<DeliveryPhaseCrmMapper>
         };
 
         // when
-        var result = TestCandidate.MapToDomain(Application, Organisation, dto, SchemeFunding).HomesToDeliver.ToList();
+        var result = TestCandidate.MapToDomain(Application, Organisation, dto).HomesToDeliver.ToList();
 
         // then
         result.Should().HaveCount(2);
@@ -194,7 +191,7 @@ public class MapToDomainTests : TestBase<DeliveryPhaseCrmMapper>
         };
 
         // when
-        var result = TestCandidate.MapToDomain(Application, Organisation, dto, SchemeFunding);
+        var result = TestCandidate.MapToDomain(Application, Organisation, dto);
 
         // then
         result.DeliveryPhaseMilestones.AcquisitionMilestone.Should().NotBeNull();
@@ -220,7 +217,7 @@ public class MapToDomainTests : TestBase<DeliveryPhaseCrmMapper>
         };
 
         // when
-        var result = TestCandidate.MapToDomain(Application, Organisation, dto, SchemeFunding);
+        var result = TestCandidate.MapToDomain(Application, Organisation, dto);
 
         // then
         result.IsAdditionalPaymentRequested.Should().NotBeNull();

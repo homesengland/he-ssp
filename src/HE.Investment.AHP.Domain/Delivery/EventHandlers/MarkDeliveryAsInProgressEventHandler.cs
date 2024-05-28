@@ -1,6 +1,7 @@
 using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.Delivery.Events;
 using HE.Investment.AHP.Contract.HomeTypes.Events;
+using HE.Investment.AHP.Contract.Scheme.Events;
 using HE.Investment.AHP.Domain.Application.Repositories;
 using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract;
@@ -13,7 +14,8 @@ public class MarkDeliveryAsInProgressEventHandler :
     IEventHandler<DeliveryPhaseHasBeenCreatedEvent>,
     IEventHandler<DeliveryPhaseHasBeenUpdatedEvent>,
     IEventHandler<DeliveryPhaseHasBeenRemovedEvent>,
-    IEventHandler<HomeTypeNumberOfHomesHasBeenUpdatedEvent>
+    IEventHandler<HomeTypeNumberOfHomesHasBeenUpdatedEvent>,
+    IEventHandler<SchemeNumberOfHomesHasBeenUpdatedEvent>
 {
     private readonly IApplicationRepository _applicationRepository;
 
@@ -47,6 +49,11 @@ public class MarkDeliveryAsInProgressEventHandler :
     }
 
     public async Task Handle(HomeTypeNumberOfHomesHasBeenUpdatedEvent domainEvent, CancellationToken cancellationToken)
+    {
+        await ChangeStatus(domainEvent.ApplicationId, cancellationToken, preventStarting: true);
+    }
+
+    public async Task Handle(SchemeNumberOfHomesHasBeenUpdatedEvent domainEvent, CancellationToken cancellationToken)
     {
         await ChangeStatus(domainEvent.ApplicationId, cancellationToken, preventStarting: true);
     }

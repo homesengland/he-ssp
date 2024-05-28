@@ -65,12 +65,16 @@ public class DeliveryPhaseCheckAnswersViewModelFactory : IDeliveryPhaseCheckAnsw
                 deliveryPhase.TypeOfHomes?.GetDescription().ToOneElementList(),
                 IsEditable: isEditable,
                 ActionUrl: createAction(nameof(DeliveryPhaseController.Details))),
-            new(
+        };
+
+        if (deliveryPhase.TypeOfHomes.IsProvided())
+        {
+            items.Add(new(
                 "Build activity type",
                 deliveryPhase.BuildActivityType?.GetDescription().ToOneElementList(),
                 IsEditable: isEditable,
-                ActionUrl: createAction(GetBuildActivityTypeActionUrl(deliveryPhase))),
-        };
+                ActionUrl: createAction(GetBuildActivityTypeActionUrl(deliveryPhase))));
+        }
 
         items.AddWhen(
             new(
@@ -142,6 +146,13 @@ public class DeliveryPhaseCheckAnswersViewModelFactory : IDeliveryPhaseCheckAnsw
             (summary?.CompletionMilestone.DisplayPoundsPences() ?? "-").ToOneElementList(),
             IsEditable: isEditable,
             ActionUrl: createAction(nameof(DeliveryPhaseController.SummaryOfDelivery)));
+
+        yield return new(
+            "Understand claiming milestones",
+            summary?.UnderstandClaimingMilestones.MapToYesNo().ToOneElementList(),
+            IsEditable: isEditable,
+            ActionUrl: createAction(nameof(DeliveryPhaseController.SummaryOfDelivery)),
+            IsVisible: false);
     }
 
     private static SectionSummaryViewModel CreateMilestonesDatesSummary(DeliveryPhaseDetails deliveryPhase, CreateAction createAction, bool isEditable)

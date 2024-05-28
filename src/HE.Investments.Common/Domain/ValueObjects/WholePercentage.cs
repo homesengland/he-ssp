@@ -18,8 +18,6 @@ public class WholePercentage : ValueObject
         Value = value;
     }
 
-    public static WholePercentage Hundered => new(1m);
-
     public decimal Value { get; }
 
     public static WholePercentage FromString(string? value, UiFields? uiFields = null)
