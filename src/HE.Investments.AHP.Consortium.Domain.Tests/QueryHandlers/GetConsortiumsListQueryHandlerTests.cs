@@ -10,7 +10,10 @@ using HE.Investments.AHP.Consortium.Domain.Tests.TestData;
 using HE.Investments.AHP.Consortium.Domain.Tests.TestObjectBuilders;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Tests.TestData;
+using HE.Investments.Programme.Contract.Enums;
+using HE.Investments.Programme.Contract.Queries;
 using HE.Investments.TestsUtils.TestFramework;
+using MediatR;
 using Moq;
 using Xunit;
 
@@ -42,11 +45,14 @@ public class GetConsortiumsListQueryHandlerTests : TestBase<GetConsortiumsListQu
 
         var accountUserContext = CreateAndRegisterDependencyMock<IAccountUserContext>();
         var consortiumRepository = CreateAndRegisterDependencyMock<IConsortiumRepository>();
+        var mediator = CreateAndRegisterDependencyMock<IMediator>();
 
         accountUserContext.Setup(x => x.GetSelectedAccount()).ReturnsAsync(jjCompanyEmployee);
         consortiumRepository
             .Setup(x => x.GetConsortiumsListByMemberId(InvestmentsOrganisationTestData.JjCompany.Id, CancellationToken.None))
             .ReturnsAsync(consortiumsList);
+        mediator.Setup(x => x.Send(new GetProgrammesQuery(ProgrammeType.Ahp), CancellationToken.None))
+            .ReturnsAsync([ProgrammeTestData.AhpCmeProgramme]);
 
         // when
         var result = await TestCandidate.Handle(new GetConsortiumsListQuery(), CancellationToken.None);
@@ -58,13 +64,13 @@ public class GetConsortiumsListQueryHandlerTests : TestBase<GetConsortiumsListQu
         result.Consortiums.Should()
             .ContainEquivalentOf(new ConsortiumByMemberRole(
                     firstConsortiumId,
-                    firstConsortium.Programme,
+                    ProgrammeTestData.AhpCmeProgramme,
                     firstConsortium.LeadPartner.OrganisationName,
                     ConsortiumMembershipRole.LeadPartner));
         result.Consortiums.Should()
             .ContainEquivalentOf(new ConsortiumByMemberRole(
                 secondConsortiumId,
-                secondConsortium.Programme,
+                ProgrammeTestData.AhpCmeProgramme,
                 secondConsortium.LeadPartner.OrganisationName,
                 ConsortiumMembershipRole.Member));
     }
@@ -76,11 +82,14 @@ public class GetConsortiumsListQueryHandlerTests : TestBase<GetConsortiumsListQu
         var jjCompanyEmployee = UserAccountInvestmentsOrganisationTestData.JjCompanyEmployee;
         var accountUserContext = CreateAndRegisterDependencyMock<IAccountUserContext>();
         var consortiumRepository = CreateAndRegisterDependencyMock<IConsortiumRepository>();
+        var mediator = CreateAndRegisterDependencyMock<IMediator>();
 
         accountUserContext.Setup(x => x.GetSelectedAccount()).ReturnsAsync(jjCompanyEmployee);
         consortiumRepository
             .Setup(x => x.GetConsortiumsListByMemberId(InvestmentsOrganisationTestData.JjCompany.Id, CancellationToken.None))
             .ReturnsAsync([]);
+        mediator.Setup(x => x.Send(new GetProgrammesQuery(ProgrammeType.Ahp), CancellationToken.None))
+            .ReturnsAsync([ProgrammeTestData.AhpCmeProgramme]);
 
         // when
         var result = await TestCandidate.Handle(new GetConsortiumsListQuery(), CancellationToken.None);

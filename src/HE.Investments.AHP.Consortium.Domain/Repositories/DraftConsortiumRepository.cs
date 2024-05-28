@@ -6,6 +6,7 @@ using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Infrastructure.Cache.Interfaces;
+using HE.Investments.Programme.Contract;
 
 namespace HE.Investments.AHP.Consortium.Domain.Repositories;
 
@@ -34,7 +35,7 @@ public class DraftConsortiumRepository : IDraftConsortiumRepository
         var draftConsortium = new DraftConsortiumEntity(
             consortium.Id,
             consortium.Name,
-            consortium.Programme,
+            consortium.ProgrammeId,
             new DraftConsortiumMember(consortium.LeadPartner.Id, consortium.LeadPartner.OrganisationName),
             []);
 
@@ -56,8 +57,7 @@ public class DraftConsortiumRepository : IDraftConsortiumRepository
         return new DraftConsortiumDto(
             entity.Id.Value,
             entity.Name.Value,
-            entity.Programme.Id.Value,
-            entity.Programme.Name,
+            entity.ProgrammeId.Value,
             new DraftConsortiumMemberDto(entity.LeadPartner.Id.Value, entity.LeadPartner.OrganisationName),
             entity.Members.Select(x => new DraftConsortiumMemberDto(x.Id.Value, x.OrganisationName)).ToList());
     }
@@ -72,7 +72,7 @@ public class DraftConsortiumRepository : IDraftConsortiumRepository
         return new DraftConsortiumEntity(
             new ConsortiumId(dto!.Id),
             new ConsortiumName(dto.Name),
-            new ProgrammeSlim(new ProgrammeId(dto.ProgrammeId), dto.ProgrammeName),
+            ProgrammeId.From(dto.ProgrammeId),
             new DraftConsortiumMember(new OrganisationId(dto.LeadPartner.Id), dto.LeadPartner.Name),
             dto.Members.Select(x => new DraftConsortiumMember(new OrganisationId(x.Id), x.Name)).ToList());
     }
@@ -83,7 +83,6 @@ public class DraftConsortiumRepository : IDraftConsortiumRepository
         string Id,
         string Name,
         string ProgrammeId,
-        string ProgrammeName,
         DraftConsortiumMemberDto LeadPartner,
         IList<DraftConsortiumMemberDto> Members);
 

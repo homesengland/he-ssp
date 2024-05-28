@@ -30,7 +30,7 @@ public class SiteApplicationsTable : ViewComponent
                 var tableItems = new List<TableValueViewModel>
                 {
                     new(Component: CreateLinkComponent(x)),
-                    new(x.Tenure.GetDescription()),
+                    new(x.Tenure?.GetDescription()),
                     new(x.NumberOfHomes?.ToString(CultureInfo.InvariantCulture) ?? GenericMessages.NotProvided),
                     new(Component: CreateApplicationStatusComponent(x)),
                 };

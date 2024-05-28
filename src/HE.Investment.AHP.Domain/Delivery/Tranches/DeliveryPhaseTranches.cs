@@ -121,10 +121,11 @@ public class DeliveryPhaseTranches : IQuestion
     {
         if (!PercentagesAmended.IsAnyPercentageProvided())
         {
+            // TODO: AB#90826 Use values returned from CRM
             return new MilestonesPercentageTranches(
-                new WholePercentage(ApplicationBasicInfo.Programme.MilestoneFramework.AcquisitionPercentage),
-                new WholePercentage(ApplicationBasicInfo.Programme.MilestoneFramework.StartOnSitePercentage),
-                new WholePercentage(ApplicationBasicInfo.Programme.MilestoneFramework.CompletionPercentage));
+                new WholePercentage(1),
+                new WholePercentage(0),
+                new WholePercentage(0));
         }
 
         return PercentagesAmended;

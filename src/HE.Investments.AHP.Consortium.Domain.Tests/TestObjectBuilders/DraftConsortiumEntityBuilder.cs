@@ -3,6 +3,7 @@ using HE.Investments.AHP.Consortium.Domain.Tests.TestData;
 using HE.Investments.AHP.Consortium.Domain.ValueObjects;
 using HE.Investments.Common.Contract;
 using HE.Investments.Organisation.ValueObjects;
+using HE.Investments.Programme.Contract;
 using HE.Investments.TestsUtils.TestFramework;
 
 namespace HE.Investments.AHP.Consortium.Domain.Tests.TestObjectBuilders;
@@ -13,7 +14,7 @@ public class DraftConsortiumEntityBuilder : TestObjectBuilder<DraftConsortiumEnt
         : base(new DraftConsortiumEntity(
             new ConsortiumId("00000000-0000-1111-1111-111111111111"),
             new ConsortiumName("my consortium name"),
-            ProgrammeSlimTestData.AhpCmeProgramme,
+            new ProgrammeId("d5fe3baa-eeae-ee11-a569-0022480041cf"),
             new DraftConsortiumMember(
                 ConsortiumMemberTestData.CarqMember.Id,
                 ConsortiumMemberTestData.CarqMember.OrganisationName),

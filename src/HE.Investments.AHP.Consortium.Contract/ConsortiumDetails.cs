@@ -4,7 +4,7 @@ namespace HE.Investments.AHP.Consortium.Contract;
 
 public record ConsortiumDetails(
     ConsortiumId ConsortiumId,
-    ProgrammeSlim Programme,
+    Programme.Contract.Programme Programme,
     ConsortiumMemberDetails LeadPartner,
     bool IsDraft,
     IList<ConsortiumMemberDetails> Members);

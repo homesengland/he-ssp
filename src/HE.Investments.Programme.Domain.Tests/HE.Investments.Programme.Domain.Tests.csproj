@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\HE.Investments.Programme.Domain\HE.Investments.Programme.Domain.csproj"/>
+    <ProjectReference Include="..\HE.Investments.Common.Tests\HE.Investments.Common.Tests.csproj"/>
+    <ProjectReference Include="..\HE.Investments.TestsUtils\HE.Investments.TestsUtils.csproj"/>
+  </ItemGroup>
+
+</Project>

@@ -21,4 +21,3 @@ namespace HE.Common.IntegrationModel.PortalIntegrationModel
         public List<MilestoneFrameworkItemDto> milestoneFrameworkItem { get; set; }
     }
 }
-
