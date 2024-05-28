@@ -147,12 +147,15 @@ public class DeliveryPhaseCheckAnswersViewModelFactory : IDeliveryPhaseCheckAnsw
             IsEditable: isEditable,
             ActionUrl: createAction(nameof(DeliveryPhaseController.SummaryOfDelivery)));
 
-        yield return new(
-            "Understand claiming milestones",
-            summary?.UnderstandClaimingMilestones.MapToYesNo().ToOneElementList(),
-            IsEditable: isEditable,
-            ActionUrl: createAction(nameof(DeliveryPhaseController.SummaryOfDelivery)),
-            IsVisible: false);
+        if (deliveryPhase.Tranches?.ShouldBeAmended == true)
+        {
+            yield return new(
+                "Understand claiming milestones",
+                summary?.UnderstandClaimingMilestones.MapToYesNo().ToOneElementList(),
+                IsEditable: isEditable,
+                ActionUrl: createAction(nameof(DeliveryPhaseController.SummaryOfDelivery)),
+                IsVisible: false);
+        }
     }
 
     private static SectionSummaryViewModel CreateMilestonesDatesSummary(DeliveryPhaseDetails deliveryPhase, CreateAction createAction, bool isEditable)
