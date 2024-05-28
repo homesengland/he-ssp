@@ -13,7 +13,7 @@ public class NewTests
     public async Task ShouldCreateConsortiumEntity()
     {
         // given
-        var programme = ProgrammeSlimTestData.AhpCmeProgramme;
+        var programme = ProgrammeTestData.AhpCmeProgramme;
         var consortiumMember = ConsortiumMemberTestData.CarqMember;
         var isPartOfConsortium = IsPartOfConsortiumBuilder.New().IsNotPartOfConsortium().Build();
 
@@ -22,7 +22,7 @@ public class NewTests
 
         // then
         result.Name.Value.Should().NotBeEmpty();
-        result.Programme.Should().Be(programme);
+        result.ProgrammeId.Should().Be(programme.Id);
         result.LeadPartner.Should().Be(consortiumMember);
     }
 
@@ -30,7 +30,7 @@ public class NewTests
     public async Task ShouldThrowValidationErrorWhenConsortiumAlreadyExists()
     {
         // given
-        var programme = ProgrammeSlimTestData.AhpCmeProgramme;
+        var programme = ProgrammeTestData.AhpCmeProgramme;
         var consortiumMember = ConsortiumMemberTestData.CarqMember;
         var isPartOfConsortium = IsPartOfConsortiumBuilder.New().IsPartOfConsortium().Build();
 

@@ -12,7 +12,9 @@ using HE.Investments.AHP.Consortium.Domain.Tests.TestObjectBuilders;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Tests.TestData;
 using HE.Investments.Organisation.Services;
+using HE.Investments.Programme.Contract.Queries;
 using HE.Investments.TestsUtils.TestFramework;
+using MediatR;
 using Moq;
 using Xunit;
 
@@ -33,16 +35,19 @@ public class GetConsortiumDetailsQueryHandlerTests : TestBase<GetConsortiumDetai
 
         var accountUserContext = CreateAndRegisterDependencyMock<IAccountUserContext>();
         var draftRepository = CreateAndRegisterDependencyMock<IDraftConsortiumRepository>();
+        var mediator = CreateAndRegisterDependencyMock<IMediator>();
 
         accountUserContext.Setup(x => x.GetSelectedAccount()).ReturnsAsync(UserAccountTestData.AdminUserAccountOne);
         draftRepository.Setup(x => x.Get(consortiumId, UserAccountTestData.AdminUserAccountOne, false)).Returns(consortium);
+        mediator.Setup(x => x.Send(new GetProgrammeQuery(consortium.ProgrammeId), CancellationToken.None))
+            .ReturnsAsync(ProgrammeTestData.AhpCmeProgramme);
 
         // when
         var result = await TestCandidate.Handle(new GetConsortiumDetailsQuery(consortiumId, FetchAddress: false), CancellationToken.None);
 
         // then
         result.ConsortiumId.Should().Be(consortiumId);
-        result.Programme.Should().Be(consortium.Programme);
+        result.Programme.Should().Be(ProgrammeTestData.AhpCmeProgramme);
         result.IsDraft.Should().BeTrue();
         result.LeadPartner.Should()
             .Be(new ConsortiumMemberDetails(
@@ -105,6 +110,7 @@ public class GetConsortiumDetailsQueryHandlerTests : TestBase<GetConsortiumDetai
         var accountUserContext = CreateAndRegisterDependencyMock<IAccountUserContext>();
         var draftRepository = CreateAndRegisterDependencyMock<IDraftConsortiumRepository>();
         var organisationSearchService = CreateAndRegisterDependencyMock<IOrganizationCrmSearchService>();
+        var mediator = CreateAndRegisterDependencyMock<IMediator>();
 
         accountUserContext.Setup(x => x.GetSelectedAccount()).ReturnsAsync(UserAccountTestData.AdminUserAccountOne);
         draftRepository.Setup(x => x.Get(consortiumId, UserAccountTestData.AdminUserAccountOne, false)).Returns(consortium);
@@ -114,13 +120,15 @@ public class GetConsortiumDetailsQueryHandlerTests : TestBase<GetConsortiumDetai
                     InvestmentsOrganisationTestData.JjCompany.Id.Value, InvestmentsOrganisationTestData.CactusDevelopments.Id.Value,
                 }))
             .ReturnsAsync(organisations);
+        mediator.Setup(x => x.Send(new GetProgrammeQuery(consortium.ProgrammeId), CancellationToken.None))
+            .ReturnsAsync(ProgrammeTestData.AhpCmeProgramme);
 
         // when
         var result = await TestCandidate.Handle(new GetConsortiumDetailsQuery(consortiumId, FetchAddress: true), CancellationToken.None);
 
         // then
         result.ConsortiumId.Should().Be(consortiumId);
-        result.Programme.Should().Be(consortium.Programme);
+        result.Programme.Should().Be(ProgrammeTestData.AhpCmeProgramme);
         result.IsDraft.Should().BeTrue();
         result.LeadPartner.Should()
             .Be(new ConsortiumMemberDetails(
@@ -162,17 +170,20 @@ public class GetConsortiumDetailsQueryHandlerTests : TestBase<GetConsortiumDetai
         var accountUserContext = CreateAndRegisterDependencyMock<IAccountUserContext>();
         var repository = CreateAndRegisterDependencyMock<IConsortiumRepository>();
         var draftRepository = CreateAndRegisterDependencyMock<IDraftConsortiumRepository>();
+        var mediator = CreateAndRegisterDependencyMock<IMediator>();
 
         draftRepository.Setup(x => x.Get(consortiumId, UserAccountTestData.AdminUserAccountOne, false)).Returns((DraftConsortiumEntity?)null);
         accountUserContext.Setup(x => x.GetSelectedAccount()).ReturnsAsync(UserAccountTestData.AdminUserAccountOne);
         repository.Setup(x => x.GetConsortium(consortiumId, UserAccountTestData.AdminUserAccountOne, CancellationToken.None)).ReturnsAsync(consortium);
+        mediator.Setup(x => x.Send(new GetProgrammeQuery(consortium.ProgrammeId), CancellationToken.None))
+            .ReturnsAsync(ProgrammeTestData.AhpCmeProgramme);
 
         // when
         var result = await TestCandidate.Handle(new GetConsortiumDetailsQuery(consortiumId, FetchAddress: false), CancellationToken.None);
 
         // then
         result.ConsortiumId.Should().Be(consortiumId);
-        result.Programme.Should().Be(consortium.Programme);
+        result.Programme.Should().Be(ProgrammeTestData.AhpCmeProgramme);
         result.IsDraft.Should().BeFalse();
         result.LeadPartner.Should()
             .Be(new ConsortiumMemberDetails(
@@ -236,6 +247,7 @@ public class GetConsortiumDetailsQueryHandlerTests : TestBase<GetConsortiumDetai
         var repository = CreateAndRegisterDependencyMock<IConsortiumRepository>();
         var organisationSearchService = CreateAndRegisterDependencyMock<IOrganizationCrmSearchService>();
         var draftRepository = CreateAndRegisterDependencyMock<IDraftConsortiumRepository>();
+        var mediator = CreateAndRegisterDependencyMock<IMediator>();
 
         accountUserContext.Setup(x => x.GetSelectedAccount()).ReturnsAsync(UserAccountTestData.AdminUserAccountOne);
         draftRepository.Setup(x => x.Get(consortiumId, UserAccountTestData.AdminUserAccountOne, false)).Returns((DraftConsortiumEntity?)null);
@@ -246,13 +258,15 @@ public class GetConsortiumDetailsQueryHandlerTests : TestBase<GetConsortiumDetai
                     InvestmentsOrganisationTestData.JjCompany.Id.Value, InvestmentsOrganisationTestData.CactusDevelopments.Id.Value,
                 }))
             .ReturnsAsync(organisations);
+        mediator.Setup(x => x.Send(new GetProgrammeQuery(consortium.ProgrammeId), CancellationToken.None))
+            .ReturnsAsync(ProgrammeTestData.AhpCmeProgramme);
 
         // when
         var result = await TestCandidate.Handle(new GetConsortiumDetailsQuery(consortiumId, FetchAddress: true), CancellationToken.None);
 
         // then
         result.ConsortiumId.Should().Be(consortiumId);
-        result.Programme.Should().Be(consortium.Programme);
+        result.Programme.Should().Be(ProgrammeTestData.AhpCmeProgramme);
         result.IsDraft.Should().BeFalse();
         result.LeadPartner.Should()
             .Be(new ConsortiumMemberDetails(

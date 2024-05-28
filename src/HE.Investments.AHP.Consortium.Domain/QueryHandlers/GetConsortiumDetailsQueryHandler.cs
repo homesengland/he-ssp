@@ -8,6 +8,7 @@ using HE.Investments.AHP.Consortium.Domain.ValueObjects;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Organisation.Services;
+using HE.Investments.Programme.Contract.Queries;
 using MediatR;
 
 namespace HE.Investments.AHP.Consortium.Domain.QueryHandlers;
@@ -22,23 +23,27 @@ public class GetConsortiumDetailsQueryHandler : IRequestHandler<GetConsortiumDet
 
     private readonly IOrganizationCrmSearchService _organisationSearchService;
 
+    private readonly IMediator _mediator;
+
     public GetConsortiumDetailsQueryHandler(
         IConsortiumRepository repository,
         IDraftConsortiumRepository draftConsortiumRepository,
         IAccountUserContext accountUserContext,
-        IOrganizationCrmSearchService organisationSearchService)
+        IOrganizationCrmSearchService organisationSearchService,
+        IMediator mediator)
     {
         _repository = repository;
         _draftConsortiumRepository = draftConsortiumRepository;
         _accountUserContext = accountUserContext;
         _organisationSearchService = organisationSearchService;
+        _mediator = mediator;
     }
 
     public async Task<ConsortiumDetails> Handle(GetConsortiumDetailsQuery request, CancellationToken cancellationToken)
     {
         var account = await _accountUserContext.GetSelectedAccount();
 
-        return await GetDraftConsortiumDetails(request, account) ?? await GetConsortiumDetails(request, account, cancellationToken);
+        return await GetDraftConsortiumDetails(request, account, cancellationToken) ?? await GetConsortiumDetails(request, account, cancellationToken);
     }
 
     private static ConsortiumMemberDetails CreateMemberDetails(IConsortiumMember consortiumMember, OrganizationDetailsDto organisationDetails)
@@ -60,7 +65,7 @@ public class GetConsortiumDetailsQueryHandler : IRequestHandler<GetConsortiumDet
         return organisations.Single(x => x.organisationId == id.ToGuidAsString());
     }
 
-    private async Task<ConsortiumDetails?> GetDraftConsortiumDetails(GetConsortiumDetailsQuery request, UserAccount account)
+    private async Task<ConsortiumDetails?> GetDraftConsortiumDetails(GetConsortiumDetailsQuery request, UserAccount account, CancellationToken cancellationToken)
     {
         var consortium = _draftConsortiumRepository.Get(request.ConsortiumId, account);
         if (consortium.IsNotProvided())
@@ -68,11 +73,12 @@ public class GetConsortiumDetailsQueryHandler : IRequestHandler<GetConsortiumDet
             return null;
         }
 
-        var organisations = await FetchOrganisationAddress([consortium!.LeadPartner, .. consortium.Members], request.FetchAddress);
+        var programme = await _mediator.Send(new GetProgrammeQuery(consortium!.ProgrammeId), cancellationToken);
+        var organisations = await FetchOrganisationAddress([consortium.LeadPartner, .. consortium.Members], request.FetchAddress);
 
         return new ConsortiumDetails(
             consortium.Id,
-            consortium.Programme,
+            programme,
             CreateMemberDetails(consortium.LeadPartner, GetOrganisationDetails(organisations, consortium.LeadPartner.Id)),
             true,
             consortium.Members.Select(x => CreateMemberDetails(x, GetOrganisationDetails(organisations, x.Id))).ToList());
@@ -82,10 +88,11 @@ public class GetConsortiumDetailsQueryHandler : IRequestHandler<GetConsortiumDet
     {
         var consortium = await _repository.GetConsortium(request.ConsortiumId, account, cancellationToken);
         var organisations = await FetchOrganisationAddress([consortium.LeadPartner, .. consortium.Members], request.FetchAddress);
+        var programme = await _mediator.Send(new GetProgrammeQuery(consortium.ProgrammeId), cancellationToken);
 
         return new ConsortiumDetails(
             consortium.Id,
-            consortium.Programme,
+            programme,
             CreateMemberDetails(consortium.LeadPartner, GetOrganisationDetails(organisations, consortium.LeadPartner.Id)),
             false,
             consortium.Members.Select(x => CreateMemberDetails(x, GetOrganisationDetails(organisations, x.Id))).ToList());

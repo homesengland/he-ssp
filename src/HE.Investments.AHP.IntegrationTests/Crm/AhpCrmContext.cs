@@ -1,5 +1,5 @@
 using HE.Investment.AHP.Domain.Application.Crm;
-using HE.Investment.AHP.Domain.Programme.Config;
+using HE.Investment.AHP.Domain.Config;
 using HE.Investments.AHP.Consortium.Contract;
 using HE.Investments.AHP.Consortium.Domain.Crm;
 using HE.Investments.Common.Contract;

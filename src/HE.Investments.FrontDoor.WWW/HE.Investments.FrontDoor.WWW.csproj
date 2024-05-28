@@ -36,6 +36,7 @@
     <ProjectReference Include="..\HE.Investments.FrontDoor.Contract\HE.Investments.FrontDoor.Contract.csproj" />
     <ProjectReference Include="..\HE.Investments.FrontDoor.Domain\HE.Investments.FrontDoor.Domain.csproj" />
     <ProjectReference Include="..\HE.Investments.Organisation\HE.Investments.Organisation.csproj" />
+    <ProjectReference Include="..\HE.Investments.Programme.Domain\HE.Investments.Programme.Domain.csproj" />
   </ItemGroup>
 
   <ItemGroup>

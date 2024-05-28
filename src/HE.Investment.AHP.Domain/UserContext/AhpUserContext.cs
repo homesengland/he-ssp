@@ -1,12 +1,12 @@
-using HE.Investment.AHP.Domain.Programme.Config;
+using HE.Investment.AHP.Domain.Config;
 using HE.Investments.Account.Shared;
 using HE.Investments.Account.Shared.User.Entities;
-using HE.Investments.AHP.Consortium.Contract;
 using HE.Investments.AHP.Consortium.Contract.Queries;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Infrastructure.Cache;
 using HE.Investments.Common.Infrastructure.Cache.Interfaces;
+using HE.Investments.Programme.Contract;
 using MediatR;
 
 namespace HE.Investment.AHP.Domain.UserContext;

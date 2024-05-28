@@ -1,17 +1,25 @@
-using HE.Investments.FrontDoor.Domain.Programme;
+using HE.Investments.Programme.Contract.Enums;
+using HE.Investments.Programme.Contract.Queries;
+using MediatR;
 
 namespace HE.Investments.FrontDoor.Domain.Services;
 
 public class ProgrammeAvailabilityService : IProgrammeAvailabilityService
 {
-    public bool IsStartDateValidForAnyProgramme(IEnumerable<ProgrammeDetails> programmes, DateOnly? expectedStartDate)
+    private readonly IMediator _mediator;
+
+    public ProgrammeAvailabilityService(IMediator mediator)
     {
+        _mediator = mediator;
+    }
+
+    public async Task<bool> IsStartDateValidForProgramme(ProgrammeType programmeType, DateOnly? expectedStartDate, CancellationToken cancellationToken)
+    {
+        var programmes = await _mediator.Send(new GetProgrammesQuery(programmeType), cancellationToken);
         foreach (var programme in programmes)
         {
-            var isEndDateValid = programme.EndOn.HasValue
-                                 && expectedStartDate < programme.EndOn;
-            var isStartOnSiteEndDateValid = programme.StartOnSiteEndDate.HasValue
-                                            && expectedStartDate < programme.StartOnSiteEndDate;
+            var isEndDateValid = expectedStartDate < programme.EndDate;
+            var isStartOnSiteEndDateValid = expectedStartDate < programme.StartOnSiteEndDate;
 
             if (isEndDateValid && isStartOnSiteEndDateValid)
             {

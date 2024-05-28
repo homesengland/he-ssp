@@ -9,9 +9,8 @@ using HE.Investment.AHP.Domain.Application.Factories;
 using HE.Investment.AHP.Domain.Application.Mappers;
 using HE.Investment.AHP.Domain.Application.ValueObjects;
 using HE.Investment.AHP.Domain.Common;
+using HE.Investment.AHP.Domain.Config;
 using HE.Investment.AHP.Domain.FinancialDetails.Mappers;
-using HE.Investment.AHP.Domain.Programme;
-using HE.Investment.AHP.Domain.Programme.Config;
 using HE.Investment.AHP.Domain.UserContext;
 using HE.Investments.Account.Shared.User;
 using HE.Investments.Common.Contract;
@@ -29,21 +28,14 @@ public class ApplicationRepository : IApplicationRepository
 {
     private readonly IApplicationCrmContext _applicationCrmContext;
 
-    private readonly IAhpProgrammeRepository _programmeRepository;
-
     private readonly IProgrammeSettings _settings;
 
     private readonly IEventDispatcher _eventDispatcher;
 
-    public ApplicationRepository(
-        IApplicationCrmContext applicationCrmContext,
-        IEventDispatcher eventDispatcher,
-        IAhpProgrammeRepository programmeRepository,
-        IProgrammeSettings settings)
+    public ApplicationRepository(IApplicationCrmContext applicationCrmContext, IEventDispatcher eventDispatcher, IProgrammeSettings settings)
     {
         _applicationCrmContext = applicationCrmContext;
         _eventDispatcher = eventDispatcher;
-        _programmeRepository = programmeRepository;
         _settings = settings;
     }
 
@@ -88,7 +80,6 @@ public class ApplicationRepository : IApplicationRepository
             application.Tenure.Value,
             application.Status,
             application.Sections,
-            await _programmeRepository.GetProgramme(cancellationToken),
             new ApplicationStateFactory(userAccount, wasSubmitted: application.LastSubmitted.IsProvided()));
     }
 

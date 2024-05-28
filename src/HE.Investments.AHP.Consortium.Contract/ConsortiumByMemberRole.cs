@@ -3,4 +3,4 @@ using HE.Investments.Common.Contract;
 
 namespace HE.Investments.AHP.Consortium.Contract;
 
-public record ConsortiumByMemberRole(ConsortiumId ConsortiumId, ProgrammeSlim Programme, string LeadPartnerName, ConsortiumMembershipRole MembershipRole);
+public record ConsortiumByMemberRole(ConsortiumId ConsortiumId, Programme.Contract.Programme Programme, string LeadPartnerName, ConsortiumMembershipRole MembershipRole);

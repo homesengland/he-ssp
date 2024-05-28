@@ -7,6 +7,8 @@ using HE.Investments.AHP.Consortium.Domain.Repositories;
 using HE.Investments.AHP.Consortium.Domain.ValueObjects;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Validators;
+using HE.Investments.Common.Extensions;
+using HE.Investments.Programme.Contract.Queries;
 using MediatR;
 
 namespace HE.Investments.AHP.Consortium.Domain.CommandHandlers;
@@ -19,21 +21,28 @@ public class CreateConsortiumCommandHandler : IRequestHandler<CreateConsortiumCo
 
     private readonly IAccountUserContext _accountUserContext;
 
-    public CreateConsortiumCommandHandler(IConsortiumRepository consortiumRepository, IDraftConsortiumRepository draftConsortiumRepository, IAccountUserContext accountUserContext)
+    private readonly IMediator _mediator;
+
+    public CreateConsortiumCommandHandler(
+        IConsortiumRepository consortiumRepository,
+        IDraftConsortiumRepository draftConsortiumRepository,
+        IAccountUserContext accountUserContext,
+        IMediator mediator)
     {
         _consortiumRepository = consortiumRepository;
         _draftConsortiumRepository = draftConsortiumRepository;
         _accountUserContext = accountUserContext;
+        _mediator = mediator;
     }
 
     public async Task<OperationResult<ConsortiumId>> Handle(CreateConsortiumCommand request, CancellationToken cancellationToken)
     {
-        if (string.IsNullOrWhiteSpace(request.ProgrammeId))
+        if (request.ProgrammeId.IsNotProvided())
         {
             OperationResult.ThrowValidationError("SelectedProgrammeId", "Please select what programme the consortium is related to");
         }
 
-        var programme = new ProgrammeSlim(ProgrammeId.From(request.ProgrammeId), "AHP CME");
+        var programme = await _mediator.Send(new GetProgrammeQuery(request.ProgrammeId!), cancellationToken);
         var userAccount = await _accountUserContext.GetSelectedAccount();
         var organisation = userAccount.SelectedOrganisation();
         var leadPartner = new ConsortiumMember(organisation.OrganisationId, organisation.RegisteredCompanyName, ConsortiumMemberStatus.Active);

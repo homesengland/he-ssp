@@ -9,6 +9,7 @@ using HE.Investments.AHP.Consortium.Domain.ValueObjects;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Infrastructure.Events;
+using HE.Investments.Programme.Contract;
 
 namespace HE.Investments.AHP.Consortium.Domain.Repositories;
 
@@ -39,7 +40,7 @@ public class ConsortiumRepository : IConsortiumRepository
             return new ConsortiumEntity(
                 consortiumId,
                 new ConsortiumName(consortiumDto.name),
-                new ProgrammeSlim(ProgrammeId.From(consortiumDto.programmeId), consortiumDto.programmeName),
+                ProgrammeId.From(consortiumDto.programmeId),
                 new ConsortiumMember(OrganisationId.From(consortiumDto.leadPartnerId), consortiumDto.leadPartnerName, ConsortiumMemberStatus.Active),
                 members);
         }
@@ -56,7 +57,7 @@ public class ConsortiumRepository : IConsortiumRepository
         return consortiumsListDto.Select(x => new ConsortiumEntity(
             ConsortiumId.From(x.id),
             new ConsortiumName(x.name),
-            new ProgrammeSlim(ProgrammeId.From(x.programmeId), x.programmeName),
+            ProgrammeId.From(x.programmeId),
             new ConsortiumMember(OrganisationId.From(x.leadPartnerId), x.leadPartnerName, ConsortiumMemberStatus.Active),
             x.members?.Select(y => new ConsortiumMember(OrganisationId.From(y.id), y.name, ConsortiumMemberStatusMapper.ToDomain(y.status))))).ToList();
     }
@@ -67,7 +68,7 @@ public class ConsortiumRepository : IConsortiumRepository
         {
             var consortiumId = await _crmContext.CreateConsortium(
                 userAccount.UserGlobalId.ToString(),
-                consortiumEntity.Programme.Id.ToString(),
+                consortiumEntity.ProgrammeId.ToString(),
                 consortiumEntity.Name.ToString(),
                 consortiumEntity.LeadPartner.Id.ToString(),
                 cancellationToken);

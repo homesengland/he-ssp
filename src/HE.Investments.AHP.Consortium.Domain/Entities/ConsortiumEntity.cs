@@ -1,4 +1,3 @@
-using HE.Investments.AHP.Consortium.Contract;
 using HE.Investments.AHP.Consortium.Contract.Enums;
 using HE.Investments.AHP.Consortium.Contract.Events;
 using HE.Investments.AHP.Consortium.Domain.Repositories;
@@ -10,6 +9,7 @@ using HE.Investments.Common.Domain;
 using HE.Investments.Common.Errors;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Organisation.ValueObjects;
+using HE.Investments.Programme.Contract;
 
 namespace HE.Investments.AHP.Consortium.Domain.Entities;
 
@@ -21,10 +21,10 @@ public class ConsortiumEntity : DomainEntity, IConsortiumEntity
 
     private readonly List<OrganisationId> _removeRequests = [];
 
-    public ConsortiumEntity(ConsortiumId id, ConsortiumName name, ProgrammeSlim programme, ConsortiumMember leadPartner, IEnumerable<ConsortiumMember>? members)
+    public ConsortiumEntity(ConsortiumId id, ConsortiumName name, ProgrammeId programmeId, ConsortiumMember leadPartner, IEnumerable<ConsortiumMember>? members)
     {
         Id = id;
-        Programme = programme;
+        ProgrammeId = programmeId;
         LeadPartner = leadPartner;
         Name = name;
         _members = members?.ToList() ?? [];
@@ -34,7 +34,7 @@ public class ConsortiumEntity : DomainEntity, IConsortiumEntity
 
     public ConsortiumName Name { get; }
 
-    public ProgrammeSlim Programme { get; }
+    public ProgrammeId ProgrammeId { get; }
 
     public ConsortiumMember LeadPartner { get; }
 
@@ -42,7 +42,7 @@ public class ConsortiumEntity : DomainEntity, IConsortiumEntity
 
     public IEnumerable<ConsortiumMember> Members => _members.Where(x => x.Status != ConsortiumMemberStatus.Inactive);
 
-    public static async Task<ConsortiumEntity> New(ProgrammeSlim programme, ConsortiumMember leadPartner, IIsPartOfConsortium isPartOfConsortium)
+    public static async Task<ConsortiumEntity> New(Programme.Contract.Programme programme, ConsortiumMember leadPartner, IIsPartOfConsortium isPartOfConsortium)
     {
         if (await isPartOfConsortium.IsPartOfConsortiumForProgramme(programme.Id, leadPartner.Id))
         {
@@ -52,7 +52,7 @@ public class ConsortiumEntity : DomainEntity, IConsortiumEntity
         return new ConsortiumEntity(
             ConsortiumId.New(),
             ConsortiumName.GenerateName(programme.Name, leadPartner.OrganisationName),
-            programme,
+            programme.Id,
             leadPartner,
             Enumerable.Empty<ConsortiumMember>());
     }
@@ -161,7 +161,7 @@ public class ConsortiumEntity : DomainEntity, IConsortiumEntity
         InvestmentsOrganisation organisation,
         IIsPartOfConsortium isPartOfConsortium,
         CancellationToken cancellationToken)
-        => await isPartOfConsortium.IsPartOfConsortiumForProgramme(Programme.Id, organisation.Id, cancellationToken);
+        => await isPartOfConsortium.IsPartOfConsortiumForProgramme(ProgrammeId, organisation.Id, cancellationToken);
 
     private ConsortiumMember GetMember(OrganisationId organisationId) => Members.SingleOrDefault(x => x.Id == organisationId) ??
                                                                          throw new NotFoundException(nameof(ConsortiumMember), organisationId);

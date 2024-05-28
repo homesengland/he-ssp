@@ -3,7 +3,6 @@ using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Domain.Application.Entities;
 using HE.Investment.AHP.Domain.Application.Factories;
 using HE.Investment.AHP.Domain.Application.ValueObjects;
-using HE.Investment.AHP.Domain.Programme;
 using HE.Investments.Common.Contract;
 
 namespace HE.Investment.AHP.Domain.Common;
@@ -19,7 +18,6 @@ public class ApplicationBasicInfo
         Tenure tenure,
         ApplicationStatus status,
         ApplicationSections sections,
-        AhpProgramme programme,
         IApplicationStateFactory applicationStateFactory)
     {
         Id = id;
@@ -28,7 +26,6 @@ public class ApplicationBasicInfo
         Tenure = tenure;
         Status = status;
         Sections = sections;
-        Programme = programme;
         _applicationState = applicationStateFactory.Create(Status);
     }
 
@@ -43,8 +40,6 @@ public class ApplicationBasicInfo
     public ApplicationStatus Status { get; }
 
     public ApplicationSections Sections { get; }
-
-    public AhpProgramme Programme { get; }
 
     public IEnumerable<AhpApplicationOperation> AllowedOperations => _applicationState.AllowedOperations;
 }
