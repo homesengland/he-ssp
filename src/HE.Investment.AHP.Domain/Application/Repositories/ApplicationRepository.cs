@@ -174,7 +174,7 @@ public class ApplicationRepository : IApplicationRepository
             : null;
 
         return new ApplicationEntity(
-            new FrontDoorProjectId(string.IsNullOrEmpty(application.fdProjectId) ? LegacyProject.ProjectId : application.fdProjectId),
+            new FrontDoorProjectId(application.fdProjectId),
             string.IsNullOrEmpty(application.siteId) ? SiteId.New() : SiteId.From(application.siteId),
             AhpApplicationId.From(application.id),
             new ApplicationName(application.name ?? "Unknown"),
@@ -203,7 +203,7 @@ public class ApplicationRepository : IApplicationRepository
         var otherApplicationCosts = OtherApplicationCostsMapper.MapToOtherApplicationCosts(ahpApplicationDto);
 
         return new ApplicationWithFundingDetails(
-            new FrontDoorProjectId(string.IsNullOrEmpty(ahpApplicationDto.fdProjectId) ? LegacyProject.ProjectId : ahpApplicationDto.fdProjectId),
+            new FrontDoorProjectId(ahpApplicationDto.fdProjectId),
             string.IsNullOrEmpty(ahpApplicationDto.siteId) ? SiteId.New() : SiteId.From(ahpApplicationDto.siteId),
             AhpApplicationId.From(ahpApplicationDto.id),
             ahpApplicationDto.name,

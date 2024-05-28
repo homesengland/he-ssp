@@ -10,6 +10,8 @@ public class SiteModel
 
     public string Name { get; set; }
 
+    public string ProjectId { get; set; }
+
     public SiteStatus Status { get; set; }
 
     public Section106Dto? Section106 { get; set; }

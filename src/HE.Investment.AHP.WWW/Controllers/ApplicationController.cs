@@ -75,9 +75,15 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
     [WorkflowState(ApplicationWorkflowState.ApplicationName)]
     [HttpGet("/{siteId}/application/name")]
     [AuthorizeWithCompletedProfile(AhpAccessContext.EditApplications)]
-    public IActionResult Name([FromQuery] string? applicationName)
+    public async Task<IActionResult> Name([FromRoute] string siteId, [FromQuery] string? applicationName, CancellationToken cancellationToken)
     {
-        return View("Name", new ApplicationBasicModel(null, applicationName, Contract.Application.Tenure.Undefined));
+        var site = await _mediator.Send(new GetSiteQuery(siteId), cancellationToken);
+        if (site.Status == SiteStatus.Completed)
+        {
+            return View("Name", new ApplicationBasicModel(null, applicationName, Contract.Application.Tenure.Undefined));
+        }
+
+        return RedirectToAction("Start", "Site", new { siteId = site.Id });
     }
 
     [WorkflowState(ApplicationWorkflowState.ApplicationName)]

@@ -34,6 +34,7 @@ public static class SiteEntityToSiteDtoMapper
         return new SiteDto
         {
             id = string.IsNullOrWhiteSpace(entity.Id.Value) ? null : entity.Id.ToGuidAsString(),
+            fdProjectid = entity.FrontDoorProjectId.Value,
             name = entity.Name.Value,
             status = SiteStatusMapper.ToDto(entity.Status),
             section106 = CreateSection106(entity.Section106),
