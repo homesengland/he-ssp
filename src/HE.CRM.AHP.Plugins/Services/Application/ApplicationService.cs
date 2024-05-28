@@ -16,22 +16,15 @@ namespace HE.CRM.AHP.Plugins.Services.Application
     public class ApplicationService : CrmService, IApplicationService
     {
         private readonly IAhpApplicationRepository _applicationRepository;
-
         private readonly IContactRepository _contactRepository;
-
         private readonly ISharepointDocumentLocationRepository _sharepointDocumentLocationRepository;
-
         private readonly ISharepointSiteRepository _sharepointSiteRepository;
-
         private readonly IAhpApplicationRepository _ahpApplicationRepositoryAdmin;
-
         private readonly IAhpStatusChangeRepository _ahpStatusChangeRepository;
-
         private readonly ISiteRepository _siteRepository;
-
         private readonly IHeLocalAuthorityRepository _heLocalAuthorityRepository;
-
         private readonly IGovNotifyEmailService _govNotifyEmailService;
+        private readonly IAhpProjectRepository _projectRepository;
 
         public ApplicationService(CrmServiceArgs args) : base(args)
         {
@@ -44,6 +37,7 @@ namespace HE.CRM.AHP.Plugins.Services.Application
             _siteRepository = CrmRepositoriesFactory.Get<ISiteRepository>();
             _heLocalAuthorityRepository = CrmRepositoriesFactory.Get<IHeLocalAuthorityRepository>();
             _govNotifyEmailService = CrmServicesFactory.Get<IGovNotifyEmailService>();
+            _projectRepository = CrmRepositoriesFactory.Get<IAhpProjectRepository>();
         }
 
         public void ChangeApplicationStatus(string organisationId, string contactId, string applicationId, int newStatus, string changeReason, bool representationsandwarranties)
@@ -238,8 +232,9 @@ namespace HE.CRM.AHP.Plugins.Services.Application
                 foreach (var application in applications)
                 {
                     var contact = _contactRepository.GetById(application.invln_contactid.Id, new string[] { Contact.Fields.FirstName, Contact.Fields.LastName, nameof(Contact.invln_externalid).ToLower() });
-                    var site = _siteRepository.GetById(application.invln_Site.Id, invln_Sites.Fields.invln_HeProjectLocalAuthorityId);
-                    var applicationDto = AhpApplicationMapper.MapRegularEntityToDto(application, contact.invln_externalid, site);
+                    var site = _siteRepository.GetById(application.invln_Site.Id, invln_Sites.Fields.invln_AHPProjectId);
+                    var ahpProject = _projectRepository.GetById(site.invln_AHPProjectId.Id, invln_ahpproject.Fields.invln_HeProjectId);
+                    var applicationDto = AhpApplicationMapper.MapRegularEntityToDto(application, contact.invln_externalid, ahpProject);
                     if (application.invln_lastexternalmodificationby != null)
                     {
                         var lastExternalModificationBy = _contactRepository.GetById(application.invln_lastexternalmodificationby.Id,
