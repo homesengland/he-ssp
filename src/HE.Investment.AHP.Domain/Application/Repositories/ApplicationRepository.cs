@@ -11,11 +11,9 @@ using HE.Investment.AHP.Domain.Application.ValueObjects;
 using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.Config;
 using HE.Investment.AHP.Domain.FinancialDetails.Mappers;
-using HE.Investment.AHP.Domain.UserContext;
 using HE.Investments.Account.Shared.User;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Exceptions;
-using HE.Investments.Common.Contract.Pagination;
 using HE.Investments.Common.CRM.Mappers;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Extensions;
@@ -91,23 +89,6 @@ public class ApplicationRepository : IApplicationRepository
         var application = await GetAhpApplicationDto(id, userAccount, cancellationToken);
 
         return CreateApplicationWithFundingDetails(application);
-    }
-
-    public async Task<PaginationResult<ApplicationBasicDetails>> GetSiteApplications(SiteId siteId, AhpUserAccount userAccount, PaginationRequest paginationRequest, CancellationToken cancellationToken)
-    {
-        var siteApplications = await _applicationCrmContext.GetSiteApplications(
-            siteId.ToGuidAsString(),
-            userAccount.SelectedOrganisationId().ToGuidAsString(),
-            userAccount.UserGlobalId.ToString(),
-            userAccount.Consortium.GetConsortiumIdAsString(),
-            cancellationToken);
-
-        var applications = siteApplications.AhpApplications
-            .TakePage(paginationRequest)
-            .Select(CreateApplicationBasicDetails)
-            .ToList();
-
-        return new PaginationResult<ApplicationBasicDetails>(applications, paginationRequest.Page, paginationRequest.ItemsPerPage, applications.Count);
     }
 
     public async Task<ApplicationEntity> Save(ApplicationEntity application, UserAccount userAccount, CancellationToken cancellationToken)
@@ -215,17 +196,6 @@ public class ApplicationRepository : IApplicationRepository
             otherApplicationCosts.ExpectedTotalCosts(),
             ahpApplicationDto.currentLandValue,
             ahpApplicationDto.representationsandwarranties);
-    }
-
-    private static ApplicationBasicDetails CreateApplicationBasicDetails(AhpApplicationForSiteDto ahpApplicationDto)
-    {
-        return new ApplicationBasicDetails(
-            AhpApplicationId.From(ahpApplicationDto.applicationId),
-            ahpApplicationDto.applicationName,
-            AhpApplicationStatusMapper.MapToPortalStatus(ahpApplicationDto.applicationStatus),
-            ApplicationTenureMapper.ToDomain(ahpApplicationDto.tenure)?.Value,
-            null,
-            ahpApplicationDto.housesToDeliver);
     }
 
     private async Task<AhpApplicationDto> GetAhpApplicationDto(AhpApplicationId id, UserAccount userAccount, CancellationToken cancellationToken)

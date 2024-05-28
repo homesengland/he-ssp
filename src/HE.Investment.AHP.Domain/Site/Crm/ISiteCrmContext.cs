@@ -8,6 +8,8 @@ public interface ISiteCrmContext
 
     Task<PagedResponseDto<SiteDto>> GetUserSites(string userGlobalId, PagingRequestDto pagination, CancellationToken cancellationToken);
 
+    Task<AhpSiteApplicationDto> GetSiteApplications(string siteId, string organisationId, string userId, string? consortiumId, CancellationToken cancellationToken);
+
     Task<SiteDto?> GetById(string siteId, CancellationToken cancellationToken);
 
     Task<bool> Exist(string name, CancellationToken cancellationToken);

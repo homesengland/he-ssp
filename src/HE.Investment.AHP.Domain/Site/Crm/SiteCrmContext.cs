@@ -102,6 +102,22 @@ public class SiteCrmContext : ISiteCrmContext
             cancellationToken);
     }
 
+    public async Task<AhpSiteApplicationDto> GetSiteApplications(string siteId, string organisationId, string userId, string? consortiumId, CancellationToken cancellationToken)
+    {
+        var request = new invln_getsiteapplicationsRequest
+        {
+            invln_userid = userId,
+            invln_organizationid = organisationId,
+            invln_consortiumid = consortiumId?.TryToGuidAsString()!,
+            invln_siteid = siteId,
+        };
+
+        return await _service.ExecuteAsync<invln_getsiteapplicationsRequest, invln_getsiteapplicationsResponse, AhpSiteApplicationDto>(
+            request,
+            r => r.invln_siteapplication,
+            cancellationToken);
+    }
+
     public async Task<SiteDto?> GetById(string siteId, CancellationToken cancellationToken)
     {
         return await _service.ExecuteAsync<invln_getsinglesiteRequest, invln_getsinglesiteResponse, SiteDto>(

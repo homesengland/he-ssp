@@ -35,11 +35,6 @@ public class RequestCacheApplicationCrmContextDecorator : IApplicationCrmContext
         return await _decorated.IsNameExist(applicationName, organisationId, cancellationToken);
     }
 
-    public async Task<AhpSiteApplicationDto> GetSiteApplications(string siteId, string organisationId, string userId, string? consortiumId, CancellationToken cancellationToken)
-    {
-        return await _decorated.GetSiteApplications(siteId, organisationId, userId, consortiumId, cancellationToken);
-    }
-
     public async Task<string> Save(AhpApplicationDto dto, string organisationId, string userId, CancellationToken cancellationToken)
     {
         var applicationId = await _decorated.Save(dto, organisationId, userId, cancellationToken);

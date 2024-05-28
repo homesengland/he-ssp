@@ -119,22 +119,6 @@ public class ApplicationCrmContext : IApplicationCrmContext
         return bool.TryParse(response, out var result) && result;
     }
 
-    public async Task<AhpSiteApplicationDto> GetSiteApplications(string siteId, string organisationId, string userId, string? consortiumId, CancellationToken cancellationToken)
-    {
-        var request = new invln_getsiteapplicationsRequest
-        {
-            invln_userid = userId,
-            invln_organizationid = organisationId,
-            invln_consortiumid = consortiumId?.TryToGuidAsString()!,
-            invln_siteid = siteId,
-        };
-
-        return await _service.ExecuteAsync<invln_getsiteapplicationsRequest, invln_getsiteapplicationsResponse, AhpSiteApplicationDto>(
-            request,
-            r => r.invln_siteapplication,
-            cancellationToken);
-    }
-
     public async Task<string> Save(AhpApplicationDto dto, string organisationId, string userId, CancellationToken cancellationToken)
     {
         var request = new invln_setahpapplicationRequest
