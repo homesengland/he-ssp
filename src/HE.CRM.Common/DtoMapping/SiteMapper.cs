@@ -11,14 +11,14 @@ namespace HE.CRM.Common.DtoMapping
 {
     public static class SiteMapper
     {
-        public static SiteDto ToDto(invln_Sites entity, he_LocalAuthority localAuthority = null)
+        public static SiteDto ToDto(invln_Sites entity, he_LocalAuthority localAuthority = null, invln_ahpproject ahpproject = null)
         {
             var siteDto = new SiteDto
             {
                 id = entity.invln_SitesId?.ToString(),
                 name = entity.invln_sitename,
                 status = entity.invln_externalsitestatus?.Value,
-                fdProjectid = entity.invln_AHPProjectId?.ToString(),
+                fdProjectid = ahpproject?.invln_HeProjectId?.Id.ToString(),
                 section106 = new Section106Dto
                 {
                     isAgreement106 = entity.invln_s106agreementinplace,

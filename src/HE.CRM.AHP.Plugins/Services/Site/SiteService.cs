@@ -17,7 +17,7 @@ namespace HE.CRM.AHP.Plugins.Services.Site
         private readonly ISiteRepository _repository;
         private readonly IAhgLocalAuthorityRepository _localAuthorityRepository;
         private readonly IContactRepository _contactRepository;
-
+        private readonly IAhpProjectRepository _ahpProjectRepository;
         private readonly IHeLocalAuthorityRepository _heLocalAuthorityRepository;
 
         public SiteService(CrmServiceArgs args) : base(args)
@@ -25,7 +25,7 @@ namespace HE.CRM.AHP.Plugins.Services.Site
             _repository = CrmRepositoriesFactory.Get<ISiteRepository>();
             _localAuthorityRepository = CrmRepositoriesFactory.Get<IAhgLocalAuthorityRepository>();
             _contactRepository = CrmRepositoriesFactory.Get<IContactRepository>();
-
+            _ahpProjectRepository = CrmRepositoriesFactory.Get<IAhpProjectRepository>();
             _heLocalAuthorityRepository = CrmRepositoriesFactory.Get<IHeLocalAuthorityRepository>();
         }
 
@@ -86,7 +86,13 @@ namespace HE.CRM.AHP.Plugins.Services.Site
                 localAuth = _heLocalAuthorityRepository.GetById(site.invln_HeLocalAuthorityId.Id, new string[] { nameof(he_LocalAuthority.he_LocalAuthorityId).ToLower(), nameof(he_LocalAuthority.he_Name).ToLower(), nameof(he_LocalAuthority.he_GSSCode).ToLower() });
             }
             TracingService.Trace("Site to Dto");
-            return SiteMapper.ToDto(site, localAuth);
+            invln_ahpproject ahpProject = null;
+            if (site.invln_AHPProjectId != null)
+            {
+                TracingService.Trace("Get Ahp Project");
+                ahpProject = _ahpProjectRepository.GetById(site.invln_AHPProjectId.Id, invln_ahpproject.Fields.invln_HeProjectId);
+            }
+            return SiteMapper.ToDto(site, localAuth, ahpProject);
         }
 
         public bool Exist(string name)
