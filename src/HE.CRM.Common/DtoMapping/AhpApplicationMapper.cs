@@ -164,9 +164,9 @@ namespace HE.CRM.Common.DtoMapping
                 ownerOfTheHomesAfterCompletionName = application.invln_OwneroftheHomesName,
                 applicationPartnerConfirmation = application.invln_partnerconfirmation,
             };
-            if (site.invln_AHPProjectId != null)
+            if (site.invln_HeProjectLocalAuthorityId != null)
             {
-                applicationDtoToReturn.fdProjectId = site.invln_AHPProjectId.Id.ToString();
+                applicationDtoToReturn.fdProjectId = site.invln_HeProjectLocalAuthorityId.Id.ToString();
             }
 
             if (application.invln_programmelookup != null)

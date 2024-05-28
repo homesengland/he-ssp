@@ -17,7 +17,6 @@ namespace HE.CRM.AHP.Plugins.Plugins.CustomApi.Site
         1,
         IsolationModeEnum.Sandbox,
         Id = "66ACEBDC-1F13-40FA-89B4-94A2C3159ECF")]
-
     public class GetSingleSitePlugin : PluginBase<DataverseContext>, IPlugin
     {
         public GetSingleSitePlugin(string unsecureConfig, string secureConfig) : base(unsecureConfig, secureConfig)

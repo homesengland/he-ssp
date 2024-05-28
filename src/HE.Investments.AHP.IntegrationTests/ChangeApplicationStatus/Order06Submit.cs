@@ -15,7 +15,7 @@ using Xunit.Extensions.Ordering;
 
 namespace HE.Investments.AHP.IntegrationTests.ChangeApplicationStatus;
 
-[Order(6)]
+[Order(7)]
 [SuppressMessage("xUnit", "xUnit1004", Justification = "Waits for DevOps configuration - #76791")]
 public class Order06Submit : AhpIntegrationTest
 {
@@ -88,8 +88,8 @@ public class Order06Submit : AhpIntegrationTest
 
         // then
         mainPage
-            .UrlEndWith(ProjectPagesUrl.ProjectApplicationList(ApplicationData.ProjectId))
-            .HasTitle(ProjectPageTitles.ApplicationList(ApplicationData.ProjectName))
+            .UrlEndWith(ProjectPagesUrl.ProjectApplicationList(ProjectData.ProjectId))
+            .HasTitle(ProjectPageTitles.ApplicationList(ProjectData.ProjectName))
             .HasApplicationInStatus(ApplicationData.ApplicationId, ApplicationStatus.ApplicationSubmitted);
     }
 }

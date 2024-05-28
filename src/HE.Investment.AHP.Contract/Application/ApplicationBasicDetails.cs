@@ -6,6 +6,6 @@ public record ApplicationBasicDetails(
     AhpApplicationId Id,
     string Name,
     ApplicationStatus Status,
-    string? LocalAuthority,
+    Tenure? Tenure,
     decimal? Grant,
     int? Unit);

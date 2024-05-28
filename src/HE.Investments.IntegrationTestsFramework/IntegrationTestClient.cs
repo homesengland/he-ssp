@@ -1,8 +1,10 @@
+using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
 using HE.Investments.Common.Extensions;
 using HE.Investments.IntegrationTestsFramework.Auth;
 using HE.Investments.IntegrationTestsFramework.Data;
 using HE.Investments.IntegrationTestsFramework.Exceptions;
+using HE.Investments.TestsUtils.Extensions;
 using HE.Investments.TestsUtils.Helpers;
 
 namespace HE.Investments.IntegrationTestsFramework;
@@ -104,7 +106,14 @@ public class IntegrationTestClient
         }
 
         var clientResponse = await _client.SendAsync(submission);
+
         CurrentPage = await HtmlHelpers.GetDocumentAsync(clientResponse);
+        if (CurrentPage.GetPageTitle() == "Sorry, there is a problem with the service")
+        {
+            var errorMessage = CurrentPage.GetElementsByClassName("govuk-body").LastOrDefault()?.Text();
+            throw new ProblemWithTheServiceException(errorMessage ?? "Error page without content");
+        }
+
         return CurrentPage;
     }
 

@@ -11,21 +11,6 @@ namespace HE.Investment.AHP.Domain.Application.Crm;
 
 public class ApplicationCrmContext : IApplicationCrmContext
 {
-    private static readonly string ApplicationListCrmFields =
-        string.Join(
-                ",",
-                nameof(invln_scheme.invln_schemename),
-                nameof(invln_scheme.invln_Tenure),
-                nameof(invln_ExternalStatus),
-                nameof(invln_scheme.invln_applicationid),
-                nameof(invln_scheme.invln_Site),
-                nameof(invln_scheme.invln_fundingrequired),
-                nameof(invln_scheme.invln_noofhomes),
-                nameof(invln_scheme.invln_pplicationid),
-                nameof(invln_scheme.invln_lastexternalmodificationby),
-                nameof(invln_scheme.invln_lastexternalmodificationon))
-            .ToLowerInvariant();
-
     private static readonly string ApplicationCrmFields =
         string.Join(
                 ",",
@@ -134,28 +119,20 @@ public class ApplicationCrmContext : IApplicationCrmContext
         return bool.TryParse(response, out var result) && result;
     }
 
-    public async Task<IList<AhpApplicationDto>> GetOrganisationApplications(string organisationId, CancellationToken cancellationToken)
+    public async Task<AhpSiteApplicationDto> GetSiteApplications(string siteId, string organisationId, string userId, string? consortiumId, CancellationToken cancellationToken)
     {
-        var request = new invln_getmultipleahpapplicationsRequest
+        var request = new invln_getsiteapplicationsRequest
         {
-            inlvn_userid = string.Empty,
-            invln_organisationid = organisationId.TryToGuidAsString(),
-            invln_appfieldstoretrieve = ApplicationListCrmFields,
+            invln_userid = userId,
+            invln_organizationid = organisationId,
+            invln_consortiumid = consortiumId?.TryToGuidAsString()!,
+            invln_siteid = siteId,
         };
 
-        return await GetAll(request, cancellationToken);
-    }
-
-    public async Task<IList<AhpApplicationDto>> GetUserApplications(string organisationId, string userId, CancellationToken cancellationToken)
-    {
-        var request = new invln_getmultipleahpapplicationsRequest
-        {
-            inlvn_userid = userId,
-            invln_organisationid = organisationId.TryToGuidAsString(),
-            invln_appfieldstoretrieve = ApplicationListCrmFields,
-        };
-
-        return await GetAll(request, cancellationToken);
+        return await _service.ExecuteAsync<invln_getsiteapplicationsRequest, invln_getsiteapplicationsResponse, AhpSiteApplicationDto>(
+            request,
+            r => r.invln_siteapplication,
+            cancellationToken);
     }
 
     public async Task<string> Save(AhpApplicationDto dto, string organisationId, string userId, CancellationToken cancellationToken)
@@ -214,13 +191,5 @@ public class ApplicationCrmContext : IApplicationCrmContext
         }
 
         return response[0];
-    }
-
-    private async Task<IList<AhpApplicationDto>> GetAll(invln_getmultipleahpapplicationsRequest request, CancellationToken cancellationToken)
-    {
-        return await _service.ExecuteAsync<invln_getmultipleahpapplicationsRequest, invln_getmultipleahpapplicationsResponse, IList<AhpApplicationDto>>(
-            request,
-            r => r.invln_ahpapplications,
-            cancellationToken);
     }
 }

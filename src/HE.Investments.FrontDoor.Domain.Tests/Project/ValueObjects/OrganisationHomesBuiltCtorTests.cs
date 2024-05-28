@@ -8,7 +8,7 @@ namespace HE.Investments.FrontDoor.Domain.Tests.Project.ValueObjects;
 
 public class OrganisationHomesBuiltCtorTests
 {
-    private const string DisplayName = "previous residential building experience";
+    private const string DisplayName = "amount of homes your organisation has built in the last year";
 
     private const int MinValue = 0;
 
@@ -35,7 +35,7 @@ public class OrganisationHomesBuiltCtorTests
         var result = () => new OrganisationHomesBuilt(null);
 
         // then
-        result.Should().Throw<DomainValidationException>().WithMessage(ValidationErrorMessage.MustProvideYourRequiredField(DisplayName));
+        result.Should().Throw<DomainValidationException>().WithMessage(ValidationErrorMessage.MustProvideRequiredField(DisplayName));
     }
 
     [Fact]
@@ -48,7 +48,7 @@ public class OrganisationHomesBuiltCtorTests
         var result = () => new OrganisationHomesBuilt(homesBuilt);
 
         // then
-        result.Should().Throw<DomainValidationException>().WithMessage(ValidationErrorMessage.MustProvideYourHigherNumber(DisplayName, MinValue));
+        result.Should().Throw<DomainValidationException>().WithMessage(ValidationErrorMessage.MustProvideTheHigherNumber(DisplayName, MinValue));
     }
 
     [Fact]
@@ -61,7 +61,7 @@ public class OrganisationHomesBuiltCtorTests
         var result = () => new OrganisationHomesBuilt(homesBuilt);
 
         // then
-        result.Should().Throw<DomainValidationException>().WithMessage(ValidationErrorMessage.MustProvideYourLowerNumber(DisplayName, MaxValue));
+        result.Should().Throw<DomainValidationException>().WithMessage(ValidationErrorMessage.MustProvideTheLowerNumber(DisplayName, MaxValue));
     }
 
     [Fact]
@@ -74,6 +74,6 @@ public class OrganisationHomesBuiltCtorTests
         var result = () => new OrganisationHomesBuilt(homesBuilt);
 
         // then
-        result.Should().Throw<DomainValidationException>().WithMessage("Your previous residential building experience must be a whole number, like 30");
+        result.Should().Throw<DomainValidationException>().WithMessage("The amount of homes your organisation has built in the last year must be a whole number, like 300");
     }
 }

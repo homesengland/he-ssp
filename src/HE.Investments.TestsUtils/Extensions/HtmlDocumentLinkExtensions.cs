@@ -43,6 +43,16 @@ public static class HtmlDocumentLinkExtensions
         return htmlDocument;
     }
 
+    public static IHtmlDocument HasLinkWithText(this IHtmlDocument htmlDocument, string text, out IHtmlAnchorElement link)
+    {
+        var links = GetLinks(htmlDocument);
+        links = HtmlElementFilters.WithText(links, text);
+        var matchedLink = links.SingleOrDefault();
+        matchedLink.Should().NotBeNull("There is no single Link element on page");
+        link = matchedLink as IHtmlAnchorElement ?? throw new InvalidOperationException("Element is not IHtmlAnchorElement");
+        return htmlDocument;
+    }
+
     public static IHtmlDocument HasLinkWithHref(this IHtmlDocument htmlDocument, string href, out IHtmlAnchorElement htmlElement)
     {
         var allLinks = htmlDocument.GetElementsByTagName("a").OfType<IHtmlAnchorElement>();
