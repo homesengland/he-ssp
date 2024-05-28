@@ -12,6 +12,8 @@ public class SiteCrmContext : ISiteCrmContext
         string.Join(
                 ",",
                 nameof(invln_Sites.invln_SitesId),
+                nameof(invln_Sites.invln_HeProjectLocalAuthorityId),
+                nameof(invln_Sites.invln_AHPProjectId),
                 nameof(invln_Sites.invln_AccountId),
                 nameof(invln_Sites.invln_CreatedByContactId),
                 nameof(invln_Sites.invln_sitename),

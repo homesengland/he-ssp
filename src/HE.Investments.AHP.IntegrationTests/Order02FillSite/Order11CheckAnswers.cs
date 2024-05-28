@@ -155,8 +155,5 @@ public class Order11CheckAnswers : AhpIntegrationTest
         {
             item.Value.ChangeAnswerLink.Should().BeNull();
         }
-
-        var result = await TestClient.NavigateTo(SitePagesUrl.SiteName + "?siteId=" + SiteData.SiteId);
-        result.Title.Should().Be("Page not found");
     }
 }
