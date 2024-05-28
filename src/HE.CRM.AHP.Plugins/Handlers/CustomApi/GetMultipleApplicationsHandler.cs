@@ -23,7 +23,20 @@ namespace HE.CRM.AHP.Plugins.Handlers.CustomApi
 
         public override void DoWork()
         {
-            TracingService.Trace("method");
+            TracingService.Trace("GetMultipleApplicationsHandler");
+            if (fieldsToRetrieve != null)
+            {
+                TracingService.Trace($"* fieldsToRetrieve : {fieldsToRetrieve}");
+            };
+            if (contactId != null)
+            {
+                TracingService.Trace($"* contactId : {contactId}");
+            };
+            if (organisationId != null)
+            {
+                TracingService.Trace($"* organisationId : {organisationId}");
+            };
+
             var applications = CrmServicesFactory.Get<IApplicationService>().GetApplication(organisationId, contactId, fieldsToRetrieve);
             if (applications != null)
             {
