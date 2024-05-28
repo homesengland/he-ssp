@@ -46,27 +46,11 @@ public class ListCardTests : ViewComponentTestBase<ListCardTests>
 
         // then
         document
-            .HasElementWithText("h3", $"Applications")
+            .HasElementWithText("h3", "Applications")
             .HasElementWithText("p", "other(s)", false)
             .HasElementWithText("a", "View all");
 
         AssertApplications(model, document);
-    }
-
-    [Fact(Skip = Constants.SkipTest)]
-    public async Task ShouldNotDisplayListCard_WhenThereAreNoApplications()
-    {
-        // given
-        var model = CreateTestModel([]);
-
-        // when
-        var document = await Render(_viewPath, model);
-
-        // then
-        document
-            .HasElementWithText("h3", $"Applications", false)
-            .HasElementWithText("p", "other(s)", false)
-            .HasElementWithText("a", "View all", false);
     }
 
     private static void AssertApplications(ListCardModel model, IHtmlDocument document)
