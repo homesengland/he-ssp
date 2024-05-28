@@ -166,7 +166,7 @@ public static class DomainModule
     private static void AddAhpProjects(this IServiceCollection services)
     {
         services.AddScoped<IProjectCrmContext, ProjectCrmContext>();
-        //services.Decorate<IProjectCrmContext, RequestCacheProjectCrmContextDecorator>();
+        services.Decorate<IProjectCrmContext, RequestCacheProjectCrmContextDecorator>();
         services.AddScoped<IProjectRepository, ProjectRepository>();
     }
 }
