@@ -285,6 +285,8 @@ namespace HE.Investments.Common.CRM.Model
 			public const string invln_RegenBid = "invln_regenbid";
 			public const string invln_regenbidName = "invln_regenbidname";
 			public const string invln_regionalbenchmarkagainstthegrantperunit = "invln_regionalbenchmarkagainstthegrantperunit";
+			public const string invln_RegionalBenchmarkGrantPerUnit = "invln_regionalbenchmarkgrantperunit";
+			public const string invln_regionalbenchmarkgrantperunit_Base = "invln_regionalbenchmarkgrantperunit_base";
 			public const string invln_representationsandwarrantiesconfirmation = "invln_representationsandwarrantiesconfirmation";
 			public const string invln_representationsandwarrantiesconfirmationName = "invln_representationsandwarrantiesconfirmationname";
 			public const string invln_Rural = "invln_rural";
@@ -2964,6 +2966,36 @@ namespace HE.Investments.Common.CRM.Model
 				this.OnPropertyChanging("invln_regionalbenchmarkagainstthegrantperunit");
 				this.SetAttributeValue("invln_regionalbenchmarkagainstthegrantperunit", value);
 				this.OnPropertyChanged("invln_regionalbenchmarkagainstthegrantperunit");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_regionalbenchmarkgrantperunit")]
+		public Microsoft.Xrm.Sdk.Money invln_RegionalBenchmarkGrantPerUnit
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_regionalbenchmarkgrantperunit");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_RegionalBenchmarkGrantPerUnit");
+				this.SetAttributeValue("invln_regionalbenchmarkgrantperunit", value);
+				this.OnPropertyChanged("invln_RegionalBenchmarkGrantPerUnit");
+			}
+		}
+		
+		/// <summary>
+		/// Value of the Regional Benchmark Grant Per Unit in base currency.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_regionalbenchmarkgrantperunit_base")]
+		public Microsoft.Xrm.Sdk.Money invln_regionalbenchmarkgrantperunit_Base
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_regionalbenchmarkgrantperunit_base");
 			}
 		}
 		
