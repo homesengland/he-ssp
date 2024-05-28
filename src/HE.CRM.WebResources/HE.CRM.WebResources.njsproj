@@ -69,6 +69,7 @@
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="src\services\ConditionService.ts" />
+    <TypeScriptCompile Include="src\services\DeliveryPhaseService.ts" />
     <TypeScriptCompile Include="src\services\IspService.ts" />
     <TypeScriptCompile Include="src\services\LoanApplicationService.ts" />
     <TypeScriptCompile Include="src\services\PrecompleteService.ts" />

@@ -1,3 +1,14 @@
+export enum RehabActivityType {
+  AcquisitionAndWorks = 858110000,
+  ExistingSatisfactory = 858110001,
+  PurchaseAndRepair = 858110002,
+  LeaseAndRepair = 858110003,
+  ReImprovement = 858110004,
+  Conversion = 858110005,
+  WorksOnly = 858110006,
+  Regeneration = 858110007
+}
+
 export enum RetrieveRequestType {
   Fetch,
   XHR,
@@ -27,7 +38,6 @@ export enum Securities {
   interestShortfall = 858110008,
   other = 858110009,
 }
-
 
 export enum StatusReviewApproval {
   Pending = 858110000,
