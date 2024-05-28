@@ -182,6 +182,7 @@ namespace HE.CRM.AHP.Plugins.Services.AhpProject
 
         private invln_Permission CheckContactWebRole(Contact contact, string organisationId)
         {
+            TracingService.Trace("CheckContactWebRole");
             var contactWebRole = invln_Permission.Limiteduser;
             if (_contactWebroleRepository.IsContactHaveSelectedWebRoleForOrganisation(contact.Id, new Guid(organisationId), invln_Permission.Limiteduser))
             {

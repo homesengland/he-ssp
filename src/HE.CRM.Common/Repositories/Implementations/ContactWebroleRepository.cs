@@ -36,8 +36,9 @@ namespace HE.CRM.Common.Repositories.Implementations
                     .SingleOrDefault(x => x.invln_Portal.Value == (int)invln_Portal1.Common);
 
 
-                var webRole = ctx.CreateQuery<invln_Webrole>()
-                    .Where(x => x.invln_Portalpermissionlevelid.Id == portalPermissionLevel.Id && x.invln_Portalid.Id == portalApp.Id).First();
+                invln_Webrole webRole = null;
+                webRole = ctx.CreateQuery<invln_Webrole>()
+                    .Where(x => x.invln_Portalpermissionlevelid.Id == portalPermissionLevel.Id && x.invln_Portalid.Id == portalApp.Id).FirstOrDefault();
 
                 if (webRole == null)
                 { return false; }
