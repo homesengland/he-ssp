@@ -1,14 +1,19 @@
 using HE.Common.IntegrationModel.PortalIntegrationModel;
+using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.Site;
+using HE.Investment.AHP.Domain.Application.Repositories;
 using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.Site.Crm;
 using HE.Investment.AHP.Domain.Site.Entities;
 using HE.Investment.AHP.Domain.Site.Mappers;
 using HE.Investment.AHP.Domain.Site.ValueObjects;
 using HE.Investment.AHP.Domain.Site.ValueObjects.StrategicSite;
+using HE.Investment.AHP.Domain.UserContext;
 using HE.Investments.Account.Shared.User;
 using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Contract.Pagination;
+using HE.Investments.Common.CRM.Mappers;
+using HE.Investments.Common.Extensions;
 
 namespace HE.Investment.AHP.Domain.Site.Repositories;
 
@@ -55,6 +60,23 @@ public class SiteRepository : ISiteRepository
         return SiteDtoToSiteEntityMapper.Map(site);
     }
 
+    public async Task<PaginationResult<ApplicationBasicDetails>> GetSiteApplications(SiteId siteId, AhpUserAccount userAccount, PaginationRequest paginationRequest, CancellationToken cancellationToken)
+    {
+        var siteApplications = await _siteCrmContext.GetSiteApplications(
+            siteId.ToGuidAsString(),
+            userAccount.SelectedOrganisationId().ToGuidAsString(),
+            userAccount.UserGlobalId.ToString(),
+            userAccount.Consortium.GetConsortiumIdAsString(),
+            cancellationToken);
+
+        var applications = siteApplications.AhpApplications
+            .TakePage(paginationRequest)
+            .Select(CreateApplicationBasicDetails)
+            .ToList();
+
+        return new PaginationResult<ApplicationBasicDetails>(applications, paginationRequest.Page, paginationRequest.ItemsPerPage, applications.Count);
+    }
+
     public async Task<bool> IsExist(SiteName name, CancellationToken cancellationToken)
     {
         return await _siteCrmContext.Exist(name.Value, cancellationToken);
@@ -79,5 +101,16 @@ public class SiteRepository : ISiteRepository
             SiteEntityToSiteDtoMapper.Map(site),
             cancellationToken);
         return SiteId.From(id);
+    }
+
+    private static ApplicationBasicDetails CreateApplicationBasicDetails(AhpApplicationForSiteDto ahpApplicationDto)
+    {
+        return new ApplicationBasicDetails(
+            AhpApplicationId.From(ahpApplicationDto.applicationId),
+            ahpApplicationDto.applicationName,
+            AhpApplicationStatusMapper.MapToPortalStatus(ahpApplicationDto.applicationStatus),
+            ApplicationTenureMapper.ToDomain(ahpApplicationDto.tenure)?.Value,
+            null,
+            ahpApplicationDto.housesToDeliver);
     }
 }

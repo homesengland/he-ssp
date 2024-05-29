@@ -11,8 +11,6 @@ public interface IApplicationCrmContext
 
     Task<bool> IsNameExist(string applicationName, string organisationId, CancellationToken cancellationToken);
 
-    Task<AhpSiteApplicationDto> GetSiteApplications(string siteId, string organisationId, string userId, string? consortiumId, CancellationToken cancellationToken);
-
     Task<string> Save(AhpApplicationDto dto, string organisationId, string userId, CancellationToken cancellationToken);
 
     Task ChangeApplicationStatus(
