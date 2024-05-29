@@ -12,16 +12,16 @@ namespace HE.CRM.AHP.Plugins.Plugins.AhpApplication
         invln_scheme.EntityLogicalName,
         StageEnum.PostOperation,
         ExecutionModeEnum.Synchronous,
-        "statuscode, invln_fundingrequired, invln_noofhomes, invln_expectedacquisitioncost, invln_actualacquisitioncost, invln_expectedoncosts, invln_expectedonworks, invln_site, invln_tenure",
+        "invln_actualacquisitioncost, invln_expectedacquisitioncost, invln_fundingrequired, statuscode, invln_noofhomes, invln_expectedoncosts, invln_site, invln_tenure, invln_expectedonworks",
         "HE.CRM.AHP.Plugins.Plugins.AhpApplication.PostUpdate: Update of invln_scheme",
         1,
         IsolationModeEnum.Sandbox,
         Id = "ffe50e48-f484-4cca-8605-76064e680f2f",
         Image1Name = "PreImage",
-        Image1Attributes = "statuscode, invln_fundingrequired, invln_noofhomes, invln_expectedacquisitioncost, invln_actualacquisitioncost, invln_expectedoncosts, invln_expectedonworks, invln_site, invln_tenure",
+        Image1Attributes = "invln_actualacquisitioncost, invln_expectedacquisitioncost, invln_fundingrequired, statuscode, invln_noofhomes, invln_expectedoncosts, invln_site, invln_tenure, invln_expectedonworks",
         Image1Type = ImageTypeEnum.PreImage,
         Image2Name = "PostImage",
-        Image2Attributes = "statuscode",
+        Image2Attributes = "invln_actualacquisitioncost, invln_expectedacquisitioncost, invln_fundingrequired, statuscode, invln_noofhomes, invln_expectedoncosts, invln_site, invln_tenure, invln_expectedonworks",
         Image2Type = ImageTypeEnum.PostImage)]
     public class PostUpdate : PluginBase<DataverseContext>, IPlugin
     {

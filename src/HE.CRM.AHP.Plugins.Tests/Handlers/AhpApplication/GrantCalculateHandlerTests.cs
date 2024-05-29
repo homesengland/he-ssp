@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using DataverseModel;
 using FakeXrmEasy.Extensions;
+using HE.Base.Common.Extensions;
 using HE.CRM.AHP.Plugins.Handlers.AHPApplication;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Microsoft.Xrm.Sdk;
@@ -254,14 +255,13 @@ namespace HE.CRM.AHP.Plugins.Tests.Handlers.AhpApplication
                 invln_typeofhousing = new OptionSetValue((int)invln_Typeofhousing.General)
             };
 
-            var ahpApplicationPostImage = new invln_scheme()
+            var ahpApplicationTarget = new invln_scheme()
             {
                 Id = ahpApplicationPreImage.Id,
                 StatusCode = new OptionSetValue((int)invln_scheme_StatusCode.ApplicationSubmitted)
             };
 
-            var ahpApplicationTarget = ahpApplicationPreImage.Clone<invln_scheme>();
-            ahpApplicationTarget.StatusCode = new OptionSetValue((int)invln_scheme_StatusCode.ApplicationSubmitted);
+            var ahpApplicationPostImage = ahpApplicationPreImage.Merge(ahpApplicationTarget);
 
             PreImage = ahpApplicationPreImage;
             Target = ahpApplicationTarget;
@@ -275,7 +275,7 @@ namespace HE.CRM.AHP.Plugins.Tests.Handlers.AhpApplication
                     homeType2,
                     homeType3,
                     site,
-                    ahpApplicationTarget,
+                    ahpApplicationPostImage,
                     grantbenchmark1,
                     grantbenchmark2,
                     grantbenchmark3,

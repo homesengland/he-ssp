@@ -11,7 +11,6 @@ namespace HE.CRM.AHP.Plugins.Handlers.AHPApplication
 {
     [CrmMessage(CrmMessage.Update)]
     [CrmProcessingStage(CrmProcessingStepStages.Postoperation)]
-
     public class GrantCalculateHandler : CrmEntityHandlerBase<invln_scheme, DataverseContext>
     {
         private invln_scheme Target => ExecutionData.Target;
@@ -52,7 +51,7 @@ namespace HE.CRM.AHP.Plugins.Handlers.AHPApplication
             Logger.Trace($"{DateTime.Now} - Start executing {GetType().Name}. UserId: {ExecutionData.Context.UserId}");
             try
             {
-                CrmServicesFactory.Get<IApplicationService>().GrantCalculate(Target.Id);
+                CrmServicesFactory.Get<IApplicationService>().GrantCalculate(CurrentState);
             }
             catch (Exception ex)
             {

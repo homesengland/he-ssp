@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Policy;
 using System.Text.Json;
 using DataverseModel;
 using HE.Base.Services;
@@ -548,25 +549,11 @@ namespace HE.CRM.AHP.Plugins.Services.Application
             return string.Empty;
         }
 
-        public void GrantCalculate(Guid applicationId)
+        public void GrantCalculate(invln_scheme application)
         {
-            Logger.Trace($"ApplicationService.GrantCalculate: {applicationId}");
+            Logger.Trace($"ApplicationService.GrantCalculate: {application.Id}");
             var grantbenchmarkRepository = CrmRepositoriesFactory.GetSystem<IGrantBenchmarkRepository>();
-
-            var applicationColumns = new string[]
-            {
-                invln_scheme.Fields.invln_fundingrequired,
-                invln_scheme.Fields.invln_noofhomes,
-                invln_scheme.Fields.invln_expectedacquisitioncost,
-                invln_scheme.Fields.invln_actualacquisitioncost,
-                invln_scheme.Fields.invln_expectedoncosts,
-                invln_scheme.Fields.invln_expectedonworks,
-                invln_scheme.Fields.invln_Tenure,
-                invln_scheme.Fields.invln_Site,
-            };
-
-            Logger.Trace($"Get application by Id {applicationId}");
-            var application = _ahpApplicationRepositoryAdmin.GetById(applicationId, applicationColumns);
+            var sitesRepository = CrmRepositoriesFactory.GetSystemBase<invln_Sites, DataverseContext>();
 
             if (application.invln_fundingrequired == null)
             {
@@ -593,6 +580,11 @@ namespace HE.CRM.AHP.Plugins.Services.Application
                 throw new Exception("invln_scheme.invln_expectedonworks is empty");
             }
 
+            if (application.invln_Site == null)
+            {
+                throw new Exception("invln_scheme.invln_Site is empty");
+            }
+
             if (application.invln_Tenure == null)
             {
                 throw new Exception("invln_scheme.invln_Tenure is empty");
@@ -610,18 +602,15 @@ namespace HE.CRM.AHP.Plugins.Services.Application
 
             var grantasaoftotalschemecosts = fundingRequired / (acquisitionCost.Value + expectedOnCosts + expectedOnWorks) * 100;
 
-            var site = GetSite(application.invln_Site.Id);
-            if (site == null)
-            {
-                throw new Exception($"Could not found site with Id: {application.invln_Site.Id}");
-            }
+            var site = sitesRepository.GetById(application.invln_Site.Id,
+                invln_Sites.Fields.invln_GovernmentOfficeRegion);
 
             if (site.invln_GovernmentOfficeRegion == null)
             {
                 throw new Exception($"Site {site.Id} has no set invln_GovernmentOfficeRegion");
             }
 
-            var typeOfHousing = GetHomeTypes(applicationId).Select(x => (invln_Typeofhousing)x.invln_typeofhousing.Value).ToList();
+            var typeOfHousing = GetHomeTypes(application.Id).Select(x => (invln_Typeofhousing)x.invln_typeofhousing.Value).ToList();
 
             var tenure = MapApplicationTenureToRegionalBenchmarkTenure((invln_Tenure)application.invln_Tenure.Value, typeOfHousing);
 
@@ -636,20 +625,13 @@ namespace HE.CRM.AHP.Plugins.Services.Application
 
             _applicationRepository.Update(new invln_scheme()
             {
-                Id = applicationId,
+                Id = application.Id,
                 invln_grantperunit = new Money(grantPerUnit),
                 invln_grantasaoftotalschemecosts = grantasaoftotalschemecosts,
                 invln_RegionalBenchmarkGrantPerUnit = regionalBenchmarkGrantPerUnit,
                 invln_regionalbenchmarkagainstthegrantperunit = regionalBenchmarkAgainstTheGrantPerUnit,
                 invln_WorkssCostsm2 = workCostM2.HasValue ? new Money(workCostM2.Value) : null
             });
-        }
-
-        private invln_Sites GetSite(Guid siteId)
-        {
-            Logger.Trace($"Get site by Id {siteId}");
-            var sitesRepository = CrmRepositoriesFactory.GetSystemBase<invln_Sites, DataverseContext>();
-            return sitesRepository.GetById(siteId);
         }
 
         private IEnumerable<invln_HomeType> GetHomeTypes(Guid applicationId)

@@ -29,6 +29,6 @@ namespace HE.CRM.AHP.Plugins.Services.Application
 
         void ChangeExternalStatus(invln_scheme target, invln_scheme preImage);
 
-        void GrantCalculate(Guid applicationId);
+        void GrantCalculate(invln_scheme application);
     }
 }
