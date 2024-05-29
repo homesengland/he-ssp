@@ -1,5 +1,6 @@
 using HE.Investments.Account.Shared.Config;
 using HE.Investments.Common;
+using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Utils;
 using HE.Investments.FrontDoor.Domain.Project.Crm;
 using HE.Investments.FrontDoor.Domain.Project.Crm.Mappers;
@@ -21,37 +22,49 @@ public static class DomainModule
         services.AddFrontDoorSharedModule();
         services.AddAccountSharedModule();
         services.AddScoped<IDateTimeProvider, DateTimeProvider>();
-        services.AddProjectCrmContext();
-        services.AddScoped<IProjectRepository, ProjectRepository>();
-
-        services.AddSiteCrmContext();
-        services.AddScoped<ISiteRepository, SiteRepository>();
-        services.AddScoped<IRemoveSiteRepository, SiteRepository>();
-        services.AddSingleton<IProjectCrmMapper, ProjectCrmMapper>();
-        services.AddEligibilityServiceWithStrategies();
-        services.AddScoped<IProgrammeAvailabilityService, ProgrammeAvailabilityService>();
-
         services.AddTransient(typeof(IRequestExceptionHandler<,,>), typeof(DomainValidationHandler<,,>));
+
+        services
+            .AddProject()
+            .AddSite()
+            .AddEligibilityServiceWithStrategies()
+            .AddProgramme();
     }
 
-    private static void AddProjectCrmContext(this IServiceCollection services)
+    private static IServiceCollection AddProject(this IServiceCollection services)
     {
         services.AddScoped<IProjectCrmContext, ProjectCrmContext>();
         services.Decorate<IProjectCrmContext, RequestCacheProjectCrmContextDecorator>();
+        services.AddScoped<IProjectRepository, ProjectRepository>();
+        services.AddSingleton<IProjectCrmMapper, ProjectCrmMapper>();
+
+        return services;
     }
 
-    private static void AddSiteCrmContext(this IServiceCollection services)
+    private static IServiceCollection AddSite(this IServiceCollection services)
     {
         services.AddScoped<ISiteCrmContext, SiteCrmContext>();
         services.Decorate<ISiteCrmContext, RequestCacheSiteCrmContextDecorator>();
+        services.AddScoped<ISiteRepository, SiteRepository>();
+        services.AddScoped<IRemoveSiteRepository, SiteRepository>();
+
+        return services;
     }
 
-    private static void AddEligibilityServiceWithStrategies(this IServiceCollection services)
+    private static IServiceCollection AddEligibilityServiceWithStrategies(this IServiceCollection services)
     {
         services.AddScoped<IProjectConversionStrategy, LoanApplicationConversionStrategy>();
         services.AddScoped<IProjectConversionStrategy, AhpProjectConversionStrategy>();
         services.AddScoped<IList<IProjectConversionStrategy>>(sp => sp.GetServices<IProjectConversionStrategy>().ToList());
 
         services.AddScoped<IEligibilityService, EligibilityService>();
+
+        return services;
+    }
+
+    private static void AddProgramme(this IServiceCollection services)
+    {
+        services.AddScoped<IProgrammeAvailabilityService, ProgrammeAvailabilityService>();
+        services.AddAppConfiguration<IProgrammeSettings, ProgrammeSettings>();
     }
 }
