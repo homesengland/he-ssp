@@ -37,10 +37,14 @@ public class CreateAhpProjectCommandHandlerTests : TestBase<CreateAhpProjectComm
             .ReturnProjectPrefillData(prefillProject.Id, userAccount, prefillProject)
             .BuildMockAndRegister(this);
 
+        ProgrammeSettingsTestBuilder
+            .New()
+            .ReturnProgrammeId()
+            .BuildMockAndRegister(this);
+
         ProgrammeTestBuilder
             .New()
             .ReturnAhpProgramme()
-            .WithProgrammeSettings()
             .BuildMockAndRegister(this);
 
         // when

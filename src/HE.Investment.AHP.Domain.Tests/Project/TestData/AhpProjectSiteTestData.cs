@@ -11,18 +11,18 @@ public static class AhpProjectSiteTestData
     public static readonly AhpProjectSite FirstAhpProjectSite = new(
         SiteId.From(Guid.NewGuid().ToString()),
         new SiteName("First site"),
-        SiteStatus.Completed,
+        SiteStatus.Submitted,
         new LocalAuthority(new LocalAuthorityCode("LA-1"), "Liverpool"));
 
     public static readonly AhpProjectSite SecondAhpProjectSite = new(
         SiteId.From(Guid.NewGuid().ToString()),
         new SiteName("Second site"),
-        SiteStatus.InProgress,
+        SiteStatus.Submitted,
         new LocalAuthority(new LocalAuthorityCode("LA-2"), "Warsaw"));
 
     public static readonly AhpProjectSite ThirdAhpProjectSite = new(
         SiteId.From(Guid.NewGuid().ToString()),
         new SiteName("Third site"),
-        SiteStatus.Completed,
+        SiteStatus.Submitted,
         new LocalAuthority(new LocalAuthorityCode("LA-3"), "London"));
 }

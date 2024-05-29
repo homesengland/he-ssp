@@ -1,8 +1,8 @@
-using HE.Investments.Programme.Contract.Enums;
+using HE.Investments.Programme.Contract;
 
 namespace HE.Investments.FrontDoor.Domain.Services;
 
 public interface IProgrammeAvailabilityService
 {
-    Task<bool> IsStartDateValidForProgramme(ProgrammeType programmeType, DateOnly? expectedStartDate, CancellationToken cancellationToken);
+    Task<bool> IsStartDateValidForProgramme(ProgrammeId programmeId, DateOnly? expectedStartDate, CancellationToken cancellationToken);
 }

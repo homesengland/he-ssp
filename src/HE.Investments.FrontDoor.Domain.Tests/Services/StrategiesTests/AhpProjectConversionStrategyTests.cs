@@ -4,21 +4,20 @@ using HE.Investments.Common.Tests.TestObjectBuilders;
 using HE.Investments.Common.Utils;
 using HE.Investments.FrontDoor.Domain.Project;
 using HE.Investments.FrontDoor.Domain.Project.ValueObjects;
-using HE.Investments.FrontDoor.Domain.Services;
 using HE.Investments.FrontDoor.Domain.Services.Strategies;
 using HE.Investments.FrontDoor.Domain.Site;
 using HE.Investments.FrontDoor.Domain.Site.ValueObjects;
 using HE.Investments.FrontDoor.Domain.Tests.Project.TestDataBuilders;
+using HE.Investments.FrontDoor.Domain.Tests.Services.TestDataBuilders;
 using HE.Investments.FrontDoor.Domain.Tests.Site.TestDataBuilders;
 using HE.Investments.FrontDoor.Shared.Project;
 using HE.Investments.FrontDoor.Shared.Project.Contract;
-using HE.Investments.Programme.Contract.Enums;
-using Moq;
+using HE.Investments.TestsUtils.TestFramework;
 using Xunit;
 
 namespace HE.Investments.FrontDoor.Domain.Tests.Services.StrategiesTests;
 
-public class AhpProjectConversionStrategyTests
+public class AhpProjectConversionStrategyTests : TestBase<AhpProjectConversionStrategy>
 {
     [Fact]
     public async Task ShouldReturnAhpApplicationType_WhenProjectAndSitesAreValidForAhpProject()
@@ -26,12 +25,20 @@ public class AhpProjectConversionStrategyTests
         // given
         var project = CreateAhpValidProjectEntity();
 
-        var strategy = ReturnAhpProjectConversionStrategy();
+        ProgrammeSettingsTestBuilder
+            .New()
+            .ReturnProgrammeId()
+            .BuildMockAndRegister(this);
+
+        ProgrammeAvailabilityServiceTestBuilder
+            .New()
+            .ReturnProgrammeId()
+            .BuildMockAndRegister(this);
 
         var projectSites = CreateAhpValidProjectSites();
 
         // when
-        var result = await strategy.Apply(project, projectSites, CancellationToken.None);
+        var result = await TestCandidate.Apply(project, projectSites, CancellationToken.None);
 
         // then
         result.Should().Be(ApplicationType.Ahp);
@@ -44,12 +51,20 @@ public class AhpProjectConversionStrategyTests
         var project = CreateAhpValidProjectEntity();
         project.ProvideAffordableHomesAmount(new ProjectAffordableHomesAmount(AffordableHomesAmount.OnlyOpenMarketHomes));
 
-        var strategy = ReturnAhpProjectConversionStrategy();
+        ProgrammeSettingsTestBuilder
+            .New()
+            .ReturnProgrammeId()
+            .BuildMockAndRegister(this);
+
+        ProgrammeAvailabilityServiceTestBuilder
+            .New()
+            .ReturnProgrammeId()
+            .BuildMockAndRegister(this);
 
         var projectSites = CreateAhpValidProjectSites();
 
         // when
-        var result = await strategy.Apply(project, projectSites, CancellationToken.None);
+        var result = await TestCandidate.Apply(project, projectSites, CancellationToken.None);
 
         // then
         result.Should().Be(ApplicationType.Undefined);
@@ -61,7 +76,15 @@ public class AhpProjectConversionStrategyTests
         // given
         var project = CreateAhpValidProjectEntity();
 
-        var strategy = ReturnAhpProjectConversionStrategy();
+        ProgrammeSettingsTestBuilder
+            .New()
+            .ReturnProgrammeId()
+            .BuildMockAndRegister(this);
+
+        ProgrammeAvailabilityServiceTestBuilder
+            .New()
+            .ReturnProgrammeId()
+            .BuildMockAndRegister(this);
 
         var projectSites = CreateAhpValidProjectSites();
 
@@ -74,7 +97,7 @@ public class AhpProjectConversionStrategyTests
         projectSites.Sites.Add(newSite);
 
         // when
-        var result = await strategy.Apply(project, projectSites, CancellationToken.None);
+        var result = await TestCandidate.Apply(project, projectSites, CancellationToken.None);
 
         // then
         result.Should().Be(ApplicationType.Undefined);
@@ -118,15 +141,5 @@ public class AhpProjectConversionStrategyTests
             .AddSite(siteOne)
             .AddSite(siteTwo)
             .Build();
-    }
-
-    private static AhpProjectConversionStrategy ReturnAhpProjectConversionStrategy()
-    {
-        var programmeAvailabilityServiceMock = new Mock<IProgrammeAvailabilityService>();
-        programmeAvailabilityServiceMock.Setup(x =>
-                x.IsStartDateValidForProgramme(ProgrammeType.Ahp, It.IsAny<DateOnly>(), CancellationToken.None))
-            .ReturnsAsync(true);
-
-        return new AhpProjectConversionStrategy(programmeAvailabilityServiceMock.Object);
     }
 }

@@ -40,10 +40,14 @@ public class GetProjectsListQueryHandlerTests : TestBase<GetProjectsListQueryHan
                 projectsWithSites)
             .BuildMockAndRegister(this);
 
+        ProgrammeSettingsTestBuilder
+            .New()
+            .ReturnProgrammeId()
+            .BuildMockAndRegister(this);
+
         ProgrammeTestBuilder
             .New()
             .ReturnAhpProgramme()
-            .WithProgrammeSettings()
             .BuildMockAndRegister(this);
 
         // when
@@ -81,10 +85,14 @@ public class GetProjectsListQueryHandlerTests : TestBase<GetProjectsListQueryHan
                 projectsWithSites)
             .BuildMockAndRegister(this);
 
+        ProgrammeSettingsTestBuilder
+            .New()
+            .ReturnProgrammeId()
+            .BuildMockAndRegister(this);
+
         ProgrammeTestBuilder
             .New()
             .ReturnAhpProgramme()
-            .WithProgrammeSettings()
             .BuildMockAndRegister(this);
 
         // when
