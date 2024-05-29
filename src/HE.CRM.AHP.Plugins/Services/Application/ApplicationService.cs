@@ -1,11 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.Remoting.Metadata.W3cXsd2001;
+using System.Security.Policy;
 using System.Text.Json;
 using DataverseModel;
 using HE.Base.Services;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
+using HE.CRM.AHP.Plugins.Repositories;
 using HE.CRM.AHP.Plugins.Services.GovNotifyEmail;
 using HE.CRM.Common.DtoMapping;
 using HE.CRM.Common.Repositories.Interfaces;
@@ -42,7 +43,7 @@ namespace HE.CRM.AHP.Plugins.Services.Application
 
         public void ChangeApplicationStatus(string organisationId, string contactId, string applicationId, int newStatus, string changeReason, bool representationsandwarranties)
         {
-            TracingService.Trace($"Service ChangeApplicationStatus");
+            Logger.Trace($"Service ChangeApplicationStatus");
             var contact = _contactRepository.GetContactViaExternalId(contactId);
             var application = _applicationRepository.GetById(new Guid(applicationId),
                 new string[] {
@@ -185,7 +186,7 @@ namespace HE.CRM.AHP.Plugins.Services.Application
         public string GetFileLocationForAhpApplication(string ahpApplicationId, bool isAbsolute)
         {
             var urlToReturn = string.Empty;
-            if (Guid.TryParse(ahpApplicationId, out Guid applicationGuid))
+            if (Guid.TryParse(ahpApplicationId, out var applicationGuid))
             {
                 var relatedDocumentLocation = _sharepointDocumentLocationRepository.GetDocumentLocationRelatedToRecordWithGivenGuid(applicationGuid);
                 if (relatedDocumentLocation != null && relatedDocumentLocation.ParentSiteOrLocation != null)
@@ -550,6 +551,162 @@ namespace HE.CRM.AHP.Plugins.Services.Application
                 return $"<filter>{condition}</filter>";
             }
             return string.Empty;
+        }
+
+        public void GrantCalculate(invln_scheme application)
+        {
+            Logger.Trace($"ApplicationService.GrantCalculate: {application.Id}");
+            var grantbenchmarkRepository = CrmRepositoriesFactory.GetSystem<IGrantBenchmarkRepository>();
+            var sitesRepository = CrmRepositoriesFactory.GetSystemBase<invln_Sites, DataverseContext>();
+
+            if (application.invln_fundingrequired == null)
+            {
+                throw new Exception("invln_scheme.invln_fundingrequired is empty");
+            }
+
+            if (!application.invln_noofhomes.HasValue || application.invln_noofhomes.Value < 1)
+            {
+                throw new Exception("invln_scheme.invln_noofhomes is empty");
+            }
+
+            if (application.invln_expectedacquisitioncost == null && application.invln_actualacquisitioncost == null)
+            {
+                throw new Exception("invln_scheme.invln_expectedacquisitioncost and invln_scheme.invln_actualacquisitioncost are empty");
+            }
+
+            if (application.invln_expectedoncosts == null)
+            {
+                throw new Exception("invln_scheme.invln_expectedoncosts is empty");
+            }
+
+            if (application.invln_expectedonworks == null)
+            {
+                throw new Exception("invln_scheme.invln_expectedonworks is empty");
+            }
+
+            if (application.invln_Site == null)
+            {
+                throw new Exception("invln_scheme.invln_Site is empty");
+            }
+
+            if (application.invln_Tenure == null)
+            {
+                throw new Exception("invln_scheme.invln_Tenure is empty");
+            }
+
+            var fundingRequired = application.invln_fundingrequired.Value;
+            var noOfHomes = application.invln_noofhomes.Value;
+
+            var acquisitionCost = application.invln_expectedacquisitioncost ?? application.invln_actualacquisitioncost;
+
+            var expectedOnCosts = application.invln_expectedoncosts.Value;
+            var expectedOnWorks = application.invln_expectedonworks.Value;
+
+            var grantPerUnit = fundingRequired / noOfHomes;
+
+            var grantasaoftotalschemecosts = fundingRequired / (acquisitionCost.Value + expectedOnCosts + expectedOnWorks) * 100;
+
+            var site = sitesRepository.GetById(application.invln_Site.Id,
+                invln_Sites.Fields.invln_GovernmentOfficeRegion);
+
+            if (site.invln_GovernmentOfficeRegion == null)
+            {
+                throw new Exception($"Site {site.Id} has no set invln_GovernmentOfficeRegion");
+            }
+
+            var typeOfHousing = GetHomeTypes(application.Id).Select(x => (invln_Typeofhousing)x.invln_typeofhousing.Value).ToList();
+
+            var tenure = MapApplicationTenureToRegionalBenchmarkTenure((invln_Tenure)application.invln_Tenure.Value, typeOfHousing);
+
+            var grantBenchmark = grantbenchmarkRepository.GetRegionalBenchmarkGrantPerUnit(
+                tenure,
+                site.invln_GovernmentOfficeRegion.Value
+            );
+
+            var regionalBenchmarkGrantPerUnit = grantBenchmark.invln_benchmarkgpu;
+            var regionalBenchmarkAgainstTheGrantPerUnit = grantPerUnit / regionalBenchmarkGrantPerUnit.Value * 100;
+            var workCostM2 = CalculateWorksCostM2(application);
+
+            _applicationRepository.Update(new invln_scheme()
+            {
+                Id = application.Id,
+                invln_grantperunit = new Money(grantPerUnit),
+                invln_grantasaoftotalschemecosts = grantasaoftotalschemecosts,
+                invln_RegionalBenchmarkGrantPerUnit = regionalBenchmarkGrantPerUnit,
+                invln_regionalbenchmarkagainstthegrantperunit = regionalBenchmarkAgainstTheGrantPerUnit,
+                invln_WorkssCostsm2 = workCostM2.HasValue ? new Money(workCostM2.Value) : null
+            });
+        }
+
+        private IEnumerable<invln_HomeType> GetHomeTypes(Guid applicationId)
+        {
+            Logger.Trace($"GetHomeTypes applicationId='{applicationId}'");
+            var homeTypesRepository = CrmRepositoriesFactory.GetSystemBase<invln_HomeType, DataverseContext>();
+
+            var homeTypesColumns = new string[] {
+                    invln_HomeType.Fields.invln_numberofhomeshometype,
+                    invln_HomeType.Fields.invln_floorarea,
+                    invln_HomeType.Fields.invln_typeofhousing
+            };
+            return homeTypesRepository.GetByAttribute(invln_HomeType.Fields.invln_application, applicationId, homeTypesColumns);
+        }
+
+        private decimal? CalculateWorksCostM2(invln_scheme application)
+        {
+            var homeTypes = GetHomeTypes(application.Id);
+            if (!homeTypes.Any())
+            {
+                Logger.Warn($"Could not find any home types for application '{application.Id}'");
+                return null;
+            }
+            var sumFloorArea = homeTypes.Select(x => x.invln_numberofhomeshometype * x.invln_floorarea).Sum();
+            var calculationResult = application.invln_expectedonworks.Value / sumFloorArea.Value;
+            return calculationResult;
+        }
+
+        private invln_Tenurechoice MapApplicationTenureToRegionalBenchmarkTenure(invln_Tenure ahpApplicationTenure, List<invln_Typeofhousing> typesOfHousing)
+        {
+            var housingForDisabledVulnerableOlderPeopleList = new List<invln_Typeofhousing>()
+            {
+                invln_Typeofhousing.Housingfordisabledandvulnerablepeople,
+                invln_Typeofhousing.Housingforolderpeople
+            };
+
+            var housingForDisabledVulnerableOlderPeople = typesOfHousing.Intersect(housingForDisabledVulnerableOlderPeopleList).Any();
+
+            if (ahpApplicationTenure == invln_Tenure.Sharedownership ||
+                ahpApplicationTenure == invln_Tenure.OPSO ||
+                ahpApplicationTenure == invln_Tenure.HOLD)
+            {
+                return invln_Tenurechoice.Sharedownership;
+            }
+
+            if (ahpApplicationTenure == invln_Tenure.Renttobuy)
+            {
+                return invln_Tenurechoice.Renttobuy;
+            }
+
+            if (ahpApplicationTenure == invln_Tenure.Affordablerent)
+            {
+                if (housingForDisabledVulnerableOlderPeople)
+                {
+                    return invln_Tenurechoice.Specialistrent;
+                }
+
+                return invln_Tenurechoice.Affordablerent;
+            }
+
+            if (ahpApplicationTenure == invln_Tenure.Socialrent)
+            {
+                if (housingForDisabledVulnerableOlderPeople)
+                {
+                    return invln_Tenurechoice.Specialistrent;
+                }
+
+                return invln_Tenurechoice.Socialrent;
+            }
+
+            throw new Exception($"Unknown tenure value: {ahpApplicationTenure}");
         }
     }
 }
