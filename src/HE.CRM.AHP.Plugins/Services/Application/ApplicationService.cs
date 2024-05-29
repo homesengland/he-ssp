@@ -216,6 +216,7 @@ namespace HE.CRM.AHP.Plugins.Services.Application
 
         public List<AhpApplicationDto> GetApplication(string organisationId, string contactId = null, string fieldsToRetrieve = null, string applicationId = null)
         {
+            TracingService.Trace("GetApplication");
             var listOfApplications = new List<AhpApplicationDto>();
             var additionalFilters = GetFetchXmlConditionForGivenField(applicationId, nameof(invln_scheme.invln_schemeId).ToLower());
 
@@ -232,8 +233,16 @@ namespace HE.CRM.AHP.Plugins.Services.Application
                 foreach (var application in applications)
                 {
                     var contact = _contactRepository.GetById(application.invln_contactid.Id, new string[] { Contact.Fields.FirstName, Contact.Fields.LastName, nameof(Contact.invln_externalid).ToLower() });
-                    var site = _siteRepository.GetById(application.invln_Site.Id, invln_Sites.Fields.invln_AHPProjectId);
-                    var ahpProject = _projectRepository.GetById(site.invln_AHPProjectId.Id, invln_ahpproject.Fields.invln_HeProjectId);
+                    invln_ahpproject ahpProject = null;
+                    if (application.invln_Site != null)
+                    {
+                        var site = _siteRepository.GetById(application.invln_Site.Id, invln_Sites.Fields.invln_AHPProjectId);
+                        if (site.invln_AHPProjectId != null)
+                        {
+                            ahpProject = _projectRepository.GetById(site.invln_AHPProjectId.Id, invln_ahpproject.Fields.invln_HeProjectId);
+                        }
+                    }
+
                     var applicationDto = AhpApplicationMapper.MapRegularEntityToDto(application, contact.invln_externalid, ahpProject);
                     if (application.invln_lastexternalmodificationby != null)
                     {
