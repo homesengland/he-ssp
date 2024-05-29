@@ -5,6 +5,7 @@ using HE.Investment.AHP.Domain.Delivery.Entities;
 using HE.Investment.AHP.Domain.Delivery.Repositories;
 using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract;
+using HE.Investments.Common.Domain.ValueObjects;
 using MediatR;
 using SummaryOfDelivery = HE.Investment.AHP.Contract.Delivery.MilestonePayments.SummaryOfDelivery;
 
@@ -48,7 +49,7 @@ public class GetDeliveryPhaseDetailsQueryHandler : IRequestHandler<GetDeliveryPh
                 deliveryPhase.Tranches.CanBeAmended,
                 GetSummaryOfDelivery(deliveryPhase)),
             deliveryPhase.Organisation.IsUnregisteredBody,
-            deliveryPhase.DeliveryPhaseMilestones.IsOnlyCompletionMilestone,
+            deliveryPhase.IsOnlyCompletionMilestone,
             DateDetails.FromDateTime(deliveryPhase.DeliveryPhaseMilestones.AcquisitionMilestone?.MilestoneDate?.Value),
             DateDetails.FromDateTime(deliveryPhase.DeliveryPhaseMilestones.AcquisitionMilestone?.PaymentDate?.Value),
             DateDetails.FromDateTime(deliveryPhase.DeliveryPhaseMilestones.StartOnSiteMilestone?.MilestoneDate?.Value),
@@ -58,18 +59,16 @@ public class GetDeliveryPhaseDetailsQueryHandler : IRequestHandler<GetDeliveryPh
             deliveryPhase.IsAdditionalPaymentRequested?.IsRequested);
     }
 
-    private SummaryOfDelivery GetSummaryOfDelivery(IDeliveryPhaseEntity deliveryPhase)
+    private static SummaryOfDelivery GetSummaryOfDelivery(IDeliveryPhaseEntity deliveryPhase)
     {
-        var milestonesPercentageTranches = deliveryPhase.Tranches.GetPercentageTranches();
-
         return new SummaryOfDelivery(
             deliveryPhase.MilestonesTranches.SumOfGrantApportioned,
             deliveryPhase.MilestonesTranches.AcquisitionMilestone,
-            milestonesPercentageTranches.Acquisition?.Value,
+            deliveryPhase.Tranches.Percentages.Acquisition?.Value,
             deliveryPhase.MilestonesTranches.StartOnSiteMilestone,
-            milestonesPercentageTranches.StartOnSite?.Value,
+            deliveryPhase.Tranches.Percentages.StartOnSite?.Value,
             deliveryPhase.MilestonesTranches.CompletionMilestone,
-            milestonesPercentageTranches.Completion?.Value,
+            deliveryPhase.Tranches.Percentages.Completion?.Value,
             deliveryPhase.Tranches.ClaimMilestone);
     }
 }

@@ -5,7 +5,6 @@ using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.Delivery.Policies;
 using HE.Investment.AHP.Domain.Delivery.Tranches;
 using HE.Investment.AHP.Domain.Delivery.ValueObjects;
-using HE.Investment.AHP.Domain.Scheme.ValueObjects;
 using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Exceptions;
@@ -31,7 +30,6 @@ public class DeliveryPhaseEntity : DomainEntity, IDeliveryPhaseEntity
         MilestonesPercentageTranches milestonesPercentageTranches,
         MilestonesTranches milestonesTranches,
         bool milestoneTranchesAmendRequested,
-        SchemeFunding schemaFunding,
         TypeOfHomes? typeOfHomes = null,
         BuildActivity? buildActivity = null,
         bool? reconfiguringExisting = null,
@@ -60,11 +58,12 @@ public class DeliveryPhaseEntity : DomainEntity, IDeliveryPhaseEntity
             Id,
             Application,
             milestonesPercentageTranches,
-            CalculateGrantApportioned(schemaFunding),
             milestoneTranchesAmendRequested,
             claimMilestone,
             IsOnlyCompletionMilestone);
         MilestonesTranches = milestonesTranches;
+
+        Tranches.TranchesAmended += MarkAsNotCompleted;
     }
 
     public ApplicationBasicInfo Application { get; }
@@ -127,6 +126,7 @@ public class DeliveryPhaseEntity : DomainEntity, IDeliveryPhaseEntity
             _homesToDeliver.AddRange(uniqueHomes);
             _modificationTracker.MarkAsModified();
             MarkAsNotCompleted();
+            Tranches.UnClaimMilestone();
         }
     }
 
@@ -205,17 +205,6 @@ public class DeliveryPhaseEntity : DomainEntity, IDeliveryPhaseEntity
     }
 
     private static bool OnlyCompletionMilestone(OrganisationBasicInfo organisation, BuildActivity buildActivity) => organisation.IsUnregisteredBody || buildActivity.IsOffTheShelfOrExistingSatisfactory;
-
-    private decimal CalculateGrantApportioned(SchemeFunding schemeFunding)
-    {
-        if (schemeFunding.HousesToDeliver <= 0)
-        {
-            return 0;
-        }
-
-        return ((schemeFunding.RequiredFunding ?? 0m) * TotalHomesToBeDeliveredInThisPhase /
-            schemeFunding.HousesToDeliver ?? 0m).RoundToTwoDecimalPlaces();
-    }
 
     private bool IsAnswered()
     {
