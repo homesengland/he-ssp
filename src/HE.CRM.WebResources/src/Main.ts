@@ -8,7 +8,7 @@ import { ReviewApproval } from './events/ReviewApproval'
 import { AhpApplication } from './events/AhpApplication'
 import { Programme } from './events/Programme'
 import { ProjectDetails } from './events/ProjectDetails'
-
+import { DeliveryPhase } from './events/DeliveryPhase'
 
 export function initialize() {
   console.log('Initialize main library')
@@ -24,3 +24,4 @@ exports.ReviewApproval = ReviewApproval
 exports.AhpApplication = AhpApplication
 exports.Programme = Programme
 exports.ProjectDetails = ProjectDetails
+exports.DeliveryPhase = DeliveryPhase

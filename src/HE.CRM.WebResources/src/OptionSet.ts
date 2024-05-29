@@ -9,6 +9,23 @@ export enum RehabActivityType {
   Regeneration = 858110007
 }
 
+export enum Buildactivitytype {
+  AcquisitionAndWorks = 858110000,
+  OffTheShelf = 858110001,
+  WorksOnly = 858110002,
+  LandInclusivePackage = 858110003,
+  Regeneration = 858110004
+}
+
+export enum Tenure {
+  AffordableRent = 858110000,
+  SocialRent = 858110001,
+  SharedOwnership = 858110002,
+  RentRoBuy = 858110003,
+  HOLD = 858110004,
+  OPSO = 858110005
+}
+
 export enum RetrieveRequestType {
   Fetch,
   XHR,

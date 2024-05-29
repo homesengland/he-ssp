@@ -53,6 +53,7 @@
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="src\events\Condition.ts" />
+    <TypeScriptCompile Include="src\events\DeliveryPhase.ts" />
     <TypeScriptCompile Include="src\events\Isp.ts" />
     <TypeScriptCompile Include="src\events\LoanApplication.ts" />
     <TypeScriptCompile Include="src\events\Precomplete.ts" />
