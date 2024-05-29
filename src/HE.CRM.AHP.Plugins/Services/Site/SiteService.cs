@@ -32,6 +32,12 @@ namespace HE.CRM.AHP.Plugins.Services.Site
         public PagedResponseDto<SiteDto> GetMultiple(PagingRequestDto paging, string fieldsToRetrieve, string externalContactId, string accountId)
         {
             TracingService.Trace($"SiteService GetMultiple");
+
+            if (fieldsToRetrieve.Contains(invln_Sites.Fields.invln_AHPProjectId))
+            {
+                fieldsToRetrieve = fieldsToRetrieve + "," + invln_Sites.Fields.invln_AHPProjectId;
+            }
+
             var externalContactIdFilter = GetFetchXmlConditionForGivenField(externalContactId, nameof(Contact.invln_externalid).ToLower());
             externalContactIdFilter = GenerateFilterMarksForCondition(externalContactIdFilter);
 
@@ -44,12 +50,18 @@ namespace HE.CRM.AHP.Plugins.Services.Site
             foreach (var site in result.items)
             {
                 he_LocalAuthority localAuth = null;
+                invln_ahpproject ahpProject = null;
                 if (site.invln_HeLocalAuthorityId != null)
                 {
                     localAuth = _heLocalAuthorityRepository.GetById(site.invln_HeLocalAuthorityId.Id, new string[] { nameof(he_LocalAuthority.he_LocalAuthorityId).ToLower(), nameof(he_LocalAuthority.he_Name).ToLower(), nameof(he_LocalAuthority.he_GSSCode).ToLower() });
-
                 }
-                siteDtoList.Add(SiteMapper.ToDto(site, localAuth));
+
+                //  var siteProject = _repository.GetById(site.Id, invln_Sites.Fields.invln_AHPProjectId);
+                if (site.invln_AHPProjectId != null)
+                {
+                    ahpProject = _ahpProjectRepository.GetById(site.invln_AHPProjectId.Id, invln_ahpproject.Fields.invln_HeProjectId);
+                }
+                siteDtoList.Add(SiteMapper.ToDto(site, localAuth, ahpProject));
             }
             return new PagedResponseDto<SiteDto>
             {

@@ -30,7 +30,6 @@ namespace HE.CRM.AHP.Plugins.Handlers.CustomApi.Site
             if (result != null)
             {
                 var serialized = JsonSerializer.Serialize(result);
-                TracingService.Trace($"output: {serialized}");
                 ExecutionData.SetOutputParameter(invln_getsinglesiteResponse.Fields.invln_site, serialized);
             }
         }
