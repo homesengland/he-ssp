@@ -52,5 +52,5 @@ public class SiteModel
 
     public OrganisationDetails? OwnerOfTheHomes { get; set; }
 
-    public bool IsReadOnly => Status == SiteStatus.Completed;
+    public bool IsReadOnly => Status == SiteStatus.Submitted;
 }

@@ -12,6 +12,6 @@ public class SiteStatusMapper : EnumMapper<SiteStatus>
         new Dictionary<SiteStatus, int?>
         {
             { SiteStatus.InProgress, (int)invln_Sitestatus.InProgress },
-            { SiteStatus.Completed, (int)invln_Sitestatus.Submitted },
+            { SiteStatus.Submitted, (int)invln_Sitestatus.Submitted },
         };
 }

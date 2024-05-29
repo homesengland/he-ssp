@@ -25,6 +25,11 @@ internal sealed class RequestCacheSiteCrmContextDecorator : ISiteCrmContext
         return await _decorated.GetUserSites(userGlobalId, pagination, cancellationToken);
     }
 
+    public async Task<AhpSiteApplicationDto> GetSiteApplications(string siteId, string organisationId, string userId, string? consortiumId, CancellationToken cancellationToken)
+    {
+        return await _decorated.GetSiteApplications(siteId, organisationId, userId, consortiumId, cancellationToken);
+    }
+
     public async Task<SiteDto?> GetById(string siteId, CancellationToken cancellationToken)
     {
         return await _cache.GetFromCache(siteId.ToGuidAsString(), async () => await _decorated.GetById(siteId, cancellationToken));

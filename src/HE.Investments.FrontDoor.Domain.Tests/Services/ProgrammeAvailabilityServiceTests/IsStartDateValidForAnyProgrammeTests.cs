@@ -1,5 +1,6 @@
 using FluentAssertions;
 using HE.Investments.FrontDoor.Domain.Services;
+using HE.Investments.FrontDoor.Domain.Tests.Services.TestDataBuilders;
 using HE.Investments.Programme.Contract.Enums;
 using HE.Investments.Programme.Contract.Queries;
 using HE.Investments.TestsUtils.TestFramework;
@@ -22,11 +23,16 @@ public class IsStartDateValidForAnyProgrammeTests : TestBase<ProgrammeAvailabili
             .Build();
         var mediator = CreateAndRegisterDependencyMock<IMediator>();
 
-        mediator.Setup(x => x.Send(new GetProgrammesQuery(ProgrammeType.Ahp), CancellationToken.None))
-            .ReturnsAsync([programme]);
+        ProgrammeSettingsTestBuilder
+            .New()
+            .ReturnProgrammeId()
+            .BuildMockAndRegister(this);
+
+        mediator.Setup(x => x.Send(new GetProgrammeQuery(programme.Id), CancellationToken.None))
+            .ReturnsAsync(programme);
 
         // when
-        var result = await TestCandidate.IsStartDateValidForProgramme(ProgrammeType.Ahp, expectedDate, CancellationToken.None);
+        var result = await TestCandidate.IsStartDateValidForProgramme(programme.Id, expectedDate, CancellationToken.None);
 
         // then
         result.Should().BeTrue();
@@ -45,11 +51,16 @@ public class IsStartDateValidForAnyProgrammeTests : TestBase<ProgrammeAvailabili
             .Build();
         var mediator = CreateAndRegisterDependencyMock<IMediator>();
 
-        mediator.Setup(x => x.Send(new GetProgrammesQuery(ProgrammeType.Ahp), CancellationToken.None))
-            .ReturnsAsync([programme]);
+        ProgrammeSettingsTestBuilder
+            .New()
+            .ReturnProgrammeId()
+            .BuildMockAndRegister(this);
+
+        mediator.Setup(x => x.Send(new GetProgrammeQuery(programme.Id), CancellationToken.None))
+            .ReturnsAsync(programme);
 
         // when
-        var result = await TestCandidate.IsStartDateValidForProgramme(ProgrammeType.Ahp, expectedDate, CancellationToken.None);
+        var result = await TestCandidate.IsStartDateValidForProgramme(programme.Id, expectedDate, CancellationToken.None);
 
         // then
         result.Should().BeFalse();

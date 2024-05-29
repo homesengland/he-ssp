@@ -41,7 +41,23 @@ namespace HE.CRM.AHP.Plugins.Handlers.CustomApi.FrontDoor
 
         public override void DoWork()
         {
-            TracingService.Trace("GetAhpProjectHandler");
+            TracingService.Trace("GetAhpProjectsHandler");
+            if (externalContactId != null)
+            {
+                TracingService.Trace($"* externalContactId : {externalContactId}");
+            };
+            if (organisationId != null)
+            {
+                TracingService.Trace($"* organisationId : {organisationId}");
+            };
+            if (consortiumId != null)
+            {
+                TracingService.Trace($"* consortiumId: {consortiumId}");
+            };
+            if (pagingRequest != null)
+            {
+                TracingService.Trace($"* pagingRequest: {pagingRequest}");
+            };
 
             PagingRequestDto paging = null;
             if (pagingRequest != null)

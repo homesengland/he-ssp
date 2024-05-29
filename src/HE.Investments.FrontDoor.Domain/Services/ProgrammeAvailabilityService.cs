@@ -1,4 +1,5 @@
-using HE.Investments.Programme.Contract.Enums;
+using HE.Investments.Common.Extensions;
+using HE.Investments.Programme.Contract;
 using HE.Investments.Programme.Contract.Queries;
 using MediatR;
 
@@ -13,20 +14,13 @@ public class ProgrammeAvailabilityService : IProgrammeAvailabilityService
         _mediator = mediator;
     }
 
-    public async Task<bool> IsStartDateValidForProgramme(ProgrammeType programmeType, DateOnly? expectedStartDate, CancellationToken cancellationToken)
+    public async Task<bool> IsStartDateValidForProgramme(ProgrammeId programmeId, DateOnly? expectedStartDate, CancellationToken cancellationToken)
     {
-        var programmes = await _mediator.Send(new GetProgrammesQuery(programmeType), cancellationToken);
-        foreach (var programme in programmes)
-        {
-            var isEndDateValid = expectedStartDate < programme.EndDate;
-            var isStartOnSiteEndDateValid = expectedStartDate < programme.StartOnSiteEndDate;
+        var programme = await _mediator.Send(new GetProgrammeQuery(programmeId), cancellationToken);
 
-            if (isEndDateValid && isStartOnSiteEndDateValid)
-            {
-                return true;
-            }
-        }
+        var isEndDateValid = expectedStartDate < programme.EndDate;
+        var isStartOnSiteEndDateValid = programme.StartOnSiteEndDate.IsNotProvided() || expectedStartDate < programme.StartOnSiteEndDate;
 
-        return false;
+        return isEndDateValid && isStartOnSiteEndDateValid;
     }
 }
