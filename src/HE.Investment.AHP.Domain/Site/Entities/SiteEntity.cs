@@ -253,7 +253,7 @@ public class SiteEntity : DomainEntity, IQuestion
                 .CheckErrors();
         }
 
-        Status = _modificationTracker.Change(Status, SiteStatus.Completed);
+        Status = _modificationTracker.Change(Status, SiteStatus.Submitted);
     }
 
     public bool IsAnswered()

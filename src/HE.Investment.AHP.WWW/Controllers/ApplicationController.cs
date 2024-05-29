@@ -78,7 +78,7 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
     public async Task<IActionResult> Name([FromRoute] string siteId, [FromQuery] string? applicationName, CancellationToken cancellationToken)
     {
         var site = await _mediator.Send(new GetSiteQuery(siteId), cancellationToken);
-        if (site.Status == SiteStatus.Completed)
+        if (site.Status == SiteStatus.Submitted)
         {
             return View("Name", new ApplicationBasicModel(null, applicationName, Contract.Application.Tenure.Undefined));
         }

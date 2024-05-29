@@ -6,5 +6,5 @@ public enum SiteStatus
 {
     [Description("In progress")]
     InProgress,
-    Completed,
+    Submitted,
 }

@@ -1,4 +1,6 @@
-﻿namespace HE.Investments.Common.Gds;
+﻿using System.ComponentModel;
+
+namespace HE.Investments.Common.Gds;
 
 public enum TagColour
 {
@@ -11,4 +13,6 @@ public enum TagColour
     Red,
     Orange,
     Yellow,
+    [Description("light-blue")]
+    LightBlue,
 }
