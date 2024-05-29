@@ -32,7 +32,7 @@ public class AhpProjectConversionStrategyTests : TestBase<AhpProjectConversionSt
 
         ProgrammeAvailabilityServiceTestBuilder
             .New()
-            .ReturnProgrammeId()
+            .ReturnIsStartDateValidForProgramme()
             .BuildMockAndRegister(this);
 
         var projectSites = CreateAhpValidProjectSites();
@@ -58,7 +58,7 @@ public class AhpProjectConversionStrategyTests : TestBase<AhpProjectConversionSt
 
         ProgrammeAvailabilityServiceTestBuilder
             .New()
-            .ReturnProgrammeId()
+            .ReturnIsStartDateValidForProgramme()
             .BuildMockAndRegister(this);
 
         var projectSites = CreateAhpValidProjectSites();
@@ -83,7 +83,7 @@ public class AhpProjectConversionStrategyTests : TestBase<AhpProjectConversionSt
 
         ProgrammeAvailabilityServiceTestBuilder
             .New()
-            .ReturnProgrammeId()
+            .ReturnIsStartDateValidForProgramme()
             .BuildMockAndRegister(this);
 
         var projectSites = CreateAhpValidProjectSites();

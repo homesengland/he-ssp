@@ -6,6 +6,7 @@ using HE.Investment.AHP.Domain.Tests.Common.TestDataBuilders;
 using HE.Investment.AHP.Domain.Tests.Project.TestData;
 using HE.Investment.AHP.Domain.Tests.Project.TestDataBuilders;
 using HE.Investments.TestsUtils.TestFramework;
+using Moq;
 
 namespace HE.Investment.AHP.Domain.Tests.Project.CommandHandlers;
 
@@ -24,7 +25,7 @@ public class CreateAhpProjectCommandHandlerTests : TestBase<CreateAhpProjectComm
             .Register(this)
             .AhpUserFromMock;
 
-        ProjectRepositoryTestBuilder
+        var projectRepository = ProjectRepositoryTestBuilder
             .New()
             .CreateProject(
                 prefillProject,
@@ -32,7 +33,7 @@ public class CreateAhpProjectCommandHandlerTests : TestBase<CreateAhpProjectComm
                 projectId)
             .BuildMockAndRegister(this);
 
-        PrefillDataRepositoryTestBuilder
+        var prefillDataRepository = PrefillDataRepositoryTestBuilder
             .New()
             .ReturnProjectPrefillData(prefillProject.Id, userAccount, prefillProject)
             .BuildMockAndRegister(this);
@@ -52,5 +53,7 @@ public class CreateAhpProjectCommandHandlerTests : TestBase<CreateAhpProjectComm
 
         // then
         result.Should().Be(projectId);
+        projectRepository.Verify(x => x.CreateProject(prefillProject, userAccount, CancellationToken.None), Times.Once);
+        prefillDataRepository.Verify(x => x.GetProjectPrefillData(prefillProject.Id, userAccount, CancellationToken.None), Times.Once);
     }
 }

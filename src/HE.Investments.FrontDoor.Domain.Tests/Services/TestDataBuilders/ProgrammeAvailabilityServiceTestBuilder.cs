@@ -16,7 +16,7 @@ public class ProgrammeAvailabilityServiceTestBuilder
 
     public static ProgrammeAvailabilityServiceTestBuilder New() => new();
 
-    public ProgrammeAvailabilityServiceTestBuilder ReturnProgrammeId()
+    public ProgrammeAvailabilityServiceTestBuilder ReturnIsStartDateValidForProgramme()
     {
         _mock.Setup(x =>
                 x.IsStartDateValidForProgramme(It.IsAny<ProgrammeId>(), It.IsAny<DateOnly>(), CancellationToken.None))
