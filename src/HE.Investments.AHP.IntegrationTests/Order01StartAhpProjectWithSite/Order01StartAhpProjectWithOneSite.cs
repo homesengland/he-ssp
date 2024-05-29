@@ -1,8 +1,10 @@
 using System.Diagnostics.CodeAnalysis;
 using HE.Investment.AHP.WWW.Views.Project.Const;
 using HE.Investment.AHP.WWW.Views.Site.Const;
+using HE.Investments.AHP.IntegrationTests.Extensions;
 using HE.Investments.AHP.IntegrationTests.Framework;
 using HE.Investments.AHP.IntegrationTests.Pages;
+using HE.Investments.Common.Extensions;
 using HE.Investments.TestsUtils.Extensions;
 using Xunit;
 using Xunit.Abstractions;
@@ -21,7 +23,7 @@ public class Order01StartAhpProjectWithOneSite : AhpIntegrationTest
 
     [Fact(Skip = AhpConfig.SkipTest)]
     [Order(1)]
-    public async Task AhpProjectShouldBeCreated()
+    public async Task Order01_AhpProjectShouldBeCreated()
     {
         // given
         var (projectId, siteId) = await InFrontDoor.FrontDoorProjectEligibleForAhpExist(LoginData, ProjectData.GenerateProjectName(), SiteData.GenerateSiteName());
@@ -40,6 +42,32 @@ public class Order01StartAhpProjectWithOneSite : AhpIntegrationTest
         nextPage
             .UrlEndWith(SitePagesUrl.SiteSelect(ProjectData.ProjectId))
             .HasTitle(SitePageTitles.SiteSelect);
+
+        SaveCurrentPage();
+    }
+
+    [Fact(Skip = AhpConfig.SkipTest)]
+    [Order(2)]
+    public async Task Order02_ShouldRedirectToSiteStartPage_WhenSelectedSiteIsNotCompleted()
+    {
+        // given
+        (await GetCurrentPage(SitePagesUrl.SiteSelect(ProjectData.ProjectId)))
+                                .HasNavigationListItem("select-list", out var selectedSiteLink);
+
+        // when
+        (await TestClient.NavigateTo(selectedSiteLink))
+            .HasTitle(SitePageTitles.SiteConfirmSelect)
+            .HasBackLink(out _)
+            .HasSubmitButton(out var confirmButton, "Continue");
+
+        var pageAfterConfirmation = await TestClient.SubmitButton(
+            confirmButton,
+            ("IsConfirmed", true.MapToTrueFalse()));
+
+        // then
+        pageAfterConfirmation
+            .HasTitle(SitePageTitles.SiteDetails)
+            .UrlEndWith(SitePagesUrl.SiteStart(selectedSiteLink.Href.GetSiteGuidFromUrl()));
 
         SaveCurrentPage();
     }

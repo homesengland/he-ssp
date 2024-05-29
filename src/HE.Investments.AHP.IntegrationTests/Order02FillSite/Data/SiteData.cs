@@ -1,4 +1,5 @@
 using System.Globalization;
+using System.Security.Policy;
 using HE.Investment.AHP.Contract.HomeTypes.Enums;
 using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Contract.Site.Enums;
@@ -16,6 +17,8 @@ public class SiteData
     }
 
     public string SiteId { get; private set; }
+
+    public string SiteIdShortGuid => ShortGuid.FromString(SiteId).Value;
 
     public string SiteName { get; private set; }
 

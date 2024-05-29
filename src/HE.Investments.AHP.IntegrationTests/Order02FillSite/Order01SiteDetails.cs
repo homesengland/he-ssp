@@ -50,8 +50,7 @@ public class Order01SiteDetails : AhpIntegrationTest
         var siteDetails = await TestClient.NavigateTo(linkToSite);
 
         // then
-        siteDetails
-            .HasTitle(SiteData.SiteName);
+        siteDetails.HasTitle(SiteData.SiteName);
 
         SaveCurrentPage();
     }

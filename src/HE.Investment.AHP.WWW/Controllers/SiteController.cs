@@ -86,15 +86,16 @@ public class SiteController : WorkflowController<SiteWorkflowState>
     [HttpPost("{siteId}/confirm-select")]
     public async Task<IActionResult> SelectConfirmed(string siteId, bool? isConfirmed, CancellationToken cancellationToken)
     {
+        var site = await _mediator.Send(new GetSiteQuery(siteId), cancellationToken);
         if (isConfirmed.IsNotProvided())
         {
             ModelState.AddValidationErrors(OperationResult.New().AddValidationError("IsConfirmed", "Select whether this is the correct site"));
-            return View("ConfirmSelect", await _mediator.Send(new GetSiteQuery(siteId), cancellationToken));
+            return View("ConfirmSelect", site);
         }
 
         return isConfirmed!.Value
             ? RedirectToAction("Name", "Application", new { siteId })
-            : RedirectToAction("Select");
+            : RedirectToAction("Select", new { projectId = site.ProjectId });
     }
 
     [HttpGet("{siteId}")]

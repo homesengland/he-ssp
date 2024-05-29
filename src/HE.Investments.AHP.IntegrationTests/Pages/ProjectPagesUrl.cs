@@ -9,4 +9,6 @@ public static class ProjectPagesUrl
     public static string ProjectSiteList(string projectId) => $"ahp/project/{projectId}/sites";
 
     public static string ProjectDetails(string projectId) => $"ahp/project/{projectId}";
+
+    public const string ProjectList = "ahp/projects";
 }
