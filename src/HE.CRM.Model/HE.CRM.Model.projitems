@@ -190,6 +190,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\AIPluginSubType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\AIPluginType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\AllocationType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OptionSets\applicationaccess.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\applicationbasedaccesslist_cloud.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\BookableResourceCharacteristicType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\botComponentcollectionsharingroletype.cs" />

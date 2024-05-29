@@ -17,19 +17,19 @@ namespace HE.Investments.Common.CRM.Model
 	{
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Affordablerent = 858110001,
+		Affordablerent = 858110000,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Extracare = 858110005,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Renttobuy = 858110002,
+		Renttobuy = 858110003,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Sharedownership = 858110000,
+		Sharedownership = 858110002,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Socialrent = 858110003,
+		Socialrent = 858110001,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Specialistrent = 858110004,

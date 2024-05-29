@@ -17,10 +17,10 @@ namespace HE.Investments.Common.CRM.Model
 	{
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Completed = 858110001,
+		InProgress = 858110000,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		InProgress = 858110000,
+		Submitted = 858110001,
 	}
 }
 #pragma warning restore CS1591

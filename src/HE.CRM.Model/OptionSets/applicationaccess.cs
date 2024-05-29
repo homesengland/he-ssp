@@ -12,18 +12,18 @@ namespace DataverseModel
 {
 	
 	
+	/// <summary>
+	/// Application Access.
+	/// </summary>
 	[System.Runtime.Serialization.DataContractAttribute()]
-	public enum ConnectorType
+	public enum applicationaccess
 	{
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		ConnectionLess = 2,
+		Allowed = 0,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		CustomConnector = 1,
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		NotSpecified = 0,
+		Blocked = 1,
 	}
 }
 #pragma warning restore CS1591
