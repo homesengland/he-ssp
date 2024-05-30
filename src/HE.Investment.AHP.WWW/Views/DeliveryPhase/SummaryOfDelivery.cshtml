@@ -21,12 +21,13 @@
     var isAmendable = Model.Tranches?.ShouldBeAmended ?? false;
     var summaryOfDelivery = Model.Tranches?.SummaryOfDelivery;
     var (tranchesInvalid, tranchesErrors) = ViewData.ModelState.GetErrors(ModelProvider.GetExpressionText((DeliveryPhaseDetails x) => x.Tranches));
+    var workflow = Context.Request.Query["workflow"];
 }
 
 <div class="govuk-grid-column-full">
     <vc:ahp-workflow-back-button current-page="@DeliveryPhaseWorkflowState.SummaryOfDelivery"/>
 
-    <form asp-controller="DeliveryPhase" asp-action="SummaryOfDelivery" asp-method="post" asp-route-applicationId="@applicationId" asp-route-deliveryPhaseId="@Model.Id" asp-route-workflow="@Context.Request.Query["workflow"]" novalidate>
+    <form asp-controller="DeliveryPhase" asp-action="SummaryOfDelivery" asp-method="post" asp-route-applicationId="@applicationId" asp-route-deliveryPhaseId="@Model.Id" asp-route-workflow="@workflow" novalidate>
         <vc:page-header caption="@($"{Model.Application.Name} - {Model.Name}")" title="@title"/>
 
         @Html.HiddenFor(x => x.Tranches!.ShouldBeAmended)
@@ -54,7 +55,7 @@
                     <td class="govuk-table__cell">
                         <gds-link
                             data-testid="change-number-of-homes"
-                            href="@Url.Action("AddHomes", "DeliveryPhase", new { applicationId, deliveryPhaseId = Model.Id })">
+                            href="@Url.Action("AddHomes", "DeliveryPhase", new { applicationId, deliveryPhaseId = Model.Id, workflow })">
                             Change
                         </gds-link>
                     </td>

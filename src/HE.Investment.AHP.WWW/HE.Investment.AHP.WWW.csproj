@@ -37,5 +37,6 @@
     <ProjectReference Include="..\HE.Investments.DocumentService\HE.Investments.DocumentService.csproj" />
     <ProjectReference Include="..\HE.Investments.Common.WWW\HE.Investments.Common.WWW.csproj" />
     <ProjectReference Include="..\HE.Investments.Common\HE.Investments.Common.csproj" />
+    <ProjectReference Include="..\HE.Investments.Programme.Domain\HE.Investments.Programme.Domain.csproj" />
   </ItemGroup>
 </Project>

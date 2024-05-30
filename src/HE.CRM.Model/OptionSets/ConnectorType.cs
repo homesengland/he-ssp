@@ -17,6 +17,9 @@ namespace DataverseModel
 	{
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
+		ConnectionLess = 2,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
 		CustomConnector = 1,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]

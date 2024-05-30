@@ -21,6 +21,7 @@ using HE.Investments.Common.WWW.Infrastructure.ErrorHandling;
 using HE.Investments.Common.WWW.Infrastructure.Middlewares;
 using HE.Investments.DocumentService.Extensions;
 using HE.Investments.Organisation.Config;
+using HE.Investments.Programme.Domain.Config;
 
 namespace HE.Investment.AHP.WWW.Config;
 
@@ -38,6 +39,7 @@ public static class AhpWebModule
         services.AddHttpUserContext();
         services.AddDomainModule();
         services.AddConsortiumDomainModule();
+        services.AddProgrammeSubdomainModule();
         services.AddEventInfrastructure();
         services.AddNotificationPublisher(ApplicationType.Ahp);
         services.AddNotificationConsumer(ApplicationType.Ahp, typeof(HomeTypeHasBeenCreatedDisplayNotificationFactory).Assembly);

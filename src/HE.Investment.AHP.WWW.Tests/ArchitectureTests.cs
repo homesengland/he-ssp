@@ -11,9 +11,10 @@ public class ArchitectureTests
     {
         get
         {
-            yield return new object[] { typeof(Program).Assembly };
-            yield return new object[] { typeof(Domain.Config.DomainModule).Assembly };
-            yield return new object[] { typeof(Contract.Application.AhpApplicationId).Assembly };
+            yield return [typeof(Program).Assembly];
+            yield return [typeof(Domain.Config.DomainModule).Assembly];
+            yield return [typeof(Contract.Application.AhpApplicationId).Assembly];
+            yield return [typeof(HE.Investments.Programme.Domain.Config.DomainModule).Assembly];
         }
     }
 

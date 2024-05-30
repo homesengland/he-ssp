@@ -17,7 +17,7 @@ namespace HE.CRM.Common.DtoMapping
                 SiteId = site.Id.ToString(),
                 fdSiteId = site.invln_HeProjectLocalAuthorityId?.Id.ToString(),
                 ahpProjectId = site.invln_AHPProjectId?.Id.ToString(),
-                siteName = site.invln_HeProjectLocalAuthorityId?.Id.ToString(),
+                siteName = site.invln_sitename.ToString(),
                 siteStatus = site.StatusCode.ToString(),
                 localAuthorityName = site.invln_LocalAuthority?.Name,
                 AhpApplications = new List<AhpApplicationForSiteDto>(),
@@ -29,10 +29,10 @@ namespace HE.CRM.Common.DtoMapping
                 {
                     applicationId = app.Id.ToString(),
                     applicationName = app.invln_schemename,
-                    applicationStatus = app.StatusCode?.Value,
+                    applicationStatus = app.invln_ExternalStatus?.Value,
                     requiredFunding = app.invln_fundingrequired?.Value.ToString(),
-                    housesToDeliver = app.invln_noofhomes == null ? string.Empty : app.invln_noofhomes.Value.ToString(),
-                    tenure = app?.invln_Tenure?.Value.ToString(),
+                    housesToDeliver = app?.invln_noofhomes,
+                    tenure = app?.invln_Tenure?.Value,
                 };
                 siteApp.AhpApplications.Add(ahpApplicationDto);
             }

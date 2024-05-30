@@ -32,7 +32,7 @@ public class SiteSummaryViewModelFactory : ISiteSummaryViewModelFactory
 
         string CreateAction(string actionName) => CreateSiteActionUrl(urlHelper, SiteId.From(siteDetails.Id!), actionName, workflow);
 
-        yield return new SectionSummaryViewModel("Site details", CreateSiteDetailsSummary(siteDetails, CreateAction, isEditable));
+        yield return new SectionSummaryViewModel("Site details", CreateSiteDetailsSummary(siteDetails, CreateAction, false));
         yield return new SectionSummaryViewModel("Section 106", CreateSection106Summary(siteDetails.Section106, CreateAction, isEditable));
         yield return new SectionSummaryViewModel("Location", CreateLocationSummary(siteDetails.LocalAuthority, CreateAction, isEditable));
         yield return new SectionSummaryViewModel("Planning", CreatePlanningSummary(siteDetails.PlanningDetails, CreateAction, isEditable));

@@ -12,6 +12,8 @@ public class SiteCrmContext : ISiteCrmContext
         string.Join(
                 ",",
                 nameof(invln_Sites.invln_SitesId),
+                nameof(invln_Sites.invln_HeProjectLocalAuthorityId),
+                nameof(invln_Sites.invln_AHPProjectId),
                 nameof(invln_Sites.invln_AccountId),
                 nameof(invln_Sites.invln_CreatedByContactId),
                 nameof(invln_Sites.invln_sitename),
@@ -99,6 +101,22 @@ public class SiteCrmContext : ISiteCrmContext
                 invln_externalcontactid = userGlobalId,
             },
             r => r.invln_sites,
+            cancellationToken);
+    }
+
+    public async Task<AhpSiteApplicationDto> GetSiteApplications(string siteId, string organisationId, string userId, string? consortiumId, CancellationToken cancellationToken)
+    {
+        var request = new invln_getsiteapplicationsRequest
+        {
+            invln_userid = userId,
+            invln_organizationid = organisationId,
+            invln_consortiumid = consortiumId?.TryToGuidAsString()!,
+            invln_siteid = siteId,
+        };
+
+        return await _service.ExecuteAsync<invln_getsiteapplicationsRequest, invln_getsiteapplicationsResponse, AhpSiteApplicationDto>(
+            request,
+            r => r.invln_siteapplication,
             cancellationToken);
     }
 

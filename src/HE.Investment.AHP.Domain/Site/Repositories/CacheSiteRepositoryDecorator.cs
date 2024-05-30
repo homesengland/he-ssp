@@ -1,9 +1,11 @@
+using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Contract.Site.Enums;
 using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.Site.Entities;
 using HE.Investment.AHP.Domain.Site.ValueObjects;
 using HE.Investment.AHP.Domain.Site.ValueObjects.StrategicSite;
+using HE.Investment.AHP.Domain.UserContext;
 using HE.Investments.Account.Shared.User;
 using HE.Investments.Common.Contract.Pagination;
 using HE.Investments.Common.Infrastructure.Cache;
@@ -46,6 +48,11 @@ internal sealed class CacheSiteRepositoryDecorator : ISiteRepository
     public async Task<SiteEntity> GetSite(SiteId siteId, UserAccount userAccount, CancellationToken cancellationToken)
     {
         return await _decorated.GetSite(siteId, userAccount, cancellationToken);
+    }
+
+    public async Task<PaginationResult<ApplicationBasicDetails>> GetSiteApplications(SiteId siteId, AhpUserAccount userAccount, PaginationRequest paginationRequest, CancellationToken cancellationToken)
+    {
+        return await _decorated.GetSiteApplications(siteId, userAccount, paginationRequest, cancellationToken);
     }
 
     public async Task<bool> IsExist(SiteName name, CancellationToken cancellationToken)

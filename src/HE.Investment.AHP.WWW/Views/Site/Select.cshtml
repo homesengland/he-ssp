@@ -1,11 +1,12 @@
+@using HE.Investment.AHP.WWW.Config
 @using HE.Investment.AHP.WWW.Views.Site.Const
 @using HE.Investments.Common.Contract.Pagination
 @using HE.Investments.Common.WWW.Components.BackLinkWithCallback
 @using HE.Investments.Common.WWW.Components.PageHeader
 @using HE.Investments.Common.WWW.Components.SelectList
 @using SelectList = Microsoft.AspNetCore.Mvc.Rendering.SelectList
+@inject IFrontDoorLinks FrontDoorLinks
 @model HE.Investment.AHP.Contract.Project.ProjectSitesModel
-
 @{
     ViewData["Title"] = SitePageTitles.SiteSelect;
     var items = new PaginationResult<SelectListItemViewModel>(
@@ -22,12 +23,13 @@
 
     <vc:page-header title="@SitePageTitles.SiteSelect"/>
 
-    <gds-p>Select a site to start your application or create a new site.</gds-p>
+    <gds-p>Select a site to start your application.</gds-p>
+     <gds-p>
+         To add a new site, <a href="@FrontDoorLinks.StartNewProject">start a new project</a>.
+     </gds-p>
 
     <vc:select-list
         items="@items"
-        paging-navigation-url="@Url.Action("Select")"
-        add-action-text="Add a new site"
-        add-action-url="@Url.Action("Start")"/>
+        paging-navigation-url="@Url.Action("Select")" />
 
 </div>

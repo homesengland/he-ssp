@@ -15,6 +15,6 @@
     <ProjectReference Include="..\HE.Investments.Common\HE.Investments.Common.csproj"/>
     <ProjectReference Include="..\HE.Investments.FrontDoor.Contract\HE.Investments.FrontDoor.Contract.csproj"/>
     <ProjectReference Include="..\HE.Investments.FrontDoor.Shared\HE.Investments.FrontDoor.Shared.csproj"/>
+    <ProjectReference Include="..\HE.Investments.Programme.Contract\HE.Investments.Programme.Contract.csproj" />
   </ItemGroup>
-
 </Project>

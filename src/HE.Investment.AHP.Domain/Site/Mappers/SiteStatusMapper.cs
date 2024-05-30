@@ -6,10 +6,12 @@ namespace HE.Investment.AHP.Domain.Site.Mappers;
 
 public class SiteStatusMapper : EnumMapper<SiteStatus>
 {
+    protected override SiteStatus? ToDomainMissing => SiteStatus.InProgress;
+
     protected override IDictionary<SiteStatus, int?> Mapping =>
         new Dictionary<SiteStatus, int?>
         {
             { SiteStatus.InProgress, (int)invln_Sitestatus.InProgress },
-            { SiteStatus.Completed, (int)invln_Sitestatus.Completed },
+            { SiteStatus.Submitted, (int)invln_Sitestatus.Submitted },
         };
 }

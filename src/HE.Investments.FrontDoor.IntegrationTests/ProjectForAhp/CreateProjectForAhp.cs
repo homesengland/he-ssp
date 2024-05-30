@@ -1,16 +1,10 @@
 using System.Diagnostics.CodeAnalysis;
-using AngleSharp;
-using AngleSharp.Dom;
 using FluentAssertions;
-using HE.Investments.Account.Api.Contract.User;
-using HE.Investments.Account.Shared;
-using HE.Investments.Account.Shared.User;
-using HE.Investments.Common.Contract;
 using HE.Investments.FrontDoor.IntegrationTests.Framework;
 using HE.Investments.FrontDoor.IntegrationTests.Pages;
 using HE.Investments.FrontDoor.WWW.Views.Project.Const;
+using HE.Investments.IntegrationTestsFramework.Assertions;
 using HE.Investments.TestsUtils.Extensions;
-using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 using Xunit.Abstractions;
 using Xunit.Extensions.Ordering;
@@ -31,7 +25,7 @@ public class CreateProjectForAhp : FrontDoorIntegrationTest
     public async Task ProjectShouldBeEligibleForAhp()
     {
         // given
-        var projectId = await InCrm.FrontDoorProjectEligibleForAhpExist(LoginData);
+        var (projectId, _) = await InFrontDoor.FrontDoorProjectEligibleForAhpExist(LoginData);
         var currentPage = await TestClient.NavigateTo(ProjectPagesUrl.CheckAnswers(projectId));
 
         // when
@@ -43,8 +37,9 @@ public class CreateProjectForAhp : FrontDoorIntegrationTest
         var nextPage = await TestClient.SubmitButton(continueButton);
 
         // then
-        var displayedText = nextPage.GetFirstPreformattedText();
-        displayedText.Should().Contain("Eligibility for Ahp");
-        Output.WriteLine(displayedText);
+        var displayedText = nextPage.GetSummaryListItems();
+        displayedText.Should().ContainKey("Eligible programme").WithValue("AHP");
+
+        Output.WriteLine($"Create AHP Project link: {displayedText["Eligible programme"].ChangeAnswerLink?.Href}");
     }
 }

@@ -46,6 +46,7 @@ public class GetSiteQueryHandler : IRequestHandler<GetSiteQuery, SiteModel>
         {
             Id = site.Id.Value,
             Name = site.Name.Value,
+            ProjectId = site.FrontDoorProjectId.Value,
             Status = site.Status,
             Section106 = CreateSection106(site),
             LocalAuthority = localAuthority,

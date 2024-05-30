@@ -6,14 +6,10 @@ using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.Delivery.Entities;
 using HE.Investment.AHP.Domain.Delivery.Tranches;
 using HE.Investment.AHP.Domain.Delivery.ValueObjects;
-using HE.Investment.AHP.Domain.Programme;
-using HE.Investment.AHP.Domain.Scheme.ValueObjects;
 using HE.Investment.AHP.Domain.Tests.Application.TestData;
-using HE.Investment.AHP.Domain.Tests.Programme.TestData;
 using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Tests.TestData;
-using HE.Investments.TestsUtils;
 using HE.Investments.TestsUtils.TestData;
 
 namespace HE.Investment.AHP.Domain.Tests.Delivery.Entities.TestDataBuilders;
@@ -41,8 +37,6 @@ public class DeliveryPhaseEntityBuilder
     private BuildActivity _buildActivity = new(Tenure.AffordableRent, TypeOfHomes.NewBuild, BuildActivityType.Regeneration);
 
     private bool? _reconfigureExisting;
-
-    private SchemeFunding _schemeFunding = new(1_000_000, 15);
 
     private AcquisitionMilestoneDetails? _acquisitionMilestone = new AcquisitionMilestoneDetailsBuilder().Build();
 
@@ -138,12 +132,6 @@ public class DeliveryPhaseEntityBuilder
         return this;
     }
 
-    public DeliveryPhaseEntityBuilder WithSchemeFunding(int? requiredFunding, int? homesToDeliver)
-    {
-        _schemeFunding = new SchemeFunding(requiredFunding, homesToDeliver);
-        return this;
-    }
-
     public DeliveryPhaseEntityBuilder WithAcquisitionMilestone(AcquisitionMilestoneDetails acquisitionMilestone)
     {
         _acquisitionMilestone = acquisitionMilestone;
@@ -180,19 +168,6 @@ public class DeliveryPhaseEntityBuilder
         return this;
     }
 
-    public DeliveryPhaseEntityBuilder WithMilestoneFramework(MilestoneFramework milestoneFramework)
-    {
-        PrivatePropertySetter.SetPropertyWithNoSetter(
-            _applicationBasicInfo,
-            nameof(ApplicationBasicInfo.Programme),
-            new AhpProgramme(
-                "1",
-                "Affordable Homes Programme 2021-2026 Continuous Market Engagement",
-                ProgrammeDatesTestData.ProgrammeDates,
-                milestoneFramework));
-        return this;
-    }
-
     public DeliveryPhaseEntity Build()
     {
         return new DeliveryPhaseEntity(
@@ -200,10 +175,9 @@ public class DeliveryPhaseEntityBuilder
             _name,
             _organisationBasicInfo,
             _status,
-            MilestonesPercentageTranches.LackOfCalculation,
+            MilestonesPercentageTranches.NotProvided,
             _milestonesTranches,
             false,
-            _schemeFunding,
             _typeOfHomes,
             _buildActivity,
             _reconfigureExisting,

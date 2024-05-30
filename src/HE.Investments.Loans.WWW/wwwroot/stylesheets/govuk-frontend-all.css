@@ -5425,91 +5425,97 @@ p + .govuk-heading-s,
 }
 
 .govuk-tag {
-  display: inline-block;
-  outline: 2px solid transparent;
-  outline-offset: -2px;
-  color: #ffffff;
-  background-color: #1d70b8;
-  letter-spacing: 1px;
-  text-decoration: none;
-  text-transform: uppercase;
-  font-family: "GDS Transport", arial, sans-serif;
+  font-family: GDS Transport, arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  font-weight: 700;
-  font-size: 14px;
-  font-size: 0.875rem;
-  line-height: 1;
-  padding-top: 5px;
-  padding-right: 8px;
-  padding-bottom: 4px;
-  padding-left: 8px;
+  font-weight: 400;
+  font-size: 1rem;
+  line-height: 1.25;
+  display: inline-block;
+  max-width: 160px;
+  margin-top: -2px;
+  margin-bottom: -3px;
+  padding: 2px 8px 3px;
+  color: #0c2d4a;
+  background-color: #bbd4ea;
+  text-decoration: none;
+  overflow-wrap: break-word
 }
 
 @media print {
   .govuk-tag {
-    font-family: sans-serif;
+    font-family: sans-serif
   }
 }
 
 @media (min-width: 40.0625em) {
   .govuk-tag {
-    font-size: 16px;
-    font-size: 1rem;
-    line-height: 1;
+    font-size: 1.1875rem;
+    line-height: 1.3157894737
   }
 }
 
 @media print {
   .govuk-tag {
     font-size: 14pt;
-    line-height: 1;
+    line-height: 1.15
+  }
+}
+
+@media screen and (forced-colors: active) {
+  .govuk-tag {
+    font-weight: 700
   }
 }
 
 .govuk-tag--grey {
-  color: #383f43;
-  background: #eeefef;
+  color: #282d30;
+  background-color: #e5e6e7
 }
 
 .govuk-tag--purple {
-  color: #3d2375;
-  background: #dbd5e9;
+  color: #491644;
+  background-color: #efdfed
 }
 
 .govuk-tag--turquoise {
   color: #10403c;
-  background: #bfe3e0;
+  background-color: #d4ecea
 }
 
 .govuk-tag--blue {
-  color: #144e81;
-  background: #d2e2f1;
+  color: #0c2d4a;
+  background-color: #bbd4ea
+}
+
+.govuk-tag--light-blue {
+  color: #0c2d4a;
+  background-color: #e8f1f8
 }
 
 .govuk-tag--yellow {
   color: #594d00;
-  background: #fff7bf;
+  background-color: #fff7bf
 }
 
 .govuk-tag--orange {
   color: #6e3619;
-  background: #fcd6c3;
+  background-color: #fcd6c3
 }
 
 .govuk-tag--red {
-  color: #942514;
-  background: #f6d7d2;
+  color: #2a0b06;
+  background-color: #f4cdc6
 }
 
 .govuk-tag--pink {
-  color: #80224d;
-  background: #f7d7e6;
+  color: #6b1c40;
+  background-color: #f9e1ec
 }
 
 .govuk-tag--green {
   color: #005a30;
-  background: #cce2d8;
+  background-color: #cce2d8
 }
 
 .govuk-phase-banner {

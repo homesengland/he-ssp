@@ -86,15 +86,16 @@ public class SiteController : WorkflowController<SiteWorkflowState>
     [HttpPost("{siteId}/confirm-select")]
     public async Task<IActionResult> SelectConfirmed(string siteId, bool? isConfirmed, CancellationToken cancellationToken)
     {
+        var site = await _mediator.Send(new GetSiteQuery(siteId), cancellationToken);
         if (isConfirmed.IsNotProvided())
         {
             ModelState.AddValidationErrors(OperationResult.New().AddValidationError("IsConfirmed", "Select whether this is the correct site"));
-            return View("ConfirmSelect", await _mediator.Send(new GetSiteQuery(siteId), cancellationToken));
+            return View("ConfirmSelect", site);
         }
 
         return isConfirmed!.Value
             ? RedirectToAction("Name", "Application", new { siteId })
-            : RedirectToAction("Select");
+            : RedirectToAction("Select", new { projectId = site.ProjectId });
     }
 
     [HttpGet("{siteId}")]
@@ -111,19 +112,17 @@ public class SiteController : WorkflowController<SiteWorkflowState>
         return this.ContinueSectionAnswering(summary, () => RedirectToAction("CheckAnswers", new { siteId }));
     }
 
-    [HttpGet("start")]
+    [HttpGet("{siteId}/start")]
     [WorkflowState(SiteWorkflowState.Start)]
-    public async Task<IActionResult> Start(CancellationToken cancellationToken)
+    public async Task<IActionResult> Start(string siteId, CancellationToken cancellationToken)
     {
-        var response = await _mediator.Send(new GetSiteListQuery(new PaginationRequest(1, 1)), cancellationToken);
-        var backUrl = response.Page.TotalItems > 0 ? Url.Action("Select") : Url.Action("Start", "Application");
-
-        return View("Start", new StartSiteModel(backUrl));
+        var site = await _mediator.Send(new GetSiteQuery(siteId), cancellationToken);
+        return View("Start", new StartSiteModel(site.ProjectId, site.Id!));
     }
 
-    [HttpGet("name")]
+    [HttpGet("{siteId}/name")]
     [WorkflowState(SiteWorkflowState.Name)]
-    public async Task<IActionResult> Name([FromQuery] string? siteId, [FromQuery] string? fdProjectId, [FromQuery] string? fdSiteId, CancellationToken cancellationToken)
+    public async Task<IActionResult> Name(string siteId, [FromQuery] string? fdProjectId, [FromQuery] string? fdSiteId, CancellationToken cancellationToken)
     {
         return View("Name", await CreateSiteNameModel(siteId, fdProjectId, fdSiteId, cancellationToken));
     }
@@ -140,7 +139,7 @@ public class SiteController : WorkflowController<SiteWorkflowState>
         var result = await _mediator.Send(
             new ProvideNameCommand(
                 SiteId.Create(siteId ?? model.Id),
-                FrontDoorProjectId.Create(fdProjectId) ?? new FrontDoorProjectId(LegacyProject.ProjectId),
+                FrontDoorProjectId.Create(fdProjectId)!,
                 FrontDoorSiteId.Create(fdSiteId),
                 model.Name),
             cancellationToken);
@@ -1084,13 +1083,13 @@ public class SiteController : WorkflowController<SiteWorkflowState>
     {
         var siteId = this.GetSiteIdFromRoute();
         var siteDetails = await GetSiteDetails(siteId.Value, cancellationToken);
-        var isEditable = await _accountAccessContext.CanEditApplication() && siteDetails.Status != SiteStatus.Completed;
+        var isEditable = await _accountAccessContext.CanEditApplication() && siteDetails.Status != SiteStatus.Submitted;
         var userAccount = await _accountUserContext.GetSelectedAccount();
         var sections = _siteSummaryViewModelFactory.CreateSiteSummary(siteDetails, userAccount.SelectedOrganisation(), Url, isEditable, useWorkflowRedirection);
 
         return new SiteSummaryViewModel(
             siteId.Value,
-            isSectionCompleted ?? (siteDetails.Status == SiteStatus.Completed ? IsSectionCompleted.Yes : IsSectionCompleted.Undefied),
+            isSectionCompleted ?? (siteDetails.Status == SiteStatus.Submitted ? IsSectionCompleted.Yes : IsSectionCompleted.Undefied),
             sections.ToList(),
             isEditable);
     }

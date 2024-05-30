@@ -1,3 +1,4 @@
+using System.Security.Policy;
 using System.Text.Json;
 using DataverseModel;
 using HE.Base.Plugins.Handlers;
@@ -9,16 +10,22 @@ namespace HE.CRM.AHP.Plugins.Handlers.CustomApi.Site
     public class GetMultipleSitesHandler : CrmActionHandlerBase<invln_getmultiplesitesRequest, DataverseContext>
     {
         #region Fields
+
         private string FieldsToRetrieve => ExecutionData.GetInputParameter<string>(invln_getmultiplesitesRequest.Fields.invln_fieldstoretrieve);
         private string Paging => ExecutionData.GetInputParameter<string>(invln_getmultiplesitesRequest.Fields.invln_pagingrequest);
         private string externalContactId => ExecutionData.GetInputParameter<string>(invln_getmultiplesitesRequest.Fields.invln_externalcontactid);
         private string accountId => ExecutionData.GetInputParameter<string>(invln_getmultiplesitesRequest.Fields.invln_accountid);
 
-        #endregion
-
+        #endregion Fields
 
         public override bool CanWork()
         {
+            TracingService.Trace("Input Parameters:");
+            TracingService.Trace($"FieldsToRetrieve: {FieldsToRetrieve}");
+            TracingService.Trace($"Paging: {Paging}");
+            TracingService.Trace($"externalContactId: {externalContactId}");
+            TracingService.Trace($"accountId: {accountId}");
+
             return !string.IsNullOrWhiteSpace(Paging);
         }
 

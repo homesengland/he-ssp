@@ -9,13 +9,11 @@ using HE.Investment.AHP.Domain.Application.Factories;
 using HE.Investment.AHP.Domain.Application.Mappers;
 using HE.Investment.AHP.Domain.Application.ValueObjects;
 using HE.Investment.AHP.Domain.Common;
+using HE.Investment.AHP.Domain.Config;
 using HE.Investment.AHP.Domain.FinancialDetails.Mappers;
-using HE.Investment.AHP.Domain.Programme;
-using HE.Investment.AHP.Domain.Programme.Config;
 using HE.Investments.Account.Shared.User;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Exceptions;
-using HE.Investments.Common.Contract.Pagination;
 using HE.Investments.Common.CRM.Mappers;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Extensions;
@@ -28,21 +26,14 @@ public class ApplicationRepository : IApplicationRepository
 {
     private readonly IApplicationCrmContext _applicationCrmContext;
 
-    private readonly IAhpProgrammeRepository _programmeRepository;
-
     private readonly IProgrammeSettings _settings;
 
     private readonly IEventDispatcher _eventDispatcher;
 
-    public ApplicationRepository(
-        IApplicationCrmContext applicationCrmContext,
-        IEventDispatcher eventDispatcher,
-        IAhpProgrammeRepository programmeRepository,
-        IProgrammeSettings settings)
+    public ApplicationRepository(IApplicationCrmContext applicationCrmContext, IEventDispatcher eventDispatcher, IProgrammeSettings settings)
     {
         _applicationCrmContext = applicationCrmContext;
         _eventDispatcher = eventDispatcher;
-        _programmeRepository = programmeRepository;
         _settings = settings;
     }
 
@@ -87,16 +78,7 @@ public class ApplicationRepository : IApplicationRepository
             application.Tenure.Value,
             application.Status,
             application.Sections,
-            await _programmeRepository.GetProgramme(cancellationToken),
             new ApplicationStateFactory(userAccount, wasSubmitted: application.LastSubmitted.IsProvided()));
-    }
-
-    public async Task<PaginationResult<ApplicationWithFundingDetails>> GetApplicationsWithFundingDetails(
-        UserAccount userAccount,
-        PaginationRequest paginationRequest,
-        CancellationToken cancellationToken)
-    {
-        return await GetApplications(userAccount, paginationRequest, null, cancellationToken);
     }
 
     public async Task<ApplicationWithFundingDetails> GetApplicationWithFundingDetailsById(
@@ -107,11 +89,6 @@ public class ApplicationRepository : IApplicationRepository
         var application = await GetAhpApplicationDto(id, userAccount, cancellationToken);
 
         return CreateApplicationWithFundingDetails(application);
-    }
-
-    public async Task<PaginationResult<ApplicationWithFundingDetails>> GetSiteApplications(SiteId siteId, UserAccount userAccount, PaginationRequest paginationRequest, CancellationToken cancellationToken)
-    {
-        return await GetApplications(userAccount, paginationRequest, a => a.siteId == siteId.ToGuidAsString(), cancellationToken);
     }
 
     public async Task<ApplicationEntity> Save(ApplicationEntity application, UserAccount userAccount, CancellationToken cancellationToken)
@@ -178,7 +155,7 @@ public class ApplicationRepository : IApplicationRepository
             : null;
 
         return new ApplicationEntity(
-            new FrontDoorProjectId(string.IsNullOrEmpty(application.fdProjectId) ? LegacyProject.ProjectId : application.fdProjectId),
+            new FrontDoorProjectId(application.fdProjectId),
             string.IsNullOrEmpty(application.siteId) ? SiteId.New() : SiteId.From(application.siteId),
             AhpApplicationId.From(application.id),
             new ApplicationName(application.name ?? "Unknown"),
@@ -207,7 +184,7 @@ public class ApplicationRepository : IApplicationRepository
         var otherApplicationCosts = OtherApplicationCostsMapper.MapToOtherApplicationCosts(ahpApplicationDto);
 
         return new ApplicationWithFundingDetails(
-            new FrontDoorProjectId(string.IsNullOrEmpty(ahpApplicationDto.fdProjectId) ? LegacyProject.ProjectId : ahpApplicationDto.fdProjectId),
+            new FrontDoorProjectId(ahpApplicationDto.fdProjectId),
             string.IsNullOrEmpty(ahpApplicationDto.siteId) ? SiteId.New() : SiteId.From(ahpApplicationDto.siteId),
             AhpApplicationId.From(ahpApplicationDto.id),
             ahpApplicationDto.name,
@@ -219,26 +196,6 @@ public class ApplicationRepository : IApplicationRepository
             otherApplicationCosts.ExpectedTotalCosts(),
             ahpApplicationDto.currentLandValue,
             ahpApplicationDto.representationsandwarranties);
-    }
-
-    private async Task<PaginationResult<ApplicationWithFundingDetails>> GetApplications(
-        UserAccount userAccount,
-        PaginationRequest paginationRequest,
-        Predicate<AhpApplicationDto>? filter,
-        CancellationToken cancellationToken)
-    {
-        var organisationId = userAccount.SelectedOrganisationId().ToGuidAsString();
-        var applications = userAccount.CanViewAllApplications()
-            ? await _applicationCrmContext.GetOrganisationApplications(organisationId, cancellationToken)
-            : await _applicationCrmContext.GetUserApplications(organisationId, userAccount.UserGlobalId.ToString(), cancellationToken);
-
-        var filtered = applications
-            .Where(x => filter == null || filter(x))
-            .OrderByDescending(x => x.lastExternalModificationOn)
-            .ToList();
-        var siteApplications = filtered.TakePage(paginationRequest).Select(CreateApplicationWithFundingDetails).ToList();
-
-        return new PaginationResult<ApplicationWithFundingDetails>(siteApplications, paginationRequest.Page, paginationRequest.ItemsPerPage, filtered.Count);
     }
 
     private async Task<AhpApplicationDto> GetAhpApplicationDto(AhpApplicationId id, UserAccount userAccount, CancellationToken cancellationToken)

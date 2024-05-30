@@ -1,12 +1,12 @@
 using System.Diagnostics.CodeAnalysis;
 using HE.Investments.Account.Shared;
-using HE.Investments.AHP.Consortium.Contract;
 using HE.Investments.AHP.Consortium.Contract.Commands;
 using HE.Investments.AHP.Consortium.Domain.Entities;
 using HE.Investments.AHP.Consortium.Domain.Repositories;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Organisation.Services;
+using HE.Investments.Programme.Contract;
 
 namespace HE.Investments.AHP.Consortium.Domain.CommandHandlers;
 

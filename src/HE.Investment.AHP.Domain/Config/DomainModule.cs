@@ -16,9 +16,6 @@ using HE.Investment.AHP.Domain.HomeTypes.Repositories;
 using HE.Investment.AHP.Domain.HomeTypes.Services;
 using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
 using HE.Investment.AHP.Domain.PrefillData.Repositories;
-using HE.Investment.AHP.Domain.Programme;
-using HE.Investment.AHP.Domain.Programme.Config;
-using HE.Investment.AHP.Domain.Programme.Crm;
 using HE.Investment.AHP.Domain.Project.Crm;
 using HE.Investment.AHP.Domain.Project.Repositories;
 using HE.Investment.AHP.Domain.Scheme.Repositories;
@@ -147,10 +144,6 @@ public static class DomainModule
 
     private static IServiceCollection AddProgramme(this IServiceCollection services)
     {
-        services.AddScoped<IAhpProgrammeRepository, AhpProgrammeRepository>();
-        services.AddScoped<IProgrammeCrmContext, ProgrammeCrmContext>();
-        services.Decorate<IProgrammeCrmContext, CacheProgrammeCrmContextDecorator>();
-        services.Decorate<IProgrammeCrmContext, RequestCacheProgrammeCrmContextDecorator>();
         services.AddAppConfiguration<IProgrammeSettings, ProgrammeSettings>();
 
         return services;
@@ -173,6 +166,7 @@ public static class DomainModule
     private static void AddAhpProjects(this IServiceCollection services)
     {
         services.AddScoped<IProjectCrmContext, ProjectCrmContext>();
+        services.Decorate<IProjectCrmContext, RequestCacheProjectCrmContextDecorator>();
         services.AddScoped<IProjectRepository, ProjectRepository>();
     }
 }

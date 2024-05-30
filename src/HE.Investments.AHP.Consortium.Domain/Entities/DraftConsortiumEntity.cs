@@ -1,4 +1,3 @@
-using HE.Investments.AHP.Consortium.Contract;
 using HE.Investments.AHP.Consortium.Domain.Repositories;
 using HE.Investments.AHP.Consortium.Domain.ValueObjects;
 using HE.Investments.Common.Contract;
@@ -6,6 +5,7 @@ using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Organisation.ValueObjects;
+using HE.Investments.Programme.Contract;
 
 namespace HE.Investments.AHP.Consortium.Domain.Entities;
 
@@ -14,13 +14,13 @@ public class DraftConsortiumEntity : IConsortiumEntity
     public DraftConsortiumEntity(
         ConsortiumId id,
         ConsortiumName name,
-        ProgrammeSlim programme,
+        ProgrammeId programmeId,
         DraftConsortiumMember leadPartner,
         IList<DraftConsortiumMember> members)
     {
         Id = id;
         Name = name;
-        Programme = programme;
+        ProgrammeId = programmeId;
         LeadPartner = leadPartner;
         Members = members;
     }
@@ -29,7 +29,7 @@ public class DraftConsortiumEntity : IConsortiumEntity
 
     public ConsortiumName Name { get; }
 
-    public ProgrammeSlim Programme { get; }
+    public ProgrammeId ProgrammeId { get; }
 
     public DraftConsortiumMember LeadPartner { get; }
 
@@ -76,7 +76,7 @@ public class DraftConsortiumEntity : IConsortiumEntity
         InvestmentsOrganisation organisation,
         IIsPartOfConsortium isPartOfConsortium,
         CancellationToken cancellationToken)
-        => await isPartOfConsortium.IsPartOfConsortiumForProgramme(Programme.Id, organisation.Id, cancellationToken);
+        => await isPartOfConsortium.IsPartOfConsortiumForProgramme(ProgrammeId, organisation.Id, cancellationToken);
 
     private DraftConsortiumMember GetMember(OrganisationId organisationId) => Members.SingleOrDefault(x => x.Id == organisationId) ??
                                                                               throw new NotFoundException(nameof(DraftConsortiumMember), organisationId);

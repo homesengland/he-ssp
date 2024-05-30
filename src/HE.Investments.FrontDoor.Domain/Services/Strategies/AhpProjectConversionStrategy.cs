@@ -1,23 +1,26 @@
 using HE.Investments.Common.Contract.Enum;
-using HE.Investments.FrontDoor.Domain.Programme.Repository;
+using HE.Investments.FrontDoor.Domain.Config;
 using HE.Investments.FrontDoor.Domain.Project;
 using HE.Investments.FrontDoor.Domain.Site;
 using HE.Investments.FrontDoor.Domain.Site.Utilities;
 using HE.Investments.FrontDoor.Shared.Project.Contract;
+using HE.Investments.Programme.Contract;
 using AffordableHomesAmountType = HE.Investments.FrontDoor.Shared.Project.Contract.AffordableHomesAmount;
 
 namespace HE.Investments.FrontDoor.Domain.Services.Strategies;
 
 public class AhpProjectConversionStrategy : IProjectConversionStrategy
 {
-    private readonly IProgrammeRepository _programmeRepository;
-
     private readonly IProgrammeAvailabilityService _programmeAvailability;
 
-    public AhpProjectConversionStrategy(IProgrammeRepository programmeRepository, IProgrammeAvailabilityService programmeAvailability)
+    private readonly IProgrammeSettings _programmeSettings;
+
+    public AhpProjectConversionStrategy(
+        IProgrammeAvailabilityService programmeAvailability,
+        IProgrammeSettings programmeSettings)
     {
-        _programmeRepository = programmeRepository;
         _programmeAvailability = programmeAvailability;
+        _programmeSettings = programmeSettings;
     }
 
     public async Task<ApplicationType> Apply(ProjectEntity project, ProjectSitesEntity projectSites, CancellationToken cancellationToken)
@@ -44,13 +47,11 @@ public class AhpProjectConversionStrategy : IProjectConversionStrategy
                    or RequiredFundingOption.MoreThan50Mln
                && project.IsProfit.Value is true or false;
 
-        if (isProjectValid)
-        {
-            var programmes = await _programmeRepository.GetProgrammes(cancellationToken);
-            isProjectValid = _programmeAvailability.IsStartDateValidForAnyProgramme(programmes, project.ExpectedStartDate.Value);
-        }
-
-        return isProjectValid;
+        return isProjectValid &&
+               await _programmeAvailability.IsStartDateValidForProgramme(
+                   ProgrammeId.From(_programmeSettings.AhpProgrammeId),
+                   project.ExpectedStartDate.Value,
+                   cancellationToken);
     }
 
     private bool AreSitesValidForAhpProject(ProjectSitesEntity projectSites)

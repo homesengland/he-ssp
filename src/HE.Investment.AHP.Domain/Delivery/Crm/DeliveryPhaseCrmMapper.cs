@@ -6,7 +6,6 @@ using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.Delivery.Entities;
 using HE.Investment.AHP.Domain.Delivery.Tranches;
 using HE.Investment.AHP.Domain.Delivery.ValueObjects;
-using HE.Investment.AHP.Domain.Scheme.ValueObjects;
 using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.CRM.Model;
@@ -21,8 +20,7 @@ public class DeliveryPhaseCrmMapper : IDeliveryPhaseCrmMapper
     public DeliveryPhaseEntity MapToDomain(
         ApplicationBasicInfo application,
         OrganisationBasicInfo organisation,
-        DeliveryPhaseDto dto,
-        SchemeFunding schemeFunding)
+        DeliveryPhaseDto dto)
     {
         var typeOfHomes = MapTypeOfHomes(dto.typeOfHomes);
         var buildActivityType = MapBuildActivityType(dto.newBuildActivityType, dto.rehabBuildActivityType);
@@ -43,7 +41,6 @@ public class DeliveryPhaseCrmMapper : IDeliveryPhaseCrmMapper
                 dto.startOnSiteValue,
                 dto.completionValue),
             MapStatusCode(dto.statusCode) == StatusCode.PendingAdjustment,
-            schemeFunding,
             typeOfHomes,
             buildActivity,
             dto.isReconfigurationOfExistingProperties,
@@ -74,9 +71,9 @@ public class DeliveryPhaseCrmMapper : IDeliveryPhaseCrmMapper
             newBuildActivityType = MapNewBuildActivityType(entity.BuildActivity.Type),
             rehabBuildActivityType = MapRehabBuildActivityType(entity.BuildActivity.Type),
             isReconfigurationOfExistingProperties = entity.ReconfiguringExisting,
-            acquisitionPercentageValue = entity.Tranches.PercentagesAmended.Acquisition?.Value,
-            startOnSitePercentageValue = entity.Tranches.PercentagesAmended.StartOnSite?.Value,
-            completionPercentageValue = entity.Tranches.PercentagesAmended.Completion?.Value,
+            acquisitionPercentageValue = entity.Tranches.Percentages.Acquisition?.Value,
+            startOnSitePercentageValue = entity.Tranches.Percentages.StartOnSite?.Value,
+            completionPercentageValue = entity.Tranches.Percentages.Completion?.Value,
             claimingtheMilestoneConfirmed = entity.Tranches.ClaimMilestone,
             acquisitionDate = MapMilestoneDate(entity.DeliveryPhaseMilestones.AcquisitionMilestone),
             acquisitionPaymentDate = MapPaymentDate(entity.DeliveryPhaseMilestones.AcquisitionMilestone),

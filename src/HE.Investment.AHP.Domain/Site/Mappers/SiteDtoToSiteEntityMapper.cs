@@ -44,7 +44,7 @@ public static class SiteDtoToSiteEntityMapper
     {
         return new SiteEntity(
             SiteId.From(dto.id),
-            new FrontDoorProjectId(string.IsNullOrWhiteSpace(dto.fdProjectid) ? LegacyProject.ProjectId : dto.fdProjectid),
+            new FrontDoorProjectId(dto.fdProjectid),
             new SiteName(dto.name),
             new SitePartners(MapOrganisation(dto.developerPartner), MapOrganisation(dto.ownerOfTheLandDuringDevelopment), MapOrganisation(dto.ownerOfTheHomesAfterCompletion)),
             SiteStatusMapper.ToDomain(dto.status),

@@ -15,8 +15,8 @@ public class SiteStatusTag : ViewComponent
     {
         return siteStatus switch
         {
-            SiteStatus.Completed => TagColour.Blue,
-            SiteStatus.InProgress => TagColour.Grey,
+            SiteStatus.Submitted => TagColour.Blue,
+            SiteStatus.InProgress => TagColour.LightBlue,
             _ => TagColour.Grey,
         };
     }

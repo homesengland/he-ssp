@@ -1,7 +1,6 @@
 using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Domain.ValueObjects;
-using HE.Investments.Common.Extensions;
 
 namespace HE.Investment.AHP.Domain.Delivery.Tranches;
 
@@ -20,11 +19,7 @@ public class MilestonesPercentageTranches : ValueObject
         Completion = completionPercentage;
     }
 
-    public static MilestonesPercentageTranches LackOfCalculation => new(null, null, null);
-
     public static MilestonesPercentageTranches NotProvided => new(null, null, null);
-
-    public static MilestonesPercentageTranches OnlyCompletion => new(null, null, WholePercentage.Hundered);
 
     public WholePercentage? Acquisition { get; }
 
@@ -63,10 +58,6 @@ public class MilestonesPercentageTranches : ValueObject
     }
 
     public bool IsSumUpTo100Percentage() => (Acquisition?.Value ?? 0m) + (StartOnSite?.Value ?? 0m) + (Completion?.Value ?? 0m) == 1m;
-
-    public bool IsAnyPercentageProvided() => Acquisition.IsProvided() || StartOnSite.IsProvided() || Completion.IsProvided();
-
-    public bool AreAllPercentagesProvided() => Acquisition.IsProvided() && StartOnSite.IsProvided() && Completion.IsProvided();
 
     protected override IEnumerable<object?> GetAtomicValues()
     {

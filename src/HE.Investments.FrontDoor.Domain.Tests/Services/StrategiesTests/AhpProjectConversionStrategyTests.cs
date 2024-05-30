@@ -2,24 +2,22 @@ using FluentAssertions;
 using HE.Investments.Common.Contract.Enum;
 using HE.Investments.Common.Tests.TestObjectBuilders;
 using HE.Investments.Common.Utils;
-using HE.Investments.FrontDoor.Domain.Programme;
 using HE.Investments.FrontDoor.Domain.Project;
 using HE.Investments.FrontDoor.Domain.Project.ValueObjects;
-using HE.Investments.FrontDoor.Domain.Services;
 using HE.Investments.FrontDoor.Domain.Services.Strategies;
 using HE.Investments.FrontDoor.Domain.Site;
 using HE.Investments.FrontDoor.Domain.Site.ValueObjects;
-using HE.Investments.FrontDoor.Domain.Tests.Programme.TestObjectBuilders;
 using HE.Investments.FrontDoor.Domain.Tests.Project.TestDataBuilders;
+using HE.Investments.FrontDoor.Domain.Tests.Services.TestDataBuilders;
 using HE.Investments.FrontDoor.Domain.Tests.Site.TestDataBuilders;
 using HE.Investments.FrontDoor.Shared.Project;
 using HE.Investments.FrontDoor.Shared.Project.Contract;
-using Moq;
+using HE.Investments.TestsUtils.TestFramework;
 using Xunit;
 
 namespace HE.Investments.FrontDoor.Domain.Tests.Services.StrategiesTests;
 
-public class AhpProjectConversionStrategyTests
+public class AhpProjectConversionStrategyTests : TestBase<AhpProjectConversionStrategy>
 {
     [Fact]
     public async Task ShouldReturnAhpApplicationType_WhenProjectAndSitesAreValidForAhpProject()
@@ -27,12 +25,20 @@ public class AhpProjectConversionStrategyTests
         // given
         var project = CreateAhpValidProjectEntity();
 
-        var strategy = ReturnAhpProjectConversionStrategy();
+        ProgrammeSettingsTestBuilder
+            .New()
+            .ReturnProgrammeId()
+            .BuildMockAndRegister(this);
+
+        ProgrammeAvailabilityServiceTestBuilder
+            .New()
+            .ReturnIsStartDateValidForProgramme()
+            .BuildMockAndRegister(this);
 
         var projectSites = CreateAhpValidProjectSites();
 
         // when
-        var result = await strategy.Apply(project, projectSites, CancellationToken.None);
+        var result = await TestCandidate.Apply(project, projectSites, CancellationToken.None);
 
         // then
         result.Should().Be(ApplicationType.Ahp);
@@ -45,12 +51,20 @@ public class AhpProjectConversionStrategyTests
         var project = CreateAhpValidProjectEntity();
         project.ProvideAffordableHomesAmount(new ProjectAffordableHomesAmount(AffordableHomesAmount.OnlyOpenMarketHomes));
 
-        var strategy = ReturnAhpProjectConversionStrategy();
+        ProgrammeSettingsTestBuilder
+            .New()
+            .ReturnProgrammeId()
+            .BuildMockAndRegister(this);
+
+        ProgrammeAvailabilityServiceTestBuilder
+            .New()
+            .ReturnIsStartDateValidForProgramme()
+            .BuildMockAndRegister(this);
 
         var projectSites = CreateAhpValidProjectSites();
 
         // when
-        var result = await strategy.Apply(project, projectSites, CancellationToken.None);
+        var result = await TestCandidate.Apply(project, projectSites, CancellationToken.None);
 
         // then
         result.Should().Be(ApplicationType.Undefined);
@@ -62,7 +76,15 @@ public class AhpProjectConversionStrategyTests
         // given
         var project = CreateAhpValidProjectEntity();
 
-        var strategy = ReturnAhpProjectConversionStrategy();
+        ProgrammeSettingsTestBuilder
+            .New()
+            .ReturnProgrammeId()
+            .BuildMockAndRegister(this);
+
+        ProgrammeAvailabilityServiceTestBuilder
+            .New()
+            .ReturnIsStartDateValidForProgramme()
+            .BuildMockAndRegister(this);
 
         var projectSites = CreateAhpValidProjectSites();
 
@@ -75,13 +97,13 @@ public class AhpProjectConversionStrategyTests
         projectSites.Sites.Add(newSite);
 
         // when
-        var result = await strategy.Apply(project, projectSites, CancellationToken.None);
+        var result = await TestCandidate.Apply(project, projectSites, CancellationToken.None);
 
         // then
         result.Should().Be(ApplicationType.Undefined);
     }
 
-    private ProjectEntity CreateAhpValidProjectEntity()
+    private static ProjectEntity CreateAhpValidProjectEntity()
     {
         var dateTimeProviderMock = DateTimeProviderBuilder.New().ReturnDate(new DateTime(2022, 1, 1, 0, 0, 0, DateTimeKind.Utc)).Build();
         DateTimeUtil.SetDateTimeProvider(dateTimeProviderMock);
@@ -98,7 +120,7 @@ public class AhpProjectConversionStrategyTests
             .Build();
     }
 
-    private ProjectSitesEntity CreateAhpValidProjectSites()
+    private static ProjectSitesEntity CreateAhpValidProjectSites()
     {
         var siteOne = ProjectSiteEntityBuilder
             .New(new SiteName("first test name"), new FrontDoorProjectId("first project id"), new FrontDoorSiteId("first site id"))
@@ -119,20 +141,5 @@ public class AhpProjectConversionStrategyTests
             .AddSite(siteOne)
             .AddSite(siteTwo)
             .Build();
-    }
-
-    private AhpProjectConversionStrategy ReturnAhpProjectConversionStrategy()
-    {
-        var programmeRepository = ProgrammeRepositoryTestBuilder
-            .New()
-            .ReturnProgrammes()
-            .Build();
-
-        var programmeAvailabilityServiceMock = new Mock<IProgrammeAvailabilityService>();
-        programmeAvailabilityServiceMock.Setup(x =>
-                x.IsStartDateValidForAnyProgramme(It.IsAny<IEnumerable<ProgrammeDetails>>(), It.IsAny<DateOnly>()))
-            .Returns(true);
-
-        return new AhpProjectConversionStrategy(programmeRepository, programmeAvailabilityServiceMock.Object);
     }
 }

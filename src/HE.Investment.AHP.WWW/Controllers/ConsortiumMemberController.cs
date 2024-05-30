@@ -18,6 +18,8 @@ using HE.Investments.Common.WWW.Extensions;
 using HE.Investments.Common.WWW.Models;
 using HE.Investments.Common.WWW.Routing;
 using HE.Investments.Organisation.ValueObjects;
+using HE.Investments.Programme.Contract.Enums;
+using HE.Investments.Programme.Contract.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -183,7 +185,7 @@ public class ConsortiumMemberController : WorkflowController<ConsortiumMemberWor
     [AuthorizeWithCompletedProfile(AhpAccessContext.ViewConsortium)]
     public async Task<IActionResult> ContactHomesEngland(string consortiumId, CancellationToken cancellationToken)
     {
-        var availableProgrammes = await _mediator.Send(new GetAvailableProgrammesQuery(), cancellationToken);
+        var availableProgrammes = await _mediator.Send(new GetProgrammesQuery(ProgrammeType.Ahp), cancellationToken);
 
         return View(new ConsortiumSelectedProgrammeModel(consortiumId, availableProgrammes[0]));
     }

@@ -1,11 +1,14 @@
 using System.Diagnostics;
 using HE.Investment.AHP.WWW;
 using HE.Investments.AHP.IntegrationTests.Crm;
-using HE.Investments.AHP.IntegrationTests.FillApplication.Data;
-using HE.Investments.AHP.IntegrationTests.FillSite.Data;
+using HE.Investments.AHP.IntegrationTests.Order01StartAhpProjectWithSite.Data;
+using HE.Investments.AHP.IntegrationTests.Order02FillSite.Data;
+using HE.Investments.AHP.IntegrationTests.Order03FillApplication.Data;
 using HE.Investments.Common.Contract;
+using HE.Investments.FrontDoor.IntegrationTests.Utils;
 using HE.Investments.IntegrationTestsFramework;
 using HE.Investments.IntegrationTestsFramework.Auth;
+using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -23,23 +26,29 @@ public class AhpIntegrationTest : IntegrationTestBase<Program>
     {
         SetApplicationData();
         SetSiteData();
+        SetProjectData();
         InitStopwatch();
         fixture.CheckUserLoginData();
         fixture.MockUserAccount();
         _output = output;
         _fixture = fixture;
         LoginData = fixture.LoginData;
+        InFrontDoor = fixture.ServiceProvider.GetRequiredService<FrontDoorDataManipulator>();
     }
 
     public ApplicationData ApplicationData { get; private set; }
 
     public SiteData SiteData { get; private set; }
 
+    public AhpProjectData ProjectData { get; private set; }
+
     public Stopwatch Stopwatch { get; private set; }
 
     protected AhpCrmContext AhpCrmContext => _fixture.AhpCrmContext;
 
     protected ILoginData LoginData { get; }
+
+    protected FrontDoorDataManipulator InFrontDoor { get; }
 
     public override async Task DisposeAsync()
     {
@@ -75,6 +84,18 @@ public class AhpIntegrationTest : IntegrationTestBase<Program>
         }
 
         SiteData = siteData;
+    }
+
+    private void SetProjectData()
+    {
+        var projectData = GetSharedDataOrNull<AhpProjectData>(nameof(ProjectData));
+        if (projectData is null)
+        {
+            projectData = new AhpProjectData();
+            SetSharedData(nameof(ProjectData), projectData);
+        }
+
+        ProjectData = projectData;
     }
 
     private void InitStopwatch()

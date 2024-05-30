@@ -175,7 +175,7 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
 
     [HttpPost("{deliveryPhaseId}/add-homes")]
     [WorkflowState(DeliveryPhaseWorkflowState.AddHomes)]
-    public async Task<IActionResult> AddHomes([FromRoute] string applicationId, string deliveryPhaseId, AddHomesModel model, CancellationToken cancellationToken)
+    public async Task<IActionResult> AddHomes([FromRoute] string applicationId, string deliveryPhaseId, [FromQuery] string? workflow, AddHomesModel model, CancellationToken cancellationToken)
     {
         return await this.ExecuteCommand<AddHomesModel>(
             _mediator,
@@ -184,7 +184,7 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
                 DeliveryPhaseId.From(deliveryPhaseId),
                 model.HomesToDeliver ?? new Dictionary<string, string?>()),
             async () => await this.ReturnToTaskListOrContinue(
-                async () => await ContinueWithWorkflow(new { applicationId, deliveryPhaseId })),
+                () => Task.FromResult<IActionResult>(RedirectToAction("SummaryOfDelivery", new { applicationId, deliveryPhaseId, workflow }))),
             async () => View("AddHomes", await new AddHomesModelFactory(_mediator).Create(applicationId, deliveryPhaseId, model, cancellationToken)),
             cancellationToken);
     }
@@ -312,7 +312,9 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
             return View("SummaryOfDeliveryTranche", summaryOfDeliveryAmend);
         }
 
-        return await ContinueWithWorkflow(new { applicationId, deliveryPhaseId });
+        Request.TryGetWorkflowQueryParameter(out var workflow);
+        return await this.ReturnToTaskListOrContinue(() =>
+            Task.FromResult<IActionResult>(RedirectToAction("SummaryOfDelivery", new { applicationId, deliveryPhaseId, workflow })));
     }
 
     [HttpGet("{deliveryPhaseId}/remove")]
@@ -535,6 +537,7 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
 
     private async Task<IActionResult> DisplayChecksAnswersPage(CancellationToken cancellationToken, IEnumerable<string>? errorMessages = null)
     {
+        ModelState.Clear();
         foreach (var errorMessage in errorMessages ?? Array.Empty<string>())
         {
             ModelState.AddModelError(nameof(DeliveryPhaseSummaryViewModel.IsCompleted), errorMessage);

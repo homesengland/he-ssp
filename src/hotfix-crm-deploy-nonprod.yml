@@ -1,0 +1,29 @@
+trigger: none
+pr: none
+
+pool:
+  vmImage: windows-latest
+
+variables:
+  solution: "**/*.sln"
+  buildPlatform: "Any CPU"
+  buildConfiguration: "Release"
+  branch: "master"
+
+resources:
+  repositories:
+    - repository: he-invst-deployment
+      type: git
+      name: "Investments Programme/he-invst-deployment"
+      ref: "main"
+  pipelines:
+    - pipeline: BuildPipeline
+      source: "Hotfix - CRM - Build"
+      trigger: none
+
+stages:
+  - template: crm-deployment-pipelines/hotfix-crm-deploy-nonprod.yml@he-invst-deployment
+    parameters:
+      artifactLocationPipeline: BuildPipeline
+      deployWithUpgrade: false
+      deployMainSolution: true

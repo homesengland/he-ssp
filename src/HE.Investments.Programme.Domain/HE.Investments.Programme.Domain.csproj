@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\HE.Common.IntegrationModel.Crm\HE.Common.IntegrationModel.Crm.csproj" />
+      <ProjectReference Include="..\HE.Investments.Common\HE.Investments.Common.csproj" />
+      <ProjectReference Include="..\HE.Investments.Programme.Contract\HE.Investments.Programme.Contract.csproj" />
+      <ProjectReference Include="..\HE.Investments.Organisation\HE.Investments.Organisation.csproj" />
+    </ItemGroup>
+
+</Project>

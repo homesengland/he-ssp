@@ -55,7 +55,7 @@ public class FundingRepository : IFundingRepository
             FundingEntityMapper.MapRepaymentSystem(loanApplicationDto.refinanceRepayment, loanApplicationDto.refinanceRepaymentDetails),
             FundingEntityMapper.MapAdditionalProjects(loanApplicationDto.additionalProjects),
             SectionStatusMapper.Map(loanApplicationDto.FundingDetailsCompletionStatus),
-            ApplicationStatusMapper.MapToPortalStatus(loanApplicationDto.loanApplicationExternalStatus));
+            LoanApplicationStatusMapper.MapToPortalStatus(loanApplicationDto.loanApplicationExternalStatus));
     }
 
     public async Task SaveAsync(FundingEntity funding, UserAccount userAccount, CancellationToken cancellationToken)

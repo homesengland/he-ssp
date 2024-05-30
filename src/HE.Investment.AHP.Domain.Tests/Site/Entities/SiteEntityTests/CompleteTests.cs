@@ -52,14 +52,14 @@ public class CompleteTests
         testCandidate.Complete(IsSectionCompleted.Yes);
 
         // then
-        testCandidate.Status.Should().Be(SiteStatus.Completed);
+        testCandidate.Status.Should().Be(SiteStatus.Submitted);
     }
 
     [Fact]
     public void ShouldChangeStatusToInProgress_WhenAnswerIsNo()
     {
         // given
-        var testCandidate = CreateAnsweredSiteBuilder().WithStatus(SiteStatus.Completed).Build();
+        var testCandidate = CreateAnsweredSiteBuilder().WithStatus(SiteStatus.Submitted).Build();
 
         // when
         testCandidate.Complete(IsSectionCompleted.No);

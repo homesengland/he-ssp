@@ -13,13 +13,14 @@ using HE.Investment.AHP.WWW.Models.Application.Factories;
 using HE.Investment.AHP.WWW.Models.Project;
 using HE.Investment.AHP.WWW.Workflows;
 using HE.Investments.Account.Shared.Authorization.Attributes;
-using HE.Investments.AHP.Consortium.Contract.Queries;
 using HE.Investments.Common.Contract.Pagination;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Validators;
 using HE.Investments.Common.WWW.Controllers;
 using HE.Investments.Common.WWW.Helpers;
 using HE.Investments.Common.WWW.Routing;
+using HE.Investments.Programme.Contract.Enums;
+using HE.Investments.Programme.Contract.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -58,7 +59,7 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
     [AuthorizeWithCompletedProfile(AhpAccessContext.EditApplications)]
     public async Task<IActionResult> Start([FromQuery] string projectId, CancellationToken cancellationToken)
     {
-        var availableProgrammes = await _mediator.Send(new GetAvailableProgrammesQuery(), cancellationToken);
+        var availableProgrammes = await _mediator.Send(new GetProgrammesQuery(ProgrammeType.Ahp), cancellationToken);
 
         return View("Splash", new ProjectBasicModel(projectId, availableProgrammes[0]));
     }
@@ -74,9 +75,15 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
     [WorkflowState(ApplicationWorkflowState.ApplicationName)]
     [HttpGet("/{siteId}/application/name")]
     [AuthorizeWithCompletedProfile(AhpAccessContext.EditApplications)]
-    public IActionResult Name([FromQuery] string? applicationName)
+    public async Task<IActionResult> Name([FromRoute] string siteId, [FromQuery] string? applicationName, CancellationToken cancellationToken)
     {
-        return View("Name", new ApplicationBasicModel(null, applicationName, Contract.Application.Tenure.Undefined));
+        var site = await _mediator.Send(new GetSiteQuery(siteId), cancellationToken);
+        if (site.Status == SiteStatus.Submitted)
+        {
+            return View("Name", new ApplicationBasicModel(null, applicationName, Contract.Application.Tenure.Undefined));
+        }
+
+        return RedirectToAction("Start", "Site", new { siteId = site.Id });
     }
 
     [WorkflowState(ApplicationWorkflowState.ApplicationName)]

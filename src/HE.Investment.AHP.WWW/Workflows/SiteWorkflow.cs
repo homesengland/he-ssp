@@ -82,7 +82,7 @@ public class SiteWorkflow : EncodedStateRouting<SiteWorkflowState>
         Machine.Configure(SiteWorkflowState.Section106GeneralAgreement)
             .PermitIf(Trigger.Continue, SiteWorkflowState.Section106AffordableHousing, () => _siteModel?.Section106?.GeneralAgreement == true)
             .PermitIf(Trigger.Continue, SiteWorkflowState.LocalAuthoritySearch, () => _siteModel?.Section106?.GeneralAgreement == false)
-            .Permit(Trigger.Back, SiteWorkflowState.Name);
+            .Permit(Trigger.Back, SiteWorkflowState.Start);
 
         Machine.Configure(SiteWorkflowState.Section106AffordableHousing)
             .PermitIf(Trigger.Continue, SiteWorkflowState.Section106OnlyAffordableHousing, () => _siteModel?.Section106?.AffordableHousing == true)

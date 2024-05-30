@@ -7,6 +7,7 @@ using HE.Investment.AHP.Domain.Application.Factories;
 using HE.Investment.AHP.Domain.Application.Repositories;
 using HE.Investment.AHP.Domain.Application.ValueObjects;
 using HE.Investment.AHP.Domain.Scheme.ValueObjects;
+using HE.Investment.AHP.Domain.Site.Entities;
 using HE.Investment.AHP.Domain.Site.Repositories;
 using HE.Investment.AHP.Domain.UserContext;
 using HE.Investments.Common.Contract.Exceptions;
@@ -40,9 +41,10 @@ public class CreateApplicationCommandHandler : IRequestHandler<CreateApplication
             throw new FoundException("Name", "There is already an application with this name. Enter a different name");
         }
 
-        var applicationPartners = await GetApplicationPartners(request.SiteId, account, cancellationToken);
+        var site = await _siteRepository.GetSite(request.SiteId, account, cancellationToken);
+        var applicationPartners = GetApplicationPartners(site, account);
         var applicationToCreate = ApplicationEntity.New(
-            new FrontDoorProjectId(LegacyProject.ProjectId),
+            site.FrontDoorProjectId,
             request.SiteId,
             name,
             new ApplicationTenure(request.Tenure),
@@ -53,17 +55,9 @@ public class CreateApplicationCommandHandler : IRequestHandler<CreateApplication
         return new OperationResult<AhpApplicationId>(application.Id);
     }
 
-    private async Task<ApplicationPartners> GetApplicationPartners(SiteId siteId, AhpUserAccount userAccount, CancellationToken cancellationToken)
+    private ApplicationPartners GetApplicationPartners(SiteEntity site, AhpUserAccount userAccount)
     {
         if (userAccount.Consortium.HasNoConsortium)
-        {
-            return ApplicationPartners.ConfirmedPartner(userAccount.SelectedOrganisation());
-        }
-
-        var site = await _siteRepository.GetSite(siteId, userAccount, cancellationToken);
-
-        // TODO: Fix when Site Completion will be part of the flow
-        if (!site.SitePartners.IsAnswered())
         {
             return ApplicationPartners.ConfirmedPartner(userAccount.SelectedOrganisation());
         }

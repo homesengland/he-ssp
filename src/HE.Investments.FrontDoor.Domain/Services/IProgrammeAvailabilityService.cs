@@ -1,8 +1,8 @@
-using HE.Investments.FrontDoor.Domain.Programme;
+using HE.Investments.Programme.Contract;
 
 namespace HE.Investments.FrontDoor.Domain.Services;
 
 public interface IProgrammeAvailabilityService
 {
-    bool IsStartDateValidForAnyProgramme(IEnumerable<ProgrammeDetails> programmes, DateOnly? expectedStartDate);
+    Task<bool> IsStartDateValidForProgramme(ProgrammeId programmeId, DateOnly? expectedStartDate, CancellationToken cancellationToken);
 }
