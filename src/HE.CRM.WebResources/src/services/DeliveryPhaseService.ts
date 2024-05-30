@@ -8,7 +8,7 @@ export class DeliveryPhaseService {
     this.common = new CommonLib(eCtx)
   }
 
-  public async ShowMessageOnSave() {
+  public ShowMessageOnSave(eCtx, application) {
     console.log("ShowMessageOnSave");
 
     let buildActivityType = this.common.getAttribute("invln_buildactivitytype").getValue();
@@ -17,29 +17,26 @@ export class DeliveryPhaseService {
     console.log("rehabActivityType: " + rehabActivityType);
     let status = this.common.getAttribute("statuscode").getValue();
     console.log("status: " + status);
-    let applicationId = this.common.getLookupValue('invln_application');
-    console.log("applicationId: " + applicationId);
     if (status != 858110002)
       return;
+    let tenure = application.invln_tenure;
+    var eventArgs = eCtx.getEventArgs();
+    if (tenure == Tenure.HOLD && buildActivityType != Buildactivitytype.OffTheShelf && rehabActivityType != RehabActivityType.ExistingSatisfactory) {
+      console.log("Show message: This tenure does not support flexible payments");
+      eventArgs.preventDefault();
+      this.common.openConfirmDialog("This build activity type does not support flexible payments", "Alert");
 
-    if (applicationId != null) {
-      let application = await Xrm.WebApi.retrieveRecord('invln_scheme', applicationId.id);
-      let tenure = application.invln_tenure;
-      console.log("tenure: " + tenure);
-      if (tenure == Tenure.HOLD) {
-        console.log("Show message: This tenure does not support flexible payments");
-        this.common.preventSave();
-        this.common.openConfirmDialog("This build activity type does not support flexible payments", "Alert");
-        this.common.preventSave();
-      } else if (tenure == Tenure.HOLD && (buildActivityType == Buildactivitytype.OffTheShelf || rehabActivityType == RehabActivityType.ExistingSatisfactory)) {
-        console.log("Show message: This build activity type does not support flexible payments");
-        this.common.preventSave();
-        this.common.openConfirmDialog("This build activity type does not support flexible payments", "Alert");
-
-      }
+    } else if (tenure == Tenure.HOLD && (buildActivityType == Buildactivitytype.OffTheShelf || rehabActivityType == RehabActivityType.ExistingSatisfactory)) {
+      console.log("Show message: This build activity type does not support flexible payments");
+      eventArgs.preventDefault();
+      this.common.openConfirmDialog("This build activity type does not support flexible payments", "Alert");
 
     }
-
+  }
+  public async GetApplication() {
+    let applicationId = this.common.getLookupValue('invln_application');
+    if (applicationId != null)
+      return await Xrm.WebApi.retrieveRecord('invln_scheme', applicationId.id);
   }
 
 }
