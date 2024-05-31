@@ -123,10 +123,11 @@ public class SiteController : WorkflowController<SiteWorkflowState>
     [WorkflowState(SiteWorkflowState.Start)]
     public async Task<IActionResult> Start(StartSiteModel model, CancellationToken cancellationToken)
     {
-        return await ExecuteSiteCommand(
+        return await this.ExecuteCommand<StartSiteModel>(
+            _mediator,
             new StartSiteCommand(SiteId.From(model.SiteId)),
-            nameof(Start),
-            _ => model,
+            () => ContinueAnswering(model.SiteId, cancellationToken),
+            async () => await Task.FromResult<IActionResult>(View("Start")),
             cancellationToken);
     }
 
