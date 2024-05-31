@@ -176,6 +176,14 @@ public class SiteEntity : DomainEntity, IQuestion
         NumberOfGreenLights = _modificationTracker.Change(NumberOfGreenLights, numberOfGreenLights, MarkAsNotCompleted);
     }
 
+    public void InitializeSitePartner(AhpUserAccount userAccount)
+    {
+        if (userAccount.Consortium.HasNoConsortium && !SitePartners.IsAnswered())
+        {
+            SitePartners.SinglePartner(userAccount.SelectedOrganisation());
+        }
+    }
+
     public void ProvideSitePartners(SitePartners sitePartners)
     {
         SitePartners = _modificationTracker.Change(SitePartners, sitePartners, MarkAsNotCompleted);
