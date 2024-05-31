@@ -220,6 +220,7 @@
     "invln_setfrontdoorsite*",
     "invln_sethometype*",
     "invln_setsite*",
+    "invln_siteapplicationget*",
     "invln_updatesingleloanapplication*",
     "invln_updatesinglesitedetails*",
     "invln_updateuserprofile*",

@@ -85,6 +85,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_setfrontdoorsite.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_sethometype.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_setsite.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_siteapplicationGet.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_updatesingleloanapplication.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_updatesinglesitedetails.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_updateuserprofile.cs" />
