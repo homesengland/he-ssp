@@ -2,7 +2,6 @@ using He.AspNetCore.Mvc.Gds.Components.Extensions;
 using HE.Investment.AHP.Contract.Common.Enums;
 using HE.Investment.AHP.Contract.Common.Queries;
 using HE.Investment.AHP.Contract.PrefillData.Queries;
-using HE.Investment.AHP.Contract.Project;
 using HE.Investment.AHP.Contract.Project.Queries;
 using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Contract.Site.Commands;
@@ -118,6 +117,17 @@ public class SiteController : WorkflowController<SiteWorkflowState>
     {
         var site = await _mediator.Send(new GetSiteQuery(siteId), cancellationToken);
         return View("Start", new StartSiteModel(site.ProjectId, site.Id!));
+    }
+
+    [HttpPost("{siteId}/start")]
+    [WorkflowState(SiteWorkflowState.Start)]
+    public async Task<IActionResult> Start(StartSiteModel model, CancellationToken cancellationToken)
+    {
+        return await ExecuteSiteCommand(
+            new StartSiteCommand(SiteId.From(model.SiteId)),
+            nameof(Start),
+            _ => model,
+            cancellationToken);
     }
 
     [HttpGet("{siteId}/name")]

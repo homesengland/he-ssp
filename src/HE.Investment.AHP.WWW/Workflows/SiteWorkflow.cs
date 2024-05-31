@@ -75,6 +75,9 @@ public class SiteWorkflow : EncodedStateRouting<SiteWorkflowState>
 
     private void ConfigureTransitions()
     {
+        Machine.Configure(SiteWorkflowState.Start)
+            .Permit(Trigger.Continue, SiteWorkflowState.Section106GeneralAgreement);
+
         Machine.Configure(SiteWorkflowState.Name)
             .Permit(Trigger.Continue, SiteWorkflowState.Section106GeneralAgreement)
             .Permit(Trigger.Back, SiteWorkflowState.Start);
