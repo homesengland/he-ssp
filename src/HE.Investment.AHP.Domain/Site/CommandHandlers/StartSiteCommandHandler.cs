@@ -19,6 +19,6 @@ public class StartSiteCommandHandler : ProvideSiteDetailsBaseCommandHandler<Star
     protected override async void Provide(StartSiteCommand request, SiteEntity site)
     {
         var userAccount = await _ahpUserContext.GetSelectedAccount();
-        site.InitializeSitePartner(userAccount);
+        site.InitializeSitePartner(!userAccount.Consortium.HasNoConsortium, userAccount.SelectedOrganisation());
     }
 }

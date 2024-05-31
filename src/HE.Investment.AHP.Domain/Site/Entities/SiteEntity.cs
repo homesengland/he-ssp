@@ -8,6 +8,7 @@ using HE.Investment.AHP.Domain.Site.ValueObjects.Planning;
 using HE.Investment.AHP.Domain.Site.ValueObjects.StrategicSite;
 using HE.Investment.AHP.Domain.Site.ValueObjects.TenderingStatus;
 using HE.Investment.AHP.Domain.UserContext;
+using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Extensions;
@@ -176,12 +177,14 @@ public class SiteEntity : DomainEntity, IQuestion
         NumberOfGreenLights = _modificationTracker.Change(NumberOfGreenLights, numberOfGreenLights, MarkAsNotCompleted);
     }
 
-    public void InitializeSitePartner(AhpUserAccount userAccount)
+    public void InitializeSitePartner(bool isConsortiumMember, OrganisationBasicInfo userOrganisation)
     {
-        if (userAccount.Consortium.HasNoConsortium && !SitePartners.IsAnswered())
+        if (isConsortiumMember || SitePartners.IsAnswered())
         {
-            SitePartners.SinglePartner(userAccount.SelectedOrganisation());
+            return;
         }
+
+        SitePartners.SinglePartner(userOrganisation);
     }
 
     public void ProvideSitePartners(SitePartners sitePartners)
