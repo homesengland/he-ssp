@@ -12,7 +12,7 @@ namespace HE.Investments.AHP.IntegrationTests.Order02FillSite;
 
 [Order(204)]
 [SuppressMessage("xUnit", "xUnit1004", Justification = "Waits for DevOps configuration - #76791")]
-public class Order04PlanningSection : AhpIntegrationTest
+public class Order04PlanningSection : AhpSiteIntegrationTest
 {
     public Order04PlanningSection(AhpIntegrationTestFixture fixture, ITestOutputHelper output)
         : base(fixture, output)
@@ -23,7 +23,7 @@ public class Order04PlanningSection : AhpIntegrationTest
     [Order(1)]
     public async Task Order01_ShouldProvidePlanningStatus()
     {
-        await TestQuestionPage(
+        await TestSiteQuestionPage(
             SitePagesUrl.SitePlanningStatus(SiteData.SiteId),
             SitePageTitles.PlanningStatus,
             SitePagesUrl.SitePlanningDetails(SiteData.SiteId),
@@ -34,7 +34,7 @@ public class Order04PlanningSection : AhpIntegrationTest
     [Order(2)]
     public async Task Order02_ShouldProvidePlanningDetails()
     {
-        await TestQuestionPage(
+        await TestSiteQuestionPage(
             SitePagesUrl.SitePlanningDetails(SiteData.SiteId),
             "Planning details",
             SitePagesUrl.SiteLandRegistry(SiteData.SiteId),
@@ -48,7 +48,7 @@ public class Order04PlanningSection : AhpIntegrationTest
     [Order(3)]
     public async Task Order03_ShouldProvideLandRegistry()
     {
-        await TestQuestionPage(
+        await TestSiteQuestionPage(
             SitePagesUrl.SiteLandRegistry(SiteData.SiteId),
             SitePageTitles.LandRegistry,
             SitePagesUrl.SiteNationalDesignGuide(SiteData.SiteId),

@@ -43,6 +43,22 @@ public static class HtmlDocumentLinkExtensions
         return htmlDocument;
     }
 
+    public static IHtmlDocument HasSaveAndReturnToSiteListButton(this IHtmlDocument htmlDocument)
+    {
+        return htmlDocument.HasSaveAndReturnToSiteListButton(out _);
+    }
+
+    public static IHtmlDocument HasSaveAndReturnToSiteListButton(this IHtmlDocument htmlDocument, out IHtmlButtonElement saveAndReturnButton)
+    {
+        var links = GetLinkButtons(htmlDocument);
+
+        var button = HtmlElementFilters.WithText(links, "Save and return to sites").SingleOrDefault() as IHtmlButtonElement;
+        button.Should().NotBeNull("There is no Save and return to sites link button");
+        button!.Type.Should().Contain($"submit");
+        saveAndReturnButton = button;
+        return htmlDocument;
+    }
+
     public static IHtmlDocument HasLinkWithText(this IHtmlDocument htmlDocument, string text, out IHtmlAnchorElement link)
     {
         var links = GetLinks(htmlDocument);

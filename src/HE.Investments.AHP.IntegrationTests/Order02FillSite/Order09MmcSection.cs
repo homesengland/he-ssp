@@ -17,7 +17,7 @@ namespace HE.Investments.AHP.IntegrationTests.Order02FillSite;
 
 [Order(209)]
 [SuppressMessage("xUnit", "xUnit1004", Justification = "Waits for DevOps configuration - #76791")]
-public class Order09MmcSection : AhpIntegrationTest
+public class Order09MmcSection : AhpSiteIntegrationTest
 {
     public Order09MmcSection(AhpIntegrationTestFixture fixture, ITestOutputHelper output)
         : base(fixture, output)
@@ -28,7 +28,7 @@ public class Order09MmcSection : AhpIntegrationTest
     [Order(1)]
     public async Task Order01_ShouldProvideSiteMmcUsing()
     {
-        await TestQuestionPage(
+        await TestSiteQuestionPage(
             SitePagesUrl.SiteMmcUsing(SiteData.SiteId),
             SitePageTitles.MmcUsing,
             SitePagesUrl.SiteMmcInformation(SiteData.SiteId),
@@ -39,7 +39,7 @@ public class Order09MmcSection : AhpIntegrationTest
     [Order(2)]
     public async Task Order02_ShouldProvideSiteMmcInformation()
     {
-        await TestQuestionPage(
+        await TestSiteQuestionPage(
             SitePagesUrl.SiteMmcInformation(SiteData.SiteId),
             SitePageTitles.MmcInformation,
             SitePagesUrl.SiteMmcCategories(SiteData.SiteId),
@@ -51,7 +51,7 @@ public class Order09MmcSection : AhpIntegrationTest
     [Order(3)]
     public async Task Order03_ShouldProvideSiteMmcCategories()
     {
-        await TestQuestionPage(
+        await TestSiteQuestionPage(
             SitePagesUrl.SiteMmcCategories(SiteData.SiteId),
             SitePageTitles.MmcCategories,
             SitePagesUrl.SiteMmcCategory3D(SiteData.SiteId),
@@ -62,7 +62,7 @@ public class Order09MmcSection : AhpIntegrationTest
     [Order(4)]
     public async Task Order04_ShouldProvideSiteMmcCategory3D()
     {
-        await TestQuestionPage(
+        await TestSiteQuestionPage(
             SitePagesUrl.SiteMmcCategory3D(SiteData.SiteId),
             SitePageTitles.Mmc3DCategory,
             SitePagesUrl.SiteMmcCategory2D(SiteData.SiteId),
@@ -73,7 +73,7 @@ public class Order09MmcSection : AhpIntegrationTest
     [Order(5)]
     public async Task Order05_ShouldProvideSiteMmcCategory2D()
     {
-        await TestQuestionPage(
+        await TestSiteQuestionPage(
             SitePagesUrl.SiteMmcCategory2D(SiteData.SiteId),
             SitePageTitles.Mmc2DCategory,
             SitePagesUrl.SiteProcurements(SiteData.SiteId),

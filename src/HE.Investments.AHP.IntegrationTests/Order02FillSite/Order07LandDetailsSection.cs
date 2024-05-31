@@ -12,7 +12,7 @@ namespace HE.Investments.AHP.IntegrationTests.Order02FillSite;
 
 [Order(207)]
 [SuppressMessage("xUnit", "xUnit1004", Justification = "Waits for DevOps configuration - #76791")]
-public class Order07LandDetailsSection : AhpIntegrationTest
+public class Order07LandDetailsSection : AhpSiteIntegrationTest
 {
     public Order07LandDetailsSection(AhpIntegrationTestFixture fixture, ITestOutputHelper output)
         : base(fixture, output)
@@ -23,7 +23,7 @@ public class Order07LandDetailsSection : AhpIntegrationTest
     [Order(1)]
     public async Task Order01_ShouldProvideLandAcquisitionStatus()
     {
-        await TestQuestionPage(
+        await TestSiteQuestionPage(
             SitePagesUrl.SiteLandAcquisitionStatus(SiteData.SiteId),
             SitePageTitles.LandAcquisitionStatus,
             SitePagesUrl.SiteTenderingStatus(SiteData.SiteId),
@@ -32,9 +32,9 @@ public class Order07LandDetailsSection : AhpIntegrationTest
 
     [Fact(Skip = AhpConfig.SkipTest)]
     [Order(2)]
-    public async Task Order2_ShouldProvideTenderingStatus()
+    public async Task Order02_ShouldProvideTenderingStatus()
     {
-        await TestQuestionPage(
+        await TestSiteQuestionPage(
             SitePagesUrl.SiteTenderingStatus(SiteData.SiteId),
             SitePageTitles.TenderingStatus,
             SitePagesUrl.SiteContractorDetails(SiteData.SiteId),
@@ -45,7 +45,7 @@ public class Order07LandDetailsSection : AhpIntegrationTest
     [Order(3)]
     public async Task Order03_ShouldProvideContractorDetails()
     {
-        await TestQuestionPage(
+        await TestSiteQuestionPage(
             SitePagesUrl.SiteContractorDetails(SiteData.SiteId),
             SitePageTitles.ContractorDetails,
             SitePagesUrl.SiteStrategicSite(SiteData.SiteId),
@@ -57,7 +57,7 @@ public class Order07LandDetailsSection : AhpIntegrationTest
     [Order(4)]
     public async Task Order04_ShouldProvideStrategicSite()
     {
-        await TestQuestionPage(
+        await TestSiteQuestionPage(
             SitePagesUrl.SiteStrategicSite(SiteData.SiteId),
             SitePageTitles.StrategicSite,
             SitePagesUrl.SiteType(SiteData.SiteId),
@@ -69,7 +69,7 @@ public class Order07LandDetailsSection : AhpIntegrationTest
     [Order(5)]
     public async Task Order05_ShouldProvideSiteType()
     {
-        await TestQuestionPage(
+        await TestSiteQuestionPage(
             SitePagesUrl.SiteType(SiteData.SiteId),
             SitePageTitles.SiteType,
             SitePagesUrl.SiteUse(SiteData.SiteId),
