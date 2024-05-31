@@ -13,7 +13,7 @@ namespace HE.Investments.AHP.IntegrationTests.Order02FillSite;
 
 [Order(205)]
 [SuppressMessage("xUnit", "xUnit1004", Justification = "Waits for DevOps configuration - #76791")]
-public class Order05DesignGuidelinesSection : AhpIntegrationTest
+public class Order05DesignGuidelinesSection : AhpSiteIntegrationTest
 {
     public Order05DesignGuidelinesSection(AhpIntegrationTestFixture fixture, ITestOutputHelper output)
         : base(fixture, output)
@@ -24,7 +24,7 @@ public class Order05DesignGuidelinesSection : AhpIntegrationTest
     [Order(1)]
     public async Task Order01_ShouldProvideNationalDesignGuidePriorities()
     {
-        await TestQuestionPage(
+        await TestSiteQuestionPage(
             SitePagesUrl.SiteNationalDesignGuide(SiteData.SiteId),
             SitePageTitles.NationalDesignGuide,
             SitePagesUrl.SiteBuildingForHealthyLife(SiteData.SiteId),
@@ -35,7 +35,7 @@ public class Order05DesignGuidelinesSection : AhpIntegrationTest
     [Order(2)]
     public async Task Order02_ShouldProvideBuildingForHealthyLife()
     {
-        await TestQuestionPage(
+        await TestSiteQuestionPage(
             SitePagesUrl.SiteBuildingForHealthyLife(SiteData.SiteId),
             SitePageTitles.BuildingForHealthyLife,
             SitePagesUrl.SiteProvideNumberOfGreenLights(SiteData.SiteId),
@@ -46,7 +46,7 @@ public class Order05DesignGuidelinesSection : AhpIntegrationTest
     [Order(3)]
     public async Task Order03_ShouldProvideNumberOfGreenLights()
     {
-        await TestQuestionPage(
+        await TestSiteQuestionPage(
             SitePagesUrl.SiteProvideNumberOfGreenLights(SiteData.SiteId),
             SitePageTitles.NumberOfGreenLights,
             SitePagesUrl.SiteDevelopingPartner(SiteData.SiteId),

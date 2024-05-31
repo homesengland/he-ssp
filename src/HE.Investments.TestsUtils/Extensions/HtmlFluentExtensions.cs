@@ -37,6 +37,12 @@ public static class HtmlFluentExtensions
         return htmlDocument;
     }
 
+    public static IHtmlDocument HasTitleCaption(this IHtmlDocument htmlDocument, string titleCaption)
+    {
+        htmlDocument.GetPageTitleCaption().Should().Be(titleCaption);
+        return htmlDocument;
+    }
+
     public static IHtmlDocument HasMatchingTitle(this IHtmlDocument htmlDocument, string titlePattern)
     {
         var title = htmlDocument.GetPageTitle();

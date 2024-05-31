@@ -10,8 +10,8 @@ public static class ProgrammeTestData
         "AHP 21-26 CME",
         "Affordable Homes Programme 2021-2026 Continuous Market Engagement",
         ProgrammeType.Ahp,
-        new DateOnly(2021, 01, 01),
-        new DateOnly(2026, 01, 01),
-        new DateOnly(2024, 03, 01),
-        new DateOnly(2025, 12, 01));
+        new DateRange(new DateOnly(2021, 01, 01), new DateOnly(2026, 01, 01)),
+        new DateRange(DateOnly.MinValue, DateOnly.MaxValue),
+        new DateRange(new DateOnly(2024, 03, 01), new DateOnly(2025, 12, 01)),
+        new DateRange(DateOnly.MinValue, DateOnly.MaxValue));
 }

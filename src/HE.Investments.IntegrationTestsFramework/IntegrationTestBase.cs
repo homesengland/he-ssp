@@ -102,10 +102,11 @@ public class IntegrationTestBase<TProgram> : IAsyncLifetime
         string startPageUrl,
         string expectedPageTitle,
         string expectedPageUrlAfterContinue,
+        Action<IHtmlDocument>[] additionalChecksForExpectedPage,
         params (string InputName, string Value)[] inputs)
     {
         // given
-        var continueButton = await GivenTestQuestionPage(startPageUrl, expectedPageTitle);
+        var continueButton = await GivenTestQuestionPage(startPageUrl, expectedPageTitle, additionalChecksForExpectedPage);
 
         // when
         var nextPage = await TestClient.SubmitButton(
@@ -117,7 +118,19 @@ public class IntegrationTestBase<TProgram> : IAsyncLifetime
         return nextPage;
     }
 
-    protected async Task<IHtmlButtonElement> GivenTestQuestionPage(string startPageUrl, string expectedPageTitle)
+    protected async Task<IHtmlDocument> TestQuestionPage(
+        string startPageUrl,
+        string expectedPageTitle,
+        string expectedPageUrlAfterContinue,
+        params (string InputName, string Value)[] inputs)
+    {
+        return await TestQuestionPage(startPageUrl, expectedPageTitle, expectedPageUrlAfterContinue, [], inputs);
+    }
+
+    protected async Task<IHtmlButtonElement> GivenTestQuestionPage(
+        string startPageUrl,
+        string expectedPageTitle,
+        Action<IHtmlDocument>[]? additionalChecks = null)
     {
         var currentPage = await GetCurrentPage(startPageUrl);
         currentPage
@@ -126,12 +139,18 @@ public class IntegrationTestBase<TProgram> : IAsyncLifetime
             .HasBackLink(out _)
             .HasSaveAndContinueButton(out var continueButton);
 
+        foreach (var additionalCheck in additionalChecks ?? [])
+        {
+            additionalCheck(currentPage);
+        }
+
         return continueButton;
     }
 
     protected void ThenTestQuestionPage(IHtmlDocument nextPage, string expectedPageUrlAfterContinue)
     {
         nextPage.UrlWithoutQueryEndsWith(expectedPageUrlAfterContinue);
+
         SaveCurrentPage();
     }
 

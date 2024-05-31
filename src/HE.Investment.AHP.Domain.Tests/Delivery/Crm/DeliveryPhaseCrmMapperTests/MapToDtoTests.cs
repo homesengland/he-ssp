@@ -129,15 +129,15 @@ public class MapToDtoTests : TestBase<DeliveryPhaseCrmMapper>
     public void ShouldMapMilestoneDates_WhenAllAreProvided()
     {
         // given
-        var today = new DateOnly(2024, 01, 28);
+        var today = new DateTime(2024, 01, 28, 0, 0, 0, 0, DateTimeKind.Local);
         var entity = new DeliveryPhaseEntityBuilder()
-            .WithAcquisitionMilestone(new AcquisitionMilestoneDetailsBuilder().WithAcquisitionDate(today)
+            .WithAcquisitionMilestone(new AcquisitionMilestoneDetailsBuilder().WithMilestoneDate(today)
                 .WithPaymentDate(today.AddDays(1))
                 .Build())
-            .WithStartOnSiteMilestone(new StartOnSiteMilestoneDetailsBuilder().WithStartOnSiteDate(today.AddDays(2))
+            .WithStartOnSiteMilestone(new StartOnSiteMilestoneDetailsBuilder().WithMilestoneDate(today.AddDays(2))
                 .WithPaymentDate(today.AddDays(3))
                 .Build())
-            .WithCompletionMilestone(new CompletionMilestoneDetailsBuilder().WithCompletionDate(today.AddDays(4))
+            .WithCompletionMilestone(new CompletionMilestoneDetailsBuilder().WithMilestoneDate(today.AddDays(4))
                 .WithPaymentDate(today.AddDays(5))
                 .Build())
             .Build();

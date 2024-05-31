@@ -2,7 +2,6 @@ using He.AspNetCore.Mvc.Gds.Components.Extensions;
 using HE.Investment.AHP.Contract.Common.Enums;
 using HE.Investment.AHP.Contract.Common.Queries;
 using HE.Investment.AHP.Contract.PrefillData.Queries;
-using HE.Investment.AHP.Contract.Project;
 using HE.Investment.AHP.Contract.Project.Queries;
 using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Contract.Site.Commands;
@@ -295,7 +294,7 @@ public class SiteController : WorkflowController<SiteWorkflowState>
         return await this.ExecuteCommand<LocalAuthorities>(
             _mediator,
             new ProvideLocalAuthoritySearchPhraseCommand(SiteId.From(siteId), model.Phrase),
-            async () => await this.ReturnToSitesListOrContinue(() => Task.FromResult<IActionResult>(RedirectToAction("LocalAuthorityResult", new { siteId, phrase = model.Phrase, workflow }))),
+            async () => await this.ReturnToSitesListOrContinue((await GetSiteDetails(siteId, cancellationToken)).ProjectId, () => Task.FromResult<IActionResult>(RedirectToAction("LocalAuthorityResult", new { siteId, phrase = model.Phrase, workflow }))),
             () => Task.FromResult<IActionResult>(View("LocalAuthoritySearch", model)),
             cancellationToken);
     }
@@ -410,7 +409,7 @@ public class SiteController : WorkflowController<SiteWorkflowState>
         return await this.ExecuteCommand<SitePlanningDetails>(
             _mediator,
             new ProvideSitePlanningStatusCommand(this.GetSiteIdFromRoute(), model.PlanningStatus),
-            async () => await this.ReturnToSitesListOrContinue(() => Task.FromResult<IActionResult>(RedirectToAction("PlanningDetails", new { siteId, workflow }))),
+            async () => await this.ReturnToSitesListOrContinue((await GetSiteDetails(siteId.Value, cancellationToken)).ProjectId, () => Task.FromResult<IActionResult>(RedirectToAction("PlanningDetails", new { siteId, workflow }))),
             async () =>
             {
                 var siteDetails = await GetSiteDetails(siteId.Value, cancellationToken);
@@ -570,8 +569,9 @@ public class SiteController : WorkflowController<SiteWorkflowState>
         return await this.ExecuteCommand<(OrganisationDetails Organisation, bool? IsConfirmed)>(
             _mediator,
             new ProvideDevelopingPartnerCommand(SiteId.From(siteId), OrganisationId.From(organisationId), isConfirmed),
-            async () => await this.ReturnToSitesListOrContinue(async () =>
-                isConfirmed == true ? await ContinueWithWorkflow(new { siteId }) : RedirectToAction("DevelopingPartner", new { siteId, workflow })),
+            async () => await this.ReturnToSitesListOrContinue(
+                (await GetSiteDetails(siteId, cancellationToken)).ProjectId,
+                async () => isConfirmed == true ? await ContinueWithWorkflow(new { siteId }) : RedirectToAction("DevelopingPartner", new { siteId, workflow })),
             async () =>
             {
                 var (organisation, _) = await GetConfirmPartnerModel(siteId, organisationId, x => x.DevelopingPartner?.OrganisationId, cancellationToken);
@@ -601,8 +601,9 @@ public class SiteController : WorkflowController<SiteWorkflowState>
         return await this.ExecuteCommand<(OrganisationDetails Organisation, bool? IsConfirmed)>(
             _mediator,
             new ProvideOwnerOfTheLandCommand(SiteId.From(siteId), OrganisationId.From(organisationId), isConfirmed),
-            async () => await this.ReturnToSitesListOrContinue(async () =>
-                isConfirmed == true ? await ContinueWithWorkflow(new { siteId }) : RedirectToAction("OwnerOfTheLand", new { siteId, workflow })),
+            async () => await this.ReturnToSitesListOrContinue(
+                (await GetSiteDetails(siteId, cancellationToken)).ProjectId,
+                async () => isConfirmed == true ? await ContinueWithWorkflow(new { siteId }) : RedirectToAction("OwnerOfTheLand", new { siteId, workflow })),
             async () =>
             {
                 var (organisation, _) = await GetConfirmPartnerModel(siteId, organisationId, x => x.OwnerOfTheLand?.OrganisationId, cancellationToken);
@@ -632,8 +633,9 @@ public class SiteController : WorkflowController<SiteWorkflowState>
         return await this.ExecuteCommand<(OrganisationDetails Organisation, bool? IsConfirmed)>(
             _mediator,
             new ProvideOwnerOfTheHomesCommand(SiteId.From(siteId), OrganisationId.From(organisationId), isConfirmed),
-            async () => await this.ReturnToSitesListOrContinue(async () =>
-                isConfirmed == true ? await ContinueWithWorkflow(new { siteId }) : RedirectToAction("OwnerOfTheHomes", new { siteId, workflow })),
+            async () => await this.ReturnToSitesListOrContinue(
+                (await GetSiteDetails(siteId, cancellationToken)).ProjectId,
+                async () => isConfirmed == true ? await ContinueWithWorkflow(new { siteId }) : RedirectToAction("OwnerOfTheHomes", new { siteId, workflow })),
             async () =>
             {
                 var (organisation, _) = await GetConfirmPartnerModel(siteId, organisationId, x => x.OwnerOfTheHomes?.OrganisationId, cancellationToken);
@@ -1033,7 +1035,9 @@ public class SiteController : WorkflowController<SiteWorkflowState>
         return await this.ExecuteCommand<TViewModel>(
             _mediator,
             command,
-            async () => await this.ReturnToSitesListOrContinue(async () => await ContinueWithWorkflow(new { siteId })),
+            async () => await this.ReturnToSitesListOrContinue(
+                (await GetSiteDetails(siteId.Value, cancellationToken)).ProjectId,
+                async () => await ContinueWithWorkflow(new { siteId })),
             async () =>
             {
                 var siteDetails = await GetSiteDetails(siteId.Value, cancellationToken);
@@ -1066,6 +1070,7 @@ public class SiteController : WorkflowController<SiteWorkflowState>
     {
         var siteModel = await _mediator.Send(new GetSiteQuery(siteId), cancellationToken);
         ViewBag.SiteName = siteModel.Name;
+        ViewBag.ProjectId = siteModel.ProjectId;
         return siteModel;
     }
 
@@ -1073,6 +1078,7 @@ public class SiteController : WorkflowController<SiteWorkflowState>
     {
         var siteBasicModel = await _mediator.Send(new GetSiteBasicDetailsQuery(siteId), cancellationToken);
         ViewBag.SiteName = siteBasicModel.Name;
+        ViewBag.ProjectId = siteBasicModel.ProjectId;
         return siteBasicModel;
     }
 

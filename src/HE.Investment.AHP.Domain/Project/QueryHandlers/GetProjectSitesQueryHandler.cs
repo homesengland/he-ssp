@@ -30,6 +30,7 @@ public class GetProjectSitesQueryHandler : IRequestHandler<GetProjectSitesQuery,
             .Select(x => new SiteBasicModel(
                 x.Id.Value,
                 x.Name.Value,
+                request.ProjectId.Value,
                 x.LocalAuthority?.Name,
                 x.Status))
             .ToList() : [];

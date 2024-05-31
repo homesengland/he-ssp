@@ -1,20 +1,20 @@
 using HE.Investment.AHP.Contract.Application;
+using HE.Investment.AHP.Contract.Common.Enums;
 using HE.Investment.AHP.Contract.Delivery;
 using HE.Investment.AHP.Contract.Delivery.Enums;
 using HE.Investment.AHP.Domain.Common;
-using HE.Investment.AHP.Domain.Delivery.Policies;
 using HE.Investment.AHP.Domain.Delivery.Tranches;
 using HE.Investment.AHP.Domain.Delivery.ValueObjects;
 using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract;
+using HE.Investments.Common.Utils;
+using HE.Investments.Programme.Contract;
 
 namespace HE.Investment.AHP.Domain.Delivery.Entities;
 
 public interface IDeliveryPhaseEntity
 {
     ApplicationBasicInfo Application { get; }
-
-    AhpApplicationId ApplicationId => Application.Id;
 
     Tenure Tenure => Application.Tenure;
 
@@ -29,8 +29,6 @@ public interface IDeliveryPhaseEntity
     BuildActivity BuildActivity { get; }
 
     DeliveryPhaseTranches Tranches { get; }
-
-    MilestonesTranches MilestonesTranches { get; }
 
     bool? ReconfiguringExisting { get; }
 
@@ -48,7 +46,7 @@ public interface IDeliveryPhaseEntity
 
     bool IsOnlyCompletionMilestone { get; }
 
-    Task ProvideDeliveryPhaseMilestones(DeliveryPhaseMilestones milestones, IMilestoneDatesInProgrammeDateRangePolicy policy, CancellationToken cancellationToken);
+    void ProvideDeliveryPhaseMilestones(DeliveryPhaseMilestones milestones);
 
     void ProvideAdditionalPaymentRequest(IsAdditionalPaymentRequested? isAdditionalPaymentRequested);
 
@@ -60,7 +58,5 @@ public interface IDeliveryPhaseEntity
 
     bool IsReconfiguringExistingNeeded();
 
-    void Complete();
-
-    void UnComplete();
+    void Complete(Programme programme, IsSectionCompleted? isSectionCompleted, IDateTimeProvider dateTimeProvider);
 }

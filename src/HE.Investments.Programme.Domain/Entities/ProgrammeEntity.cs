@@ -8,13 +8,21 @@ namespace HE.Investments.Programme.Domain.Entities;
 
 public class ProgrammeEntity
 {
-    public ProgrammeEntity(ProgrammeId id, string name, ProgrammeDates programmeDates, ProgrammeDates startOnSiteDates)
+    public ProgrammeEntity(
+        ProgrammeId id,
+        string name,
+        ProgrammeDates programmeDates,
+        ProgrammeDates fundingDates,
+        ProgrammeDates startOnSiteDates,
+        ProgrammeDates completionDates)
     {
         Id = id;
         ShortName = ParseShortName(name);
         Name = name;
         ProgrammeDates = programmeDates;
+        FundingDates = fundingDates;
         StartOnSiteDates = startOnSiteDates;
+        CompletionDates = completionDates;
     }
 
     public ProgrammeId Id { get; }
@@ -27,7 +35,11 @@ public class ProgrammeEntity
 
     public ProgrammeDates ProgrammeDates { get; }
 
+    public ProgrammeDates FundingDates { get; }
+
     public ProgrammeDates StartOnSiteDates { get; }
+
+    public ProgrammeDates CompletionDates { get; }
 
     private static string ParseShortName(string fullName)
     {

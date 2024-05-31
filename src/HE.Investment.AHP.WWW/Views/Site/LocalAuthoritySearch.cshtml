@@ -27,5 +27,5 @@
         </gds-field-set>
         @Html.HiddenFor(c => c.SiteId)
     </form>
-    <vc:return-to-sites-link is-link-inside-form="false"/>
+    <vc:return-to-sites-link is-link-inside-form="false" project-id="@ViewBag.ProjectId" />
 </gds-div-grid-column-two-thirds>

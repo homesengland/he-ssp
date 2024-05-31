@@ -1,58 +1,23 @@
-using System.Globalization;
 using HE.Investment.AHP.Domain.Delivery.ValueObjects;
+using HE.Investments.TestsUtils.TestFramework;
 
 namespace HE.Investment.AHP.Domain.Tests.Delivery.Entities.TestDataBuilders;
 
-public class CompletionMilestoneDetailsBuilder
+internal sealed class CompletionMilestoneDetailsBuilder : TestObjectBuilder<CompletionMilestoneDetailsBuilder, CompletionMilestoneDetails>
 {
-    private CompletionDate? _completionDate = new(true, "12", "1", "2025");
-    private MilestonePaymentDate? _paymentDate = new(true, "1", "7", "2026");
-
-    public CompletionMilestoneDetailsBuilder WithMilestoneDateBeforeProgrammeStartDate()
+    public CompletionMilestoneDetailsBuilder()
+        : base(Answered)
     {
-        _completionDate = new CompletionDate(true, "1", "1", "2022");
-
-        return this;
     }
 
-    public CompletionMilestoneDetailsBuilder WithCompletionDate(DateOnly completionDate)
-    {
-        _completionDate = new CompletionDate(
-            true,
-            completionDate.Day.ToString(CultureInfo.InvariantCulture),
-            completionDate.Month.ToString(CultureInfo.InvariantCulture),
-            completionDate.Year.ToString(CultureInfo.InvariantCulture));
-        return this;
-    }
+    public static CompletionMilestoneDetails Answered =>
+        CompletionMilestoneDetails.Create(new CompletionDate(true, "12", "1", "2025"), new MilestonePaymentDate(true, "1", "7", "2026"))!;
 
-    public CompletionMilestoneDetailsBuilder WithPaymentDate(DateOnly paymentDate)
-    {
-        _paymentDate = new MilestonePaymentDate(
-            true,
-            paymentDate.Day.ToString(CultureInfo.InvariantCulture),
-            paymentDate.Month.ToString(CultureInfo.InvariantCulture),
-            paymentDate.Year.ToString(CultureInfo.InvariantCulture));
-        return this;
-    }
+    protected override CompletionMilestoneDetailsBuilder Builder => this;
 
-    public CompletionMilestoneDetailsBuilder WithMissingMilestoneDate()
-    {
-        _completionDate = null;
+    public CompletionMilestoneDetailsBuilder WithMilestoneDate(DateTime value) => SetProperty(x => x.MilestoneDate, new CompletionDate(value));
 
-        return this;
-    }
+    public CompletionMilestoneDetailsBuilder WithPaymentDate(DateTime value) => SetProperty(x => x.PaymentDate, new MilestonePaymentDate(value));
 
-    public CompletionMilestoneDetailsBuilder WithPaymentDateAfterProgrammeEndDate()
-    {
-        _paymentDate = new MilestonePaymentDate(true, "1", "1", "2028");
-
-        return this;
-    }
-
-    public CompletionMilestoneDetails Build()
-    {
-        return new CompletionMilestoneDetails(
-            _completionDate,
-            _paymentDate);
-    }
+    public CompletionMilestoneDetailsBuilder WithoutPaymentDate() => SetProperty(x => x.PaymentDate, null);
 }

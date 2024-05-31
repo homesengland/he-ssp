@@ -1,4 +1,3 @@
-using System.ComponentModel;
 using HE.Investments.Common.Contract.Validators;
 
 namespace HE.Investments.Common.Domain.ValueObjects;
@@ -42,7 +41,7 @@ public abstract class DateValueObject : ValueObject
             var missingPartsDisplayNames = missingParts.Select(ms => ms.DisplayName).ToArray();
             var operationResult = OperationResult.New();
             operationResult.AddValidationError(missingParts[0].FieldName, $"The {fieldDescription} must include a {string.Join(" and ", missingPartsDisplayNames)}");
-            foreach (var (displayName, partFieldName) in missingParts.Skip(1))
+            foreach (var (_, partFieldName) in missingParts.Skip(1))
             {
                 operationResult.AddValidationError(partFieldName, string.Empty);
             }
@@ -66,10 +65,24 @@ public abstract class DateValueObject : ValueObject
 
     protected DateValueObject(DateTime? value)
     {
-        Value = value;
+        Value = value?.Date;
     }
 
     public DateTime? Value { get; set; }
+
+    public bool IsBefore(DateValueObject? other)
+    {
+        if (Value == null || other?.Value == null)
+        {
+            return false;
+        }
+
+        return IsBefore(other.Value.Value);
+    }
+
+    public bool IsBefore(DateTime other) => Value < other;
+
+    public bool IsAfter(DateTime other) => Value > other;
 
     protected override IEnumerable<object?> GetAtomicValues()
     {

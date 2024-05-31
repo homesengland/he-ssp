@@ -116,7 +116,7 @@ public class FinancialDetailsEntity : IQuestion
     {
         if (isSectionCompleted == IsSectionCompleted.Undefied)
         {
-            OperationResult.New().AddValidationError(nameof(IsSectionCompleted), "Select whether you have completed this section").CheckErrors();
+            OperationResult.ThrowValidationError(nameof(IsSectionCompleted), ValidationErrorMessage.NoCheckAnswers);
         }
 
         if (isSectionCompleted == IsSectionCompleted.No)
