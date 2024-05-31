@@ -12,10 +12,10 @@ public class ContactHomesEnglandTests : AhpViewTestBase
         "HEP",
         "Homes England Programme",
         ProgrammeType.Ahp,
-        DateOnly.MinValue,
-        DateOnly.MaxValue,
-        DateOnly.MinValue,
-        DateOnly.MaxValue);
+        new DateRange(DateOnly.MinValue, DateOnly.MaxValue),
+        new DateRange(DateOnly.MinValue, DateOnly.MaxValue),
+        new DateRange(DateOnly.MinValue, DateOnly.MaxValue),
+        new DateRange(DateOnly.MinValue, DateOnly.MaxValue));
 
     private readonly string _viewPath = "/Views/ConsortiumMember/ContactHomesEngland.cshtml";
 

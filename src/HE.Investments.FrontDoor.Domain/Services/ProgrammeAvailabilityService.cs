@@ -18,8 +18,8 @@ public class ProgrammeAvailabilityService : IProgrammeAvailabilityService
     {
         var programme = await _mediator.Send(new GetProgrammeQuery(programmeId), cancellationToken);
 
-        var isEndDateValid = expectedStartDate < programme.EndDate;
-        var isStartOnSiteEndDateValid = programme.StartOnSiteEndDate.IsNotProvided() || expectedStartDate < programme.StartOnSiteEndDate;
+        var isEndDateValid = expectedStartDate < programme.ProgrammeDates.End;
+        var isStartOnSiteEndDateValid = programme.StartOnSiteDates.End.IsNotProvided() || expectedStartDate < programme.StartOnSiteDates.End;
 
         return isEndDateValid && isStartOnSiteEndDateValid;
     }

@@ -467,28 +467,26 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
     [HttpGet("{deliveryPhaseId}/check-answers")]
     public async Task<IActionResult> CheckAnswers(CancellationToken cancellationToken)
     {
-        return await DisplayChecksAnswersPage(cancellationToken);
+        return View(await GetDeliveryPhaseAndCreateSummary(true, cancellationToken));
     }
 
     [WorkflowState(DeliveryPhaseWorkflowState.CheckAnswers)]
     [HttpPost("{deliveryPhaseId}/check-answers")]
-    public async Task<IActionResult> Complete([FromRoute] string applicationId, string deliveryPhaseId, [FromForm] IsSectionCompleted? isCompleted, CancellationToken cancellationToken)
+    public async Task<IActionResult> Complete([FromRoute] string applicationId, string deliveryPhaseId, [FromForm] IsSectionCompleted? isSectionCompleted, CancellationToken cancellationToken)
     {
-        if (isCompleted == null)
-        {
-            return await DisplayChecksAnswersPage(cancellationToken, ["Select whether you have completed this section"]);
-        }
+        return await this.ExecuteCommand<DeliveryPhaseSummaryViewModel>(
+            _mediator,
+            new CompleteDeliveryPhaseCommand(AhpApplicationId.From(applicationId), DeliveryPhaseId.From(deliveryPhaseId), isSectionCompleted),
+            async () => await this.ReturnToTaskListOrContinue(() =>
+                Task.FromResult<IActionResult>(RedirectToAction("List", "Delivery", new { applicationId }))),
+            async () =>
+            {
+                var summary = await GetDeliveryPhaseAndCreateSummary(true, cancellationToken);
+                summary.IsSectionCompleted = isSectionCompleted;
 
-        var result = isCompleted == IsSectionCompleted.Yes
-            ? await _mediator.Send(new CompleteDeliveryPhaseCommand(AhpApplicationId.From(applicationId), DeliveryPhaseId.From(deliveryPhaseId)), cancellationToken)
-            : await _mediator.Send(new UnCompleteDeliveryPhaseCommand(AhpApplicationId.From(applicationId), DeliveryPhaseId.From(deliveryPhaseId)), cancellationToken);
-
-        if (result.HasValidationErrors)
-        {
-            return await DisplayChecksAnswersPage(cancellationToken, result.Errors.Select(e => e.ErrorMessage));
-        }
-
-        return RedirectToAction("List", "Delivery", new { applicationId });
+                return View("CheckAnswers", summary);
+            },
+            cancellationToken);
     }
 
     protected override async Task<IStateRouting<DeliveryPhaseWorkflowState>> Routing(DeliveryPhaseWorkflowState currentState, object? routeData = null)
@@ -533,17 +531,6 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
             "BuildActivityType",
             savedModel => savedModel with { BuildActivityType = deliveryPhaseDetails.BuildActivityType },
             cancellationToken);
-    }
-
-    private async Task<IActionResult> DisplayChecksAnswersPage(CancellationToken cancellationToken, IEnumerable<string>? errorMessages = null)
-    {
-        ModelState.Clear();
-        foreach (var errorMessage in errorMessages ?? Array.Empty<string>())
-        {
-            ModelState.AddModelError(nameof(DeliveryPhaseSummaryViewModel.IsCompleted), errorMessage);
-        }
-
-        return View("CheckAnswers", await GetDeliveryPhaseAndCreateSummary(true, cancellationToken));
     }
 
     private async Task<DeliveryPhaseSummaryViewModel> GetDeliveryPhaseAndCreateSummary(bool useWorkflowRedirection, CancellationToken cancellationToken)

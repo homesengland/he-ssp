@@ -17,6 +17,8 @@ public class ShortNameTests
             ProgrammeId.From("61a40ef5-5054-445d-9d2d-4bc84260464e"),
             name,
             new ProgrammeDates(null, null),
+            new ProgrammeDates(null, null),
+            new ProgrammeDates(null, null),
             new ProgrammeDates(null, null));
 
         // then

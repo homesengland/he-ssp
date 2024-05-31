@@ -1,3 +1,4 @@
+@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Links
 @using HE.Investments.Common.WWW.Components.SectionSummary;
 @using HE.Investment.AHP.WWW.Models.Common
 @using HE.Investment.AHP.WWW.Views.Shared.Components.AhpWorkflowBackButton
@@ -7,6 +8,9 @@
 @using HE.Investment.AHP.Contract.Delivery
 @using HE.Investment.AHP.WWW.Views.Delivery.Const
 @using HE.Investment.AHP.Contract.Application
+@using HE.Investments.Common.WWW.Components.PageHeader
+@using HE.Investments.Common.WWW.Extensions
+@using Microsoft.AspNetCore.Mvc.TagHelpers
 
 @model HE.Investment.AHP.WWW.Models.Delivery.DeliveryPhaseSummaryViewModel
 
@@ -36,16 +40,16 @@
 
     @foreach (var summarySection in Model.Sections)
     {
-        <vc:section-summary title="@summarySection.Title" items="@summarySection.Items"/>
+        <vc:section-summary title="@summarySection.Title" items="@summarySection.Items" name="@summarySection.Title.ToPascalCase()" has-error="@ViewData.ModelState.GetErrors(summarySection.Title.ToPascalCase()).HasAnyError"/>
     }
 
     <form asp-controller="DeliveryPhase" asp-action="Complete" asp-route-applicationId="@Model.ApplicationId" asp-route-deliveryPhaseId="@Model.DeliveryPhaseId" asp-method="post" novalidate hidden="@Model.IsReadOnly">
 
         <vc:radio-list
-            field-name="@(nameof(Model.IsCompleted))"
+            field-name="@(nameof(Model.IsSectionCompleted))"
             title="Have you completed this section?"
             available-options="@CommonFormOptions.IsSectionCompletedExtended"
-            value="@Model.IsCompleted"/>
+            value="@Model.IsSectionCompleted"/>
 
         <vc:form-button/>
     </form>

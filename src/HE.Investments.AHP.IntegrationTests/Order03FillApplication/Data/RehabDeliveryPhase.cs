@@ -67,22 +67,22 @@ public class RehabDeliveryPhase : INestedItemData
 
     public RehabDeliveryPhase GenerateAcquisitionMilestone()
     {
-        AcquisitionMilestoneDate = new DateDetails("12", "12", "2021");
-        AcquisitionMilestonePaymentDate = new DateDetails("13", "7", "2022");
+        AcquisitionMilestoneDate = new DateDetails("29", "11", "2025");
+        AcquisitionMilestonePaymentDate = new DateDetails("01", "01", "2026");
         return this;
     }
 
     public RehabDeliveryPhase GenerateStartOnSiteMilestone()
     {
-        StartOnSiteMilestoneDate = new DateDetails("7", "7", "2022");
-        StartOnSiteMilestonePaymentDate = new DateDetails("8", "8", "2022");
+        StartOnSiteMilestoneDate = new DateDetails("30", "11", "2025");
+        StartOnSiteMilestonePaymentDate = new DateDetails("01", "02", "2026");
         return this;
     }
 
     public RehabDeliveryPhase GenerateCompletionMilestone()
     {
-        CompletionMilestoneDate = new DateDetails("9", "9", "2023");
-        CompletionMilestonePaymentDate = new DateDetails("10", "10", "2023");
+        CompletionMilestoneDate = new DateDetails("30", "12", "2025");
+        CompletionMilestonePaymentDate = new DateDetails("01", "03", "2026");
         return this;
     }
 }

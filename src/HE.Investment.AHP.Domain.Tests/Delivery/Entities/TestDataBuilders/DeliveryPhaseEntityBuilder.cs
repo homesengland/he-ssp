@@ -20,7 +20,7 @@ public class DeliveryPhaseEntityBuilder
 
     private readonly ApplicationBasicInfo _applicationBasicInfo = ApplicationBasicInfoTestData.CreateAffordableRentInDraftState();
 
-    private readonly MilestonesTranches _milestonesTranches = new(1000, 100, 100, 100);
+    private readonly MilestonesCalculatedTranches _milestonesCalculatedTranches = new(1000, 100, 100, 100);
 
     private string _id = GuidTestData.GuidOne.ToString();
 
@@ -176,7 +176,7 @@ public class DeliveryPhaseEntityBuilder
             _organisationBasicInfo,
             _status,
             MilestonesPercentageTranches.NotProvided,
-            _milestonesTranches,
+            _milestonesCalculatedTranches,
             false,
             _typeOfHomes,
             _buildActivity,
