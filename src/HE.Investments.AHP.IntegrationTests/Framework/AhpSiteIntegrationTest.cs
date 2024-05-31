@@ -17,11 +17,17 @@ public class AhpSiteIntegrationTest : AhpIntegrationTest
         string expectedPageUrlAfterContinue,
         params (string InputName, string Value)[] inputs)
     {
+        Action<IHtmlDocument>[] additionalChecksForExpectedPage =
+        [
+            page => page.HasSaveAndReturnToSiteListButton(),
+            page => page.HasTitleCaption(SiteData.SiteName),
+        ];
+
         return TestQuestionPage(
             startPageUrl,
             expectedPageTitle,
             expectedPageUrlAfterContinue,
-            [page => page.HasSaveAndReturnToSiteListButton()],
+            additionalChecksForExpectedPage,
             inputs);
     }
 }

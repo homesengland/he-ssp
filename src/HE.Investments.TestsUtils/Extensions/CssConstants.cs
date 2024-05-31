@@ -6,6 +6,8 @@ public static class CssConstants
 
     public const string GovUkList = "govuk-list";
 
+    public const string GovukCaptionL = "govuk-caption-l";
+
     public const string GovUkHxl = "govuk-heading-xl";
 
     public const string GovUkFieldSetHeading = "govuk-fieldset__heading";
