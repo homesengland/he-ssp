@@ -27,5 +27,5 @@
         items="@items"
         paging-navigation-url="@Url.Action("OwnerOfTheHomes", "Site", new { siteId = Model.SiteId, workflow })"/>
 
-    <vc:return-to-sites-link is-link-inside-form="false" is-editable="false"/>
+    <vc:return-to-sites-link is-link-inside-form="false" is-editable="false" project-id="@ViewBag.ProjectId" />
 </gds-div-grid-column-two-thirds>

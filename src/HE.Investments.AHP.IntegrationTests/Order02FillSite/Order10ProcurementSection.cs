@@ -12,7 +12,7 @@ namespace HE.Investments.AHP.IntegrationTests.Order02FillSite;
 
 [Order(210)]
 [SuppressMessage("xUnit", "xUnit1004", Justification = "Waits for DevOps configuration - #76791")]
-public class Order10ProcurementSection : AhpIntegrationTest
+public class Order10ProcurementSection : AhpSiteIntegrationTest
 {
     public Order10ProcurementSection(AhpIntegrationTestFixture fixture, ITestOutputHelper output)
         : base(fixture, output)
@@ -23,7 +23,7 @@ public class Order10ProcurementSection : AhpIntegrationTest
     [Order(1)]
     public async Task Order01_ShouldProvideProcurements()
     {
-        await TestQuestionPage(
+        await TestSiteQuestionPage(
             SitePagesUrl.SiteProcurements(SiteData.SiteId),
             SitePageTitles.Procurements,
             SitePagesUrl.SiteCheckAnswers(SiteData.SiteId),
