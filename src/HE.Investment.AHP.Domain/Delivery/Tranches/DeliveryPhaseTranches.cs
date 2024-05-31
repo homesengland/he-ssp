@@ -19,6 +19,7 @@ public class DeliveryPhaseTranches : IQuestion
         DeliveryPhaseId id,
         ApplicationBasicInfo applicationBasicInfo,
         MilestonesPercentageTranches percentages,
+        MilestonesCalculatedTranches values,
         bool amendmentsRequested,
         bool? claimMilestone,
         bool isOneTranche)
@@ -27,6 +28,7 @@ public class DeliveryPhaseTranches : IQuestion
         ApplicationBasicInfo = applicationBasicInfo;
         _amendmentsRequested = amendmentsRequested;
         Percentages = percentages;
+        CalculatedValues = values;
         ClaimMilestone = claimMilestone;
         IsOneTranche = isOneTranche;
     }
@@ -38,6 +40,8 @@ public class DeliveryPhaseTranches : IQuestion
     public ApplicationBasicInfo ApplicationBasicInfo { get; }
 
     public MilestonesPercentageTranches Percentages { get; private set; }
+
+    public MilestonesCalculatedTranches CalculatedValues { get; }
 
     public bool IsOneTranche { get; }
 

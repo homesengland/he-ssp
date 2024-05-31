@@ -237,7 +237,7 @@ public class SiteEntity : DomainEntity, IQuestion
     {
         if (isSectionCompleted == IsSectionCompleted.Undefied)
         {
-            OperationResult.New().AddValidationError(nameof(IsSectionCompleted), "Select whether you have completed this section").CheckErrors();
+            OperationResult.ThrowValidationError(nameof(IsSectionCompleted), ValidationErrorMessage.NoCheckAnswers);
         }
 
         if (isSectionCompleted == IsSectionCompleted.No)
@@ -248,9 +248,7 @@ public class SiteEntity : DomainEntity, IQuestion
 
         if (!IsAnswered())
         {
-            OperationResult.New()
-                .AddValidationError(nameof(IsSectionCompleted), ValidationErrorMessage.SectionIsNotCompleted)
-                .CheckErrors();
+            OperationResult.ThrowValidationError(nameof(IsSectionCompleted), ValidationErrorMessage.SectionIsNotCompleted);
         }
 
         Status = _modificationTracker.Change(Status, SiteStatus.Submitted);
