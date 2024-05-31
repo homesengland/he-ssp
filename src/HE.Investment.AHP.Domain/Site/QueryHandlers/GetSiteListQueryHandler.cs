@@ -27,7 +27,14 @@ public class GetSiteListQueryHandler : IRequestHandler<GetSiteListQuery, SitesLi
         return new SitesListModel(
             selectedAccount.Organisation?.RegisteredCompanyName ?? string.Empty,
             new PaginationResult<SiteBasicModel>(
-                sitesPage.Items.Select(x => new SiteBasicModel(x.Id.Value, x.Name.Value, x.LocalAuthority?.Name, x.Status)).ToList(),
+                sitesPage.Items.Select(x =>
+                        new SiteBasicModel(
+                            x.Id.Value,
+                            x.Name.Value,
+                            x.FrontDoorProjectId.Value,
+                            x.LocalAuthority?.Name,
+                            x.Status))
+                    .ToList(),
                 sitesPage.CurrentPage,
                 sitesPage.ItemsPerPage,
                 sitesPage.TotalItems));

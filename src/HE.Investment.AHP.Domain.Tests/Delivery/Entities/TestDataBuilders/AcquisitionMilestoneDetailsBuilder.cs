@@ -1,84 +1,23 @@
-using System.Globalization;
 using HE.Investment.AHP.Domain.Delivery.ValueObjects;
+using HE.Investments.TestsUtils.TestFramework;
 
 namespace HE.Investment.AHP.Domain.Tests.Delivery.Entities.TestDataBuilders;
 
-public class AcquisitionMilestoneDetailsBuilder
+internal sealed class AcquisitionMilestoneDetailsBuilder : TestObjectBuilder<AcquisitionMilestoneDetailsBuilder, AcquisitionMilestoneDetails>
 {
-    public static readonly AcquisitionDate? DefaultAcquisitionDate = new(true, "10", "1", "2025");
-    public static readonly MilestonePaymentDate? DefaultPaymentDate = new(true, "1", "5", "2026");
-
-    private AcquisitionDate? _acquisitionDate = DefaultAcquisitionDate;
-    private MilestonePaymentDate? _paymentDate = DefaultPaymentDate;
-
-    public AcquisitionMilestoneDetailsBuilder WithPaymentDateBeforeMilestoneDate()
+    public AcquisitionMilestoneDetailsBuilder()
+        : base(Answered)
     {
-        _paymentDate = new MilestonePaymentDate(true, "9", "1", "2025");
-
-        return this;
     }
 
-    public AcquisitionMilestoneDetailsBuilder WithPaymentDateAtMilestoneDate()
-    {
-        _paymentDate = new MilestonePaymentDate(true, "10", "1", "2025");
+    public static AcquisitionMilestoneDetails Answered =>
+        AcquisitionMilestoneDetails.Create(new AcquisitionDate(true, "10", "1", "2025"), new MilestonePaymentDate(true, "1", "5", "2026"))!;
 
-        return this;
-    }
+    protected override AcquisitionMilestoneDetailsBuilder Builder => this;
 
-    public AcquisitionMilestoneDetailsBuilder WithPaymentDate(MilestonePaymentDate paymentDate)
-    {
-        _paymentDate = paymentDate;
+    public AcquisitionMilestoneDetailsBuilder WithMilestoneDate(DateTime value) => SetProperty(x => x.MilestoneDate, new AcquisitionDate(value));
 
-        return this;
-    }
+    public AcquisitionMilestoneDetailsBuilder WithPaymentDate(DateTime value) => SetProperty(x => x.PaymentDate, new MilestonePaymentDate(value));
 
-    public AcquisitionMilestoneDetailsBuilder WithPaymentDate(DateOnly date)
-    {
-        _paymentDate = new MilestonePaymentDate(
-            true,
-            date.Day.ToString(CultureInfo.InvariantCulture),
-            date.Month.ToString(CultureInfo.InvariantCulture),
-            date.Year.ToString(CultureInfo.InvariantCulture));
-
-        return this;
-    }
-
-    public AcquisitionMilestoneDetailsBuilder WithoutPaymentDate()
-    {
-        _paymentDate = null;
-
-        return this;
-    }
-
-    public AcquisitionMilestoneDetailsBuilder WithAcquisitionDate(AcquisitionDate acquisitionDate)
-    {
-        _acquisitionDate = acquisitionDate;
-
-        return this;
-    }
-
-    public AcquisitionMilestoneDetailsBuilder WithAcquisitionDate(DateOnly date)
-    {
-        _acquisitionDate = new AcquisitionDate(
-            true,
-            date.Day.ToString(CultureInfo.InvariantCulture),
-            date.Month.ToString(CultureInfo.InvariantCulture),
-            date.Year.ToString(CultureInfo.InvariantCulture));
-
-        return this;
-    }
-
-    public AcquisitionMilestoneDetailsBuilder WithoutAcquisitionDate()
-    {
-        _acquisitionDate = null;
-
-        return this;
-    }
-
-    public AcquisitionMilestoneDetails Build()
-    {
-        return new AcquisitionMilestoneDetails(
-            _acquisitionDate,
-            _paymentDate);
-    }
+    public AcquisitionMilestoneDetailsBuilder WithoutPaymentDate() => SetProperty(x => x.PaymentDate, null);
 }

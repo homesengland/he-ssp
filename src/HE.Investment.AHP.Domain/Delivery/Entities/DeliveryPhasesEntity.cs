@@ -11,6 +11,7 @@ using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Extensions;
+using HE.Investments.Common.Messages;
 
 namespace HE.Investment.AHP.Domain.Delivery.Entities;
 
@@ -109,7 +110,7 @@ public class DeliveryPhasesEntity : IHomeTypeConsumer
             organisationBasicInfo,
             SectionStatus.InProgress,
             MilestonesPercentageTranches.NotProvided,
-            MilestonesTranches.LackOfCalculation,
+            MilestonesCalculatedTranches.NotCalculated,
             false);
 
         _deliveryPhases.Add(deliveryPhase);
@@ -141,7 +142,7 @@ public class DeliveryPhasesEntity : IHomeTypeConsumer
     {
         if (isDeliveryCompleted == IsDeliveryCompleted.Undefied)
         {
-            OperationResult.ThrowValidationError(nameof(IsDeliveryCompleted), "Select whether you have completed this section");
+            OperationResult.ThrowValidationError(nameof(IsDeliveryCompleted), ValidationErrorMessage.NoCheckAnswers);
         }
 
         if (isDeliveryCompleted == IsDeliveryCompleted.Yes)

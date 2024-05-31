@@ -26,6 +26,7 @@ public class GetSiteBasicDetailsQueryHandler : IRequestHandler<GetSiteBasicDetai
         return new SiteBasicModel(
             site.Id.Value,
             site.Name.Value,
+            site.FrontDoorProjectId.Value,
             site.LocalAuthority?.Name,
             site.Status);
     }

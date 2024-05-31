@@ -1,75 +1,22 @@
 using HE.Investment.AHP.Domain.Delivery.ValueObjects;
+using HE.Investments.TestsUtils.TestFramework;
 
 namespace HE.Investment.AHP.Domain.Tests.Delivery.Entities.TestDataBuilders;
 
-public class DeliveryPhaseMilestonesBuilder
+internal sealed class DeliveryPhaseMilestonesBuilder : TestObjectBuilder<DeliveryPhaseMilestonesBuilder, DeliveryPhaseMilestones>
 {
-    private bool _isOnlyCompletionMilestone;
-    private AcquisitionMilestoneDetails? _acquisitionMilestoneDetails = new AcquisitionMilestoneDetailsBuilder().Build();
-    private StartOnSiteMilestoneDetails? _startOnSiteMilestoneDetails = new StartOnSiteMilestoneDetailsBuilder().Build();
-    private CompletionMilestoneDetails? _completionMilestoneDetails = new CompletionMilestoneDetailsBuilder().Build();
-
-    public DeliveryPhaseMilestonesBuilder WithIsOnlyCompletionMilestone(bool isOnlyCompletionMilestone = true)
+    public DeliveryPhaseMilestonesBuilder()
+        : base(new DeliveryPhaseMilestones(false, null, null, null))
     {
-        _isOnlyCompletionMilestone = isOnlyCompletionMilestone;
-        return this;
     }
 
-    public DeliveryPhaseMilestonesBuilder WithoutAcquisitionMilestoneDetails()
-    {
-        _acquisitionMilestoneDetails = null;
-        return this;
-    }
+    protected override DeliveryPhaseMilestonesBuilder Builder => this;
 
-    public DeliveryPhaseMilestonesBuilder WithAcquisitionMilestoneDetails(AcquisitionMilestoneDetails milestoneDetails)
-    {
-        _acquisitionMilestoneDetails = milestoneDetails;
-        return this;
-    }
+    public DeliveryPhaseMilestonesBuilder WithIsOnlyCompletionMilestone(bool value) => SetProperty(x => x.IsOnlyCompletionMilestone, value);
 
-    public DeliveryPhaseMilestonesBuilder WithoutStartOnSiteMilestoneDetails()
-    {
-        _startOnSiteMilestoneDetails = null;
-        return this;
-    }
+    public DeliveryPhaseMilestonesBuilder WithAcquisitionMilestone(AcquisitionMilestoneDetails value) => SetProperty(x => x.AcquisitionMilestone, value);
 
-    public DeliveryPhaseMilestonesBuilder WithAcquisitionPaymentDateAfterStartOnSitePaymentDate()
-    {
-        _acquisitionMilestoneDetails = new AcquisitionMilestoneDetailsBuilder()
-            .WithPaymentDate(MilestonePaymentDateFactory.GetDateDayAfter(_startOnSiteMilestoneDetails?.PaymentDate))
-            .Build();
-        return this;
-    }
+    public DeliveryPhaseMilestonesBuilder WithStartOnSiteMilestone(StartOnSiteMilestoneDetails value) => SetProperty(x => x.StartOnSiteMilestone, value);
 
-    public DeliveryPhaseMilestonesBuilder WithAcquisitionPaymentDateAfterCompletionPaymentDate()
-    {
-        _acquisitionMilestoneDetails = new AcquisitionMilestoneDetailsBuilder()
-            .WithPaymentDate(MilestonePaymentDateFactory.GetDateDayAfter(_completionMilestoneDetails?.PaymentDate))
-            .Build();
-        _startOnSiteMilestoneDetails = null;
-        return this;
-    }
-
-    public DeliveryPhaseMilestonesBuilder WithStartOnSitePaymentDateAfterCompletionPaymentDate()
-    {
-        _startOnSiteMilestoneDetails = new StartOnSiteMilestoneDetailsBuilder()
-            .WithPaymentDate(MilestonePaymentDateFactory.GetDateDayAfter(_completionMilestoneDetails?.PaymentDate))
-            .Build();
-        return this;
-    }
-
-    public DeliveryPhaseMilestonesBuilder WithoutCompletionMilestoneDetails()
-    {
-        _completionMilestoneDetails = null;
-        return this;
-    }
-
-    public DeliveryPhaseMilestones Build()
-    {
-        return new DeliveryPhaseMilestones(
-            _isOnlyCompletionMilestone,
-            _acquisitionMilestoneDetails,
-            _startOnSiteMilestoneDetails,
-            _completionMilestoneDetails);
-    }
+    public DeliveryPhaseMilestonesBuilder WithCompletionMilestone(CompletionMilestoneDetails value) => SetProperty(x => x.CompletionMilestone, value);
 }

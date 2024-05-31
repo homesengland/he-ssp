@@ -12,16 +12,16 @@ public class ProgrammeBuilder : TestObjectBuilder<ProgrammeBuilder, Investments.
             "AHP 21-26 CME",
             "Affordable Homes Programme 2021-2026 Continuous Market Engagement",
             ProgrammeType.Ahp,
-            new DateOnly(2021, 01, 01),
-            new DateOnly(2026, 01, 01),
-            new DateOnly(2024, 03, 01),
-            new DateOnly(2025, 12, 01)))
+            new DateRange(new DateOnly(2021, 01, 01), new DateOnly(2026, 01, 01)),
+            new DateRange(DateOnly.MinValue, DateOnly.MaxValue),
+            new DateRange(new DateOnly(2024, 03, 01), new DateOnly(2025, 12, 01)),
+            new DateRange(DateOnly.MinValue, DateOnly.MaxValue)))
     {
     }
 
     protected override ProgrammeBuilder Builder => this;
 
-    public ProgrammeBuilder WithEndDate(DateOnly value) => SetProperty(x => x.EndDate, value);
+    public ProgrammeBuilder WithEndDate(DateOnly value) => SetProperty(x => x.ProgrammeDates.End, value);
 
-    public ProgrammeBuilder WithStartOnSiteEndDate(DateOnly value) => SetProperty(x => x.StartOnSiteEndDate, value);
+    public ProgrammeBuilder WithStartOnSiteEndDate(DateOnly value) => SetProperty(x => x.StartOnSiteDates.End, value);
 }

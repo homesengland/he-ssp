@@ -11,7 +11,7 @@ public class DeliveryPhaseSummaryViewModel : ISummaryViewModel
         string deliveryPhaseId,
         string applicationName,
         string deliveryPhaseName,
-        IsSectionCompleted? isCompleted,
+        IsSectionCompleted? isSectionCompleted,
         IList<SectionSummaryViewModel> sections,
         IReadOnlyCollection<AhpApplicationOperation> allowedOperations)
     {
@@ -19,7 +19,7 @@ public class DeliveryPhaseSummaryViewModel : ISummaryViewModel
         DeliveryPhaseId = deliveryPhaseId;
         ApplicationName = applicationName;
         DeliveryPhaseName = deliveryPhaseName;
-        IsCompleted = isCompleted;
+        IsSectionCompleted = isSectionCompleted;
         Sections = sections;
         AllowedOperations = allowedOperations;
     }
@@ -32,7 +32,7 @@ public class DeliveryPhaseSummaryViewModel : ISummaryViewModel
 
     public string DeliveryPhaseName { get; }
 
-    public IsSectionCompleted? IsCompleted { get; }
+    public IsSectionCompleted? IsSectionCompleted { get; set; }
 
     public IList<SectionSummaryViewModel> Sections { get; }
 

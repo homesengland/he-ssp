@@ -45,7 +45,7 @@ namespace HE.CRM.Common.Repositories.Implementations
             var query_invln_consortiummember = query.AddLink(invln_ConsortiumMember.EntityLogicalName, invln_Consortium.Fields.invln_ConsortiumId, invln_ConsortiumMember.Fields.invln_Consortium);
 
             query_invln_consortiummember.LinkCriteria.AddCondition(invln_ConsortiumMember.Fields.invln_Partner, ConditionOperator.Equal, organisationId);
-            query_invln_consortiummember.LinkCriteria.AddCondition(invln_ConsortiumMember.Fields.StatusCode, ConditionOperator.NotEqual, invln_ConsortiumMember_StatusCode.Removalapproved);
+            query_invln_consortiummember.LinkCriteria.AddCondition(invln_ConsortiumMember.Fields.StatusCode, ConditionOperator.NotEqual, (int)invln_ConsortiumMember_StatusCode.Removalapproved);
             return service.RetrieveMultiple(query).Entities.Select(x => x.ToEntity<invln_Consortium>()).ToList();
         }
     }

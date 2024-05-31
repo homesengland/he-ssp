@@ -38,7 +38,9 @@ public class ProgrammeRepository : IProgrammeRepository
             programmeId,
             programme.name,
             MapProgrammeDates(programmeId, programme.startOn, programme.endOn, true),
-            MapProgrammeDates(programmeId, programme.startOnSiteStartDate, programme.startOnSiteEndDate));
+            MapProgrammeDates(programmeId, programme.assignFundingStartDate, programme.assignFundingEndDate),
+            MapProgrammeDates(programmeId, programme.startOnSiteStartDate, programme.startOnSiteEndDate),
+            MapProgrammeDates(programmeId, programme.completionStartDate, programme.completionEndDate));
     }
 
     private static ProgrammeDates MapProgrammeDates(ProgrammeId programmeId, DateTime? start, DateTime? end, bool isRequired = false)

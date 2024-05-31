@@ -14,11 +14,11 @@ using Xunit.Extensions.Ordering;
 
 namespace HE.Investments.AHP.IntegrationTests.Order02FillSite;
 
-[Order(211)]
+[Order(212)]
 [SuppressMessage("xUnit", "xUnit1004", Justification = "Waits for DevOps configuration - #76791")]
-public class Order11CheckAnswers : AhpIntegrationTest
+public class Order12CheckAnswers : AhpIntegrationTest
 {
-    public Order11CheckAnswers(AhpIntegrationTestFixture fixture, ITestOutputHelper output)
+    public Order12CheckAnswers(AhpIntegrationTestFixture fixture, ITestOutputHelper output)
         : base(fixture, output)
     {
     }

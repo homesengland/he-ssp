@@ -9,8 +9,8 @@
 }
 
 <div class="govuk-grid-column-three-quarters">
-    <vc:ahp-workflow-back-button current-page="@SiteWorkflowState.Section106Ineligible" />
-    <vc:page-header title="@SitePageTitles.Section106Ineligible" />
+    <vc:ahp-workflow-back-button current-page="@SiteWorkflowState.Section106Ineligible"/>
+    <vc:page-header title="@SitePageTitles.Section106Ineligible"/>
 
     <div class="govuk-!-padding-bottom-8">
         @if (Model.IsIneligibleDueToAffordableHousing == true)
@@ -52,8 +52,8 @@
                 correctly, contact your Growth Manager to discuss this further.
             </gds-p>
         }
-        
+
     </div>
     <link-button action-url="@Url.Action("Section106GeneralAgreement", "Site", new { SiteId = Model.SiteId })">Go back and try again</link-button>
-    <link-button action-url="@Url.Action("Index", "Site")" class="govuk-button--secondary">Save and return to your account</link-button>
+    <link-button action-url="@Url.Action("Index", "Site", new { @ViewBag.ProjectId })" class="govuk-button--secondary">Save and return to your account</link-button>
 </div>
