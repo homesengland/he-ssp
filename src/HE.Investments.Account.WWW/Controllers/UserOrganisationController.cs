@@ -65,12 +65,12 @@ public class UserOrganisationController : Controller
                 userOrganisationResult.ProgrammesToAccess.Select(
                     p => new ProgrammeToAccessModel(
                         programmeModels[p.Type],
-                        p.Applications.Select(a =>
+                        p.Appliances.Select(a =>
                                 new UserApplianceModel(
                                         a.Id.Value,
                                         a.Name,
                                         a.Status,
-                                        _programmes.GetApplicationUrl(p.Type, a.Id)))
+                                        _programmes.GetUrl(p.Type, a.Id)))
                             .ToList()))
                     .ToList(),
                 await UserOrganisationActions(userOrganisationResult.OrganisationBasicInformation.RegisteredCompanyName)));

@@ -89,7 +89,7 @@ public class ProgrammeApplicationsRepository : IProgrammeApplicationsRepository
             cancellationToken);
 
         return projects.items.Select(a => new UserAppliance(
-                HeApplianceId.From(a.AhpProjectId),
+                HeApplianceId.From(a.FrontDoorProjectId),
                 a.AhpProjectName))
             .ToList();
     }
