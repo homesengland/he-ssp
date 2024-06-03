@@ -33,6 +33,7 @@ namespace HE.CRM.AHP.Plugins.Plugins.HomeType
         public override void RegisterHandlers(CrmHandlerFactory<DataverseContext> handlerFactory, IList<ICrmHandler> registeredHandlers)
         {
             registeredHandlers.Add(handlerFactory.GetHandler<CalculatePercentageValueOfNDSSStandardHandler>());
+            registeredHandlers.Add(handlerFactory.GetHandler<RecalculateDeliveryPhaseAfterNoOfHomeChangeHandler>());
         }
     }
 }
