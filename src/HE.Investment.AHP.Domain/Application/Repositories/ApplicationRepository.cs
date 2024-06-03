@@ -19,6 +19,7 @@ using HE.Investments.Common.Domain;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Infrastructure.Events;
 using HE.Investments.FrontDoor.Shared.Project;
+using HE.Investments.Programme.Contract.Config;
 
 namespace HE.Investment.AHP.Domain.Application.Repositories;
 
