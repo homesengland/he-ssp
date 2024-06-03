@@ -487,6 +487,9 @@ namespace HE.Investments.Common.CRM.Model
 			}
 		}
 		
+		/// <summary>
+		/// Approved by
+		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_approvedby")]
 		public Microsoft.Xrm.Sdk.EntityReference invln_Approvedby
 		{

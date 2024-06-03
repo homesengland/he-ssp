@@ -4,6 +4,7 @@ using HE.Investment.AHP.Contract.Site.Enums;
 using HE.Investment.AHP.Domain.Site.ValueObjects;
 using HE.Investment.AHP.Domain.Site.ValueObjects.Planning;
 using HE.Investment.AHP.Domain.Site.ValueObjects.Planning.PlanningDetailsTypes;
+using HE.Investment.AHP.Domain.Tests.Delivery.Entities.TestDataBuilders;
 using HE.Investment.AHP.Domain.Tests.Site.TestDataBuilders;
 
 namespace HE.Investment.AHP.Domain.Tests.Site.Entities.SiteEntityTests;
@@ -264,6 +265,7 @@ public class IsAnsweredTests
                 .WithIsUsingMmc(SiteUsingModernMethodsOfConstruction.OnlyForSomeHomes)
                 .WithInformation("some barriers", "some impact")
                 .Build())
-            .WithProcurements(SiteProcurementsBuilder.New().WithProcurements(SiteProcurement.PartneringSupplyChain).Build());
+            .WithProcurements(SiteProcurementsBuilder.New().WithProcurements(SiteProcurement.PartneringSupplyChain).Build())
+            .WithSitePartners(SitePartners.SinglePartner(new OrganisationBasicInfoBuilder().Build()));
     }
 }

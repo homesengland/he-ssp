@@ -1,6 +1,8 @@
 using System.Diagnostics.CodeAnalysis;
 using HE.Investments.AHP.IntegrationTests.Framework;
 using HE.Investments.AHP.IntegrationTests.Pages;
+using HE.Investments.Common.Contract;
+using HE.Investments.Common.Extensions;
 using HE.Investments.TestsUtils.Extensions;
 using Xunit;
 using Xunit.Abstractions;
@@ -30,7 +32,7 @@ public class Order01SiteDetails : AhpIntegrationTest
 
         // then
         listOfSitesPage
-            .UrlEndWith(ProjectPagesUrl.ProjectSiteList(ProjectData.ProjectId))
+            .UrlEndWith(ProjectPagesUrl.ProjectSiteList(ShortGuid.FromString(ProjectData.ProjectId).Value))
             .HasTitle("Sites")
             .HasBackLink(out _);
 

@@ -28,6 +28,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\Entities\OptionSetValueCollectionExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\FetchXmlHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\StringHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OptionSetsMapping\invln_TenureMapp.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Implementations\AccountRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Implementations\AhgLocalAuthorityRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Implementations\AhpApplicationRepository.cs" />
