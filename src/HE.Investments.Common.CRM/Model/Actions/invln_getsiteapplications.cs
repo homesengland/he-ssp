@@ -26,7 +26,7 @@ namespace HE.Investments.Common.CRM.Model
 		}
 
 		public const string ActionLogicalName = "invln_getsiteapplications";
-
+		
 		public string invln_consortiumid
 		{
 			get
@@ -45,7 +45,7 @@ namespace HE.Investments.Common.CRM.Model
 				this.Parameters["invln_consortiumid"] = value;
 			}
 		}
-
+		
 		public string invln_userid
 		{
 			get
@@ -64,7 +64,7 @@ namespace HE.Investments.Common.CRM.Model
 				this.Parameters["invln_userid"] = value;
 			}
 		}
-
+		
 		public string invln_organizationid
 		{
 			get
