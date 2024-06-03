@@ -150,7 +150,7 @@ public class Order07ReferredBackToApplicant : AhpIntegrationTest
 
         // then
         applicationsPage
-            .UrlEndWith(ProjectPagesUrl.ProjectApplicationList(ProjectData.ProjectId))
+            .UrlEndWith(ProjectPagesUrl.ProjectApplicationList(ShortGuid.FromString(ProjectData.ProjectId).Value))
             .HasTitle(ProjectPageTitles.ApplicationList(ProjectData.ProjectName));
     }
 

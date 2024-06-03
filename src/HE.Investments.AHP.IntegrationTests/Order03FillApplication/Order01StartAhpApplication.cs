@@ -4,6 +4,7 @@ using HE.Investment.AHP.WWW.Views.Site.Const;
 using HE.Investments.AHP.IntegrationTests.Extensions;
 using HE.Investments.AHP.IntegrationTests.Framework;
 using HE.Investments.AHP.IntegrationTests.Pages;
+using HE.Investments.Common.Contract;
 using HE.Investments.TestsUtils.Extensions;
 using Xunit;
 using Xunit.Abstractions;
@@ -46,7 +47,7 @@ public class Order01StartAhpApplication : AhpIntegrationTest
 
         // then
         applicationNamePage
-            .UrlEndWith(ApplicationPagesUrl.ApplicationStart(ProjectData.ProjectId))
+            .UrlEndWith(ApplicationPagesUrl.ApplicationStart(ShortGuid.FromString(ProjectData.ProjectId).Value))
             .HasTitle(ApplicationPageTitles.Start("Affordable Homes Programme 2021-2026 Continuous Market Engagement", "AHP 21-26 CME"));
 
         SaveCurrentPage();

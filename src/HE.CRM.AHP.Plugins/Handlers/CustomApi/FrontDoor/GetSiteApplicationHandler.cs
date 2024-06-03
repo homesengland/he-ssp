@@ -19,12 +19,12 @@ using static HE.CRM.AHP.Plugins.Services.Consortium.ConsortiumService;
 
 namespace HE.CRM.AHP.Plugins.Handlers.CustomApi.FrontDoor
 {
-    public class GetSiteApplicationHandler : CrmActionHandlerBase<invln_getsiteapplicationsRequest, DataverseContext>
+    public class GetSiteApplicationHandler : CrmActionHandlerBase<invln_siteapplicationGetRequest, DataverseContext>
     {
-        private string ExternalUserId => ExecutionData.GetInputParameter<string>(invln_getsiteapplicationsRequest.Fields.invln_userid);
-        private string OrganizationId => ExecutionData.GetInputParameter<string>(invln_getsiteapplicationsRequest.Fields.invln_organizationid);
-        private string SiteId => ExecutionData.GetInputParameter<string>(invln_getsiteapplicationsRequest.Fields.invln_siteid);
-        private string ConsortiumId => ExecutionData.GetInputParameter<string>(invln_getsiteapplicationsRequest.Fields.invln_consortiumid);
+        private string ExternalUserId => ExecutionData.GetInputParameter<string>(invln_siteapplicationGetRequest.Fields.invln_userid);
+        private string OrganizationId => ExecutionData.GetInputParameter<string>(invln_siteapplicationGetRequest.Fields.invln_organizationid);
+        private string SiteId => ExecutionData.GetInputParameter<string>(invln_siteapplicationGetRequest.Fields.invln_siteid);
+        private string ConsortiumId => ExecutionData.GetInputParameter<string>(invln_siteapplicationGetRequest.Fields.invln_consortiumid);
 
         private readonly ISiteRepository _siteRepository;
         private readonly IConsortiumService _consortiumService;
