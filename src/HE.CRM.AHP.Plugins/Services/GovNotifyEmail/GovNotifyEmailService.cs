@@ -381,47 +381,44 @@ namespace HE.CRM.AHP.Plugins.Services.GovNotifyEmail
 
         public void SendNotifications_AHP_EXTERNAL_APPLICATION_REFERRED_BACK_TO_APPLICANT(invln_AHPStatusChange ahpStatusChange, invln_scheme ahpApplication)
         {
-            if (ahpStatusChange.invln_ChangeSource.Value == (int)invln_ChangesourceSet.External)
+            TracingService.Trace("AHP_EXTERNAL_APPLICATION_REFERRED_BACK_TO_APPLICANT");
+            var contact = _contactRepositoryAdmin.GetById(ahpApplication.invln_contactid.Id, Contact.Fields.FullName, Contact.Fields.EMailAddress1);
+            if (ahpApplication.invln_programmelookup == null)
             {
-                TracingService.Trace("AHP_EXTERNAL_APPLICATION_REFERRED_BACK_TO_APPLICANT");
-                var contact = _contactRepositoryAdmin.GetById(ahpApplication.invln_contactid.Id, Contact.Fields.FullName, Contact.Fields.EMailAddress1);
-                if (ahpApplication.invln_programmelookup == null)
-                {
-                    TracingService.Trace("There is no programme on ahpApplication. Mail not sent.");
-                    return;
-                }
-                var programme = _programmeRepositoryAdmin.GetById(ahpApplication.invln_programmelookup.Id, invln_programme.Fields.invln_programmename);
-                var emailTemplate = _notificationSettingRepositoryAdmin.GetTemplateViaTypeName("AHP_EXTERNAL_APPLICATION_REFERRED_BACK_TO_APPLICANT");
+                TracingService.Trace("There is no programme on ahpApplication. Mail not sent.");
+                return;
+            }
+            var programme = _programmeRepositoryAdmin.GetById(ahpApplication.invln_programmelookup.Id, invln_programme.Fields.invln_programmename);
+            var emailTemplate = _notificationSettingRepositoryAdmin.GetTemplateViaTypeName("AHP_EXTERNAL_APPLICATION_REFERRED_BACK_TO_APPLICANT");
 
-                if (contact != null && programme != null && emailTemplate != null)
+            if (contact != null && programme != null && emailTemplate != null)
+            {
+                var subject = emailTemplate.invln_subject;
+                var govNotParams = new AHP_EXTERNAL_APPLICATION_REFERRED_BACK_TO_APPLICANT()
                 {
-                    var subject = emailTemplate.invln_subject;
-                    var govNotParams = new AHP_EXTERNAL_APPLICATION_REFERRED_BACK_TO_APPLICANT()
+                    templateId = emailTemplate?.invln_templateid,
+                    personalisation = new parameters_AHP_EXTERNAL_APPLICATION_REFERRED_BACK_TO_APPLICANT()
                     {
-                        templateId = emailTemplate?.invln_templateid,
-                        personalisation = new parameters_AHP_EXTERNAL_APPLICATION_REFERRED_BACK_TO_APPLICANT()
-                        {
-                            recipientEmail = contact.EMailAddress1,
-                            subject = subject,
-                            name = contact.FullName ?? "NO NAME",
-                            schemename = ahpApplication.invln_schemename ?? "NO NAME",
-                            programmename = programme.invln_programmename ?? "NO NAME",
-                        }
-                    };
+                        recipientEmail = contact.EMailAddress1,
+                        subject = subject,
+                        name = contact.FullName ?? "NO NAME",
+                        schemename = ahpApplication.invln_schemename ?? "NO NAME",
+                        programmename = programme.invln_programmename ?? "NO NAME",
+                    }
+                };
 
-                    var options = new JsonSerializerOptions
-                    {
-                        Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
-                        WriteIndented = true
-                    };
-
-                    var parameters = JsonSerializer.Serialize(govNotParams, options);
-                    this.SendGovNotifyEmail(ahpApplication.OwnerId, ahpApplication.ToEntityReference(), subject, parameters, emailTemplate);
-                }
-                else
+                var options = new JsonSerializerOptions
                 {
-                    TracingService.Trace("Probably there is no email template. Mail not sent.");
-                }
+                    Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+                    WriteIndented = true
+                };
+
+                var parameters = JsonSerializer.Serialize(govNotParams, options);
+                this.SendGovNotifyEmail(ahpApplication.OwnerId, ahpApplication.ToEntityReference(), subject, parameters, emailTemplate);
+            }
+            else
+            {
+                TracingService.Trace("Probably there is no email template. Mail not sent.");
             }
         }
 
