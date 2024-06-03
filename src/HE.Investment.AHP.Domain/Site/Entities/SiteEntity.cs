@@ -184,7 +184,7 @@ public class SiteEntity : DomainEntity, IQuestion
             return;
         }
 
-        SitePartners.SinglePartner(userOrganisation);
+        SitePartners = SitePartners.SinglePartner(userOrganisation);
     }
 
     public void ProvideSitePartners(SitePartners sitePartners)

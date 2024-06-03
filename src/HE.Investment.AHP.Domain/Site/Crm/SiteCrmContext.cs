@@ -110,7 +110,7 @@ public class SiteCrmContext : ISiteCrmContext
         {
             invln_userid = userId,
             invln_organizationid = organisationId,
-            invln_consortiumguid = consortiumId?.TryToGuidAsString() ?? string.Empty,
+            invln_consortiumid = consortiumId?.TryToGuidAsString() ?? string.Empty,
             invln_siteid = siteId,
         };
 
