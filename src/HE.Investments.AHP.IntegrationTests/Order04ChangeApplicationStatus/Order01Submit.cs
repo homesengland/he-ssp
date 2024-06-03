@@ -87,7 +87,7 @@ public class Order01Submit : AhpIntegrationTest
 
         // then
         mainPage
-            .UrlEndWith(ProjectPagesUrl.ProjectApplicationList(ProjectData.ProjectId))
+            .UrlEndWith(ProjectPagesUrl.ProjectApplicationList(ShortGuid.FromString(ProjectData.ProjectId).Value))
             .HasTitle(ProjectPageTitles.ApplicationList(ProjectData.ProjectName))
             .HasApplicationInStatus(ApplicationData.ApplicationId, ApplicationStatus.ApplicationSubmitted);
     }
