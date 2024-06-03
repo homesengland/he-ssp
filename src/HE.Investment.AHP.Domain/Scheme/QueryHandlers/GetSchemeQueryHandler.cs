@@ -5,6 +5,7 @@ using HE.Investment.AHP.Domain.Scheme.Entities;
 using HE.Investment.AHP.Domain.Scheme.Repositories;
 using HE.Investment.AHP.Domain.UserContext;
 using HE.Investments.AHP.Consortium.Contract;
+using HE.Investments.Organisation.Contract;
 using HE.Investments.Organisation.ValueObjects;
 using MediatR;
 

@@ -12,6 +12,7 @@ using HE.Investment.AHP.Domain.UserContext;
 using HE.Investments.AHP.Consortium.Contract;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Extensions;
+using HE.Investments.Organisation.Contract;
 using HE.Investments.Organisation.ValueObjects;
 using MediatR;
 using SiteTypeDetails = HE.Investment.AHP.Contract.Site.SiteTypeDetails;
@@ -67,6 +68,7 @@ public class GetSiteQueryHandler : IRequestHandler<GetSiteQuery, SiteModel>
             SiteProcurements = site.Procurements.Procurements.ToList(),
             ModernMethodsOfConstruction = CreateSiteModernMethodsOfConstruction(site.ModernMethodsOfConstruction),
             IsConsortiumMember = !userAccount.Consortium.HasNoConsortium,
+            IsUnregisteredBody = userAccount.SelectedOrganisation().IsUnregisteredBody,
         };
     }
 

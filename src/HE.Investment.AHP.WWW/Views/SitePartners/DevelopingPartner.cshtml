@@ -1,0 +1,31 @@
+@using HE.Investment.AHP.Contract.SitePartners
+@using HE.Investment.AHP.WWW.Extensions
+@using HE.Investment.AHP.WWW.Views.Shared
+@using HE.Investment.AHP.WWW.Views.Shared.Components.AhpWorkflowBackButton
+@using HE.Investment.AHP.WWW.Views.Shared.Components.ReturnToSitesLink
+@using HE.Investments.Common.WWW.Components.PageHeader
+@using HE.Investments.Common.WWW.Components.SelectList
+@model HE.Investment.AHP.WWW.Models.SitePartners.SelectPartnerModel;
+@{
+    ViewData["Title"] = SharedPageTitles.DevelopingPartner;
+    var workflow = Context.Request.Query["workflow"];
+
+    var items = Model.ConsortiumMembers.ToSelectListViewModel(
+        x => Url.Action("DevelopingPartnerConfirm", "SitePartners", new { Model.SiteId, organisationId = x.Value, workflow }));
+}
+
+<gds-div-grid-column-two-thirds>
+    <vc:ahp-workflow-back-button current-page="@SitePartnersWorkflowState.DevelopingPartner"/>
+    <vc:page-header title="@SharedPageTitles.DevelopingPartner" caption="@Model.SiteName"/>
+
+    @foreach (var paragraph in SharedParagraphs.DevelopingPartner)
+    {
+        <gds-p>@paragraph</gds-p>
+    }
+
+    <vc:select-list
+        items="@items"
+        paging-navigation-url="@Url.Action("DevelopingPartner", "SitePartners", new { siteId = Model.SiteId, workflow })"/>
+
+    <vc:return-to-sites-link is-link-inside-form="false" is-editable="false" project-id="@ViewBag.ProjectId"/>
+</gds-div-grid-column-two-thirds>

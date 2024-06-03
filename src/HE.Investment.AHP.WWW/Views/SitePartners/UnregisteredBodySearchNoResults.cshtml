@@ -1,0 +1,34 @@
+@using HE.Investment.AHP.Contract.SitePartners
+@using HE.Investment.AHP.WWW.Extensions
+@using HE.Investment.AHP.WWW.Views.Shared.Components.AhpWorkflowBackButton
+@using HE.Investment.AHP.WWW.Views.SitePartners.Const
+@using HE.Investments.Common.WWW.Components.PageHeader
+@{
+    ViewData["Title"] = SitePartnersPageTitles.UnregisteredBodySearchNoResults;
+
+    var siteId = this.GetSiteIdFromRoute();
+    var workflow = Context.Request.Query["workflow"];
+}
+
+<gds-div-grid-column-two-thirds>
+    <vc:ahp-workflow-back-button current-page="@SitePartnersWorkflowState.UnregisteredBodySearchNoResults"/>
+    <vc:page-header title="@SitePartnersPageTitles.UnregisteredBodySearchNoResults" caption="@ViewBag.SiteName"/>
+
+    <gds-p>
+        We could not find the details you entered in our records.
+    </gds-p>
+
+    <gds-p>
+        If you think you have entered the wrong details, you can
+        <gds-link href="@Url.Action("UnregisteredBodySearch", "SitePartners", new { siteId, workflow })">
+            search again for your organisation.
+        </gds-link>
+    </gds-p>
+
+    <gds-p>
+        Or,
+        <gds-link href="@Url.Action("UnregisteredBodyCreateManual", "SitePartners", new { siteId, workflow })">
+            enter the details manually.
+        </gds-link>
+    </gds-p>
+</gds-div-grid-column-two-thirds>

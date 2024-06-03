@@ -5,7 +5,7 @@
 @using HE.Investments.Common.WWW.Components.PageHeader
 @using HE.Investments.Common.WWW.Components.RadioYesNo
 @using Microsoft.AspNetCore.Mvc.TagHelpers
-@model (HE.Investments.AHP.Consortium.Contract.OrganisationDetails Organisation, bool? IsPartnerConfirmed)
+@model (HE.Investments.Organisation.Contract.OrganisationDetails Organisation, bool? IsPartnerConfirmed)
 @{
     ViewData["Title"] = SharedPageTitles.DevelopingPartnerConfirm;
     var redirect = Context.Request.Query["redirect"];
