@@ -13,6 +13,7 @@ using HE.Investments.Common.WWW.Controllers;
 using HE.Investments.Common.WWW.Extensions;
 using HE.Investments.Common.WWW.Routing;
 using HE.Investments.Organisation.Contract;
+using HE.Investments.Organisation.Contract.Commands;
 using HE.Investments.Organisation.Contract.Queries;
 using HE.Investments.Organisation.ValueObjects;
 using MediatR;
@@ -203,14 +204,15 @@ public class SitePartnersController : SiteControllerBase<SitePartnersWorkflowSta
         return View("UnregisteredBodySearchNoResults");
     }
 
-    [HttpGet("unregistered-body-create-manual")]
+    [HttpGet("{siteId}/unregistered-body-create-manual")]
     [WorkflowState(SitePartnersWorkflowState.UnregisteredBodyCreateManual)]
-    public IActionResult UnregisteredBodyCreateManual()
+    public async Task<IActionResult> UnregisteredBodyCreateManual([FromRoute] string siteId, CancellationToken cancellationToken)
     {
+        await GetSiteBasicDetails(siteId, cancellationToken);
         return View(new AddOrganisationModel(null, null, null, null, null, null));
     }
 
-    [HttpPost("unregistered-body-create-manual")]
+    [HttpPost("{siteId}/unregistered-body-create-manual")]
     [WorkflowState(SitePartnersWorkflowState.UnregisteredBodyCreateManual)]
     public async Task<IActionResult> UnregisteredBodyCreateManual(
         [FromRoute] string siteId,
@@ -218,21 +220,21 @@ public class SitePartnersController : SiteControllerBase<SitePartnersWorkflowSta
         [FromQuery] string? workflow,
         CancellationToken cancellationToken)
     {
-        return await this.ExecuteCommand<AddOrganisationModel>(
-            _mediator,
-            new ProvideManualOwnerOfTheHomesCommand(
-                SiteId.From(siteId),
-                model.Name,
-                model.AddressLine1,
-                model.AddressLine2,
-                model.TownOrCity,
-                model.County,
-                model.Postcode),
-            async () => await this.ReturnToSitesListOrContinue(
-                (await GetSiteDetails(siteId, cancellationToken)).ProjectId,
-                async () => await Continue(new { siteId, workflow })),
-            () => Task.FromResult<IActionResult>(View("UnregisteredBodyCreateManual", model)),
+        var result = await _mediator.Send(
+            new CreateManualOrganisationCommand(model.Name, model.AddressLine1, model.AddressLine2, model.TownOrCity, model.County, model.Postcode),
             cancellationToken);
+        var siteBasicDetails = await GetSiteBasicDetails(siteId, cancellationToken);
+        if (result.HasValidationErrors)
+        {
+            this.AddOrderedErrors<CreateManualOrganisationCommand>(result);
+            await GetSiteBasicDetails(siteId, cancellationToken);
+
+            return View("UnregisteredBodyCreateManual", model);
+        }
+
+        return await this.ReturnToSitesListOrContinue(
+            siteBasicDetails.ProjectId,
+            async () => await Continue(new { siteId, organisationId = result.ReturnedData.Id.Value, workflow }));
     }
 
     [HttpGet("{siteId}/unregistered-body-confirm/{organisationId}")]

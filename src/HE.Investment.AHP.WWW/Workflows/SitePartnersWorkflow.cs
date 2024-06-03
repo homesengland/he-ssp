@@ -79,7 +79,7 @@ public class SitePartnersWorkflow : EncodedStateRouting<SitePartnersWorkflowStat
             .Permit(Trigger.Back, SitePartnersWorkflowState.UnregisteredBodySearch);
 
         Machine.Configure(SitePartnersWorkflowState.UnregisteredBodyCreateManual)
-            .Permit(Trigger.Continue, SitePartnersWorkflowState.FlowFinished)
+            .Permit(Trigger.Continue, SitePartnersWorkflowState.UnregisteredBodyConfirm)
             .Permit(Trigger.Back, SitePartnersWorkflowState.UnregisteredBodySearch);
 
         Machine.Configure(SitePartnersWorkflowState.UnregisteredBodyConfirm)
