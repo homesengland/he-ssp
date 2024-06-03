@@ -71,7 +71,7 @@ public class SiteController : WorkflowController<SiteWorkflowState>
     [HttpGet("select")]
     public async Task<IActionResult> Select([FromQuery] int? page, [FromQuery] string projectId, CancellationToken cancellationToken)
     {
-        var response = await _mediator.Send(new GetProjectSitesQuery(new FrontDoorProjectId(projectId), new PaginationRequest(page ?? 1)), cancellationToken);
+        var response = await _mediator.Send(new GetProjectSitesQuery(FrontDoorProjectId.From(projectId), new PaginationRequest(page ?? 1)), cancellationToken);
         return View("Select", response);
     }
 
