@@ -10,30 +10,30 @@
 
 namespace HE.Investments.Common.CRM.Model
 {
-	
-	
+
+
 	[System.Runtime.Serialization.DataContractAttribute(Namespace="http://schemas.microsoft.com/xrm/2011/new/")]
 	[Microsoft.Xrm.Sdk.Client.RequestProxyAttribute("invln_getsiteapplications")]
 	public partial class invln_getsiteapplicationsRequest : Microsoft.Xrm.Sdk.OrganizationRequest
 	{
-		
+
 		public static class Fields
 		{
-			public const string invln_consortiumguid = "invln_consortiumguid";
+			public const string invln_consortiumid = "invln_consortiumid";
 			public const string invln_userid = "invln_userid";
 			public const string invln_organizationid = "invln_organizationid";
 			public const string invln_siteid = "invln_siteid";
 		}
-		
+
 		public const string ActionLogicalName = "invln_getsiteapplications";
-		
-		public string invln_consortiumguid
+
+		public string invln_consortiumid
 		{
 			get
 			{
-				if (this.Parameters.Contains("invln_consortiumguid"))
+				if (this.Parameters.Contains("invln_consortiumid"))
 				{
-					return ((string)(this.Parameters["invln_consortiumguid"]));
+					return ((string)(this.Parameters["invln_consortiumid"]));
 				}
 				else
 				{
@@ -42,10 +42,10 @@ namespace HE.Investments.Common.CRM.Model
 			}
 			set
 			{
-				this.Parameters["invln_consortiumguid"] = value;
+				this.Parameters["invln_consortiumid"] = value;
 			}
 		}
-		
+
 		public string invln_userid
 		{
 			get
@@ -64,7 +64,7 @@ namespace HE.Investments.Common.CRM.Model
 				this.Parameters["invln_userid"] = value;
 			}
 		}
-		
+
 		public string invln_organizationid
 		{
 			get
@@ -83,7 +83,7 @@ namespace HE.Investments.Common.CRM.Model
 				this.Parameters["invln_organizationid"] = value;
 			}
 		}
-		
+
 		public string invln_siteid
 		{
 			get
@@ -102,33 +102,33 @@ namespace HE.Investments.Common.CRM.Model
 				this.Parameters["invln_siteid"] = value;
 			}
 		}
-		
+
 		public invln_getsiteapplicationsRequest()
 		{
 			this.RequestName = "invln_getsiteapplications";
-			this.invln_consortiumguid = default(string);
+			this.invln_consortiumid = default(string);
 			this.invln_userid = default(string);
 			this.invln_organizationid = default(string);
 			this.invln_siteid = default(string);
 		}
 	}
-	
+
 	[System.Runtime.Serialization.DataContractAttribute(Namespace="http://schemas.microsoft.com/xrm/2011/new/")]
 	[Microsoft.Xrm.Sdk.Client.ResponseProxyAttribute("invln_getsiteapplications")]
 	public partial class invln_getsiteapplicationsResponse : Microsoft.Xrm.Sdk.OrganizationResponse
 	{
-		
+
 		public static class Fields
 		{
 			public const string invln_siteapplication = "invln_siteapplication";
 		}
-		
+
 		public const string ActionLogicalName = "invln_getsiteapplications";
-		
+
 		public invln_getsiteapplicationsResponse()
 		{
 		}
-		
+
 		public string invln_siteapplication
 		{
 			get
