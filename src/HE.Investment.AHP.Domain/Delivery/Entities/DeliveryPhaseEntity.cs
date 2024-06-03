@@ -1,8 +1,8 @@
+using HE.Investment.AHP.Contract.Common.Enums;
 using HE.Investment.AHP.Contract.Delivery;
 using HE.Investment.AHP.Contract.Delivery.Enums;
 using HE.Investment.AHP.Contract.HomeTypes;
 using HE.Investment.AHP.Domain.Common;
-using HE.Investment.AHP.Domain.Delivery.Policies;
 using HE.Investment.AHP.Domain.Delivery.Tranches;
 using HE.Investment.AHP.Domain.Delivery.ValueObjects;
 using HE.Investments.Account.Shared;
@@ -12,6 +12,8 @@ using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Messages;
+using HE.Investments.Common.Utils;
+using HE.Investments.Programme.Contract;
 using DeliveryPhaseTranches = HE.Investment.AHP.Domain.Delivery.Tranches.DeliveryPhaseTranches;
 
 namespace HE.Investment.AHP.Domain.Delivery.Entities;
@@ -28,7 +30,7 @@ public class DeliveryPhaseEntity : DomainEntity, IDeliveryPhaseEntity
         OrganisationBasicInfo organisation,
         SectionStatus status,
         MilestonesPercentageTranches milestonesPercentageTranches,
-        MilestonesTranches milestonesTranches,
+        MilestonesCalculatedTranches milestonesCalculatedTranches,
         bool milestoneTranchesAmendRequested,
         TypeOfHomes? typeOfHomes = null,
         BuildActivity? buildActivity = null,
@@ -58,10 +60,10 @@ public class DeliveryPhaseEntity : DomainEntity, IDeliveryPhaseEntity
             Id,
             Application,
             milestonesPercentageTranches,
+            milestonesCalculatedTranches,
             milestoneTranchesAmendRequested,
             claimMilestone,
             IsOnlyCompletionMilestone);
-        MilestonesTranches = milestonesTranches;
 
         Tranches.TranchesAmended += MarkAsNotCompleted;
     }
@@ -79,8 +81,6 @@ public class DeliveryPhaseEntity : DomainEntity, IDeliveryPhaseEntity
     public BuildActivity BuildActivity { get; private set; }
 
     public DeliveryPhaseTranches Tranches { get; private set; }
-
-    public MilestonesTranches MilestonesTranches { get; private set; }
 
     public bool? ReconfiguringExisting { get; private set; }
 
@@ -135,13 +135,8 @@ public class DeliveryPhaseEntity : DomainEntity, IDeliveryPhaseEntity
         Name = _modificationTracker.Change(Name, deliveryPhaseName, MarkAsNotCompleted);
     }
 
-    public async Task ProvideDeliveryPhaseMilestones(
-        DeliveryPhaseMilestones milestones,
-        IMilestoneDatesInProgrammeDateRangePolicy policy,
-        CancellationToken cancellationToken)
+    public void ProvideDeliveryPhaseMilestones(DeliveryPhaseMilestones milestones)
     {
-        await policy.Validate(milestones, cancellationToken);
-
         DeliveryPhaseMilestones = _modificationTracker.Change(DeliveryPhaseMilestones, milestones, MarkAsNotCompleted);
     }
 
@@ -165,19 +160,35 @@ public class DeliveryPhaseEntity : DomainEntity, IDeliveryPhaseEntity
         IsAdditionalPaymentRequested = _modificationTracker.Change(IsAdditionalPaymentRequested, isAdditionalPaymentRequested, MarkAsNotCompleted);
     }
 
-    public void Complete()
+    public void Complete(Programme programme, IsSectionCompleted? isSectionCompleted, IDateTimeProvider dateTimeProvider)
     {
-        if (!IsAnswered())
+        if (isSectionCompleted == null)
         {
-            throw new DomainValidationException(ValidationErrorMessage.SectionIsNotCompleted);
+            OperationResult.ThrowValidationError(nameof(isSectionCompleted).TitleCaseFirstLetterInString(), ValidationErrorMessage.NoCheckAnswers);
         }
 
-        DeliveryPhaseMilestones.CheckComplete();
+        if (isSectionCompleted == IsSectionCompleted.No)
+        {
+            Status = _modificationTracker.Change(Status, SectionStatus.InProgress);
+            return;
+        }
+
+        if (!IsAnswered())
+        {
+            OperationResult.ThrowValidationError(nameof(isSectionCompleted).TitleCaseFirstLetterInString(), ValidationErrorMessage.SectionIsNotCompleted);
+        }
+
+        try
+        {
+            DeliveryPhaseMilestones.ValidateMilestoneDates(programme, dateTimeProvider);
+        }
+        catch (DomainValidationException)
+        {
+            OperationResult.ThrowValidationError("Milestones", "The information you have entered doesn't meet what is required, check and try again");
+        }
 
         Status = _modificationTracker.Change(Status, SectionStatus.Completed);
     }
-
-    public void UnComplete() => MarkAsNotCompleted();
 
     public void ProvideBuildActivity(BuildActivity buildActivity)
     {
@@ -216,13 +227,11 @@ public class DeliveryPhaseEntity : DomainEntity, IDeliveryPhaseEntity
                          reconfigureExistingValid &&
                          Tranches.IsAnswered() &&
                          _homesToDeliver.Count != 0 &&
-                         DeliveryPhaseMilestones.IsAnswered() &&
-                         MilestonesTranches.IsAnswered();
+                         DeliveryPhaseMilestones.IsAnswered();
 
         if (Organisation.IsUnregisteredBody)
         {
-            return DeliveryPhaseMilestones.IsAnswered() &&
-                   IsAdditionalPaymentRequested != null && IsAdditionalPaymentRequested.IsAnswered();
+            isAnswered = isAnswered && IsAdditionalPaymentRequested != null && IsAdditionalPaymentRequested.IsAnswered();
         }
 
         return isAnswered;

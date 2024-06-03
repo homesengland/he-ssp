@@ -24,7 +24,7 @@ namespace HE.CRM.AHP.Plugins.Handlers.CustomApi.FrontDoor
         private string ExternalUserId => ExecutionData.GetInputParameter<string>(invln_getsiteapplicationsRequest.Fields.invln_userid);
         private string OrganizationId => ExecutionData.GetInputParameter<string>(invln_getsiteapplicationsRequest.Fields.invln_organizationid);
         private string SiteId => ExecutionData.GetInputParameter<string>(invln_getsiteapplicationsRequest.Fields.invln_siteid);
-        private string ConsortiumId => ExecutionData.GetInputParameter<string>(invln_getsiteapplicationsRequest.Fields.invln_consortiumid);
+        private string ConsortiumId => ExecutionData.GetInputParameter<string>(invln_getsiteapplicationsRequest.Fields.invln_consortiumId);
 
         private readonly ISiteRepository _siteRepository;
         private readonly IConsortiumService _consortiumService;
@@ -41,6 +41,10 @@ namespace HE.CRM.AHP.Plugins.Handlers.CustomApi.FrontDoor
         public override bool CanWork()
         {
             TracingService.Trace("GetSiteApplicationHandler Can Work");
+            TracingService.Trace($"ExternalUserId: {ExternalUserId}");
+            TracingService.Trace($"OrganizationId: {OrganizationId}");
+            TracingService.Trace($"SiteId: {SiteId}");
+            TracingService.Trace($"ConsortiumId: {ConsortiumId}");
 
             return !string.IsNullOrEmpty(ExternalUserId) && !string.IsNullOrEmpty(OrganizationId)
                     && !string.IsNullOrEmpty(SiteId);
@@ -48,9 +52,14 @@ namespace HE.CRM.AHP.Plugins.Handlers.CustomApi.FrontDoor
 
         public override void DoWork()
         {
-            TracingService.Trace("GetSiteApplicationHandler Do Work");
+            string consortiumId = null;
+            if (!string.IsNullOrEmpty(ConsortiumId))
+            {
+                consortiumId = ConsortiumId;
+            }
 
-            if (!_consortiumService.CheckAccess(Operation.Get, RecordType.Site, ExternalUserId, SiteId, null, ConsortiumId, OrganizationId))
+            TracingService.Trace("GetSiteApplicationHandler Do Work");
+            if (!_consortiumService.CheckAccess(Operation.Get, RecordType.Site, ExternalUserId, SiteId, null, consortiumId, OrganizationId))
                 return;
 
             var site = _siteRepository.GetById(new Guid(SiteId));
@@ -60,7 +69,7 @@ namespace HE.CRM.AHP.Plugins.Handlers.CustomApi.FrontDoor
             foreach (var application in applications)
             {
                 TracingService.Trace("Start loop for application");
-                if (_consortiumService.CheckAccess(Operation.Get, RecordType.Application, ExternalUserId, null, application.Id.ToString(), ConsortiumId, OrganizationId))
+                if (_consortiumService.CheckAccess(Operation.Get, RecordType.Application, ExternalUserId, null, application.Id.ToString(), consortiumId, OrganizationId))
                 {
                     filteredApplication.Add(application);
                 }

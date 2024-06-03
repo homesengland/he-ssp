@@ -17,7 +17,7 @@ namespace HE.Investments.AHP.IntegrationTests.Order02FillSite;
 
 [Order(208)]
 [SuppressMessage("xUnit", "xUnit1004", Justification = "Waits for DevOps configuration - #76791")]
-public class Order08SiteUseSection : AhpIntegrationTest
+public class Order08SiteUseSection : AhpSiteIntegrationTest
 {
     public Order08SiteUseSection(AhpIntegrationTestFixture fixture, ITestOutputHelper output)
         : base(fixture, output)
@@ -28,7 +28,7 @@ public class Order08SiteUseSection : AhpIntegrationTest
     [Order(1)]
     public async Task Order01_ShouldProvideSiteUse()
     {
-        await TestQuestionPage(
+        await TestSiteQuestionPage(
             SitePagesUrl.SiteUse(SiteData.SiteId),
             SitePageTitles.SiteUse,
             SitePagesUrl.SiteTravellerPitchType(SiteData.SiteId),
@@ -40,7 +40,7 @@ public class Order08SiteUseSection : AhpIntegrationTest
     [Order(2)]
     public async Task Order02_ShouldProvideTravellerPitchType()
     {
-        await TestQuestionPage(
+        await TestSiteQuestionPage(
             SitePagesUrl.SiteTravellerPitchType(SiteData.SiteId),
             SitePageTitles.TravellerPitchType,
             SitePagesUrl.SiteRuralClassification(SiteData.SiteId),
@@ -51,7 +51,7 @@ public class Order08SiteUseSection : AhpIntegrationTest
     [Order(3)]
     public async Task Order03_ShouldProvideRuralClassification()
     {
-        await TestQuestionPage(
+        await TestSiteQuestionPage(
             SitePagesUrl.SiteRuralClassification(SiteData.SiteId),
             SitePageTitles.RuralClassification,
             SitePagesUrl.SiteEnvironmentalImpact(SiteData.SiteId),
@@ -63,7 +63,7 @@ public class Order08SiteUseSection : AhpIntegrationTest
     [Order(4)]
     public async Task Order04_ShouldProvideEnvironmentalImpact()
     {
-        await TestQuestionPage(
+        await TestSiteQuestionPage(
             SitePagesUrl.SiteEnvironmentalImpact(SiteData.SiteId),
             SitePageTitles.EnvironmentalImpact,
             SitePagesUrl.SiteMmcUsing(SiteData.SiteId),

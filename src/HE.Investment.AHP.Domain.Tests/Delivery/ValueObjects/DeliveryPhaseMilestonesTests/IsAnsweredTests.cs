@@ -6,10 +6,30 @@ namespace HE.Investment.AHP.Domain.Tests.Delivery.ValueObjects.DeliveryPhaseMile
 public class IsAnsweredTests
 {
     [Fact]
-    public void ShouldReturnTrue()
+    public void ShouldReturnTrue_WhenIsOnlyCompletionMilestoneAndCompletionMilestoneIsAnswered()
     {
         // given
         var milestones = new DeliveryPhaseMilestonesBuilder()
+            .WithIsOnlyCompletionMilestone(true)
+            .WithCompletionMilestone(CompletionMilestoneDetailsBuilder.Answered)
+            .Build();
+
+        // when
+        var result = milestones.IsAnswered();
+
+        // then
+        result.Should().BeTrue();
+    }
+
+    [Fact]
+    public void ShouldReturnTrue_WhenAllMilestonesAreAnswered()
+    {
+        // given
+        var milestones = new DeliveryPhaseMilestonesBuilder()
+            .WithIsOnlyCompletionMilestone(false)
+            .WithAcquisitionMilestone(AcquisitionMilestoneDetailsBuilder.Answered)
+            .WithStartOnSiteMilestone(StartOnSiteMilestoneDetailsBuilder.Answered)
+            .WithCompletionMilestone(CompletionMilestoneDetailsBuilder.Answered)
             .Build();
 
         // when
@@ -24,10 +44,7 @@ public class IsAnsweredTests
     {
         // given
         var milestones = new DeliveryPhaseMilestonesBuilder()
-            .WithIsOnlyCompletionMilestone()
-            .WithoutAcquisitionMilestoneDetails()
-            .WithoutStartOnSiteMilestoneDetails()
-            .WithoutCompletionMilestoneDetails()
+            .WithIsOnlyCompletionMilestone(true)
             .Build();
 
         // when
@@ -42,8 +59,9 @@ public class IsAnsweredTests
     {
         // given
         var milestones = new DeliveryPhaseMilestonesBuilder()
-            .WithoutStartOnSiteMilestoneDetails()
-            .WithoutCompletionMilestoneDetails()
+            .WithIsOnlyCompletionMilestone(false)
+            .WithStartOnSiteMilestone(StartOnSiteMilestoneDetailsBuilder.Answered)
+            .WithCompletionMilestone(CompletionMilestoneDetailsBuilder.Answered)
             .Build();
 
         // when
@@ -58,9 +76,10 @@ public class IsAnsweredTests
     {
         // given
         var milestones = new DeliveryPhaseMilestonesBuilder()
-            .WithoutAcquisitionMilestoneDetails()
-            .WithoutCompletionMilestoneDetails()
-            .Build();
+                .WithIsOnlyCompletionMilestone(false)
+                .WithAcquisitionMilestone(AcquisitionMilestoneDetailsBuilder.Answered)
+                .WithCompletionMilestone(CompletionMilestoneDetailsBuilder.Answered)
+                .Build();
 
         // when
         var result = milestones.IsAnswered();
@@ -74,8 +93,9 @@ public class IsAnsweredTests
     {
         // given
         var milestones = new DeliveryPhaseMilestonesBuilder()
-            .WithoutAcquisitionMilestoneDetails()
-            .WithoutStartOnSiteMilestoneDetails()
+            .WithIsOnlyCompletionMilestone(false)
+            .WithAcquisitionMilestone(AcquisitionMilestoneDetailsBuilder.Answered)
+            .WithStartOnSiteMilestone(StartOnSiteMilestoneDetailsBuilder.Answered)
             .Build();
 
         // when

@@ -7,7 +7,7 @@ public record Programme(
     string ShortName,
     string Name,
     ProgrammeType ProgrammeType,
-    DateOnly StartDate,
-    DateOnly EndDate,
-    DateOnly StartOnSiteStartDate,
-    DateOnly StartOnSiteEndDate);
+    DateRange ProgrammeDates,
+    DateRange FundingDates,
+    DateRange StartOnSiteDates,
+    DateRange CompletionDates);

@@ -1,11 +1,10 @@
 using HE.Investment.AHP.Contract.Delivery;
 using HE.Investment.AHP.Contract.Delivery.Queries;
 using HE.Investment.AHP.Domain.Application.Mappers;
-using HE.Investment.AHP.Domain.Delivery.Entities;
 using HE.Investment.AHP.Domain.Delivery.Repositories;
+using HE.Investment.AHP.Domain.Delivery.Tranches;
 using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract;
-using HE.Investments.Common.Domain.ValueObjects;
 using MediatR;
 using SummaryOfDelivery = HE.Investment.AHP.Contract.Delivery.MilestonePayments.SummaryOfDelivery;
 
@@ -47,7 +46,7 @@ public class GetDeliveryPhaseDetailsQueryHandler : IRequestHandler<GetDeliveryPh
             deliveryPhase.TotalHomesToBeDeliveredInThisPhase,
             new DeliveryPhaseTranchesDto(
                 deliveryPhase.Tranches.CanBeAmended,
-                GetSummaryOfDelivery(deliveryPhase)),
+                GetSummaryOfDelivery(deliveryPhase.Tranches)),
             deliveryPhase.Organisation.IsUnregisteredBody,
             deliveryPhase.IsOnlyCompletionMilestone,
             DateDetails.FromDateTime(deliveryPhase.DeliveryPhaseMilestones.AcquisitionMilestone?.MilestoneDate?.Value),
@@ -59,16 +58,16 @@ public class GetDeliveryPhaseDetailsQueryHandler : IRequestHandler<GetDeliveryPh
             deliveryPhase.IsAdditionalPaymentRequested?.IsRequested);
     }
 
-    private static SummaryOfDelivery GetSummaryOfDelivery(IDeliveryPhaseEntity deliveryPhase)
+    private static SummaryOfDelivery GetSummaryOfDelivery(DeliveryPhaseTranches tranches)
     {
         return new SummaryOfDelivery(
-            deliveryPhase.MilestonesTranches.SumOfGrantApportioned,
-            deliveryPhase.MilestonesTranches.AcquisitionMilestone,
-            deliveryPhase.Tranches.Percentages.Acquisition?.Value,
-            deliveryPhase.MilestonesTranches.StartOnSiteMilestone,
-            deliveryPhase.Tranches.Percentages.StartOnSite?.Value,
-            deliveryPhase.MilestonesTranches.CompletionMilestone,
-            deliveryPhase.Tranches.Percentages.Completion?.Value,
-            deliveryPhase.Tranches.ClaimMilestone);
+            tranches.CalculatedValues.SumOfGrantApportioned,
+            tranches.CalculatedValues.AcquisitionMilestone,
+            tranches.Percentages.Acquisition?.Value,
+            tranches.CalculatedValues.StartOnSiteMilestone,
+            tranches.Percentages.StartOnSite?.Value,
+            tranches.CalculatedValues.CompletionMilestone,
+            tranches.Percentages.Completion?.Value,
+            tranches.ClaimMilestone);
     }
 }

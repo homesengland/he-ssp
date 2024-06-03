@@ -3,25 +3,30 @@
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Headings
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Summary
 @using HE.Investments.Common.WWW.Components.ErrorMessage
-
-@model (string title, IList<SectionSummaryItemModel> items, string name)
-
-@if (!string.IsNullOrEmpty(Model.title))
-{
-    <gds-h2>@Model.title</gds-h2>
+@model (string title, IList<SectionSummaryItemModel> items, string name, bool hasError)
+@{
+    var formGroupClass = "govuk-form-group " + (Model.hasError ? "govuk-form-group--error" : string.Empty);
+    var sectionId = string.IsNullOrEmpty(Model.name) ? Guid.NewGuid().ToString() : Model.name;
 }
 
-<vc:error-message field-name="@Model.name" />
-
-<gds-summary-list class="govuk-!-margin-bottom-9">
-    @foreach (var item in Model.items)
+<div id="@sectionId" class="@formGroupClass">
+    @if (!string.IsNullOrEmpty(Model.title))
     {
-        <vc:section-summary-item
-            name="@item.Name"
-            values="@item.Values"
-            action-url="@item.ActionUrl"
-            files="@item.Files"
-            is-editable="@item.IsEditable"
-            is-visible="@item.IsVisible"/>
+        <gds-h2>@Model.title</gds-h2>
     }
-</gds-summary-list>
+
+    <vc:error-message field-name="@Model.name" />
+
+    <gds-summary-list class="govuk-!-margin-bottom-9">
+        @foreach (var item in Model.items)
+        {
+            <vc:section-summary-item
+                name="@item.Name"
+                values="@item.Values"
+                action-url="@item.ActionUrl"
+                files="@item.Files"
+                is-editable="@item.IsEditable"
+                is-visible="@item.IsVisible"/>
+        }
+    </gds-summary-list>
+</div>

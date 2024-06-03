@@ -61,6 +61,14 @@ public static class HtmlDocumentExtensions
         return HttpUtility.HtmlDecode(header!.InnerHtml.Trim());
     }
 
+    public static string GetPageTitleCaption(this IHtmlDocument htmlDocument)
+    {
+        var titleCaption = htmlDocument.GetElementsByClassName(CssConstants.GovukCaptionL).FirstOrDefault();
+
+        titleCaption.Should().NotBeNull("Title caption does not exist");
+        return HttpUtility.HtmlDecode(titleCaption!.Text().Trim());
+    }
+
     public static string GetStatusTagByTestId(this IHtmlDocument htmlDocument, string testId)
     {
         var applicationStatus = htmlDocument.GetElementByTestId(testId);
