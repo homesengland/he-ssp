@@ -37,7 +37,7 @@ public class ProjectRepository : IProjectRepository
     public async Task<AhpProjectApplications> GetProjectApplications(FrontDoorProjectId id, ConsortiumUserAccount userAccount, CancellationToken cancellationToken)
     {
         var project = await _projectCrmContext.GetProject(
-            id.ToString(),
+            id.ToGuidAsString(),
             userAccount.UserGlobalId.ToString(),
             userAccount.SelectedOrganisationId().ToString(),
             userAccount.Consortium.GetConsortiumIdAsString(),
@@ -63,7 +63,7 @@ public class ProjectRepository : IProjectRepository
     public async Task<AhpProjectSites> GetProjectSites(FrontDoorProjectId id, ConsortiumUserAccount userAccount, CancellationToken cancellationToken)
     {
         var projectSites = await _projectCrmContext.GetProject(
-            id.ToString(),
+            id.ToGuidAsString(),
             userAccount.UserGlobalId.ToString(),
             userAccount.SelectedOrganisationId().ToString(),
             userAccount.Consortium.GetConsortiumIdAsString(),

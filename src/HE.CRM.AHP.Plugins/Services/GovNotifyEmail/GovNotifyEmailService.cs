@@ -159,8 +159,6 @@ namespace HE.CRM.AHP.Plugins.Services.GovNotifyEmail
             }
         }
 
-        #region !!! Probably not used. To be checked and removed. !!!
-
         public void SendNotifications_COMMON_INVITE_CONTACT_TO_JOIN_ORGANIZATION(EntityReference invitedContactId, EntityReference _inviterContactId, EntityReference organisationId)
         {
             if (invitedContactId != null && _inviterContactId != null && organisationId != null)
@@ -197,6 +195,8 @@ namespace HE.CRM.AHP.Plugins.Services.GovNotifyEmail
                 }
             }
         }
+
+        #region !!! Probably not used. To be checked and removed. !!!
 
         public void SendNotifications_AHP_EXTERNAL_REMINDER_TO_FINALIZE_APPLICATION_REFERRED_BACK(EntityReference ahpApplicationId, EntityReference contactId)
         {

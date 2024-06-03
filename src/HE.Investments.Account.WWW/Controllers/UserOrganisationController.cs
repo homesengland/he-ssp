@@ -147,7 +147,6 @@ public class UserOrganisationController : Controller
     private async Task<List<ActionModel>> UserOrganisationActions(string organisationName)
     {
         var canViewOrganisationDetails = await _accountAccessContext.CanAccessOrganisationView();
-        var canSubmitApplicationAndIsNotLimitedUser = await _accountAccessContext.CanSubmitApplication() && canViewOrganisationDetails;
         var userOrganisationActions = new List<ActionModel>();
         if (canViewOrganisationDetails)
         {
@@ -176,13 +175,13 @@ public class UserOrganisationController : Controller
             HasAccess: true,
             DataTestId: "manage-profile-link"));
 
-        if (await _featureManager.IsEnabledAsync(FeatureFlags.AhpProgram) && canSubmitApplicationAndIsNotLimitedUser)
+        if (await _featureManager.IsEnabledAsync(FeatureFlags.AhpProgram) && canViewOrganisationDetails)
         {
             userOrganisationActions.Add(new(
-                "Add AHP consortium",
+                "Consortium management",
                 "Index",
                 "Consortium",
-                HasAccess: canSubmitApplicationAndIsNotLimitedUser,
+                HasAccess: canViewOrganisationDetails,
                 DataTestId: "manage-consortium-link"));
         }
 
