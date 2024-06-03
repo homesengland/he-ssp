@@ -80,12 +80,12 @@ public class ProgrammeApplicationsRepository : IProgrammeApplicationsRepository
         {
             invln_userid = userAccount.UserGlobalId.ToString(),
             invln_accountid = userAccount.SelectedOrganisationId().ToGuidAsString(),
-            invln_consortiumid = userAccount.Consortium.GetConsortiumIdAsString(),
+            invln_consortiumid = userAccount.Consortium.GetConsortiumIdAsString()?.ToGuidAsString(),
         };
 
         var projects = await _crmService.ExecuteAsync<invln_getahpprojectsRequest, invln_getahpprojectsResponse, PagedResponseDto<AhpProjectDto>>(
             request,
-            r => string.IsNullOrEmpty(r.invln_listOfAhpProjects) ? "[]" : r.invln_listOfAhpProjects,
+            r => r.invln_listOfAhpProjects,
             cancellationToken);
 
         return projects.items.Select(a => new UserAppliance(
