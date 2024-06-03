@@ -10,10 +10,13 @@ using System.Xml.Linq;
 using DataverseModel;
 using HE.Base.Services;
 using HE.CRM.AHP.Plugins.Common;
+using HE.CRM.Common.OptionSetsMapping;
 using HE.CRM.Common.Repositories.interfaces;
 using HE.CRM.Common.Repositories.Interfaces;
 using HE.CRM.Model.CrmSerialiedParameters;
 using Microsoft.Xrm.Sdk;
+using Microsoft.Xrm.Sdk.Messages;
+using Microsoft.Xrm.Sdk.Metadata;
 using static System.Net.Mime.MediaTypeNames;
 
 namespace HE.CRM.AHP.Plugins.Services.GovNotifyEmail
@@ -647,6 +650,13 @@ namespace HE.CRM.AHP.Plugins.Services.GovNotifyEmail
                 {
                     TracingService.Trace("There is no invln_Tenure on ahpApplication. Mail not sent.");
                     return;
+                } else 
+                {
+                    if(TenureMapp.TenureMappToString(ahpApplication.invln_Tenure.Value) == null)
+                    {
+                        TracingService.Trace("There is no invln_Tenure on TenureMappToString. Mail not sent.");
+                        return;
+                    }
                 }
                 if (ahpApplication.invln_fundingrequired == null)
                 {
@@ -671,7 +681,7 @@ namespace HE.CRM.AHP.Plugins.Services.GovNotifyEmail
                         applicationname = ahpApplication.invln_schemename,
                         applicationid = ahpApplication.invln_applicationid,
                         partnername = account.Name,
-                        tenure = ahpApplication.invln_Tenure.Value.ToString(),
+                        tenure = TenureMapp.TenureMappToString(ahpApplication.invln_Tenure.Value),
                         homesenglandfunding = decimal.Round(ahpApplication.invln_fundingrequired.Value, 2).ToString(),
                         homes = ahpApplication.invln_noofhomes.ToString(),
                         providermanagementlead = providerManagementLead.FullName,
