@@ -95,7 +95,6 @@
     "environmentvariablevalue",
     "invln_ahglocalauthorities",
     "invln_ahpcontract",
-    "invln_ahpproject",
     "invln_ahpstatuschange",
     "invln_borrowerpreviousschemes",
     "invln_comment",
@@ -145,7 +144,7 @@
     "systemuser",
     "team"
   ],
-  "entityTypesFolder": "..\\Entities",
+  "entityTypesFolder": "..\\..\\HE.Investments.Common.CRM\\Model\\Entities\\",
   "generateActions": true,
   "generateGlobalOptionSets": true,
   "messageNamesFilter": [
@@ -220,6 +219,7 @@
     "invln_setfrontdoorsite*",
     "invln_sethometype*",
     "invln_setsite*",
+    "invln_siteapplicationget*",
     "invln_updatesingleloanapplication*",
     "invln_updatesinglesitedetails*",
     "invln_updateuserprofile*",
@@ -227,12 +227,12 @@
     "retrieveenvironmentvariablesecretvalue*",
     "retrieveenvironmentvariablevalue*"
   ],
-  "messagesTypesFolder": "..\\Actions",
+  "messagesTypesFolder": "..\\..\\HE.Investments.Common.CRM\\Model\\Actions\\",
   "metadataProviderService": "DLaB.ModelBuilderExtensions.MetadataProviderService,DLaB.ModelBuilderExtensions",
   "metadataQueryProviderService": "DLaB.ModelBuilderExtensions.MetadataQueryProviderService,DLaB.ModelBuilderExtensions",
-  "namespace": "DataverseModel",
+  "namespace": "HE.Investments.Common.CRM.Model",
   "namingService": "DLaB.ModelBuilderExtensions.NamingService,DLaB.ModelBuilderExtensions",
-  "optionSetsTypesFolder": "..\\OptionSets",
+  "optionSetsTypesFolder": "..\\..\\HE.Investments.Common.CRM\\Model\\OptionSets\\",
   "serviceContextName": "DataverseContext",
   "suppressGeneratedCodeAttribute": true,
   "suppressINotifyPattern": false

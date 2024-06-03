@@ -43,55 +43,59 @@ namespace HE.CRM.AHP.Plugins.Services.Consortium
         public bool CheckAccess(Operation operation, RecordType recordtype, string externalUserId, string siteId = null, string applicationId = null, string consortiumId = null, string organizationId = null)
         {
             TracingService.Trace("Get Consortium");
-            var consortium = _consortiumRepository.GetById(new Guid(consortiumId), new string[] {
+            if (consortiumId != null)
+            {
+                var consortium = _consortiumRepository.GetById(new Guid(consortiumId), new string[] {
                     invln_Consortium.Fields.invln_LeadPartner});
 
-            bool isLeadPartner = false;
-            bool isSitePartner = false;
-            bool isAppPartner = false;
+                bool isLeadPartner = false;
+                bool isSitePartner = false;
+                bool isAppPartner = false;
 
-            if (applicationId != null)
-            {
-                TracingService.Trace("Check Access to Application");
-                var application = _ahpApplicationRepository.GetById(new Guid(applicationId),
-                    new string[] {invln_scheme.Fields.invln_DevelopingPartner, invln_scheme.Fields.invln_OwneroftheHomes,
+                if (applicationId != null)
+                {
+                    TracingService.Trace("Check Access to Application");
+                    var application = _ahpApplicationRepository.GetById(new Guid(applicationId),
+                        new string[] {invln_scheme.Fields.invln_DevelopingPartner, invln_scheme.Fields.invln_OwneroftheHomes,
                     invln_scheme.Fields.invln_OwneroftheLand});
-                isLeadPartner = IsConsortiumLeadPartner(consortium, organizationId);
-                isAppPartner = IsApplicationPartner(application, organizationId);
+                    isLeadPartner = IsConsortiumLeadPartner(consortium, organizationId);
+                    isAppPartner = IsApplicationPartner(application, organizationId);
+                }
+
+                if (siteId != null)
+                {
+                    TracingService.Trace("Check Access to Site");
+                    isLeadPartner = IsConsortiumLeadPartner(consortium, organizationId);
+                    isSitePartner = IsOrganizationSitePartner(siteId, organizationId);
+                }
+
+                if (isLeadPartner)
+                    return true;
+                if (isSitePartner && operation == Operation.Get && (recordtype == RecordType.Site
+                    || recordtype == RecordType.Application))
+                {
+                    return true;
+                }
+
+                if (isSitePartner && operation == Operation.Get && (recordtype == RecordType.AHPProject
+                    || recordtype == RecordType.Application))
+                {
+                    return true;
+                }
+
+                if (isAppPartner && operation == Operation.Get && (recordtype == RecordType.Site
+                    || recordtype == RecordType.Application))
+                {
+                    return true;
+                }
+
+                if (isAppPartner && operation == Operation.Get && (recordtype == RecordType.AHPProject
+                    || recordtype == RecordType.Application))
+                {
+                    return true;
+                }
             }
 
-            if (siteId != null)
-            {
-                TracingService.Trace("Check Access to Site");
-                isLeadPartner = IsConsortiumLeadPartner(consortium, organizationId);
-                isSitePartner = IsOrganizationSitePartner(siteId, organizationId);
-            }
-
-            if (isLeadPartner)
-                return true;
-            if (isSitePartner && operation == Operation.Get && (recordtype == RecordType.Site
-                || recordtype == RecordType.Application))
-            {
-                return true;
-            }
-
-            if (isSitePartner && operation == Operation.Get && (recordtype == RecordType.AHPProject
-                || recordtype == RecordType.Application))
-            {
-                return true;
-            }
-
-            if (isAppPartner && operation == Operation.Get && (recordtype == RecordType.Site
-                || recordtype == RecordType.Application))
-            {
-                return true;
-            }
-
-            if (isAppPartner && operation == Operation.Get && (recordtype == RecordType.AHPProject
-                || recordtype == RecordType.Application))
-            {
-                return true;
-            }
             TracingService.Trace("Check web role");
             return UserHasAccess(externalUserId, new Guid(organizationId), siteId, applicationId);
         }

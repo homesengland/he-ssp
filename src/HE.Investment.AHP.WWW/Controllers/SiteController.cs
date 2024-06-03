@@ -119,6 +119,18 @@ public class SiteController : WorkflowController<SiteWorkflowState>
         return View("Start", new StartSiteModel(site.ProjectId, site.Id!));
     }
 
+    [HttpPost("{siteId}/start")]
+    [WorkflowState(SiteWorkflowState.Start)]
+    public async Task<IActionResult> Start(StartSiteModel model, CancellationToken cancellationToken)
+    {
+        return await this.ExecuteCommand<StartSiteModel>(
+            _mediator,
+            new StartSiteCommand(SiteId.From(model.SiteId)),
+            () => ContinueAnswering(model.SiteId, cancellationToken),
+            async () => await Task.FromResult<IActionResult>(View("Start")),
+            cancellationToken);
+    }
+
     [HttpGet("{siteId}/name")]
     [WorkflowState(SiteWorkflowState.Name)]
     public async Task<IActionResult> Name(string siteId, [FromQuery] string? fdProjectId, [FromQuery] string? fdSiteId, CancellationToken cancellationToken)
