@@ -21,7 +21,7 @@ public class ConsortiumCrmRepository : IConsortiumRepository
     {
         var request = new invln_getconsortiumsRequest
         {
-            invln_organisationid = organisationId.Value.ToGuidAsString(),
+            invln_organisationid = organisationId.ToGuidAsString(),
         };
 
         var consortiumsList = await _service.ExecuteAsync<invln_getconsortiumsRequest, invln_getconsortiumsResponse, IList<ConsortiumDto>>(
@@ -33,7 +33,7 @@ public class ConsortiumCrmRepository : IConsortiumRepository
         return consortiumDto.IsProvided() ?
             new ConsortiumBasicInfo(
                 ConsortiumId.From(consortiumDto!.id),
-                consortiumDto.leadPartnerId == organisationId.Value,
+                consortiumDto.leadPartnerId == organisationId.ToGuidAsString(),
                 consortiumDto.members?.Select(x => OrganisationId.From(x.id)).ToList() ?? []) :
             ConsortiumBasicInfo.NoConsortium;
     }
