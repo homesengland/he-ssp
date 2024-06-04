@@ -7,5 +7,5 @@ public interface IProgrammes
 {
     ProgrammeModel GetProgramme(ProgrammeType programmeType);
 
-    string GetApplicationUrl(ProgrammeType programmeType, HeApplianceId applicationId);
+    string GetUrl(ProgrammeType programmeType, HeApplianceId id);
 }
