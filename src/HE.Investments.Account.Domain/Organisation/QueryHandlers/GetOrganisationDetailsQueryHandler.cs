@@ -3,6 +3,7 @@ using HE.Investments.Account.Contract.Organisation.Queries;
 using HE.Investments.Account.Domain.Organisation.Repositories;
 using HE.Investments.Account.Domain.UserOrganisation.Repositories;
 using HE.Investments.Account.Shared;
+using HE.Investments.Consortium.Shared.UserContext;
 using MediatR;
 
 namespace HE.Investments.Account.Domain.Organisation.QueryHandlers;
@@ -11,13 +12,13 @@ public class GetOrganisationDetailsQueryHandler : IRequestHandler<GetOrganisatio
 {
     private readonly IOrganizationRepository _organizationRepository;
 
-    private readonly IAccountUserContext _accountUserContext;
+    private readonly IConsortiumUserContext _accountUserContext;
 
     private readonly IProgrammeApplicationsRepository _applicationsRepository;
 
     public GetOrganisationDetailsQueryHandler(
         IOrganizationRepository organizationRepository,
-        IAccountUserContext accountUserContext,
+        IConsortiumUserContext accountUserContext,
         IProgrammeApplicationsRepository applicationsRepository)
     {
         _organizationRepository = organizationRepository;

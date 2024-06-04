@@ -14,6 +14,7 @@ using HE.Investment.AHP.Domain.UserContext;
 using HE.Investments.Common.Contract.Pagination;
 using HE.Investments.Common.CRM.Mappers;
 using HE.Investments.Common.Infrastructure.Events;
+using HE.Investments.Consortium.Shared.UserContext;
 using HE.Investments.FrontDoor.Shared.Project;
 using HE.Investments.FrontDoor.Shared.Project.Data;
 
@@ -33,7 +34,7 @@ public class ProjectRepository : IProjectRepository
         _eventDispatcher = eventDispatcher;
     }
 
-    public async Task<AhpProjectApplications> GetProjectApplications(FrontDoorProjectId id, AhpUserAccount userAccount, CancellationToken cancellationToken)
+    public async Task<AhpProjectApplications> GetProjectApplications(FrontDoorProjectId id, ConsortiumUserAccount userAccount, CancellationToken cancellationToken)
     {
         var project = await _projectCrmContext.GetProject(
             id.ToGuidAsString(),
@@ -59,7 +60,7 @@ public class ProjectRepository : IProjectRepository
             applications);
     }
 
-    public async Task<AhpProjectSites> GetProjectSites(FrontDoorProjectId id, AhpUserAccount userAccount, CancellationToken cancellationToken)
+    public async Task<AhpProjectSites> GetProjectSites(FrontDoorProjectId id, ConsortiumUserAccount userAccount, CancellationToken cancellationToken)
     {
         var projectSites = await _projectCrmContext.GetProject(
             id.ToGuidAsString(),
@@ -81,7 +82,7 @@ public class ProjectRepository : IProjectRepository
 
     public async Task<PaginationResult<AhpProjectSites>> GetProjects(
         PaginationRequest paginationRequest,
-        AhpUserAccount userAccount,
+        ConsortiumUserAccount userAccount,
         CancellationToken cancellationToken)
     {
         var paging = new PagingRequestDto { pageNumber = paginationRequest.Page, pageSize = paginationRequest.ItemsPerPage };
@@ -99,7 +100,7 @@ public class ProjectRepository : IProjectRepository
             projects.totalItemsCount);
     }
 
-    public async Task<AhpProjectId> CreateProject(ProjectPrefillData frontDoorProject, AhpUserAccount userAccount, CancellationToken cancellationToken)
+    public async Task<AhpProjectId> CreateProject(ProjectPrefillData frontDoorProject, ConsortiumUserAccount userAccount, CancellationToken cancellationToken)
     {
         var projectId = await _projectCrmContext.CreateProject(
             userAccount.UserGlobalId.ToString(),

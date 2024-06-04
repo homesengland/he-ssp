@@ -12,6 +12,7 @@ using HE.Investment.AHP.Domain.Site.Repositories;
 using HE.Investment.AHP.Domain.UserContext;
 using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Contract.Validators;
+using HE.Investments.Consortium.Shared.UserContext;
 using HE.Investments.FrontDoor.Shared.Project;
 using MediatR;
 
@@ -23,19 +24,19 @@ public class CreateApplicationCommandHandler : IRequestHandler<CreateApplication
 
     private readonly ISiteRepository _siteRepository;
 
-    private readonly IAhpUserContext _ahpUserContext;
+    private readonly IConsortiumUserContext _consortiumUserContext;
 
-    public CreateApplicationCommandHandler(IApplicationRepository repository, ISiteRepository siteRepository, IAhpUserContext ahpUserContext)
+    public CreateApplicationCommandHandler(IApplicationRepository repository, ISiteRepository siteRepository, IConsortiumUserContext consortiumUserContext)
     {
         _repository = repository;
         _siteRepository = siteRepository;
-        _ahpUserContext = ahpUserContext;
+        _consortiumUserContext = consortiumUserContext;
     }
 
     public async Task<OperationResult<AhpApplicationId>> Handle(CreateApplicationCommand request, CancellationToken cancellationToken)
     {
         var name = new ApplicationName(request.Name);
-        var account = await _ahpUserContext.GetSelectedAccount();
+        var account = await _consortiumUserContext.GetSelectedAccount();
         if (await _repository.IsNameExist(name, account.SelectedOrganisationId(), cancellationToken))
         {
             throw new FoundException("Name", "There is already an application with this name. Enter a different name");
@@ -55,7 +56,7 @@ public class CreateApplicationCommandHandler : IRequestHandler<CreateApplication
         return new OperationResult<AhpApplicationId>(application.Id);
     }
 
-    private ApplicationPartners GetApplicationPartners(SiteEntity site, AhpUserAccount userAccount)
+    private ApplicationPartners GetApplicationPartners(SiteEntity site, ConsortiumUserAccount userAccount)
     {
         if (userAccount.Consortium.HasNoConsortium)
         {

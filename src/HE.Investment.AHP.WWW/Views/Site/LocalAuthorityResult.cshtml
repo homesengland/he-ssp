@@ -1,7 +1,7 @@
+@using HE.Investment.AHP.WWW.Views.Shared.Components.LocalAuthorityNotListedParagraph
 @using HE.Investment.AHP.WWW.Views.Site.Const
 @using HE.Investments.Common.Contract.Pagination
 @using HE.Investments.Common.WWW.Components.SelectList
-@using HE.Investments.Common.WWW.Models
 @using SelectList = Microsoft.AspNetCore.Mvc.Rendering.SelectList
 @model HE.Investment.AHP.Contract.Site.LocalAuthorities;
 @{
@@ -16,6 +16,13 @@
         Model.Page.CurrentPage,
         Model.Page.ItemsPerPage,
         Model.Page.TotalItems);
+
+    var paragraph = new DynamicComponentViewModel(
+        nameof(LocalAuthorityNotListedParagraph),
+        new
+        {
+            searchOrganisationUrl = @Url.Action("LocalAuthorityReset", "Site", new { siteId = Model.SiteId, workflow })
+        });
 }
 
 <gds-div-grid-column-two-thirds>
@@ -25,8 +32,8 @@
 
     <vc:select-list
         items="@items"
-        paragraph-with-link="@(new ParagraphWithLinkModel("If your local authority is not listed above, your", new LinkModel(new ActionLinkModel("LocalAuthorityReset", "Site", new { siteId = Model.SiteId, workflow }), null!), "Growth Manager can add this for you later."))"
-        paging-navigation-url="@Url.Action("LocalAuthorityResult", "Site", new { siteId = Model.SiteId, localAuthorityCode = Model.LocalAuthorityCode, phrase = Model.Phrase, workflow })"/>
+        paging-navigation-url="@Url.Action("LocalAuthorityResult", "Site", new { siteId = Model.SiteId, localAuthorityCode = Model.LocalAuthorityCode, phrase = Model.Phrase, workflow })"
+        additional-content="@paragraph"/>
 
     <vc:return-to-sites-link is-link-inside-form="false" project-id="@ViewBag.ProjectId" />
     @Html.HiddenFor(c => c.SiteId)

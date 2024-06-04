@@ -7,6 +7,7 @@ using HE.Investments.AHP.Consortium.Domain.Repositories;
 using HE.Investments.AHP.Consortium.Domain.ValueObjects;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Extensions;
+using HE.Investments.Organisation.Contract;
 using HE.Investments.Organisation.Services;
 using HE.Investments.Programme.Contract.Queries;
 using MediatR;

@@ -12,6 +12,7 @@ public static class ServiceCollectionExtensions
 {
     public static void AddOrganisationCrmModule(this IServiceCollection services)
     {
+        services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(ServiceCollectionExtensions).Assembly));
         services.AddCompaniesHouseHttpClient();
         services.AddScoped<IOrganisationSearchService, OrganisationSearchService>();
 

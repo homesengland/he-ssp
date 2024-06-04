@@ -19,4 +19,8 @@
     <ProjectReference Include="..\HE.Investments.TestsUtils\HE.Investments.TestsUtils.csproj"/>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="ApplicationManagement\" />
+  </ItemGroup>
+
 </Project>

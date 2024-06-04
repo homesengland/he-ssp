@@ -17,6 +17,6 @@ public class CompletionDate : DateValueObject
     {
     }
 
-    public static CompletionDate FromDateDetails(bool exists, DateDetails? date) =>
-        new(exists, date?.Day, date?.Month, date?.Year);
+    public static CompletionDate FromDateDetails(DateDetails? date) =>
+        new(date is { IsNotEmpty: true }, date?.Day, date?.Month, date?.Year);
 }

@@ -23,7 +23,7 @@ public class CreateAhpProjectCommandHandlerTests : TestBase<CreateAhpProjectComm
         var userAccount = AhpUserContextTestBuilder
             .New()
             .Register(this)
-            .AhpUserFromMock;
+            .ConsortiumUserFromMock;
 
         var projectRepository = ProjectRepositoryTestBuilder
             .New()

@@ -30,6 +30,6 @@
 
     <vc:select-list
         items="@items"
-        paging-navigation-url="@Url.Action("Select")" />
+        paging-navigation-url="@Url.Action("Select", new { projectId = Model.ProjectId })" />
 
 </div>

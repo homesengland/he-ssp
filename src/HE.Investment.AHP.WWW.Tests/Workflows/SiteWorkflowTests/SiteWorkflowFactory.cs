@@ -29,7 +29,8 @@ public static class SiteWorkflowFactory
         SiteRuralClassification? ruralClassification = null,
         EnvironmentalImpact? environmentalImpact = null,
         SiteModernMethodsOfConstruction? modernMethodsOfConstruction = null,
-        bool isConsortiumMember = false)
+        bool isConsortiumMember = false,
+        bool isUnregisteredBody = false)
     {
         var site = new SiteModel
         {
@@ -50,6 +51,7 @@ public static class SiteWorkflowFactory
             EnvironmentalImpact = environmentalImpact?.Value,
             ModernMethodsOfConstruction = modernMethodsOfConstruction ?? new SiteModernMethodsOfConstruction(),
             IsConsortiumMember = isConsortiumMember,
+            IsUnregisteredBody = isUnregisteredBody,
         };
 
         return new SiteWorkflow(currentSiteWorkflowState, site);

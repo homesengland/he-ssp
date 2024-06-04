@@ -28,7 +28,7 @@ public class RemoveMemberTests
             CancellationToken.None);
 
         // then
-        await removeMember.Should().ThrowAsync<DomainValidationException>();
+        await removeMember.Should().ThrowAsync<DomainValidationException>().WithMessage("Select yes if you want to remove the organisation");
     }
 
     [Fact]

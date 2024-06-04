@@ -1,5 +1,6 @@
 using HE.Investment.AHP.Domain.Config;
 using HE.Investment.AHP.Domain.Tests.Project.TestData;
+using HE.Investments.Programme.Contract.Config;
 using HE.Investments.TestsUtils.TestFramework;
 using Moq;
 

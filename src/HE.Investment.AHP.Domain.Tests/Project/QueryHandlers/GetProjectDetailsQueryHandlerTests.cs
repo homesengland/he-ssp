@@ -21,7 +21,7 @@ public class GetProjectDetailsQueryHandlerTests : TestBase<GetProjectDetailsQuer
         var userAccount = AhpUserContextTestBuilder
             .New()
             .Register(this)
-            .AhpUserFromMock;
+            .ConsortiumUserFromMock;
 
         ProjectRepositoryTestBuilder
             .New()
@@ -65,7 +65,7 @@ public class GetProjectDetailsQueryHandlerTests : TestBase<GetProjectDetailsQuer
         var userAccount = AhpUserContextTestBuilder
             .New()
             .Register(this)
-            .AhpUserFromMock;
+            .ConsortiumUserFromMock;
 
         ProjectRepositoryTestBuilder
             .New()
@@ -105,7 +105,7 @@ public class GetProjectDetailsQueryHandlerTests : TestBase<GetProjectDetailsQuer
         var userAccount = AhpUserContextTestBuilder
             .New()
             .Register(this)
-            .AhpUserFromMock;
+            .ConsortiumUserFromMock;
 
         ProjectRepositoryTestBuilder
             .New()

@@ -5,6 +5,7 @@ using HE.Investment.AHP.Domain.Project.Repositories;
 using HE.Investment.AHP.Domain.UserContext;
 using HE.Investments.Common.Contract.Pagination;
 using HE.Investments.Common.Extensions;
+using HE.Investments.Consortium.Shared.UserContext;
 using MediatR;
 
 namespace HE.Investment.AHP.Domain.Project.QueryHandlers;
@@ -13,9 +14,9 @@ public class GetProjectSitesQueryHandler : IRequestHandler<GetProjectSitesQuery,
 {
     private readonly IProjectRepository _projectRepository;
 
-    private readonly IAhpUserContext _userContext;
+    private readonly IConsortiumUserContext _userContext;
 
-    public GetProjectSitesQueryHandler(IProjectRepository projectRepository, IAhpUserContext userContext)
+    public GetProjectSitesQueryHandler(IProjectRepository projectRepository, IConsortiumUserContext userContext)
     {
         _projectRepository = projectRepository;
         _userContext = userContext;
