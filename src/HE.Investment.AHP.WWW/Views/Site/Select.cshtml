@@ -19,7 +19,7 @@
         Model.Sites.TotalItems);
 }
  <div class="govuk-grid-column-full">
-    <vc:back-link-with-callback url="@Url.Action("Start", "Application")"/>
+    <vc:back-link-with-callback url="@Url.Action("Start", "Application", new { projectId = Model.ProjectId.Value })"/>
 
     <vc:page-header title="@SitePageTitles.SiteSelect"/>
 
@@ -30,8 +30,6 @@
 
     <vc:select-list
         items="@items"
-        paging-navigation-url="@Url.Action("Select")"
-        add-action-text="Add a new site"
-        add-action-url="@Url.Action("Start")"/>
+        paging-navigation-url="@Url.Action("Select", new { projectId = Model.ProjectId })" />
 
 </div>

@@ -17,6 +17,6 @@ public class StartOnSiteDate : DateValueObject
     {
     }
 
-    public static StartOnSiteDate FromDateDetails(bool exists, DateDetails? date) =>
-        new(exists, date?.Day, date?.Month, date?.Year);
+    public static StartOnSiteDate FromDateDetails(DateDetails? date) =>
+        new(date is { IsNotEmpty: true }, date?.Day, date?.Month, date?.Year);
 }

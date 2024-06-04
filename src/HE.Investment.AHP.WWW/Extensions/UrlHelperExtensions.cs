@@ -18,12 +18,12 @@ public static class UrlHelperExtensions
         };
     }
 
-    public static IActionResult RedirectToSitesList(this IUrlHelper urlHelper)
+    public static IActionResult RedirectToSitesList(this IUrlHelper urlHelper, string projectId)
     {
         return new RedirectToActionResult(
             nameof(SiteController.Index),
             new ControllerName(nameof(SiteController)).WithoutPrefix(),
-            null,
+            new { projectId },
             null)
         {
             UrlHelper = urlHelper,

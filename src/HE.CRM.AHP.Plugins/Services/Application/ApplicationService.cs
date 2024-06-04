@@ -459,6 +459,12 @@ namespace HE.CRM.AHP.Plugins.Services.Application
                 case (int)invln_scheme_StatusCode.UnderReviewInAssessment:
                     return new OptionSetValue((int)invln_ExternalStatusAHP.UnderReview);
 
+                case (int)invln_scheme_StatusCode.UnderReviewGoingToBidClinic:
+                    return new OptionSetValue((int)invln_ExternalStatusAHP.UnderReview);
+
+                case (int)invln_scheme_StatusCode.UnderReviewGoingToCMEModeration:
+                    return new OptionSetValue((int)invln_ExternalStatusAHP.UnderReview);
+
                 case (int)invln_scheme_StatusCode.UnderReviewGoingToSLT:
                     return new OptionSetValue((int)invln_ExternalStatusAHP.UnderReview);
 

@@ -35,7 +35,7 @@ public class DeliveryPhaseCrmMapper : IDeliveryPhaseCrmMapper
                 dto.acquisitionPercentageValue != null ? new WholePercentage(dto.acquisitionPercentageValue.Value) : null,
                 dto.startOnSitePercentageValue != null ? new WholePercentage(dto.startOnSitePercentageValue.Value) : null,
                 dto.completionPercentageValue != null ? new WholePercentage(dto.completionPercentageValue.Value) : null),
-            new MilestonesTranches(
+            new MilestonesCalculatedTranches(
                 dto.sumOfCalculatedFounds,
                 dto.acquisitionValue,
                 dto.startOnSiteValue,

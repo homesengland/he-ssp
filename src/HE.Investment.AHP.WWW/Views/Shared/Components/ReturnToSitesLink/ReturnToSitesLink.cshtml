@@ -1,7 +1,7 @@
 @using HE.Investments.Common.Messages
 @using HE.Investments.Common.WWW.Components.LinkWorkingAsButton
 
-@model (bool isEditable, bool isLinkInsideForm)
+@model (string projectId, bool isEditable, bool isLinkInsideForm)
 
 <div>
     @if (Model is { isEditable: true, isLinkInsideForm: true })
@@ -11,14 +11,14 @@
     else if (Model is {  isEditable: true, isLinkInsideForm: false })
     {
         <gds-link class="govuk-link--no-visited-state"
-                  href="@Url.Action("Index", "Site")">
+                  href="@Url.Action("Index", "Site", new { Model.projectId })">
             Save and return to sites
         </gds-link>
     }
     else
     {
         <gds-link class="govuk-link--no-visited-state"
-                  href="@Url.Action("Index", "Site")">
+                  href="@Url.Action("Index", "Site", new { Model.projectId })">
             Return to sites
         </gds-link>
     }

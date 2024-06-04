@@ -5,6 +5,7 @@ using HE.Investments.AHP.Consortium.Contract.Enums;
 using HE.Investments.AHP.Consortium.Contract.Queries;
 using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Contract.Pagination;
+using HE.Investments.Consortium.Shared.UserContext;
 using MediatR;
 
 namespace HE.Investment.AHP.Domain.Common.QueryHandlers;
@@ -13,17 +14,17 @@ public class GetConsortiumMembersQueryHandler : IRequestHandler<GetConsortiumMem
 {
     private readonly IMediator _mediator;
 
-    private readonly IAhpUserContext _ahpUserContext;
+    private readonly IConsortiumUserContext _consortiumUserContext;
 
-    public GetConsortiumMembersQueryHandler(IMediator mediator, IAhpUserContext ahpUserContext)
+    public GetConsortiumMembersQueryHandler(IMediator mediator, IConsortiumUserContext consortiumUserContext)
     {
         _mediator = mediator;
-        _ahpUserContext = ahpUserContext;
+        _consortiumUserContext = consortiumUserContext;
     }
 
     public async Task<PaginationResult<ConsortiumMemberDetails>> Handle(GetConsortiumMembersQuery request, CancellationToken cancellationToken)
     {
-        var userAccount = await _ahpUserContext.GetSelectedAccount();
+        var userAccount = await _consortiumUserContext.GetSelectedAccount();
         if (userAccount.Consortium.HasNoConsortium)
         {
             throw new NotFoundException(nameof(userAccount.Consortium));

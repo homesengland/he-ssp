@@ -10,6 +10,7 @@ using HE.Investments.FrontDoor.Domain.Services.Strategies;
 using HE.Investments.FrontDoor.Domain.Site.Crm;
 using HE.Investments.FrontDoor.Domain.Site.Repository;
 using HE.Investments.FrontDoor.Shared.Config;
+using HE.Investments.Programme.Contract.Config;
 using MediatR.Pipeline;
 using Microsoft.Extensions.DependencyInjection;
 

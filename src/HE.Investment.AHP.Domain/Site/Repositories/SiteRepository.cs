@@ -14,6 +14,7 @@ using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Contract.Pagination;
 using HE.Investments.Common.CRM.Mappers;
 using HE.Investments.Common.Extensions;
+using HE.Investments.Consortium.Shared.UserContext;
 
 namespace HE.Investment.AHP.Domain.Site.Repositories;
 
@@ -60,7 +61,7 @@ public class SiteRepository : ISiteRepository
         return SiteDtoToSiteEntityMapper.Map(site);
     }
 
-    public async Task<PaginationResult<ApplicationBasicDetails>> GetSiteApplications(SiteId siteId, AhpUserAccount userAccount, PaginationRequest paginationRequest, CancellationToken cancellationToken)
+    public async Task<PaginationResult<ApplicationBasicDetails>> GetSiteApplications(SiteId siteId, ConsortiumUserAccount userAccount, PaginationRequest paginationRequest, CancellationToken cancellationToken)
     {
         var siteApplications = await _siteCrmContext.GetSiteApplications(
             siteId.ToGuidAsString(),

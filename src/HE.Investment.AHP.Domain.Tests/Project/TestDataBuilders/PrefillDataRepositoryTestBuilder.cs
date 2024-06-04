@@ -1,4 +1,5 @@
 using HE.Investment.AHP.Domain.UserContext;
+using HE.Investments.Consortium.Shared.UserContext;
 using HE.Investments.FrontDoor.Shared.Project;
 using HE.Investments.FrontDoor.Shared.Project.Data;
 using HE.Investments.FrontDoor.Shared.Project.Repositories;
@@ -20,7 +21,7 @@ public class PrefillDataRepositoryTestBuilder
 
     public PrefillDataRepositoryTestBuilder ReturnProjectPrefillData(
         FrontDoorProjectId fdProjectId,
-        AhpUserAccount userAccount,
+        ConsortiumUserAccount userAccount,
         ProjectPrefillData projectPrefillData)
     {
         _mock.Setup(x => x.GetProjectPrefillData(fdProjectId, userAccount, CancellationToken.None)).ReturnsAsync(projectPrefillData);

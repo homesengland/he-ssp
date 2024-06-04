@@ -3,6 +3,7 @@ using HE.Investment.AHP.Domain.Config;
 using HE.Investments.AHP.Consortium.Domain.Crm;
 using HE.Investments.Common.Contract;
 using HE.Investments.IntegrationTestsFramework.Auth;
+using HE.Investments.Programme.Contract.Config;
 
 namespace HE.Investments.AHP.IntegrationTests.Crm;
 

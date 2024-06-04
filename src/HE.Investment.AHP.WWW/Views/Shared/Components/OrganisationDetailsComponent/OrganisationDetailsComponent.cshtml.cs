@@ -1,11 +1,12 @@
 using HE.Investments.Common.WWW.Components;
+using HE.Investments.Organisation.Contract;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HE.Investment.AHP.WWW.Views.Shared.Components.OrganisationDetailsComponent;
 
 public class OrganisationDetailsComponent : ViewComponent
 {
-    public static DynamicComponentViewModel FromOrganisationDetails(HE.Investments.AHP.Consortium.Contract.OrganisationDetails organisation)
+    public static DynamicComponentViewModel FromOrganisationDetails(OrganisationDetails organisation)
     {
         return new DynamicComponentViewModel(
             nameof(OrganisationDetailsComponent),

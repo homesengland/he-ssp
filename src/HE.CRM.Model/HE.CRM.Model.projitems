@@ -85,6 +85,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_setfrontdoorsite.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_sethometype.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_setsite.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_siteapplicationGet.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_updatesingleloanapplication.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_updatesinglesitedetails.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_updateuserprofile.cs" />
@@ -94,6 +95,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Actions\UpsertMultiple.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CrmSerialiedParameters\AHP_DELIVERY_PHASE_NOTIFICATION_OF_ADDITIONAL_PAYMENTS_FOR_PHASE.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)crmserialiedparameters\AHP_DELIVERY_PHASE_NOTIFICATION_OF_ADJUSTMENT_ACCEPTED.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CrmSerialiedParameters\AHP_EXTERNAL_APPLICATION_APPROVED_OUTCOME.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CrmSerialiedParameters\AHP_EXTERNAL_APPLICATION_ON_HOLD.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CrmSerialiedParameters\AHP_EXTERNAL_APPLICATION_REFERRED_BACK_TO_APPLICANT.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CrmSerialiedParameters\AHP_EXTERNAL_APPLICATION_REJECTED.cs" />
@@ -215,6 +217,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\convert_campaign_response_to_lead_disqualify_status.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\convert_campaign_response_to_lead_option.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\convert_campaign_response_to_lead_qualify_status.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OptionSets\copilotexamplequestiontknowledgetype.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\CustomAPIFieldType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\delete_recurringappointmentmaster.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\DependencyType.cs" />

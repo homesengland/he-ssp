@@ -6,6 +6,7 @@ using HE.Investment.AHP.Domain.Site.ValueObjects;
 using HE.Investment.AHP.Domain.UserContext;
 using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Extensions;
+using HE.Investments.Consortium.Shared.UserContext;
 using MediatR;
 
 namespace HE.Investment.AHP.Domain.Site.CommandHandlers;
@@ -14,17 +15,17 @@ public class ProvideNameCommandHandler : IRequestHandler<ProvideNameCommand, Ope
 {
     private readonly ISiteRepository _siteRepository;
 
-    private readonly IAhpUserContext _ahpUserContext;
+    private readonly IConsortiumUserContext _consortiumUserContext;
 
-    public ProvideNameCommandHandler(ISiteRepository siteRepository, IAhpUserContext ahpUserContext)
+    public ProvideNameCommandHandler(ISiteRepository siteRepository, IConsortiumUserContext consortiumUserContext)
     {
         _siteRepository = siteRepository;
-        _ahpUserContext = ahpUserContext;
+        _consortiumUserContext = consortiumUserContext;
     }
 
     public async Task<OperationResult<SiteId>> Handle(ProvideNameCommand request, CancellationToken cancellationToken)
     {
-        var userAccount = await _ahpUserContext.GetSelectedAccount();
+        var userAccount = await _consortiumUserContext.GetSelectedAccount();
         var site = request.SiteId.IsProvided()
             ? await _siteRepository.GetSite(request.SiteId!, userAccount, cancellationToken)
             : SiteEntity.NewSite(userAccount, request.FrontDoorProjectId, request.FrontDoorSiteId);

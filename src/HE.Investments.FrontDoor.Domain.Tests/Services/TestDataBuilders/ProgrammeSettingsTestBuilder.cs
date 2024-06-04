@@ -1,4 +1,5 @@
 using HE.Investments.FrontDoor.Domain.Config;
+using HE.Investments.Programme.Contract.Config;
 using HE.Investments.TestsUtils.TestFramework;
 using Moq;
 

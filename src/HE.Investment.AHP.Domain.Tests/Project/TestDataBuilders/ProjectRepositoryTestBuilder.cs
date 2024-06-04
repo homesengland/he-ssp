@@ -3,6 +3,7 @@ using HE.Investment.AHP.Domain.Project.Repositories;
 using HE.Investment.AHP.Domain.Project.ValueObjects;
 using HE.Investment.AHP.Domain.UserContext;
 using HE.Investments.Common.Contract.Pagination;
+using HE.Investments.Consortium.Shared.UserContext;
 using HE.Investments.FrontDoor.Shared.Project;
 using HE.Investments.FrontDoor.Shared.Project.Data;
 using HE.Investments.TestsUtils.TestFramework;
@@ -23,7 +24,7 @@ public class ProjectRepositoryTestBuilder
 
     public ProjectRepositoryTestBuilder ReturnProjectApplications(
         FrontDoorProjectId fdProjectId,
-        AhpUserAccount userAccount,
+        ConsortiumUserAccount userAccount,
         AhpProjectApplications ahpProjectApplications)
     {
         _mock.Setup(x => x.GetProjectApplications(fdProjectId, userAccount, CancellationToken.None)).ReturnsAsync(ahpProjectApplications);
@@ -32,7 +33,7 @@ public class ProjectRepositoryTestBuilder
 
     public ProjectRepositoryTestBuilder ReturnProjectSites(
         FrontDoorProjectId fdProjectId,
-        AhpUserAccount userAccount,
+        ConsortiumUserAccount userAccount,
         AhpProjectSites ahpProjectSites)
     {
         _mock.Setup(x => x.GetProjectSites(fdProjectId, userAccount, CancellationToken.None)).ReturnsAsync(ahpProjectSites);
@@ -41,7 +42,7 @@ public class ProjectRepositoryTestBuilder
 
     public ProjectRepositoryTestBuilder ReturnProjectsList(
         PaginationRequest pagination,
-        AhpUserAccount userAccount,
+        ConsortiumUserAccount userAccount,
         PaginationResult<AhpProjectSites> ahpProjectSites)
     {
         _mock.Setup(x => x.GetProjects(pagination, userAccount, CancellationToken.None)).ReturnsAsync(ahpProjectSites);
@@ -50,7 +51,7 @@ public class ProjectRepositoryTestBuilder
 
     public ProjectRepositoryTestBuilder CreateProject(
         ProjectPrefillData projectPrefillData,
-        AhpUserAccount userAccount,
+        ConsortiumUserAccount userAccount,
         AhpProjectId ahpProjectId)
     {
         _mock.Setup(x => x.CreateProject(projectPrefillData, userAccount, CancellationToken.None)).ReturnsAsync(ahpProjectId);

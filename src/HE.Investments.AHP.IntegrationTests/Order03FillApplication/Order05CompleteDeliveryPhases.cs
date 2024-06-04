@@ -301,7 +301,7 @@ public class Order05CompleteDeliveryPhases : AhpIntegrationTest
         // when
         var deliveryPhasesListPage = await TestClient.SubmitButton(
             continueButton,
-            ("IsCompleted", "Yes"));
+            ("IsSectionCompleted", "Yes"));
 
         // then
         deliveryPhasesListPage

@@ -19,6 +19,7 @@ using HE.Investments.Common.Domain;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Infrastructure.Events;
 using HE.Investments.FrontDoor.Shared.Project;
+using HE.Investments.Programme.Contract.Config;
 
 namespace HE.Investment.AHP.Domain.Application.Repositories;
 
@@ -155,7 +156,7 @@ public class ApplicationRepository : IApplicationRepository
             : null;
 
         return new ApplicationEntity(
-            new FrontDoorProjectId(application.fdProjectId),
+            FrontDoorProjectId.From(application.fdProjectId),
             string.IsNullOrEmpty(application.siteId) ? SiteId.New() : SiteId.From(application.siteId),
             AhpApplicationId.From(application.id),
             new ApplicationName(application.name ?? "Unknown"),
@@ -184,7 +185,7 @@ public class ApplicationRepository : IApplicationRepository
         var otherApplicationCosts = OtherApplicationCostsMapper.MapToOtherApplicationCosts(ahpApplicationDto);
 
         return new ApplicationWithFundingDetails(
-            new FrontDoorProjectId(ahpApplicationDto.fdProjectId),
+            FrontDoorProjectId.From(ahpApplicationDto.fdProjectId),
             string.IsNullOrEmpty(ahpApplicationDto.siteId) ? SiteId.New() : SiteId.From(ahpApplicationDto.siteId),
             AhpApplicationId.From(ahpApplicationDto.id),
             ahpApplicationDto.name,

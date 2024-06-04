@@ -30,7 +30,7 @@ public class GetProjectsTests : TestBase<ProjectRepository>
         var userAccount = AhpUserContextTestBuilder
             .New()
             .Register(this)
-            .AhpUserFromMock;
+            .ConsortiumUserFromMock;
 
         var paginationRequest = new PaginationRequest(1);
 
@@ -64,7 +64,7 @@ public class GetProjectsTests : TestBase<ProjectRepository>
         var userAccount = AhpUserContextTestBuilder
             .New()
             .Register(this)
-            .AhpUserFromMock;
+            .ConsortiumUserFromMock;
 
         var paginationRequest = new PaginationRequest(1);
 

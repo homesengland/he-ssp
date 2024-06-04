@@ -8,10 +8,12 @@ using HE.Investment.AHP.Domain.Site.ValueObjects.Planning;
 using HE.Investment.AHP.Domain.Site.ValueObjects.StrategicSite;
 using HE.Investment.AHP.Domain.Site.ValueObjects.TenderingStatus;
 using HE.Investment.AHP.Domain.UserContext;
+using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Messages;
+using HE.Investments.Consortium.Shared.UserContext;
 using HE.Investments.FrontDoor.Shared.Project;
 using LocalAuthority = HE.Investments.Organisation.LocalAuthorities.ValueObjects.LocalAuthority;
 using Section106 = HE.Investment.AHP.Domain.Site.ValueObjects.Section106;
@@ -116,7 +118,7 @@ public class SiteEntity : DomainEntity, IQuestion
 
     public bool IsModified => _modificationTracker.IsModified;
 
-    public static SiteEntity NewSite(AhpUserAccount userAccount, FrontDoorProjectId projectId, FrontDoorSiteId? siteId)
+    public static SiteEntity NewSite(ConsortiumUserAccount userAccount, FrontDoorProjectId projectId, FrontDoorSiteId? siteId)
     {
         var sitePartners = userAccount.Consortium.HasNoConsortium
             ? SitePartners.SinglePartner(userAccount.SelectedOrganisation())
@@ -174,6 +176,16 @@ public class SiteEntity : DomainEntity, IQuestion
     public void ProvideNumberOfGreenLights(NumberOfGreenLights? numberOfGreenLights)
     {
         NumberOfGreenLights = _modificationTracker.Change(NumberOfGreenLights, numberOfGreenLights, MarkAsNotCompleted);
+    }
+
+    public void InitializeSitePartner(bool isConsortiumMember, OrganisationBasicInfo userOrganisation)
+    {
+        if (isConsortiumMember || SitePartners.IsAnswered())
+        {
+            return;
+        }
+
+        ProvideSitePartners(SitePartners.SinglePartner(userOrganisation));
     }
 
     public void ProvideSitePartners(SitePartners sitePartners)
@@ -237,7 +249,7 @@ public class SiteEntity : DomainEntity, IQuestion
     {
         if (isSectionCompleted == IsSectionCompleted.Undefied)
         {
-            OperationResult.New().AddValidationError(nameof(IsSectionCompleted), "Select whether you have completed this section").CheckErrors();
+            OperationResult.ThrowValidationError(nameof(IsSectionCompleted), ValidationErrorMessage.NoCheckAnswers);
         }
 
         if (isSectionCompleted == IsSectionCompleted.No)
@@ -248,9 +260,7 @@ public class SiteEntity : DomainEntity, IQuestion
 
         if (!IsAnswered())
         {
-            OperationResult.New()
-                .AddValidationError(nameof(IsSectionCompleted), ValidationErrorMessage.SectionIsNotCompleted)
-                .CheckErrors();
+            OperationResult.ThrowValidationError(nameof(IsSectionCompleted), ValidationErrorMessage.SectionIsNotCompleted);
         }
 
         Status = _modificationTracker.Change(Status, SiteStatus.Submitted);

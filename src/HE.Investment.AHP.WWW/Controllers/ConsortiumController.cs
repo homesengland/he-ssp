@@ -1,4 +1,3 @@
-using HE.Investment.AHP.Domain.UserContext;
 using HE.Investment.AHP.WWW.Models.Consortium;
 using HE.Investment.AHP.WWW.Workflows;
 using HE.Investments.Account.Shared.Authorization.Attributes;
@@ -8,6 +7,7 @@ using HE.Investments.AHP.Consortium.Contract.Queries;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Validators;
 using HE.Investments.Common.WWW.Routing;
+using HE.Investments.Consortium.Shared.UserContext;
 using HE.Investments.Programme.Contract;
 using HE.Investments.Programme.Contract.Enums;
 using HE.Investments.Programme.Contract.Queries;
@@ -17,17 +17,17 @@ using Microsoft.AspNetCore.Mvc;
 namespace HE.Investment.AHP.WWW.Controllers;
 
 [Route("consortium")]
-[AuthorizeWithCompletedProfile(AhpAccessContext.ViewConsortium)]
+[AuthorizeWithCompletedProfile(ConsortiumAccessContext.ViewConsortium)]
 public class ConsortiumController : WorkflowController<ConsortiumWorkflowState>
 {
     private readonly IMediator _mediator;
 
-    private readonly IAhpAccessContext _ahpAccessContext;
+    private readonly IConsortiumAccessContext _consortiumAccessContext;
 
-    public ConsortiumController(IMediator mediator, IAhpAccessContext ahpAccessContext)
+    public ConsortiumController(IMediator mediator, IConsortiumAccessContext consortiumAccessContext)
     {
         _mediator = mediator;
-        _ahpAccessContext = ahpAccessContext;
+        _consortiumAccessContext = consortiumAccessContext;
     }
 
     [HttpGet]
@@ -35,12 +35,12 @@ public class ConsortiumController : WorkflowController<ConsortiumWorkflowState>
     public async Task<IActionResult> Index()
     {
         var consortiumsList = await _mediator.Send(new GetConsortiumsListQuery());
-        return View((consortiumsList, await _ahpAccessContext.CanManageConsortium()));
+        return View((consortiumsList, await _consortiumAccessContext.CanManageConsortium()));
     }
 
     [HttpGet("start")]
     [WorkflowState(ConsortiumWorkflowState.Start)]
-    [AuthorizeWithCompletedProfile(AhpAccessContext.ManageConsortium)]
+    [AuthorizeWithCompletedProfile(ConsortiumAccessContext.ManageConsortium)]
     public IActionResult Start()
     {
         return View();
@@ -48,7 +48,7 @@ public class ConsortiumController : WorkflowController<ConsortiumWorkflowState>
 
     [HttpGet("programme")]
     [WorkflowState(ConsortiumWorkflowState.Programme)]
-    [AuthorizeWithCompletedProfile(AhpAccessContext.ManageConsortium)]
+    [AuthorizeWithCompletedProfile(ConsortiumAccessContext.ManageConsortium)]
     public async Task<IActionResult> Programme(CancellationToken cancellationToken)
     {
         var availableProgrammes = await _mediator.Send(new GetProgrammesQuery(ProgrammeType.Ahp), cancellationToken);
@@ -57,7 +57,7 @@ public class ConsortiumController : WorkflowController<ConsortiumWorkflowState>
 
     [HttpPost("programme")]
     [WorkflowState(ConsortiumWorkflowState.Programme)]
-    [AuthorizeWithCompletedProfile(AhpAccessContext.ManageConsortium)]
+    [AuthorizeWithCompletedProfile(ConsortiumAccessContext.ManageConsortium)]
     public async Task<IActionResult> ProgrammePost(SelectProgramme model, CancellationToken cancellationToken)
     {
         var result = await _mediator.Send(

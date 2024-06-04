@@ -3,7 +3,9 @@ using HE.Investment.AHP.Contract.HomeTypes.Enums;
 using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Domain.HomeTypes.Attributes;
 using HE.Investments.Common.Contract.Enum;
+using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Domain;
+using HE.Investments.Common.Extensions;
 
 namespace HE.Investment.AHP.Domain.HomeTypes.Entities;
 
@@ -47,29 +49,13 @@ public class ModernMethodsConstructionSegmentEntity : DomainEntity, IHomeTypeSeg
 
         if (ModernMethodsConstructionApplied == YesNoType.No)
         {
-            ChangeModernMethodsConstructionCategories(Enumerable.Empty<ModernMethodsConstructionCategoriesType>());
+            ChangeModernMethodsConstructionCategories(Enumerable.Empty<ModernMethodsConstructionCategoriesType>(), true);
         }
     }
 
     public void ChangeModernMethodsConstructionCategories(IEnumerable<ModernMethodsConstructionCategoriesType> modernMethodsConstructionCategories)
     {
-        var uniqueModernMethodsConstructionCategories = modernMethodsConstructionCategories.Distinct().ToList();
-
-        if (!ModernMethodsConstructionCategories.SequenceEqual(uniqueModernMethodsConstructionCategories))
-        {
-            ModernMethodsConstructionCategories = uniqueModernMethodsConstructionCategories;
-            _modificationTracker.MarkAsModified();
-        }
-
-        if (!ModernMethodsConstructionCategories.Contains(ModernMethodsConstructionCategoriesType.Category1PreManufacturing3DPrimaryStructuralSystems))
-        {
-            ChangeModernMethodsConstruction3DSubcategories(Enumerable.Empty<ModernMethodsConstruction3DSubcategoriesType>());
-        }
-
-        if (!ModernMethodsConstructionCategories.Contains(ModernMethodsConstructionCategoriesType.Category2PreManufacturing2DPrimaryStructuralSystems))
-        {
-            ChangeModernMethodsConstruction2DSubcategories(Enumerable.Empty<ModernMethodsConstruction2DSubcategoriesType>());
-        }
+        ChangeModernMethodsConstructionCategories(modernMethodsConstructionCategories, false);
     }
 
     public void ChangeModernMethodsConstruction2DSubcategories(IEnumerable<ModernMethodsConstruction2DSubcategoriesType> modernMethodsConstruction2DSubcategories)
@@ -134,6 +120,33 @@ public class ModernMethodsConstructionSegmentEntity : DomainEntity, IHomeTypeSeg
         if (ModernMethodsConstructionCategories.Contains(ModernMethodsConstructionCategoriesType.Category2PreManufacturing2DPrimaryStructuralSystems))
         {
             yield return () => ModernMethodsConstruction2DSubcategories.Count != 0;
+        }
+    }
+
+    private void ChangeModernMethodsConstructionCategories(
+        IEnumerable<ModernMethodsConstructionCategoriesType> modernMethodsConstructionCategories,
+        bool allowEmpty)
+    {
+        var uniqueModernMethodsConstructionCategories = modernMethodsConstructionCategories.Distinct().ToList();
+        if (uniqueModernMethodsConstructionCategories.IsEmpty() && !allowEmpty)
+        {
+            OperationResult.ThrowValidationError("ModernMethodsConstructionCategories", "Select which MMC categories you have used on this home type");
+        }
+
+        if (!ModernMethodsConstructionCategories.SequenceEqual(uniqueModernMethodsConstructionCategories))
+        {
+            ModernMethodsConstructionCategories = uniqueModernMethodsConstructionCategories;
+            _modificationTracker.MarkAsModified();
+        }
+
+        if (!ModernMethodsConstructionCategories.Contains(ModernMethodsConstructionCategoriesType.Category1PreManufacturing3DPrimaryStructuralSystems))
+        {
+            ChangeModernMethodsConstruction3DSubcategories(Enumerable.Empty<ModernMethodsConstruction3DSubcategoriesType>());
+        }
+
+        if (!ModernMethodsConstructionCategories.Contains(ModernMethodsConstructionCategoriesType.Category2PreManufacturing2DPrimaryStructuralSystems))
+        {
+            ChangeModernMethodsConstruction2DSubcategories(Enumerable.Empty<ModernMethodsConstruction2DSubcategoriesType>());
         }
     }
 }

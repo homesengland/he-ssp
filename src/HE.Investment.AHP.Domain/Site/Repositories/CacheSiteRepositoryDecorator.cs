@@ -10,6 +10,7 @@ using HE.Investments.Account.Shared.User;
 using HE.Investments.Common.Contract.Pagination;
 using HE.Investments.Common.Infrastructure.Cache;
 using HE.Investments.Common.Infrastructure.Cache.Interfaces;
+using HE.Investments.Consortium.Shared.UserContext;
 using HE.Investments.FrontDoor.Shared.Project;
 
 namespace HE.Investment.AHP.Domain.Site.Repositories;
@@ -50,7 +51,7 @@ internal sealed class CacheSiteRepositoryDecorator : ISiteRepository
         return await _decorated.GetSite(siteId, userAccount, cancellationToken);
     }
 
-    public async Task<PaginationResult<ApplicationBasicDetails>> GetSiteApplications(SiteId siteId, AhpUserAccount userAccount, PaginationRequest paginationRequest, CancellationToken cancellationToken)
+    public async Task<PaginationResult<ApplicationBasicDetails>> GetSiteApplications(SiteId siteId, ConsortiumUserAccount userAccount, PaginationRequest paginationRequest, CancellationToken cancellationToken)
     {
         return await _decorated.GetSiteApplications(siteId, userAccount, paginationRequest, cancellationToken);
     }

@@ -7,6 +7,7 @@ using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Extensions;
+using HE.Investments.Common.Messages;
 
 namespace HE.Investment.AHP.Domain.HomeTypes.Entities;
 
@@ -83,7 +84,7 @@ public class HomeTypesEntity
     {
         if (finishAnswer == FinishHomeTypesAnswer.Undefined)
         {
-            OperationResult.New().AddValidationError(nameof(finishAnswer), "Select whether you have completed this section").CheckErrors();
+            OperationResult.ThrowValidationError(nameof(finishAnswer), ValidationErrorMessage.NoCheckAnswers);
         }
 
         if (finishAnswer == FinishHomeTypesAnswer.Yes)

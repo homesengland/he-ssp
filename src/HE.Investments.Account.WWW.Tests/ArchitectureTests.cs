@@ -11,11 +11,11 @@ public class ArchitectureTests
     {
         get
         {
-            yield return new object[] { typeof(Program).Assembly };
-            yield return new object[] { typeof(Domain.Config.AccountModule).Assembly };
-            yield return new object[] { typeof(Contract.User.UserProfileDetails).Assembly };
-            yield return new object[] { typeof(Api.Contract.User.AccountDetails).Assembly };
-            yield return new object[] { typeof(Shared.AccountAccessContext).Assembly };
+            yield return [typeof(Program).Assembly];
+            yield return [typeof(Domain.Config.AccountModule).Assembly];
+            yield return [typeof(Contract.User.UserProfileDetails).Assembly];
+            yield return [typeof(Api.Contract.User.AccountDetails).Assembly];
+            yield return [typeof(Shared.AccountAccessContext).Assembly];
         }
     }
 
