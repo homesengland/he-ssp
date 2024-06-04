@@ -614,18 +614,71 @@ namespace HE.CRM.AHP.Plugins.Services.Application
                 throw new Exception($"Site {site.Id} has no set invln_GovernmentOfficeRegion");
             }
 
-            var typeOfHousing = GetHomeTypes(application.Id).Select(x => (invln_Typeofhousing)x.invln_typeofhousing.Value).ToList();
+            var homeTypes = GetHomeTypes(application.Id);
 
-            var tenure = MapApplicationTenureToRegionalBenchmarkTenure((invln_Tenure)application.invln_Tenure.Value, typeOfHousing);
+            var areHousingForDisabledVulnerableOrOlderPeople = homeTypes
+                .Any(x => x.invln_typeofhousing.Value == (int)invln_Typeofhousing.Housingfordisabledandvulnerablepeople || x.invln_typeofhousing.Value == (int)invln_Typeofhousing.Housingforolderpeople);
 
-            var grantBenchmark = grantbenchmarkRepository.GetRegionalBenchmarkGrantPerUnit(
+            var tenure = MapApplicationTenureToRegionalBenchmarkTenure((invln_Tenure)application.invln_Tenure.Value, areHousingForDisabledVulnerableOrOlderPeople);
+
+            var grantBenchmarks = grantbenchmarkRepository.GetGrantBenchmarks(
                 tenure,
-                site.invln_GovernmentOfficeRegion.Value
+                site.invln_GovernmentOfficeRegion.Value,
+                GrantBenchmarkRepository.DefaultColumns
             );
 
-            var regionalBenchmarkGrantPerUnit = grantBenchmark.invln_benchmarkgpu;
+            var grantBenchmarkTable5 = grantBenchmarks.Single(x => x.invln_BenchmarkTable.Value == (int)invln_BenchmarkTable.Table5RegionalBenchmarkGrantPerUnit);
+            if (grantBenchmarkTable5.invln_benchmarkgpu == null)
+            {
+                throw new Exception($"Grant benchmark with id '{grantBenchmarkTable5.Id}' has empty invln_benchmarkgpu field!");
+            }
+
+            var regionalBenchmarkGrantPerUnit = grantBenchmarkTable5.invln_benchmarkgpu;
             var regionalBenchmarkAgainstTheGrantPerUnit = grantPerUnit / regionalBenchmarkGrantPerUnit.Value * 100;
-            var workCostM2 = CalculateWorksCostM2(application);
+            var workCostM2 = CalculateWorksCostM2(application, homeTypes);
+
+            var grantBenchmarkTable1 = grantBenchmarks.Single(x => x.invln_BenchmarkTable.Value == (int)invln_BenchmarkTable.Table1AreaaveragesforGrantasofTotalSchemeCosts);
+            if (!grantBenchmarkTable1.invln_BenchmarkValuePercentage.HasValue)
+            {
+                throw new Exception($"Grant benchmark with id '{grantBenchmarkTable1.Id}' has empty invln_BenchmarkValuePercentage field!");
+            }
+
+            var grantAsPercentageOfTotalSchemeCosts = grantasaoftotalschemecosts / grantBenchmarkTable1.invln_BenchmarkValuePercentage.Value;
+
+            var grantBenchmarkTable2 = grantBenchmarks.Single(x => x.invln_BenchmarkTable.Value == (int)invln_BenchmarkTable.Table2Areaaveragesforworkscostsperm2);
+            if (grantBenchmarkTable2.invln_benchmarkgpu == null)
+            {
+                throw new Exception($"Grant benchmark with id '{grantBenchmarkTable2.Id}' has empty invln_benchmarkgpu field!");
+            }
+
+            var worksM2AsPercentageOfAreaAvg = workCostM2.HasValue ? (decimal?)workCostM2.Value / grantBenchmarkTable2.invln_benchmarkgpu.Value : null;
+
+            var grantBenchmarkTable3 = grantBenchmarks.Single(x => x.invln_BenchmarkTable.Value == (int)invln_BenchmarkTable.Table3Areaaveragesforruralgrantperunit);
+            if (grantBenchmarkTable3.invln_benchmarkgpu == null)
+            {
+                throw new Exception($"Grant benchmark with id '{grantBenchmarkTable3.Id}' has empty invln_benchmarkgpu field!");
+            }
+
+            var areHousingForOlderPeoplesWithAllFeaturesHousing = homeTypes
+                .Any(x => new OptionSetValue((int)invln_typeofolderpeopleshousing.Housingforolderpeoplewithallspecialdesignfeatures).Equals(x.invln_typeofolderpeopleshousing));
+
+            var arePurposeDesignedForDisabledTypeOfHousing = homeTypes
+                .Any(x => new OptionSetValue((int)invln_typeofhousingfordisabledvulnerable.Purposedesignedhousingfordisabledandvulnerablepeoplewithaccesstosupport).Equals(x.invln_typeofhousingfordisabledvulnerablepeople)
+                    || new OptionSetValue((int)invln_typeofhousingfordisabledvulnerable.Purposedesignedsupportedhousingfordisabledandvulnerablepeople).Equals(x.invln_typeofhousingfordisabledvulnerablepeople));
+
+            var grantBenchmarkTable4 = grantBenchmarks.Single(x => x.invln_BenchmarkTable.Value == (int)invln_BenchmarkTable.Table4Areaaveragesforsupportedhousinggrantperunit);
+            if (grantBenchmarkTable4.invln_benchmarkgpu == null)
+            {
+                throw new Exception($"Grant benchmark with id '{grantBenchmarkTable4.Id}' has empty invln_benchmarkgpu field!");
+            }
+
+            var isSupportedGpuAsPercentageOfAreaAverage = false;
+            if ((application.invln_Tenure.Value == (int)invln_Tenure.Affordablerent || application.invln_Tenure.Value == (int)invln_Tenure.Socialrent) &&
+                areHousingForDisabledVulnerableOrOlderPeople &&
+                (areHousingForOlderPeoplesWithAllFeaturesHousing || arePurposeDesignedForDisabledTypeOfHousing))
+            {
+                isSupportedGpuAsPercentageOfAreaAverage = true;
+            }
 
             _applicationRepository.Update(new invln_scheme()
             {
@@ -634,7 +687,11 @@ namespace HE.CRM.AHP.Plugins.Services.Application
                 invln_grantasaoftotalschemecosts = grantasaoftotalschemecosts,
                 invln_RegionalBenchmarkGrantPerUnit = regionalBenchmarkGrantPerUnit,
                 invln_regionalbenchmarkagainstthegrantperunit = regionalBenchmarkAgainstTheGrantPerUnit,
-                invln_WorkssCostsm2 = workCostM2.HasValue ? new Money(workCostM2.Value) : null
+                invln_WorkssCostsm2 = workCostM2.HasValue ? new Money(workCostM2.Value) : null,
+                invln_grantasapercentageoftotalschemecosts = grantAsPercentageOfTotalSchemeCosts,
+                invln_worksm2asapercentageofareaavg = worksM2AsPercentageOfAreaAvg.HasValue ? worksM2AsPercentageOfAreaAvg : null,
+                invln_gpuaspercentageofareaaverage = application.invln_Rural == true ? grantPerUnit / grantBenchmarkTable3.invln_benchmarkgpu.Value : (decimal?)null,
+                invln_supportedgpuaspercentageofareaaverage = isSupportedGpuAsPercentageOfAreaAverage ? grantPerUnit / grantBenchmarkTable4.invln_benchmarkgpu.Value : (decimal?)null
             });
         }
 
@@ -646,14 +703,15 @@ namespace HE.CRM.AHP.Plugins.Services.Application
             var homeTypesColumns = new string[] {
                     invln_HomeType.Fields.invln_numberofhomeshometype,
                     invln_HomeType.Fields.invln_floorarea,
-                    invln_HomeType.Fields.invln_typeofhousing
+                    invln_HomeType.Fields.invln_typeofhousing,
+                    invln_HomeType.Fields.invln_typeofhousingfordisabledvulnerablepeople,
+                    invln_HomeType.Fields.invln_typeofolderpeopleshousing
             };
             return homeTypesRepository.GetByAttribute(invln_HomeType.Fields.invln_application, applicationId, homeTypesColumns);
         }
 
-        private decimal? CalculateWorksCostM2(invln_scheme application)
+        private decimal? CalculateWorksCostM2(invln_scheme application, IEnumerable<invln_HomeType> homeTypes)
         {
-            var homeTypes = GetHomeTypes(application.Id);
             if (!homeTypes.Any())
             {
                 Logger.Warn($"Could not find any home types for application '{application.Id}'");
@@ -664,16 +722,8 @@ namespace HE.CRM.AHP.Plugins.Services.Application
             return calculationResult;
         }
 
-        private invln_Tenurechoice MapApplicationTenureToRegionalBenchmarkTenure(invln_Tenure ahpApplicationTenure, List<invln_Typeofhousing> typesOfHousing)
+        private invln_Tenurechoice MapApplicationTenureToRegionalBenchmarkTenure(invln_Tenure ahpApplicationTenure, bool areHousingForDisabledVulnerableOlderPeople)
         {
-            var housingForDisabledVulnerableOlderPeopleList = new List<invln_Typeofhousing>()
-            {
-                invln_Typeofhousing.Housingfordisabledandvulnerablepeople,
-                invln_Typeofhousing.Housingforolderpeople
-            };
-
-            var housingForDisabledVulnerableOlderPeople = typesOfHousing.Intersect(housingForDisabledVulnerableOlderPeopleList).Any();
-
             if (ahpApplicationTenure == invln_Tenure.Sharedownership ||
                 ahpApplicationTenure == invln_Tenure.OPSO ||
                 ahpApplicationTenure == invln_Tenure.HOLD)
@@ -688,7 +738,7 @@ namespace HE.CRM.AHP.Plugins.Services.Application
 
             if (ahpApplicationTenure == invln_Tenure.Affordablerent)
             {
-                if (housingForDisabledVulnerableOlderPeople)
+                if (areHousingForDisabledVulnerableOlderPeople)
                 {
                     return invln_Tenurechoice.Specialistrent;
                 }
@@ -698,7 +748,7 @@ namespace HE.CRM.AHP.Plugins.Services.Application
 
             if (ahpApplicationTenure == invln_Tenure.Socialrent)
             {
-                if (housingForDisabledVulnerableOlderPeople)
+                if (areHousingForDisabledVulnerableOlderPeople)
                 {
                     return invln_Tenurechoice.Specialistrent;
                 }

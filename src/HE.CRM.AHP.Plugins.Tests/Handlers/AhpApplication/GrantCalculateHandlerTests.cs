@@ -5,6 +5,7 @@ using DataverseModel;
 using FakeXrmEasy.Extensions;
 using HE.Base.Common.Extensions;
 using HE.CRM.AHP.Plugins.Handlers.AHPApplication;
+using HE.CRM.AHP.Plugins.Tests.Helpers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Microsoft.Xrm.Sdk;
 using PwC.Base.Tests.Plugins.Handlers;
@@ -157,63 +158,30 @@ namespace HE.CRM.AHP.Plugins.Tests.Handlers.AhpApplication
         }
 
         [TestMethod]
-        public void DoWork_AllCorrectData_UpdateGrantCalculationOnApplication()
+        public void DoWork_HappyPath1_ApplicationUpdated()
         {
             // Arrange
 
-            var eastofEnglandRegion = new OptionSetValue((int)he_GovernmentOfficeRegion.EastofEngland);
-            var northEastRegion = new OptionSetValue((int)he_GovernmentOfficeRegion.NorthEast);
+            var grantbenchmarkT5EastSharedownership = GrantBenchmarkHelper.CreateGrantBenchmarkTable5(he_GovernmentOfficeRegion.EastofEngland, invln_Tenurechoice.Sharedownership, 46_000);
 
-            var grantbenchmark1 = new invln_grantbenchmark()
-            {
-                Id = Guid.NewGuid(),
-                invln_GovernmentOfficeRegion = eastofEnglandRegion,
-                invln_tenure = new OptionSetValue((int)invln_Tenurechoice.Sharedownership),
-                invln_BenchmarkTable = new OptionSetValue((int)invln_BenchmarkTable.Table5RegionalBenchmarkGrantPerUnit),
-                invln_benchmarkgpu = new Money(46000)
-            };
+            var grantbenchmarkT5EastRenttobuy = GrantBenchmarkHelper.CreateGrantBenchmarkTable5(he_GovernmentOfficeRegion.EastofEngland, invln_Tenurechoice.Renttobuy, 57_000);
 
-            var grantbenchmark2 = new invln_grantbenchmark()
-            {
-                Id = Guid.NewGuid(),
-                invln_GovernmentOfficeRegion = eastofEnglandRegion,
-                invln_tenure = new OptionSetValue((int)invln_Tenurechoice.Renttobuy),
-                invln_BenchmarkTable = new OptionSetValue((int)invln_BenchmarkTable.Table5RegionalBenchmarkGrantPerUnit),
-                invln_benchmarkgpu = new Money(57000)
-            };
+            var grantbenchmarkT5EastSocialrent = GrantBenchmarkHelper.CreateGrantBenchmarkTable5(he_GovernmentOfficeRegion.EastofEngland, invln_Tenurechoice.Socialrent, 89_000);
 
-            var grantbenchmark3 = new invln_grantbenchmark()
-            {
-                Id = Guid.NewGuid(),
-                invln_GovernmentOfficeRegion = eastofEnglandRegion,
-                invln_tenure = new OptionSetValue((int)invln_Tenurechoice.Socialrent),
-                invln_BenchmarkTable = new OptionSetValue((int)invln_BenchmarkTable.Table5RegionalBenchmarkGrantPerUnit),
-                invln_benchmarkgpu = new Money(89000)
-            };
+            var grantbenchmarkT5EastSpecialistrent = GrantBenchmarkHelper.CreateGrantBenchmarkTable5(he_GovernmentOfficeRegion.EastofEngland, invln_Tenurechoice.Specialistrent, 89_000);
 
-            var grantbenchmark4 = new invln_grantbenchmark()
-            {
-                Id = Guid.NewGuid(),
-                invln_GovernmentOfficeRegion = eastofEnglandRegion,
-                invln_tenure = new OptionSetValue((int)invln_Tenurechoice.Specialistrent),
-                invln_BenchmarkTable = new OptionSetValue((int)invln_BenchmarkTable.Table5RegionalBenchmarkGrantPerUnit),
-                invln_benchmarkgpu = new Money(89000)
-            };
+            var grantbenchmark5NorthEastExtracare = GrantBenchmarkHelper.CreateGrantBenchmarkTable5(he_GovernmentOfficeRegion.NorthEast, invln_Tenurechoice.Extracare, 89_000);
 
-            var grantbenchmark5 = new invln_grantbenchmark()
-            {
-                Id = Guid.NewGuid(),
-                invln_GovernmentOfficeRegion = northEastRegion,
-                invln_tenure = new OptionSetValue((int)invln_Tenurechoice.Extracare),
-                invln_BenchmarkTable = new OptionSetValue((int)invln_BenchmarkTable.Table5RegionalBenchmarkGrantPerUnit),
-                invln_benchmarkgpu = new Money(89000)
-            };
+            var grantbenchmarkT1EastSharedownership = GrantBenchmarkHelper.CreateGrantBenchmarkTable1(he_GovernmentOfficeRegion.EastofEngland, invln_Tenurechoice.Sharedownership, 19.5m);
+            var grantbenchmarkT2EastSharedownership = GrantBenchmarkHelper.CreateGrantBenchmarkTable2(he_GovernmentOfficeRegion.EastofEngland, invln_Tenurechoice.Sharedownership, 2_000);
+            var grantbenchmarkT3EastSharedownership = GrantBenchmarkHelper.CreateGrantBenchmarkTable3(he_GovernmentOfficeRegion.EastofEngland, invln_Tenurechoice.Sharedownership, 48_048);
+            var grantbenchmarkT4EastSharedownership = GrantBenchmarkHelper.CreateGrantBenchmarkTable4(he_GovernmentOfficeRegion.EastofEngland, invln_Tenurechoice.Sharedownership, 43_680);
 
             var site = new invln_Sites()
             {
                 Id = Guid.NewGuid(),
                 invln_sitename = "Test_Site1",
-                invln_GovernmentOfficeRegion = eastofEnglandRegion
+                invln_GovernmentOfficeRegion = new OptionSetValue((int)he_GovernmentOfficeRegion.EastofEngland)
             };
 
             var ahpApplicationPreImage = new invln_scheme()
@@ -229,31 +197,11 @@ namespace HE.CRM.AHP.Plugins.Tests.Handlers.AhpApplication
                 StatusCode = new OptionSetValue((int)invln_scheme_StatusCode.Draft)
             };
 
-            var homeType1 = new invln_HomeType()
-            {
-                Id = Guid.NewGuid(),
-                invln_application = ahpApplicationPreImage.ToEntityReference(),
-                invln_numberofhomeshometype = 85,
-                invln_floorarea = 125,
-                invln_typeofhousing = new OptionSetValue((int)invln_Typeofhousing.General)
-            };
+            var homeType1 = HomeTypeHelper.CreateHomeType(ahpApplicationPreImage, 85, 125, invln_Typeofhousing.General, null, null);
 
-            var homeType2 = new invln_HomeType()
-            {
-                Id = Guid.NewGuid(),
-                invln_application = ahpApplicationPreImage.ToEntityReference(),
-                invln_numberofhomeshometype = 85,
-                invln_floorarea = 125,
-                invln_typeofhousing = new OptionSetValue((int)invln_Typeofhousing.Housingforolderpeople)
-            };
+            var homeType2 = HomeTypeHelper.CreateHomeType(ahpApplicationPreImage, 85, 125, invln_Typeofhousing.Housingforolderpeople, invln_typeofolderpeopleshousing.Housingforolderpeoplewithallspecialdesignfeatures, null);
 
-            var homeType3 = new invln_HomeType()
-            {
-                Id = Guid.NewGuid(),
-                invln_numberofhomeshometype = 11,
-                invln_floorarea = 15,
-                invln_typeofhousing = new OptionSetValue((int)invln_Typeofhousing.General)
-            };
+            var homeType3 = HomeTypeHelper.CreateHomeType(null, 11, 15, invln_Typeofhousing.General, null, null);
 
             var ahpApplicationTarget = new invln_scheme()
             {
@@ -276,11 +224,15 @@ namespace HE.CRM.AHP.Plugins.Tests.Handlers.AhpApplication
                     homeType3,
                     site,
                     ahpApplicationPostImage,
-                    grantbenchmark1,
-                    grantbenchmark2,
-                    grantbenchmark3,
-                    grantbenchmark4,
-                    grantbenchmark5
+                    grantbenchmarkT5EastSharedownership,
+                    grantbenchmarkT5EastRenttobuy,
+                    grantbenchmarkT5EastSocialrent,
+                    grantbenchmarkT5EastSpecialistrent,
+                    grantbenchmark5NorthEastExtracare,
+                    grantbenchmarkT1EastSharedownership,
+                    grantbenchmarkT2EastSharedownership,
+                    grantbenchmarkT3EastSharedownership,
+                    grantbenchmarkT4EastSharedownership
                 }
             );
 #pragma warning restore CS0618 // Type or member is obsolete
@@ -299,10 +251,120 @@ namespace HE.CRM.AHP.Plugins.Tests.Handlers.AhpApplication
             // Assert
 
             Assert.AreEqual(25_000, applicationResult.invln_grantperunit.Value);
-            Assert.AreEqual((decimal)27.03, applicationResult.invln_grantasaoftotalschemecosts.Value, (decimal)0.01);
+            Assert.AreEqual(27.03m, applicationResult.invln_grantasaoftotalschemecosts.Value, 0.01m);
             Assert.AreEqual(46_000, applicationResult.invln_RegionalBenchmarkGrantPerUnit.Value);
-            Assert.AreEqual((decimal)54.35, applicationResult.invln_regionalbenchmarkagainstthegrantperunit.Value, (decimal)0.01);
-            Assert.AreEqual((decimal)4.71, applicationResult.invln_WorkssCostsm2.Value, (decimal)0.01);
+            Assert.AreEqual(54.35m, applicationResult.invln_regionalbenchmarkagainstthegrantperunit.Value, 0.01m);
+            Assert.AreEqual(4.71m, applicationResult.invln_WorkssCostsm2.Value, 0.01m);
+
+            Assert.AreEqual(1.38m, applicationResult.invln_grantasapercentageoftotalschemecosts.Value, 0.01m);
+            Assert.AreEqual(0.0023m, applicationResult.invln_worksm2asapercentageofareaavg.Value, 0.0001m);
+            Assert.AreEqual(null, applicationResult.invln_gpuaspercentageofareaaverage);
+            Assert.AreEqual(null, applicationResult.invln_supportedgpuaspercentageofareaaverage);
+        }
+
+        [TestMethod]
+        public void DoWork_HappyPath2_ApplicationUpdated()
+        {
+            // Arrange
+
+            var grantbenchmarkT5EastSharedownership = GrantBenchmarkHelper.CreateGrantBenchmarkTable5(he_GovernmentOfficeRegion.EastofEngland, invln_Tenurechoice.Affordablerent, 57_000);
+            var grantbenchmarkT5EastRenttobuy = GrantBenchmarkHelper.CreateGrantBenchmarkTable5(he_GovernmentOfficeRegion.EastofEngland, invln_Tenurechoice.Renttobuy, 57_000);
+            var grantbenchmarkT5EastSocialrent = GrantBenchmarkHelper.CreateGrantBenchmarkTable5(he_GovernmentOfficeRegion.EastofEngland, invln_Tenurechoice.Socialrent, 89_000);
+
+            var grantbenchmark5NorthEastExtracare = GrantBenchmarkHelper.CreateGrantBenchmarkTable5(he_GovernmentOfficeRegion.NorthEast, invln_Tenurechoice.Extracare, 89_000);
+
+            var grantbenchmarkT1EastSpecialistrent = GrantBenchmarkHelper.CreateGrantBenchmarkTable1(he_GovernmentOfficeRegion.EastofEngland, invln_Tenurechoice.Specialistrent, 26m);
+            var grantbenchmarkT2EastSpecialistrent = GrantBenchmarkHelper.CreateGrantBenchmarkTable2(he_GovernmentOfficeRegion.EastofEngland, invln_Tenurechoice.Specialistrent, 2_800);
+            var grantbenchmarkT3EastSpecialistrent = GrantBenchmarkHelper.CreateGrantBenchmarkTable3(he_GovernmentOfficeRegion.EastofEngland, invln_Tenurechoice.Specialistrent, 67_760);
+            var grantbenchmarkT4EastSpecialistrent = GrantBenchmarkHelper.CreateGrantBenchmarkTable4(he_GovernmentOfficeRegion.EastofEngland, invln_Tenurechoice.Specialistrent, 61_600);
+            var grantbenchmarkT5EastSpecialistrent = GrantBenchmarkHelper.CreateGrantBenchmarkTable5(he_GovernmentOfficeRegion.EastofEngland, invln_Tenurechoice.Specialistrent, 89_000);
+
+            var site = new invln_Sites()
+            {
+                Id = Guid.NewGuid(),
+                invln_sitename = "Test_Site1",
+                invln_GovernmentOfficeRegion = new OptionSetValue((int)he_GovernmentOfficeRegion.EastofEngland)
+            };
+
+            var ahpApplicationPreImage = new invln_scheme()
+            {
+                Id = Guid.NewGuid(),
+                invln_Site = site.ToEntityReference(),
+                invln_Rural = true,
+                invln_fundingrequired = new Money(100000),
+                invln_noofhomes = 4,
+                invln_expectedacquisitioncost = new Money(150000),
+                invln_expectedoncosts = new Money(120_000),
+                invln_expectedonworks = new Money(100_000),
+                invln_Tenure = new OptionSetValue((int)invln_Tenure.Affordablerent),
+                StatusCode = new OptionSetValue((int)invln_scheme_StatusCode.Draft)
+            };
+
+            var homeType1 = HomeTypeHelper.CreateHomeType(ahpApplicationPreImage, 85, 125, invln_Typeofhousing.General, null, null);
+
+            var homeType2 = HomeTypeHelper.CreateHomeType(ahpApplicationPreImage, 85, 125, invln_Typeofhousing.Housingfordisabledandvulnerablepeople, null, invln_typeofhousingfordisabledvulnerable.Purposedesignedhousingfordisabledandvulnerablepeoplewithaccesstosupport);
+
+            var homeType3 = HomeTypeHelper.CreateHomeType(null, 11, 15, invln_Typeofhousing.General, null, null);
+
+            var ahpApplicationTarget = new invln_scheme()
+            {
+                Id = ahpApplicationPreImage.Id,
+                StatusCode = new OptionSetValue((int)invln_scheme_StatusCode.ApplicationSubmitted)
+            };
+
+            var ahpApplicationPostImage = ahpApplicationPreImage.Merge(ahpApplicationTarget);
+
+            PreImage = ahpApplicationPreImage;
+            Target = ahpApplicationTarget;
+            PostImage = ahpApplicationPostImage;
+
+#pragma warning disable CS0618 // Type or member is obsolete
+            fakedContext.Initialize(
+                new List<Entity>()
+                {
+                    homeType1,
+                    homeType2,
+                    homeType3,
+                    site,
+                    ahpApplicationPostImage,
+                    grantbenchmarkT5EastSharedownership,
+                    grantbenchmarkT5EastRenttobuy,
+                    grantbenchmarkT5EastSocialrent,
+                    grantbenchmark5NorthEastExtracare,
+                    grantbenchmarkT1EastSpecialistrent,
+                    grantbenchmarkT2EastSpecialistrent,
+                    grantbenchmarkT3EastSpecialistrent,
+                    grantbenchmarkT4EastSpecialistrent,
+                    grantbenchmarkT5EastSpecialistrent,
+                }
+            );
+#pragma warning restore CS0618 // Type or member is obsolete
+
+            Asset("Update", (int)StageEnum.PostOperation);
+
+            // Act
+
+            handler.DoWork();
+
+            var applicationResult = fakedContext.CreateQuery<invln_scheme>()
+                .Single(x => x.Id == ahpApplicationTarget.Id);
+
+            var homesTypesResult = fakedContext.CreateQuery<invln_HomeType>().ToList();
+
+            // Assert
+
+            Assert.AreEqual(25_000, applicationResult.invln_grantperunit.Value);
+            Assert.AreEqual(27.02m, applicationResult.invln_grantasaoftotalschemecosts.Value, 0.01m);
+            Assert.AreEqual(89_000, applicationResult.invln_RegionalBenchmarkGrantPerUnit.Value);
+            Assert.AreEqual(28.08m, applicationResult.invln_regionalbenchmarkagainstthegrantperunit.Value, 0.01m);
+            Assert.AreEqual(4.70m, applicationResult.invln_WorkssCostsm2.Value, 0.01m);
+
+            Assert.AreEqual(1.03m, applicationResult.invln_grantasapercentageoftotalschemecosts.Value, 0.01m);
+            Assert.AreEqual(0.0016m, applicationResult.invln_worksm2asapercentageofareaavg.Value, 0.0001m);
+            Assert.IsNotNull(applicationResult.invln_gpuaspercentageofareaaverage);
+            Assert.AreEqual(0.36m, applicationResult.invln_gpuaspercentageofareaaverage.Value, 0.01m);
+            Assert.IsNotNull(applicationResult.invln_supportedgpuaspercentageofareaaverage);
+            Assert.AreEqual(0.40m, applicationResult.invln_supportedgpuaspercentageofareaaverage.Value, 0.01m);
         }
     }
 }
