@@ -1,12 +1,12 @@
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investments.Account.Contract.UserOrganisation;
 using HE.Investments.Account.Shared.User;
-using HE.Investments.AHP.Consortium.Shared.UserContext;
 using HE.Investments.Common;
 using HE.Investments.Common.CRM.Mappers;
 using HE.Investments.Common.CRM.Model;
 using HE.Investments.Common.CRM.Services;
 using HE.Investments.Common.Extensions;
+using HE.Investments.Consortium.Shared.UserContext;
 using Microsoft.FeatureManagement;
 
 namespace HE.Investments.Account.Domain.UserOrganisation.Repositories;

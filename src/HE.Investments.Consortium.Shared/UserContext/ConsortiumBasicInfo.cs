@@ -1,6 +1,6 @@
 using HE.Investments.Common.Contract;
 
-namespace HE.Investments.AHP.Consortium.Shared.UserContext;
+namespace HE.Investments.Consortium.Shared.UserContext;
 
 public record ConsortiumBasicInfo(ConsortiumId ConsortiumId, bool IsLeadPartner, IList<OrganisationId> ActiveMembers)
 {

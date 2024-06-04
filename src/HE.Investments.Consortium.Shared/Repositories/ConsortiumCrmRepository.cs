@@ -1,12 +1,12 @@
 using HE.Common.IntegrationModel.PortalIntegrationModel;
-using HE.Investments.AHP.Consortium.Shared.UserContext;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.CRM.Model;
 using HE.Investments.Common.CRM.Services;
 using HE.Investments.Common.Extensions;
+using HE.Investments.Consortium.Shared.UserContext;
 using HE.Investments.Programme.Contract;
 
-namespace HE.Investments.AHP.Consortium.Shared.Repositories;
+namespace HE.Investments.Consortium.Shared.Repositories;
 
 public class ConsortiumCrmRepository : IConsortiumRepository
 {
