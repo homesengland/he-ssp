@@ -34,6 +34,7 @@ public class Order01SiteDetails : AhpIntegrationTest
         listOfSitesPage
             .UrlEndWith(ProjectPagesUrl.ProjectSiteList(ShortGuid.FromString(ProjectData.ProjectId).Value))
             .HasTitle("Sites")
+            .HasTableRowData("Oxford")
             .HasBackLink(out _);
 
         SaveCurrentPage();

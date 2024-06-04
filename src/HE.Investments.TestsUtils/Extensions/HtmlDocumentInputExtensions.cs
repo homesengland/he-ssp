@@ -28,6 +28,14 @@ public static class HtmlDocumentInputExtensions
         return htmlDocument;
     }
 
+    public static IHtmlDocument HasInputValue(this IHtmlDocument htmlDocument, string fieldName, string value)
+    {
+        var input = GetAndValidateSingleInput<IHtmlInputElement>(htmlDocument, fieldName)!;
+        input.Value.Should().Contain(value);
+
+        return htmlDocument;
+    }
+
     public static IHtmlDocument HasInput(this IHtmlDocument htmlDocument, string fieldName, out IHtmlInputElement input)
     {
         input = GetAndValidateSingleInput<IHtmlInputElement>(htmlDocument, fieldName)!;

@@ -102,6 +102,16 @@ public static class HtmlDocumentOtherExtensions
         return htmlDocument;
     }
 
+    public static IHtmlDocument HasTableRowData(this IHtmlDocument htmlDocument, string text)
+    {
+        var exist = htmlDocument.GetElements(".govuk-table__cell")
+            .Any(td => td.TextContent.Contains(text));
+
+        exist.Should().BeTrue($"There is no table data with text: '{text}'");
+
+        return htmlDocument;
+    }
+
     public static IHtmlDocument HasPanel(this IHtmlDocument htmlDocument, string title, string subTitle, string reference, bool confirmation = false)
     {
         var panel = htmlDocument.GetElements(".govuk-panel").Single();

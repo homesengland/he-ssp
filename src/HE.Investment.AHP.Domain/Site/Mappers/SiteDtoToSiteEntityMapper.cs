@@ -12,6 +12,7 @@ using HE.Investment.AHP.Domain.Site.ValueObjects.StrategicSite;
 using HE.Investment.AHP.Domain.Site.ValueObjects.TenderingStatus;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.CRM.Mappers;
+using HE.Investments.Common.Extensions;
 using HE.Investments.FrontDoor.Shared.Project;
 using HE.Investments.Organisation.ValueObjects;
 using Section106Dto = HE.Common.IntegrationModel.PortalIntegrationModel.Section106Dto;
@@ -62,7 +63,7 @@ public static class SiteDtoToSiteEntityMapper
             string.IsNullOrWhiteSpace(dto.environmentalImpact) ? null : new EnvironmentalImpact(dto.environmentalImpact),
             CreateMmc(dto.modernMethodsOfConstruction),
             new SiteProcurements(MapCollection(dto.procurementMechanisms, SiteProcurementMapper)),
-            FrontDoorSiteId.From(dto.fdSiteid));
+            dto.fdSiteid.IsProvided() ? FrontDoorSiteId.From(dto.fdSiteid) : null);
     }
 
     private static Section106 CreateSection106(Section106Dto dto)
