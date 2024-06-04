@@ -30,6 +30,7 @@ COPY ["HE.Investments.Common/HE.Investments.Common.csproj", "HE.Investments.Comm
 COPY ["HE.Investments.Organisation/HE.Investments.Organisation.csproj", "HE.Investments.Organisation/"]
 COPY ["HE.Investments.DocumentService/HE.Investments.DocumentService.csproj", "HE.Investments.DocumentService/"]
 COPY ["HE.Investments.Common.WWW/HE.Investments.Common.WWW.csproj", "HE.Investments.Common.WWW/"]
+COPY ["HE.Investments.Consortium.Shared/HE.Investments.Consortium.Shared.csproj", "HE.Investments.Consortium.Shared/"]
 COPY ["HE.Investments.AHP.Consortium.Contract/HE.Investments.AHP.Consortium.Contract.csproj", "HE.Investments.AHP.Consortium.Contract/"]
 COPY ["HE.Investments.AHP.Consortium.Domain/HE.Investments.AHP.Consortium.Domain.csproj", "HE.Investments.AHP.Consortium.Domain/"]
 COPY ["HE.Common.IntegrationModel.Crm/HE.Common.IntegrationModel.Crm.csproj", "HE.Common.IntegrationModel.Crm/"]

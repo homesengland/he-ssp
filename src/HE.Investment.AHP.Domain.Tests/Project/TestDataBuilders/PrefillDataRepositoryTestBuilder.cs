@@ -1,5 +1,5 @@
 using HE.Investment.AHP.Domain.UserContext;
-using HE.Investments.AHP.Consortium.Shared.UserContext;
+using HE.Investments.Consortium.Shared.UserContext;
 using HE.Investments.FrontDoor.Shared.Project;
 using HE.Investments.FrontDoor.Shared.Project.Data;
 using HE.Investments.FrontDoor.Shared.Project.Repositories;

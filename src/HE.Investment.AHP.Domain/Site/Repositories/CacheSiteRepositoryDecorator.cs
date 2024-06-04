@@ -7,10 +7,10 @@ using HE.Investment.AHP.Domain.Site.ValueObjects;
 using HE.Investment.AHP.Domain.Site.ValueObjects.StrategicSite;
 using HE.Investment.AHP.Domain.UserContext;
 using HE.Investments.Account.Shared.User;
-using HE.Investments.AHP.Consortium.Shared.UserContext;
 using HE.Investments.Common.Contract.Pagination;
 using HE.Investments.Common.Infrastructure.Cache;
 using HE.Investments.Common.Infrastructure.Cache.Interfaces;
+using HE.Investments.Consortium.Shared.UserContext;
 using HE.Investments.FrontDoor.Shared.Project;
 
 namespace HE.Investment.AHP.Domain.Site.Repositories;

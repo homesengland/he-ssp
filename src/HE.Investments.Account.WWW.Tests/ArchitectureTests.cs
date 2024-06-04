@@ -1,7 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 using FluentAssertions;
-using HE.Investments.AHP.Consortium.Shared.UserContext;
 using HE.Investments.TestsUtils.Helpers;
 
 namespace HE.Investments.Account.WWW.Tests;

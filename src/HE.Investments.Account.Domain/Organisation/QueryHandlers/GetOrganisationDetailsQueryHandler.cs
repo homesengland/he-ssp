@@ -3,7 +3,7 @@ using HE.Investments.Account.Contract.Organisation.Queries;
 using HE.Investments.Account.Domain.Organisation.Repositories;
 using HE.Investments.Account.Domain.UserOrganisation.Repositories;
 using HE.Investments.Account.Shared;
-using HE.Investments.AHP.Consortium.Shared.UserContext;
+using HE.Investments.Consortium.Shared.UserContext;
 using MediatR;
 
 namespace HE.Investments.Account.Domain.Organisation.QueryHandlers;
