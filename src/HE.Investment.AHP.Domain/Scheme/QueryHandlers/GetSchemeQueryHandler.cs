@@ -3,8 +3,7 @@ using HE.Investment.AHP.Contract.Scheme.Queries;
 using HE.Investment.AHP.Domain.Application.Mappers;
 using HE.Investment.AHP.Domain.Scheme.Entities;
 using HE.Investment.AHP.Domain.Scheme.Repositories;
-using HE.Investment.AHP.Domain.UserContext;
-using HE.Investments.AHP.Consortium.Contract;
+using HE.Investments.AHP.Consortium.Shared.UserContext;
 using HE.Investments.Organisation.Contract;
 using HE.Investments.Organisation.ValueObjects;
 using MediatR;
@@ -15,17 +14,17 @@ public class GetSchemeQueryHandler : IRequestHandler<GetApplicationSchemeQuery, 
 {
     private readonly ISchemeRepository _repository;
 
-    private readonly IAhpUserContext _ahpUserContext;
+    private readonly IConsortiumUserContext _consortiumUserContext;
 
-    public GetSchemeQueryHandler(ISchemeRepository repository, IAhpUserContext ahpUserContext)
+    public GetSchemeQueryHandler(ISchemeRepository repository, IConsortiumUserContext consortiumUserContext)
     {
         _repository = repository;
-        _ahpUserContext = ahpUserContext;
+        _consortiumUserContext = consortiumUserContext;
     }
 
     public async Task<Contract.Scheme.Scheme> Handle(GetApplicationSchemeQuery request, CancellationToken cancellationToken)
     {
-        var account = await _ahpUserContext.GetSelectedAccount();
+        var account = await _consortiumUserContext.GetSelectedAccount();
         var entity = await _repository.GetByApplicationId(request.ApplicationId, account, request.IncludeFiles, cancellationToken);
 
         return new Contract.Scheme.Scheme(

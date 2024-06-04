@@ -69,7 +69,7 @@ public class SiteController : SiteControllerBase<SiteWorkflowState>
     [HttpGet("select")]
     public async Task<IActionResult> Select([FromQuery] int? page, [FromQuery] string projectId, CancellationToken cancellationToken)
     {
-        var response = await _mediator.Send(new GetProjectSitesQuery(new FrontDoorProjectId(projectId), new PaginationRequest(page ?? 1)), cancellationToken);
+        var response = await _mediator.Send(new GetProjectSitesQuery(FrontDoorProjectId.From(projectId), new PaginationRequest(page ?? 1)), cancellationToken);
         return View("Select", response);
     }
 
@@ -115,6 +115,18 @@ public class SiteController : SiteControllerBase<SiteWorkflowState>
     {
         var site = await _mediator.Send(new GetSiteQuery(siteId), cancellationToken);
         return View("Start", new StartSiteModel(site.ProjectId, site.Id!));
+    }
+
+    [HttpPost("{siteId}/start")]
+    [WorkflowState(SiteWorkflowState.Start)]
+    public async Task<IActionResult> Start(StartSiteModel model, CancellationToken cancellationToken)
+    {
+        return await this.ExecuteCommand<StartSiteModel>(
+            _mediator,
+            new StartSiteCommand(SiteId.From(model.SiteId)),
+            () => ContinueAnswering(model.SiteId, cancellationToken),
+            async () => await Task.FromResult<IActionResult>(View("Start")),
+            cancellationToken);
     }
 
     [HttpGet("{siteId}/name")]

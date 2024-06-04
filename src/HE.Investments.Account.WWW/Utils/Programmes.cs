@@ -24,16 +24,16 @@ public class Programmes : IProgrammes
             : throw new InvalidEnumArgumentException($"Programme for {programmeType} does not exist.");
     }
 
-    public string GetApplicationUrl(ProgrammeType programmeType, HeApplianceId applicationId)
+    public string GetUrl(ProgrammeType programmeType, HeApplianceId id)
     {
         if (programmeType == ProgrammeType.Ahp)
         {
-            return $"{_programmeUrlConfig.Ahp}/application/{applicationId}";
+            return $"{_programmeUrlConfig.Ahp}/project/{id}";
         }
 
         if (programmeType == ProgrammeType.Loans)
         {
-            return $"{_programmeUrlConfig.Loans}/application/{applicationId.ToGuidAsString()}";
+            return $"{_programmeUrlConfig.Loans}/application/{id.ToGuidAsString()}";
         }
 
         throw new InvalidEnumArgumentException($"Programme for {programmeType} does not exist.");

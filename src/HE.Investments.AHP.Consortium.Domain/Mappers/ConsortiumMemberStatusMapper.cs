@@ -11,13 +11,11 @@ public static class ConsortiumMemberStatusMapper
         {
             (int?)invln_ConsortiumMember_StatusCode.Inactive => ConsortiumMemberStatus.Inactive,
             (int?)invln_ConsortiumMember_StatusCode.Additionapproved => ConsortiumMemberStatus.Active,
-            (int?)invln_ConsortiumMember_StatusCode.Additionongoingcontracting => ConsortiumMemberStatus.PendingAddition,
             (int?)invln_ConsortiumMember_StatusCode.Additionsubmitted => ConsortiumMemberStatus.PendingAddition,
             (int?)invln_ConsortiumMember_StatusCode.Additionunderreview => ConsortiumMemberStatus.PendingAddition,
-            (int?)invln_ConsortiumMember_StatusCode.Removalapproved => ConsortiumMemberStatus.Inactive,
-            (int?)invln_ConsortiumMember_StatusCode.Removalongoingcontracting => ConsortiumMemberStatus.PendingRemoval,
+            (int?)invln_ConsortiumMember_StatusCode.Removalconfirmed => ConsortiumMemberStatus.Inactive,
             (int?)invln_ConsortiumMember_StatusCode.Removalsubmitted => ConsortiumMemberStatus.PendingRemoval,
-            (int?)invln_ConsortiumMember_StatusCode.Removalunderreview => ConsortiumMemberStatus.PendingRemoval,
+            (int?)invln_ConsortiumMember_StatusCode.Removalinprogress => ConsortiumMemberStatus.PendingRemoval,
             _ => ConsortiumMemberStatus.Undefined,
         };
     }

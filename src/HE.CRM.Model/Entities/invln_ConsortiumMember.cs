@@ -23,7 +23,7 @@ namespace DataverseModel
 		Additionapproved = 858110004,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Additionongoingcontracting = 858110003,
+		Additionsubjecttocontract = 858110003,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Additionsubmitted = 858110001,
@@ -35,16 +35,13 @@ namespace DataverseModel
 		Inactive = 2,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Removalapproved = 858110008,
+		Removalconfirmed = 858110008,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Removalongoingcontracting = 858110007,
+		Removalinprogress = 858110006,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Removalsubmitted = 858110005,
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Removalunderreview = 858110006,
 	}
 	
 	/// <summary>

@@ -6,6 +6,7 @@ using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Utils;
 using HE.Investments.Programme.Contract;
+using HE.Investments.Programme.Contract.Config;
 using HE.Investments.Programme.Contract.Queries;
 using MediatR;
 

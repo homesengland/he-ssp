@@ -19,7 +19,7 @@ public class GetProjectApplicationsTests : TestBase<ProjectRepository>
         var userAccount = AhpUserContextTestBuilder
             .New()
             .Register(this)
-            .AhpUserFromMock;
+            .ConsortiumUserFromMock;
 
         ProjectCrmContextTestBuilder
             .New()
@@ -48,7 +48,7 @@ public class GetProjectApplicationsTests : TestBase<ProjectRepository>
         var userAccount = AhpUserContextTestBuilder
             .New()
             .Register(this)
-            .AhpUserFromMock;
+            .ConsortiumUserFromMock;
 
         ProjectCrmContextTestBuilder
             .New()

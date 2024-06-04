@@ -1,6 +1,6 @@
-namespace HE.Investment.AHP.Domain.UserContext;
+namespace HE.Investments.AHP.Consortium.Shared.UserContext;
 
-public interface IAhpAccessContext
+public interface IConsortiumAccessContext
 {
     Task<bool> IsConsortiumLeadPartner();
 

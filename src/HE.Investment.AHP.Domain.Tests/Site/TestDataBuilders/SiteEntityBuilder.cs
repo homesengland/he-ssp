@@ -5,7 +5,6 @@ using HE.Investment.AHP.Domain.Site.ValueObjects;
 using HE.Investment.AHP.Domain.Site.ValueObjects.Planning;
 using HE.Investment.AHP.Domain.Site.ValueObjects.StrategicSite;
 using HE.Investment.AHP.Domain.Site.ValueObjects.TenderingStatus;
-using HE.Investment.AHP.Domain.Tests.Common.TestData;
 using HE.Investments.FrontDoor.Shared.Project;
 using HE.Investments.TestsUtils.TestFramework;
 using LocalAuthority = HE.Investments.Organisation.LocalAuthorities.ValueObjects.LocalAuthority;
@@ -19,7 +18,7 @@ namespace HE.Investment.AHP.Domain.Tests.Site.TestDataBuilders;
 public class SiteEntityBuilder : TestObjectBuilder<SiteEntityBuilder, SiteEntity>
 {
     private SiteEntityBuilder()
-        : base(SiteEntity.NewSite(AhpUserAccountTestData.UserAccountOneNoConsortium, new FrontDoorProjectId("1"), null))
+        : base(new SiteEntity(SiteId.New(), new FrontDoorProjectId("1"), new SiteName($"New Site - {Guid.NewGuid()}"), new SitePartners()))
     {
     }
 

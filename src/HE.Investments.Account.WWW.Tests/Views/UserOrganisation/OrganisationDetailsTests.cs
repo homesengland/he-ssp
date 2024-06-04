@@ -17,7 +17,7 @@ public class OrganisationDetailsTests : AccountViewTestBase
         {
             Name = "Awesome Company",
             InvestmentPartnerStatus = partnerStatus,
-            HasAnyAhpApplication = true,
+            HasAnyAhpProjects = true,
         };
 
         // when
@@ -42,7 +42,7 @@ public class OrganisationDetailsTests : AccountViewTestBase
         {
             Name = "Awesome Company",
             InvestmentPartnerStatus = partnerStatus,
-            HasAnyAhpApplication = hasAnyAhpApplication,
+            HasAnyAhpProjects = hasAnyAhpApplication,
         };
 
         // when

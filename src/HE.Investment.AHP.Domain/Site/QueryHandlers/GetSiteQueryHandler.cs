@@ -10,6 +10,7 @@ using HE.Investment.AHP.Domain.Site.ValueObjects.StrategicSite;
 using HE.Investment.AHP.Domain.Site.ValueObjects.TenderingStatus;
 using HE.Investment.AHP.Domain.UserContext;
 using HE.Investments.AHP.Consortium.Contract;
+using HE.Investments.AHP.Consortium.Shared.UserContext;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Organisation.Contract;
@@ -21,13 +22,13 @@ namespace HE.Investment.AHP.Domain.Site.QueryHandlers;
 
 public class GetSiteQueryHandler : IRequestHandler<GetSiteQuery, SiteModel>
 {
-    private readonly IAhpUserContext _accountUserContext;
+    private readonly IConsortiumUserContext _accountUserContext;
 
     private readonly ISiteRepository _siteRepository;
 
     private readonly IAhpPrefillDataRepository _prefillDataRepository;
 
-    public GetSiteQueryHandler(IAhpUserContext accountUserContext, ISiteRepository siteRepository, IAhpPrefillDataRepository prefillDataRepository)
+    public GetSiteQueryHandler(IConsortiumUserContext accountUserContext, ISiteRepository siteRepository, IAhpPrefillDataRepository prefillDataRepository)
     {
         _accountUserContext = accountUserContext;
         _siteRepository = siteRepository;

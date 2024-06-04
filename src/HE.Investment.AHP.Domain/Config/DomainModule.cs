@@ -32,6 +32,7 @@ using HE.Investments.Common.Utils;
 using HE.Investments.FrontDoor.Shared.Config;
 using HE.Investments.Organisation.LocalAuthorities;
 using HE.Investments.Organisation.LocalAuthorities.Repositories;
+using HE.Investments.Programme.Contract.Config;
 using MediatR.Pipeline;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.PowerPlatform.Dataverse.Client;
@@ -46,8 +47,6 @@ public static class DomainModule
         services.AddFrontDoorSharedModule();
         services.AddScoped<IDateTimeProvider, DateTimeProvider>();
         services.AddTransient(typeof(IRequestExceptionHandler<,,>), typeof(DomainValidationHandler<,,>));
-        services.AddScoped<IAhpUserContext, AhpUserContext>();
-        services.AddScoped<IAhpAccessContext, AhpAccessContext>();
 
         services
             .AddProgramme()
