@@ -41,7 +41,7 @@ resources:
     - repository: he-invst-deployment
       type: git
       name: "Investments Programme/he-invst-deployment"
-      ref: "Pipeline_EnvVar"
+      ref: "main"
   pipelines:
     - pipeline: BuildPipeline
       source: "AHP - CRM - Build"
