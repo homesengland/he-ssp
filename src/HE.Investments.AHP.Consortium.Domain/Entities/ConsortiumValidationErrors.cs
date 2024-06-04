@@ -10,5 +10,5 @@ internal static class ConsortiumValidationErrors
 
     public const string IsApplicationPartner = "This organisation is an Application Partner";
 
-    public const string RemoveConfirmationNotSelected = "Select whether you want to remove this organisation from consortium";
+    public const string RemoveConfirmationNotSelected = "Select yes if you want to remove the organisation";
 }
