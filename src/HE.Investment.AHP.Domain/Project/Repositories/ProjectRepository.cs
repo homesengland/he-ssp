@@ -136,7 +136,7 @@ public class ProjectRepository : IProjectRepository
     {
         return sites?.Select(x => new SiteDto
         {
-            id = x.Id.ToString(),
+            fdSiteid = x.Id.ToGuidAsString(),
             name = x.Name.ToString(),
         }).ToList() ?? [];
     }
