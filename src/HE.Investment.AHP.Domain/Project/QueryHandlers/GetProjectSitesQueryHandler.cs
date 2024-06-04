@@ -36,7 +36,7 @@ public class GetProjectSitesQueryHandler : IRequestHandler<GetProjectSitesQuery,
             foreach (var site in projectSites.Sites!.TakePage(request.PaginationRequest))
             {
                 var localAuthorityName = string.IsNullOrEmpty(site.LocalAuthority?.Name)
-                    ? (await _prefillDataRepository.GetAhpSitePrefillData(request.ProjectId, site.FdSiteId, cancellationToken)).LocalAuthorityName!
+                    ? (await _prefillDataRepository.GetAhpSitePrefillData(request.ProjectId, site.FdSiteId!, cancellationToken)).LocalAuthorityName!
                     : site.LocalAuthority.Name;
 
                 var siteModel = new SiteBasicModel(
