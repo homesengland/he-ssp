@@ -28,7 +28,7 @@ public class GetProjectsListQueryHandlerTests : TestBase<GetProjectsListQueryHan
         var userAccount = AhpUserContextTestBuilder
             .New()
             .Register(this)
-            .AhpUserFromMock;
+            .ConsortiumUserFromMock;
 
         var paginationRequest = new PaginationRequest(1);
 
@@ -73,7 +73,7 @@ public class GetProjectsListQueryHandlerTests : TestBase<GetProjectsListQueryHan
         var userAccount = AhpUserContextTestBuilder
             .New()
             .Register(this)
-            .AhpUserFromMock;
+            .ConsortiumUserFromMock;
 
         var paginationRequest = new PaginationRequest(1);
 

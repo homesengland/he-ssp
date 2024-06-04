@@ -1,4 +1,4 @@
-namespace HE.Investments.FrontDoor.Domain.Config;
+namespace HE.Investments.Programme.Contract.Config;
 
 public interface IProgrammeSettings
 {

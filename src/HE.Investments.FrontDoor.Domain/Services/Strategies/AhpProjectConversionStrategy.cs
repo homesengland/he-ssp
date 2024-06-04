@@ -5,6 +5,7 @@ using HE.Investments.FrontDoor.Domain.Site;
 using HE.Investments.FrontDoor.Domain.Site.Utilities;
 using HE.Investments.FrontDoor.Shared.Project.Contract;
 using HE.Investments.Programme.Contract;
+using HE.Investments.Programme.Contract.Config;
 using AffordableHomesAmountType = HE.Investments.FrontDoor.Shared.Project.Contract.AffordableHomesAmount;
 
 namespace HE.Investments.FrontDoor.Domain.Services.Strategies;

@@ -18,6 +18,8 @@ public record UserAccount(
 
     public bool CanEditApplication => HasOneOfRole([.. AccountAccessContext.EditApplicationRoles]);
 
+    public bool IsMemberOfOrganisation => Role() > UserRole.Limited;
+
     public UserRole Role() => Roles.Count > 0 ? Roles.Max() : throw new UnauthorizedAccessException();
 
     public bool CanViewAllApplications() => Role() != UserRole.Limited;

@@ -6,9 +6,12 @@ using HE.Investments.Account.Domain.Users.Repositories;
 using HE.Investments.Account.Shared;
 using HE.Investments.Account.Shared.Config;
 using HE.Investments.Account.Shared.Repositories;
+using HE.Investments.AHP.Consortium.Shared.Config;
 using HE.Investments.Common;
 using HE.Investments.Common.Contract.Exceptions;
+using HE.Investments.Common.Extensions;
 using HE.Investments.Organisation.Config;
+using HE.Investments.Programme.Contract.Config;
 using MediatR.Pipeline;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -32,7 +35,8 @@ public static class AccountModule
         services.AddScoped<IUsersCrmContext, UsersCrmContext>();
         services.AddScoped<IUsersRepository, UsersRepository>();
         services.AddScoped<IUserRepository, UserRepository>();
-
+        services.AddAppConfiguration<IProgrammeSettings, ProgrammeSettings>();
+        services.AddConsortiumSharedModule();
         AddUserOrganisations(services);
     }
 

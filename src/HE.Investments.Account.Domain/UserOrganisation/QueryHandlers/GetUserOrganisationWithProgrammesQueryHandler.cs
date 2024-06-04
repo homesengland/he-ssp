@@ -4,6 +4,7 @@ using HE.Investments.Account.Domain.Organisation.Repositories;
 using HE.Investments.Account.Domain.User.Repositories;
 using HE.Investments.Account.Domain.UserOrganisation.Repositories;
 using HE.Investments.Account.Shared;
+using HE.Investments.AHP.Consortium.Shared.UserContext;
 using HE.Investments.Common;
 using MediatR;
 using Microsoft.FeatureManagement;
@@ -12,7 +13,7 @@ namespace HE.Investments.Account.Domain.UserOrganisation.QueryHandlers;
 
 public class GetUserOrganisationWithProgrammesQueryHandler : IRequestHandler<GetUserOrganisationWithProgrammesQuery, GetUserOrganisationWithProgrammesQueryResponse>
 {
-    private readonly IAccountUserContext _accountUserContext;
+    private readonly IConsortiumUserContext _accountUserContext;
     private readonly IProgrammeApplicationsRepository _programmeApplicationsRepository;
     private readonly IOrganizationRepository _organizationRepository;
     private readonly IProfileRepository _profileRepository;
@@ -22,7 +23,7 @@ public class GetUserOrganisationWithProgrammesQueryHandler : IRequestHandler<Get
     public GetUserOrganisationWithProgrammesQueryHandler(
         IOrganizationRepository organizationRepository,
         IProfileRepository profileRepository,
-        IAccountUserContext accountUserContext,
+        IConsortiumUserContext accountUserContext,
         IProgrammeApplicationsRepository programmeApplicationsRepository,
         IProjectRepository projectRepository,
         IFeatureManager featureManager)

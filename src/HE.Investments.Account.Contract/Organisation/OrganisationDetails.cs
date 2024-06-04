@@ -14,7 +14,7 @@ public class OrganisationDetails
         string houseNumber,
         OrganisationChangeRequestState changeRequestState,
         InvestmentPartnerStatus? investmentPartnerStatus,
-        bool hasAnyAhpApplication)
+        bool hasAnyAhpProjects)
     {
         Name = name;
         PhoneNumber = phoneNumber;
@@ -22,7 +22,7 @@ public class OrganisationDetails
         HouseNumber = houseNumber;
         ChangeRequestState = changeRequestState;
         InvestmentPartnerStatus = investmentPartnerStatus;
-        HasAnyAhpApplication = hasAnyAhpApplication;
+        HasAnyAhpProjects = hasAnyAhpProjects;
     }
 
     public string? Name { get; set; }
@@ -47,5 +47,5 @@ public class OrganisationDetails
 
     public InvestmentPartnerStatus? InvestmentPartnerStatus { get; set; }
 
-    public bool HasAnyAhpApplication { get; set; }
+    public bool HasAnyAhpProjects { get; set; }
 }

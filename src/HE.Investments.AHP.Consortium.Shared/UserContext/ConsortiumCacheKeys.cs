@@ -1,8 +1,8 @@
 using HE.Investments.Common.Contract;
 
-namespace HE.Investment.AHP.Domain.UserContext;
+namespace HE.Investments.AHP.Consortium.Shared.UserContext;
 
-internal static class AhpCacheKeys
+public static class ConsortiumCacheKeys
 {
     public static string OrganisationConsortium(OrganisationId organisationId) => $"ahp-consortium-{organisationId}";
 }
