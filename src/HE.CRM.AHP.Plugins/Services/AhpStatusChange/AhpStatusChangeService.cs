@@ -42,6 +42,7 @@ namespace HE.CRM.AHP.Plugins.Services.AhpStatusChange
 
         public void SendNotificationOnAhpStatusChangeCreate(invln_AHPStatusChange target)
         {
+            TracingService.Trace("SendNotificationOnAhpStatusChangeCreate");
             if (target.invln_ChangeSource != null)
             {
                 this.TracingService.Trace("Change source: " + target.invln_ChangeSource.Value);
@@ -53,7 +54,11 @@ namespace HE.CRM.AHP.Plugins.Services.AhpStatusChange
                         invln_scheme.Fields.invln_schemename,
                         invln_scheme.Fields.invln_contactid,
                         invln_scheme.Fields.invln_organisationid,
-                        invln_scheme.Fields.invln_programmelookup
+                        invln_scheme.Fields.invln_programmelookup,
+                        invln_scheme.Fields.invln_GrantAmountRequested,
+                        invln_scheme.Fields.invln_Tenure,
+                        invln_scheme.Fields.invln_fundingrequired,
+                        invln_scheme.Fields.invln_noofhomes
                     });
                 SendNotification(target, ahpApplication);
             }
@@ -64,6 +69,7 @@ namespace HE.CRM.AHP.Plugins.Services.AhpStatusChange
 
         private void SendNotification(invln_AHPStatusChange ahpStatusChange, invln_scheme ahpApplication)
         {
+            TracingService.Trace("SendNotification");
             var statusLabel = string.Empty;
             switch (ahpStatusChange.invln_Changeto.Value)
             {
@@ -83,6 +89,10 @@ namespace HE.CRM.AHP.Plugins.Services.AhpStatusChange
                     break;
                 case (int)invln_AHPInternalStatus.Approved:
                     statusLabel = "Approved";
+                    if (ahpStatusChange.invln_ChangeSource.Value == (int)invln_ChangesourceSet.Internal)
+                    {
+                        _govNotifyEmailService.SendNotifications_AHP_EXTERNAL_APPLICATION_APPROVED_OUTCOME(ahpStatusChange, ahpApplication);
+                    }
                     break;
                 case (int)invln_AHPInternalStatus.ApprovedContractExecuted:
                     statusLabel = "ApprovedContractExecuted";
@@ -98,7 +108,11 @@ namespace HE.CRM.AHP.Plugins.Services.AhpStatusChange
                     break;
                 case (int)invln_AHPInternalStatus.ApprovedSubjecttoContract:
                     statusLabel = "ApprovedSubjecttoContract";
-                    _govNotifyEmailService.SendNotifications_AHP_INTERNAL_APPLICATION_APPROVED_SUBJECT_TO_CONTRACT(ahpStatusChange, ahpApplication);
+                    if (ahpStatusChange.invln_ChangeSource.Value == (int)invln_ChangesourceSet.Internal)
+                    {
+                        _govNotifyEmailService.SendNotifications_AHP_INTERNAL_APPLICATION_APPROVED_SUBJECT_TO_CONTRACT(ahpStatusChange, ahpApplication);
+                        _govNotifyEmailService.SendNotifications_AHP_EXTERNAL_APPLICATION_APPROVED_OUTCOME(ahpStatusChange, ahpApplication);
+                    }
                     break;
                 case (int)invln_AHPInternalStatus.Deleted:
                     statusLabel = "Deleted";

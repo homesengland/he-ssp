@@ -3,9 +3,11 @@ using HE.Investment.AHP.Contract.Project.Queries;
 using HE.Investment.AHP.Domain.Config;
 using HE.Investment.AHP.Domain.Project.Repositories;
 using HE.Investment.AHP.Domain.UserContext;
+using HE.Investments.AHP.Consortium.Shared.UserContext;
 using HE.Investments.Common.Contract.Pagination;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Programme.Contract;
+using HE.Investments.Programme.Contract.Config;
 using HE.Investments.Programme.Contract.Queries;
 using MediatR;
 
@@ -17,14 +19,14 @@ public class GetProjectDetailsQueryHandler : IRequestHandler<GetProjectDetailsQu
 
     private readonly IMediator _mediator;
 
-    private readonly IAhpUserContext _userContext;
+    private readonly IConsortiumUserContext _userContext;
 
     private readonly IProgrammeSettings _programmeSettings;
 
     public GetProjectDetailsQueryHandler(
         IProjectRepository projectRepository,
         IMediator mediator,
-        IAhpUserContext userContext,
+        IConsortiumUserContext userContext,
         IProgrammeSettings programmeSettings)
     {
         _projectRepository = projectRepository;

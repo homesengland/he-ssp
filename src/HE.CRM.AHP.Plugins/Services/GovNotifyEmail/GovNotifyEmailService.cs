@@ -10,10 +10,13 @@ using System.Xml.Linq;
 using DataverseModel;
 using HE.Base.Services;
 using HE.CRM.AHP.Plugins.Common;
+using HE.CRM.Common.OptionSetsMapping;
 using HE.CRM.Common.Repositories.interfaces;
 using HE.CRM.Common.Repositories.Interfaces;
 using HE.CRM.Model.CrmSerialiedParameters;
 using Microsoft.Xrm.Sdk;
+using Microsoft.Xrm.Sdk.Messages;
+using Microsoft.Xrm.Sdk.Metadata;
 using static System.Net.Mime.MediaTypeNames;
 
 namespace HE.CRM.AHP.Plugins.Services.GovNotifyEmail
@@ -156,8 +159,6 @@ namespace HE.CRM.AHP.Plugins.Services.GovNotifyEmail
             }
         }
 
-        #region !!! Probably not used. To be checked and removed. !!!
-
         public void SendNotifications_COMMON_INVITE_CONTACT_TO_JOIN_ORGANIZATION(EntityReference invitedContactId, EntityReference _inviterContactId, EntityReference organisationId)
         {
             if (invitedContactId != null && _inviterContactId != null && organisationId != null)
@@ -194,6 +195,8 @@ namespace HE.CRM.AHP.Plugins.Services.GovNotifyEmail
                 }
             }
         }
+
+        #region !!! Probably not used. To be checked and removed. !!!
 
         public void SendNotifications_AHP_EXTERNAL_REMINDER_TO_FINALIZE_APPLICATION_REFERRED_BACK(EntityReference ahpApplicationId, EntityReference contactId)
         {
@@ -378,99 +381,93 @@ namespace HE.CRM.AHP.Plugins.Services.GovNotifyEmail
 
         public void SendNotifications_AHP_EXTERNAL_APPLICATION_REFERRED_BACK_TO_APPLICANT(invln_AHPStatusChange ahpStatusChange, invln_scheme ahpApplication)
         {
-            if (ahpStatusChange.invln_ChangeSource.Value == (int)invln_ChangesourceSet.External)
+            TracingService.Trace("AHP_EXTERNAL_APPLICATION_REFERRED_BACK_TO_APPLICANT");
+            var contact = _contactRepositoryAdmin.GetById(ahpApplication.invln_contactid.Id, Contact.Fields.FullName, Contact.Fields.EMailAddress1);
+            if (ahpApplication.invln_programmelookup == null)
             {
-                TracingService.Trace("AHP_EXTERNAL_APPLICATION_REFERRED_BACK_TO_APPLICANT");
-                var contact = _contactRepositoryAdmin.GetById(ahpApplication.invln_contactid.Id, Contact.Fields.FullName, Contact.Fields.EMailAddress1);
-                if (ahpApplication.invln_programmelookup == null)
-                {
-                    TracingService.Trace("There is no programme on ahpApplication. Mail not sent.");
-                    return;
-                }
-                var programme = _programmeRepositoryAdmin.GetById(ahpApplication.invln_programmelookup.Id, invln_programme.Fields.invln_programmename);
-                var emailTemplate = _notificationSettingRepositoryAdmin.GetTemplateViaTypeName("AHP_EXTERNAL_APPLICATION_REFERRED_BACK_TO_APPLICANT");
+                TracingService.Trace("There is no programme on ahpApplication. Mail not sent.");
+                return;
+            }
+            var programme = _programmeRepositoryAdmin.GetById(ahpApplication.invln_programmelookup.Id, invln_programme.Fields.invln_programmename);
+            var emailTemplate = _notificationSettingRepositoryAdmin.GetTemplateViaTypeName("AHP_EXTERNAL_APPLICATION_REFERRED_BACK_TO_APPLICANT");
 
-                if (contact != null && programme != null && emailTemplate != null)
+            if (contact != null && programme != null && emailTemplate != null)
+            {
+                var subject = emailTemplate.invln_subject;
+                var govNotParams = new AHP_EXTERNAL_APPLICATION_REFERRED_BACK_TO_APPLICANT()
                 {
-                    var subject = emailTemplate.invln_subject;
-                    var govNotParams = new AHP_EXTERNAL_APPLICATION_REFERRED_BACK_TO_APPLICANT()
+                    templateId = emailTemplate?.invln_templateid,
+                    personalisation = new parameters_AHP_EXTERNAL_APPLICATION_REFERRED_BACK_TO_APPLICANT()
                     {
-                        templateId = emailTemplate?.invln_templateid,
-                        personalisation = new parameters_AHP_EXTERNAL_APPLICATION_REFERRED_BACK_TO_APPLICANT()
-                        {
-                            recipientEmail = contact.EMailAddress1,
-                            subject = subject,
-                            name = contact.FullName ?? "NO NAME",
-                            schemename = ahpApplication.invln_schemename ?? "NO NAME",
-                            programmename = programme.invln_programmename ?? "NO NAME",
-                        }
-                    };
+                        recipientEmail = contact.EMailAddress1,
+                        subject = subject,
+                        name = contact.FullName ?? "NO NAME",
+                        schemename = ahpApplication.invln_schemename ?? "NO NAME",
+                        programmename = programme.invln_programmename ?? "NO NAME",
+                    }
+                };
 
-                    var options = new JsonSerializerOptions
-                    {
-                        Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
-                        WriteIndented = true
-                    };
-
-                    var parameters = JsonSerializer.Serialize(govNotParams, options);
-                    this.SendGovNotifyEmail(ahpApplication.OwnerId, ahpApplication.ToEntityReference(), subject, parameters, emailTemplate);
-                }
-                else
+                var options = new JsonSerializerOptions
                 {
-                    TracingService.Trace("Probably there is no email template. Mail not sent.");
-                }
+                    Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+                    WriteIndented = true
+                };
+
+                var parameters = JsonSerializer.Serialize(govNotParams, options);
+                this.SendGovNotifyEmail(ahpApplication.OwnerId, ahpApplication.ToEntityReference(), subject, parameters, emailTemplate);
+            }
+            else
+            {
+                TracingService.Trace("Probably there is no email template. Mail not sent.");
             }
         }
 
         public void SendNotifications_AHP_INTERNAL_APPLICATION_APPROVED_SUBJECT_TO_CONTRACT(invln_AHPStatusChange ahpStatusChange, invln_scheme ahpApplication)
         {
-            if (ahpStatusChange.invln_ChangeSource.Value == (int)invln_ChangesourceSet.Internal)
+            TracingService.Trace("AHP_INTERNAL_APPLICATION_APPROVED_SUBJECT_TO_CONTRACT");
+            var account = _accountRepositoryAdmin.GetById(ahpApplication.invln_organisationid.Id, Account.Fields.invln_ProviderManagementLead, Account.Fields.Name);
+            var emailTemplate = _notificationSettingRepositoryAdmin.GetTemplateViaTypeName("AHP_INTERNAL_APPLICATION_APPROVED_SUBJECT_TO_CONTRACT");
+            SystemUser user = null;
+            if (account.invln_ProviderManagementLead != null)
             {
-                TracingService.Trace("AHP_INTERNAL_APPLICATION_APPROVED_SUBJECT_TO_CONTRACT");
-                var account = _accountRepositoryAdmin.GetById(ahpApplication.invln_organisationid.Id, Account.Fields.invln_ProviderManagementLead, Account.Fields.Name);
-                var emailTemplate = _notificationSettingRepositoryAdmin.GetTemplateViaTypeName("AHP_INTERNAL_APPLICATION_APPROVED_SUBJECT_TO_CONTRACT");
-                SystemUser user = null;
-                if (account.invln_ProviderManagementLead != null)
-                {
-                    user = _systemUserRepositoryAdmin.GetById(account.invln_ProviderManagementLead.Id, SystemUser.Fields.FullName, SystemUser.Fields.DomainName);
-                }
+                user = _systemUserRepositoryAdmin.GetById(account.invln_ProviderManagementLead.Id, SystemUser.Fields.FullName, SystemUser.Fields.DomainName);
+            }
 
-                if (account != null && user != null && emailTemplate != null)
-                {
-                    var subject = emailTemplate.invln_subject.Replace("[SchemeName]", ahpApplication.invln_schemename);
+            if (account != null && user != null && emailTemplate != null)
+            {
+                var subject = emailTemplate.invln_subject.Replace("[SchemeName]", ahpApplication.invln_schemename);
 
-                    var govNotParams = new AHP_INTERNAL_APPLICATION_APPROVED_SUBJECT_TO_CONTRACT()
+                var govNotParams = new AHP_INTERNAL_APPLICATION_APPROVED_SUBJECT_TO_CONTRACT()
+                {
+                    templateId = emailTemplate?.invln_templateid,
+                    personalisation = new parameters_AHP_INTERNAL_APPLICATION_APPROVED_SUBJECT_TO_CONTRACT()
                     {
-                        templateId = emailTemplate?.invln_templateid,
-                        personalisation = new parameters_AHP_INTERNAL_APPLICATION_APPROVED_SUBJECT_TO_CONTRACT()
-                        {
-                            recipientEmail = "",
-                            subject = subject,
-                            name = user.FullName ?? "NO NAME",
-                            organisationname = account.Name ?? "NO NAME",
-                            applicationname = ahpApplication.invln_schemename ?? "NO NAME",
-                            applicationurl = GetAhpApplicationUrl(ahpApplication.ToEntityReference()),
-                        }
-                    };
+                        recipientEmail = "",
+                        subject = subject,
+                        name = user.FullName ?? "NO NAME",
+                        organisationname = account.Name ?? "NO NAME",
+                        applicationname = ahpApplication.invln_schemename ?? "NO NAME",
+                        applicationurl = GetAhpApplicationUrl(ahpApplication.ToEntityReference()),
+                    }
+                };
 
-                    var options = new JsonSerializerOptions
-                    {
-                        Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
-                        WriteIndented = true
-                    };
-
-                    govNotParams.personalisation.recipientEmail = user.DomainName;
-                    var parameters = JsonSerializer.Serialize(govNotParams, options);
-                    this.SendGovNotifyEmail(ahpApplication.OwnerId, ahpApplication.ToEntityReference(), subject, parameters, emailTemplate);
-
-                    govNotParams.personalisation.recipientEmail = "Housing.Contracts@homesengland.gov.uk";
-                    parameters = JsonSerializer.Serialize(govNotParams, options);
-                    this.SendGovNotifyEmail(ahpApplication.OwnerId, ahpApplication.ToEntityReference(), subject, parameters, emailTemplate);
-                }
-                else
+                var options = new JsonSerializerOptions
                 {
-                    TracingService.Trace("Probably there is no email template or invln_ProviderManagementLead on Account. Mail not sent.");
-                }
+                    Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+                    WriteIndented = true
+                };
+
+                govNotParams.personalisation.recipientEmail = user.DomainName;
+                var parameters = JsonSerializer.Serialize(govNotParams, options);
+                this.SendGovNotifyEmail(ahpApplication.OwnerId, ahpApplication.ToEntityReference(), subject, parameters, emailTemplate);
+
+                govNotParams.personalisation.recipientEmail = "Housing.Contracts@homesengland.gov.uk";
+                parameters = JsonSerializer.Serialize(govNotParams, options);
+                this.SendGovNotifyEmail(ahpApplication.OwnerId, ahpApplication.ToEntityReference(), subject, parameters, emailTemplate);
+            }
+            else
+            {
+                TracingService.Trace("Probably there is no email template or invln_ProviderManagementLead on Account. Mail not sent.");
             }
         }
 
@@ -608,6 +605,118 @@ namespace HE.CRM.AHP.Plugins.Services.GovNotifyEmail
                 {
                     TracingService.Trace("Probably there is no email template. Mail not sent.");
                 }
+            }
+        }
+
+        public void SendNotifications_AHP_EXTERNAL_APPLICATION_APPROVED_OUTCOME(invln_AHPStatusChange ahpStatusChange, invln_scheme ahpApplication)
+        {
+            TracingService.Trace("AHP_EXTERNAL_APPLICATION_APPROVED_OUTCOME");
+            var contact = _contactRepositoryAdmin.GetById(ahpApplication.invln_contactid.Id, nameof(Contact.FullName).ToLower(), nameof(Contact.EMailAddress1).ToLower());
+            var account = _accountRepositoryAdmin.GetById(ahpApplication.invln_organisationid.Id, Account.Fields.invln_ProviderManagementLead, Account.Fields.Name);
+
+            SystemUser providerManagementLead = null;
+            if (account.invln_ProviderManagementLead != null)
+            {
+                providerManagementLead = _systemUserRepositoryAdmin.GetById(account.invln_ProviderManagementLead.Id, SystemUser.Fields.FullName, SystemUser.Fields.DomainName);
+            }
+            if (providerManagementLead == null)
+            {
+                TracingService.Trace("Probably there is no invln_ProviderManagementLead on Account. Mail not sent.");
+                return;
+            }
+
+            if (ahpApplication.invln_programmelookup == null)
+            {
+                TracingService.Trace("There is no programme on ahpApplication. Mail not sent.");
+                return;
+            }
+            var programme = _programmeRepositoryAdmin.GetById(ahpApplication.invln_programmelookup.Id, invln_programme.Fields.invln_programmename);
+            var emailTemplate = _notificationSettingRepositoryAdmin.GetTemplateViaTypeName("AHP_EXTERNAL_APPLICATION_APPROVED_OUTCOME");
+
+            if (contact != null && account != null && providerManagementLead != null && programme != null && emailTemplate != null)
+            {
+                TracingService.Trace("Prepare parameters.");
+                var subject = emailTemplate.invln_subject;
+
+                if (ahpApplication.invln_GrantAmountRequested == null)
+                {
+                    TracingService.Trace("There is no invln_GrantAmountRequested on ahpApplication. Mail not sent.");
+                    return;
+                }
+                if (ahpApplication.invln_Tenure == null)
+                {
+                    TracingService.Trace("There is no invln_Tenure on ahpApplication. Mail not sent.");
+                    return;
+                } else 
+                {
+                    if(TenureMapp.TenureMappToString(ahpApplication.invln_Tenure.Value) == null)
+                    {
+                        TracingService.Trace("There is no invln_Tenure on TenureMappToString. Mail not sent.");
+                        return;
+                    }
+                }
+                if (ahpApplication.invln_fundingrequired == null)
+                {
+                    TracingService.Trace("There is no invln_fundingrequired on ahpApplication. Mail not sent.");
+                    return;
+                }
+                if (ahpApplication.invln_noofhomes == null)
+                {
+                    TracingService.Trace("There is no invln_noofhomes on ahpApplication. Mail not sent.");
+                    return;
+                }
+
+                var govNotParams = new AHP_EXTERNAL_APPLICATION_APPROVED_OUTCOME()
+                {
+                    templateId = emailTemplate?.invln_templateid,
+                    personalisation = new parameters_AHP_EXTERNAL_APPLICATION_APPROVED_OUTCOME()
+                    {
+                        recipientEmail = contact.EMailAddress1,
+                        subject = subject,
+                        name = contact.FullName,
+                        grantamount = decimal.Round(ahpApplication.invln_GrantAmountRequested.Value, 2).ToString(),
+                        applicationname = ahpApplication.invln_schemename,
+                        applicationid = ahpApplication.invln_applicationid,
+                        partnername = account.Name,
+                        tenure = TenureMapp.TenureMappToString(ahpApplication.invln_Tenure.Value),
+                        homesenglandfunding = decimal.Round(ahpApplication.invln_fundingrequired.Value, 2).ToString(),
+                        homes = ahpApplication.invln_noofhomes.ToString(),
+                        providermanagementlead = providerManagementLead.FullName,
+                        allocationofgrant = "",
+                    }
+                };
+
+                if (ahpStatusChange.invln_Changeto.Value == (int)invln_AHPInternalStatus.ApprovedSubjecttoContract)
+                {
+                    govNotParams.personalisation.allocationofgrant = "This allocation of grant under the 21-26 Affordable Homes Programme is subject to entering in to an AHP 2021 to 2026 grant agreement with Homes England. Our contracting team will be in touch with a copy of the agreement. We operate using standard, non-negotiable contracts. You are required to enter into this contract prior to any milestone payments being claimed.";
+                }
+                TracingService.Trace("*** Parameters :");
+                TracingService.Trace($"govNotParams.templateId : {govNotParams.templateId}");
+                TracingService.Trace($"govNotParams.personalisation.recipientEmail : {govNotParams.personalisation.recipientEmail}");
+                TracingService.Trace($"govNotParams.personalisation.subject : {govNotParams.personalisation.subject}");
+                TracingService.Trace($"govNotParams.personalisation.name : {govNotParams.personalisation.name}");
+                TracingService.Trace($"govNotParams.personalisation.grantamount : {govNotParams.personalisation.grantamount}");
+                TracingService.Trace($"govNotParams.personalisation.applicationname : {govNotParams.personalisation.applicationname}");
+                TracingService.Trace($"govNotParams.personalisation.applicationid : {govNotParams.personalisation.applicationid}");
+                TracingService.Trace($"govNotParams.personalisation.partnername : {govNotParams.personalisation.partnername}");
+                TracingService.Trace($"govNotParams.personalisation.tenure : {govNotParams.personalisation.tenure}");
+                TracingService.Trace($"govNotParams.personalisation.homesenglandfunding : {govNotParams.personalisation.homesenglandfunding}");
+                TracingService.Trace($"govNotParams.personalisation.homes : {govNotParams.personalisation.homes}");
+                TracingService.Trace($"govNotParams.personalisation.providermanagementlead : {govNotParams.personalisation.providermanagementlead}");
+                TracingService.Trace($"govNotParams.personalisation.allocationofgrant : {govNotParams.personalisation.allocationofgrant}");
+
+                var options = new JsonSerializerOptions
+                {
+                    Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+                    WriteIndented = true
+                };
+
+                var parameters = JsonSerializer.Serialize(govNotParams, options);
+                this.SendGovNotifyEmail(ahpApplication.OwnerId, ahpApplication.ToEntityReference(), subject, parameters, emailTemplate);
+            }
+            else
+            {
+                TracingService.Trace("Probably there is no email template. Mail not sent.");
             }
         }
 

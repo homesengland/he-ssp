@@ -5,6 +5,7 @@ using HE.Investment.AHP.Domain.Site.Entities;
 using HE.Investment.AHP.Domain.Site.ValueObjects.StrategicSite;
 using HE.Investment.AHP.Domain.UserContext;
 using HE.Investments.Account.Shared.User;
+using HE.Investments.AHP.Consortium.Shared.UserContext;
 using HE.Investments.Common.Contract.Pagination;
 
 namespace HE.Investment.AHP.Domain.Site.Repositories;
@@ -19,7 +20,7 @@ public interface ISiteRepository : ISiteNameExist
 
     Task<PaginationResult<ApplicationBasicDetails>> GetSiteApplications(
         SiteId siteId,
-        AhpUserAccount userAccount,
+        ConsortiumUserAccount userAccount,
         PaginationRequest paginationRequest,
         CancellationToken cancellationToken);
 

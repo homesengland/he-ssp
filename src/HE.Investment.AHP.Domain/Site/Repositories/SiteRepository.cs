@@ -10,6 +10,7 @@ using HE.Investment.AHP.Domain.Site.ValueObjects;
 using HE.Investment.AHP.Domain.Site.ValueObjects.StrategicSite;
 using HE.Investment.AHP.Domain.UserContext;
 using HE.Investments.Account.Shared.User;
+using HE.Investments.AHP.Consortium.Shared.UserContext;
 using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Contract.Pagination;
 using HE.Investments.Common.CRM.Mappers;
@@ -60,7 +61,7 @@ public class SiteRepository : ISiteRepository
         return SiteDtoToSiteEntityMapper.Map(site);
     }
 
-    public async Task<PaginationResult<ApplicationBasicDetails>> GetSiteApplications(SiteId siteId, AhpUserAccount userAccount, PaginationRequest paginationRequest, CancellationToken cancellationToken)
+    public async Task<PaginationResult<ApplicationBasicDetails>> GetSiteApplications(SiteId siteId, ConsortiumUserAccount userAccount, PaginationRequest paginationRequest, CancellationToken cancellationToken)
     {
         var siteApplications = await _siteCrmContext.GetSiteApplications(
             siteId.ToGuidAsString(),

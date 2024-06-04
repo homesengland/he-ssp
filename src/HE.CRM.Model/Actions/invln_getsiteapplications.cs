@@ -19,7 +19,7 @@ namespace DataverseModel
 		
 		public static class Fields
 		{
-			public const string invln_consortiumId = "invln_consortiumId";
+			public const string invln_consortiumid = "invln_consortiumid";
 			public const string invln_userid = "invln_userid";
 			public const string invln_organizationid = "invln_organizationid";
 			public const string invln_siteid = "invln_siteid";
@@ -27,13 +27,13 @@ namespace DataverseModel
 		
 		public const string ActionLogicalName = "invln_getsiteapplications";
 		
-		public string invln_consortiumId
+		public string invln_consortiumid
 		{
 			get
 			{
-				if (this.Parameters.Contains("invln_consortiumId"))
+				if (this.Parameters.Contains("invln_consortiumid"))
 				{
-					return ((string)(this.Parameters["invln_consortiumId"]));
+					return ((string)(this.Parameters["invln_consortiumid"]));
 				}
 				else
 				{
@@ -42,7 +42,7 @@ namespace DataverseModel
 			}
 			set
 			{
-				this.Parameters["invln_consortiumId"] = value;
+				this.Parameters["invln_consortiumid"] = value;
 			}
 		}
 		
@@ -106,7 +106,7 @@ namespace DataverseModel
 		public invln_getsiteapplicationsRequest()
 		{
 			this.RequestName = "invln_getsiteapplications";
-			this.invln_consortiumId = default(string);
+			this.invln_consortiumid = default(string);
 			this.invln_userid = default(string);
 			this.invln_organizationid = default(string);
 			this.invln_siteid = default(string);

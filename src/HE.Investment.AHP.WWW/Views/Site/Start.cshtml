@@ -1,4 +1,7 @@
+@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Links
+@using HE.Investment.AHP.WWW.Views.Shared.Components.ReturnToAccountLink
 @using HE.Investment.AHP.WWW.Views.Site.Const
+@using HE.Investments.Common.WWW.Components.PageHeader
 @model HE.Investment.AHP.WWW.Models.Site.StartSiteModel
 @{
     ViewData["Title"] = SitePageTitles.SiteDetails;
@@ -24,8 +27,8 @@
         <gds-p>If your application concerns existing properties rather than land-led development, this section is still relevant to you. Complete this section in relation to the properties and where we use 'site' or 'land', substitute in 'properties'.</gds-p>
         <gds-p>We will also ask you to tell us if you’re using Modern Methods of Construction (MMC). If your site includes a mix of MMC and traditional build homes, you can indicate that here. We will ask for more details when you tell us about the homes on your site.</gds-p>
     </div>
-    <link-button action-url="@Url.Action("ContinueAnswering", "Site", new { siteId = Model.SiteId})" data-testid="site-start-continue">
-        Continue
-    </link-button>
-    <vc:return-to-account-link />
+    <form asp-controller="Site" asp-action="Start" asp-route-workflow="@Context.Request.Query["workflow"]" asp-method="post" novalidate>
+        <vc:form-button text="Continue"/>
+        <vc:return-to-account-link/>
+    </form>
 </gds-div-grid-column-two-thirds>

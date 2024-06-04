@@ -2,6 +2,7 @@ using HE.Investment.AHP.Contract.Project;
 using HE.Investment.AHP.Contract.Project.Commands;
 using HE.Investment.AHP.Domain.Project.Repositories;
 using HE.Investment.AHP.Domain.UserContext;
+using HE.Investments.AHP.Consortium.Shared.UserContext;
 using HE.Investments.FrontDoor.Shared.Project.Repositories;
 using MediatR;
 
@@ -13,18 +14,18 @@ public class CreateAhpProjectCommandHandler : IRequestHandler<CreateAhpProjectCo
 
     private readonly IProjectRepository _projectRepository;
 
-    private readonly IAhpUserContext _ahpUserContext;
+    private readonly IConsortiumUserContext _consortiumUserContext;
 
-    public CreateAhpProjectCommandHandler(IPrefillDataRepository prefillDataRepository, IProjectRepository projectRepository, IAhpUserContext ahpUserContext)
+    public CreateAhpProjectCommandHandler(IPrefillDataRepository prefillDataRepository, IProjectRepository projectRepository, IConsortiumUserContext consortiumUserContext)
     {
         _prefillDataRepository = prefillDataRepository;
         _projectRepository = projectRepository;
-        _ahpUserContext = ahpUserContext;
+        _consortiumUserContext = consortiumUserContext;
     }
 
     public async Task<AhpProjectId> Handle(CreateAhpProjectCommand request, CancellationToken cancellationToken)
     {
-        var account = await _ahpUserContext.GetSelectedAccount();
+        var account = await _consortiumUserContext.GetSelectedAccount();
         var frontDoorProject = await _prefillDataRepository.GetProjectPrefillData(request.FrontDoorProjectId, account, cancellationToken);
 
         var ahpProject = await _projectRepository.CreateProject(frontDoorProject, account, cancellationToken);

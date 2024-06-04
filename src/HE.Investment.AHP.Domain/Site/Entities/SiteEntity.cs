@@ -8,6 +8,8 @@ using HE.Investment.AHP.Domain.Site.ValueObjects.Planning;
 using HE.Investment.AHP.Domain.Site.ValueObjects.StrategicSite;
 using HE.Investment.AHP.Domain.Site.ValueObjects.TenderingStatus;
 using HE.Investment.AHP.Domain.UserContext;
+using HE.Investments.Account.Shared;
+using HE.Investments.AHP.Consortium.Shared.UserContext;
 using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Extensions;
@@ -116,7 +118,7 @@ public class SiteEntity : DomainEntity, IQuestion
 
     public bool IsModified => _modificationTracker.IsModified;
 
-    public static SiteEntity NewSite(AhpUserAccount userAccount, FrontDoorProjectId projectId, FrontDoorSiteId? siteId)
+    public static SiteEntity NewSite(ConsortiumUserAccount userAccount, FrontDoorProjectId projectId, FrontDoorSiteId? siteId)
     {
         var sitePartners = userAccount.Consortium.HasNoConsortium
             ? SitePartners.SinglePartner(userAccount.SelectedOrganisation())
@@ -174,6 +176,16 @@ public class SiteEntity : DomainEntity, IQuestion
     public void ProvideNumberOfGreenLights(NumberOfGreenLights? numberOfGreenLights)
     {
         NumberOfGreenLights = _modificationTracker.Change(NumberOfGreenLights, numberOfGreenLights, MarkAsNotCompleted);
+    }
+
+    public void InitializeSitePartner(bool isConsortiumMember, OrganisationBasicInfo userOrganisation)
+    {
+        if (isConsortiumMember || SitePartners.IsAnswered())
+        {
+            return;
+        }
+
+        SitePartners = SitePartners.SinglePartner(userOrganisation);
     }
 
     public void ProvideSitePartners(SitePartners sitePartners)

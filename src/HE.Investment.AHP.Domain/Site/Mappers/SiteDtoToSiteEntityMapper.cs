@@ -1,7 +1,6 @@
 using System.Collections.ObjectModel;
 using System.Globalization;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
-using HE.Investment.AHP.Contract.Project;
 using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Contract.Site.Enums;
 using HE.Investment.AHP.Domain.Site.Entities;
@@ -44,7 +43,7 @@ public static class SiteDtoToSiteEntityMapper
     {
         return new SiteEntity(
             SiteId.From(dto.id),
-            new FrontDoorProjectId(dto.fdProjectid),
+            FrontDoorProjectId.From(dto.fdProjectid),
             new SiteName(dto.name),
             new SitePartners(MapOrganisation(dto.developerPartner), MapOrganisation(dto.ownerOfTheLandDuringDevelopment), MapOrganisation(dto.ownerOfTheHomesAfterCompletion)),
             SiteStatusMapper.ToDomain(dto.status),
