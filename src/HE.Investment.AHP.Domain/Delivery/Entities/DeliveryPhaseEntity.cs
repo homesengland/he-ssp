@@ -164,7 +164,7 @@ public class DeliveryPhaseEntity : DomainEntity, IDeliveryPhaseEntity
     {
         if (isSectionCompleted == null)
         {
-            OperationResult.ThrowValidationError(nameof(isSectionCompleted).TitleCaseFirstLetterInString(), ValidationErrorMessage.NoCheckAnswers);
+            OperationResult.ThrowValidationError("IsSectionCompleted", ValidationErrorMessage.NoCheckAnswers);
         }
 
         if (isSectionCompleted == IsSectionCompleted.No)
@@ -175,7 +175,7 @@ public class DeliveryPhaseEntity : DomainEntity, IDeliveryPhaseEntity
 
         if (!IsAnswered())
         {
-            OperationResult.ThrowValidationError(nameof(isSectionCompleted).TitleCaseFirstLetterInString(), ValidationErrorMessage.SectionIsNotCompleted);
+            OperationResult.ThrowValidationError("IsSectionCompleted", ValidationErrorMessage.SectionIsNotCompleted);
         }
 
         try
