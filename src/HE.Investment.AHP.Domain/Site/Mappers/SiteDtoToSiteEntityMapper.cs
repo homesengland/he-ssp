@@ -62,7 +62,7 @@ public static class SiteDtoToSiteEntityMapper
             string.IsNullOrWhiteSpace(dto.environmentalImpact) ? null : new EnvironmentalImpact(dto.environmentalImpact),
             CreateMmc(dto.modernMethodsOfConstruction),
             new SiteProcurements(MapCollection(dto.procurementMechanisms, SiteProcurementMapper)),
-            frontDoorSiteId: null);
+            FrontDoorSiteId.From(dto.fdSiteid));
     }
 
     private static Section106 CreateSection106(Section106Dto dto)
