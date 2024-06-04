@@ -1,6 +1,7 @@
 using HE.Investment.AHP.Contract.Application;
 using HE.Investments.AHP.Consortium.Contract;
 using HE.Investments.Common.Contract;
+using HE.Investments.Organisation.Contract;
 using UploadedFile = HE.Investment.AHP.Contract.Common.UploadedFile;
 
 namespace HE.Investment.AHP.Contract.Scheme;

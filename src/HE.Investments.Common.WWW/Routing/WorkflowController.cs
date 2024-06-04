@@ -100,7 +100,10 @@ public abstract class WorkflowController<TState> : Controller
             dynamicRouteData.Add(property.Name, property.GetValue(routeData)!);
         }
 
-        dynamicRouteData.Add("workflow", workflow);
+        if (!dynamicRouteData.ContainsKey("workflow"))
+        {
+            dynamicRouteData.Add("workflow", workflow);
+        }
 
         return Continue(dynamicRouteData);
     }

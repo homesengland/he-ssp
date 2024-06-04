@@ -11,6 +11,7 @@ using HE.Investments.AHP.Consortium.Domain.Tests.TestData;
 using HE.Investments.AHP.Consortium.Domain.Tests.TestObjectBuilders;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Tests.TestData;
+using HE.Investments.Organisation.Contract;
 using HE.Investments.Organisation.Services;
 using HE.Investments.Programme.Contract.Queries;
 using HE.Investments.TestsUtils.TestFramework;

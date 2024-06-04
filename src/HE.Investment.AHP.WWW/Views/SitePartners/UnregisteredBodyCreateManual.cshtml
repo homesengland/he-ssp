@@ -1,0 +1,18 @@
+@using HE.Investment.AHP.Contract.SitePartners
+@using HE.Investment.AHP.WWW.Views.Shared.Components.AhpWorkflowBackButton
+@using HE.Investment.AHP.WWW.Views.SitePartners.Const
+@using HE.Investments.Common.WWW.Components.PageHeader
+@{
+    ViewData["Title"] = SitePartnersPageTitles.OwnerOfTheHomes;
+    var workflow = Context.Request.Query["workflow"];
+}
+
+<gds-div-grid-column-two-thirds>
+    <vc:ahp-workflow-back-button current-page="@SitePartnersWorkflowState.UnregisteredBodyCreateManual"/>
+    @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
+    <vc:page-header caption="@ViewBag.SiteName"/>
+
+    <gds-p>
+        TODO: AB#96202
+    </gds-p>
+</gds-div-grid-column-two-thirds>

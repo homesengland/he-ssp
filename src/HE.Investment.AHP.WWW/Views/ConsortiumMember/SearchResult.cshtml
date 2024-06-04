@@ -3,10 +3,11 @@
 @using HE.Investments.AHP.Consortium.Contract
 @using HE.Investments.Common.WWW.Components.FormButton
 @using HE.Investments.Common.WWW.Components.RadioList
-@model HE.Investment.AHP.WWW.Models.ConsortiumMember.SearchOrganisationResultModel
+@model HE.Investment.AHP.WWW.Models.Common.SearchOrganisationResultModel
 @{
     ViewData["Title"] = ConsortiumMemberPageTitles.SearchResult;
     var consortiumId = ViewContext.RouteData.Values["consortiumId"];
+    var result = Model.ToExtendedSelectListItems();
 }
 
 <gds-div-grid-column-two-thirds>
@@ -15,21 +16,21 @@
 
     <form asp-controller="ConsortiumMember" asp-action="SearchResult" asp-route-phrase="@Context.Request.Query["phrase"]" asp-route-page="@Context.Request.Query["page"]" asp-method="post" novalidate>
         @Html.HiddenFor(x => x.Phrase)
-        @Html.HiddenFor(x => x.Page.CurrentPage)
-        @Html.HiddenFor(x => x.Page.ItemsPerPage)
+        @Html.HiddenFor(x => x.Result.CurrentPage)
+        @Html.HiddenFor(x => x.Result.ItemsPerPage)
 
         <vc:radio-list
             title="Select an organisation to add to the consortium"
             title-type="InputTitleType.PageHeader"
-            available-options="@Model.Page.Items"
+            available-options="@result.Items"
             field-name="@nameof(Model.SelectedMember)"
             string-value="@Model.SelectedMember"/>
 
         <he-pagination
             base-url="@Model.NavigationUrl"
-            page="@Model.Page.CurrentPage"
-            items-per-page="@Model.Page.ItemsPerPage"
-            total-items="@Model.Page.TotalItems">
+            page="@Model.Result.CurrentPage"
+            items-per-page="@Model.Result.ItemsPerPage"
+            total-items="@Model.Result.TotalItems">
         </he-pagination>
 
         <gds-link href="@Url.Action("AddOrganisation", "ConsortiumMember", new { consortiumId })">
