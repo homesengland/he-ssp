@@ -12,7 +12,7 @@ namespace HE.CRM.AHP.Plugins.Plugins.HomesInDeliveryPhase
     invln_homesindeliveryphase.EntityLogicalName,
     StageEnum.PostOperation,
     ExecutionModeEnum.Synchronous,
-    "",
+    invln_homesindeliveryphase.Fields.invln_numberofhomes,
     "HE.CRM.Plugins.Plugins.HomeType.HomesInDeliveryPhase: Create of HomesIn Delivery Phase",
     1,
     IsolationModeEnum.Sandbox,
