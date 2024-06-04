@@ -5,8 +5,8 @@ using HE.Investment.AHP.Domain.Site.Entities;
 using HE.Investment.AHP.Domain.Site.ValueObjects.StrategicSite;
 using HE.Investment.AHP.Domain.UserContext;
 using HE.Investments.Account.Shared.User;
-using HE.Investments.AHP.Consortium.Shared.UserContext;
 using HE.Investments.Common.Contract.Pagination;
+using HE.Investments.Consortium.Shared.UserContext;
 
 namespace HE.Investment.AHP.Domain.Site.Repositories;
 

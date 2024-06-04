@@ -1,7 +1,7 @@
 using HE.Investment.AHP.Domain.Tests.Common.TestData;
 using HE.Investment.AHP.Domain.UserContext;
 using HE.Investments.Account.Shared.User.Entities;
-using HE.Investments.AHP.Consortium.Shared.UserContext;
+using HE.Investments.Consortium.Shared.UserContext;
 using HE.Investments.TestsUtils.TestFramework;
 using Moq;
 

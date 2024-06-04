@@ -1,15 +1,15 @@
 using HE.Investments.Account.Api.Contract.User;
 using HE.Investments.Account.Shared;
 using HE.Investments.Account.Shared.User.Entities;
-using HE.Investments.AHP.Consortium.Shared.Repositories;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Infrastructure.Cache;
 using HE.Investments.Common.Infrastructure.Cache.Interfaces;
+using HE.Investments.Consortium.Shared.Repositories;
 using HE.Investments.Programme.Contract;
 using HE.Investments.Programme.Contract.Config;
 
-namespace HE.Investments.AHP.Consortium.Shared.UserContext;
+namespace HE.Investments.Consortium.Shared.UserContext;
 
 internal sealed class ConsortiumUserContext(
     ICacheService cacheService,

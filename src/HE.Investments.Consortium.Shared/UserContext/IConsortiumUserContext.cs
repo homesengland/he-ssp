@@ -1,6 +1,6 @@
 using HE.Investments.Account.Shared;
 
-namespace HE.Investments.AHP.Consortium.Shared.UserContext;
+namespace HE.Investments.Consortium.Shared.UserContext;
 
 public interface IConsortiumUserContext : IUserAccountContext<ConsortiumUserAccount>
 {

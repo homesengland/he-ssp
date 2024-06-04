@@ -1,6 +1,6 @@
 using HE.Investments.AHP.Consortium.Domain.Crm;
 using HE.Investments.AHP.Consortium.Domain.Repositories;
-using HE.Investments.AHP.Consortium.Shared.Config;
+using HE.Investments.Consortium.Shared.Config;
 using HE.Investments.Organisation.Config;
 using Microsoft.Extensions.DependencyInjection;
 

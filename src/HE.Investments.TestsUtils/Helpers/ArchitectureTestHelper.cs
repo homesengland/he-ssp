@@ -13,7 +13,7 @@ public static class ArchitectureTestHelper
         "HE.Investments.Account.Api.Contract",
         "HE.Investments.FrontDoor.Shared",
         "HE.Investments.Programme.Contract",
-        "HE.Investments.AHP.Consortium.Shared"
+        "HE.Investments.Consortium.Shared"
     ];
 
     private static readonly List<string> AllowedSubdomainProjects =

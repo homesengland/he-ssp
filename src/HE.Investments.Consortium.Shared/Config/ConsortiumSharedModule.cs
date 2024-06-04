@@ -1,8 +1,8 @@
-using HE.Investments.AHP.Consortium.Shared.Repositories;
-using HE.Investments.AHP.Consortium.Shared.UserContext;
+using HE.Investments.Consortium.Shared.Repositories;
+using HE.Investments.Consortium.Shared.UserContext;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace HE.Investments.AHP.Consortium.Shared.Config;
+namespace HE.Investments.Consortium.Shared.Config;
 
 public static class ConsortiumSharedModule
 {

@@ -1,8 +1,8 @@
-using HE.Investments.AHP.Consortium.Shared.UserContext;
 using HE.Investments.Common.Contract;
+using HE.Investments.Consortium.Shared.UserContext;
 using HE.Investments.Programme.Contract;
 
-namespace HE.Investments.AHP.Consortium.Shared.Repositories;
+namespace HE.Investments.Consortium.Shared.Repositories;
 
 public interface IConsortiumRepository
 {
