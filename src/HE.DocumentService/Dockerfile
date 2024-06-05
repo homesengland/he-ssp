@@ -19,8 +19,8 @@ ENV VSS_NUGET_EXTERNAL_FEED_ENDPOINTS \
     "{\"endpointCredentials\": [{\"endpoint\":\"https://pkgs.dev.azure.com/homesengland/_packaging/homesengland/nuget/v3/index.json\", \"username\":\"docker\", \"password\":\"${INTERNAL_FEED_ACCESSTOKEN}\"}]}"
 
 COPY . .
-RUN ls
 WORKDIR "/src/HE.DocumentService/HE.DocumentService.Api"
+RUN ls
 RUN dotnet build "./HE.DocumentService.Api.csproj" -c Release -o /app/build
 
 FROM build AS publish
