@@ -227,7 +227,6 @@ public class SitePartnersController : SiteControllerBase<SitePartnersWorkflowSta
         if (result.HasValidationErrors)
         {
             this.AddOrderedErrors<CreateManualOrganisationCommand>(result);
-            await GetSiteBasicDetails(siteId, cancellationToken);
 
             return View("UnregisteredBodyCreateManual", model);
         }
