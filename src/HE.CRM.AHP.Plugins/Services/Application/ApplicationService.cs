@@ -686,7 +686,7 @@ namespace HE.CRM.AHP.Plugins.Services.Application
                 isSupportedGpuAsPercentageOfAreaAverage = true;
             }
 
-            _applicationRepository.Update(new invln_scheme()
+            _ahpApplicationRepositoryAdmin.Update(new invln_scheme()
             {
                 Id = application.Id,
                 invln_grantperunit = new Money(grantPerUnit),

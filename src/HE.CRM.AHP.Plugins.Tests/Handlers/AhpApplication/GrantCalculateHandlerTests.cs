@@ -53,6 +53,7 @@ namespace HE.CRM.AHP.Plugins.Tests.Handlers.AhpApplication
         [DataTestMethod]
         [DataRow(invln_scheme_StatusCode.ApplicationSubmitted, invln_scheme_StatusCode.Approved)]
         [DataRow(invln_scheme_StatusCode.ApplicationSubmitted, invln_scheme_StatusCode.Deleted)]
+        [DataRow(invln_scheme_StatusCode.ApplicationSubmitted, invln_scheme_StatusCode.ReferredBackToApplicant)]
         [DataRow(invln_scheme_StatusCode.ApplicationSubmitted, invln_scheme_StatusCode.Rejected)]
         public void CanWork_ChangeApplicationStatus_SkipWork(invln_scheme_StatusCode preStatus, invln_scheme_StatusCode postStatus)
         {
@@ -122,6 +123,7 @@ namespace HE.CRM.AHP.Plugins.Tests.Handlers.AhpApplication
         [TestMethod]
         [DataRow(invln_scheme_StatusCode.Inactive)]
         [DataRow(invln_scheme_StatusCode.Draft)]
+        [DataRow(invln_scheme_StatusCode.ReferredBackToApplicant)]
         [DataRow(invln_scheme_StatusCode.Deleted)]
         public void CanWork_UpdateFundingRequiredForDifferentStatusesOnNotSubmittedApplication_SkipWork(invln_scheme_StatusCode status)
         {
