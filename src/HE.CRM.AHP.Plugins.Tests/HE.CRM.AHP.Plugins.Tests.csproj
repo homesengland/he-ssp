@@ -155,6 +155,8 @@
     <Compile Include="Handlers\HomeType\CreateDocumentLocationOnCreateHandlerTests.cs" />
     <Compile Include="Handlers\HomeType\SetHappiPrinciplesValueHandlerTest.cs" />
     <Compile Include="Handlers\HomeType\SetWhichNdssStandardsHaveBeenMetValueHandlerTests.cs" />
+    <Compile Include="Helpers\GrantBenchmarkHelper.cs" />
+    <Compile Include="Helpers\HomeTypeHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PwC.Base\Tests\Plugins\Handlers\CrmEntityHandlerTestBase.cs" />
     <Compile Include="PwC.Base\Tests\Plugins\Handlers\CrmHandlerTestBase.cs" />

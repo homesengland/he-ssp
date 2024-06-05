@@ -245,9 +245,9 @@ public class Order05CompleteDeliveryPhases : AhpIntegrationTest
             ("MilestoneStartAt.Day", deliveryPhase.CompletionMilestoneDate.Day!),
             ("MilestoneStartAt.Month", deliveryPhase.CompletionMilestoneDate.Month!),
             ("MilestoneStartAt.Year", deliveryPhase.CompletionMilestoneDate.Year!),
-            ("ClaimMilestonePaymentAt.Day", deliveryPhase.CompletionMilestonePaymentDate.Day!),
-            ("ClaimMilestonePaymentAt.Month", deliveryPhase.CompletionMilestonePaymentDate.Month!),
-            ("ClaimMilestonePaymentAt.Year", deliveryPhase.CompletionMilestonePaymentDate.Year!));
+            ("ClaimMilestonePaymentAt.Day", deliveryPhase.InvalidCompletionMilestonePaymentDate.Day!),
+            ("ClaimMilestonePaymentAt.Month", deliveryPhase.InvalidCompletionMilestonePaymentDate.Month!),
+            ("ClaimMilestonePaymentAt.Year", deliveryPhase.InvalidCompletionMilestonePaymentDate.Year!));
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
@@ -286,12 +286,70 @@ public class Order05CompleteDeliveryPhases : AhpIntegrationTest
         summary.Should().ContainKey("Start on site date").WithValue(RehabDeliveryPhase.StartOnSiteMilestoneDate);
         summary.Should().ContainKey("Forecast start on site claim date").WithValue(RehabDeliveryPhase.StartOnSiteMilestonePaymentDate);
         summary.Should().ContainKey("Completion date").WithValue(RehabDeliveryPhase.CompletionMilestoneDate);
-        summary.Should().ContainKey("Forecast completion claim date").WithValue(RehabDeliveryPhase.CompletionMilestonePaymentDate);
+        summary.Should().ContainKey("Forecast completion claim date").WithValue(RehabDeliveryPhase.InvalidCompletionMilestonePaymentDate);
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
     [Order(12)]
-    public async Task Order12_CompleteDeliveryPhase()
+    public async Task Order12_DisplayDeliveryPhaseDatesValidationError()
+    {
+        // given
+        var continueButton = await GivenTestQuestionPage(
+            BuildDeliveryPhasesPage(DeliveryPhasePagesUrl.CheckAnswers, RehabDeliveryPhase),
+            DeliveryPageTitles.CheckAnswers);
+
+        // when
+        var checkAnswersPage = await TestClient.SubmitButton(
+            continueButton,
+            ("IsSectionCompleted", "Yes"));
+
+        // then
+        checkAnswersPage
+            .UrlEndWith(BuildDeliveryPhasesPage(DeliveryPhasePagesUrl.CheckAnswers, RehabDeliveryPhase))
+            .HasTitle(DeliveryPageTitles.CheckAnswers)
+            .HasSummaryErrorMessage("Milestones", text: "The information you have entered doesn't meet what is required, check and try again")
+            .HasSaveAndContinueButton();
+        SaveCurrentPage();
+    }
+
+    [Fact(Skip = AhpConfig.SkipTest)]
+    [Order(13)]
+    public async Task Order13_ChangePracticalCompletionDate()
+    {
+        // given
+        var currentPage = await GetCurrentPage(BuildDeliveryPhasesPage(DeliveryPhasePagesUrl.CheckAnswers, RehabDeliveryPhase));
+        var summary = currentPage
+            .UrlWithoutQueryEndsWith(BuildDeliveryPhasesPage(DeliveryPhasePagesUrl.CheckAnswers, RehabDeliveryPhase))
+            .HasSummaryItem("Forecast completion claim date")
+            .GetSummaryListItems();
+        var practicalCompletionMilestonePage = await TestClient.NavigateTo(summary["Forecast completion claim date"].ChangeAnswerLink!);
+        practicalCompletionMilestonePage
+            .UrlWithoutQueryEndsWith(BuildDeliveryPhasesPage(DeliveryPhasePagesUrl.PracticalCompletionMilestone, RehabDeliveryPhase))
+            .HasTitle(DeliveryPageTitles.PracticalCompletionMilestone)
+            .HasSaveAndContinueButton(out var continueButton);
+
+        // when
+        var checkAnswersPage = await TestClient.SubmitButton(
+            continueButton,
+            ("MilestoneStartAt.Day", RehabDeliveryPhase.CompletionMilestoneDate.Day!),
+            ("MilestoneStartAt.Month", RehabDeliveryPhase.CompletionMilestoneDate.Month!),
+            ("MilestoneStartAt.Year", RehabDeliveryPhase.CompletionMilestoneDate.Year!),
+            ("ClaimMilestonePaymentAt.Day", RehabDeliveryPhase.CompletionMilestonePaymentDate.Day!),
+            ("ClaimMilestonePaymentAt.Month", RehabDeliveryPhase.CompletionMilestonePaymentDate.Month!),
+            ("ClaimMilestonePaymentAt.Year", RehabDeliveryPhase.CompletionMilestonePaymentDate.Year!));
+
+        // then
+        var updatedSummary = checkAnswersPage
+            .UrlWithoutQueryEndsWith(BuildDeliveryPhasesPage(DeliveryPhasePagesUrl.CheckAnswers, RehabDeliveryPhase))
+            .HasTitle(DeliveryPageTitles.CheckAnswers)
+            .GetSummaryListItems();
+        updatedSummary.Should().ContainKey("Forecast completion claim date").WithValue(RehabDeliveryPhase.CompletionMilestonePaymentDate);
+        SaveCurrentPage();
+    }
+
+    [Fact(Skip = AhpConfig.SkipTest)]
+    [Order(14)]
+    public async Task Order14_CompleteDeliveryPhase()
     {
         // given
         var continueButton = await GivenTestQuestionPage(
@@ -305,18 +363,18 @@ public class Order05CompleteDeliveryPhases : AhpIntegrationTest
 
         // then
         deliveryPhasesListPage
-            .UrlEndWith(BuildDeliveryPhasesPage(DeliveryPhasesPagesUrl.List))
+            .UrlWithoutQueryEndsWith(BuildDeliveryPhasesPage(DeliveryPhasesPagesUrl.List))
             .HasTitle(DeliveryPageTitles.List);
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
-    [Order(13)]
-    public async Task Order13_CompleteDeliveryPhasesSection()
+    [Order(15)]
+    public async Task Order15_CompleteDeliveryPhasesSection()
     {
         // given
         var deliveryPhaseListPage = await GetCurrentPage(BuildDeliveryPhasesPage(DeliveryPhasesPagesUrl.List));
         deliveryPhaseListPage
-            .UrlEndWith(BuildDeliveryPhasesPage(DeliveryPhasesPagesUrl.List))
+            .UrlWithoutQueryEndsWith(BuildDeliveryPhasesPage(DeliveryPhasesPagesUrl.List))
             .HasTitle(DeliveryPageTitles.List)
             .HasSaveAndContinueButton(out var continueButton);
 
@@ -330,8 +388,8 @@ public class Order05CompleteDeliveryPhases : AhpIntegrationTest
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
-    [Order(14)]
-    public async Task Order14_ConfirmCompleteDeliveryPhasesSection()
+    [Order(16)]
+    public async Task Order16_ConfirmCompleteDeliveryPhasesSection()
     {
         // given
         var completeDeliveryPhasesPage = await GetCurrentPage(BuildDeliveryPhasesPage(DeliveryPhasesPagesUrl.CompleteDeliveryPhases));

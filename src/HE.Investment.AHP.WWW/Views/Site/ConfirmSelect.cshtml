@@ -11,7 +11,7 @@
     var header = new DynamicComponentViewModel(nameof(SiteConfirmSelectHeader), new { header = SitePageTitles.SiteConfirmSelect, name = Model.Name, description = Model.LocalAuthority?.Name });
 }
 <gds-div-grid-column-two-thirds>
-    <vc:back-link-with-callback url="@Url.Action("Select", "Site")"/>
+    <vc:back-link-with-callback url="@Url.Action("Select", "Site", new { projectId = Model.ProjectId })"/>
 
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
 

@@ -11,6 +11,7 @@ public class ContactHomesEnglandTests : AhpViewTestBase
         ProgrammeId.From(Guid.NewGuid().ToString()),
         "HEP",
         "Homes England Programme",
+        true,
         ProgrammeType.Ahp,
         new DateRange(DateOnly.MinValue, DateOnly.MaxValue),
         new DateRange(DateOnly.MinValue, DateOnly.MaxValue),
