@@ -18,7 +18,7 @@ namespace HE.Investments.AHP.IntegrationTests.Order03FillApplication;
 
 [Order(303)]
 [SuppressMessage("xUnit", "xUnit1004", Justification = "Waits for DevOps configuration - #76791")]
-public class Order03CompleteHomeTypes : AhpIntegrationTest
+public class Order03CompleteHomeTypes : AhpApplicationIntegrationTest
 {
     private readonly HomeTypesData _homeTypesData;
 
@@ -104,7 +104,7 @@ public class Order03CompleteHomeTypes : AhpIntegrationTest
         var homeType = GeneralHomeType.GenerateInformation();
 
         // when & then
-        await TestQuestionPage(
+        await TestApplicationQuestionPage(
             BuildHomeTypePage(HomeTypePagesUrl.HomeInformation, GeneralHomeType),
             HomeTypesPageTitles.HomeInformation,
             BuildHomeTypePage(HomeTypePagesUrl.MoveOnAccommodation, GeneralHomeType),
@@ -122,7 +122,7 @@ public class Order03CompleteHomeTypes : AhpIntegrationTest
         var homeType = GeneralHomeType.GenerateMoveOnAccommodation();
 
         // when & then
-        await TestQuestionPage(
+        await TestApplicationQuestionPage(
             BuildHomeTypePage(HomeTypePagesUrl.MoveOnAccommodation, GeneralHomeType),
             HomeTypesPageTitles.MoveOnAccommodation,
             BuildHomeTypePage(HomeTypePagesUrl.BuildingInformation, GeneralHomeType),
@@ -137,7 +137,7 @@ public class Order03CompleteHomeTypes : AhpIntegrationTest
         var homeType = GeneralHomeType.GenerateBuildingInformation();
 
         // when & then
-        await TestQuestionPage(
+        await TestApplicationQuestionPage(
             BuildHomeTypePage(HomeTypePagesUrl.BuildingInformation, GeneralHomeType),
             HomeTypesPageTitles.BuildingInformation,
             BuildHomeTypePage(HomeTypePagesUrl.CustomBuildProperty, GeneralHomeType),
@@ -152,7 +152,7 @@ public class Order03CompleteHomeTypes : AhpIntegrationTest
         var homeType = GeneralHomeType.GenerateCustomBuild();
 
         // when & then
-        await TestQuestionPage(
+        await TestApplicationQuestionPage(
             BuildHomeTypePage(HomeTypePagesUrl.CustomBuildProperty, GeneralHomeType),
             HomeTypesPageTitles.CustomBuildProperty,
             BuildHomeTypePage(HomeTypePagesUrl.TypeOfFacilities, GeneralHomeType),
@@ -167,7 +167,7 @@ public class Order03CompleteHomeTypes : AhpIntegrationTest
         var homeType = GeneralHomeType.GenerateFacilityType();
 
         // when & then
-        await TestQuestionPage(
+        await TestApplicationQuestionPage(
             BuildHomeTypePage(HomeTypePagesUrl.TypeOfFacilities, GeneralHomeType),
             HomeTypesPageTitles.TypeOfFacilities,
             BuildHomeTypePage(HomeTypePagesUrl.AccessibilityStandards, GeneralHomeType),
@@ -182,7 +182,7 @@ public class Order03CompleteHomeTypes : AhpIntegrationTest
         var homeType = GeneralHomeType.GenerateAccessibilityStandards();
 
         // when & then
-        await TestQuestionPage(
+        await TestApplicationQuestionPage(
             BuildHomeTypePage(HomeTypePagesUrl.AccessibilityStandards, GeneralHomeType),
             HomeTypesPageTitles.AccessibilityStandards,
             BuildHomeTypePage(HomeTypePagesUrl.AccessibilityCategory, GeneralHomeType),
@@ -197,7 +197,7 @@ public class Order03CompleteHomeTypes : AhpIntegrationTest
         var homeType = GeneralHomeType.GenerateAccessibilityCategory();
 
         // when & then
-        await TestQuestionPage(
+        await TestApplicationQuestionPage(
             BuildHomeTypePage(HomeTypePagesUrl.AccessibilityCategory, GeneralHomeType),
             HomeTypesPageTitles.AccessibilityCategory,
             BuildHomeTypePage(HomeTypePagesUrl.FloorArea, GeneralHomeType),
@@ -212,7 +212,7 @@ public class Order03CompleteHomeTypes : AhpIntegrationTest
         var homeType = GeneralHomeType.GenerateFloorArea();
 
         // when & then
-        await TestQuestionPage(
+        await TestApplicationQuestionPage(
             BuildHomeTypePage(HomeTypePagesUrl.FloorArea, GeneralHomeType),
             HomeTypesPageTitles.FloorArea,
             BuildHomeTypePage(HomeTypePagesUrl.FloorAreaStandards, GeneralHomeType),
@@ -228,7 +228,7 @@ public class Order03CompleteHomeTypes : AhpIntegrationTest
         var homeType = GeneralHomeType.GenerateFloorAreaStandards();
 
         // when & then
-        await TestQuestionPage(
+        await TestApplicationQuestionPage(
             BuildHomeTypePage(HomeTypePagesUrl.FloorAreaStandards, GeneralHomeType),
             HomeTypesPageTitles.FloorAreaStandards,
             BuildHomeTypePage(HomeTypePagesUrl.AffordableRent, GeneralHomeType),
@@ -243,7 +243,7 @@ public class Order03CompleteHomeTypes : AhpIntegrationTest
         var homeType = GeneralHomeType.GenerateAffordableRent();
 
         // when & then
-        await TestQuestionPage(
+        await TestApplicationQuestionPage(
             BuildHomeTypePage(HomeTypePagesUrl.AffordableRent, GeneralHomeType),
             HomeTypesPageTitles.AffordableRent,
             BuildHomeTypePage(HomeTypePagesUrl.ExemptFromTheRightToSharedOwnership, GeneralHomeType),
@@ -261,7 +261,7 @@ public class Order03CompleteHomeTypes : AhpIntegrationTest
         var homeType = GeneralHomeType.GenerateExemptFromTheRightToSharedOwnership();
 
         // when & then
-        await TestQuestionPage(
+        await TestApplicationQuestionPage(
             BuildHomeTypePage(HomeTypePagesUrl.ExemptFromTheRightToSharedOwnership, GeneralHomeType),
             HomeTypesPageTitles.ExemptFromTheRightToSharedOwnership,
             BuildHomeTypePage(HomeTypePagesUrl.ExemptionJustification, GeneralHomeType),
@@ -276,7 +276,7 @@ public class Order03CompleteHomeTypes : AhpIntegrationTest
         var homeType = GeneralHomeType.GenerateExemptionJustification();
 
         // when & then
-        await TestQuestionPage(
+        await TestApplicationQuestionPage(
             BuildHomeTypePage(HomeTypePagesUrl.ExemptionJustification, GeneralHomeType),
             HomeTypesPageTitles.ExemptionJustification,
             BuildHomeTypePage(HomeTypePagesUrl.ModernMethodsConstruction, GeneralHomeType),
@@ -291,7 +291,7 @@ public class Order03CompleteHomeTypes : AhpIntegrationTest
         var homeType = GeneralHomeType.GenerateModernMethodsOfConstruction();
 
         // when & then
-        await TestQuestionPage(
+        await TestApplicationQuestionPage(
             BuildHomeTypePage(HomeTypePagesUrl.ModernMethodsConstruction, GeneralHomeType),
             HomeTypesPageTitles.ModernMethodsConstruction,
             BuildHomeTypePage(HomeTypePagesUrl.ModernMethodsConstructionCategories, GeneralHomeType),
@@ -306,7 +306,7 @@ public class Order03CompleteHomeTypes : AhpIntegrationTest
         var homeType = GeneralHomeType.GenerateModernMethodsConstructionCategories();
 
         // when & then
-        await TestQuestionPage(
+        await TestApplicationQuestionPage(
             BuildHomeTypePage(HomeTypePagesUrl.ModernMethodsConstructionCategories, GeneralHomeType),
             HomeTypesPageTitles.ModernMethodsConstructionCategories,
             BuildHomeTypePage(HomeTypePagesUrl.ModernMethodsConstruction3DSubcategories, GeneralHomeType),
@@ -317,7 +317,7 @@ public class Order03CompleteHomeTypes : AhpIntegrationTest
     [Order(17)]
     public async Task Order17_ProvideModernMethodsConstruction3DSubcategories()
     {
-        await TestQuestionPage(
+        await TestApplicationQuestionPage(
             BuildHomeTypePage(HomeTypePagesUrl.ModernMethodsConstruction3DSubcategories, GeneralHomeType),
             HomeTypesPageTitles.ModernMethodsConstruction3DCategories,
             BuildHomeTypePage(HomeTypePagesUrl.ModernMethodsConstruction2DSubcategories, GeneralHomeType),
@@ -328,7 +328,7 @@ public class Order03CompleteHomeTypes : AhpIntegrationTest
     [Order(18)]
     public async Task Order18_ProvideModernMethodsConstruction2DSubcategories()
     {
-        await TestQuestionPage(
+        await TestApplicationQuestionPage(
             BuildHomeTypePage(HomeTypePagesUrl.ModernMethodsConstruction2DSubcategories, GeneralHomeType),
             HomeTypesPageTitles.ModernMethodsConstruction2DCategories,
             BuildHomeTypePage(HomeTypePagesUrl.CheckAnswers, GeneralHomeType),
@@ -468,7 +468,7 @@ public class Order03CompleteHomeTypes : AhpIntegrationTest
         var homeType = DisabledHomeType.GenerateHomeTypeDetails();
 
         // when & then
-        await TestQuestionPage(
+        await TestApplicationQuestionPage(
             BuildHomeTypePage(HomeTypePagesUrl.HomeTypeDetails, DisabledHomeType),
             HomeTypesPageTitles.HomeTypeDetails,
             BuildHomeTypePage(HomeTypePagesUrl.DisabledPeople, DisabledHomeType),
@@ -484,7 +484,7 @@ public class Order03CompleteHomeTypes : AhpIntegrationTest
         var homeType = DisabledHomeType.GenerateDisabledPeopleHousingType();
 
         // when & then
-        await TestQuestionPage(
+        await TestApplicationQuestionPage(
             BuildHomeTypePage(HomeTypePagesUrl.DisabledPeople, DisabledHomeType),
             HomeTypesPageTitles.DisabledPeople,
             BuildHomeTypePage(HomeTypePagesUrl.DisabledPeopleClientGroup, DisabledHomeType),
@@ -499,7 +499,7 @@ public class Order03CompleteHomeTypes : AhpIntegrationTest
         var homeType = DisabledHomeType.GenerateClientGroup();
 
         // when & then
-        await TestQuestionPage(
+        await TestApplicationQuestionPage(
             BuildHomeTypePage(HomeTypePagesUrl.DisabledPeopleClientGroup, DisabledHomeType),
             HomeTypesPageTitles.DisabledPeopleClientGroup,
             BuildHomeTypePage(HomeTypePagesUrl.HappiDesignPrinciples, DisabledHomeType),
@@ -514,7 +514,7 @@ public class Order03CompleteHomeTypes : AhpIntegrationTest
         var homeType = DisabledHomeType.GenerateHappiDesignPrinciple();
 
         // when & then
-        await TestQuestionPage(
+        await TestApplicationQuestionPage(
             BuildHomeTypePage(HomeTypePagesUrl.HappiDesignPrinciples, DisabledHomeType),
             HomeTypesPageTitles.HappiDesignPrinciples,
             BuildHomeTypePage(HomeTypePagesUrl.DesignPlans, DisabledHomeType),
@@ -547,7 +547,7 @@ public class Order03CompleteHomeTypes : AhpIntegrationTest
         var homeType = DisabledHomeType.GenerateSupportedHousingInformation();
 
         // when & then
-        await TestQuestionPage(
+        await TestApplicationQuestionPage(
             BuildHomeTypePage(HomeTypePagesUrl.SupportedHousingInformation, DisabledHomeType),
             HomeTypesPageTitles.SupportedHousingInformation,
             BuildHomeTypePage(HomeTypePagesUrl.RevenueFunding, DisabledHomeType),
@@ -564,7 +564,7 @@ public class Order03CompleteHomeTypes : AhpIntegrationTest
         var homeType = DisabledHomeType.GenerateRevenueFundingSource();
 
         // when & then
-        await TestQuestionPage(
+        await TestApplicationQuestionPage(
             BuildHomeTypePage(HomeTypePagesUrl.RevenueFunding, DisabledHomeType),
             HomeTypesPageTitles.RevenueFunding,
             BuildHomeTypePage(HomeTypePagesUrl.MoveOnArrangements, DisabledHomeType),
@@ -579,7 +579,7 @@ public class Order03CompleteHomeTypes : AhpIntegrationTest
         var homeType = DisabledHomeType.GenerateMoveOnArrangements();
 
         // when & then
-        await TestQuestionPage(
+        await TestApplicationQuestionPage(
             BuildHomeTypePage(HomeTypePagesUrl.MoveOnArrangements, DisabledHomeType),
             HomeTypesPageTitles.MoveOnArrangements,
             BuildHomeTypePage(HomeTypePagesUrl.ExitPlan, DisabledHomeType),
@@ -594,7 +594,7 @@ public class Order03CompleteHomeTypes : AhpIntegrationTest
         var homeType = DisabledHomeType.GenerateExitPlan();
 
         // when & then
-        await TestQuestionPage(
+        await TestApplicationQuestionPage(
             BuildHomeTypePage(HomeTypePagesUrl.ExitPlan, DisabledHomeType),
             HomeTypesPageTitles.ExitPlan,
             BuildHomeTypePage(HomeTypePagesUrl.TypologyLocationAndDesign, DisabledHomeType),
@@ -609,7 +609,7 @@ public class Order03CompleteHomeTypes : AhpIntegrationTest
         var homeType = DisabledHomeType.GenerateTypologyLocationAndDesign();
 
         // when & then
-        await TestQuestionPage(
+        await TestApplicationQuestionPage(
             BuildHomeTypePage(HomeTypePagesUrl.TypologyLocationAndDesign, DisabledHomeType),
             HomeTypesPageTitles.TypologyLocationAndDesign,
             BuildHomeTypePage(HomeTypePagesUrl.PeopleGroupForSpecificDesignFeatures, DisabledHomeType),
@@ -624,7 +624,7 @@ public class Order03CompleteHomeTypes : AhpIntegrationTest
         var homeType = DisabledHomeType.GeneratePeopleGroupForSpecificDesignFeatures();
 
         // when & then
-        await TestQuestionPage(
+        await TestApplicationQuestionPage(
             BuildHomeTypePage(HomeTypePagesUrl.PeopleGroupForSpecificDesignFeatures, DisabledHomeType),
             HomeTypesPageTitles.PeopleGroupForSpecificDesignFeatures,
             BuildHomeTypePage(HomeTypePagesUrl.CheckAnswers, DisabledHomeType),

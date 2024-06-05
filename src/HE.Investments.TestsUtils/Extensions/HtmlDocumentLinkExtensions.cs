@@ -21,6 +21,19 @@ public static class HtmlDocumentLinkExtensions
         return htmlDocument;
     }
 
+    public static IHtmlDocument HasReturnOrSaveAndReturnToApplicationLink(this IHtmlDocument htmlDocument)
+    {
+        var links = GetLinkButtons(htmlDocument);
+
+        var returnToApplicationLink = HtmlElementFilters.WithText(links, "Return to applications");
+        var saveAndReturnToApplicationLink = HtmlElementFilters.WithText(links, "Save and return to application");
+
+        (returnToApplicationLink.Count + saveAndReturnToApplicationLink.Count).Should()
+            .Be(1, "There should be single link button with text 'Return to applications' or 'Save and return to application'");
+
+        return htmlDocument;
+    }
+
     public static IHtmlDocument HasSaveAndReturnToApplicationLink(this IHtmlDocument htmlDocument)
     {
         var links = GetLinkButtons(htmlDocument);

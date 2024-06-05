@@ -96,7 +96,7 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
             return View(model);
         }
 
-        return await Continue(new { applicationName = model.Name, siteId });
+        return await this.ReturnToTaskListOrContinue(async () => await Continue(new { applicationName = model.Name, siteId }));
     }
 
     [WorkflowState(ApplicationWorkflowState.ApplicationTenure)]
