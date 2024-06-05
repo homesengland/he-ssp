@@ -230,43 +230,13 @@ public class Order02CompleteSchemeInformation : AhpIntegrationTest
         await TestQuestionPage(
             SchemeInformationPagesUrl.PartnerDetails(ApplicationData.ApplicationId),
             SchemeInformationPageTitles.PartnerDetails,
-            SchemeInformationPagesUrl.Affordability(ApplicationData.ApplicationId),
+            SchemeInformationPagesUrl.HousingNeeds(ApplicationData.ApplicationId),
             ("ArePartnersConfirmed", YesNoType.Yes.ToBoolAnswer()));
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
     [Order(12)]
-    public async Task Order12_ProvideAffordability()
-    {
-        // given
-        SchemeInformationData.GenerateAffordability();
-
-        // when & then
-        await TestQuestionPage(
-            SchemeInformationPagesUrl.Affordability(ApplicationData.ApplicationId),
-            SchemeInformationPageTitles.Affordability,
-            SchemeInformationPagesUrl.SalesRisk(ApplicationData.ApplicationId),
-            ("AffordabilityEvidence", SchemeInformationData.Affordability));
-    }
-
-    [Fact(Skip = AhpConfig.SkipTest)]
-    [Order(13)]
-    public async Task Order13_ProvideSaleRisk()
-    {
-        // given
-        SchemeInformationData.GenerateSalesRisk();
-
-        // when & then
-        await TestQuestionPage(
-            SchemeInformationPagesUrl.SalesRisk(ApplicationData.ApplicationId),
-            SchemeInformationPageTitles.SalesRisk,
-            SchemeInformationPagesUrl.HousingNeeds(ApplicationData.ApplicationId),
-            ("SalesRisk", SchemeInformationData.SalesRisk));
-    }
-
-    [Fact(Skip = AhpConfig.SkipTest)]
-    [Order(14)]
-    public async Task Order14_ProvideHousingNeed()
+    public async Task Order12_ProvideHousingNeed()
     {
         // given
         SchemeInformationData.GenerateHousingNeeds();
@@ -281,8 +251,8 @@ public class Order02CompleteSchemeInformation : AhpIntegrationTest
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
-    [Order(15)]
-    public async Task Order15_ProvideStakeholderDiscussions()
+    [Order(13)]
+    public async Task Order13_ProvideStakeholderDiscussions()
     {
         // given
         SchemeInformationData.GenerateStakeholderDiscussions();
@@ -296,8 +266,8 @@ public class Order02CompleteSchemeInformation : AhpIntegrationTest
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
-    [Order(16)]
-    public async Task Order16_CheckAnswersAndCompleteSection()
+    [Order(14)]
+    public async Task Order14_CheckAnswersAndCompleteSection()
     {
         // given
         var checkAnswersPage = await GetCurrentPage(SchemeInformationPagesUrl.CheckAnswers(ApplicationData.ApplicationId));
@@ -315,8 +285,8 @@ public class Order02CompleteSchemeInformation : AhpIntegrationTest
         summary.Should().ContainKey("Owner of the land").WithValue(SchemeInformationData.OwnerOfTheLand.Name);
         summary.Should().ContainKey("Owner of the homes").WithValue(SchemeInformationData.OwnerOfTheHomes.Name);
         summary.Should().ContainKey("Are partner details correct?").WithValue(YesNoType.Yes);
-        summary.Should().ContainKey("Affordability of Shared Ownership").WithValue(SchemeInformationData.Affordability);
-        summary.Should().ContainKey("Sales risk of Shared Ownership").WithValue(SchemeInformationData.SalesRisk);
+        summary.Should().NotContainKey("Affordability of Shared Ownership");
+        summary.Should().NotContainKey("Sales risk of Shared Ownership");
         summary.Should().ContainKey("Type and tenure of homes").WithValue(SchemeInformationData.HousingNeedsMeetingLocalPriorities);
         summary.Should().ContainKey("Locally identified housing need").WithValue(SchemeInformationData.HousingNeedsMeetingLocalHousingNeed);
         summary.Should().ContainKey("Local stakeholder discussions").WithValue(SchemeInformationData.StakeholderDiscussions);
