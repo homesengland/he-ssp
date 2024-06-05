@@ -10,11 +10,11 @@ using HE.Investment.AHP.Domain.Project.ValueObjects;
 using HE.Investment.AHP.Domain.Scheme.ValueObjects;
 using HE.Investment.AHP.Domain.Site.Mappers;
 using HE.Investment.AHP.Domain.Site.ValueObjects;
-using HE.Investment.AHP.Domain.UserContext;
-using HE.Investments.AHP.Consortium.Shared.UserContext;
 using HE.Investments.Common.Contract.Pagination;
 using HE.Investments.Common.CRM.Mappers;
+using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Infrastructure.Events;
+using HE.Investments.Consortium.Shared.UserContext;
 using HE.Investments.FrontDoor.Shared.Project;
 using HE.Investments.FrontDoor.Shared.Project.Data;
 
@@ -73,6 +73,7 @@ public class ProjectRepository : IProjectRepository
             id,
             new AhpProjectName(projectSites.AhpProjectName),
             projectSites.ListOfSites.Select(x => new AhpProjectSite(
+                    x.fdSiteid.IsProvided() ? FrontDoorSiteId.From(x.fdSiteid) : null,
                     SiteId.From(x.id),
                     new SiteName(x.name),
                     _siteStatusMapper.ToDomain(x.status)!.Value,
@@ -120,6 +121,7 @@ public class ProjectRepository : IProjectRepository
     {
         var sites = ahpProjectDto.ListOfSites?
             .Select(s => new AhpProjectSite(
+                s.fdSiteid.IsProvided() ? FrontDoorSiteId.From(s.fdSiteid) : null,
                 SiteId.From(s.id),
                 new SiteName(s.name),
                 new SiteStatusMapper().ToDomain(s.status)!.Value,
@@ -136,7 +138,7 @@ public class ProjectRepository : IProjectRepository
     {
         return sites?.Select(x => new SiteDto
         {
-            id = x.Id.ToString(),
+            fdSiteid = x.Id.ToGuidAsString(),
             name = x.Name.ToString(),
         }).ToList() ?? [];
     }

@@ -1,7 +1,7 @@
 using HE.Investments.AHP.Consortium.Contract.Events;
-using HE.Investments.AHP.Consortium.Shared.UserContext;
 using HE.Investments.Common.Infrastructure.Cache.Interfaces;
 using HE.Investments.Common.Infrastructure.Events;
+using HE.Investments.Consortium.Shared.UserContext;
 
 namespace HE.Investment.AHP.Domain.UserContext.EventHandlers;
 

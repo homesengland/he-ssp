@@ -1,6 +1,5 @@
 using He.AspNetCore.Mvc.Gds.Components.Extensions;
 using HE.Investment.AHP.Contract.Common.Enums;
-using HE.Investment.AHP.Contract.Common.Queries;
 using HE.Investment.AHP.Contract.PrefillData.Queries;
 using HE.Investment.AHP.Contract.Project.Queries;
 using HE.Investment.AHP.Contract.Site;
@@ -17,8 +16,6 @@ using HE.Investment.AHP.WWW.Models.Site.Factories;
 using HE.Investment.AHP.WWW.Workflows;
 using HE.Investments.Account.Shared;
 using HE.Investments.Account.Shared.Authorization.Attributes;
-using HE.Investments.AHP.Consortium.Contract;
-using HE.Investments.AHP.Consortium.Contract.Queries;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Constants;
 using HE.Investments.Common.Contract.Enum;
@@ -40,7 +37,7 @@ namespace HE.Investment.AHP.WWW.Controllers;
 
 [Route("site")]
 [AuthorizeWithCompletedProfile]
-public class SiteController : WorkflowController<SiteWorkflowState>
+public class SiteController : SiteControllerBase<SiteWorkflowState>
 {
     private readonly IMediator _mediator;
 
@@ -55,6 +52,7 @@ public class SiteController : WorkflowController<SiteWorkflowState>
         IAccountAccessContext accountAccessContext,
         IAccountUserContext accountUserContext,
         ISiteSummaryViewModelFactory siteSummaryViewModelFactory)
+        : base(mediator)
     {
         _mediator = mediator;
         _accountAccessContext = accountAccessContext;
@@ -391,7 +389,7 @@ public class SiteController : WorkflowController<SiteWorkflowState>
     public async Task<IActionResult> LocalAuthorityReset(string siteId, [FromQuery] string workflow, CancellationToken token)
     {
         await _mediator.Send(
-            new ProvideLocalAuthorityCommand(SiteId.From(siteId), null, null, null),
+            new ProvideLocalAuthorityCommand(SiteId.From(siteId), null, null, "Yes"),
             token);
 
         return await ContinueWithWorkflow(new { siteId, workflow });
@@ -400,7 +398,7 @@ public class SiteController : WorkflowController<SiteWorkflowState>
     [HttpGet("{siteId}/back")]
     public async Task<IActionResult> Back([FromRoute] string siteId, SiteWorkflowState currentPage)
     {
-        return await Back(currentPage, new { siteId });
+        return await Back(currentPage, new { siteId, isBack = true });
     }
 
     [HttpGet("{siteId}/planning-status")]
@@ -560,100 +558,22 @@ public class SiteController : WorkflowController<SiteWorkflowState>
             cancellationToken);
     }
 
-    [HttpGet("{siteId}/developing-partner")]
-    [WorkflowState(SiteWorkflowState.DevelopingPartner)]
-    public async Task<IActionResult> DevelopingPartner([FromRoute] string siteId, [FromQuery] int? page, CancellationToken cancellationToken)
+    [HttpGet("{siteId}/start-site-partners")]
+    [WorkflowState(SiteWorkflowState.StartSitePartnersFlow)]
+    public async Task<IActionResult> StartSitePartnersFlow([FromRoute] string siteId, [FromQuery] string? workflow, bool isBack)
     {
-        return View(await GetSelectPartnerModel(siteId, page, cancellationToken));
+        return isBack
+            ? await Back(new { siteId })
+            : RedirectToAction("StartSitePartnersFlow", "SitePartners", new { siteId, workflow });
     }
 
-    [HttpGet("{siteId}/developing-partner-confirm/{organisationId}")]
-    [WorkflowState(SiteWorkflowState.DevelopingPartnerConfirm)]
-    public async Task<IActionResult> DevelopingPartnerConfirm([FromRoute] string siteId, [FromRoute] string organisationId, CancellationToken cancellationToken)
+    [HttpGet("{siteId}/finish-site-partners")]
+    [WorkflowState(SiteWorkflowState.FinishSitePartnersFlow)]
+    public async Task<IActionResult> FinishSitePartnersFlow([FromRoute] string siteId, [FromQuery] string? workflow, bool isBack)
     {
-        return View(await GetConfirmPartnerModel(siteId, organisationId, x => x.DevelopingPartner?.OrganisationId, cancellationToken));
-    }
-
-    [HttpPost("{siteId}/developing-partner-confirm/{organisationId}")]
-    [WorkflowState(SiteWorkflowState.DevelopingPartnerConfirm)]
-    public async Task<IActionResult> DevelopingPartnerConfirm([FromRoute] string siteId, [FromRoute] string organisationId, [FromForm] bool? isConfirmed, [FromQuery] string? workflow, CancellationToken cancellationToken)
-    {
-        return await this.ExecuteCommand<(OrganisationDetails Organisation, bool? IsConfirmed)>(
-            _mediator,
-            new ProvideDevelopingPartnerCommand(SiteId.From(siteId), OrganisationId.From(organisationId), isConfirmed),
-            async () => await this.ReturnToSitesListOrContinue(
-                (await GetSiteDetails(siteId, cancellationToken)).ProjectId,
-                async () => isConfirmed == true ? await ContinueWithWorkflow(new { siteId }) : RedirectToAction("DevelopingPartner", new { siteId, workflow })),
-            async () =>
-            {
-                var (organisation, _) = await GetConfirmPartnerModel(siteId, organisationId, x => x.DevelopingPartner?.OrganisationId, cancellationToken);
-                return View((organisation, isConfirmed));
-            },
-            cancellationToken);
-    }
-
-    [HttpGet("{siteId}/owner-of-the-land")]
-    [WorkflowState(SiteWorkflowState.OwnerOfTheLand)]
-    public async Task<IActionResult> OwnerOfTheLand([FromRoute] string siteId, [FromQuery] int? page, CancellationToken cancellationToken)
-    {
-        return View(await GetSelectPartnerModel(siteId, page, cancellationToken));
-    }
-
-    [HttpGet("{siteId}/owner-of-the-land-confirm/{organisationId}")]
-    [WorkflowState(SiteWorkflowState.OwnerOfTheLandConfirm)]
-    public async Task<IActionResult> OwnerOfTheLandConfirm([FromRoute] string siteId, [FromRoute] string organisationId, CancellationToken cancellationToken)
-    {
-        return View(await GetConfirmPartnerModel(siteId, organisationId, x => x.OwnerOfTheLand?.OrganisationId, cancellationToken));
-    }
-
-    [HttpPost("{siteId}/owner-of-the-land-confirm/{organisationId}")]
-    [WorkflowState(SiteWorkflowState.OwnerOfTheLandConfirm)]
-    public async Task<IActionResult> OwnerOfTheLandConfirm([FromRoute] string siteId, [FromRoute] string organisationId, [FromForm] bool? isConfirmed, [FromQuery] string? workflow, CancellationToken cancellationToken)
-    {
-        return await this.ExecuteCommand<(OrganisationDetails Organisation, bool? IsConfirmed)>(
-            _mediator,
-            new ProvideOwnerOfTheLandCommand(SiteId.From(siteId), OrganisationId.From(organisationId), isConfirmed),
-            async () => await this.ReturnToSitesListOrContinue(
-                (await GetSiteDetails(siteId, cancellationToken)).ProjectId,
-                async () => isConfirmed == true ? await ContinueWithWorkflow(new { siteId }) : RedirectToAction("OwnerOfTheLand", new { siteId, workflow })),
-            async () =>
-            {
-                var (organisation, _) = await GetConfirmPartnerModel(siteId, organisationId, x => x.OwnerOfTheLand?.OrganisationId, cancellationToken);
-                return View((organisation, isConfirmed));
-            },
-            cancellationToken);
-    }
-
-    [HttpGet("{siteId}/owner-of-the-homes")]
-    [WorkflowState(SiteWorkflowState.OwnerOfTheHomes)]
-    public async Task<IActionResult> OwnerOfTheHomes([FromRoute] string siteId, [FromQuery] int? page, CancellationToken cancellationToken)
-    {
-        return View(await GetSelectPartnerModel(siteId, page, cancellationToken));
-    }
-
-    [HttpGet("{siteId}/owner-of-the-homes-confirm/{organisationId}")]
-    [WorkflowState(SiteWorkflowState.OwnerOfTheHomesConfirm)]
-    public async Task<IActionResult> OwnerOfTheHomesConfirm([FromRoute] string siteId, [FromRoute] string organisationId, CancellationToken cancellationToken)
-    {
-        return View(await GetConfirmPartnerModel(siteId, organisationId, x => x.OwnerOfTheHomes?.OrganisationId, cancellationToken));
-    }
-
-    [HttpPost("{siteId}/owner-of-the-homes-confirm/{organisationId}")]
-    [WorkflowState(SiteWorkflowState.OwnerOfTheHomesConfirm)]
-    public async Task<IActionResult> OwnerOfTheHomesConfirm([FromRoute] string siteId, [FromRoute] string organisationId, [FromForm] bool? isConfirmed, [FromQuery] string? workflow, CancellationToken cancellationToken)
-    {
-        return await this.ExecuteCommand<(OrganisationDetails Organisation, bool? IsConfirmed)>(
-            _mediator,
-            new ProvideOwnerOfTheHomesCommand(SiteId.From(siteId), OrganisationId.From(organisationId), isConfirmed),
-            async () => await this.ReturnToSitesListOrContinue(
-                (await GetSiteDetails(siteId, cancellationToken)).ProjectId,
-                async () => isConfirmed == true ? await ContinueWithWorkflow(new { siteId }) : RedirectToAction("OwnerOfTheHomes", new { siteId, workflow })),
-            async () =>
-            {
-                var (organisation, _) = await GetConfirmPartnerModel(siteId, organisationId, x => x.OwnerOfTheHomes?.OrganisationId, cancellationToken);
-                return View((organisation, isConfirmed));
-            },
-            cancellationToken);
+        return isBack
+            ? RedirectToAction("FinishSitePartnersFlow", "SitePartners", new { siteId, isBack })
+            : await Continue(new { siteId, workflow });
     }
 
     [HttpGet("{siteId}/land-acquisition-status")]
@@ -1078,22 +998,6 @@ public class SiteController : WorkflowController<SiteWorkflowState>
         return new SiteModel();
     }
 
-    private async Task<SiteModel> GetSiteDetails(string siteId, CancellationToken cancellationToken)
-    {
-        var siteModel = await _mediator.Send(new GetSiteQuery(siteId), cancellationToken);
-        ViewBag.SiteName = siteModel.Name;
-        ViewBag.ProjectId = siteModel.ProjectId;
-        return siteModel;
-    }
-
-    private async Task<SiteBasicModel> GetSiteBasicDetails(string siteId, CancellationToken cancellationToken)
-    {
-        var siteBasicModel = await _mediator.Send(new GetSiteBasicDetailsQuery(siteId), cancellationToken);
-        ViewBag.SiteName = siteBasicModel.Name;
-        ViewBag.ProjectId = siteBasicModel.ProjectId;
-        return siteBasicModel;
-    }
-
     private async Task<SiteSummaryViewModel> CreateSiteSummary(
         CancellationToken cancellationToken,
         IsSectionCompleted? isSectionCompleted = null,
@@ -1110,26 +1014,5 @@ public class SiteController : WorkflowController<SiteWorkflowState>
             isSectionCompleted ?? (siteDetails.Status == SiteStatus.Submitted ? IsSectionCompleted.Yes : IsSectionCompleted.Undefied),
             sections.ToList(),
             isEditable);
-    }
-
-    private async Task<SelectPartnerModel> GetSelectPartnerModel(string siteId, int? page, CancellationToken cancellationToken)
-    {
-        var site = await GetSiteBasicDetails(siteId, cancellationToken);
-        var partners = await _mediator.Send(new GetConsortiumMembersQuery(new PaginationRequest(page ?? 1)), cancellationToken);
-
-        return new SelectPartnerModel(site.Id, site.Name, partners);
-    }
-
-    private async Task<(OrganisationDetails Organisation, bool? IsConfirmed)> GetConfirmPartnerModel(
-        string siteId,
-        string organisationId,
-        Func<SiteModel, string?> getSelectedPartnerId,
-        CancellationToken cancellationToken)
-    {
-        var site = await GetSiteDetails(siteId, cancellationToken);
-        var organisationDetails = await _mediator.Send(new GetOrganisationDetailsQuery(OrganisationId.From(organisationId)), cancellationToken);
-        var currentlySelectedPartner = getSelectedPartnerId(site);
-
-        return (organisationDetails, organisationDetails.OrganisationId == currentlySelectedPartner ? true : null);
     }
 }

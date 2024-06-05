@@ -17,7 +17,7 @@ namespace HE.Investment.AHP.WWW.Models.Site.Factories;
 
 public class SiteSummaryViewModelFactory : ISiteSummaryViewModelFactory
 {
-    private delegate string CreateAction(string actionName);
+    private delegate string CreateAction(string actionName, string? controllerName = null);
 
     public IEnumerable<SectionSummaryViewModel> CreateSiteSummary(
         SiteModel siteDetails,
@@ -30,7 +30,12 @@ public class SiteSummaryViewModelFactory : ISiteSummaryViewModelFactory
             ? new SiteWorkflow(SiteWorkflowState.Name, siteDetails).GetEncodedWorkflow().Value
             : null;
 
-        string CreateAction(string actionName) => CreateSiteActionUrl(urlHelper, SiteId.From(siteDetails.Id!), actionName, workflow);
+        string CreateAction(string actionName, string? controllerName = null) => CreateSiteActionUrl(
+            urlHelper,
+            SiteId.From(siteDetails.Id!),
+            new ControllerName(controllerName ?? nameof(SiteController)).WithoutPrefix(),
+            actionName,
+            workflow);
 
         yield return new SectionSummaryViewModel("Site details", CreateSiteDetailsSummary(siteDetails, CreateAction, false));
         yield return new SectionSummaryViewModel("Section 106", CreateSection106Summary(siteDetails.Section106, CreateAction, isEditable));
@@ -41,6 +46,10 @@ public class SiteSummaryViewModelFactory : ISiteSummaryViewModelFactory
         if (siteDetails.IsConsortiumMember)
         {
             yield return new SectionSummaryViewModel("Consortium", CreateConsortiumSummary(siteDetails, CreateAction, isEditable));
+        }
+        else if (organisation.IsUnregisteredBody)
+        {
+            yield return new SectionSummaryViewModel("URB", CreateUrbSummary(siteDetails, CreateAction, isEditable));
         }
 
         yield return new SectionSummaryViewModel("Land details", CreateLandDetailsSummary(siteDetails, CreateAction, isEditable));
@@ -238,17 +247,29 @@ public class SiteSummaryViewModelFactory : ISiteSummaryViewModelFactory
             new(
                 "Developing partner",
                 site.DevelopingPartner?.Name.ToOneElementList(),
-                createAction(nameof(Controller.DevelopingPartner)),
+                createAction(nameof(SitePartnersController.DevelopingPartner), nameof(SitePartnersController)),
                 IsEditable: isEditable),
             new(
                 "Owner of the land",
                 site.OwnerOfTheLand?.Name.ToOneElementList(),
-                createAction(nameof(Controller.OwnerOfTheLand)),
+                createAction(nameof(SitePartnersController.OwnerOfTheLand), nameof(SitePartnersController)),
                 IsEditable: isEditable),
             new(
                 "Owner of the homes",
                 site.OwnerOfTheHomes?.Name.ToOneElementList(),
-                createAction(nameof(Controller.OwnerOfTheHomes)),
+                createAction(nameof(SitePartnersController.OwnerOfTheHomes), nameof(SitePartnersController)),
+                IsEditable: isEditable),
+        ];
+    }
+
+    private static List<SectionSummaryItemModel> CreateUrbSummary(SiteModel site, CreateAction createAction, bool isEditable)
+    {
+        return
+        [
+            new(
+                "Owner of the homes",
+                site.OwnerOfTheHomes?.Name.ToOneElementList(),
+                createAction(nameof(SitePartnersController.UnregisteredBodySearch), nameof(SitePartnersController)),
                 IsEditable: isEditable),
         ];
     }
@@ -430,11 +451,11 @@ public class SiteSummaryViewModelFactory : ISiteSummaryViewModelFactory
         ];
     }
 
-    private static string CreateSiteActionUrl(IUrlHelper urlHelper, SiteId siteId, string actionName, string? workflow)
+    private static string CreateSiteActionUrl(IUrlHelper urlHelper, SiteId siteId, string controllerName, string actionName, string? workflow)
     {
         var action = urlHelper.Action(
             actionName,
-            new ControllerName(nameof(SiteController)).WithoutPrefix(),
+            controllerName,
             new { siteId = siteId.Value, workflow });
 
         return action ?? string.Empty;

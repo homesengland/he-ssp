@@ -20,7 +20,6 @@ public class SaveModernMethodsConstructionCategoriesCommandHandler : SaveHomeTyp
 
     protected override IEnumerable<Action<SaveModernMethodsConstructionCategoriesCommand, IHomeTypeEntity>> SaveActions =>
     [
-        (SaveModernMethodsConstructionCategoriesCommand request, IHomeTypeEntity homeType) =>
-            homeType.ModernMethodsConstruction.ChangeModernMethodsConstructionCategories(request.ModernMethodsConstructionCategories),
+        (request, homeType) => homeType.ModernMethodsConstruction.ChangeModernMethodsConstructionCategories(request.ModernMethodsConstructionCategories),
     ];
 }

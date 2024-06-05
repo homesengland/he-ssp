@@ -9,11 +9,11 @@ using HE.Investment.AHP.Domain.Site.ValueObjects.StrategicSite;
 using HE.Investment.AHP.Domain.Site.ValueObjects.TenderingStatus;
 using HE.Investment.AHP.Domain.UserContext;
 using HE.Investments.Account.Shared;
-using HE.Investments.AHP.Consortium.Shared.UserContext;
 using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Messages;
+using HE.Investments.Consortium.Shared.UserContext;
 using HE.Investments.FrontDoor.Shared.Project;
 using LocalAuthority = HE.Investments.Organisation.LocalAuthorities.ValueObjects.LocalAuthority;
 using Section106 = HE.Investment.AHP.Domain.Site.ValueObjects.Section106;
@@ -185,7 +185,7 @@ public class SiteEntity : DomainEntity, IQuestion
             return;
         }
 
-        SitePartners = SitePartners.SinglePartner(userOrganisation);
+        ProvideSitePartners(SitePartners.SinglePartner(userOrganisation));
     }
 
     public void ProvideSitePartners(SitePartners sitePartners)

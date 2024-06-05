@@ -30,6 +30,7 @@ public class Order03LocalAuthoritySection : AhpIntegrationTest
         currentPage
             .UrlWithoutQueryEndsWith(SitePagesUrl.SiteLocalAuthoritySearch(SiteData.SiteId))
             .HasTitle(SitePageTitles.LocalAuthoritySearch)
+            .HasInputValue(nameof(LocalAuthorities.Phrase), "Oxford")
             .HasBackLink(out _)
             .HasSubmitButton(out var searchButton, "Search");
 

@@ -8,11 +8,10 @@ using HE.Investment.AHP.Domain.Site.Repositories;
 using HE.Investment.AHP.Domain.Site.ValueObjects.Planning;
 using HE.Investment.AHP.Domain.Site.ValueObjects.StrategicSite;
 using HE.Investment.AHP.Domain.Site.ValueObjects.TenderingStatus;
-using HE.Investment.AHP.Domain.UserContext;
-using HE.Investments.AHP.Consortium.Contract;
-using HE.Investments.AHP.Consortium.Shared.UserContext;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Extensions;
+using HE.Investments.Consortium.Shared.UserContext;
+using HE.Investments.Organisation.Contract;
 using HE.Investments.Organisation.ValueObjects;
 using MediatR;
 using SiteTypeDetails = HE.Investment.AHP.Contract.Site.SiteTypeDetails;
@@ -39,7 +38,7 @@ public class GetSiteQueryHandler : IRequestHandler<GetSiteQuery, SiteModel>
         var userAccount = await _accountUserContext.GetSelectedAccount();
         var site = await _siteRepository.GetSite(SiteId.From(request.SiteId), userAccount, cancellationToken);
         var prefillData = site.FrontDoorProjectId.IsProvided() && site.FrontDoorSiteId.IsProvided()
-            ? await _prefillDataRepository.GetAhpSitePrefillData(site.FrontDoorProjectId!, site.FrontDoorSiteId!, cancellationToken)
+            ? await _prefillDataRepository.GetAhpSitePrefillData(site.FrontDoorProjectId, site.FrontDoorSiteId!, cancellationToken)
             : null;
         var localAuthority = LocalAuthorityMapper.Map(site.LocalAuthority);
 
@@ -68,6 +67,7 @@ public class GetSiteQueryHandler : IRequestHandler<GetSiteQuery, SiteModel>
             SiteProcurements = site.Procurements.Procurements.ToList(),
             ModernMethodsOfConstruction = CreateSiteModernMethodsOfConstruction(site.ModernMethodsOfConstruction),
             IsConsortiumMember = !userAccount.Consortium.HasNoConsortium,
+            IsUnregisteredBody = userAccount.SelectedOrganisation().IsUnregisteredBody,
         };
     }
 

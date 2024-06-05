@@ -17,6 +17,6 @@ public class AcquisitionDate : DateValueObject
     {
     }
 
-    public static AcquisitionDate FromDateDetails(bool exists, DateDetails? date) =>
-        new(exists, date?.Day, date?.Month, date?.Year);
+    public static AcquisitionDate FromDateDetails(DateDetails? date) =>
+        new(date is { IsNotEmpty: true }, date?.Day, date?.Month, date?.Year);
 }

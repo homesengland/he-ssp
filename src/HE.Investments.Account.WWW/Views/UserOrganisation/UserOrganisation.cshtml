@@ -68,7 +68,7 @@
 
             @if (Model.ProgrammesToAccess.Any(p => p.Appliances.Any()))
             {
-                @foreach (var programmeToAccess in Model.ProgrammesToAccess)
+                @foreach (var programmeToAccess in Model.ProgrammesToAccess.Where(x => x.Appliances.Any()))
                 {
                     var items = new ListCardModel(
                         programmeToAccess.Programme.Name,

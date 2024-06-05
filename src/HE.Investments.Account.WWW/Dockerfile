@@ -1,11 +1,16 @@
 FROM mcr.microsoft.com/dotnet/aspnet:8.0-bookworm-slim AS base
+
+RUN groupadd -g 999 appuser && \
+ useradd -r -u 999 -g appuser appuser
+USER appuser
+
 WORKDIR /app
 ENV ASPNETCORE_URLS="http://*:5555"
 EXPOSE 5555
 
 FROM mcr.microsoft.com/dotnet/sdk:8.0.204 AS build
 
-RUN curl -Lk "https://raw.githubusercontent.com/Microsoft/artifacts-credprovider/master/helpers/installcredprovider.sh" | sh
+RUN curl -L "https://raw.githubusercontent.com/Microsoft/artifacts-credprovider/master/helpers/installcredprovider.sh" | sh
 ARG INTERNAL_FEED_ACCESSTOKEN
 ENV VSS_NUGET_EXTERNAL_FEED_ENDPOINTS \
     "{\"endpointCredentials\": [{\"endpoint\":\"https://pkgs.dev.azure.com/homesengland/_packaging/homesengland/nuget/v3/index.json\", \"username\":\"docker\", \"password\":\"${INTERNAL_FEED_ACCESSTOKEN}\"}]}"
@@ -22,6 +27,7 @@ COPY ["HE.Investments.Account.Contract/HE.Investments.Account.Contract.csproj", 
 COPY ["HE.Investments.Account.Shared/HE.Investments.Account.Shared.csproj", "HE.Investments.Account.Shared/"]
 COPY ["HE.Investments.Organisation/HE.Investments.Organisation.csproj", "HE.Investments.Organisation/"]
 COPY ["HE.Investments.Common.WWW/HE.Investments.Common.WWW.csproj", "HE.Investments.Common.WWW/"]
+COPY ["HE.Investments.Consortium.Shared/HE.Investments.Consortium.Shared.csproj", "HE.Investments.Consortium.Shared/"]
 COPY ["HE.Common.IntegrationModel.Crm/HE.Common.IntegrationModel.Crm.csproj", "HE.Common.IntegrationModel.Crm/"]
 RUN dotnet restore "./HE.Investments.Account.WWW/./HE.Investments.Account.WWW.csproj"
 COPY . .

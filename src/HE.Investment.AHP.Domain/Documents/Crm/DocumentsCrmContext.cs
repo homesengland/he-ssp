@@ -15,7 +15,7 @@ public class DocumentsCrmContext : IDocumentsCrmContext
 
     public async Task<string> GetDocumentLocation(AhpApplicationId applicationId, CancellationToken cancellationToken)
     {
-        var request = new invln_getahpapplicationdocumentlocationRequest { invln_applicationid = applicationId.Value };
+        var request = new invln_getahpapplicationdocumentlocationRequest { invln_applicationid = applicationId.ToGuidAsString() };
         return await _crmService.ExecuteAsync<invln_getahpapplicationdocumentlocationRequest, invln_getahpapplicationdocumentlocationResponse>(
             request,
             x => x.invln_documentlocation,

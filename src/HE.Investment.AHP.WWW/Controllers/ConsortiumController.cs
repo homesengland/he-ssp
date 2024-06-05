@@ -1,14 +1,13 @@
-using HE.Investment.AHP.Domain.UserContext;
 using HE.Investment.AHP.WWW.Models.Consortium;
 using HE.Investment.AHP.WWW.Workflows;
 using HE.Investments.Account.Shared.Authorization.Attributes;
 using HE.Investments.AHP.Consortium.Contract;
 using HE.Investments.AHP.Consortium.Contract.Commands;
 using HE.Investments.AHP.Consortium.Contract.Queries;
-using HE.Investments.AHP.Consortium.Shared.UserContext;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Validators;
 using HE.Investments.Common.WWW.Routing;
+using HE.Investments.Consortium.Shared.UserContext;
 using HE.Investments.Programme.Contract;
 using HE.Investments.Programme.Contract.Enums;
 using HE.Investments.Programme.Contract.Queries;

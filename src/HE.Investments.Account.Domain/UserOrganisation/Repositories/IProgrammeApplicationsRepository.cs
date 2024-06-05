@@ -1,5 +1,5 @@
 using HE.Investments.Account.Shared.User;
-using HE.Investments.AHP.Consortium.Shared.UserContext;
+using HE.Investments.Consortium.Shared.UserContext;
 
 namespace HE.Investments.Account.Domain.UserOrganisation.Repositories;
 

@@ -144,7 +144,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HE.Investments.Programme.Do
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Consortium", "Consortium", "{641E6B3F-7C11-4374-8506-7C7975F5ABEB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HE.Investments.AHP.Consortium.Shared", "HE.Investments.AHP.Consortium.Shared\HE.Investments.AHP.Consortium.Shared.csproj", "{9039289B-8DA6-442D-8BE6-5A056EB1A30B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HE.Investments.Consortium.Shared", "HE.Investments.Consortium.Shared\HE.Investments.Consortium.Shared.csproj", "{9039289B-8DA6-442D-8BE6-5A056EB1A30B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
