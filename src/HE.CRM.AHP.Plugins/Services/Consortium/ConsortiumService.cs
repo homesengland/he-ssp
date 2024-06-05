@@ -60,22 +60,21 @@ namespace HE.CRM.AHP.Plugins.Services.Consortium
                     bool isSitePartner = false;
                     bool isAppPartner = false;
 
-                    if (ahpProject != null)
-                    {
+                    //if (ahpProject != null)
+                    //{
+                    //    var sites = _siteRepository.GetByAttribute(invln_Sites.Fields.invln_AHPProjectId, new Guid(ahpProject)).ToList();
+                    //    isSitePartner = sites.Any(x => IsOrganizationSitePartner(x.Id.ToString(), organizationId));
 
-                        var sites = _siteRepository.GetByAttribute(invln_Sites.Fields.invln_AHPProjectId, new Guid(ahpProject)).ToList();
-                        isSitePartner = sites.Any(x => IsOrganizationSitePartner(x.Id.ToString(), organizationId));
-
-                        foreach (var site in sites)
-                        {
-                            var applications = _ahpApplicationRepository.GetByAttribute(invln_scheme.Fields.invln_Site, site.Id);
-                            isAppPartner = applications.Any(x => IsApplicationPartner(x, organizationId));
-                            if (isAppPartner)
-                            {
-                                break;
-                            }
-                        }
-                    }
+                    //    foreach (var site in sites)
+                    //    {
+                    //        var applications = _ahpApplicationRepository.GetByAttribute(invln_scheme.Fields.invln_Site, site.Id);
+                    //        isAppPartner = applications.Any(x => IsApplicationPartner(x, organizationId));
+                    //        if (isAppPartner)
+                    //        {
+                    //            break;
+                    //        }
+                    //    }
+                    //}
 
                     if (applicationId != null)
                     {
@@ -201,7 +200,7 @@ namespace HE.CRM.AHP.Plugins.Services.Consortium
             if (ahpProject != null)
             {
                 TracingService.Trace("Check For project");
-                accessToAction = HasUserHavePermissionToProvideOperation(Operation.Get, role, null, null, contact.ToEntityReference(), ahpProject);
+                accessToAction = HasUserHavePermissionToProvideOperation(Operation.Get, role, null, null, contact.ToEntityReference(), ahpProject, organizationId.ToString());
                 TracingService.Trace("Checked");
             }
             TracingService.Trace("1");
@@ -220,7 +219,7 @@ namespace HE.CRM.AHP.Plugins.Services.Consortium
             return accessToAction;
         }
 
-        private bool HasUserHavePermissionToProvideOperation(Operation operation, int role, string siteId = null, string applicationId = null, EntityReference contactId = null, string ahpProject = null)
+        private bool HasUserHavePermissionToProvideOperation(Operation operation, int role, string siteId = null, string applicationId = null, EntityReference contactId = null, string ahpProject = null, string organizationId = null)
         {
             if (role == (int)invln_Permission.Admin)
             {
@@ -248,15 +247,15 @@ namespace HE.CRM.AHP.Plugins.Services.Consortium
             {
 
                 TracingService.Trace("Limited role");
-                if (ahpProject != null)
-                {
-                    TracingService.Trace("Get Project");
+                //if (ahpProject != null)
+                //{
+                //    TracingService.Trace("Get Project");
 
-                    var ahpProjects = _ahpProjectRepository.GetByAttribute(invln_ahpproject.Fields.invln_ContactId, contactId.Id).ToList();
-                    TracingService.Trace($"No of Project{ahpProjects}");
-                    TracingService.Trace($"Project{ahpProject}");
-                    return ahpProjects.Any(x => x.Id == new Guid(ahpProject));
-                }
+                //    var ahpProjects = _ahpProjectRepository.GetByAttribute(invln_ahpproject.Fields.invln_ContactId, contactId.Id).ToList();
+                //    TracingService.Trace($"No of Project{ahpProjects}");
+                //    TracingService.Trace($"Project{ahpProject}");
+                //    return ahpProjects.Any(x => x.Id == new Guid(ahpProject) && x.invln_AccountId.Id == new Guid(organizationId));
+                //}
                 if (siteId != null)
                 {
                     var site = _siteRepository.GetById(new Guid(siteId));
