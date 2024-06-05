@@ -21,10 +21,10 @@ ENV VSS_NUGET_EXTERNAL_FEED_ENDPOINTS \
 COPY . .
 RUN ls
 WORKDIR "/src/HE.DocumentService/HE.DocumentService.Api"
-RUN dotnet build "HE.DocumentService.Api.csproj" -c Release -o /app/build
+RUN dotnet build "./HE.DocumentService.Api.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "HE.DocumentService.Api.csproj" -c Release -o /app/publish --no-restore
+RUN dotnet publish "./HE.DocumentService.Api.csproj" -c Release -o /app/publish --no-restore
 
 FROM base AS final
 WORKDIR /app
