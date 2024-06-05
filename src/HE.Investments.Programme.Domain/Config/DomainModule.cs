@@ -1,4 +1,5 @@
 using HE.Investments.Programme.Domain.Crm;
+using HE.Investments.Programme.Domain.Mappers;
 using HE.Investments.Programme.Domain.Repositories;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -13,5 +14,6 @@ public static class DomainModule
         services.AddScoped<IProgrammeCrmContext, ProgrammeCrmContext>();
         services.Decorate<IProgrammeCrmContext, CacheProgrammeCrmContextDecorator>();
         services.Decorate<IProgrammeCrmContext, RequestCacheProgrammeCrmContextDecorator>();
+        services.AddScoped<IProgrammeMapper, ProgrammeMapper>();
     }
 }
