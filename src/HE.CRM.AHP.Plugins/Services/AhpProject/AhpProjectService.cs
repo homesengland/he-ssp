@@ -131,7 +131,7 @@ namespace HE.CRM.AHP.Plugins.Services.AhpProject
             if (consortiumId == null || (consortiumId != null && contactWebRole == invln_Permission.Limiteduser))
             {
                 TracingService.Trace("No Consortium or Consortium with Limiteduser");
-                var ahpProjectsDto = GetAhpProjectsAndCheckPermission(contactWebRole, contact, organisationId, null, paging, externalContactId);
+                var ahpProjectsDto = GetAhpProjectsAndCheckPermission(contactWebRole, contact, organisationId, consortiumId, paging, externalContactId);
 
                 if (ahpProjectsDto != null)
                 {
@@ -159,7 +159,7 @@ namespace HE.CRM.AHP.Plugins.Services.AhpProject
                 var isALeadPartner = IsOrganisationALeadPartnerOfConsortium(organisationId, consortiumId);
                 TracingService.Trace($"Is Organisation a Lead Partner Of Consortium: {isALeadPartner}");
 
-                var ahpProjectsDto = GetAhpProjectsForConsortium(consortiumId, paging);
+                var ahpProjectsDto = GetAhpProjectsForConsortium(consortiumId, paging, externalContactId, organisationId);
                 if (ahpProjectsDto != null)
                 {
                     foreach (var ahpProjectDto in ahpProjectsDto.items)
@@ -277,24 +277,25 @@ namespace HE.CRM.AHP.Plugins.Services.AhpProject
                     ahpProjects.Remove(project);
                 }
             }
-
+            List<invln_ahpproject> filteredProject = new List<invln_ahpproject>();
             foreach (var project in ahpProjects)
             {
-                if (!_consortiumService.CheckAccess(ConsortiumService.Operation.Get, ConsortiumService.RecordType.AHPProject, externalId, null, null, consortiumId, organisationId, project.Id.ToString()))
-                    ahpProjects.Remove(project);
+                if (_consortiumService.CheckAccess(ConsortiumService.Operation.Get, ConsortiumService.RecordType.AHPProject,
+                    externalId, null, null, consortiumId, organisationId, project.Id.ToString()))
+                    filteredProject.Add(project);
             }
 
             if (paging != null)
             {
                 TracingService.Trace($"Paging found.");
                 result.paging = paging;
-                result.totalItemsCount = ahpProjects.Count();
+                result.totalItemsCount = filteredProject.Count();
                 var pageSize = paging.pageSize;
                 var pagenumber = paging.pageNumber;
                 var startIndex = (pageSize * pagenumber) - pageSize;
                 var countrRange = startIndex + pageSize <= (result.totalItemsCount - 1) ? pageSize : result.totalItemsCount - startIndex;
 
-                var ahpProjectsPage = ahpProjects.GetRange(startIndex, countrRange);
+                var ahpProjectsPage = filteredProject.GetRange(startIndex, countrRange);
 
                 var ahpProjectsPageDto = ahpProjectsPage.Select(x => AhpProjectMapper.MapRegularEntityToDto(x)).ToList();
                 TracingService.Trace($"Records mapped.");
@@ -424,7 +425,7 @@ namespace HE.CRM.AHP.Plugins.Services.AhpProject
             return result;
         }
 
-        private PagedResponseDto<AhpProjectDto> GetAhpProjectsForConsortium(string consortiumId, PagingRequestDto paging)
+        private PagedResponseDto<AhpProjectDto> GetAhpProjectsForConsortium(string consortiumId, PagingRequestDto paging, string externalId, string organisationId)
         {
             TracingService.Trace("GetAhpProjectsForConsortium");
             PagedResponseDto<AhpProjectDto> result = new PagedResponseDto<AhpProjectDto>();
@@ -440,18 +441,26 @@ namespace HE.CRM.AHP.Plugins.Services.AhpProject
             TracingService.Trace("Core records downloaded");
 
             ahpProjects = ahpProjects.OrderByDescending(x => x.CreatedOn).ToList();
+            List<invln_ahpproject> filteredProject = new List<invln_ahpproject>();
+            foreach (var project in ahpProjects)
+            {
+                if (_consortiumService.CheckAccess(ConsortiumService.Operation.Get, ConsortiumService.RecordType.AHPProject,
+                    externalId, null, null, consortiumId, organisationId, project.Id.ToString()))
+                    filteredProject.Add(project);
+            }
+
             TracingService.Trace($"Core records OrderBy.");
             if (paging != null)
             {
                 TracingService.Trace($"Paging found.");
                 result.paging = paging;
-                result.totalItemsCount = ahpProjects.Count();
+                result.totalItemsCount = filteredProject.Count();
                 var pageSize = paging.pageSize;
                 var pagenumber = paging.pageNumber;
                 var startIndex = (pageSize * pagenumber) - pageSize;
                 var countrRange = startIndex + pageSize <= (result.totalItemsCount - 1) ? pageSize : result.totalItemsCount - startIndex;
 
-                var ahpProjectsPage = ahpProjects.GetRange(startIndex, countrRange);
+                var ahpProjectsPage = filteredProject.GetRange(startIndex, countrRange);
 
                 var ahpProjectsPageDto = ahpProjectsPage.Select(x => AhpProjectMapper.MapRegularEntityToDto(x)).ToList();
                 TracingService.Trace($"Records mapped.");

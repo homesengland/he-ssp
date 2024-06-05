@@ -91,7 +91,6 @@ public class Order01StartAhpApplication : AhpIntegrationTest
         SaveCurrentPage();
     }
 
-    [Fact(Skip = AhpConfig.SkipTest)]
     [Order(5)]
     public async Task Order05_ShouldProvideSiteConfirmation()
     {

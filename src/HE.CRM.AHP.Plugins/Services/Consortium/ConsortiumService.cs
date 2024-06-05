@@ -44,74 +44,85 @@ namespace HE.CRM.AHP.Plugins.Services.Consortium
 
         public bool CheckAccess(Operation operation, RecordType recordtype, string externalUserId, string siteId = null, string applicationId = null, string consortiumId = null, string organizationId = null, string ahpProject = null)
         {
+            var contact = CrmRepositoriesFactory.Get<IContactRepository>().GetContactViaExternalId(externalUserId);
+            TracingService.Trace("Get Portal Permition Level");
+            List<invln_portalpermissionlevel> ppl = CrmRepositoriesFactory.Get<IPortalPermissionRepository>().GetByAccountAndContact(new Guid(organizationId), contact.Id);
+            int role = GetRole(ppl);
             TracingService.Trace("Get Consortium");
             if (consortiumId != null)
             {
-                var consortium = _consortiumRepository.GetById(new Guid(consortiumId), new string[] {
+                if (role != (int)invln_Permission.Limiteduser)
+                {
+                    var consortium = _consortiumRepository.GetById(new Guid(consortiumId), new string[] {
                     invln_Consortium.Fields.invln_LeadPartner});
 
-                bool isLeadPartner = false;
-                bool isSitePartner = false;
-                bool isAppPartner = false;
+                    bool isLeadPartner = false;
+                    bool isSitePartner = false;
+                    bool isAppPartner = false;
 
-                if (ahpProject != null)
-                {
-
-                    var sites = _siteRepository.GetByAttribute(invln_Sites.Fields.invln_AHPProjectId, new Guid(ahpProject)).ToList();
-                    isSitePartner = sites.Any(x => IsOrganizationSitePartner(x.Id.ToString(), organizationId));
-
-                    foreach (var site in sites)
+                    if (ahpProject != null)
                     {
-                        var applications = _ahpApplicationRepository.GetByAttribute(invln_scheme.Fields.invln_Site, site.Id);
-                        isAppPartner = applications.Any(x => IsApplicationPartner(x, organizationId));
-                        if (isAppPartner)
+
+                        var sites = _siteRepository.GetByAttribute(invln_Sites.Fields.invln_AHPProjectId, new Guid(ahpProject)).ToList();
+                        isSitePartner = sites.Any(x => IsOrganizationSitePartner(x.Id.ToString(), organizationId));
+
+                        foreach (var site in sites)
                         {
-                            break;
+                            var applications = _ahpApplicationRepository.GetByAttribute(invln_scheme.Fields.invln_Site, site.Id);
+                            isAppPartner = applications.Any(x => IsApplicationPartner(x, organizationId));
+                            if (isAppPartner)
+                            {
+                                break;
+                            }
                         }
                     }
-                }
 
-                if (applicationId != null)
-                {
-                    TracingService.Trace("Check Access to Application");
-                    var application = _ahpApplicationRepository.GetById(new Guid(applicationId),
-                        new string[] {invln_scheme.Fields.invln_DevelopingPartner, invln_scheme.Fields.invln_OwneroftheHomes,
+                    if (applicationId != null)
+                    {
+                        TracingService.Trace("Check Access to Application");
+                        var application = _ahpApplicationRepository.GetById(new Guid(applicationId),
+                            new string[] {invln_scheme.Fields.invln_DevelopingPartner, invln_scheme.Fields.invln_OwneroftheHomes,
                     invln_scheme.Fields.invln_OwneroftheLand});
-                    isLeadPartner = IsConsortiumLeadPartner(consortium, organizationId);
-                    isAppPartner = IsApplicationPartner(application, organizationId);
-                }
+                        isLeadPartner = IsConsortiumLeadPartner(consortium, organizationId);
+                        isAppPartner = IsApplicationPartner(application, organizationId);
+                    }
 
-                if (siteId != null)
-                {
-                    TracingService.Trace("Check Access to Site");
-                    isLeadPartner = IsConsortiumLeadPartner(consortium, organizationId);
-                    isSitePartner = IsOrganizationSitePartner(siteId, organizationId);
-                }
+                    if (siteId != null)
+                    {
+                        TracingService.Trace("Check Access to Site");
+                        isLeadPartner = IsConsortiumLeadPartner(consortium, organizationId);
+                        isSitePartner = IsOrganizationSitePartner(siteId, organizationId);
+                    }
 
-                if (isLeadPartner)
-                    return true;
-                if (isSitePartner && operation == Operation.Get && (recordtype == RecordType.Site
-                    || recordtype == RecordType.Application))
-                {
-                    return true;
-                }
+                    TracingService.Trace($"isLeadPartner: {isLeadPartner}");
+                    TracingService.Trace($"isSitePartner: {isSitePartner}");
+                    TracingService.Trace($"isAppPartner: {isAppPartner}");
 
-                if (isSitePartner && operation == Operation.Get && (recordtype == RecordType.AHPProject
-                    || recordtype == RecordType.Application))
-                {
-                    return true;
-                }
+                    if (isLeadPartner)
+                        return true;
+                    if (isSitePartner && operation == Operation.Get && (recordtype == RecordType.Site
+                        || recordtype == RecordType.Application))
+                    {
+                        return true;
+                    }
 
-                if (isAppPartner && operation == Operation.Get && (recordtype == RecordType.Site
-                    || recordtype == RecordType.Application))
-                {
-                    return true;
-                }
+                    if (isSitePartner && operation == Operation.Get && (recordtype == RecordType.AHPProject
+                        || recordtype == RecordType.Application))
+                    {
+                        return true;
+                    }
 
-                if (isAppPartner && operation == Operation.Get && (recordtype == RecordType.AHPProject
-                    || recordtype == RecordType.Application))
-                {
-                    return true;
+                    if (isAppPartner && operation == Operation.Get && (recordtype == RecordType.Site
+                        || recordtype == RecordType.Application))
+                    {
+                        return true;
+                    }
+
+                    if (isAppPartner && operation == Operation.Get && (recordtype == RecordType.AHPProject
+                        || recordtype == RecordType.Application))
+                    {
+                        return true;
+                    }
                 }
             }
 
@@ -189,22 +200,23 @@ namespace HE.CRM.AHP.Plugins.Services.Consortium
 
             if (ahpProject != null)
             {
-                TracingService.Trace("Check For site");
+                TracingService.Trace("Check For project");
                 accessToAction = HasUserHavePermissionToProvideOperation(Operation.Get, role, null, null, contact.ToEntityReference(), ahpProject);
+                TracingService.Trace("Checked");
             }
-
+            TracingService.Trace("1");
             if (siteId != null)
             {
                 TracingService.Trace("Check For site");
                 accessToAction = HasUserHavePermissionToProvideOperation(Operation.Get, role, siteId, null, contact.ToEntityReference());
             }
-
+            TracingService.Trace("2");
             if (applicationId != null)
             {
                 TracingService.Trace("Check For application");
                 accessToAction = HasUserHavePermissionToProvideOperation(Operation.Get, role, null, applicationId, contact.ToEntityReference());
             }
-
+            TracingService.Trace("3");
             return accessToAction;
         }
 
@@ -212,6 +224,7 @@ namespace HE.CRM.AHP.Plugins.Services.Consortium
         {
             if (role == (int)invln_Permission.Admin)
             {
+                TracingService.Trace("Admin Role");
                 var ahpProjects = _ahpProjectRepository.GetByAttribute(invln_ahpproject.Fields.invln_ContactId, contactId.Id).ToList();
                 if (ahpProjects != null)
                 {
@@ -220,6 +233,7 @@ namespace HE.CRM.AHP.Plugins.Services.Consortium
             }
             if (role == (int)invln_Permission.Enhanced)
             {
+                TracingService.Trace("Enhanced Role");
                 var ahpProjects = _ahpProjectRepository.GetByAttribute(invln_ahpproject.Fields.invln_ContactId, contactId.Id).ToList();
                 if (ahpProjects != null)
                 {
@@ -232,6 +246,17 @@ namespace HE.CRM.AHP.Plugins.Services.Consortium
                 return true;
             if (role == (int)invln_Permission.Limiteduser)
             {
+
+                TracingService.Trace("Limited role");
+                if (ahpProject != null)
+                {
+                    TracingService.Trace("Get Project");
+
+                    var ahpProjects = _ahpProjectRepository.GetByAttribute(invln_ahpproject.Fields.invln_ContactId, contactId.Id).ToList();
+                    TracingService.Trace($"No of Project{ahpProjects}");
+                    TracingService.Trace($"Project{ahpProject}");
+                    return ahpProjects.Any(x => x.Id == new Guid(ahpProject));
+                }
                 if (siteId != null)
                 {
                     var site = _siteRepository.GetById(new Guid(siteId));
