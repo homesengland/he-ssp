@@ -1,3 +1,4 @@
+using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.Scheme.Entities;
 using HE.Investment.AHP.Domain.Scheme.ValueObjects;
 using HE.Investment.AHP.Domain.Tests.Application.TestData;
@@ -31,6 +32,56 @@ public class SchemeEntityBuilder
             _item,
             nameof(_item.Funding),
             funding);
+
+        return this;
+    }
+
+    public SchemeEntityBuilder WithApplicationDetails(ApplicationBasicInfo application)
+    {
+        PrivatePropertySetter.SetPropertyWithNoSetter(
+            _item,
+            nameof(_item.Application),
+            application);
+
+        return this;
+    }
+
+    public SchemeEntityBuilder WithSectionStatus(SectionStatus status)
+    {
+        PrivatePropertySetter.SetPropertyWithNoSetter(
+            _item,
+            nameof(_item.Status),
+            status);
+
+        return this;
+    }
+
+    public SchemeEntityBuilder WithAffordabilityEvidence(AffordabilityEvidence affordabilityEvidence)
+    {
+        PrivatePropertySetter.SetPropertyWithNoSetter(
+            _item,
+            nameof(_item.AffordabilityEvidence),
+            affordabilityEvidence);
+
+        return this;
+    }
+
+    public SchemeEntityBuilder WithSalesRisk(SalesRisk salesRisk)
+    {
+        PrivatePropertySetter.SetPropertyWithNoSetter(
+            _item,
+            nameof(_item.SalesRisk),
+            salesRisk);
+
+        return this;
+    }
+
+    public SchemeEntityBuilder WithHousingNeeds(HousingNeeds housingNeeds)
+    {
+        PrivatePropertySetter.SetPropertyWithNoSetter(
+            _item,
+            nameof(_item.HousingNeeds),
+            housingNeeds);
 
         return this;
     }
