@@ -26,6 +26,8 @@ public class RehabDeliveryPhase : INestedItemData
 
     public DateDetails CompletionMilestonePaymentDate { get; private set; }
 
+    public DateDetails InvalidCompletionMilestonePaymentDate { get; private set; }
+
     public bool ReconfiguringExisting { get; private set; }
 
     public IList<HomeTypeDetails> DeliveryPhaseHomes { get; private set; }
@@ -83,6 +85,7 @@ public class RehabDeliveryPhase : INestedItemData
     {
         CompletionMilestoneDate = new DateDetails("30", "12", "2025");
         CompletionMilestonePaymentDate = new DateDetails("01", "03", "2026");
+        InvalidCompletionMilestonePaymentDate = new DateDetails("01", "01", "2030");
         return this;
     }
 }
