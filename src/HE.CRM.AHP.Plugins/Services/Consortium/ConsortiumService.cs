@@ -32,15 +32,17 @@ namespace HE.CRM.AHP.Plugins.Services.Consortium
         private readonly IConsortiumRepository _consortiumRepository;
         private readonly ISiteRepository _siteRepository;
         private readonly IAhpApplicationRepository _ahpApplicationRepository;
+        private readonly IAhpProjectRepository _ahpProjectRepository;
 
         public ConsortiumService(CrmServiceArgs args) : base(args)
         {
             _consortiumRepository = CrmRepositoriesFactory.Get<IConsortiumRepository>();
             _siteRepository = CrmRepositoriesFactory.Get<ISiteRepository>();
             _ahpApplicationRepository = CrmRepositoriesFactory.Get<IAhpApplicationRepository>();
+            _ahpProjectRepository = CrmRepositoriesFactory.Get<IAhpProjectRepository>();
         }
 
-        public bool CheckAccess(Operation operation, RecordType recordtype, string externalUserId, string siteId = null, string applicationId = null, string consortiumId = null, string organizationId = null)
+        public bool CheckAccess(Operation operation, RecordType recordtype, string externalUserId, string siteId = null, string applicationId = null, string consortiumId = null, string organizationId = null, string ahpProject = null)
         {
             TracingService.Trace("Get Consortium");
             if (consortiumId != null)
@@ -51,6 +53,23 @@ namespace HE.CRM.AHP.Plugins.Services.Consortium
                 bool isLeadPartner = false;
                 bool isSitePartner = false;
                 bool isAppPartner = false;
+
+                if (ahpProject != null)
+                {
+
+                    var sites = _siteRepository.GetByAttribute(invln_Sites.Fields.invln_AHPProjectId, new Guid(ahpProject)).ToList();
+                    isSitePartner = sites.Any(x => IsOrganizationSitePartner(x.Id.ToString(), organizationId);
+
+                    foreach (var site in sites)
+                    {
+                        var applications = _ahpApplicationRepository.GetByAttribute(invln_scheme.Fields.invln_Site, site.Id);
+                        isAppPartner = applications.Any(x => IsApplicationPartner(x, organizationId));
+                        if (isAppPartner)
+                        {
+                            break;
+                        }
+                    }
+                }
 
                 if (applicationId != null)
                 {
@@ -97,7 +116,7 @@ namespace HE.CRM.AHP.Plugins.Services.Consortium
             }
 
             TracingService.Trace("Check web role");
-            return UserHasAccess(externalUserId, new Guid(organizationId), siteId, applicationId);
+            return UserHasAccess(externalUserId, new Guid(organizationId), siteId, applicationId, ahpProject);
         }
 
         private bool IsApplicationPartner(invln_scheme application, string organizationId)
@@ -159,7 +178,7 @@ namespace HE.CRM.AHP.Plugins.Services.Consortium
             return false;
         }
 
-        private bool UserHasAccess(string externalUserId, Guid organizationId, string siteId = null, string applicationId = null)
+        private bool UserHasAccess(string externalUserId, Guid organizationId, string siteId = null, string applicationId = null, string ahpProject = null)
         {
             TracingService.Trace("Get Contact");
             var contact = CrmRepositoriesFactory.Get<IContactRepository>().GetContactViaExternalId(externalUserId);
@@ -182,13 +201,25 @@ namespace HE.CRM.AHP.Plugins.Services.Consortium
             return accessToAction;
         }
 
-        private bool HasUserHavePermissionToProvideOperation(Operation operation, int role, string siteId = null, string applicationId = null, EntityReference contactId = null)
+        private bool HasUserHavePermissionToProvideOperation(Operation operation, int role, string siteId = null, string applicationId = null, EntityReference contactId = null, string ahpProject = null)
         {
-
             if (role == (int)invln_Permission.Admin)
-                return true;
+            {
+                var ahpProjects = _ahpProjectRepository.GetByAttribute(invln_ahpproject.Fields.invln_ContactId, contactId.Id).ToList();
+                if (ahpProjects != null)
+                {
+                    return ahpProjects.Any(x => x.invln_ContactId != null && x.invln_ContactId.Id == contactId.Id);
+                }
+            }
+            return true;
             if (role == (int)invln_Permission.Enhanced)
-                return true;
+            {
+                var ahpProjects = _ahpProjectRepository.GetByAttribute(invln_ahpproject.Fields.invln_ContactId, contactId.Id).ToList();
+                if (ahpProjects != null)
+                {
+                    return ahpProjects.Any(x => x.invln_AccountId != null && x.invln_AccountId.Id == contactId.Id);
+                }
+            }
             if (role == (int)invln_Permission.Inputonly && operation != Operation.Submit)
                 return true;
             if (role == (int)invln_Permission.Viewonly && operation == Operation.Get)
@@ -213,6 +244,7 @@ namespace HE.CRM.AHP.Plugins.Services.Consortium
                     if (application.invln_contactid.Equals(contactId))
                         return true;
                 }
+
             }
 
             return false;
