@@ -25,11 +25,14 @@ namespace HE.CRM.AHP.Plugins.Handlers.AHPApplication
             {
                 invln_scheme_StatusCode.Draft,
                 invln_scheme_StatusCode.Deleted,
+                invln_scheme_StatusCode.ReferredBackToApplicant,
                 invln_scheme_StatusCode.Inactive
             };
             var currentStatuCode = (invln_scheme_StatusCode)CurrentState.StatusCode.Value;
 
-            var isSubmitting = (currentStatuCode == invln_scheme_StatusCode.ApplicationSubmitted) && ValueChanged(invln_scheme.Fields.StatusCode);
+            var isSubmitting = (currentStatuCode == invln_scheme_StatusCode.ApplicationSubmitted || currentStatuCode == invln_scheme_StatusCode.UnderReviewInAssessment)
+                && ValueChanged(invln_scheme.Fields.StatusCode);
+
             return isSubmitting ||
                 (
                     !disabledStatusesForCalculation.Contains(currentStatuCode) &&

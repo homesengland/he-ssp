@@ -2,21 +2,15 @@ using HE.Investments.AHP.IntegrationTests.ApplicationManagement.Data.Model;
 
 namespace HE.Investments.AHP.IntegrationTests.ApplicationManagement.Data;
 
-public static class AdminUserInLeadOrganisationOfConsortium
+public static class AdminUserInSitePartnerOrganisationOfConsortium
 {
     public static UserData UserData { get; } = new(
-        "admin.consortium.lead-integration.tests@gmail.com",
-        "auth0|665c3f9f607efb43e06f4f6b",
-        "2a7ef26a-c320-ef11-840a-000d3a0cff9a",
+        "admin.consortium.site.partner-app01-integration.tests@gmail.com",
+        "auth0|665c43a9e627bbe9ed3b2fcf",
+        "e28ea7ba-c720-ef11-840a-002248c5d15f",
         "ee269470-c620-ef11-840a-002248c83519");
 
-    public static AhpProject[] Projects => AllTestsLimitedConsortium.Projects;
-
-    public static AhpProject ProjectAdminLead => AllTestsLimitedConsortium.ProjectAdminLead;
-
-    public static AhpSite SiteLead => AllTestsLimitedConsortium.SiteLead;
-
-    public static AhpApplication ApplicationLead => AllTestsLimitedConsortium.ApplicationLead;
+    public static AhpProject[] Projects => [AllTestsLimitedConsortium.ProjectSitePartner];
 
     public static AhpProject ProjectSitePartner => AllTestsLimitedConsortium.ProjectSitePartner;
 
