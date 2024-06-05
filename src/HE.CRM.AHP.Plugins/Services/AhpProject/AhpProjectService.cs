@@ -13,6 +13,7 @@ using System.IdentityModel.Metadata;
 using Microsoft.Xrm.Sdk.Query;
 using HE.CRM.Common.DtoMapping;
 using System.Security.Policy;
+using HE.CRM.AHP.Plugins.Services.Consortium;
 
 namespace HE.CRM.AHP.Plugins.Services.AhpProject
 {
@@ -27,6 +28,7 @@ namespace HE.CRM.AHP.Plugins.Services.AhpProject
         private readonly IConsortiumMemberRepository _consortiumMemberRepository;
         private readonly IHeLocalAuthorityRepository _heLocalAuthorityRepository;
         private readonly IConsortiumRepository _consortiumRepository;
+        private readonly IConsortiumService _consortiumService;
 
         public AhpProjectService(CrmServiceArgs args) : base(args)
         {
@@ -38,6 +40,7 @@ namespace HE.CRM.AHP.Plugins.Services.AhpProject
             _consortiumMemberRepository = CrmRepositoriesFactory.Get<IConsortiumMemberRepository>();
             _heLocalAuthorityRepository = CrmRepositoriesFactory.Get<IHeLocalAuthorityRepository>();
             _consortiumRepository = CrmRepositoriesFactory.Get<IConsortiumRepository>();
+            _consortiumService = CrmServicesFactory.Get<IConsortiumService>();
         }
 
         public string CreateRecordFromPortal(string externalContactId, string organisationId, string heProjectId, string ahpProjectName, string consortiumId)
@@ -128,7 +131,7 @@ namespace HE.CRM.AHP.Plugins.Services.AhpProject
             if (consortiumId == null || (consortiumId != null && contactWebRole == invln_Permission.Limiteduser))
             {
                 TracingService.Trace("No Consortium or Consortium with Limiteduser");
-                var ahpProjectsDto = GetAhpProjectsAndCheckPermission(contactWebRole, contact, organisationId, null, paging);
+                var ahpProjectsDto = GetAhpProjectsAndCheckPermission(contactWebRole, contact, organisationId, null, paging, externalContactId);
 
                 if (ahpProjectsDto != null)
                 {
@@ -240,7 +243,7 @@ namespace HE.CRM.AHP.Plugins.Services.AhpProject
             return ahpProject;
         }
 
-        private PagedResponseDto<AhpProjectDto> GetAhpProjectsAndCheckPermission(invln_Permission contactWebRole, Contact contact, string organisationId, string consortiumId = null, PagingRequestDto paging = null)
+        private PagedResponseDto<AhpProjectDto> GetAhpProjectsAndCheckPermission(invln_Permission contactWebRole, Contact contact, string organisationId, string consortiumId = null, PagingRequestDto paging = null, string externalId = null)
         {
             TracingService.Trace("GetAhpProjectsAndCheckPermission");
             PagedResponseDto<AhpProjectDto> result = new PagedResponseDto<AhpProjectDto>();
@@ -273,6 +276,12 @@ namespace HE.CRM.AHP.Plugins.Services.AhpProject
                     TracingService.Trace("AhpProject removed from the list.");
                     ahpProjects.Remove(project);
                 }
+            }
+
+            foreach (var project in ahpProjects)
+            {
+                if (!_consortiumService.CheckAccess(ConsortiumService.Operation.Get, ConsortiumService.RecordType.AHPProject, externalId, null, null, consortiumId, organisationId, project.Id.ToString()))
+                    ahpProjects.Remove(project);
             }
 
             if (paging != null)

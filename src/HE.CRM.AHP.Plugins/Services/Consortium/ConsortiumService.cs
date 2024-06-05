@@ -58,7 +58,7 @@ namespace HE.CRM.AHP.Plugins.Services.Consortium
                 {
 
                     var sites = _siteRepository.GetByAttribute(invln_Sites.Fields.invln_AHPProjectId, new Guid(ahpProject)).ToList();
-                    isSitePartner = sites.Any(x => IsOrganizationSitePartner(x.Id.ToString(), organizationId);
+                    isSitePartner = sites.Any(x => IsOrganizationSitePartner(x.Id.ToString(), organizationId));
 
                     foreach (var site in sites)
                     {
@@ -186,6 +186,13 @@ namespace HE.CRM.AHP.Plugins.Services.Consortium
             List<invln_portalpermissionlevel> ppl = CrmRepositoriesFactory.Get<IPortalPermissionRepository>().GetByAccountAndContact(organizationId, contact.Id);
             int role = GetRole(ppl);
             bool accessToAction = false;
+
+            if (ahpProject != null)
+            {
+                TracingService.Trace("Check For site");
+                accessToAction = HasUserHavePermissionToProvideOperation(Operation.Get, role, null, null, contact.ToEntityReference(), ahpProject);
+            }
+
             if (siteId != null)
             {
                 TracingService.Trace("Check For site");
@@ -211,7 +218,6 @@ namespace HE.CRM.AHP.Plugins.Services.Consortium
                     return ahpProjects.Any(x => x.invln_ContactId != null && x.invln_ContactId.Id == contactId.Id);
                 }
             }
-            return true;
             if (role == (int)invln_Permission.Enhanced)
             {
                 var ahpProjects = _ahpProjectRepository.GetByAttribute(invln_ahpproject.Fields.invln_ContactId, contactId.Id).ToList();
