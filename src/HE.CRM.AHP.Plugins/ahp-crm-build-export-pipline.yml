@@ -45,7 +45,7 @@ resources:
     - repository: he-invst-deployment
       type: git
       name: "Investments Programme/he-invst-deployment"
-      ref: "Pipeline_EnvVar"
+      ref: "main"
 
 stages:
   - template: crm-deployment-pipelines/ahp-crm-build-export.yml@he-invst-deployment
