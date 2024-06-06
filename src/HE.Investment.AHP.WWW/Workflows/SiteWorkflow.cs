@@ -119,7 +119,7 @@ public class SiteWorkflow : EncodedStateRouting<SiteWorkflowState>
             .PermitIf(
                 Trigger.Back,
                 SiteWorkflowState.Section106CapitalFundingEligibility,
-                () => _siteModel?.Section106?.AdditionalAffordableHousing == false);
+                () => _siteModel?.Section106?.AdditionalAffordableHousing != true && _siteModel?.Section106?.GeneralAgreement == true);
 
         Machine.Configure(SiteWorkflowState.LocalAuthorityResult)
             .Permit(Trigger.Continue, SiteWorkflowState.LocalAuthorityConfirm)
