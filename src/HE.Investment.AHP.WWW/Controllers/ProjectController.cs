@@ -1,3 +1,4 @@
+using HE.Investment.AHP.Contract.AhpProgramme;
 using HE.Investment.AHP.Contract.Project;
 using HE.Investment.AHP.Contract.Project.Commands;
 using HE.Investment.AHP.Contract.Project.Queries;
@@ -38,8 +39,8 @@ public class ProjectController : Controller
         var userAccount = await _consortiumUserContext.GetSelectedAccount();
         if (userAccount.Consortium.HasNoConsortium || await _consortiumAccessContext.IsConsortiumLeadPartner())
         {
-            var availableProgrammes = await _mediator.Send(new GetProgrammesQuery(ProgrammeType.Ahp), cancellationToken);
-            return View(new ProjectBasicModel(fdProjectId, availableProgrammes[0]));
+            var ahpProgramme = await _mediator.Send(new GetTheAhpProgrammeQuery(), cancellationToken);
+            return View(new ProjectBasicModel(fdProjectId, ahpProgramme));
         }
 
         return RedirectToAction("ContactHomesEngland", "ConsortiumMember", new { consortiumId = userAccount.Consortium.ConsortiumId.Value });

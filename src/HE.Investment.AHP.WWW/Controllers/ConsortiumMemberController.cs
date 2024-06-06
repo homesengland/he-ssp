@@ -1,3 +1,4 @@
+using HE.Investment.AHP.Contract.AhpProgramme;
 using HE.Investment.AHP.WWW.Models.Common;
 using HE.Investment.AHP.WWW.Models.Consortium;
 using HE.Investment.AHP.WWW.Models.ConsortiumMember;
@@ -185,9 +186,9 @@ public class ConsortiumMemberController : WorkflowController<ConsortiumMemberWor
     [AuthorizeWithCompletedProfile(ConsortiumAccessContext.ViewConsortium)]
     public async Task<IActionResult> ContactHomesEngland(string consortiumId, CancellationToken cancellationToken)
     {
-        var availableProgrammes = await _mediator.Send(new GetProgrammesQuery(ProgrammeType.Ahp), cancellationToken);
+        var ahpProgramme = await _mediator.Send(new GetTheAhpProgrammeQuery(), cancellationToken);
 
-        return View(new ConsortiumSelectedProgrammeModel(consortiumId, availableProgrammes[0]));
+        return View(new ConsortiumSelectedProgrammeModel(consortiumId, ahpProgramme));
     }
 
     protected override async Task<IStateRouting<ConsortiumMemberWorkflowState>> Routing(ConsortiumMemberWorkflowState currentState, object? routeData = null)
