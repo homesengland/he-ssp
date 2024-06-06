@@ -11,6 +11,7 @@ using HE.CRM.AHP.Plugins.Services.GovNotifyEmail;
 using HE.CRM.Common.DtoMapping;
 using HE.CRM.Common.Repositories.Interfaces;
 using Microsoft.Xrm.Sdk;
+using Microsoft.Xrm.Sdk.Query;
 
 namespace HE.CRM.AHP.Plugins.Services.Application
 {
@@ -686,6 +687,18 @@ namespace HE.CRM.AHP.Plugins.Services.Application
                 isSupportedGpuAsPercentageOfAreaAverage = true;
             }
 
+            var deliveryPahses = GetMilesoneClaimDatesForDeliveryPhases(application.Id);
+            var earliestStartMilestoneClaimDate = deliveryPahses.Min(x => x.invln_startonsitemilestoneclaimdate);
+            if (!earliestStartMilestoneClaimDate.HasValue)
+            {
+                earliestStartMilestoneClaimDate = deliveryPahses.Min(x => x.invln_completionmilestoneclaimdate);
+            }
+
+            var latestCompletionMilestoneClaimDate = deliveryPahses.Max(x => x.invln_completionmilestoneclaimdate);
+
+            var sosScore = CalculateScore(earliestStartMilestoneClaimDate);
+            var compScore = CalculateScore(latestCompletionMilestoneClaimDate);
+
             _ahpApplicationRepositoryAdmin.Update(new invln_scheme()
             {
                 Id = application.Id,
@@ -697,7 +710,9 @@ namespace HE.CRM.AHP.Plugins.Services.Application
                 invln_grantasapercentageoftotalschemecosts = grantAsPercentageOfTotalSchemeCosts,
                 invln_worksm2asapercentageofareaavg = worksM2AsPercentageOfAreaAvg.HasValue ? worksM2AsPercentageOfAreaAvg : null,
                 invln_gpuaspercentageofareaaverage = application.invln_Rural == true ? grantPerUnit / grantBenchmarkTable3.invln_benchmarkgpu.Value : (decimal?)null,
-                invln_supportedgpuaspercentageofareaaverage = isSupportedGpuAsPercentageOfAreaAverage ? grantPerUnit / grantBenchmarkTable4.invln_benchmarkgpu.Value : (decimal?)null
+                invln_supportedgpuaspercentageofareaaverage = isSupportedGpuAsPercentageOfAreaAverage ? grantPerUnit / grantBenchmarkTable4.invln_benchmarkgpu.Value : (decimal?)null,
+                invln_SoSScore = sosScore,
+                invln_CompScore = compScore
             });
         }
 
@@ -763,6 +778,62 @@ namespace HE.CRM.AHP.Plugins.Services.Application
             }
 
             throw new Exception($"Unknown tenure value: {ahpApplicationTenure}");
+        }
+
+        private IEnumerable<invln_DeliveryPhase> GetMilesoneClaimDatesForDeliveryPhases(Guid applicationId)
+        {
+            var deliveryPhaseRepository = CrmRepositoriesFactory.GetSystemBase<invln_DeliveryPhase, DataverseContext>();
+
+            var query = new QueryExpression(invln_DeliveryPhase.EntityLogicalName)
+            {
+                TopCount = 100,
+                ColumnSet = new ColumnSet(
+                    invln_DeliveryPhase.Fields.invln_startonsitemilestoneclaimdate,
+                    invln_DeliveryPhase.Fields.invln_completionmilestoneclaimdate),
+                Criteria = new FilterExpression(LogicalOperator.And)
+                {
+                    Conditions =
+                    {
+                        new ConditionExpression
+                        {
+                            AttributeName = invln_DeliveryPhase.Fields.invln_Application,
+                            Operator = ConditionOperator.Equal,
+                            Values = { applicationId }
+                        }
+                    }
+                }
+            };
+
+            return deliveryPhaseRepository.RetrieveAll(query).Entities.Select(e => e.ToEntity<invln_DeliveryPhase>());
+        }
+
+        private decimal? CalculateScore(DateTime? date)
+        {
+            if (date == null)
+            {
+                return null;
+            }
+
+            if (date >= new DateTime(2023, 4, 1) && date <= new DateTime(2023, 12, 31))
+            {
+                return 10m;
+            }
+            else if (date >= new DateTime(2024, 1, 1) && date <= new DateTime(2024, 12, 31))
+            {
+                return 8m;
+            }
+            else if (date >= new DateTime(2025, 1, 1) && date <= new DateTime(2025, 12, 31))
+            {
+                return 6m;
+            }
+            else if (date >= new DateTime(2026, 1, 1) && date <= new DateTime(2026, 3, 31))
+            {
+                return 4m;
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 }
