@@ -8,7 +8,7 @@ namespace HE.Investment.AHP.WWW.Tests.Views.Application;
 
 public class TenureTests : AhpViewTestBase
 {
-    private readonly ApplicationBasicModel _model = new("1", "test name", Tenure.Undefined);
+    private readonly ApplicationBasicModel _model = new("new-project-id", "1", "test name", Tenure.Undefined);
     private readonly string _viewPath = "/Views/Application/Tenure.cshtml";
     private readonly RouteData _routeData = new(new RouteValueDictionary { { "siteId", "123" } });
 

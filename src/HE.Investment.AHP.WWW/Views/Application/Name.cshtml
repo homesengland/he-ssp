@@ -4,6 +4,7 @@
 @model HE.Investment.AHP.WWW.Models.Application.ApplicationBasicModel
 @{
     ViewData["Title"] = ApplicationPageTitles.ApplicationName;
+    var siteId = ViewContext.RouteData.Values["siteId"]?.ToString() ?? string.Empty;
 
     var paragraph = string.Join(
         Environment.NewLine,
@@ -12,8 +13,7 @@
         "You should include the tenure type within your application name. For example, Village Way – Affordable Rent or Village Way – Shared Ownership.");
 }
 <gds-div-grid-column-two-thirds>
-
-    <vc:back-link-with-callback url="@Url.Action("Select", "Site")"/>
+    <vc:back-link-with-callback url="@Url.Action("ConfirmSelect", "Site", new { siteId })"/>
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
     <form asp-controller="Application" asp-action="Name" asp-route-projectId="@Model.ProjectId" asp-method="post" novalidate>
         <vc:text-input
