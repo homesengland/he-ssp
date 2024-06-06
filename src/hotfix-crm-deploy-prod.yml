@@ -4,6 +4,12 @@ pr: none
 pool:
   vmImage: windows-latest
 
+parameters:
+  - name: mainSolutionName
+    displayName: Main Solution name
+    type: string
+    default: 'InvestmentsLoansReleaseFixesv1_2'
+    
 variables:
   solution: "**/*.sln"
   buildPlatform: "Any CPU"
@@ -27,3 +33,4 @@ stages:
       artifactLocationPipeline: BuildPipeline
       deployWithUpgrade: false
       deployMainSolution: true
+      mainSolutionName: "${{ parameters.mainSolutionName }}"
