@@ -8,7 +8,6 @@ parameters:
   - name: mainSolutionName
     displayName: Main Solution name
     type: string
-    default: 'InvestmentsLoansReleaseFixesv1_2'
 
 variables:
   solution: "**/*.sln"
