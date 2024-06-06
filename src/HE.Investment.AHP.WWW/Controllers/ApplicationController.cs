@@ -74,10 +74,10 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
     [AuthorizeWithCompletedProfile(ConsortiumAccessContext.EditApplications)]
     public async Task<IActionResult> Name([FromRoute] string siteId, [FromQuery] string? applicationName, CancellationToken cancellationToken)
     {
-        var site = await _mediator.Send(new GetSiteQuery(siteId), cancellationToken);
+        var site = await GetSiteDetails(siteId, cancellationToken);
         if (site.Status == SiteStatus.Submitted)
         {
-            return View("Name", new ApplicationBasicModel(null, applicationName, Contract.Application.Tenure.Undefined));
+            return View("Name", new ApplicationBasicModel(site.ProjectId, null, applicationName, Contract.Application.Tenure.Undefined));
         }
 
         return RedirectToAction("Start", "Site", new { siteId = site.Id });
@@ -96,15 +96,16 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
             return View(model);
         }
 
-        return await Continue(new { applicationName = model.Name, siteId });
+        return await this.ReturnToProjectOrContinue(
+            async () => await Continue(new { applicationName = model.Name, siteId, projectId = model.ProjectId }), model.ProjectId);
     }
 
     [WorkflowState(ApplicationWorkflowState.ApplicationTenure)]
     [HttpGet("/{siteId}/application/tenure")]
     [AuthorizeWithCompletedProfile(ConsortiumAccessContext.EditApplications)]
-    public IActionResult Tenure([FromQuery] string applicationName)
+    public IActionResult Tenure([FromQuery] string applicationName, [FromQuery] string projectId)
     {
-        return View("Tenure", new ApplicationBasicModel(null, applicationName, Contract.Application.Tenure.Undefined));
+        return View("Tenure", new ApplicationBasicModel(projectId, null, applicationName, Contract.Application.Tenure.Undefined));
     }
 
     [WorkflowState(ApplicationWorkflowState.ApplicationTenure)]
@@ -120,7 +121,8 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
             return View(model);
         }
 
-        return RedirectToAction(nameof(TaskList), new { applicationId = result.ReturnedData.Value });
+        return await this.ReturnToProjectOrContinue(
+            async () => await Task.FromResult(RedirectToAction(nameof(TaskList), new { applicationId = result.ReturnedData.Value })), model.ProjectId);
     }
 
     [WorkflowState(ApplicationWorkflowState.TaskList)]
@@ -331,5 +333,12 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
             application.FundingRequested.DisplayPounds()!,
             application.TotalSchemeCost.DisplayPounds()!,
             application.RepresentationsAndWarranties == true ? "checked" : null);
+    }
+
+    private async Task<SiteModel> GetSiteDetails(string siteId, CancellationToken cancellationToken)
+    {
+        var siteModel = await _mediator.Send(new GetSiteQuery(siteId), cancellationToken);
+        ViewBag.ProjectId = siteModel.ProjectId;
+        return siteModel;
     }
 }

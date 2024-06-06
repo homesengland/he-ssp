@@ -56,4 +56,9 @@ public static class HtmlElementFilters
 
         return [.. elements];
     }
+
+    public static bool ContainsElementWithText(IList<IElement> elements, string text)
+    {
+        return elements.Any(i => i.TextContent.Contains(text));
+    }
 }

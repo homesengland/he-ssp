@@ -18,7 +18,7 @@ namespace HE.Investments.AHP.IntegrationTests.Order03FillApplication;
 
 [Order(305)]
 [SuppressMessage("xUnit", "xUnit1004", Justification = "Waits for DevOps configuration - #76791")]
-public class Order05CompleteDeliveryPhases : AhpIntegrationTest
+public class Order05CompleteDeliveryPhases : AhpApplicationIntegrationTest
 {
     private readonly DeliveryPhasesData _deliveryPhasesData;
 
@@ -114,7 +114,7 @@ public class Order05CompleteDeliveryPhases : AhpIntegrationTest
         var deliveryPhase = RehabDeliveryPhase.GenerateDetails();
 
         // when & then
-        await TestQuestionPage(
+        await TestApplicationQuestionPage(
             BuildDeliveryPhasesPage(DeliveryPhasePagesUrl.Details, RehabDeliveryPhase),
             DeliveryPageTitles.Details,
             BuildDeliveryPhasesPage(DeliveryPhasePagesUrl.RehabBuildActivityType, RehabDeliveryPhase),
@@ -129,7 +129,7 @@ public class Order05CompleteDeliveryPhases : AhpIntegrationTest
         var deliveryPhase = RehabDeliveryPhase.GenerateBuildActivityType();
 
         // when & then
-        await TestQuestionPage(
+        await TestApplicationQuestionPage(
             BuildDeliveryPhasesPage(DeliveryPhasePagesUrl.RehabBuildActivityType, RehabDeliveryPhase),
             DeliveryPageTitles.BuildActivityType,
             BuildDeliveryPhasesPage(DeliveryPhasePagesUrl.ReconfiguringExisting, RehabDeliveryPhase),
@@ -144,7 +144,7 @@ public class Order05CompleteDeliveryPhases : AhpIntegrationTest
         var deliveryPhase = RehabDeliveryPhase.GenerateReconfiguringExisting();
 
         // when & then
-        await TestQuestionPage(
+        await TestApplicationQuestionPage(
             BuildDeliveryPhasesPage(DeliveryPhasePagesUrl.ReconfiguringExisting, RehabDeliveryPhase),
             DeliveryPageTitles.ReconfiguringExisting,
             BuildDeliveryPhasesPage(DeliveryPhasePagesUrl.AddHomes, RehabDeliveryPhase),
@@ -161,7 +161,7 @@ public class Order05CompleteDeliveryPhases : AhpIntegrationTest
         var inputs = deliveryPhase.DeliveryPhaseHomes.Select(x => ($"HomesToDeliver[{x.Id}]", x.NumberOfHomes.ToString(CultureInfo.InvariantCulture))).ToArray();
 
         // when & then
-        await TestQuestionPage(
+        await TestApplicationQuestionPage(
             BuildDeliveryPhasesPage(DeliveryPhasePagesUrl.AddHomes, RehabDeliveryPhase),
             DeliveryPageTitles.AddHomes,
             BuildDeliveryPhasesPage(DeliveryPhasePagesUrl.SummaryOfDelivery, RehabDeliveryPhase),
@@ -198,7 +198,7 @@ public class Order05CompleteDeliveryPhases : AhpIntegrationTest
         var deliveryPhase = RehabDeliveryPhase.GenerateAcquisitionMilestone();
 
         // when & then
-        await TestQuestionPage(
+        await TestApplicationQuestionPage(
             BuildDeliveryPhasesPage(DeliveryPhasePagesUrl.AcquisitionMilestone, RehabDeliveryPhase),
             DeliveryPageTitles.AcquisitionMilestone,
             BuildDeliveryPhasesPage(DeliveryPhasePagesUrl.StartOnSiteMilestone, RehabDeliveryPhase),
@@ -218,7 +218,7 @@ public class Order05CompleteDeliveryPhases : AhpIntegrationTest
         var deliveryPhase = RehabDeliveryPhase.GenerateStartOnSiteMilestone();
 
         // when & then
-        await TestQuestionPage(
+        await TestApplicationQuestionPage(
             BuildDeliveryPhasesPage(DeliveryPhasePagesUrl.StartOnSiteMilestone, RehabDeliveryPhase),
             DeliveryPageTitles.StartOnSiteMilestone,
             BuildDeliveryPhasesPage(DeliveryPhasePagesUrl.PracticalCompletionMilestone, RehabDeliveryPhase),
@@ -238,7 +238,7 @@ public class Order05CompleteDeliveryPhases : AhpIntegrationTest
         var deliveryPhase = RehabDeliveryPhase.GenerateCompletionMilestone();
 
         // when & then
-        await TestQuestionPage(
+        await TestApplicationQuestionPage(
             BuildDeliveryPhasesPage(DeliveryPhasePagesUrl.PracticalCompletionMilestone, RehabDeliveryPhase),
             DeliveryPageTitles.PracticalCompletionMilestone,
             BuildDeliveryPhasesPage(DeliveryPhasePagesUrl.CheckAnswers, RehabDeliveryPhase),

@@ -48,6 +48,17 @@ public static class ControllerExtensions
             async () => await onContinue());
     }
 
+    public static async Task<IActionResult> ReturnToProjectOrContinue(
+        this Controller controller,
+        Func<Task<IActionResult>> onContinue,
+        string projectId)
+    {
+        return await ReturnToListOrContinue(
+            controller,
+            async () => await Task.FromResult(controller.Url.RedirectToProjectDetails(projectId)),
+            async () => await onContinue());
+    }
+
     public static async Task<IActionResult> ReturnToSitesListOrContinue(
         this Controller controller,
         string projectId,

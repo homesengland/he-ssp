@@ -9,7 +9,7 @@ public class NameTests : AhpViewTestBase
 {
     private readonly string _viewPath = "/Views/Application/Name.cshtml";
 
-    private readonly ApplicationBasicModel _model = new(null, null, Tenure.Undefined);
+    private readonly ApplicationBasicModel _model = new("new-project-id", null, null, Tenure.Undefined);
 
     [Fact]
     public async Task ShouldDisplayView()
