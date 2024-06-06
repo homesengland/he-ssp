@@ -83,7 +83,8 @@ namespace HE.CRM.Common.Repositories.Implementations
                 invln_scheme.Fields.invln_noofhomes,
                 invln_scheme.Fields.invln_DevelopingPartner,
                 invln_scheme.Fields.invln_OwneroftheLand,
-                invln_scheme.Fields.invln_OwneroftheHomes
+                invln_scheme.Fields.invln_OwneroftheHomes,
+                invln_scheme.Fields.invln_Site
                 );
 
             var query_invln_sites = query.AddLink(

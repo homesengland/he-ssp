@@ -263,7 +263,7 @@ namespace HE.CRM.AHP.Plugins.Services.AhpProject
             }
             TracingService.Trace("Core records downloaded");
 
-            ahpProjects = ahpProjects.OrderBy(x => x.CreatedOn).ToList();
+            ahpProjects = ahpProjects.OrderByDescending(x => x.CreatedOn).ToList();
             TracingService.Trace($"Core records OrderBy.");
 
             foreach (var project in ahpProjects)
