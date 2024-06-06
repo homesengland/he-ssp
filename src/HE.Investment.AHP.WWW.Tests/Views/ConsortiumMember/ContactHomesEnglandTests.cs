@@ -11,6 +11,7 @@ public class ContactHomesEnglandTests : AhpViewTestBase
         ProgrammeId.From(Guid.NewGuid().ToString()),
         "HEP",
         "Homes England Programme",
+        true,
         ProgrammeType.Ahp,
         new DateRange(DateOnly.MinValue, DateOnly.MaxValue),
         new DateRange(DateOnly.MinValue, DateOnly.MaxValue),
@@ -34,6 +35,6 @@ public class ContactHomesEnglandTests : AhpViewTestBase
             .HasElementWithText("a", "View the details of your consortium.")
             .HasParagraph("Only a lead partner of a consortium can apply. Speak to the lead partner of your consortium about including your proposal as part of your consortium's programme.")
             .HasParagraph("If you do not wish to apply for an affordable housing grant, please contact Homes England.")
-            .HasDefaultButton("Return to your account");
+            .HasLinkButton("Return to your account");
     }
 }

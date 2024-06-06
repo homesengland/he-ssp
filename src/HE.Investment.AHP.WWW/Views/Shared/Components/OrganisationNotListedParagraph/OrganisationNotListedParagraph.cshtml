@@ -1,0 +1,12 @@
+@model (string SearchOrganisationUrl, string EnterDetailsUrl)
+
+<gds-p>
+    The organisation is not listed above, you can
+    <gds-link href="@Model.SearchOrganisationUrl">
+        search again for your organisation
+    </gds-link>
+    or
+    <gds-link href="@Model.EnterDetailsUrl">
+        enter the details manually.
+    </gds-link>
+</gds-p>

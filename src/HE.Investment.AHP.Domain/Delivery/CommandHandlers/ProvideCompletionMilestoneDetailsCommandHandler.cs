@@ -21,12 +21,9 @@ public class ProvideCompletionMilestoneDetailsCommandHandler : UpdateDeliveryPha
     {
         var operationResult = OperationResult.New();
 
-        var completionDate = operationResult.Aggregate(() =>
-            CompletionDate.FromDateDetails(true, request.CompletionDate));
-        var milestonePaymentDate = operationResult.Aggregate(() =>
-            MilestonePaymentDate.FromDateDetails(true, request.PaymentDate));
-        var milestone = operationResult.AggregateNullable(() =>
-            CompletionMilestoneDetails.Create(completionDate, milestonePaymentDate));
+        var completionDate = operationResult.Aggregate(() => CompletionDate.FromDateDetails(request.CompletionDate));
+        var milestonePaymentDate = operationResult.Aggregate(() => MilestonePaymentDate.FromDateDetails(request.PaymentDate));
+        var milestone = operationResult.AggregateNullable(() => CompletionMilestoneDetails.Create(completionDate, milestonePaymentDate));
 
         operationResult.CheckErrors();
 

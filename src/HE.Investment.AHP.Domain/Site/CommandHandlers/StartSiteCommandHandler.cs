@@ -3,7 +3,7 @@ using HE.Investment.AHP.Domain.Site.Entities;
 using HE.Investment.AHP.Domain.Site.Repositories;
 using HE.Investment.AHP.Domain.UserContext;
 using HE.Investments.Account.Shared;
-using HE.Investments.AHP.Consortium.Shared.UserContext;
+using HE.Investments.Consortium.Shared.UserContext;
 
 namespace HE.Investment.AHP.Domain.Site.CommandHandlers;
 

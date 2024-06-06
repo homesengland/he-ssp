@@ -1,3 +1,4 @@
+using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.Scheme;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Extensions;
@@ -27,12 +28,13 @@ public class SchemeWorkflow : IStateRouting<SchemeWorkflowState>
 
     public Task<bool> StateCanBeAccessed(SchemeWorkflowState nextState)
     {
-        if (nextState == SchemeWorkflowState.PartnerDetails && !_scheme.IsConsortiumMember)
+        return nextState switch
         {
-            return Task.FromResult(false);
-        }
-
-        return Task.FromResult(true);
+            SchemeWorkflowState.PartnerDetails => Task.FromResult(_scheme.IsConsortiumMember),
+            SchemeWorkflowState.Affordability => Task.FromResult(IsSharedOwnershipTenure()),
+            SchemeWorkflowState.SalesRisk => Task.FromResult(IsSharedOwnershipTenure()),
+            _ => Task.FromResult(true),
+        };
     }
 
     public SchemeWorkflowState CurrentState(SchemeWorkflowState targetState)
@@ -53,8 +55,8 @@ public class SchemeWorkflow : IStateRouting<SchemeWorkflowState>
             { HousesToDeliver: var x } when x.IsNotProvided() => SchemeWorkflowState.Funding,
             { IsConsortiumMember: true, ArePartnersConfirmed: var arePartnersConfirmed } when arePartnersConfirmed != true =>
                 SchemeWorkflowState.PartnerDetails,
-            { AffordabilityEvidence: var x } when x.IsNotProvided() => SchemeWorkflowState.Affordability,
-            { SalesRisk: var x } when x.IsNotProvided() => SchemeWorkflowState.SalesRisk,
+            { AffordabilityEvidence: var x } when x.IsNotProvided() && IsSharedOwnershipTenure() => SchemeWorkflowState.Affordability,
+            { SalesRisk: var x } when x.IsNotProvided() && IsSharedOwnershipTenure() => SchemeWorkflowState.SalesRisk,
             { MeetingLocalPriorities: var x } when x.IsNotProvided() => SchemeWorkflowState.HousingNeeds,
             { MeetingLocalHousingNeed: var x } when x.IsNotProvided() => SchemeWorkflowState.HousingNeeds,
             { StakeholderDiscussionsReport: var x } when x.IsNotProvided() => SchemeWorkflowState.StakeholderDiscussions,
@@ -68,12 +70,14 @@ public class SchemeWorkflow : IStateRouting<SchemeWorkflowState>
             .Permit(Trigger.Continue, SchemeWorkflowState.Funding);
 
         _machine.Configure(SchemeWorkflowState.Funding)
-            .PermitIf(Trigger.Continue, SchemeWorkflowState.Affordability, () => !_scheme.IsConsortiumMember)
+            .PermitIf(Trigger.Continue, SchemeWorkflowState.Affordability, () => !_scheme.IsConsortiumMember && IsSharedOwnershipTenure())
+            .PermitIf(Trigger.Continue, SchemeWorkflowState.HousingNeeds, () => !_scheme.IsConsortiumMember && !IsSharedOwnershipTenure())
             .PermitIf(Trigger.Continue, SchemeWorkflowState.PartnerDetails, () => _scheme.IsConsortiumMember)
             .Permit(Trigger.Back, SchemeWorkflowState.Start);
 
         _machine.Configure(SchemeWorkflowState.PartnerDetails)
-            .Permit(Trigger.Continue, SchemeWorkflowState.Affordability)
+            .PermitIf(Trigger.Continue, SchemeWorkflowState.Affordability, IsSharedOwnershipTenure)
+            .PermitIf(Trigger.Continue, SchemeWorkflowState.HousingNeeds, () => !IsSharedOwnershipTenure())
             .Permit(Trigger.Back, SchemeWorkflowState.Funding);
 
         _machine.Configure(SchemeWorkflowState.Affordability)
@@ -87,7 +91,9 @@ public class SchemeWorkflow : IStateRouting<SchemeWorkflowState>
 
         _machine.Configure(SchemeWorkflowState.HousingNeeds)
             .Permit(Trigger.Continue, SchemeWorkflowState.StakeholderDiscussions)
-            .Permit(Trigger.Back, SchemeWorkflowState.SalesRisk);
+            .PermitIf(Trigger.Back, SchemeWorkflowState.SalesRisk, IsSharedOwnershipTenure)
+            .PermitIf(Trigger.Back, SchemeWorkflowState.PartnerDetails, () => _scheme.IsConsortiumMember && !IsSharedOwnershipTenure())
+            .PermitIf(Trigger.Back, SchemeWorkflowState.Funding, () => !_scheme.IsConsortiumMember && !IsSharedOwnershipTenure());
 
         _machine.Configure(SchemeWorkflowState.StakeholderDiscussions)
             .Permit(Trigger.Continue, SchemeWorkflowState.CheckAnswers)
@@ -95,5 +101,11 @@ public class SchemeWorkflow : IStateRouting<SchemeWorkflowState>
 
         _machine.Configure(SchemeWorkflowState.CheckAnswers)
             .Permit(Trigger.Back, SchemeWorkflowState.StakeholderDiscussions);
+    }
+
+    private bool IsSharedOwnershipTenure()
+    {
+        var tenure = _scheme.Application.Tenure;
+        return tenure is Tenure.SharedOwnership or Tenure.OlderPersonsSharedOwnership;
     }
 }

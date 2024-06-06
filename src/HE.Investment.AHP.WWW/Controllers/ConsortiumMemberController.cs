@@ -1,23 +1,22 @@
-using HE.Investment.AHP.Domain.UserContext;
+using HE.Investment.AHP.WWW.Models.Common;
 using HE.Investment.AHP.WWW.Models.Consortium;
 using HE.Investment.AHP.WWW.Models.ConsortiumMember;
-using HE.Investment.AHP.WWW.Views.Shared.Components.OrganisationDetailsComponent;
 using HE.Investment.AHP.WWW.Workflows;
 using HE.Investments.Account.Shared.Authorization.Attributes;
 using HE.Investments.AHP.Consortium.Contract;
 using HE.Investments.AHP.Consortium.Contract.Commands;
 using HE.Investments.AHP.Consortium.Contract.Enums;
 using HE.Investments.AHP.Consortium.Contract.Queries;
-using HE.Investments.AHP.Consortium.Shared.UserContext;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Contract.Pagination;
 using HE.Investments.Common.Extensions;
-using HE.Investments.Common.WWW.Components;
 using HE.Investments.Common.WWW.Controllers;
 using HE.Investments.Common.WWW.Extensions;
-using HE.Investments.Common.WWW.Models;
 using HE.Investments.Common.WWW.Routing;
+using HE.Investments.Consortium.Shared.UserContext;
+using HE.Investments.Organisation.Contract;
+using HE.Investments.Organisation.Contract.Queries;
 using HE.Investments.Organisation.ValueObjects;
 using HE.Investments.Programme.Contract.Enums;
 using HE.Investments.Programme.Contract.Queries;
@@ -95,9 +94,9 @@ public class ConsortiumMemberController : WorkflowController<ConsortiumMemberWor
     {
         return await this.ExecuteCommand<SearchOrganisationResultModel>(
             _mediator,
-            new AddOrganisationToConsortiumCommand(ConsortiumId.From(consortiumId), model.SelectedMember.IsProvided() ? new OrganisationIdentifier(model.SelectedMember!) : null),
+            new AddOrganisationToConsortiumCommand(ConsortiumId.From(consortiumId), model.SelectedMember.IsProvided() ? new OrganisationIdentifier(model.SelectedMember) : null),
             async () => await Continue(new { consortiumId }),
-            async () => await SearchOrganisation(consortiumId, model.Phrase, model.Page.CurrentPage, model.SelectedMember, cancellationToken),
+            async () => await SearchOrganisation(consortiumId, model.Phrase, model.Result.CurrentPage, model.SelectedMember, cancellationToken),
             cancellationToken);
     }
 
@@ -228,24 +227,6 @@ public class ConsortiumMemberController : WorkflowController<ConsortiumMemberWor
             return RedirectToAction("SearchNoResults", "ConsortiumMember", new { consortiumId });
         }
 
-        var model = new SearchOrganisationResultModel(
-            consortiumId,
-            phrase ?? string.Empty,
-            $"search-result?phrase={phrase}",
-            new PaginationResult<ExtendedSelectListItem>(
-                result.Page.Items.Select(x => new ExtendedSelectListItem(
-                        x.Name,
-                        x.OrganisationId ?? x.CompanyHouseNumber ?? string.Empty,
-                        false,
-                        itemContent: new DynamicComponentViewModel(
-                            nameof(OrganisationDetailsComponent),
-                            new { street = x.Street, city = x.City, postalCode = x.PostalCode, providerCode = (string?)null })))
-                    .ToList(),
-                result.Page.CurrentPage,
-                result.Page.ItemsPerPage,
-                result.Page.TotalItems),
-            selectedItem);
-
-        return View("SearchResult", model);
+        return View("SearchResult", new SearchOrganisationResultModel(phrase ?? string.Empty, $"search-result?phrase={phrase}", result.Page, selectedItem ?? string.Empty));
     }
 }

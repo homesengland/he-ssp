@@ -10,9 +10,9 @@ using HE.Investment.AHP.Domain.Scheme.ValueObjects;
 using HE.Investment.AHP.Domain.Site.Entities;
 using HE.Investment.AHP.Domain.Site.Repositories;
 using HE.Investment.AHP.Domain.UserContext;
-using HE.Investments.AHP.Consortium.Shared.UserContext;
 using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Contract.Validators;
+using HE.Investments.Consortium.Shared.UserContext;
 using HE.Investments.FrontDoor.Shared.Project;
 using MediatR;
 

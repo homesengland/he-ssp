@@ -41,6 +41,8 @@ public class ProgrammeEntity
 
     public ProgrammeDates CompletionDates { get; }
 
+    public bool IsOpenForApplications(DateOnly today) => ProgrammeDates.IsWithinRange(today);
+
     private static string ParseShortName(string fullName)
     {
         var shortNameBuilder = new StringBuilder();

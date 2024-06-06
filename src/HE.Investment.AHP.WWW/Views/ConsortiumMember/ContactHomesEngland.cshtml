@@ -1,6 +1,8 @@
 @using HE.Investment.AHP.WWW.Views.ConsortiumMember.Const
 @using HE.Investment.AHP.WWW.Models.Consortium
+@using HE.Investments.Common.Gds
 @using HE.Investments.Common.WWW.Components.PageHeader
+@using HE.Investments.Common.WWW.TagHelpers
 @model ConsortiumSelectedProgrammeModel
 
 <gds-div-grid-column-two-thirds>
@@ -30,5 +32,8 @@
         Email: <a href="mailto:enquiries@homesengland.gov.uk">enquiries@homesengland.gov.uk</a>
     </gds-p>
 
-    <gds-button text="Return to your account" href="@Url.Action("Index", "Account")" class="govuk-!-margin-top-6"></gds-button>
+    <link-button button-type="@ButtonType.Standard"
+                 href="@Url.Action("Index", "Account")">
+        Return to your account
+    </link-button>
 </gds-div-grid-column-two-thirds>

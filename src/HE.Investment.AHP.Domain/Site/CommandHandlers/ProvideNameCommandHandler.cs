@@ -4,9 +4,9 @@ using HE.Investment.AHP.Domain.Site.Entities;
 using HE.Investment.AHP.Domain.Site.Repositories;
 using HE.Investment.AHP.Domain.Site.ValueObjects;
 using HE.Investment.AHP.Domain.UserContext;
-using HE.Investments.AHP.Consortium.Shared.UserContext;
 using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Extensions;
+using HE.Investments.Consortium.Shared.UserContext;
 using MediatR;
 
 namespace HE.Investment.AHP.Domain.Site.CommandHandlers;

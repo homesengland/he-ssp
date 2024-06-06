@@ -29,7 +29,7 @@ public class ModernMethodsConstructionCategoriesTests : HomeTypesTestBase
 
         document
             .HasPageHeader("My application - My homes", "Which Modern Methods of Construction (MMC) categories are you using?")
-            .HasElementWithText("span", "Select all that apply.")
+            .HasElementWithText("div", "Select all that apply.")
             .HasCheckboxes("ModernMethodsConstructionCategories", options)
             .HasSaveAndContinueButton();
     }
@@ -63,7 +63,7 @@ public class ModernMethodsConstructionCategoriesTests : HomeTypesTestBase
         document
             .HasElementWithText("span", "My application - My homes")
             .HasElementWithText("h1", "Which Modern Methods of Construction (MMC) categories are you using?")
-            .HasElementWithText("span", "Select all that apply.")
+            .HasElementWithText("div", "Select all that apply.")
             .HasCheckedCheckboxes("ModernMethodsConstructionCategories", checkedValues)
             .HasSaveAndContinueButton();
     }

@@ -9,15 +9,18 @@ public class GetProgrammesQueryHandler : IRequestHandler<GetProgrammesQuery, ILi
 {
     private readonly IProgrammeRepository _repository;
 
-    public GetProgrammesQueryHandler(IProgrammeRepository repository)
+    private readonly IProgrammeMapper _programmeMapper;
+
+    public GetProgrammesQueryHandler(IProgrammeRepository repository, IProgrammeMapper programmeMapper)
     {
         _repository = repository;
+        _programmeMapper = programmeMapper;
     }
 
     public async Task<IList<Contract.Programme>> Handle(GetProgrammesQuery request, CancellationToken cancellationToken)
     {
         var programmes = await _repository.GetProgrammes(request.ProgrammeType, cancellationToken);
 
-        return programmes.Select(ProgrammeMapper.Map).ToList();
+        return programmes.Select(_programmeMapper.Map).ToList();
     }
 }

@@ -49,6 +49,13 @@ public class FrontDoorDataManipulator
         };
 
         var projectId = await _projectCrmContext.Save(projectDto, loginData.UserGlobalId, loginData.OrganisationId, CancellationToken.None);
+        var siteId = await CreateFrontDoorSite(loginData, siteName, projectDto, projectId);
+
+        return (projectId, siteId);
+    }
+
+    private async Task<string> CreateFrontDoorSite(ILoginData loginData, string? siteName, FrontDoorProjectDto projectDto, string projectId)
+    {
         var siteDto = new FrontDoorProjectSiteDto
         {
             SiteName = siteName ?? $"Site for {projectDto.ProjectName}",
@@ -59,6 +66,6 @@ public class FrontDoorDataManipulator
         };
 
         var siteId = await _siteCrmContext.Save(projectId, siteDto, loginData.UserGlobalId, loginData.OrganisationId, CancellationToken.None);
-        return (projectId, siteId);
+        return siteId;
     }
 }

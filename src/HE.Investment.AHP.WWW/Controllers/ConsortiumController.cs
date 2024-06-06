@@ -1,14 +1,13 @@
-using HE.Investment.AHP.Domain.UserContext;
 using HE.Investment.AHP.WWW.Models.Consortium;
 using HE.Investment.AHP.WWW.Workflows;
 using HE.Investments.Account.Shared.Authorization.Attributes;
 using HE.Investments.AHP.Consortium.Contract;
 using HE.Investments.AHP.Consortium.Contract.Commands;
 using HE.Investments.AHP.Consortium.Contract.Queries;
-using HE.Investments.AHP.Consortium.Shared.UserContext;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Validators;
 using HE.Investments.Common.WWW.Routing;
+using HE.Investments.Consortium.Shared.UserContext;
 using HE.Investments.Programme.Contract;
 using HE.Investments.Programme.Contract.Enums;
 using HE.Investments.Programme.Contract.Queries;
@@ -52,8 +51,7 @@ public class ConsortiumController : WorkflowController<ConsortiumWorkflowState>
     [AuthorizeWithCompletedProfile(ConsortiumAccessContext.ManageConsortium)]
     public async Task<IActionResult> Programme(CancellationToken cancellationToken)
     {
-        var availableProgrammes = await _mediator.Send(new GetProgrammesQuery(ProgrammeType.Ahp), cancellationToken);
-        return View(new SelectProgramme(string.Empty, availableProgrammes));
+        return View(new SelectProgramme(string.Empty, await GetOpenAhpProgrammes(cancellationToken)));
     }
 
     [HttpPost("programme")]
@@ -67,7 +65,7 @@ public class ConsortiumController : WorkflowController<ConsortiumWorkflowState>
         if (result.HasValidationErrors)
         {
             ModelState.AddValidationErrors(result);
-            return View("Programme", model with { AvailableProgrammes = await _mediator.Send(new GetProgrammesQuery(ProgrammeType.Ahp), cancellationToken) });
+            return View("Programme", model with { AvailableProgrammes = await GetOpenAhpProgrammes(cancellationToken) });
         }
 
         return RedirectToAction("SearchOrganisation", "ConsortiumMember", new { consortiumId = result.ReturnedData.Value });
@@ -76,5 +74,12 @@ public class ConsortiumController : WorkflowController<ConsortiumWorkflowState>
     protected override async Task<IStateRouting<ConsortiumWorkflowState>> Routing(ConsortiumWorkflowState currentState, object? routeData = null)
     {
         return await Task.FromResult<IStateRouting<ConsortiumWorkflowState>>(new ConsortiumWorkflow(currentState));
+    }
+
+    private async Task<IList<Programme>> GetOpenAhpProgrammes(CancellationToken cancellationToken)
+    {
+        var programmes = await _mediator.Send(new GetProgrammesQuery(ProgrammeType.Ahp), cancellationToken);
+
+        return programmes.Where(x => x.IsOpenForApplications).ToList();
     }
 }

@@ -1,0 +1,34 @@
+@using HE.Investment.AHP.Contract.SitePartners
+@using HE.Investment.AHP.WWW.Extensions
+@using HE.Investment.AHP.WWW.Views.Shared
+@using HE.Investment.AHP.WWW.Views.Shared.Components.AhpWorkflowBackButton
+@using HE.Investment.AHP.WWW.Views.Shared.Components.OrganisationNotListedParagraph
+@using HE.Investment.AHP.WWW.Views.Shared.Components.ReturnToSitesLink
+@using HE.Investments.Common.WWW.Components.PageHeader
+@using SelectList = Microsoft.AspNetCore.Mvc.Rendering.SelectList
+@model HE.Investment.AHP.WWW.Models.Common.SearchOrganisationResultModel;
+@{
+    ViewData["Title"] = SharedPageTitles.OwnerOfTheHomes;
+    var workflow = Context.Request.Query["workflow"];
+    var siteId = this.GetSiteIdFromRoute();
+    var organisationNotListedParagraph = new DynamicComponentViewModel(
+        nameof(OrganisationNotListedParagraph),
+        new
+        {
+            searchOrganisationUrl = Url.Action("UnregisteredBodySearch", "SitePartners", new { siteId, workflow }),
+            enterDetailsUrl = Url.Action("UnregisteredBodyCreateManual", "SitePartners", new { siteId, workflow })
+        });
+}
+
+<gds-div-grid-column-two-thirds>
+    <vc:ahp-workflow-back-button current-page="@SitePartnersWorkflowState.UnregisteredBodySearchResult"/>
+    <vc:page-header title="@SharedPageTitles.OwnerOfTheHomes" caption="@ViewBag.SiteName"/>
+    <gds-p>This is the partner who will own the homes after completion.</gds-p>
+
+    <vc:select-list
+        items="@Model.ToSelectListItemViewModel(x => Url.Action("UnregisteredBodyConfirm", "SitePartners", new { siteId, organisationIdentifier = x, workflow }))"
+        paging-navigation-url="@Model.NavigationUrl"
+        additional-content="@organisationNotListedParagraph"/>
+
+    <vc:return-to-sites-link is-link-inside-form="false" is-editable="false" project-id="@ViewBag.ProjectId"/>
+</gds-div-grid-column-two-thirds>

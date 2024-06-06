@@ -14,6 +14,11 @@ public class ProgrammeDates : ValueObject
 
     public DateOnly End { get; }
 
+    public bool IsWithinRange(DateOnly date)
+    {
+        return date >= Start && date <= End;
+    }
+
     protected override IEnumerable<object?> GetAtomicValues()
     {
         yield return Start;

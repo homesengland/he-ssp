@@ -24,6 +24,9 @@ using HE.Investments.Common.WWW.Extensions;
 using HE.Investments.Common.WWW.Helpers;
 using HE.Investments.Common.WWW.Models;
 using HE.Investments.Common.WWW.Routing;
+using HE.Investments.Organisation.Contract;
+using HE.Investments.Organisation.Contract.Queries;
+using HE.Investments.Organisation.ValueObjects;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using UploadedFile = HE.Investment.AHP.Contract.Common.UploadedFile;
@@ -468,7 +471,7 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
         CancellationToken cancellationToken)
     {
         var scheme = await GetScheme(applicationId, cancellationToken);
-        var organisationDetails = await _mediator.Send(new GetOrganisationDetailsQuery(OrganisationId.From(organisationId)), cancellationToken);
+        var organisationDetails = await _mediator.Send(new GetOrganisationDetailsQuery(new OrganisationIdentifier(organisationId)), cancellationToken);
         var currentlySelectedPartner = getSelectedPartnerId(scheme);
 
         return (organisationDetails, organisationDetails.OrganisationId == currentlySelectedPartner ? true : null);

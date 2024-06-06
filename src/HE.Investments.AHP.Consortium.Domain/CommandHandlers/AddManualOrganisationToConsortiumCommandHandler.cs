@@ -4,40 +4,41 @@ using HE.Investments.AHP.Consortium.Contract.Commands;
 using HE.Investments.AHP.Consortium.Domain.Entities;
 using HE.Investments.AHP.Consortium.Domain.Repositories;
 using HE.Investments.Common.Contract;
-using HE.Investments.Common.Contract.Validators;
-using HE.Investments.Organisation.Services;
+using HE.Investments.Organisation.Contract.Commands;
 using HE.Investments.Programme.Contract;
+using MediatR;
 
 namespace HE.Investments.AHP.Consortium.Domain.CommandHandlers;
 
 public class AddManualOrganisationToConsortiumCommandHandler : DraftConsortiumCommandHandlerBase<AddManualOrganisationToConsortiumCommand>
 {
-    private readonly IInvestmentsOrganisationService _organisationService;
+    private readonly IMediator _mediator;
 
     public AddManualOrganisationToConsortiumCommandHandler(
         IConsortiumRepository repository,
         IDraftConsortiumRepository draftConsortiumRepository,
-        IInvestmentsOrganisationService organisationService,
+        IMediator mediator,
         IAccountUserContext accountUserContext)
         : base(repository, draftConsortiumRepository, accountUserContext)
     {
-        _organisationService = organisationService;
+        _mediator = mediator;
     }
 
-    protected override Task Perform(IConsortiumEntity consortium, AddManualOrganisationToConsortiumCommand request, CancellationToken cancellationToken)
+    protected override async Task Perform(IConsortiumEntity consortium, AddManualOrganisationToConsortiumCommand request, CancellationToken cancellationToken)
     {
-        var manualOrganisation = ManualOrganisationEntity.Create(
-            request.Name,
-            request.AddressLine1,
-            request.AddressLine2,
-            request.TownOrCity,
-            request.County,
-            request.Postcode);
-        var organisation = _organisationService.CreateOrganisation(manualOrganisation);
+        var organisationResult = await _mediator.Send(
+            new CreateManualOrganisationCommand(
+                request.Name,
+                request.AddressLine1,
+                request.AddressLine2,
+                request.TownOrCity,
+                request.County,
+                request.Postcode),
+            cancellationToken);
 
-        consortium.AddMember(organisation, new NotPartOfConsortium(), cancellationToken);
+        organisationResult.CheckErrors();
 
-        return Task.FromResult(OperationResult.Success());
+        await consortium.AddMember(organisationResult.ReturnedData, new NotPartOfConsortium(), cancellationToken);
     }
 }
 

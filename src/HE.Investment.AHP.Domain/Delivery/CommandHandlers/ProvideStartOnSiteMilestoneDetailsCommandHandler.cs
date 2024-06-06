@@ -21,12 +21,9 @@ public class ProvideStartOnSiteMilestoneDetailsCommandHandler : UpdateDeliveryPh
     {
         var operationResult = OperationResult.New();
 
-        var startOnSiteDate = operationResult.Aggregate(() =>
-            StartOnSiteDate.FromDateDetails(true, request.StartOnSiteDate));
-        var milestonePaymentDate = operationResult.Aggregate(() =>
-            MilestonePaymentDate.FromDateDetails(true, request.PaymentDate));
-        var milestone = operationResult.AggregateNullable(() =>
-            StartOnSiteMilestoneDetails.Create(startOnSiteDate, milestonePaymentDate));
+        var startOnSiteDate = operationResult.Aggregate(() => StartOnSiteDate.FromDateDetails(request.StartOnSiteDate));
+        var milestonePaymentDate = operationResult.Aggregate(() => MilestonePaymentDate.FromDateDetails(request.PaymentDate));
+        var milestone = operationResult.AggregateNullable(() => StartOnSiteMilestoneDetails.Create(startOnSiteDate, milestonePaymentDate));
 
         operationResult.CheckErrors();
 

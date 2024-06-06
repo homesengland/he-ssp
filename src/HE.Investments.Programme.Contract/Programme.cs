@@ -6,6 +6,7 @@ public record Programme(
     ProgrammeId Id,
     string ShortName,
     string Name,
+    bool IsOpenForApplications,
     ProgrammeType ProgrammeType,
     DateRange ProgrammeDates,
     DateRange FundingDates,
