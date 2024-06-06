@@ -50,4 +50,22 @@
       <field displayname="Import Sequence Number" name="importsequencenumber" type="number" />
     </fields>
   </entity>
+  <entity name="invln_programme" displayname="Programme" etc="11114" primaryidfield="invln_programmeid" primarynamefield="invln_programmename" disableplugins="false">
+    <fields>
+      <field displayname="Bidding End Date" name="invln_programmeenddate" type="datetime" customfield="true" />
+      <field displayname="Bidding Start Date" name="invln_programmestartdate" type="datetime" customfield="true" />
+      <field displayname="Earliest Completion Date Allowed (optional)" name="invln_earliestcompletiondateallowed" type="datetime" customfield="true" />
+      <field displayname="Earliest Start on Site Date Allowed (optional)" name="invln_earlieststartonsitedateallowed" type="datetime" customfield="true" />
+      <field displayname="Funding End Date" name="invln_fundingenddate" type="datetime" customfield="true" />
+      <field displayname="Funding Start Date" name="invln_fundingstartdate" type="datetime" customfield="true" />
+      <field displayname="Import Sequence Number" name="importsequencenumber" type="number" />
+      <field displayname="Latest Completion Date Allowed (optional)" name="invln_latestcompletiondateallowed" type="datetime" customfield="true" />
+      <field displayname="Latest Start on Site Date Allowed (optional)" name="invln_lateststartonsitedateallowed" type="datetime" customfield="true" />
+      <field displayname="Programme" name="invln_programmeid" type="guid" primaryKey="true" />
+      <field displayname="Programme Name" name="invln_programmename" type="string" customfield="true" />
+      <field displayname="Record Created On" name="overriddencreatedon" type="datetime" />
+      <field displayname="Status" name="statecode" type="state" />
+      <field displayname="Status Reason" name="statuscode" type="status" />
+    </fields>
+  </entity>
 </entities>

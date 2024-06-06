@@ -69,11 +69,11 @@ namespace HE.CRM.AHP.Plugins.Services.AhpProject
             if (consortiumId == null || (consortiumId != null && contactWebRole == invln_Permission.Limiteduser))
             {
                 TracingService.Trace("No Consortium or Consortium with Limiteduser");
-                var ahpProject = GetAhpProjectAndCheckPermission(contactWebRole, contact, organisationId, ahpProjectId, heProjectId);
+                var ahpProject = GetAhpProjectAndCheckPermission(contactWebRole, externalContactId, organisationId, ahpProjectId, heProjectId);
 
                 if (ahpProject != null)
                 {
-                    var listOfApps = _ahpApplicationRepository.GetApplicationsForAhpProject(ahpProject.Id, contactWebRole, contact, new Guid(organisationId), false, consortiumId);
+                    var listOfApps = _ahpApplicationRepository.GetApplicationsForAhpProject(ahpProject.Id, contactWebRole, contact, new Guid(organisationId), false, false, consortiumId);
                     var listOfAppsDto = listOfApps.Select(x => AhpApplicationMapper.MapRegularEntityToDto(x)).ToList();
 
                     var listOfSites = _siteRepository.GetSitesForAhpProject(ahpProject.Id, contactWebRole, contact, new Guid(organisationId), consortiumId);
@@ -97,18 +97,28 @@ namespace HE.CRM.AHP.Plugins.Services.AhpProject
                 var ahpProject = GetAhpProjectForConsortium(ahpProjectId, heProjectId, consortiumId);
                 if (ahpProject != null)
                 {
-                    var listOfApps = _ahpApplicationRepository.GetApplicationsForAhpProject(ahpProject.Id, contactWebRole, contact, new Guid(organisationId), isALeadPartner, consortiumId);
-                    TracingService.Trace($"List of Application downloaded.");
+                    var listOfSites = _siteRepository.GetSitesForAhpProject(ahpProject.Id, contactWebRole, contact, new Guid(organisationId), consortiumId);
+                    var isSitePartner = false;
+                    foreach (var site in listOfSites)
+                    {
+                        if (site.invln_developingpartner?.Id == new Guid(organisationId) || site.invln_ownerofthelandduringdevelopment?.Id == new Guid(organisationId) || site.invln_Ownerofthehomesaftercompletion?.Id == new Guid(organisationId))
+                        {
+                            isSitePartner = true;
+                        }
+                    }
+
+                    var listOfApps = _ahpApplicationRepository.GetApplicationsForAhpProject(ahpProject.Id, contactWebRole, contact, new Guid(organisationId), isALeadPartner, isSitePartner, consortiumId);
+                    TracingService.Trace($"List of Application downloaded. no: {listOfApps.Count}");
                     var listOfAppsDto = listOfApps.Select(x => AhpApplicationMapper.MapRegularEntityToDto(x)).ToList();
                     TracingService.Trace($"Records mapped.");
 
-                    var listOfSites = _siteRepository.GetSitesForAhpProject(ahpProject.Id, contactWebRole, contact, new Guid(organisationId), consortiumId);
-                    TracingService.Trace($"List of Sites downloaded.");
+                    TracingService.Trace($"List of Sites downloaded. no: {listOfSites.Count}");
                     var listOfSitesAfterChecked = CheckSitesForsConsortium(listOfSites, new Guid(organisationId), isALeadPartner);
                     var listOfSitesDto = listOfSitesAfterChecked.Select(x => SiteMapper.ToDto(x, GetHeLaForSite(x.invln_HeLocalAuthorityId?.Id.ToString()))).ToList();
                     TracingService.Trace($"Records mapped.");
 
                     result = AhpProjectMapper.MapRegularEntityToDto(ahpProject, listOfSitesDto, listOfAppsDto);
+
                 }
 
                 return result;
@@ -131,7 +141,7 @@ namespace HE.CRM.AHP.Plugins.Services.AhpProject
             if (consortiumId == null || (consortiumId != null && contactWebRole == invln_Permission.Limiteduser))
             {
                 TracingService.Trace("No Consortium or Consortium with Limiteduser");
-                var ahpProjectsDto = GetAhpProjectsAndCheckPermission(contactWebRole, contact, organisationId, consortiumId, paging, externalContactId);
+                var ahpProjectsDto = GetAhpProjectsAndCheckPermission(contactWebRole, contact, externalContactId, organisationId, consortiumId, paging, externalContactId);
 
                 if (ahpProjectsDto != null)
                 {
@@ -201,7 +211,7 @@ namespace HE.CRM.AHP.Plugins.Services.AhpProject
             return contactWebRole;
         }
 
-        private invln_ahpproject GetAhpProjectAndCheckPermission(invln_Permission contactWebRole, Contact contact, string organisationId, string ahpProjectId, string heProjectId)
+        private invln_ahpproject GetAhpProjectAndCheckPermission(invln_Permission contactWebRole, string externalContactId, string organisationId, string ahpProjectId, string heProjectId, string consortiumId = null)
         {
             TracingService.Trace("GetAhpProjectAndCheckPermission");
             invln_ahpproject ahpProject = null;
@@ -222,28 +232,35 @@ namespace HE.CRM.AHP.Plugins.Services.AhpProject
                 return null;
             }
             TracingService.Trace("Core record downloaded");
-            ahpProject = CheckAccessToAhpProject(contactWebRole, ahpProject, contact, organisationId);
+            ahpProject = CheckAccessToAhpProject(contactWebRole, ahpProject, externalContactId, organisationId, consortiumId);
 
             return ahpProject;
         }
 
-        private invln_ahpproject CheckAccessToAhpProject(invln_Permission contactWebRole, invln_ahpproject ahpProject, Contact contact, string organisationId)
+        private invln_ahpproject CheckAccessToAhpProject(invln_Permission contactWebRole, invln_ahpproject ahpProject, string externalContactId, string organisationId, string consortiumId = null)
         {
-            if (contactWebRole == invln_Permission.Limiteduser && ahpProject.invln_ContactId.Id != contact.Id)
+            if (_consortiumService.CheckAccess(ConsortiumService.Operation.Get, ConsortiumService.RecordType.AHPProject,
+                externalContactId, null, null, consortiumId, organisationId, ahpProject.Id.ToString()))
             {
-                TracingService.Trace("The user does not have access to AhpProject");
-                return null;
+                TracingService.Trace("Access to Core record checked");
+                return ahpProject;
             }
-            if (contactWebRole != invln_Permission.Limiteduser && ahpProject.invln_AccountId.Id != new Guid(organisationId))
-            {
-                TracingService.Trace("The user does not have access to AhpProject. Contact does not belong to organization from core cecord");
-                return null;
-            }
-            TracingService.Trace("Access to Core record checked");
-            return ahpProject;
+
+            //if (contactWebRole == invln_Permission.Limiteduser && ahpProject.invln_ContactId.Id != contact.Id)
+            //{
+            //    TracingService.Trace("The user does not have access to AhpProject");
+            //    return null;
+            //}
+            //if (contactWebRole != invln_Permission.Limiteduser && ahpProject.invln_AccountId.Id != new Guid(organisationId))
+            //{
+            //    TracingService.Trace("The user does not have access to AhpProject. Contact does not belong to organization from core cecord");
+            //    return null;
+            //}
+            TracingService.Trace("No Access to Core record");
+            return null;
         }
 
-        private PagedResponseDto<AhpProjectDto> GetAhpProjectsAndCheckPermission(invln_Permission contactWebRole, Contact contact, string organisationId, string consortiumId = null, PagingRequestDto paging = null, string externalId = null)
+        private PagedResponseDto<AhpProjectDto> GetAhpProjectsAndCheckPermission(invln_Permission contactWebRole, Contact contact, string externalContactId, string organisationId, string consortiumId = null, PagingRequestDto paging = null, string externalId = null)
         {
             TracingService.Trace("GetAhpProjectsAndCheckPermission");
             PagedResponseDto<AhpProjectDto> result = new PagedResponseDto<AhpProjectDto>();
@@ -271,7 +288,7 @@ namespace HE.CRM.AHP.Plugins.Services.AhpProject
 
             foreach (var project in ahpProjects)
             {
-                if (CheckAccessToAhpProject(contactWebRole, project, contact, organisationId) == null)
+                if (CheckAccessToAhpProject(contactWebRole, project, externalContactId, organisationId) == null)
                 {
                     TracingService.Trace("AhpProject removed from the list.");
                     ahpProjects.Remove(project);
@@ -411,7 +428,7 @@ namespace HE.CRM.AHP.Plugins.Services.AhpProject
             var fieldsAhpApp = new string[] { invln_scheme.Fields.invln_DevelopingPartner, invln_scheme.Fields.invln_OwneroftheLand, invln_scheme.Fields.invln_OwneroftheHomes };
             foreach (var site in otherSites)
             {
-                var ahpApps = _ahpApplicationRepository.GetByAttribute(invln_scheme.Fields.invln_Site, organisation, fieldsAhpApp);
+                var ahpApps = _ahpApplicationRepository.GetByAttribute(invln_scheme.Fields.invln_Site, site.Id, fieldsAhpApp);
                 foreach (var ahpApp in ahpApps)
                 {
                     if (ahpApp.invln_DevelopingPartner?.Id == organisation || ahpApp.invln_OwneroftheLand?.Id == organisation || ahpApp.invln_OwneroftheHomes?.Id == organisation)
