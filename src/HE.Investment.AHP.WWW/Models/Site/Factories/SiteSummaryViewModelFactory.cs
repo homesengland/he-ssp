@@ -21,7 +21,6 @@ public class SiteSummaryViewModelFactory : ISiteSummaryViewModelFactory
 
     public IEnumerable<SectionSummaryViewModel> CreateSiteSummary(
         SiteModel siteDetails,
-        OrganisationBasicInfo organisation,
         IUrlHelper urlHelper,
         bool isEditable,
         bool useWorkflowRedirection)
@@ -47,7 +46,7 @@ public class SiteSummaryViewModelFactory : ISiteSummaryViewModelFactory
         {
             yield return new SectionSummaryViewModel("Consortium", CreateConsortiumSummary(siteDetails, CreateAction, isEditable));
         }
-        else if (organisation.IsUnregisteredBody)
+        else if (siteDetails.IsUnregisteredBody)
         {
             yield return new SectionSummaryViewModel("URB", CreateUrbSummary(siteDetails, CreateAction, isEditable));
         }
