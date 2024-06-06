@@ -15,7 +15,7 @@
 
     <vc:back-link-with-callback url="@Url.Action("Select", "Site")"/>
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
-    <form asp-controller="Application" asp-action="Name" asp-method="post" novalidate>
+    <form asp-controller="Application" asp-action="Name" asp-route-projectId="@Model.ProjectId" asp-method="post" novalidate>
         <vc:text-input
             title="@ApplicationPageTitles.ApplicationName"
             title-type="InputTitleType.PageHeader"
@@ -25,7 +25,9 @@
             paragraph="@paragraph"/>
 
         <vc:form-button text="Continue"/>
-        <vc:return-to-application-link application-id="@Model.Id"/>
+        <vc:return-to-project-link project-id="@Model.ProjectId"/>
+
+        @Html.HiddenFor(x => x.ProjectId)
     </form>
 
 </gds-div-grid-column-two-thirds>

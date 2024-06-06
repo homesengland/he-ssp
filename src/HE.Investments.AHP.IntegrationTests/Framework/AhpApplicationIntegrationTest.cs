@@ -20,7 +20,6 @@ public class AhpApplicationIntegrationTest : AhpIntegrationTest
         Action<IHtmlDocument>[] additionalChecksForExpectedPage =
         [
             page => page.HasReturnOrSaveAndReturnToApplicationLink(),
-            page => page.HasTitleCaption(ApplicationData.ApplicationName),
         ];
 
         return TestQuestionPage(

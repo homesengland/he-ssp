@@ -76,7 +76,7 @@ public class SiteController : SiteControllerBase<SiteWorkflowState>
     [HttpPost("{siteId}/confirm-select")]
     public async Task<IActionResult> SelectConfirmed(string siteId, bool? isConfirmed, CancellationToken cancellationToken)
     {
-        var site = await _mediator.Send(new GetSiteQuery(siteId), cancellationToken);
+        var site = await GetSiteDetails(siteId, cancellationToken);
         if (isConfirmed.IsNotProvided())
         {
             ModelState.AddValidationErrors(OperationResult.New().AddValidationError("IsConfirmed", "Select whether this is the correct site"));
