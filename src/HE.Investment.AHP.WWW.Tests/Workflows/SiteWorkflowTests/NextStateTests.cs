@@ -383,16 +383,28 @@ public class NextStateTests
         result.Should().Be(expectedNext);
     }
 
-    [Fact]
-    public async Task ShouldReturnSection106CapitalFundingEligibility_WhenBackTriggerExecutedWithSection106AdditionalAffordableHousingSetToFalse()
+    [Theory]
+    [InlineData(false, null, null, null, null, null, SiteWorkflowState.Section106GeneralAgreement)]
+    [InlineData(true, false, null, null, false, null, SiteWorkflowState.Section106CapitalFundingEligibility)]
+    [InlineData(true, true, true, null, false, null, SiteWorkflowState.Section106CapitalFundingEligibility)]
+    [InlineData(true, true, false, true, false, "confirmation", SiteWorkflowState.Section106LocalAuthorityConfirmation)]
+    public async Task ShouldReturnToSpecificSection106Question_WhenBackTriggerExecutedFromLocalAuthoritySearchView(
+        bool generalAgreement,
+        bool? affordableHousing,
+        bool? onlyAffordableHousing,
+        bool? additionalAffordableHousing,
+        bool? capitalFundingEligibility,
+        string? localAuthorityConfirmation,
+        SiteWorkflowState expectedResult)
     {
         // given
         var section106 = new Section106TestDataBuilder()
-           .WithGeneralAgreement(true)
-           .WithAffordableHousing(false)
-           .WithOnlyAffordableHousing(true)
-           .WithAdditionalAffordableHousing(false)
-           .WithCapitalFundingEligibility(false)
+           .WithGeneralAgreement(generalAgreement)
+           .WithAffordableHousing(affordableHousing)
+           .WithOnlyAffordableHousing(onlyAffordableHousing)
+           .WithAdditionalAffordableHousing(additionalAffordableHousing)
+           .WithCapitalFundingEligibility(capitalFundingEligibility)
+           .WithLocalAuthorityConfirmation(localAuthorityConfirmation)
            .Build();
         var workflow = new SiteWorkflow(SiteWorkflowState.LocalAuthoritySearch, SiteModelBuilder.Build(section106));
 
@@ -400,44 +412,7 @@ public class NextStateTests
         var result = await workflow.NextState(Trigger.Back);
 
         // then
-        result.Should().Be(SiteWorkflowState.Section106CapitalFundingEligibility);
-    }
-
-    [Fact]
-    public async Task ShouldReturnSection106GeneralAgreement_WhenBackTriggerExecutedWithSection106GeneralAgreementSetToFalse()
-    {
-        // given
-        var section106 = new Section106TestDataBuilder()
-           .WithGeneralAgreement(false)
-           .WithCapitalFundingEligibility(false)
-           .Build();
-        var workflow = new SiteWorkflow(SiteWorkflowState.LocalAuthoritySearch, SiteModelBuilder.Build(section106));
-
-        // when
-        var result = await workflow.NextState(Trigger.Back);
-
-        // then
-        result.Should().Be(SiteWorkflowState.Section106GeneralAgreement);
-    }
-
-    [Fact]
-    public async Task ShouldReturnSection106LocalAuthorityConfirmation_WhenBackTriggerExecutedWithSection106AdditionalAffordableHousingSetToTrue()
-    {
-        // given
-        var section106 = new Section106TestDataBuilder()
-           .WithGeneralAgreement(true)
-           .WithAffordableHousing(true)
-           .WithOnlyAffordableHousing(false)
-           .WithAdditionalAffordableHousing(true)
-           .WithCapitalFundingEligibility(false)
-           .Build();
-        var workflow = new SiteWorkflow(SiteWorkflowState.LocalAuthoritySearch, SiteModelBuilder.Build(section106));
-
-        // when
-        var result = await workflow.NextState(Trigger.Back);
-
-        // then
-        result.Should().Be(SiteWorkflowState.Section106LocalAuthorityConfirmation);
+        result.Should().Be(expectedResult);
     }
 
     [Fact]
