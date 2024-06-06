@@ -10,22 +10,19 @@ public static class AdminUserInLeadOrganisationOfConsortium
         "2a7ef26a-c320-ef11-840a-000d3a0cff9a",
         "ee269470-c620-ef11-840a-002248c83519");
 
-    public static AhpProject[] Projects => [ProjectAdminLead, ProjectSitePartner];
+    public static AhpProject[] Projects => AllTestsLimitedConsortium.Projects;
 
-    public static AhpProject ProjectAdminLead { get; } = new("52cc09f8-c620-ef11-840a-000d3a0cff9a", "AhpProject-Admin-Lead", [SiteLead]);
+    public static AhpProject ProjectAdminLead => AllTestsLimitedConsortium.ProjectAdminLead;
 
-    public static AhpSite SiteLead => new("de3363fb-c620-ef11-840a-002248c5d15f", "AhpProjectSite-Admin-Lead", [ApplicationLead]);
+    public static AhpSite SiteLead => AllTestsLimitedConsortium.SiteLead;
 
-    public static AhpApplication ApplicationLead => new("AhpApplication-Admin-Lead-01");
+    public static AhpApplication ApplicationLead => AllTestsLimitedConsortium.ApplicationLead;
 
-    public static AhpProject ProjectSitePartner { get; } = new("9af93cb8-c820-ef11-840a-000d3a0cff9a", "AhpProject-Admin-SitePartner", [SitePartner]);
+    public static AhpProject ProjectSitePartner => AllTestsLimitedConsortium.ProjectSitePartner;
 
-    public static AhpSite SitePartner => new(
-        "8b4a5abe-c820-ef11-840a-002248c5d15f",
-        "AhpProjectSite-Admin-SitePartner",
-        [ApplicationPartnerForSitePartner, ApplicationSitePartnerForSitePartner]);
+    public static AhpSite SitePartner => AllTestsLimitedConsortium.SitePartner;
 
-    public static AhpApplication ApplicationSitePartnerForSitePartner => new("AhpApplication-Admin-SitePartner-01");
+    public static AhpApplication ApplicationSitePartnerForSitePartner => AllTestsLimitedConsortium.ApplicationSitePartnerForSitePartner;
 
-    public static AhpApplication ApplicationPartnerForSitePartner => new("AhpApplication-Admin-ApplicationPartner-02");
+    public static AhpApplication ApplicationPartnerForSitePartner => AllTestsLimitedConsortium.ApplicationPartnerForSitePartner;
 }

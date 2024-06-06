@@ -1,3 +1,4 @@
+using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.Scheme.Events;
 using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.Scheme.ValueObjects;
@@ -98,9 +99,14 @@ public class SchemeEntity : DomainEntity
     {
         var operationResult = new OperationResult();
         operationResult.Aggregate(Funding.CheckIsComplete);
-        operationResult.Aggregate(AffordabilityEvidence.CheckIsComplete);
         operationResult.Aggregate(ApplicationPartners.CheckIsComplete);
-        operationResult.Aggregate(SalesRisk.CheckIsComplete);
+
+        if (Application.Tenure is Tenure.SharedOwnership or Tenure.OlderPersonsSharedOwnership)
+        {
+            operationResult.Aggregate(AffordabilityEvidence.CheckIsComplete);
+            operationResult.Aggregate(SalesRisk.CheckIsComplete);
+        }
+
         operationResult.Aggregate(HousingNeeds.CheckIsComplete);
         operationResult.Aggregate(StakeholderDiscussions.CheckIsComplete);
         operationResult.CheckErrors();

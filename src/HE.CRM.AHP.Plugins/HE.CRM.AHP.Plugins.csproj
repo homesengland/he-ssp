@@ -148,8 +148,10 @@
     <Compile Include="Handlers\DeliveryPhase\AcceptOrRejectPaymentProportion.cs" />
     <Compile Include="Handlers\DeliveryPhase\ChangeNumberOfHomes.cs" />
     <Compile Include="Handlers\DeliveryPhase\SendNotificationUrbWantsAdditionalPaymentsForPhaseHandler.cs" />
+    <Compile Include="Handlers\HomesInDeliveryPhases\CalculateNumberOfHouseForDeliveryPhase.cs" />
     <Compile Include="Handlers\HomeType\CalculatePercentageValueOfNDSSStandardHandler.cs" />
     <Compile Include="Handlers\HomeType\CreateDocumentLocationOnCreateHandler.cs" />
+    <Compile Include="Handlers\HomeType\RecalculateDeliveryPhaseAfterNoOfHomeChangeHandler.cs" />
     <Compile Include="Handlers\HomeType\SetHappiPrinciplesValueHandler.cs" />
     <Compile Include="Handlers\HomeType\SetWhichNdssStandardsHaveBeenMetValueHandler.cs" />
     <Compile Include="Handlers\Programme\ProgrammeDuplicateDetectionHandler.cs" />
@@ -261,6 +263,8 @@
     <Compile Include="Plugins\CustomApi\Site\SetSitePlugin.cs" />
     <Compile Include="Plugins\DeliveryPhase\PreUpdateDeliveryPhase.cs" />
     <Compile Include="Plugins\DeliveryPhase\SendNotificationUrbWantsAdditionalPaymentsForPhasePlugin.cs" />
+    <Compile Include="Plugins\HomesInDeliveryPhase\PostCreate.cs" />
+    <Compile Include="Plugins\HomesInDeliveryPhase\PostUpdate.cs" />
     <Compile Include="Plugins\HomeType\CreateDocumentLocationOnCreatePlugin.cs" />
     <Compile Include="Plugins\HomeType\HomeTypePreUpdate.cs" />
     <Compile Include="Plugins\HomeType\SetHappiPrinciplesValuePlugin.cs" />
@@ -294,8 +298,9 @@
     <Compile Include="Services\Site\SiteService.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="ahp-build-export.yml" />
-    <None Include="ahp-deploy.yml" />
+    <None Include="ahp-crm-build-export-pipline.yml" />
+    <None Include="ahp-crm-deploy-nonprod-pipeline.yml" />
+    <None Include="ahp-crm-deploy-prod-pipeline.yml" />
     <None Include="app.config" />
     <None Include="bin\coretools\CrmSvcUtil.exe.config" />
     <None Include="bin\coretools\LicenseTerms.docx" />

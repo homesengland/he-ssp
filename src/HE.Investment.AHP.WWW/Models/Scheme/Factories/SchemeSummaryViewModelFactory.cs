@@ -73,16 +73,20 @@ public class SchemeSummaryViewModelFactory : ISchemeSummaryViewModelFactory
                 ActionUrl: CreateSchemeActionUrl(urlHelper, scheme.Application.Id, nameof(SchemeController.PartnerDetails)));
         }
 
-        yield return new(
-            "Affordability of Shared Ownership",
-            scheme.AffordabilityEvidence.ToOneElementList(),
-            IsEditable: scheme.Application.IsEditable,
-            ActionUrl: CreateSchemeActionUrl(urlHelper, scheme.Application.Id, nameof(SchemeController.Affordability)));
-        yield return new(
-            "Sales risk of Shared Ownership",
-            scheme.SalesRisk.ToOneElementList(),
-            IsEditable: scheme.Application.IsEditable,
-            ActionUrl: CreateSchemeActionUrl(urlHelper, scheme.Application.Id, nameof(SchemeController.SalesRisk)));
+        if (scheme.Application.Tenure is Tenure.SharedOwnership or Tenure.OlderPersonsSharedOwnership)
+        {
+            yield return new(
+                "Affordability of Shared Ownership",
+                scheme.AffordabilityEvidence.ToOneElementList(),
+                IsEditable: scheme.Application.IsEditable,
+                ActionUrl: CreateSchemeActionUrl(urlHelper, scheme.Application.Id, nameof(SchemeController.Affordability)));
+            yield return new(
+                "Sales risk of Shared Ownership",
+                scheme.SalesRisk.ToOneElementList(),
+                IsEditable: scheme.Application.IsEditable,
+                ActionUrl: CreateSchemeActionUrl(urlHelper, scheme.Application.Id, nameof(SchemeController.SalesRisk)));
+        }
+
         yield return new(
             "Type and tenure of homes",
             scheme.MeetingLocalPriorities.ToOneElementList(),

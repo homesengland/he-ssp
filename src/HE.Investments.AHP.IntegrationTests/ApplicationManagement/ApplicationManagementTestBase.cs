@@ -55,6 +55,7 @@ public class ApplicationManagementTestBase : AhpIntegrationTest
 
     protected async Task TestGetSiteApplicationsEndpoint(UserData userData, AhpSite expectedAhpSiteApplications)
     {
+        // given
         var (_, userGlobalId, organisationId, consortiumId) = userData;
 
         // when
