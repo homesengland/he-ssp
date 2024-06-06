@@ -1,4 +1,5 @@
 using System.Globalization;
+using HE.Investment.AHP.Contract.AhpProgramme;
 using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.Application.Commands;
 using HE.Investment.AHP.Contract.Application.Queries;
@@ -56,9 +57,8 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
     [AuthorizeWithCompletedProfile(ConsortiumAccessContext.EditApplications)]
     public async Task<IActionResult> Start([FromQuery] string projectId, CancellationToken cancellationToken)
     {
-        var availableProgrammes = await _mediator.Send(new GetProgrammesQuery(ProgrammeType.Ahp), cancellationToken);
-
-        return View("Splash", new ProjectBasicModel(projectId, availableProgrammes[0]));
+        var ahpProgramme = await _mediator.Send(new GetTheAhpProgrammeQuery(), cancellationToken);
+        return View("Splash", new ProjectBasicModel(projectId, ahpProgramme));
     }
 
     [HttpPost("start")]
