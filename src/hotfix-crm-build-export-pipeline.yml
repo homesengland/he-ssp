@@ -4,6 +4,12 @@ pr: none
 pool:
   vmImage: windows-latest
 
+parameters:
+  - name: mainSolutionName
+    displayName: Main Solution name
+    type: string
+    default: 'InvestmentsLoansReleaseFixesv1_2'
+
 variables:
   solution: "**/*.sln"
   buildPlatform: "Any CPU"
@@ -21,3 +27,4 @@ stages:
   - template: crm-deployment-pipelines/hotfix-crm-build-export.yml@he-invst-deployment
     parameters:
       exportMainSolution: true
+      mainSolutionName: "${{ parameters.mainSolutionName }}"
