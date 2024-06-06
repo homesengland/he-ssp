@@ -9,7 +9,7 @@ parameters:
     displayName: Main Solution name
     type: string
     default: 'InvestmentsLoansReleaseFixesv1_2'
-    
+
 variables:
   solution: "**/*.sln"
   buildPlatform: "Any CPU"
@@ -21,7 +21,7 @@ resources:
     - repository: he-invst-deployment
       type: git
       name: "Investments Programme/he-invst-deployment"
-      ref: "main"
+      ref: "hotfix_managed_unamanged_paths"
   pipelines:
     - pipeline: BuildPipeline
       source: "Hotfix - CRM - Build"
