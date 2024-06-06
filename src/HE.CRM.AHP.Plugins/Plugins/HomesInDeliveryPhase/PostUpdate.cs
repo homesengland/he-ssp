@@ -9,7 +9,7 @@ namespace HE.CRM.AHP.Plugins.Plugins.HomesInDeliveryPhase
 {
     [CrmPluginRegistration(
         MessageNameEnum.Update,
-        invln_HomeType.EntityLogicalName,
+        invln_homesindeliveryphase.EntityLogicalName,
         StageEnum.PostOperation,
         ExecutionModeEnum.Synchronous,
         invln_homesindeliveryphase.Fields.invln_numberofhomes,
@@ -20,8 +20,7 @@ namespace HE.CRM.AHP.Plugins.Plugins.HomesInDeliveryPhase
         Image1Name = "PreImage",
         Image1Attributes = invln_homesindeliveryphase.Fields.invln_numberofhomes + "," +
         invln_homesindeliveryphase.Fields.invln_homesindeliveryphaseId + "," +
-        invln_homesindeliveryphase.Fields.invln_deliveryphaselookup
-        ,
+        invln_homesindeliveryphase.Fields.invln_deliveryphaselookup,
         Image1Type = ImageTypeEnum.PreImage
     )]
     public class PostUpdate : PluginBase<DataverseContext>, IPlugin
