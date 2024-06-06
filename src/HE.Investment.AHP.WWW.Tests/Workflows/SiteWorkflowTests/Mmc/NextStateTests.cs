@@ -1,6 +1,8 @@
 using FluentAssertions;
 using HE.Investment.AHP.Contract.HomeTypes.Enums;
 using HE.Investment.AHP.Contract.Site;
+using HE.Investment.AHP.WWW.Tests.TestDataBuilders;
+using HE.Investment.AHP.WWW.Workflows;
 using HE.Investments.Common.WWW.Routing;
 
 namespace HE.Investment.AHP.WWW.Tests.Workflows.SiteWorkflowTests.Mmc;
@@ -177,7 +179,7 @@ public class NextStateTests
         SiteModernMethodsOfConstruction? modernMethodsOfConstruction = null)
     {
         // given
-        var workflow = SiteWorkflowFactory.BuildWorkflow(currentState, modernMethodsOfConstruction: modernMethodsOfConstruction);
+        var workflow = new SiteWorkflow(currentState, SiteModelBuilder.Build(modernMethodsOfConstruction: modernMethodsOfConstruction));
 
         // when
         var result = await workflow.NextState(Trigger.Back);
@@ -192,9 +194,7 @@ public class NextStateTests
         SiteModernMethodsOfConstruction? modernMethodsOfConstruction = null)
     {
         // given
-        var workflow = SiteWorkflowFactory.BuildWorkflow(
-            currentState,
-            modernMethodsOfConstruction: modernMethodsOfConstruction);
+        var workflow = new SiteWorkflow(currentState, SiteModelBuilder.Build(modernMethodsOfConstruction: modernMethodsOfConstruction));
 
         // when
         var result = await workflow.NextState(Trigger.Continue);
