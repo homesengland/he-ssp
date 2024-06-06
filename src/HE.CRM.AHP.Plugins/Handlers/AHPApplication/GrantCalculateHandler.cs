@@ -44,7 +44,8 @@ namespace HE.CRM.AHP.Plugins.Handlers.AHPApplication
                             ValueChanged(invln_scheme.Fields.invln_expectedoncosts) ||
                             ValueChanged(invln_scheme.Fields.invln_expectedonworks) ||
                             ValueChanged(invln_scheme.Fields.invln_Site) ||
-                            ValueChanged(invln_scheme.Fields.invln_Tenure)
+                            ValueChanged(invln_scheme.Fields.invln_Tenure) ||
+                            ValueChanged(invln_scheme.Fields.invln_Rural)
                         )
                 );
         }
