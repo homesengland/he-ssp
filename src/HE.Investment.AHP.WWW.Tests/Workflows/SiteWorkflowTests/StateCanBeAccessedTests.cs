@@ -2,6 +2,8 @@ using FluentAssertions;
 using HE.Investment.AHP.Contract.HomeTypes.Enums;
 using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Contract.Site.Enums;
+using HE.Investment.AHP.WWW.Tests.TestDataBuilders;
+using HE.Investment.AHP.WWW.Workflows;
 using HE.Investments.Common.Contract.Enum;
 
 namespace HE.Investment.AHP.WWW.Tests.Workflows.SiteWorkflowTests;
@@ -40,7 +42,7 @@ public class StateCanBeAccessedTests
     public async Task ShouldReturnValue_WhenMethodCalledForDefaults(SiteWorkflowState state, bool expectedResult)
     {
         // given
-        var workflow = SiteWorkflowFactory.BuildWorkflow(SiteWorkflowState.Start);
+        var workflow = new SiteWorkflow(SiteWorkflowState.Start, SiteModelBuilder.Build());
 
         // when
         var result = await workflow.StateCanBeAccessed(state);
@@ -54,7 +56,7 @@ public class StateCanBeAccessedTests
     {
         // given
         var planningDetails = new SitePlanningDetails(SitePlanningStatus.DetailedPlanningApplicationSubmitted, IsLandRegistryTitleNumberRegistered: true);
-        var workflow = SiteWorkflowFactory.BuildWorkflow(SiteWorkflowState.Start, planningDetails: planningDetails);
+        var workflow = new SiteWorkflow(SiteWorkflowState.Start, SiteModelBuilder.Build(planningDetails: planningDetails));
 
         // when
         var result = await workflow.StateCanBeAccessed(SiteWorkflowState.LandRegistry);
@@ -70,7 +72,7 @@ public class StateCanBeAccessedTests
     {
         // given
         var details = new SiteTenderingStatusDetails(status, null, null, null);
-        var workflow = SiteWorkflowFactory.BuildWorkflow(SiteWorkflowState.Start, tenderingStatusDetails: details);
+        var workflow = new SiteWorkflow(SiteWorkflowState.Start, SiteModelBuilder.Build(tenderingStatusDetails: details));
 
         // when
         var result = await workflow.StateCanBeAccessed(SiteWorkflowState.ContractorDetails);
@@ -86,7 +88,7 @@ public class StateCanBeAccessedTests
     {
         // given
         var details = new SiteTenderingStatusDetails(status, null, null, null);
-        var workflow = SiteWorkflowFactory.BuildWorkflow(SiteWorkflowState.Start, tenderingStatusDetails: details);
+        var workflow = new SiteWorkflow(SiteWorkflowState.Start, SiteModelBuilder.Build(tenderingStatusDetails: details));
 
         // when
         var result = await workflow.StateCanBeAccessed(SiteWorkflowState.IntentionToWorkWithSme);
@@ -99,7 +101,7 @@ public class StateCanBeAccessedTests
     public async Task ShouldReturnTrue_WhenMethodCalledForNumberOfGreenLightsAndBuildingForHealthyLifeIsYes()
     {
         // given
-        var workflow = SiteWorkflowFactory.BuildWorkflow(SiteWorkflowState.Start, buildingForHealthyLife: BuildingForHealthyLifeType.Yes);
+        var workflow = new SiteWorkflow(SiteWorkflowState.Start, SiteModelBuilder.Build(buildingForHealthyLife: BuildingForHealthyLifeType.Yes));
 
         // when
         var result = await workflow.StateCanBeAccessed(SiteWorkflowState.NumberOfGreenLights);
@@ -168,9 +170,7 @@ public class StateCanBeAccessedTests
         bool expectedCanBeAccessed = true)
     {
         // given
-        var workflow = SiteWorkflowFactory.BuildWorkflow(
-            SiteWorkflowState.Start,
-            modernMethodsOfConstruction: modernMethodsOfConstruction);
+        var workflow = new SiteWorkflow(SiteWorkflowState.Start, SiteModelBuilder.Build(modernMethodsOfConstruction: modernMethodsOfConstruction));
 
         // when
         var result = await workflow.StateCanBeAccessed(state);

@@ -45,7 +45,8 @@ public class SitePartnersWorkflow : EncodedStateRouting<SitePartnersWorkflowStat
             .PermitIf(Trigger.Continue, SitePartnersWorkflowState.FlowFinished, () => !IsConsortiumMember() && !IsUnregisteredBody());
 
         Machine.Configure(SitePartnersWorkflowState.DevelopingPartner)
-            .Permit(Trigger.Continue, SitePartnersWorkflowState.DevelopingPartnerConfirm);
+            .Permit(Trigger.Continue, SitePartnersWorkflowState.DevelopingPartnerConfirm)
+            .Permit(Trigger.Back, SitePartnersWorkflowState.FlowStarted);
 
         Machine.Configure(SitePartnersWorkflowState.DevelopingPartnerConfirm)
             .Permit(Trigger.Continue, SitePartnersWorkflowState.OwnerOfTheLand)
@@ -88,7 +89,7 @@ public class SitePartnersWorkflow : EncodedStateRouting<SitePartnersWorkflowStat
 
         Machine.Configure(SitePartnersWorkflowState.FlowFinished)
             .PermitIf(Trigger.Back, SitePartnersWorkflowState.FlowStarted, () => !IsConsortiumMember() && !IsUnregisteredBody())
-            .PermitIf(Trigger.Back, SitePartnersWorkflowState.UnregisteredBodySearch, IsConsortiumMember)
+            .PermitIf(Trigger.Back, SitePartnersWorkflowState.OwnerOfTheHomes, IsConsortiumMember)
             .PermitIf(Trigger.Back, SitePartnersWorkflowState.UnregisteredBodySearch, IsUnregisteredBody);
     }
 
