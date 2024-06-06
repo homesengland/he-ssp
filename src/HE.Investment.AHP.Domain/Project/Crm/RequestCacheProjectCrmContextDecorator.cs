@@ -18,7 +18,7 @@ internal sealed class RequestCacheProjectCrmContextDecorator : IProjectCrmContex
     public async Task<AhpProjectDto> GetProject(string projectId, string userId, string organisationId, string? consortiumId, CancellationToken cancellationToken)
     {
         return (await _cache.GetFromCache(
-            projectId.ToGuidAsString(),
+            $"{projectId.ToGuidAsString()}_{userId}",
             async () => await _decorated.GetProject(projectId, userId, organisationId, consortiumId, cancellationToken)))!;
     }
 
