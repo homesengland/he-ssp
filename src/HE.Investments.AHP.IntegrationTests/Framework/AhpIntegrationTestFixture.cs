@@ -15,6 +15,8 @@ public class AhpIntegrationTestFixture : IntegrationTestFixture<Program>
     {
         services.AddScoped<AhpCrmContext>();
         services.AddFrontDoorManipulator();
+        services.AddScoped<IIntegrationTestPrerequisite, IsOrganisationAdminPrerequisite>();
+        services.AddScoped<IIntegrationTestPrerequisite, IsNotUnregisteredBodyPrerequisite>();
         services.AddScoped<IIntegrationTestPrerequisite, IsConsortiumLeadPartnerPrerequisite>();
     }
 }
