@@ -62,6 +62,8 @@ namespace HE.CRM.AHP.Plugins.Handlers.AHPApplication
         {
             var percentageValueofNDSSStandardMax = hometypes.Max(x => x.invln_PercentageValueofNDSSStandard);
             var percentageValueofNDSSStandardMin = hometypes.Min(x => x.invln_PercentageValueofNDSSStandard);
+            var homeTypeWithMaxValue = hometypes.FirstOrDefault(x => x.invln_PercentageValueofNDSSStandard == percentageValueofNDSSStandardMax);
+            var homeTypeWithMinValue = hometypes.FirstOrDefault(x => x.invln_PercentageValueofNDSSStandard == percentageValueofNDSSStandardMin);
             ExecutionData.Target.invln_Maximumm2asofNDSSoftheHomeTypesonthis = percentageValueofNDSSStandardMax;
             ExecutionData.Target.invln_Minimumm2asofNDSSoftheHomeTypesonthis = percentageValueofNDSSStandardMin;
             if (CurrentState.invln_Tenure.Value == (int)invln_Tenure.Affordablerent ||
