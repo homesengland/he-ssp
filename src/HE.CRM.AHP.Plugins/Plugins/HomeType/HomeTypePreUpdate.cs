@@ -15,7 +15,8 @@ namespace HE.CRM.AHP.Plugins.Plugins.HomeType
             invln_HomeType.Fields.invln_numberofbedrooms + "," +
             invln_HomeType.Fields.invln_maxoccupancy + "," +
             invln_HomeType.Fields.invln_numberofstoreys + "," +
-            invln_HomeType.Fields.invln_whichndssstandardshavebeenmet,
+            invln_HomeType.Fields.invln_whichndssstandardshavebeenmet + "," +
+            invln_HomeType.Fields.invln_numberofhomeshometype,
         "HE.CRM.Plugins.Plugins.HomeType.HomeTypePreUpdate: Update of Home Type",
         1,
         IsolationModeEnum.Sandbox,
@@ -25,7 +26,9 @@ namespace HE.CRM.AHP.Plugins.Plugins.HomeType
                         invln_HomeType.Fields.invln_maxoccupancy + "," +
                         invln_HomeType.Fields.invln_numberofstoreys + "," +
                         invln_HomeType.Fields.invln_whichndssstandardshavebeenmet + "," +
-                        invln_HomeType.Fields.invln_floorarea,
+                        invln_HomeType.Fields.invln_floorarea + "," +
+                        invln_HomeType.Fields.invln_numberofhomeshometype + "," +
+                        invln_HomeType.Fields.invln_application,
         Image1Type = ImageTypeEnum.PreImage
     )]
     public class HomeTypePreUpdate : PluginBase<DataverseContext>, IPlugin
