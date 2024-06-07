@@ -299,6 +299,51 @@ namespace HE.CRM.AHP.Plugins.Services.GovNotifyEmail
             }
         }
 
+        public void SendNotifications_AHP_EXTERNAL_REJECT_ON_DELIVERY_PHASE(EntityReference deliveryPhaseId)
+        {
+            TracingService.Trace("SendNotifications_AHP_EXTERNAL_REJECT_ON_DELIVERY_PHASE");
+            var deliveryPhase = _deliveryPhaseRepositoryAdmin.GetById(deliveryPhaseId.Id, nameof(invln_DeliveryPhase.invln_Application).ToLower());
+
+            TracingService.Trace("*** 111 ");
+
+            var ahpApplicationId = deliveryPhase.invln_Application;
+            TracingService.Trace("*** 222 ");
+            var ahpApplication = _ahpApplicationRepositoryAdmin.GetById(ahpApplicationId.Id, nameof(Contact.OwnerId).ToLower(), nameof(invln_scheme.invln_contactid).ToLower());
+            TracingService.Trace("*** 333 ");
+            var contact = _contactRepositoryAdmin.GetById(ahpApplication.invln_contactid.Id, nameof(Contact.FullName).ToLower(), nameof(Contact.EMailAddress1).ToLower());
+            TracingService.Trace("*** 444 ");
+            var emailTemplate = _notificationSettingRepositoryAdmin.GetTemplateViaTypeName("AHP_EXTERNAL_REJECT_ON_DELIVERY_PHASE");
+            TracingService.Trace("*** 555 ");
+
+            if (contact != null && emailTemplate != null)
+            {
+                var subject = emailTemplate.invln_subject;
+                var govNotParams = new AHP_EXTERNAL_REJECT_ON_DELIVERY_PHASE()
+                {
+                    templateId = emailTemplate?.invln_templateid,
+                    personalisation = new parameters_AHP_EXTERNAL_REJECT_ON_DELIVERY_PHASE()
+                    {
+                        recipientEmail = contact.EMailAddress1,
+                        subject = subject,
+                        name = contact.FullName,
+                    }
+                };
+
+                var options = new JsonSerializerOptions
+                {
+                    Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+                    WriteIndented = true
+                };
+
+                var parameters = JsonSerializer.Serialize(govNotParams, options);
+                this.SendGovNotifyEmail(ahpApplication.OwnerId, ahpApplication.ToEntityReference(), subject, parameters, emailTemplate);
+            }
+            else
+            {
+                TracingService.Trace("Probably there is no email template. Mail not sent.");
+            }
+        }
+
         public void SendNotifications_AHP_INTERNAL_REQUEST_TO_WITHDRAW(invln_AHPStatusChange ahpStatusChange, invln_scheme ahpApplication)
         {
             if (ahpStatusChange.invln_ChangeSource.Value == (int)invln_ChangesourceSet.External)
