@@ -24,6 +24,9 @@
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
 
     <vc:page-header caption="@ViewBag.SiteName" title="@SitePageTitles.CheckAnswers"/>
+    <span class="govuk-header__signin">
+        <vc:site-status-tag site-status="@Model.SiteStatus"/>
+    </span>
 
     @foreach (var summarySection in Model.Sections)
     {
