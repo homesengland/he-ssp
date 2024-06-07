@@ -17,6 +17,7 @@ namespace HE.CRM.AHP.Plugins.Services.HomeType
         private readonly IAhpApplicationRepository _ahpApplicationRepository;
         private readonly IContactRepository _contactRepository;
         private readonly ISharepointDocumentLocationRepository _sharepointDocumentLocationRepository;
+
         public HomeTypeService(CrmServiceArgs args) : base(args)
         {
             _homeTypeRepository = CrmRepositoriesFactory.Get<IHomeTypeRepository>();
@@ -109,9 +110,12 @@ namespace HE.CRM.AHP.Plugins.Services.HomeType
                     {
                         homeTypeToUpdateOrCreate = homeTypeMapped;
                     }
+                    TracingService.Trace("Update Home Type");
                     homeTypeToUpdateOrCreate.Id = homeTypeGuid;
                     _homeTypeRepository.Update(homeTypeToUpdateOrCreate);
+                    TracingService.Trace("Update Application");
                     UpdateApplicationModificationFields(applicationGuid, contact.Id);
+                    TracingService.Trace($"Return{homeTypeToUpdateOrCreate.Id}");
                     return homeTypeToUpdateOrCreate.Id;
                 }
             }
