@@ -31,7 +31,8 @@ public class Order12CheckAnswers : AhpIntegrationTest
         var checkAnswersPage = await GetCurrentPage(SitePagesUrl.SiteCheckAnswers(SiteData.SiteId));
         checkAnswersPage
             .UrlEndWith(SitePagesUrl.SiteCheckAnswers(SiteData.SiteId))
-            .HasTitle(SitePageTitles.CheckAnswers);
+            .HasTitle(SitePageTitles.CheckAnswers)
+            .HasStatusTagByTestId("In progress", "site-status-tag");
 
         // when
         var summary = checkAnswersPage.GetSummaryListItems();
@@ -149,6 +150,7 @@ public class Order12CheckAnswers : AhpIntegrationTest
     public async Task Order06_SiteIsNotEditableAfterCompletion()
     {
         var checkAnswersPage = await GetCurrentPage(SitePagesUrl.SiteCheckAnswers(SiteData.SiteId));
+        checkAnswersPage.HasStatusTagByTestId("Submitted", "site-status-tag");
 
         var summaryItems = checkAnswersPage.GetSummaryListItems();
         foreach (var item in summaryItems)

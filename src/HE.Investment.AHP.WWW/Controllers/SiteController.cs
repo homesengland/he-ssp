@@ -1003,6 +1003,7 @@ public class SiteController : SiteControllerBase<SiteWorkflowState>
 
         return new SiteSummaryViewModel(
             siteId.Value,
+            siteDetails.Status,
             isSectionCompleted ?? (siteDetails.Status == SiteStatus.Submitted ? IsSectionCompleted.Yes : IsSectionCompleted.Undefied),
             sections.ToList(),
             isEditable);
