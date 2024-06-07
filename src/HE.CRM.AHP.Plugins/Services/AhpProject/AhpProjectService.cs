@@ -245,17 +245,6 @@ namespace HE.CRM.AHP.Plugins.Services.AhpProject
                 TracingService.Trace("Access to Core record checked");
                 return ahpProject;
             }
-
-            //if (contactWebRole == invln_Permission.Limiteduser && ahpProject.invln_ContactId.Id != contact.Id)
-            //{
-            //    TracingService.Trace("The user does not have access to AhpProject");
-            //    return null;
-            //}
-            //if (contactWebRole != invln_Permission.Limiteduser && ahpProject.invln_AccountId.Id != new Guid(organisationId))
-            //{
-            //    TracingService.Trace("The user does not have access to AhpProject. Contact does not belong to organization from core cecord");
-            //    return null;
-            //}
             TracingService.Trace("No Access to Core record");
             return null;
         }
