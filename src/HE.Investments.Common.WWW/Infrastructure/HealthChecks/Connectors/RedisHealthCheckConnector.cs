@@ -7,13 +7,13 @@ namespace HE.Investments.Common.WWW.Infrastructure.HealthChecks.Connectors;
 
 public sealed class RedisHealthCheckConnector : IHealthCheck
 {
-    private readonly ICacheService _cacheConfig;
+    private readonly ICacheService _cacheService;
 
     private readonly ILogger<RedisHealthCheckConnector> _logger;
 
-    public RedisHealthCheckConnector(ICacheService cacheConfig, ILogger<RedisHealthCheckConnector> logger)
+    public RedisHealthCheckConnector(ICacheService cacheService, ILogger<RedisHealthCheckConnector> logger)
     {
-        _cacheConfig = cacheConfig;
+        _cacheService = cacheService;
         _logger = logger;
     }
 
@@ -22,7 +22,7 @@ public sealed class RedisHealthCheckConnector : IHealthCheck
     {
         try
         {
-            _cacheConfig.GetValue<string>("health-check-key");
+            _cacheService.GetValue<string>("health-check-key");
             return Task.FromResult(HealthCheckResult.Healthy());
         }
         catch (Exception ex)
