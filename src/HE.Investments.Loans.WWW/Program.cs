@@ -2,6 +2,8 @@ using HE.Investments.Common.Models.App;
 using HE.Investments.Common.WWW.Infrastructure.Authorization;
 using HE.Investments.Common.WWW.Infrastructure.Cache;
 using HE.Investments.Common.WWW.Infrastructure.ErrorHandling;
+using HE.Investments.Common.WWW.Infrastructure.HealthChecks;
+using HE.Investments.Common.WWW.Infrastructure.HealthChecks.Connectors;
 using HE.Investments.Common.WWW.Infrastructure.Middlewares;
 using HE.Investments.Common.WWW.Partials;
 using HE.Investments.DocumentService.Extensions;
@@ -35,6 +37,7 @@ builder.Services.AddWebModule();
 builder.Services.AddFeatureManagement();
 builder.Services.AddDocumentServiceModule();
 builder.Services.AddCommonBuildingBlocks();
+builder.Services.AddHeHealthChecks(typeof(RedisHealthCheckConnector), typeof(CrmHealthCheckConnector));
 
 var mvcBuilder = builder.Services.AddControllersWithViews(x => x.Filters.Add<ExceptionFilterAttribute>());
 builder.AddIdentityProviderConfiguration(mvcBuilder);
@@ -90,6 +93,7 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+app.MapHeHealthChecks();
 
 app.Run();
 

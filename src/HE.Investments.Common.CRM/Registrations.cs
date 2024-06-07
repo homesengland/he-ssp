@@ -1,7 +1,9 @@
 using System.IdentityModel.Tokens.Jwt;
+using HE.Investments.Common.CRM.Infrastructure;
 using HE.Investments.Common.CRM.Services;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Infrastructure.Cache.Interfaces;
+using HE.Investments.Common.Infrastructure.HealthChecks;
 using HE.Investments.Common.Models.App;
 using HE.Investments.Common.Utils;
 using Microsoft.Extensions.DependencyInjection;
@@ -40,6 +42,7 @@ public static class Registrations
         });
         services.AddScoped<ICrmService, CrmService>();
         services.Decorate<ICrmService, CrmServiceExceptionDecorator>();
+        services.AddScoped<ICrmConnectionTester, CrmConnectionTester>();
     }
 
     private static bool IsTokenExpired(JwtSecurityToken token, IDateTimeProvider dateTimeProvider)
