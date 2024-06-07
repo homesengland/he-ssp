@@ -128,17 +128,6 @@ namespace DataverseModel
 		}
 		
 		/// <summary>
-		/// Gets a binding to the set of all <see cref="DataverseModel.invln_comment"/> entities.
-		/// </summary>
-		public System.Linq.IQueryable<DataverseModel.invln_comment> invln_commentSet
-		{
-			get
-			{
-				return this.CreateQuery<DataverseModel.invln_comment>();
-			}
-		}
-		
-		/// <summary>
 		/// Gets a binding to the set of all <see cref="DataverseModel.invln_Conditions"/> entities.
 		/// </summary>
 		public System.Linq.IQueryable<DataverseModel.invln_Conditions> invln_ConditionsSet

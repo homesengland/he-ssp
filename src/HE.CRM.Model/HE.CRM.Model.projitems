@@ -612,6 +612,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\msdyn_SuggestedPriority.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\msdyn_SuggestionControlType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\msdyn_SuggestionType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OptionSets\msdyn_SurveyProvider.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\msdyn_TargetAudience.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\msdyn_TimeCostActualsSource.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\msdyn_TimeEntryGenerationStrategy.cs" />

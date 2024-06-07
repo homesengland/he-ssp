@@ -149,8 +149,6 @@ namespace DataverseModel
 			public const string invln_reducingenvironmentalimpact = "invln_reducingenvironmentalimpact";
 			public const string invln_regensite = "invln_regensite";
 			public const string invln_regensiteName = "invln_regensitename";
-			public const string invln_Region = "invln_region";
-			public const string invln_RegionName = "invln_regionname";
 			public const string invln_Ruralclassification = "invln_ruralclassification";
 			public const string invln_ruralclassificationName = "invln_ruralclassificationname";
 			public const string invln_RuralExceptionSite = "invln_ruralexceptionsite";
@@ -1931,40 +1929,6 @@ namespace DataverseModel
 				if (this.FormattedValues.Contains("invln_regensite"))
 				{
 					return this.FormattedValues["invln_regensite"];
-				}
-				else
-				{
-					return default(string);
-				}
-			}
-		}
-		
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_region")]
-		public Microsoft.Xrm.Sdk.EntityReference invln_Region
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("invln_region");
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("invln_Region");
-				this.SetAttributeValue("invln_region", value);
-				this.OnPropertyChanged("invln_Region");
-			}
-		}
-		
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_regionname")]
-		public string invln_RegionName
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				if (this.FormattedValues.Contains("invln_region"))
-				{
-					return this.FormattedValues["invln_region"];
 				}
 				else
 				{

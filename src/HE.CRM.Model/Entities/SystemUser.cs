@@ -517,10 +517,6 @@ namespace DataverseModel
 			public const string lk_invln_borrowerpreviousschemes_createdonbehalfby = "lk_invln_borrowerpreviousschemes_createdonbehalfby";
 			public const string lk_invln_borrowerpreviousschemes_modifiedby = "lk_invln_borrowerpreviousschemes_modifiedby";
 			public const string lk_invln_borrowerpreviousschemes_modifiedonbehalfby = "lk_invln_borrowerpreviousschemes_modifiedonbehalfby";
-			public const string lk_invln_comment_createdby = "lk_invln_comment_createdby";
-			public const string lk_invln_comment_createdonbehalfby = "lk_invln_comment_createdonbehalfby";
-			public const string lk_invln_comment_modifiedby = "lk_invln_comment_modifiedby";
-			public const string lk_invln_comment_modifiedonbehalfby = "lk_invln_comment_modifiedonbehalfby";
 			public const string lk_invln_conditions_createdby = "lk_invln_conditions_createdby";
 			public const string lk_invln_conditions_createdonbehalfby = "lk_invln_conditions_createdonbehalfby";
 			public const string lk_invln_conditions_modifiedby = "lk_invln_conditions_modifiedby";
@@ -779,7 +775,6 @@ namespace DataverseModel
 			public const string user_invln_ahpproject = "user_invln_ahpproject";
 			public const string user_invln_ahpstatuschange = "user_invln_ahpstatuschange";
 			public const string user_invln_borrowerpreviousschemes = "user_invln_borrowerpreviousschemes";
-			public const string user_invln_comment = "user_invln_comment";
 			public const string user_invln_conditions = "user_invln_conditions";
 			public const string user_invln_consortium = "user_invln_consortium";
 			public const string user_invln_consortiummember = "user_invln_consortiummember";
@@ -5550,86 +5545,6 @@ namespace DataverseModel
 		}
 		
 		/// <summary>
-		/// 1:N lk_invln_comment_createdby
-		/// </summary>
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_invln_comment_createdby")]
-		public System.Collections.Generic.IEnumerable<DataverseModel.invln_comment> lk_invln_comment_createdby
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetRelatedEntities<DataverseModel.invln_comment>("lk_invln_comment_createdby", null);
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("lk_invln_comment_createdby");
-				this.SetRelatedEntities<DataverseModel.invln_comment>("lk_invln_comment_createdby", null, value);
-				this.OnPropertyChanged("lk_invln_comment_createdby");
-			}
-		}
-		
-		/// <summary>
-		/// 1:N lk_invln_comment_createdonbehalfby
-		/// </summary>
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_invln_comment_createdonbehalfby")]
-		public System.Collections.Generic.IEnumerable<DataverseModel.invln_comment> lk_invln_comment_createdonbehalfby
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetRelatedEntities<DataverseModel.invln_comment>("lk_invln_comment_createdonbehalfby", null);
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("lk_invln_comment_createdonbehalfby");
-				this.SetRelatedEntities<DataverseModel.invln_comment>("lk_invln_comment_createdonbehalfby", null, value);
-				this.OnPropertyChanged("lk_invln_comment_createdonbehalfby");
-			}
-		}
-		
-		/// <summary>
-		/// 1:N lk_invln_comment_modifiedby
-		/// </summary>
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_invln_comment_modifiedby")]
-		public System.Collections.Generic.IEnumerable<DataverseModel.invln_comment> lk_invln_comment_modifiedby
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetRelatedEntities<DataverseModel.invln_comment>("lk_invln_comment_modifiedby", null);
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("lk_invln_comment_modifiedby");
-				this.SetRelatedEntities<DataverseModel.invln_comment>("lk_invln_comment_modifiedby", null, value);
-				this.OnPropertyChanged("lk_invln_comment_modifiedby");
-			}
-		}
-		
-		/// <summary>
-		/// 1:N lk_invln_comment_modifiedonbehalfby
-		/// </summary>
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_invln_comment_modifiedonbehalfby")]
-		public System.Collections.Generic.IEnumerable<DataverseModel.invln_comment> lk_invln_comment_modifiedonbehalfby
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetRelatedEntities<DataverseModel.invln_comment>("lk_invln_comment_modifiedonbehalfby", null);
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("lk_invln_comment_modifiedonbehalfby");
-				this.SetRelatedEntities<DataverseModel.invln_comment>("lk_invln_comment_modifiedonbehalfby", null, value);
-				this.OnPropertyChanged("lk_invln_comment_modifiedonbehalfby");
-			}
-		}
-		
-		/// <summary>
 		/// 1:N lk_invln_conditions_createdby
 		/// </summary>
 		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_invln_conditions_createdby")]
@@ -9206,26 +9121,6 @@ namespace DataverseModel
 				this.OnPropertyChanging("user_invln_borrowerpreviousschemes");
 				this.SetRelatedEntities<DataverseModel.invln_BorrowerPreviousSchemes>("user_invln_borrowerpreviousschemes", null, value);
 				this.OnPropertyChanged("user_invln_borrowerpreviousschemes");
-			}
-		}
-		
-		/// <summary>
-		/// 1:N user_invln_comment
-		/// </summary>
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("user_invln_comment")]
-		public System.Collections.Generic.IEnumerable<DataverseModel.invln_comment> user_invln_comment
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetRelatedEntities<DataverseModel.invln_comment>("user_invln_comment", null);
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("user_invln_comment");
-				this.SetRelatedEntities<DataverseModel.invln_comment>("user_invln_comment", null, value);
-				this.OnPropertyChanged("user_invln_comment");
 			}
 		}
 		

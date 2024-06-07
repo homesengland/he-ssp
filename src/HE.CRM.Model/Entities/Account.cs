@@ -813,8 +813,6 @@ namespace DataverseModel
 			public const string invln_OriginalCRR = "invln_originalcrr";
 			public const string invln_originalcrrName = "invln_originalcrrname";
 			public const string invln_OtherCreditRatingAgency = "invln_othercreditratingagency";
-			public const string invln_PartnerType = "invln_partnertype";
-			public const string invln_partnertypeName = "invln_partnertypename";
 			public const string invln_pepincluded = "invln_pepincluded";
 			public const string invln_pepincludedName = "invln_pepincludedname";
 			public const string invln_PowerofAttorney = "invln_powerofattorney";
@@ -4755,40 +4753,6 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_OtherCreditRatingAgency");
 				this.SetAttributeValue("invln_othercreditratingagency", value);
 				this.OnPropertyChanged("invln_OtherCreditRatingAgency");
-			}
-		}
-		
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_partnertype")]
-		public virtual Microsoft.Xrm.Sdk.OptionSetValue invln_PartnerType
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_partnertype");
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("invln_PartnerType");
-				this.SetAttributeValue("invln_partnertype", value);
-				this.OnPropertyChanged("invln_PartnerType");
-			}
-		}
-		
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_partnertypename")]
-		public string invln_partnertypeName
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				if (this.FormattedValues.Contains("invln_partnertype"))
-				{
-					return this.FormattedValues["invln_partnertype"];
-				}
-				else
-				{
-					return default(string);
-				}
 			}
 		}
 		
