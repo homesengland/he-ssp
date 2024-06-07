@@ -6,6 +6,9 @@ internal static class DeliveryPhasePagesUrl
 
     public static string Details(string applicationId, string deliveryPhaseId) => BuildDeliveryPhasePage(applicationId, deliveryPhaseId, "details");
 
+    public static string NewBuildActivityType(string applicationId, string deliveryPhaseId) =>
+        BuildDeliveryPhasePage(applicationId, deliveryPhaseId, "new-build-activity-type");
+
     public static string RehabBuildActivityType(string applicationId, string deliveryPhaseId) =>
         BuildDeliveryPhasePage(applicationId, deliveryPhaseId, "rehab-build-activity-type");
 
