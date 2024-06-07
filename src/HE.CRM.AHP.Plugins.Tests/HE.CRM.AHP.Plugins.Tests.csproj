@@ -144,6 +144,7 @@
     <Compile Include="CustomAPI\SetApplicationPluginTests.cs" />
     <Compile Include="CustomAPI\SetDeliveryPhaseTests.cs" />
     <Compile Include="CustomAPI\SetHomeTypePluginTests.cs" />
+    <Compile Include="Handlers\AhpApplication\CalculateFieldsOnSubmitOrOnUnderReviewInAssessmentTests.cs" />
     <Compile Include="Handlers\AhpApplication\ChangeExternalStatusOnInternalStatusChangeHandlerTests.cs" />
     <Compile Include="Handlers\AhpApplication\CheckIfApplicationWithNewNameExistsHandlerTests.cs" />
     <Compile Include="Handlers\AhpApplication\GrantCalculateHandlerTests.cs" />

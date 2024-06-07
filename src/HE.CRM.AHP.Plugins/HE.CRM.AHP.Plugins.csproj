@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>HE.CRM.AHP.Plugins</RootNamespace>
-    <AssemblyName>HE.CRM.AHP.Plugins</AssemblyName>
+    <AssemblyName>HE.CRM.AHP.Plugins.MB</AssemblyName>
     <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -97,6 +97,7 @@
   <ItemGroup>
     <Compile Include="Common\AHPConst.cs" />
     <Compile Include="CrmPluginRegistrationAttribute.cs" />
+    <Compile Include="Handlers\AHPApplication\CalculateDataForApplicationReportHandler.cs" />
     <Compile Include="Handlers\AHPApplication\ChangeExternalStatusOnInternalStatusChangeHandler.cs" />
     <Compile Include="Handlers\AHPApplication\CheckIfApplicationWithNewNameExistsHandler.cs" />
     <Compile Include="Handlers\AHPApplication\CreateDocumentLocationOnCreateHandler.cs" />
@@ -221,6 +222,7 @@
     <Compile Include="Plugins\AhpApplication\CheckIfApplicationWithNewNameExistsPlugin.cs" />
     <Compile Include="Plugins\AhpApplication\PostUpdate.cs" />
     <Compile Include="Plugins\AhpApplication\CreateDocumentLocationOnCreatePlugin.cs" />
+    <Compile Include="Plugins\AhpApplication\PreUpdate.cs" />
     <Compile Include="Plugins\AhpStatusChange\SendNotificationOnCreatePlugin.cs" />
     <Compile Include="Plugins\ContactWebrole\SendNotificationOnAdminRoleGrantedPlugin.cs" />
     <Compile Include="Plugins\ContactWebrole\SendNotificationOnRoleModificationPlugin.cs" />
@@ -280,6 +282,7 @@
     <Compile Include="Services\AhpProject\IAhpProjectService.cs" />
     <Compile Include="Services\AhpStatusChange\AhpStatusChangeService.cs" />
     <Compile Include="Services\AhpStatusChange\IAhpStatusChangeService.cs" />
+    <Compile Include="Services\Application\ApplicationCalculationService.cs" />
     <Compile Include="Services\Application\ApplicationService.cs" />
     <Compile Include="Services\Application\IApplicationService.cs" />
     <Compile Include="Services\Consortium\ConsortiumService.cs" />
