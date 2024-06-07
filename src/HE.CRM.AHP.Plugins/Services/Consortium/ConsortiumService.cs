@@ -214,19 +214,16 @@ namespace HE.CRM.AHP.Plugins.Services.Consortium
                 accessToAction = HasUserHavePermissionToProvideOperation(Operation.Get, role, null, null, contact.ToEntityReference(), ahpProject, organizationId.ToString());
                 TracingService.Trace("Checked");
             }
-            TracingService.Trace("1");
             if (siteId != null)
             {
                 TracingService.Trace("Check For site");
                 accessToAction = HasUserHavePermissionToProvideOperation(Operation.Get, role, siteId, null, contact.ToEntityReference());
             }
-            TracingService.Trace("2");
             if (applicationId != null)
             {
                 TracingService.Trace("Check For application");
                 accessToAction = HasUserHavePermissionToProvideOperation(Operation.Get, role, null, applicationId, contact.ToEntityReference());
             }
-            TracingService.Trace("3");
             return accessToAction;
         }
 
