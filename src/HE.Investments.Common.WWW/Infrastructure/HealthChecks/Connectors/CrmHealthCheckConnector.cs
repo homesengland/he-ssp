@@ -1,6 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using HE.Investments.Common.Infrastructure.HealthChecks;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
+using Microsoft.Extensions.Logging;
 
 namespace HE.Investments.Common.WWW.Infrastructure.HealthChecks.Connectors;
 
@@ -8,9 +9,12 @@ public sealed class CrmHealthCheckConnector : IHealthCheck
 {
     private readonly ICrmConnectionTester _crmConnectionTester;
 
-    public CrmHealthCheckConnector(ICrmConnectionTester crmConnectionTester)
+    private readonly ILogger<CrmHealthCheckConnector> _logger;
+
+    public CrmHealthCheckConnector(ICrmConnectionTester crmConnectionTester, ILogger<CrmHealthCheckConnector> logger)
     {
         _crmConnectionTester = crmConnectionTester;
+        _logger = logger;
     }
 
     [SuppressMessage("Design", "CA1031: Do not catch general exception types", Justification = "We need to catch all exceptions from CRM in Health Check")]
@@ -23,7 +27,8 @@ public sealed class CrmHealthCheckConnector : IHealthCheck
         }
         catch (Exception ex)
         {
-            return HealthCheckResult.Unhealthy("CRM connection not available", ex);
+            _logger.LogError(ex, $"{nameof(CrmHealthCheckConnector)} failed");
+            return HealthCheckResult.Unhealthy("CRM connection not available");
         }
     }
 }

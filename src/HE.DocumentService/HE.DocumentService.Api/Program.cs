@@ -3,6 +3,7 @@ using HE.DocumentService.Api.Extensions;
 using HE.DocumentService.Api.Middlewares;
 using HE.DocumentService.SharePoint.Configuration;
 using HE.DocumentService.SharePoint.Extensions;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,6 +20,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddApplicationInsightsTelemetry();
+builder.Services.AddHealthChecks();
 
 var app = builder.Build();
 
@@ -37,5 +39,7 @@ app.UseAuthorization();
 app.UseMiddleware<ErrorHandlerMiddleware>();
 
 app.MapControllers();
+app.MapHealthChecks("/readyz", new HealthCheckOptions { Predicate = _ => false });
+app.MapHealthChecks("/livez", new HealthCheckOptions { Predicate = _ => false });
 
 app.Run();
