@@ -147,6 +147,7 @@
     <Compile Include="Handlers\CustomApi\Site\SetSiteHandler.cs" />
     <Compile Include="Handlers\DeliveryPhase\AcceptOrRejectPaymentProportion.cs" />
     <Compile Include="Handlers\DeliveryPhase\ChangeNumberOfHomes.cs" />
+    <Compile Include="Handlers\DeliveryPhase\PostUpdateDeliveryPhaseHandler.cs" />
     <Compile Include="Handlers\DeliveryPhase\SendNotificationUrbWantsAdditionalPaymentsForPhaseHandler.cs" />
     <Compile Include="Handlers\HomesInDeliveryPhases\CalculateNumberOfHouseForDeliveryPhase.cs" />
     <Compile Include="Handlers\HomeType\CalculatePercentageValueOfNDSSStandardHandler.cs" />
@@ -261,6 +262,7 @@
     <Compile Include="Plugins\CustomApi\Site\GetMultipleSitesPlugin.cs" />
     <Compile Include="Plugins\CustomApi\Site\GetSingleSitePlugin.cs" />
     <Compile Include="Plugins\CustomApi\Site\SetSitePlugin.cs" />
+    <Compile Include="Plugins\DeliveryPhase\PostUpdateDeliveryPhasePlugin.cs" />
     <Compile Include="Plugins\DeliveryPhase\PreUpdateDeliveryPhase.cs" />
     <Compile Include="Plugins\DeliveryPhase\SendNotificationUrbWantsAdditionalPaymentsForPhasePlugin.cs" />
     <Compile Include="Plugins\HomesInDeliveryPhase\PostCreate.cs" />
