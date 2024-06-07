@@ -8,6 +8,7 @@ using Microsoft.Xrm.Sdk;
 
 namespace HE.CRM.AHP.Plugins.Tests.Helpers
 {
+
     public static class GrantBenchmarkHelper
     {
         public static invln_grantbenchmark CreateGrantBenchmark(he_GovernmentOfficeRegion governmentOfficeRegion, invln_Tenurechoice tenure, invln_BenchmarkTable benchmarkTable, invln_BenchmarkValueType valueType, decimal value)

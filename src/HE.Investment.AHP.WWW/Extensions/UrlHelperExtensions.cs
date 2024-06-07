@@ -29,4 +29,16 @@ public static class UrlHelperExtensions
             UrlHelper = urlHelper,
         };
     }
+
+    public static IActionResult RedirectToProjectDetails(this IUrlHelper urlHelper, string projectId)
+    {
+        return new RedirectToActionResult(
+            nameof(ProjectController.Details),
+            new ControllerName(nameof(ProjectController)).WithoutPrefix(),
+            new { projectId },
+            null)
+        {
+            UrlHelper = urlHelper,
+        };
+    }
 }

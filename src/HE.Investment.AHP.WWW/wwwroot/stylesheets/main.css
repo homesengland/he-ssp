@@ -71,3 +71,7 @@
     width: 100%;
   }
 }
+
+.govuk-tag {
+  display: inline;
+}

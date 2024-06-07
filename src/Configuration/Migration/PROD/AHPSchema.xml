@@ -1,0 +1,68 @@
+<entities >
+  <entity name="invln_ndss" displayname="NDSS" etc="11120" primaryidfield="invln_ndssid" primarynamefield="invln_name" disableplugins="false">
+    <fields>
+      <field displayname="Bedrooms" name="invln_bedrooms" type="number" customfield="true" />
+      <field displayname="Import Sequence Number" name="importsequencenumber" type="number" />
+      <field displayname="Name" name="invln_name" type="string" customfield="true" />
+      <field displayname="NDSS" name="invln_ndssid" type="guid" primaryKey="true" />
+      <field displayname="People" name="invln_people" type="number" customfield="true" />
+      <field displayname="Record Created On" name="overriddencreatedon" type="datetime" />
+      <field displayname="Standard m2" name="invln_standard" type="decimal" customfield="true" />
+      <field displayname="Standard Number" name="invln_standardnumber" type="number" customfield="true" />
+      <field displayname="Status" name="statecode" type="state" />
+      <field displayname="Status Reason" name="statuscode" type="status" />
+      <field displayname="Storeys" name="invln_storeys" type="number" customfield="true" />
+    </fields>
+  </entity>
+  <entity name="invln_grantbenchmark" displayname="Grant benchmark" etc="11119" primaryidfield="invln_grantbenchmarkid" primarynamefield="invln_grantbenchmarkname" disableplugins="false">
+    <fields>
+      <field displayname="Benchmark Gpu (Base)" name="invln_benchmarkgpu_base" type="money" customfield="true" />
+      <field displayname="Benchmark Table" name="invln_benchmarktable" type="optionsetvalue" customfield="true" />
+      <field displayname="Benchmark Value Percentage" name="invln_benchmarkvaluepercentage" type="decimal" customfield="true" />
+      <field displayname="Benchmark Value Pounds" name="invln_benchmarkgpu" type="money" customfield="true" />
+      <field displayname="Benchmark Value Type" name="invln_benchmarkvaluetype" type="optionsetvalue" customfield="true" />
+      <field displayname="Currency" name="transactioncurrencyid" type="entityreference" lookupType="transactioncurrency" />
+      <field displayname="Exchange Rate" name="exchangerate" type="decimal" />
+      <field displayname="Government Office Region" name="invln_governmentofficeregion" type="optionsetvalue" customfield="true" />
+      <field displayname="Grant benchmark" name="invln_grantbenchmarkid" type="guid" primaryKey="true" />
+      <field displayname="Grant benchmark ID" name="invln_grantbenchmarkname" type="string" customfield="true" />
+      <field displayname="Import Sequence Number" name="importsequencenumber" type="number" />
+      <field displayname="Status" name="statecode" type="state" />
+      <field displayname="Status Reason" name="statuscode" type="status" />
+      <field displayname="Tenure" name="invln_tenure" type="optionsetvalue" customfield="true" />
+      <field displayname="Time Zone Rule Version Number" name="timezoneruleversionnumber" type="number" />
+      <field displayname="UTC Conversion Time Zone Code" name="utcconversiontimezonecode" type="number" />
+      <field displayname="Version Number" name="versionnumber" type="bigint" />
+    </fields>
+  </entity>
+  <entity name="invln_notificationsetting" displayname="Notification Setting" etc="11070" primaryidfield="invln_notificationsettingid" primarynamefield="invln_name" disableplugins="false">
+    <fields>
+      <field displayname="Name" name="invln_name" type="string" customfield="true" />
+      <field displayname="Notification Setting" name="invln_notificationsettingid" type="guid" primaryKey="true" />
+      <field displayname="Status" name="statecode" type="state" />
+      <field displayname="Status Reason" name="statuscode" type="status" />
+      <field displayname="Subject" name="invln_subject" type="string" customfield="true" />
+      <field displayname="Template Id" name="invln_templateid" type="string" customfield="true" />
+      <field displayname="Template Type Name" name="invln_templatetypename" type="string" customfield="true" />
+      <field displayname="Time Zone Rule Version Number" name="timezoneruleversionnumber" type="number" />
+      <field displayname="UTC Conversion Time Zone Code" name="utcconversiontimezonecode" type="number" />
+      <field displayname="Version Number" name="versionnumber" type="bigint" />
+      <field displayname="Import Sequence Number" name="importsequencenumber" type="number" />
+    </fields>
+  </entity>
+  <entity name="invln_programme" displayname="Programme" etc="11114" primaryidfield="invln_programmeid" primarynamefield="invln_programmename" disableplugins="false">
+    <fields>
+      <field displayname="Bidding End Date" name="invln_programmeenddate" type="datetime" customfield="true" />
+      <field displayname="Bidding Start Date" name="invln_programmestartdate" type="datetime" customfield="true" />
+      <field displayname="Earliest Completion Date Allowed (optional)" name="invln_earliestcompletiondateallowed" type="datetime" customfield="true" />
+      <field displayname="Earliest Start on Site Date Allowed (optional)" name="invln_earlieststartonsitedateallowed" type="datetime" customfield="true" />
+      <field displayname="Funding End Date" name="invln_fundingenddate" type="datetime" customfield="true" />
+      <field displayname="Funding Start Date" name="invln_fundingstartdate" type="datetime" customfield="true" />
+      <field displayname="Import Sequence Number" name="importsequencenumber" type="number" />
+      <field displayname="Latest Completion Date Allowed (optional)" name="invln_latestcompletiondateallowed" type="datetime" customfield="true" />
+      <field displayname="Latest Start on Site Date Allowed (optional)" name="invln_lateststartonsitedateallowed" type="datetime" customfield="true" />
+      <field updateCompare="true" displayname="Programme" name="invln_programmeid" type="guid" primaryKey="true" />
+      <field displayname="Programme Name" name="invln_programmename" type="string" customfield="true" />
+    </fields>
+  </entity>
+</entities>

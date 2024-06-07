@@ -19,7 +19,7 @@ namespace HE.Investments.AHP.IntegrationTests.Order03FillApplication;
 
 [Order(302)]
 [SuppressMessage("xUnit", "xUnit1004", Justification = "Waits for DevOps configuration - #76791")]
-public class Order02CompleteSchemeInformation : AhpIntegrationTest
+public class Order02CompleteSchemeInformation : AhpApplicationIntegrationTest
 {
     public Order02CompleteSchemeInformation(AhpIntegrationTestFixture fixture, ITestOutputHelper output)
         : base(fixture, output)
@@ -65,7 +65,7 @@ public class Order02CompleteSchemeInformation : AhpIntegrationTest
         SchemeInformationData.GenerateFundingDetails();
 
         // when & then
-        await TestQuestionPage(
+        await TestApplicationQuestionPage(
             SchemeInformationPagesUrl.FundingDetails(ApplicationData.ApplicationId),
             SchemeInformationPageTitles.FundingDetails,
             SchemeInformationPagesUrl.PartnerDetails(ApplicationData.ApplicationId),
@@ -123,7 +123,7 @@ public class Order02CompleteSchemeInformation : AhpIntegrationTest
     [Order(5)]
     public async Task Order05_ConfirmDevelopingPartner()
     {
-        await TestQuestionPage(
+        await TestApplicationQuestionPage(
             SchemeInformationPagesUrl.DevelopingPartnerConfirmation(ApplicationData.ApplicationId, SchemeInformationData.DevelopingPartner.Id.Value),
             SharedPageTitles.DevelopingPartnerConfirm,
             SchemeInformationPagesUrl.PartnerDetails(ApplicationData.ApplicationId),
@@ -159,7 +159,7 @@ public class Order02CompleteSchemeInformation : AhpIntegrationTest
     [Order(7)]
     public async Task Order07_ConfirmOwnerOfTheLand()
     {
-        await TestQuestionPage(
+        await TestApplicationQuestionPage(
             SchemeInformationPagesUrl.OwnerOfTheLandConfirmation(ApplicationData.ApplicationId, SchemeInformationData.OwnerOfTheLand.Id.Value),
             SharedPageTitles.OwnerOfTheLandConfirm,
             SchemeInformationPagesUrl.PartnerDetails(ApplicationData.ApplicationId),
@@ -195,7 +195,7 @@ public class Order02CompleteSchemeInformation : AhpIntegrationTest
     [Order(9)]
     public async Task Order09_ConfirmOwnerOfTheHomes()
     {
-        await TestQuestionPage(
+        await TestApplicationQuestionPage(
             SchemeInformationPagesUrl.OwnerOfTheHomesConfirmation(ApplicationData.ApplicationId, SchemeInformationData.OwnerOfTheHomes.Id.Value),
             SharedPageTitles.OwnerOfTheHomesConfirm,
             SchemeInformationPagesUrl.PartnerDetails(ApplicationData.ApplicationId),
@@ -227,7 +227,7 @@ public class Order02CompleteSchemeInformation : AhpIntegrationTest
     [Order(11)]
     public async Task Order11_ConfirmPartnerDetails()
     {
-        await TestQuestionPage(
+        await TestApplicationQuestionPage(
             SchemeInformationPagesUrl.PartnerDetails(ApplicationData.ApplicationId),
             SchemeInformationPageTitles.PartnerDetails,
             SchemeInformationPagesUrl.HousingNeeds(ApplicationData.ApplicationId),
@@ -242,7 +242,7 @@ public class Order02CompleteSchemeInformation : AhpIntegrationTest
         SchemeInformationData.GenerateHousingNeeds();
 
         // when & then
-        await TestQuestionPage(
+        await TestApplicationQuestionPage(
             SchemeInformationPagesUrl.HousingNeeds(ApplicationData.ApplicationId),
             SchemeInformationPageTitles.HousingNeeds,
             SchemeInformationPagesUrl.StakeholderDiscussions(ApplicationData.ApplicationId),
@@ -258,7 +258,7 @@ public class Order02CompleteSchemeInformation : AhpIntegrationTest
         SchemeInformationData.GenerateStakeholderDiscussions();
 
         // when & then
-        await TestQuestionPage(
+        await TestApplicationQuestionPage(
             SchemeInformationPagesUrl.StakeholderDiscussions(ApplicationData.ApplicationId),
             SchemeInformationPageTitles.StakeholderDiscussions,
             SchemeInformationPagesUrl.CheckAnswers(ApplicationData.ApplicationId),

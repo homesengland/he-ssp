@@ -43,20 +43,13 @@ public class SiteController : SiteControllerBase<SiteWorkflowState>
 
     private readonly IAccountAccessContext _accountAccessContext;
 
-    private readonly IAccountUserContext _accountUserContext;
-
     private readonly ISiteSummaryViewModelFactory _siteSummaryViewModelFactory;
 
-    public SiteController(
-        IMediator mediator,
-        IAccountAccessContext accountAccessContext,
-        IAccountUserContext accountUserContext,
-        ISiteSummaryViewModelFactory siteSummaryViewModelFactory)
+    public SiteController(IMediator mediator, IAccountAccessContext accountAccessContext, ISiteSummaryViewModelFactory siteSummaryViewModelFactory)
         : base(mediator)
     {
         _mediator = mediator;
         _accountAccessContext = accountAccessContext;
-        _accountUserContext = accountUserContext;
         _siteSummaryViewModelFactory = siteSummaryViewModelFactory;
     }
 
@@ -83,7 +76,7 @@ public class SiteController : SiteControllerBase<SiteWorkflowState>
     [HttpPost("{siteId}/confirm-select")]
     public async Task<IActionResult> SelectConfirmed(string siteId, bool? isConfirmed, CancellationToken cancellationToken)
     {
-        var site = await _mediator.Send(new GetSiteQuery(siteId), cancellationToken);
+        var site = await GetSiteDetails(siteId, cancellationToken);
         if (isConfirmed.IsNotProvided())
         {
             ModelState.AddValidationErrors(OperationResult.New().AddValidationError("IsConfirmed", "Select whether this is the correct site"));
@@ -1006,8 +999,7 @@ public class SiteController : SiteControllerBase<SiteWorkflowState>
         var siteId = this.GetSiteIdFromRoute();
         var siteDetails = await GetSiteDetails(siteId.Value, cancellationToken);
         var isEditable = await _accountAccessContext.CanEditApplication() && siteDetails.Status != SiteStatus.Submitted;
-        var userAccount = await _accountUserContext.GetSelectedAccount();
-        var sections = _siteSummaryViewModelFactory.CreateSiteSummary(siteDetails, userAccount.SelectedOrganisation(), Url, isEditable, useWorkflowRedirection);
+        var sections = _siteSummaryViewModelFactory.CreateSiteSummary(siteDetails, Url, isEditable, useWorkflowRedirection);
 
         return new SiteSummaryViewModel(
             siteId.Value,

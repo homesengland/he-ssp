@@ -18,7 +18,7 @@ namespace HE.Investments.AHP.IntegrationTests.Order03FillApplication;
 
 [Order(304)]
 [SuppressMessage("xUnit", "xUnit1004", Justification = "Waits for DevOps configuration - #76791")]
-public class Order04CompleteFinancialDetails : AhpIntegrationTest
+public class Order04CompleteFinancialDetails : AhpApplicationIntegrationTest
 {
     public Order04CompleteFinancialDetails(AhpIntegrationTestFixture fixture, ITestOutputHelper output)
         : base(fixture, output)
@@ -66,7 +66,7 @@ public class Order04CompleteFinancialDetails : AhpIntegrationTest
         FinancialDetailsData.GenerateLandStatus();
 
         // when & then
-        await TestQuestionPage(
+        await TestApplicationQuestionPage(
             FinancialDetailsPagesUrl.LandStatus(ApplicationData.ApplicationId),
             FinancialDetailsPageTitles.LandStatusPage,
             FinancialDetailsPagesUrl.LandValueSuffix,
@@ -81,7 +81,7 @@ public class Order04CompleteFinancialDetails : AhpIntegrationTest
         FinancialDetailsData.GenerateLandValue();
 
         // when & then
-        await TestQuestionPage(
+        await TestApplicationQuestionPage(
             FinancialDetailsPagesUrl.LandValue(ApplicationData.ApplicationId),
             FinancialDetailsPageTitles.LandValuePage,
             FinancialDetailsPagesUrl.OtherApplicationCostsSuffix,
@@ -97,7 +97,7 @@ public class Order04CompleteFinancialDetails : AhpIntegrationTest
         FinancialDetailsData.GenerateOtherApplicationCosts();
 
         // when & then
-        await TestQuestionPage(
+        await TestApplicationQuestionPage(
             FinancialDetailsPagesUrl.OtherApplicationCosts(ApplicationData.ApplicationId),
             FinancialDetailsPageTitles.OtherSchemeCosts,
             FinancialDetailsPagesUrl.ExpectedContributionsSuffix,
@@ -113,7 +113,7 @@ public class Order04CompleteFinancialDetails : AhpIntegrationTest
         FinancialDetailsData.GenerateExpectedContributions();
 
         // when & then
-        await TestQuestionPage(
+        await TestApplicationQuestionPage(
             FinancialDetailsPagesUrl.ExpectedContributions(ApplicationData.ApplicationId),
             FinancialDetailsPageTitles.ExpectedContributions,
             FinancialDetailsPagesUrl.GrantsSuffix,
@@ -134,7 +134,7 @@ public class Order04CompleteFinancialDetails : AhpIntegrationTest
         FinancialDetailsData.GenerateGrants();
 
         // when & then
-        await TestQuestionPage(
+        await TestApplicationQuestionPage(
             FinancialDetailsPagesUrl.Grants(ApplicationData.ApplicationId),
             FinancialDetailsPageTitles.ExpectedGrants,
             FinancialDetailsPagesUrl.CheckAnswersSuffix,

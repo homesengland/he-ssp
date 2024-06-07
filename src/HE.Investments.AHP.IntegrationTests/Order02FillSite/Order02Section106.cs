@@ -12,7 +12,7 @@ namespace HE.Investments.AHP.IntegrationTests.Order02FillSite;
 
 [Order(202)]
 [SuppressMessage("xUnit", "xUnit1004", Justification = "Waits for DevOps configuration - #76791")]
-public class Order02Section106 : AhpIntegrationTest
+public class Order02Section106 : AhpSiteIntegrationTest
 {
     public Order02Section106(AhpIntegrationTestFixture fixture, ITestOutputHelper output)
         : base(fixture, output)
@@ -23,7 +23,7 @@ public class Order02Section106 : AhpIntegrationTest
     [Order(1)]
     public async Task Order01_ShouldProvideSection106GeneralAgreementAndNavigateToSection106AffordableHousing()
     {
-        await TestQuestionPage(
+        await TestSiteQuestionPage(
             SitePagesUrl.SiteSection106GeneralAgreement(SiteData.SiteId),
             SitePageTitles.SiteSection106Agreement,
             SitePagesUrl.SiteSection106AffordableHousing(SiteData.SiteId),
@@ -34,7 +34,7 @@ public class Order02Section106 : AhpIntegrationTest
     [Order(2)]
     public async Task Order02_ShouldProvideSection106AffordableHousingAndNavigateToSection106OnlyAffordableHousing()
     {
-        await TestQuestionPage(
+        await TestSiteQuestionPage(
             SitePagesUrl.SiteSection106AffordableHousing(SiteData.SiteId),
             SitePageTitles.SiteSection106AffordableHousing,
             SitePagesUrl.SiteSection106OnlyAffordableHousing(SiteData.SiteId),
@@ -45,7 +45,7 @@ public class Order02Section106 : AhpIntegrationTest
     [Order(3)]
     public async Task Order03_ShouldProvideSection106OnlyAffordableHousingAndNavigateToSection106AdditionalAffordableHousing()
     {
-        await TestQuestionPage(
+        await TestSiteQuestionPage(
             SitePagesUrl.SiteSection106OnlyAffordableHousing(SiteData.SiteId),
             SitePageTitles.SiteSection106OnlyAffordableHousing,
             SitePagesUrl.SiteSection106AdditionalAffordableHousing(SiteData.SiteId),
@@ -56,7 +56,7 @@ public class Order02Section106 : AhpIntegrationTest
     [Order(4)]
     public async Task Order04_ShouldProvideSection106AdditionalAffordableHousingAndNavigateToSection106CapitalFundingEligibility()
     {
-        await TestQuestionPage(
+        await TestSiteQuestionPage(
             SitePagesUrl.SiteSection106AdditionalAffordableHousing(SiteData.SiteId),
             SitePageTitles.SiteSection106AdditionalAffordableHousing,
             SitePagesUrl.SiteSection106CapitalFundingEligibility(SiteData.SiteId),
@@ -67,7 +67,7 @@ public class Order02Section106 : AhpIntegrationTest
     [Order(5)]
     public async Task Order05_ShouldProvideSection106CapitalFundingEligibilityAndNavigateToSection106LocalAuthorityConfirmation()
     {
-        await TestQuestionPage(
+        await TestSiteQuestionPage(
             SitePagesUrl.SiteSection106CapitalFundingEligibility(SiteData.SiteId),
             SitePageTitles.SiteSection106CapitalFundingEligibility,
             SitePagesUrl.SiteSection106LocalAuthorityConfirmation(SiteData.SiteId),
@@ -78,7 +78,7 @@ public class Order02Section106 : AhpIntegrationTest
     [Order(6)]
     public async Task Order06_ShouldProvideSection106LocalAuthorityConfirmationAndNavigateToLocalAuthoritySearch()
     {
-        await TestQuestionPage(
+        await TestSiteQuestionPage(
             SitePagesUrl.SiteSection106LocalAuthorityConfirmation(SiteData.SiteId),
             SitePageTitles.SiteSection106LocalAuthorityConfirmation,
             SitePagesUrl.SiteLocalAuthoritySearch(SiteData.SiteId),
