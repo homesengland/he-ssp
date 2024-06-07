@@ -11,12 +11,12 @@
     <PackageReference Include="MediatR" Version="12.1.1"/>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="6.0.24"/>
     <PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" Version="7.0.0"/>
-    <PackageReference Include="Microsoft.Extensions.FileProviders.Abstractions" Version="7.0.0"/>
+    <PackageReference Include="Microsoft.Extensions.FileProviders.Abstractions" Version="8.0.0"/>
     <PackageReference Include="Microsoft.Extensions.FileProviders.Embedded" Version="7.0.13"/>
     <PackageReference Include="Microsoft.FeatureManagement" Version="3.0.0"/>
     <PackageReference Include="Microsoft.FeatureManagement.AspNetCore" Version="3.0.0"/>
     <PackageReference Include="BuildBundlerMinifier" Version="3.2.449"/>
-    <PackageReference Include="He.Cookies.Mvc" Version="2.0.7" />
+    <PackageReference Include="He.Cookies.Mvc" Version="2.0.7"/>
     <PackageReference Include="He.Identity" Version="2.1.1"/>
     <PackageReference Include="He.Identity.Auth0" Version="2.1.1"/>
     <PackageReference Include="He.Identity.Mvc" Version="2.1.1"/>

@@ -3,6 +3,8 @@ using HE.Investments.Common.Models.App;
 using HE.Investments.Common.WWW.Infrastructure.Authorization;
 using HE.Investments.Common.WWW.Infrastructure.Cache;
 using HE.Investments.Common.WWW.Infrastructure.ErrorHandling;
+using HE.Investments.Common.WWW.Infrastructure.HealthChecks;
+using HE.Investments.Common.WWW.Infrastructure.HealthChecks.Connectors;
 using HE.Investments.Common.WWW.Infrastructure.Middlewares;
 using HE.Investments.Common.WWW.Partials;
 using HE.Investments.FrontDoor.WWW.Config;
@@ -20,6 +22,7 @@ builder.Services.AddCrmConnection();
 builder.Services.AddWebModule();
 builder.Services.AddFeatureManagement();
 builder.Services.AddCommonBuildingBlocks();
+builder.Services.AddHeHealthChecks(typeof(RedisHealthCheckConnector), typeof(CrmHealthCheckConnector));
 
 var mvcBuilder = builder.Services
     .AddControllersWithViews(options =>
@@ -55,6 +58,7 @@ app.UseMiddleware<HeaderSecurityMiddleware>();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+app.MapHeHealthChecks();
 
 app.Run();
 
