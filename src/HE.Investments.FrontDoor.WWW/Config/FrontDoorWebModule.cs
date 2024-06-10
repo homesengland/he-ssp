@@ -50,6 +50,8 @@ public static class FrontDoorWebModule
         services.AddSingleton<IErrorViewPaths, FrontDoorErrorViewPaths>();
         services.AddAppConfiguration<ContactInfoOptions>("ContactInfo");
         services.AddAppConfiguration<IDataverseConfig, DataverseConfig>("Dataverse");
+        services.AddAppConfiguration<ICrmApiConfig, CrmApiConfig>("CrmApi");
+        services.AddAppConfiguration<ICrmApiAuthConfig, CrmApiAuthConfig>("CrmApi:Auth");
         services.AddScoped<IProjectSummaryViewModelFactory, ProjectSummaryViewModelFactory>();
         services.AddAppConfiguration<ProgrammeUrlConfig>("ProgrammeUrl");
     }

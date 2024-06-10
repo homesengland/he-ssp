@@ -1,5 +1,6 @@
 using HE.Investments.Account.Shared.Config;
 using HE.Investments.Common;
+using HE.Investments.Common.CRM;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Utils;
 using HE.Investments.FrontDoor.Domain.Project.Crm;
@@ -34,7 +35,7 @@ public static class DomainModule
 
     private static IServiceCollection AddProject(this IServiceCollection services)
     {
-        services.AddScoped<IProjectCrmContext, ProjectCrmContext>();
+        services.AddApiCrmContext<IProjectCrmContext, ProjectCrmContext, ProjectCrmApiHttpClient, ProjectCrmContextSelectorDecorator>();
         services.Decorate<IProjectCrmContext, RequestCacheProjectCrmContextDecorator>();
         services.AddScoped<IProjectRepository, ProjectRepository>();
         services.AddSingleton<IProjectCrmMapper, ProjectCrmMapper>();
@@ -44,7 +45,7 @@ public static class DomainModule
 
     private static IServiceCollection AddSite(this IServiceCollection services)
     {
-        services.AddScoped<ISiteCrmContext, SiteCrmContext>();
+        services.AddApiCrmContext<ISiteCrmContext, SiteCrmContext, SiteCrmApiHttpClient, SiteCrmContextSelectorDecorator>();
         services.Decorate<ISiteCrmContext, RequestCacheSiteCrmContextDecorator>();
         services.AddScoped<ISiteRepository, SiteRepository>();
         services.AddScoped<IRemoveSiteRepository, SiteRepository>();
