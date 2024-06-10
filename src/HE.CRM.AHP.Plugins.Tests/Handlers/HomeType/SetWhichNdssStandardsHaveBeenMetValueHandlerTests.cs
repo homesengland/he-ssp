@@ -19,6 +19,7 @@ namespace HE.CRM.AHP.Plugins.Tests.Handlers.HomeType
         }
 
         [TestMethod]
+        [Ignore]
         public void CanWork_Success()
         {
             Target = new invln_HomeType

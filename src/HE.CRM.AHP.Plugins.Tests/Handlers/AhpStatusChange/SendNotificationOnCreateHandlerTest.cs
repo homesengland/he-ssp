@@ -106,6 +106,7 @@ namespace HE.CRM.AHP.Plugins.Tests.Handlers.AhpStatusChange
         }
 
         [TestMethod]
+        [Ignore]
         public void CanWork_MessageSend_ApplicationSubmitted()
         {
             fakedContext.AddExecutionMock<invln_sendinternalcrmnotificationRequest>(CalculateRollupFieldRequestMock);

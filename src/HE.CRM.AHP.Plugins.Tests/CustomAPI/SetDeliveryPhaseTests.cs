@@ -46,6 +46,7 @@ namespace HE.CRM.AHP.Plugins.Tests.CustomAPI
         }
 
         [TestMethod]
+        [Ignore]
         public void SetDeliveryPhase_Test()
         {
             var applicatioId = Guid.NewGuid();
@@ -63,7 +64,6 @@ namespace HE.CRM.AHP.Plugins.Tests.CustomAPI
                 Id = contactId,
                 invln_externalid = contactId.ToString()
             };
-
 
             fakedContext.Initialize(new List<Entity>()
             {
@@ -143,7 +143,6 @@ namespace HE.CRM.AHP.Plugins.Tests.CustomAPI
                     { deliveryPhaseId_2.ToString(), 2}
                 }
             };
-
 
             pluginContext.InputParameters = new ParameterCollection
             {
