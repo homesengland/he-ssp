@@ -14,6 +14,8 @@ namespace HE.CRM.AHP.Plugins.Services.Application
         public int NumberOfBedsits { get; set; }
 
         public bool IsContractExists { get; set; }
+
+        public int? ContractTypeConsortiumSingleEntity { get; set; }
     }
 
     public class CalculateDataForApplicationReportService : CrmService, ICalculateDataForApplicationReportService
@@ -47,14 +49,26 @@ namespace HE.CRM.AHP.Plugins.Services.Application
 
             var ahpContracts = ahpContractsRepository
                 .GetByAttribute(invln_ahpcontract.Fields.invln_AHPApplication, applicationId,
-                    new string[] { invln_ahpcontract.Fields.invln_ahpcontractId });
+                    new string[]
+                    {
+                        invln_ahpcontract.Fields.invln_ConsortiumSingleentity,
+                        invln_ahpcontract.Fields.CreatedOn
+                    })
+                .OrderByDescending(x => x.CreatedOn);
 
-            return new CalculationReportData
+            var result = new CalculationReportData
             {
                 RtsoExamption = rtsoexamption,
                 NumberOfBedsits = numberOfBedsits ?? 0,
-                IsContractExists = ahpContracts.Any()
+                IsContractExists = ahpContracts.Any(),
             };
+
+            if (ahpContracts.Any())
+            {
+                result.ContractTypeConsortiumSingleEntity = ahpContracts.First().invln_ConsortiumSingleentity.Value;
+            }
+
+            return result;
         }
     }
 

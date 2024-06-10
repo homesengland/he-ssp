@@ -13,6 +13,8 @@ namespace HE.CRM.AHP.Plugins.Handlers.AHPApplication
     /// Populate the following fields when application status is ApplicationSubmitted or UnderReviewInAssessment.
     /// - invln_RtSOExamption
     /// - invln_NumberofBedsits
+    /// - invln_ContractExist
+    /// - invln_ContractTypeConsortiumSingleEntity
     /// </summary>
     [CrmMessage(CrmMessage.Update)]
     [CrmProcessingStage(CrmProcessingStepStages.Preoperation)]
@@ -36,6 +38,14 @@ namespace HE.CRM.AHP.Plugins.Handlers.AHPApplication
             ExecutionData.Target.invln_RtSOExamption = calculationReportData.RtsoExamption;
             ExecutionData.Target.invln_NumberofBedsits = calculationReportData.NumberOfBedsits;
             ExecutionData.Target.invln_ContractExist = calculationReportData.IsContractExists;
+            if (calculationReportData.ContractTypeConsortiumSingleEntity.HasValue)
+            {
+                ExecutionData.Target.invln_ContractTypeConsortiumSingleEntity = new OptionSetValue(calculationReportData.ContractTypeConsortiumSingleEntity.Value);
+            }
+            else
+            {
+                ExecutionData.Target.invln_ContractTypeConsortiumSingleEntity = null;
+            }
         }
     }
 }

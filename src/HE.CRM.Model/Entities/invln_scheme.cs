@@ -148,6 +148,8 @@ namespace DataverseModel
 			public const string invln_contactidYomiName = "invln_contactidyominame";
 			public const string invln_ContractExist = "invln_contractexist";
 			public const string invln_contractexistName = "invln_contractexistname";
+			public const string invln_ContractTypeConsortiumSingleEntity = "invln_contracttypeconsortiumsingleentity";
+			public const string invln_contracttypeconsortiumsingleentityName = "invln_contracttypeconsortiumsingleentityname";
 			public const string invln_currentlandvalue = "invln_currentlandvalue";
 			public const string invln_currentlandvalue_Base = "invln_currentlandvalue_base";
 			public const string invln_DateApprovedatCMEModeration = "invln_dateapprovedatcmemoderation";
@@ -794,6 +796,40 @@ namespace DataverseModel
 				if (this.FormattedValues.Contains("invln_contractexist"))
 				{
 					return this.FormattedValues["invln_contractexist"];
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_contracttypeconsortiumsingleentity")]
+		public virtual Microsoft.Xrm.Sdk.OptionSetValue invln_ContractTypeConsortiumSingleEntity
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_contracttypeconsortiumsingleentity");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_ContractTypeConsortiumSingleEntity");
+				this.SetAttributeValue("invln_contracttypeconsortiumsingleentity", value);
+				this.OnPropertyChanged("invln_ContractTypeConsortiumSingleEntity");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_contracttypeconsortiumsingleentityname")]
+		public string invln_contracttypeconsortiumsingleentityName
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				if (this.FormattedValues.Contains("invln_contracttypeconsortiumsingleentity"))
+				{
+					return this.FormattedValues["invln_contracttypeconsortiumsingleentity"];
 				}
 				else
 				{
