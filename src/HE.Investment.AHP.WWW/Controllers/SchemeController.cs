@@ -356,6 +356,7 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
             var result = await _mediator.Send(new CompleteSchemeCommand(AhpApplicationId.From(applicationId)), cancellationToken);
             if (result.HasValidationErrors)
             {
+                ModelState.Clear();
                 ModelState.AddModelError(
                     nameof(SchemeSummaryViewModel.IsCompleted),
                     "You have not completed this section. Select no if you want to come back later");
@@ -367,6 +368,7 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
             var result = await _mediator.Send(new UnCompleteSchemeCommand(AhpApplicationId.From(applicationId)), cancellationToken);
             if (result.HasValidationErrors)
             {
+                ModelState.Clear();
                 ModelState.AddModelError(
                     nameof(SchemeSummaryViewModel.IsCompleted),
                     "You cannot change status for completed section.");

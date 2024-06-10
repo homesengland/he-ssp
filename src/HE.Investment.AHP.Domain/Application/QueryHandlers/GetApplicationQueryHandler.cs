@@ -29,6 +29,7 @@ public class GetApplicationQueryHandler : IRequestHandler<GetApplicationQuery, C
         return new ContractApplication(
             application.Id,
             application.ProjectId,
+            application.SiteId,
             application.Name.Value,
             application.Tenure.Value,
             application.Status,

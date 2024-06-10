@@ -41,7 +41,7 @@
                 <tr class="govuk-table__row">
                     <th scope="col" class="govuk-table__header govuk-!-width-one-half">Name</th>
                     <th scope="col" class="govuk-table__header govuk-!-width-one-half">Homes in this phase</th>
-                    <th scope="col" class="govuk-table__header govuk-!-width-one-fifth"></th>
+                    <td class="govuk-table__header"/>
                 </tr>
                 </thead>
                 <tbody class="govuk-table__body">
@@ -66,9 +66,9 @@
             <dl class="govuk-summary-list govuk-!-margin-bottom-8">
                 <div class="govuk-summary-list__row">
                     <dt class="govuk-summary-list__key">
-                        <gds-h3 size="ControlSize.S">
+                        <gds-h2 size="ControlSize.S">
                             Grant apportioned to this phase
-                        </gds-h3>
+                        </gds-h2>
                         <p class="govuk-body govuk-!-margin-bottom-1" data-testid="grant-apportioned-value">@((summaryOfDelivery?.GrantApportioned).DisplayPoundsPences() ?? "-")</p>
                     </dt>
                 </div>

@@ -1,7 +1,7 @@
 @using HE.Investments.Common.Contract
 @model (int completeSectionsCount, int incompleteSectionsCount, int totalSectionsCount, HE.Investments.Common.Contract.ApplicationStatus applicationStatus, string referenceNumber, HE.Investments.Common.Contract.ModificationDetails LastModificationDetails, HE.Investments.Common.Contract.ModificationDetails LastSubmissionDetails)
 
-<gds-h3 class="govuk-!-display-inline-block govuk-!-margin-bottom-1">ID @Model.referenceNumber</gds-h3>
+<gds-h2 size="ControlSize.S" class="govuk-!-display-inline-block govuk-!-margin-bottom-1 govuk-heading-s">ID @Model.referenceNumber</gds-h2>
 <application-status-tag application-status="@Model.applicationStatus" additional-classes="govuk-!-static-margin-left-3" data-testid="application-status"></application-status-tag>
 
 <gds-h3 class="govuk-!-margin-bottom-1">AHP 21-26 CME</gds-h3>

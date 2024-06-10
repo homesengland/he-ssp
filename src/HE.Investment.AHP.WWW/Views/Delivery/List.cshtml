@@ -10,7 +10,6 @@
     ViewBag.Breadcrumbs = AhpBreadcrumbsBuilder
         .New()
         .WithSites()
-        .WithSchemes()
         .WithApplication(applicationId, Model.ApplicationName)
         .Build();
 }

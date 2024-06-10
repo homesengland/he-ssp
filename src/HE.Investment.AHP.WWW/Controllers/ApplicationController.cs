@@ -28,7 +28,6 @@ namespace HE.Investment.AHP.WWW.Controllers;
 [AuthorizeWithCompletedProfile]
 public class ApplicationController : WorkflowController<ApplicationWorkflowState>
 {
-    private readonly string _siteName = "Test Site";
     private readonly IMediator _mediator;
     private readonly IApplicationSummaryViewModelFactory _applicationSummaryViewModelFactory;
 
@@ -131,11 +130,12 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
     public async Task<IActionResult> TaskList(string applicationId, CancellationToken cancellationToken)
     {
         var application = await _mediator.Send(new GetApplicationQuery(AhpApplicationId.From(applicationId)), cancellationToken);
+        var site = await _mediator.Send(new GetSiteBasicDetailsQuery(application.SiteId.Value), cancellationToken);
 
         var model = new ApplicationSectionsModel(
             applicationId,
             application.ProjectId.Value,
-            _siteName,
+            site.Name,
             application.Name,
             application.Status,
             application.AllowedOperations,
