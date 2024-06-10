@@ -25,5 +25,5 @@ internal sealed class CrmApiTokenProvider
         return new CrmApiAccessToken(result.AccessToken, result.ExpiresOn);
     }
 
-    public record CrmApiAccessToken(string AccessToken, DateTimeOffset ExpiresOn);
+    public sealed record CrmApiAccessToken(string AccessToken, DateTimeOffset ExpiresOn);
 }
