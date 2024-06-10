@@ -18,12 +18,10 @@
         @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
         <gds-field-set role="group">
             <gds-div-form-group>
-                <vc:page-header title="@FinancialDetailsPageTitles.OtherSchemeCosts" caption="@Model.ApplicationName - Finance details" />
-                <gds-field-set role="group">
-                    <he-div-hint class="govuk-!-margin-bottom-6">
-                        For multi-tenure sites, ensure the costs and contributions are apportioned across the development and only those applicable to the homes on this application are recorded here.
-                    </he-div-hint>
-                </gds-field-set>
+                <vc:page-header title="@FinancialDetailsPageTitles.OtherSchemeCosts" caption="@Model.ApplicationName  - Finance details"/>
+                <he-div-hint class="govuk-!-margin-bottom-6">
+                    For multi-tenure sites, ensure the costs and contributions are apportioned across the development and only those applicable to the homes on this application are recorded here.
+                </he-div-hint>
                 <gds-field-set class="govuk-!-margin-bottom-6" role="group">
                     <he-error-form-group asp-for="ExpectedWorksCosts">
                         <gds-legend>
@@ -33,7 +31,7 @@
                         </gds-legend>
                         <gds-input govuk-formgroup-asp-for="@Model.ExpectedWorksCosts" type="text"
                                    asp-hiddenlabeltext="Enter your expected works costs"
-                                   asp-prefixtext=@(GdsInputPrefixText.Pounds) class="govuk-!-width-one-quarter" value=@Model.ExpectedWorksCosts />
+                                   asp-prefixtext=@(GdsInputPrefixText.Pounds) class="govuk-!-width-one-quarter" value=@Model.ExpectedWorksCosts/>
                     </he-error-form-group>
                     <he-error-form-group asp-for="ExpectedOnCosts">
                         <gds-legend>
@@ -44,7 +42,7 @@
 
                         <gds-input govuk-formgroup-asp-for="@Model.ExpectedOnCosts" type="text"
                                    asp-hiddenlabeltext="Enter your expected on costs"
-                                   asp-prefixtext=@(GdsInputPrefixText.Pounds) class="govuk-!-width-one-quarter" value=@Model.ExpectedOnCosts />
+                                   asp-prefixtext=@(GdsInputPrefixText.Pounds) class="govuk-!-width-one-quarter" value=@Model.ExpectedOnCosts/>
                     </he-error-form-group>
                 </gds-field-set>
                 <gds-details>
@@ -65,7 +63,7 @@
 
         </gds-field-set>
         <gds-p>
-            <vc:return-to-application-link application-id="@Model.ApplicationId.ToString()" />
+            <vc:return-to-application-link application-id="@Model.ApplicationId.ToString()"/>
         </gds-p>
 
     </form>

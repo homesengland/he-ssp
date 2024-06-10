@@ -1,4 +1,5 @@
 using HE.Investment.AHP.Contract.Application;
+using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.WWW.Workflows;
 using HE.Investments.Common.Contract;
 using HE.Investments.FrontDoor.Shared.Project;
@@ -28,6 +29,7 @@ public static class ApplicationWorkflowFactory
         var application = new Application(
             new AhpApplicationId("new id"),
             new FrontDoorProjectId("project-id"),
+            new SiteId("site-id"),
             name,
             tenure,
             status,
