@@ -30,7 +30,7 @@ namespace HE.CRM.AHP.Plugins.Tests.Handlers.AhpApplication
             };
 
             var ahpApplicationTarget = ahpApplicationPreImage.Clone<invln_scheme>();
-            ahpApplicationTarget.StatusCode = new OptionSetValue((int)(int)invln_scheme_StatusCode.ApplicationSubmitted);
+            ahpApplicationTarget.StatusCode = new OptionSetValue((int)invln_scheme_StatusCode.ApplicationSubmitted);
 
             var homeType1 = new invln_HomeType() { Id = Guid.NewGuid(), invln_rtsoexempt = false, invln_application = ahpApplicationPreImage.ToEntityReference() };
             var homeType2 = new invln_HomeType() { Id = Guid.NewGuid(), invln_rtsoexempt = false, invln_application = ahpApplicationPreImage.ToEntityReference() };
@@ -75,7 +75,7 @@ namespace HE.CRM.AHP.Plugins.Tests.Handlers.AhpApplication
             };
 
             var ahpApplicationTarget = ahpApplicationPreImage.Clone<invln_scheme>();
-            ahpApplicationTarget.StatusCode = new OptionSetValue((int)(int)invln_scheme_StatusCode.ApplicationSubmitted);
+            ahpApplicationTarget.StatusCode = new OptionSetValue((int)invln_scheme_StatusCode.ApplicationSubmitted);
 
             var homeType1 = new invln_HomeType() { Id = Guid.NewGuid(), invln_rtsoexempt = true, invln_application = ahpApplicationPreImage.ToEntityReference() };
             var homeType2 = new invln_HomeType() { Id = Guid.NewGuid(), invln_rtsoexempt = true, invln_application = ahpApplicationPreImage.ToEntityReference() };
