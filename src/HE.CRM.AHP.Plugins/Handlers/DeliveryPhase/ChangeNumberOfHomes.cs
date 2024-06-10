@@ -23,7 +23,8 @@ namespace HE.CRM.AHP.Plugins.Handlers.DeliveryPhase
 
         public override bool CanWork()
         {
-            return ValueChanged(invln_DeliveryPhase.Fields.invln_NoofHomes) || ValueChanged(invln_DeliveryPhase.Fields.invln_buildactivitytype);
+            return ValueChanged(invln_DeliveryPhase.Fields.invln_NoofHomes) || ValueChanged(invln_DeliveryPhase.Fields.invln_buildactivitytype)
+                || ValueChanged(invln_DeliveryPhase.Fields.invln_rehabactivitytype) || ValueChanged(invln_DeliveryPhase.Fields.invln_nbrh);
         }
 
         public override void DoWork()
