@@ -178,14 +178,7 @@ public class DeliveryPhaseEntity : DomainEntity, IDeliveryPhaseEntity
             OperationResult.ThrowValidationError("IsSectionCompleted", ValidationErrorMessage.SectionIsNotCompleted);
         }
 
-        try
-        {
-            DeliveryPhaseMilestones.ValidateMilestoneDates(programme, dateTimeProvider);
-        }
-        catch (DomainValidationException)
-        {
-            OperationResult.ThrowValidationError("Milestones", "The information you have entered doesn't meet what is required, check and try again");
-        }
+        DeliveryPhaseMilestones.ValidateMilestoneDates(programme, dateTimeProvider);
 
         Status = _modificationTracker.Change(Status, SectionStatus.Completed);
     }

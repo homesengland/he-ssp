@@ -135,7 +135,7 @@ public class OperationResult : IOperationResult
 
     public OperationResult AddValidationErrors(IList<ErrorItem> errorItems)
     {
-        foreach (var errorItem in errorItems)
+        foreach (var errorItem in errorItems.Distinct())
         {
             Errors.Add(errorItem);
         }
@@ -145,7 +145,11 @@ public class OperationResult : IOperationResult
 
     public OperationResult AddValidationError(ErrorItem errorItem)
     {
-        Errors.Add(errorItem);
+        if (!Errors.Any(e => e == errorItem))
+        {
+            Errors.Add(errorItem);
+        }
+
         return this;
     }
 
@@ -182,7 +186,7 @@ public class OperationResult : IOperationResult
 
     public string GetAllErrors()
     {
-        return string.Join(Environment.NewLine, Errors.Select(x => x.ErrorMessage));
+        return string.Join(Environment.NewLine, Errors.Select(x => x.ErrorMessage).Distinct());
     }
 
     public void CheckErrors()
