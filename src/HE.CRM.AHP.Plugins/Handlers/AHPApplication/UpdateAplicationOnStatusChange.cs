@@ -42,7 +42,7 @@ namespace HE.CRM.AHP.Plugins.Handlers.AHPApplication
                 ExecutionData.Target.invln_representationsandwarrantiesconfirmation = false;
             }
             if (CurrentState.StatusCode.Value == (int)invln_scheme_StatusCode.ApplicationSubmitted ||
-                CurrentState.StatusCode.Value == (int)invln_scheme_StatusCode.UnderReviewPendingAssessment)
+                CurrentState.StatusCode.Value == (int)invln_scheme_StatusCode.UnderReviewInAssessment)
             {
                 var hometypes = _homeTypeRepository.GetByAttribute(invln_HomeType.Fields.invln_application,
                     CurrentState.Id,
