@@ -119,9 +119,32 @@ public class UserOrganisationController : Controller
     }
 
     [HttpGet("list")]
-    public IActionResult UserOrganisationsList()
+    public async Task<IActionResult> UserOrganisationList()
     {
-        return RedirectToAction("Index");
+        var userOrganisationList = await _mediator.Send(new GetUserOrganisationListQuery());
+
+        List<ActionModel> userOrganisationListActions = [
+            new(
+                "Add another organisation",
+                "SearchOrganisation",
+                "Organisation",
+                new { callback = Url.Action("UserOrganisationList") },
+                HasAccess: true,
+                DataTestId: "add-another-organisation-link"),
+            new(
+                "Manage your account",
+                "GetProfileDetails",
+                "User",
+                new { callback = Url.Action("UserOrganisationList") },
+                HasAccess: true,
+                DataTestId: "manage-profile-link"),
+        ];
+
+        return View(
+            "UserOrganisationList",
+            new UserOrganisationListModel(
+                userOrganisationList,
+                userOrganisationListActions));
     }
 
     private async Task<string?> GetStartNewProjectUrl()

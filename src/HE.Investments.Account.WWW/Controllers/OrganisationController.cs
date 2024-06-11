@@ -80,7 +80,7 @@ public class OrganisationController : Controller
         }
 
         await _mediator.Send(new LinkContactWithOrganisationCommand(organisationNumberOrId));
-        return RedirectToAction("UserOrganisationsList", "UserOrganisation");
+        return RedirectToAction("UserOrganisationList", "UserOrganisation");
     }
 
     [HttpGet("no-match-found")]
@@ -110,7 +110,7 @@ public class OrganisationController : Controller
             _mediator,
             command,
             onSuccess: () => Task.FromResult<IActionResult>(RedirectToAction(
-                nameof(UserOrganisationController.UserOrganisationsList),
+                nameof(UserOrganisationController.UserOrganisationList),
                 new ControllerName(nameof(UserOrganisationController)).WithoutPrefix())),
             onError: () => Task.FromResult<IActionResult>(View(model)),
             cancellationToken);

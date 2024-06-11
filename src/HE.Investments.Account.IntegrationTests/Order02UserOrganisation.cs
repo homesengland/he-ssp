@@ -8,6 +8,7 @@ using HE.Investments.Account.IntegrationTests.Pages;
 using HE.Investments.Account.WWW;
 using HE.Investments.Account.WWW.Views.User;
 using HE.Investments.Account.WWW.Views.UserOrganisation;
+using HE.Investments.Account.WWW.Views.UserOrganisation.Const;
 using HE.Investments.IntegrationTestsFramework;
 using HE.Investments.TestsUtils.Extensions;
 using Xunit;
