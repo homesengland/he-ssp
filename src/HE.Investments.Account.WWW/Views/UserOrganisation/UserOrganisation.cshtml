@@ -1,23 +1,16 @@
 @using HE.Investments.Account.WWW.Utils
 @using HE.Investments.Account.WWW.Views.Organisation
 @using HE.Investments.Account.WWW.Views.Shared.Components.ProjectStatusTagComponent
-@using HE.Investments.Common
 @using HE.Investments.Common.WWW.Components.ApplicationStatusTagComponent
-@using Microsoft.FeatureManagement
-@using System.Threading
 @using HE.Investments.Common.WWW.Components.ListCard
-@inject IFeatureManager FeatureManager
 @model HE.Investments.Account.WWW.Models.UserOrganisation.UserOrganisationModel;
 @{
     ViewData["Title"] = OrganisationPageTitles.OrganisationDashboard(Model.OrganisationName);
-    if (await FeatureManager.IsEnabledAsync(FeatureFlags.OrganisationsListImplemented, CancellationToken.None))
-    {
-        ViewBag.Breadcrumbs = BreadcrumbsBuilder
-            .New()
-            .WithOrganisations()
-            .WithOrganisation(Model.OrganisationName)
-            .Build();
-    }
+    ViewBag.Breadcrumbs = BreadcrumbsBuilder
+        .New()
+        .WithOrganisations()
+        .WithOrganisation(Model.OrganisationName)
+        .Build();
 }
 
 <div class="govuk-grid-column-full">

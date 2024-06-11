@@ -10,12 +10,13 @@ using HE.Investments.Common.WWW.Controllers;
 using HE.Investments.Common.WWW.Models;
 using HE.Investments.Common.WWW.Utils;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HE.Investments.Account.WWW.Controllers;
 
 [Route(OrganisationAccountEndpoints.Controller)]
-[AuthorizeWithoutLinkedOrganisationOnly]
+[Authorize]
 public class OrganisationController : Controller
 {
     private readonly IMediator _mediator;
@@ -80,7 +81,7 @@ public class OrganisationController : Controller
         }
 
         await _mediator.Send(new LinkContactWithOrganisationCommand(organisationNumberOrId));
-        return RedirectToAction("UserOrganisationList", "UserOrganisation");
+        return RedirectToAction("List", "UserOrganisations");
     }
 
     [HttpGet("no-match-found")]
@@ -110,8 +111,8 @@ public class OrganisationController : Controller
             _mediator,
             command,
             onSuccess: () => Task.FromResult<IActionResult>(RedirectToAction(
-                nameof(UserOrganisationController.UserOrganisationList),
-                new ControllerName(nameof(UserOrganisationController)).WithoutPrefix())),
+                nameof(UserOrganisationsController.List),
+                new ControllerName(nameof(UserOrganisationsController)).WithoutPrefix())),
             onError: () => Task.FromResult<IActionResult>(View(model)),
             cancellationToken);
     }

@@ -1,13 +1,16 @@
+@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Links
 @using HE.Investments.Common.WWW.Components.TextInput
 @using HE.Investments.Common.WWW.Components.FormButton
 @using HE.Investments.Account.WWW.Views.User
+@using HE.Investments.Common.WWW.Extensions
+@using Microsoft.AspNetCore.Mvc.TagHelpers
 @model HE.Investments.Account.WWW.Models.User.UserProfileDetailsModel;
 @{
     ViewData["Title"] = "Profile details";
     var marginClass = !string.IsNullOrWhiteSpace(Model.CallbackUrl) ? string.Empty : "govuk-!-margin-top-9";
 
     var programme = Context.Request.Query["programme"];
-    var callback = Context.Request.Query["callback"];
+    Context.Request.TryGetCallbackQueryParameter(out var callback);
 }
 
 <gds-div-grid-column-two-thirds>

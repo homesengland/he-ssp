@@ -9,9 +9,7 @@ public class BreadcrumbsBuilder : BreadcrumbsBuilderBase
 
     public BreadcrumbsBuilder WithOrganisations()
     {
-        // TODO: Fix link for AHP when organisations list will be ready
-        AddBreadcrumb("Your Organisations");
-
+        AddBreadcrumb("Your Organisations", nameof(UserOrganisationsController.List), GetControllerName(nameof(UserOrganisationsController)));
         return this;
     }
 

@@ -1,20 +1,24 @@
+@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Links
 @using HE.Investments.Account.WWW.Controllers
 @using HE.Investments.Account.WWW.Views.Organisation
 @using HE.Investments.Common.WWW.Utils
 @using HE.Investments.Common.WWW.Components.TextInput;
 @using HE.Investments.Account.Shared
+@using HE.Investments.Common.WWW.Extensions
+@using Microsoft.AspNetCore.Mvc.TagHelpers
 @inject IAccountUserContext AccountUserContext
 @model HE.Investments.Account.Contract.Organisation.Queries.OrganisationSearchModel;
 @{
     ViewData["Title"] = OrganisationPageTitles.SearchForYourOrganisation;
     var controllerName = new ControllerName(nameof(OrganisationController));
     var isLinkedWithOrganisation = await AccountUserContext.IsLinkedWithOrganisation();
+    var callback = Context.Request.TryGetCallbackQueryParameter(out var callbackUrl) ? callbackUrl : Url.Action("Index", "UserOrganisation");
 }
 
 <gds-div-grid-column-two-thirds>
     @if (isLinkedWithOrganisation)
     {
-        <gds-back-link href="@Url.Action("Index", "UserOrganisation")"></gds-back-link>
+    <gds-back-link href="@callback"></gds-back-link>
     }
 
     <div class="govuk-!-margin-bottom-8"></div>
