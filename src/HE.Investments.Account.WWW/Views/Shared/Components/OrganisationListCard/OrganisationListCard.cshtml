@@ -1,0 +1,35 @@
+@model HE.Investments.Account.WWW.Views.Shared.Components.OrganisationListCard.OrganisationListCardModel
+
+<div class="govuk-summary-card">
+    <div class="govuk-summary-card__title-wrapper">
+        <h2 class="govuk-summary-card__title">@Model.Header</h2>
+
+        <ul class="govuk-summary-card__actions">
+            <li class="govuk-summary-card__action">
+                <a class="govuk-link" href="@Model.HeaderLinkUrl">View organisation</a>
+            </li>
+        </ul>
+    </div>
+    <div class="govuk-summary-card__content">
+        <dl class="govuk-summary-list govuk-summary-list--no-border">
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Address
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    @Model.Street<br>@Model.City<br>@Model.PostalCode
+                </dd>
+            </div>
+
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Provider code
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    @Model.CompanyHouseNumber
+                </dd>
+            </div>
+        </dl>
+    </div>
+</div>
+

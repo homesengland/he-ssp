@@ -1,4 +1,4 @@
-namespace HE.Investments.Account.WWW.Views.UserOrganisation;
+namespace HE.Investments.Account.WWW.Views.UserOrganisation.Const;
 
 public static class UserOrganisationPageTitles
 {
