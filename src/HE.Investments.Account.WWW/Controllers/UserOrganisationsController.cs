@@ -1,4 +1,4 @@
-using HE.Investments.Account.Contract.UserOrganisation.Queries;
+using HE.Investments.Account.Contract.UserOrganisations.Queries;
 using HE.Investments.Account.Shared.Authorization.Attributes;
 using HE.Investments.Account.Shared.Routing;
 using HE.Investments.Account.WWW.Models.UserOrganisations;
