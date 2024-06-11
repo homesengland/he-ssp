@@ -8,13 +8,13 @@ namespace HE.Investment.AHP.Domain.Delivery.ValueObjects;
 public class MilestoneDetails<T> : ValueObject, IQuestion
     where T : DateValueObject
 {
-    protected MilestoneDetails(T? milestoneDate, MilestonePaymentDate? paymentDate)
+    protected MilestoneDetails(T? milestoneDate, MilestonePaymentDate? paymentDate, string milestoneNameLowercase)
     {
         if (milestoneDate != null &&
             paymentDate != null &&
             paymentDate.IsBefore(milestoneDate))
         {
-            throw new DomainValidationException("ClaimMilestonePaymentAt", "The milestone payment date must be on or after the milestone date");
+            throw new DomainValidationException("ClaimMilestonePaymentAt", $"The {milestoneNameLowercase} date must be before, or the same as, the forecast {milestoneNameLowercase} claim date");
         }
 
         MilestoneDate = milestoneDate;

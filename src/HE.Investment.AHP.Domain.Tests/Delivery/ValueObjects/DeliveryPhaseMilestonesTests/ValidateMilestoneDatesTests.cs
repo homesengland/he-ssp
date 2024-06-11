@@ -10,7 +10,7 @@ namespace HE.Investment.AHP.Domain.Tests.Delivery.ValueObjects.DeliveryPhaseMile
 
 public class ValidateMilestoneDatesTests
 {
-    private static readonly DateTime Now = DateTime.UtcNow;
+    private static readonly DateTime Now = new(2024, 05, 29, 10, 15, 20, DateTimeKind.Local);
 
     private readonly IDateTimeProvider _dateTimeProvider = Mock.Of<IDateTimeProvider>();
 

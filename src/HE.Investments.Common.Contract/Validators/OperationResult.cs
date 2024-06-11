@@ -186,7 +186,7 @@ public class OperationResult : IOperationResult
 
     public string GetAllErrors()
     {
-        return string.Join(Environment.NewLine, Errors.Select(x => x.ErrorMessage).Distinct());
+        return string.Join(Environment.NewLine, Errors.Select(x => x.ErrorMessage));
     }
 
     public void CheckErrors()
