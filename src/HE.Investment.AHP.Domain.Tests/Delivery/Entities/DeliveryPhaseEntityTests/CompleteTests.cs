@@ -212,7 +212,7 @@ public class CompleteTests
         var action = () => testCandidate.Complete(programme, IsSectionCompleted.Yes, _dateTimeProvider);
 
         // then
-        action.Should().Throw<DomainValidationException>().WithMessage("The information you have entered doesn't meet what is required, check and try again");
+        action.Should().Throw<DomainValidationException>().WithMessage("Dates fall outside of the programme requirements. Check your dates against the published funding requirements\nThe forecast start on site claim date must be before, or the same as, the forecast completion claim date");
     }
 
     private DeliveryPhaseEntityBuilder CreateValidBuilder()
