@@ -1,6 +1,6 @@
-namespace HE.Investments.Common.Models.App;
+namespace HE.Investments.Api.Config;
 
-public interface ICrmApiConfig
+public interface IApiConfig
 {
     string? BaseUri { get; }
 

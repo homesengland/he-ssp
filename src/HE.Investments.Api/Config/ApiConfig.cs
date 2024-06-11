@@ -1,6 +1,6 @@
-namespace HE.Investments.Common.Models.App;
+namespace HE.Investments.Api.Config;
 
-public class CrmApiConfig : ICrmApiConfig
+internal sealed class ApiConfig : IApiConfig
 {
     public string? BaseUri { get; set; }
 

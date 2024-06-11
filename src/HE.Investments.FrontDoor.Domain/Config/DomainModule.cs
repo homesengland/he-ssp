@@ -1,13 +1,18 @@
 using HE.Investments.Account.Shared.Config;
+using HE.Investments.Api.Extensions;
 using HE.Investments.Common;
 using HE.Investments.Common.CRM;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Utils;
+using HE.Investments.FrontDoor.Domain.Project;
+using HE.Investments.FrontDoor.Domain.Project.Api;
 using HE.Investments.FrontDoor.Domain.Project.Crm;
 using HE.Investments.FrontDoor.Domain.Project.Crm.Mappers;
 using HE.Investments.FrontDoor.Domain.Project.Repository;
 using HE.Investments.FrontDoor.Domain.Services;
 using HE.Investments.FrontDoor.Domain.Services.Strategies;
+using HE.Investments.FrontDoor.Domain.Site;
+using HE.Investments.FrontDoor.Domain.Site.Api;
 using HE.Investments.FrontDoor.Domain.Site.Crm;
 using HE.Investments.FrontDoor.Domain.Site.Repository;
 using HE.Investments.FrontDoor.Shared.Config;
@@ -35,8 +40,8 @@ public static class DomainModule
 
     private static IServiceCollection AddProject(this IServiceCollection services)
     {
-        services.AddApiCrmContext<IProjectCrmContext, ProjectCrmContext, ProjectCrmApiHttpClient, ProjectCrmContextSelectorDecorator>();
-        services.Decorate<IProjectCrmContext, RequestCacheProjectCrmContextDecorator>();
+        services.AddConditionalApiContext<IProjectContext, ProjectCrmContext, ProjectApiContext, ProjectContextSelectorDecorator>();
+        services.Decorate<IProjectContext, RequestCacheProjectContextDecorator>();
         services.AddScoped<IProjectRepository, ProjectRepository>();
         services.AddSingleton<IProjectCrmMapper, ProjectCrmMapper>();
 
@@ -45,8 +50,8 @@ public static class DomainModule
 
     private static IServiceCollection AddSite(this IServiceCollection services)
     {
-        services.AddApiCrmContext<ISiteCrmContext, SiteCrmContext, SiteCrmApiHttpClient, SiteCrmContextSelectorDecorator>();
-        services.Decorate<ISiteCrmContext, RequestCacheSiteCrmContextDecorator>();
+        services.AddConditionalApiContext<ISiteContext, SiteCrmContext, SiteApiContext, SiteContextSelectorDecorator>();
+        services.Decorate<ISiteContext, RequestCacheSiteContextDecorator>();
         services.AddScoped<ISiteRepository, SiteRepository>();
         services.AddScoped<IRemoveSiteRepository, SiteRepository>();
 

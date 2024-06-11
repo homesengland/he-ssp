@@ -1,10 +1,10 @@
 using System.Net;
 
-namespace HE.Investments.Common.CRM.Exceptions;
+namespace HE.Investments.Api.Exceptions;
 
-public sealed class CrmApiCommunicationException : CrmException
+public sealed class ApiCommunicationException : ApiException
 {
-    public CrmApiCommunicationException(HttpStatusCode statusCode, Exception? innerException = null, string? errorContent = null)
+    public ApiCommunicationException(HttpStatusCode statusCode, Exception? innerException = null, string? errorContent = null)
         : base($"Communication error occurred while accessing CRM API, HTTP code: {statusCode}.", innerException)
     {
         StatusCode = statusCode;

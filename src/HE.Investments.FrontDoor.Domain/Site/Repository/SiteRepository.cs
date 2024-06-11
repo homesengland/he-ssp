@@ -12,32 +12,32 @@ namespace HE.Investments.FrontDoor.Domain.Site.Repository;
 
 public class SiteRepository : ISiteRepository, IRemoveSiteRepository
 {
-    private readonly ISiteCrmContext _siteCrmContext;
+    private readonly ISiteContext _siteContext;
 
     private readonly PlanningStatusMapper _planningStatusMapper = new();
 
-    public SiteRepository(ISiteCrmContext siteCrmContext)
+    public SiteRepository(ISiteContext siteContext)
     {
-        _siteCrmContext = siteCrmContext;
+        _siteContext = siteContext;
     }
 
     public async Task<ProjectSitesEntity> GetProjectSites(FrontDoorProjectId projectId, UserAccount userAccount, CancellationToken cancellationToken)
     {
-        var sites = await _siteCrmContext.GetSites(projectId.Value, userAccount, new PagingRequestDto { pageNumber = 1, pageSize = 100 }, cancellationToken);
+        var sites = await _siteContext.GetSites(projectId.Value, userAccount, new PagingRequestDto { pageNumber = 1, pageSize = 100 }, cancellationToken);
 
         return new ProjectSitesEntity(projectId, sites.items.Select(x => ToDomain(x, projectId)).ToList());
     }
 
     public async Task<ProjectSiteEntity> GetSite(FrontDoorProjectId projectId, FrontDoorSiteId siteId, UserAccount userAccount, CancellationToken cancellationToken)
     {
-        var site = await _siteCrmContext.GetSite(projectId.Value, siteId.Value, userAccount, cancellationToken);
+        var site = await _siteContext.GetSite(projectId.Value, siteId.Value, userAccount, cancellationToken);
 
         return ToDomain(site, projectId);
     }
 
     public async Task<ProjectSiteEntity> Save(ProjectSiteEntity site, UserAccount userAccount, CancellationToken cancellationToken)
     {
-        var siteId = await _siteCrmContext.Save(
+        var siteId = await _siteContext.Save(
             site.ProjectId.Value,
             ToDto(site),
             userAccount.UserGlobalId.Value,
@@ -53,7 +53,7 @@ public class SiteRepository : ISiteRepository, IRemoveSiteRepository
 
     public async Task<string> Remove(FrontDoorSiteId siteId, UserAccount userAccount, CancellationToken cancellationToken)
     {
-        return await _siteCrmContext.Remove(siteId.Value, userAccount, cancellationToken);
+        return await _siteContext.Remove(siteId.Value, userAccount, cancellationToken);
     }
 
     private FrontDoorProjectSiteDto ToDto(ProjectSiteEntity entity)

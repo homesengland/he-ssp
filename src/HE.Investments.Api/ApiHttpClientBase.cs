@@ -3,18 +3,19 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using HE.Investments.Common.CRM.Exceptions;
-using HE.Investments.Common.Models.App;
+using HE.Investments.Api.Auth;
+using HE.Investments.Api.Config;
+using HE.Investments.Api.Exceptions;
 using Polly;
 using Polly.Retry;
 
-namespace HE.Investments.Common.CRM.Services;
+namespace HE.Investments.Api;
 
-public abstract class CrmApiHttpClient
+public abstract class ApiHttpClientBase
 {
     private readonly HttpClient _httpClient;
 
-    private readonly ICrmApiTokenProvider _crmApiTokenProvider;
+    private readonly IApiTokenProvider _apiTokenProvider;
 
     private readonly AsyncRetryPolicy<HttpResponseMessage> _httpPolicy;
 
@@ -25,12 +26,17 @@ public abstract class CrmApiHttpClient
         DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
     };
 
-    protected CrmApiHttpClient(HttpClient httpClient, ICrmApiTokenProvider crmApiTokenProvider, ICrmApiConfig config)
+    protected ApiHttpClientBase(HttpClient httpClient, IApiTokenProvider apiTokenProvider, IApiConfig config)
     {
         _httpClient = httpClient;
-        _crmApiTokenProvider = crmApiTokenProvider;
+        _apiTokenProvider = apiTokenProvider;
         _httpPolicy = Policy.HandleResult<HttpResponseMessage>(x => x.StatusCode is HttpStatusCode.RequestTimeout or >= HttpStatusCode.InternalServerError)
             .WaitAndRetryAsync(config.RetryCount, _ => TimeSpan.FromMilliseconds(config.RetryDelayInMilliseconds));
+    }
+
+    protected async Task<TResponse> SendAsync<TResponse>(string relativeUrl, HttpMethod method, CancellationToken cancellationToken)
+    {
+        return await SendAsync<TResponse>(CreateHttpRequestFactory(null, relativeUrl, method), cancellationToken);
     }
 
     protected async Task<TResponse> SendAsync<TRequest, TResponse>(
@@ -44,39 +50,47 @@ public abstract class CrmApiHttpClient
         return await SendAsync<TResponse>(CreateHttpRequestFactory(requestBody, relativeUrl, method), cancellationToken);
     }
 
-    private Func<Task<HttpRequestMessage>> CreateHttpRequestFactory(string requestBody, string relativeUrl, HttpMethod method)
+    private Func<Task<HttpRequestMessage>> CreateHttpRequestFactory(string? requestBody, string relativeUrl, HttpMethod method)
     {
-        return async () => new(method, relativeUrl)
+        return async () =>
         {
-            Headers = { Authorization = new AuthenticationHeaderValue("Bearer", await _crmApiTokenProvider.GetToken()) },
-            Content = new StringContent(requestBody, Encoding.UTF8, "application/json"),
+            var request = new HttpRequestMessage(method, relativeUrl)
+            {
+                Headers = { Authorization = new AuthenticationHeaderValue("Bearer", await _apiTokenProvider.GetToken()) },
+            };
+
+            if (!string.IsNullOrEmpty(requestBody))
+            {
+                request.Content = new StringContent(requestBody, Encoding.UTF8, "application/json");
+            }
+
+            return request;
         };
     }
 
     private async Task<TResponse> SendAsync<TResponse>(Func<Task<HttpRequestMessage>> httpRequestFactory, CancellationToken cancellationToken)
     {
         using var httpResponse = await SendHttpRequestAsync(httpRequestFactory, cancellationToken);
-
         if (!httpResponse.IsSuccessStatusCode)
         {
             var errorContent = await httpResponse.Content.ReadAsStringAsync(cancellationToken);
-            throw new CrmApiCommunicationException(httpResponse.StatusCode, errorContent: errorContent);
+            throw new ApiCommunicationException(httpResponse.StatusCode, errorContent: errorContent);
         }
 
         var responseContent = await httpResponse.Content.ReadAsStringAsync(cancellationToken);
         if (string.IsNullOrEmpty(responseContent))
         {
-            throw new CrmApiSerializationException(responseContent: responseContent);
+            throw new ApiSerializationException(responseContent: responseContent);
         }
 
         try
         {
             return JsonSerializer.Deserialize<TResponse>(responseContent, _jsonSerializerOptions) ??
-                   throw new CrmApiSerializationException(responseContent: responseContent);
+                   throw new ApiSerializationException(responseContent: responseContent);
         }
         catch (Exception ex) when (ex is JsonException or NotSupportedException or ArgumentNullException)
         {
-            throw new CrmApiSerializationException(ex, responseContent);
+            throw new ApiSerializationException(ex, responseContent);
         }
     }
 

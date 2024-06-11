@@ -8,7 +8,7 @@ using HE.Investments.FrontDoor.Shared.Project.Crm;
 
 namespace HE.Investments.FrontDoor.Domain.Site.Crm;
 
-public class SiteCrmContext : ISiteCrmContext
+public class SiteCrmContext : ISiteContext
 {
     private readonly ICrmService _service;
 

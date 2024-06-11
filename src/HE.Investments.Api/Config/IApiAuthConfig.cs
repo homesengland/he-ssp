@@ -1,6 +1,6 @@
-namespace HE.Investments.Common.Models.App;
+namespace HE.Investments.Api.Config;
 
-public interface ICrmApiAuthConfig
+public interface IApiAuthConfig
 {
     string? TenantId { get; }
 

@@ -1,23 +1,23 @@
 using HE.Investments.Common.Infrastructure.Cache.Interfaces;
 using HE.Investments.Common.Utils;
 
-namespace HE.Investments.Common.CRM.Services;
+namespace HE.Investments.Api.Auth;
 
-internal sealed class CachedCrmApiTokenProvider : ICrmApiTokenProvider
+internal sealed class CachedApiTokenProvider : IApiTokenProvider
 {
     private const string CrmApiTokenCacheKey = "crm-api-token";
 
     private const int InvalidateCachedTokenTimeoutInMinutes = 5;
 
-    private readonly CrmApiTokenProvider _tokenProvider;
+    private readonly ApiTokenProvider _tokenProvider;
 
     private readonly ICacheService _cacheService;
 
     private readonly IDateTimeProvider _dateTimeProvider;
 
-    private CrmApiTokenProvider.CrmApiAccessToken? _token;
+    private ApiTokenProvider.CrmApiAccessToken? _token;
 
-    public CachedCrmApiTokenProvider(CrmApiTokenProvider tokenProvider, ICacheService cacheService, IDateTimeProvider dateTimeProvider)
+    public CachedApiTokenProvider(ApiTokenProvider tokenProvider, ICacheService cacheService, IDateTimeProvider dateTimeProvider)
     {
         _tokenProvider = tokenProvider;
         _cacheService = cacheService;

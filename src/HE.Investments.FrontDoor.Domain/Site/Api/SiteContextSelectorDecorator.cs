@@ -1,25 +1,26 @@
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investments.Account.Shared.User;
 using HE.Investments.Common;
+using HE.Investments.FrontDoor.Domain.Site.Crm;
 using Microsoft.FeatureManagement;
 
-namespace HE.Investments.FrontDoor.Domain.Site.Crm;
+namespace HE.Investments.FrontDoor.Domain.Site.Api;
 
-internal sealed class SiteCrmContextSelectorDecorator : ISiteCrmContext
+internal sealed class SiteContextSelectorDecorator : ISiteContext
 {
     private readonly IFeatureManager _featureManager;
 
     private readonly Func<SiteCrmContext> _crmContextFactory;
 
-    private readonly Func<SiteCrmApiHttpClient> _httpClientFactory;
+    private readonly Func<SiteApiContext> _apiContextFactory;
 
-    public SiteCrmContextSelectorDecorator(
+    public SiteContextSelectorDecorator(
         IFeatureManager featureManager,
         Func<SiteCrmContext> crmContextFactory,
-        Func<SiteCrmApiHttpClient> httpClientFactory)
+        Func<SiteApiContext> apiContextFactory)
     {
         _featureManager = featureManager;
-        _httpClientFactory = httpClientFactory;
+        _apiContextFactory = apiContextFactory;
         _crmContextFactory = crmContextFactory;
     }
 
@@ -29,33 +30,33 @@ internal sealed class SiteCrmContextSelectorDecorator : ISiteCrmContext
         PagingRequestDto pagination,
         CancellationToken cancellationToken)
     {
-        var context = await GetCrmContext();
+        var context = await GetSiteContext();
         return await context.GetSites(projectId, userAccount, pagination, cancellationToken);
     }
 
     public async Task<FrontDoorProjectSiteDto> GetSite(string projectId, string siteId, UserAccount userAccount, CancellationToken cancellationToken)
     {
-        var context = await GetCrmContext();
+        var context = await GetSiteContext();
         return await context.GetSite(projectId, siteId, userAccount, cancellationToken);
     }
 
     public async Task<string> Save(string projectId, FrontDoorProjectSiteDto dto, string userGlobalId, string organisationId, CancellationToken cancellationToken)
     {
-        var context = await GetCrmContext();
+        var context = await GetSiteContext();
         return await context.Save(projectId, dto, userGlobalId, organisationId, cancellationToken);
     }
 
     public async Task<string> Remove(string siteId, UserAccount userAccount, CancellationToken cancellationToken)
     {
-        var context = await GetCrmContext();
+        var context = await GetSiteContext();
         return await context.Remove(siteId, userAccount, cancellationToken);
     }
 
-    private async Task<ISiteCrmContext> GetCrmContext()
+    private async Task<ISiteContext> GetSiteContext()
     {
         if (await _featureManager.IsEnabledAsync(FeatureFlags.UseFrontDoorApi))
         {
-            return _httpClientFactory();
+            return _apiContextFactory();
         }
 
         return _crmContextFactory();

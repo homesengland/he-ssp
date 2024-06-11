@@ -1,6 +1,6 @@
-namespace HE.Investments.Common.Models.App;
+namespace HE.Investments.Api.Config;
 
-public class CrmApiAuthConfig : ICrmApiAuthConfig
+internal sealed class ApiAuthConfig : IApiAuthConfig
 {
     public string? TenantId { get; set; }
 

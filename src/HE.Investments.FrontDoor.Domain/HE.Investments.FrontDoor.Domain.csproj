@@ -11,6 +11,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\HE.Investments.Account.Shared\HE.Investments.Account.Shared.csproj"/>
+    <ProjectReference Include="..\HE.Investments.Api\HE.Investments.Api.csproj" />
     <ProjectReference Include="..\HE.Investments.Common.CRM\HE.Investments.Common.CRM.csproj"/>
     <ProjectReference Include="..\HE.Investments.Common\HE.Investments.Common.csproj"/>
     <ProjectReference Include="..\HE.Investments.FrontDoor.Contract\HE.Investments.FrontDoor.Contract.csproj"/>

@@ -1,13 +1,14 @@
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investments.Account.Shared.User;
-using HE.Investments.Common.CRM.Services;
-using HE.Investments.Common.Models.App;
+using HE.Investments.Api;
+using HE.Investments.Api.Auth;
+using HE.Investments.Api.Config;
 
-namespace HE.Investments.FrontDoor.Domain.Site.Crm;
+namespace HE.Investments.FrontDoor.Domain.Site.Api;
 
-public sealed class SiteCrmApiHttpClient : CrmApiHttpClient, ISiteCrmContext
+public sealed class SiteApiContext : ApiHttpClientBase, ISiteContext
 {
-    public SiteCrmApiHttpClient(HttpClient httpClient, ICrmApiTokenProvider tokenProvider, ICrmApiConfig config)
+    public SiteApiContext(HttpClient httpClient, IApiTokenProvider tokenProvider, IApiConfig config)
         : base(httpClient, tokenProvider, config)
     {
     }
@@ -15,7 +16,7 @@ public sealed class SiteCrmApiHttpClient : CrmApiHttpClient, ISiteCrmContext
     public Task<PagedResponseDto<FrontDoorProjectSiteDto>> GetSites(string projectId, UserAccount userAccount, PagingRequestDto pagination, CancellationToken cancellationToken)
     {
         // TODO: AB#98936 Implement API connection
-        throw new NotImplementedException();
+        return Task.FromResult(new PagedResponseDto<FrontDoorProjectSiteDto> { items = [], paging = pagination, totalItemsCount = 0, });
     }
 
     public Task<FrontDoorProjectSiteDto> GetSite(string projectId, string siteId, UserAccount userAccount, CancellationToken cancellationToken)

@@ -1,3 +1,4 @@
+using HE.Investments.Api.Config;
 using HE.Investments.Common;
 using HE.Investments.Common.Config;
 using HE.Investments.Common.Contract.Enum;
@@ -40,6 +41,7 @@ public static class FrontDoorWebModule
         AddConfiguration(services);
         services.AddDomainModule();
         services.AddProgrammeSubdomainModule();
+        services.AddApiModule();
         services.AddHttpUserContext();
         services.AddEventInfrastructure();
     }
@@ -50,8 +52,6 @@ public static class FrontDoorWebModule
         services.AddSingleton<IErrorViewPaths, FrontDoorErrorViewPaths>();
         services.AddAppConfiguration<ContactInfoOptions>("ContactInfo");
         services.AddAppConfiguration<IDataverseConfig, DataverseConfig>("Dataverse");
-        services.AddAppConfiguration<ICrmApiConfig, CrmApiConfig>("CrmApi");
-        services.AddAppConfiguration<ICrmApiAuthConfig, CrmApiAuthConfig>("CrmApi:Auth");
         services.AddScoped<IProjectSummaryViewModelFactory, ProjectSummaryViewModelFactory>();
         services.AddAppConfiguration<ProgrammeUrlConfig>("ProgrammeUrl");
     }

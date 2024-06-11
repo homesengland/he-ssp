@@ -1,13 +1,13 @@
-using HE.Investments.Common.Models.App;
+using HE.Investments.Api.Config;
 using Microsoft.Identity.Client;
 
-namespace HE.Investments.Common.CRM.Services;
+namespace HE.Investments.Api.Auth;
 
-internal sealed class CrmApiTokenProvider
+internal sealed class ApiTokenProvider
 {
-    private readonly ICrmApiAuthConfig _config;
+    private readonly IApiAuthConfig _config;
 
-    public CrmApiTokenProvider(ICrmApiAuthConfig config)
+    public ApiTokenProvider(IApiAuthConfig config)
     {
         _config = config;
     }
