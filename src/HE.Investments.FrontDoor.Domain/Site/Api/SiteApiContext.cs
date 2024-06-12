@@ -3,7 +3,8 @@ using HE.Investments.Account.Shared.User;
 using HE.Investments.Api;
 using HE.Investments.Api.Auth;
 using HE.Investments.Api.Config;
-using HE.Investments.FrontDoor.Domain.Project.Api.Contract.Responses;
+using HE.Investments.Common.Contract.Pagination;
+using HE.Investments.Common.Extensions;
 using HE.Investments.FrontDoor.Domain.Site.Api.Contract.Requests;
 using HE.Investments.FrontDoor.Domain.Site.Api.Contract.Responses;
 using HE.Investments.FrontDoor.Domain.Site.Api.Mappers;
@@ -17,10 +18,24 @@ public sealed class SiteApiContext : ApiHttpClientBase, ISiteContext
     {
     }
 
-    public Task<PagedResponseDto<FrontDoorProjectSiteDto>> GetSites(string projectId, UserAccount userAccount, PagingRequestDto pagination, CancellationToken cancellationToken)
+    public async Task<PagedResponseDto<FrontDoorProjectSiteDto>> GetSites(
+        string projectId,
+        UserAccount userAccount,
+        PagingRequestDto pagination,
+        CancellationToken cancellationToken)
     {
-        // TODO: AB#98936 Implement API connection
-        return Task.FromResult(new PagedResponseDto<FrontDoorProjectSiteDto> { items = [], paging = pagination, totalItemsCount = 0, });
+        var response = await SendAsync<GetMultipleSitesResponse>(SiteApiUrls.GetSites(projectId), HttpMethod.Get, cancellationToken);
+        var sites = response
+            .TakePage(new PaginationRequest(pagination.pageNumber, pagination.pageSize))
+            .Select(GetSiteResponseMapper.Map)
+            .ToList();
+
+        return new PagedResponseDto<FrontDoorProjectSiteDto>
+        {
+            items = sites,
+            paging = pagination,
+            totalItemsCount = 0,
+        };
     }
 
     public async Task<FrontDoorProjectSiteDto> GetSite(string projectId, string siteId, UserAccount userAccount, CancellationToken cancellationToken)
@@ -43,9 +58,9 @@ public sealed class SiteApiContext : ApiHttpClientBase, ISiteContext
         return response.Result;
     }
 
-    public Task<string> Remove(string siteId, UserAccount userAccount, CancellationToken cancellationToken)
+    public async Task Remove(string siteId, UserAccount userAccount, CancellationToken cancellationToken)
     {
-        // TODO: AB#98936 Implement API connection
-        throw new NotImplementedException();
+        var request = new RemoveSiteRequest(siteId.ToGuidAsString());
+        await SendAsync<RemoveSiteRequest, RemoveSiteResponse>(request, SiteApiUrls.RemoveSite, HttpMethod.Post, cancellationToken);
     }
 }

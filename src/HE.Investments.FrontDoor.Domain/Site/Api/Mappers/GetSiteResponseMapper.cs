@@ -1,5 +1,5 @@
 using HE.Common.IntegrationModel.PortalIntegrationModel;
-using HE.Investments.FrontDoor.Domain.Project.Api.Contract.Responses;
+using HE.Investments.FrontDoor.Domain.Site.Api.Contract.Responses;
 
 namespace HE.Investments.FrontDoor.Domain.Site.Api.Mappers;
 

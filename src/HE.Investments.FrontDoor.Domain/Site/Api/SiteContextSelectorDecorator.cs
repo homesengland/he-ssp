@@ -46,10 +46,10 @@ internal sealed class SiteContextSelectorDecorator : ISiteContext
         return await context.Save(projectId, dto, userGlobalId, organisationId, cancellationToken);
     }
 
-    public async Task<string> Remove(string siteId, UserAccount userAccount, CancellationToken cancellationToken)
+    public async Task Remove(string siteId, UserAccount userAccount, CancellationToken cancellationToken)
     {
         var context = await GetSiteContext();
-        return await context.Remove(siteId, userAccount, cancellationToken);
+        await context.Remove(siteId, userAccount, cancellationToken);
     }
 
     private async Task<ISiteContext> GetSiteContext()

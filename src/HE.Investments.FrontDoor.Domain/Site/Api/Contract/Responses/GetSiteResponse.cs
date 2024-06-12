@@ -1,4 +1,4 @@
-namespace HE.Investments.FrontDoor.Domain.Project.Api.Contract.Responses;
+namespace HE.Investments.FrontDoor.Domain.Site.Api.Contract.Responses;
 
 internal sealed record GetSiteResponse(
     DateTimeOffset CreatedOn,

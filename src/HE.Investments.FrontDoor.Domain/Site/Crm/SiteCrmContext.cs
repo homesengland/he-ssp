@@ -73,7 +73,7 @@ public class SiteCrmContext : ISiteContext
             cancellationToken);
     }
 
-    public async Task<string> Remove(string siteId, UserAccount userAccount, CancellationToken cancellationToken)
+    public async Task Remove(string siteId, UserAccount userAccount, CancellationToken cancellationToken)
     {
         var request = new invln_deactivatefrontdoorsiteRequest
         {
@@ -81,7 +81,7 @@ public class SiteCrmContext : ISiteContext
             invln_usehetables = "true",
         };
 
-        return await _service.ExecuteAsync<invln_deactivatefrontdoorsiteRequest, invln_deactivatefrontdoorsiteResponse>(
+        await _service.ExecuteAsync<invln_deactivatefrontdoorsiteRequest, invln_deactivatefrontdoorsiteResponse>(
             request,
             r => r.invln_sitedeactivated,
             cancellationToken);
