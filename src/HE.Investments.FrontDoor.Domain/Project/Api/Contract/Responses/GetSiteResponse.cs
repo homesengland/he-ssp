@@ -5,8 +5,8 @@ internal sealed record GetSiteResponse(
     string? LocalAuthority,
     string? LocalAuthorityName,
     string? SiteId,
-    string? SiteName,
+    string SiteName,
     int? NumberOfHomesEnabledBuilt,
     int? PlanningStatus,
     string? LocalAuthorityCode,
-    string? ProjectRecordId);
+    string ProjectRecordId);

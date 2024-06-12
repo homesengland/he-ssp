@@ -3,6 +3,10 @@ using HE.Investments.Account.Shared.User;
 using HE.Investments.Api;
 using HE.Investments.Api.Auth;
 using HE.Investments.Api.Config;
+using HE.Investments.FrontDoor.Domain.Project.Api.Contract.Responses;
+using HE.Investments.FrontDoor.Domain.Site.Api.Contract.Requests;
+using HE.Investments.FrontDoor.Domain.Site.Api.Contract.Responses;
+using HE.Investments.FrontDoor.Domain.Site.Api.Mappers;
 
 namespace HE.Investments.FrontDoor.Domain.Site.Api;
 
@@ -19,16 +23,24 @@ public sealed class SiteApiContext : ApiHttpClientBase, ISiteContext
         return Task.FromResult(new PagedResponseDto<FrontDoorProjectSiteDto> { items = [], paging = pagination, totalItemsCount = 0, });
     }
 
-    public Task<FrontDoorProjectSiteDto> GetSite(string projectId, string siteId, UserAccount userAccount, CancellationToken cancellationToken)
+    public async Task<FrontDoorProjectSiteDto> GetSite(string projectId, string siteId, UserAccount userAccount, CancellationToken cancellationToken)
     {
-        // TODO: AB#98936 Implement API connection
-        throw new NotImplementedException();
+        var response = await SendAsync<GetSiteResponse>(SiteApiUrls.GetSite(siteId), HttpMethod.Get, cancellationToken);
+
+        return GetSiteResponseMapper.Map(response);
     }
 
-    public Task<string> Save(string projectId, FrontDoorProjectSiteDto dto, string userGlobalId, string organisationId, CancellationToken cancellationToken)
+    public async Task<string> Save(
+        string projectId,
+        FrontDoorProjectSiteDto dto,
+        string userGlobalId,
+        string organisationId,
+        CancellationToken cancellationToken)
     {
-        // TODO: AB#98936 Implement API connection
-        throw new NotImplementedException();
+        var request = SaveSiteRequestMapper.Map(dto, projectId);
+        var response = await SendAsync<SaveSiteRequest, SaveSiteResponse>(request, SiteApiUrls.SaveSite, HttpMethod.Post, cancellationToken);
+
+        return response.Result;
     }
 
     public Task<string> Remove(string siteId, UserAccount userAccount, CancellationToken cancellationToken)

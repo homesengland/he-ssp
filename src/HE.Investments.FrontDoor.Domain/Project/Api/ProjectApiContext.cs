@@ -42,7 +42,7 @@ public sealed class ProjectApiContext : ApiHttpClientBase, IProjectContext
     {
         var response = await SendAsync<CheckProjectExistsRequest, CheckProjectExistsResponse>(
             new CheckProjectExistsRequest(organisationId.ToGuidAsString(), projectName),
-            "CheckProjectExists",
+            ProjectApiUrls.IsThereProjectWithName,
             HttpMethod.Post,
             cancellationToken);
 
@@ -53,7 +53,7 @@ public sealed class ProjectApiContext : ApiHttpClientBase, IProjectContext
     {
         var response = await SendAsync<SaveProjectRequest, SaveProjectResponse>(
             SaveProjectRequestMapper.Map(dto, organisationId),
-            "UpsertProject",
+            ProjectApiUrls.SaveProject,
             HttpMethod.Post,
             cancellationToken);
 
@@ -62,7 +62,7 @@ public sealed class ProjectApiContext : ApiHttpClientBase, IProjectContext
 
     private async Task<FrontDoorProjectDto> GetProject(string projectId, CancellationToken cancellationToken)
     {
-        var response = await SendAsync<GetProjectResponse>($"getProject/{projectId.ToGuidAsString()}", HttpMethod.Get, cancellationToken);
+        var response = await SendAsync<GetProjectResponse>(ProjectApiUrls.GetProject(projectId), HttpMethod.Get, cancellationToken);
 
         return GetProjectResponseMapper.Map(response);
     }
