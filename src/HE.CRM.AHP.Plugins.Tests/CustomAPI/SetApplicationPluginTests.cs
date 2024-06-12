@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text.Json;
 using DataverseModel;
 using FakeXrmEasy;
@@ -22,7 +21,9 @@ namespace HE.CRM.AHP.Plugins.Tests.CustomApi
         [TestInitialize]
         public void Initialize()
         {
+#pragma warning disable CS0618 // Type or member is obsolete
             fakedContext = new XrmFakedContext();
+#pragma warning restore CS0618 // Type or member is obsolete
             pluginContext = fakedContext.GetDefaultPluginContext();
 
             var entityMetadata = new EntityMetadata()
@@ -59,6 +60,7 @@ namespace HE.CRM.AHP.Plugins.Tests.CustomApi
                 invln_externalid = userId.ToString()
             };
 
+#pragma warning disable CS0618 // Type or member is obsolete
             fakedContext.Initialize(new List<Entity>()
             {
                 new invln_scheme()
@@ -71,6 +73,7 @@ namespace HE.CRM.AHP.Plugins.Tests.CustomApi
                 },
                 contact
             });
+#pragma warning restore CS0618 // Type or member is obsolete
 
             var metadata = fakedContext.GetEntityMetadataByName("contact");
             var keymetadata = new EntityKeyMetadata[]
@@ -87,7 +90,7 @@ namespace HE.CRM.AHP.Plugins.Tests.CustomApi
             pluginContext.InputParameters = new ParameterCollection
             {
                 { invln_setahpapplicationRequest.Fields.invln_application, JsonSerializer.Serialize(app)},
-                { invln_setahpapplicationRequest.Fields.invln_fieldstoupdate, $"{invln_scheme.Fields.invln_oncosts}"},
+                { invln_setahpapplicationRequest.Fields.invln_fieldstoupdate, $"{invln_scheme.Fields.invln_expectedoncosts}"},
                 { invln_setahpapplicationRequest.Fields.invln_organisationid, organizationId.ToString()},
                 { invln_setahpapplicationRequest.Fields.invln_userid, userId.ToString()}
             };

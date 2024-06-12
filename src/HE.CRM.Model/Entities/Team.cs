@@ -130,7 +130,6 @@ namespace DataverseModel
 			public const string team_invln_ahpproject = "team_invln_ahpproject";
 			public const string team_invln_ahpstatuschange = "team_invln_ahpstatuschange";
 			public const string team_invln_borrowerpreviousschemes = "team_invln_borrowerpreviousschemes";
-			public const string team_invln_comment = "team_invln_comment";
 			public const string team_invln_conditions = "team_invln_conditions";
 			public const string team_invln_consortium = "team_invln_consortium";
 			public const string team_invln_consortiummember = "team_invln_consortiummember";
@@ -1472,26 +1471,6 @@ namespace DataverseModel
 				this.OnPropertyChanging("team_invln_borrowerpreviousschemes");
 				this.SetRelatedEntities<DataverseModel.invln_BorrowerPreviousSchemes>("team_invln_borrowerpreviousschemes", null, value);
 				this.OnPropertyChanged("team_invln_borrowerpreviousschemes");
-			}
-		}
-		
-		/// <summary>
-		/// 1:N team_invln_comment
-		/// </summary>
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("team_invln_comment")]
-		public System.Collections.Generic.IEnumerable<DataverseModel.invln_comment> team_invln_comment
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetRelatedEntities<DataverseModel.invln_comment>("team_invln_comment", null);
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("team_invln_comment");
-				this.SetRelatedEntities<DataverseModel.invln_comment>("team_invln_comment", null, value);
-				this.OnPropertyChanged("team_invln_comment");
 			}
 		}
 		

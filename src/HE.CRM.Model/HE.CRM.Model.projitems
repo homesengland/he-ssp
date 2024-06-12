@@ -231,6 +231,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\Goal_FiscalPeriod.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\Goal_FiscalYear.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\he_Assistivesoftwaresupportlist.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OptionSets\he_FrontDoorDecision.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\he_GovernmentOfficeRegion.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\he_howcouldweimprovethecrm.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\he_HoweasywasittousetheCRM.cs" />
@@ -612,6 +613,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\msdyn_SuggestedPriority.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\msdyn_SuggestionControlType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\msdyn_SuggestionType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OptionSets\msdyn_SurveyProvider.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\msdyn_TargetAudience.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\msdyn_TimeCostActualsSource.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\msdyn_TimeEntryGenerationStrategy.cs" />

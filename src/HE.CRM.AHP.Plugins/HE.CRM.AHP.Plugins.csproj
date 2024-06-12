@@ -97,6 +97,7 @@
   <ItemGroup>
     <Compile Include="Common\AHPConst.cs" />
     <Compile Include="CrmPluginRegistrationAttribute.cs" />
+    <Compile Include="Handlers\AHPApplication\PopulateFieldsForApplicationReportHandler.cs" />
     <Compile Include="Handlers\AHPApplication\ChangeExternalStatusOnInternalStatusChangeHandler.cs" />
     <Compile Include="Handlers\AHPApplication\CheckIfApplicationWithNewNameExistsHandler.cs" />
     <Compile Include="Handlers\AHPApplication\CreateDocumentLocationOnCreateHandler.cs" />
@@ -221,6 +222,7 @@
     <Compile Include="Plugins\AhpApplication\CheckIfApplicationWithNewNameExistsPlugin.cs" />
     <Compile Include="Plugins\AhpApplication\PostUpdate.cs" />
     <Compile Include="Plugins\AhpApplication\CreateDocumentLocationOnCreatePlugin.cs" />
+    <Compile Include="Plugins\AhpApplication\PreUpdate.cs" />
     <Compile Include="Plugins\AhpStatusChange\SendNotificationOnCreatePlugin.cs" />
     <Compile Include="Plugins\ContactWebrole\SendNotificationOnAdminRoleGrantedPlugin.cs" />
     <Compile Include="Plugins\ContactWebrole\SendNotificationOnRoleModificationPlugin.cs" />
@@ -280,6 +282,7 @@
     <Compile Include="Services\AhpProject\IAhpProjectService.cs" />
     <Compile Include="Services\AhpStatusChange\AhpStatusChangeService.cs" />
     <Compile Include="Services\AhpStatusChange\IAhpStatusChangeService.cs" />
+    <Compile Include="Services\Application\ApplicationCalculationService.cs" />
     <Compile Include="Services\Application\ApplicationService.cs" />
     <Compile Include="Services\Application\IApplicationService.cs" />
     <Compile Include="Services\Consortium\ConsortiumService.cs" />
