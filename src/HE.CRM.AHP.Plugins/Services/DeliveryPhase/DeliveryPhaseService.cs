@@ -206,7 +206,7 @@ namespace HE.CRM.AHP.Plugins.Services.DeliveryPhase
             {
                 if (deliveryPhaseToUpdateOrCreate == null)
                 {
-                    TracingService.Trace($"CalculateFundings");
+                    TracingService.Trace($"CalculateFundings deliveryPhaseToUpdateOrCreate == null");
                     CalculateFundings(deliveryPhaseMapped, acquisitionPercentageValue, startOnSitePercentageValue, completionPercentageValue, fundingForPhase);
                 }
                 else
@@ -233,7 +233,6 @@ namespace HE.CRM.AHP.Plugins.Services.DeliveryPhase
                                                invln_DeliveryPhase.Fields.invln_CompletionValue,
                                     });
             }
-
             if (deliveryPhase.invln_AcquisitionPercentageValue == null && deliveryPhase.invln_StartOnSitePercentageValue == null && deliveryPhase.invln_CompletionPercentageValue == null)
             {
                 deliveryPhase.invln_AcquisitionPercentageValue = acquisitionPercentageValue;
@@ -276,6 +275,7 @@ namespace HE.CRM.AHP.Plugins.Services.DeliveryPhase
                                             + deliveryPhase.invln_StartOnSiteValue.Value
                                             + deliveryPhase.invln_CompletionValue.Value);
             }
+            TracingService.Trace("End Of Calculation");
         }
 
         private void CalculateFieldValue(invln_DeliveryPhase deliveryPhase, decimal fundingForPhase, invln_DeliveryPhase df)
