@@ -36,7 +36,7 @@ public class ValidateMilestoneDatesTests
         var action = () => milestones.ValidateMilestoneDates(programme, _dateTimeProvider);
 
         // then
-        action.Should().Throw<DomainValidationException>().WithMessage("Milestone dates should follow each other");
+        action.Should().Throw<DomainValidationException>().WithMessage("The acquisition date must be before, or the same as, the start on site date");
     }
 
     [Fact]
@@ -54,7 +54,7 @@ public class ValidateMilestoneDatesTests
         var action = () => milestones.ValidateMilestoneDates(programme, _dateTimeProvider);
 
         // then
-        action.Should().Throw<DomainValidationException>().WithMessage("Milestone dates should follow each other");
+        action.Should().Throw<DomainValidationException>().WithMessage("The start on site date must be before, or the same as, the completion date");
     }
 
     [Fact]
@@ -72,7 +72,7 @@ public class ValidateMilestoneDatesTests
         var action = () => milestones.ValidateMilestoneDates(programme, _dateTimeProvider);
 
         // then
-        action.Should().Throw<DomainValidationException>().WithMessage("Milestone claim dates should follow each other");
+        action.Should().Throw<DomainValidationException>().WithMessage("The forecast acquisition claim date must be before, or the same as, the forecast start on site claim date");
     }
 
     [Fact]
@@ -90,7 +90,7 @@ public class ValidateMilestoneDatesTests
         var action = () => milestones.ValidateMilestoneDates(programme, _dateTimeProvider);
 
         // then
-        action.Should().Throw<DomainValidationException>().WithMessage("Milestone claim dates should follow each other");
+        action.Should().Throw<DomainValidationException>().WithMessage("The forecast start on site claim date must be before, or the same as, the forecast completion claim date");
     }
 
     [Fact]
@@ -108,7 +108,7 @@ public class ValidateMilestoneDatesTests
         var action = () => milestones.ValidateMilestoneDates(programme, _dateTimeProvider);
 
         // then
-        action.Should().Throw<DomainValidationException>().WithMessage("Milestone claim dates should be withing Programme Funding dates");
+        action.Should().Throw<DomainValidationException>().WithMessage("Dates fall outside of the programme requirements. Check your dates against the published funding requirements");
     }
 
     [Fact]
@@ -126,7 +126,7 @@ public class ValidateMilestoneDatesTests
         var action = () => milestones.ValidateMilestoneDates(programme, _dateTimeProvider);
 
         // then
-        action.Should().Throw<DomainValidationException>().WithMessage("Milestone claim dates should be withing Programme Funding dates");
+        action.Should().Throw<DomainValidationException>().WithMessage("Dates fall outside of the programme requirements. Check your dates against the published funding requirements");
     }
 
     [Fact]
@@ -145,7 +145,7 @@ public class ValidateMilestoneDatesTests
         var action = () => milestones.ValidateMilestoneDates(programme, _dateTimeProvider);
 
         // then
-        action.Should().Throw<DomainValidationException>().WithMessage("Milestone claim dates should be withing Programme Funding dates");
+        action.Should().Throw<DomainValidationException>().WithMessage("Dates fall outside of the programme requirements. Check your dates against the published funding requirements");
     }
 
     [Fact]
@@ -161,7 +161,23 @@ public class ValidateMilestoneDatesTests
         var action = () => milestones.ValidateMilestoneDates(programme, _dateTimeProvider);
 
         // then
-        action.Should().Throw<DomainValidationException>().WithMessage("Milestone claim dates should be in the future");
+        action.Should().Throw<DomainValidationException>().WithMessage("The forecast acquisition claim date must be today or in the future");
+    }
+
+    [Fact]
+    public void ShouldThrowException_WhenStartOnSiteDateClaimDateIsInThePast()
+    {
+        // given
+        var programme = new ProgrammeBuilder().Build();
+        var milestones = new DeliveryPhaseMilestones(
+            false,
+            startOnSiteMilestone: new StartOnSiteMilestoneDetailsBuilder().WithMilestoneDate(Now.AddDays(-10)).WithPaymentDate(Now.AddDays(-1)).Build());
+
+        // when
+        var action = () => milestones.ValidateMilestoneDates(programme, _dateTimeProvider);
+
+        // then
+        action.Should().Throw<DomainValidationException>().WithMessage("The forecast start on site claim date must be today or in the future");
     }
 
     [Fact]
@@ -177,7 +193,7 @@ public class ValidateMilestoneDatesTests
         var action = () => milestones.ValidateMilestoneDates(programme, _dateTimeProvider);
 
         // then
-        action.Should().Throw<DomainValidationException>().WithMessage("Milestone claim dates should be in the future");
+        action.Should().Throw<DomainValidationException>().WithMessage("The forecast completion claim date must be today or in the future");
     }
 
     [Fact]
@@ -195,7 +211,7 @@ public class ValidateMilestoneDatesTests
         var action = () => milestones.ValidateMilestoneDates(programme, _dateTimeProvider);
 
         // then
-        action.Should().Throw<DomainValidationException>().WithMessage("Start on Site milestone dates should be within programme Start on Site dates");
+        action.Should().Throw<DomainValidationException>().WithMessage("Dates fall outside of the programme requirements. Check your dates against the published funding requirements");
     }
 
     [Fact]
@@ -213,7 +229,7 @@ public class ValidateMilestoneDatesTests
         var action = () => milestones.ValidateMilestoneDates(programme, _dateTimeProvider);
 
         // then
-        action.Should().Throw<DomainValidationException>().WithMessage("Start on Site milestone dates should be within programme Start on Site dates");
+        action.Should().Throw<DomainValidationException>().WithMessage("Dates fall outside of the programme requirements. Check your dates against the published funding requirements");
     }
 
     [Fact]
@@ -231,7 +247,7 @@ public class ValidateMilestoneDatesTests
         var action = () => milestones.ValidateMilestoneDates(programme, _dateTimeProvider);
 
         // then
-        action.Should().Throw<DomainValidationException>().WithMessage("Completion milestone dates should be within programme Completion dates");
+        action.Should().Throw<DomainValidationException>().WithMessage("Dates fall outside of the programme requirements. Check your dates against the published funding requirements");
     }
 
     [Fact]
@@ -249,7 +265,59 @@ public class ValidateMilestoneDatesTests
         var action = () => milestones.ValidateMilestoneDates(programme, _dateTimeProvider);
 
         // then
-        action.Should().Throw<DomainValidationException>().WithMessage("Completion milestone dates should be within programme Completion dates");
+        action.Should().Throw<DomainValidationException>().WithMessage("Dates fall outside of the programme requirements. Check your dates against the published funding requirements");
+    }
+
+    [Fact]
+    public void ShouldThrowException_WhenAcquisitionMilestoneIsAfterAcquisitionClaimDate()
+    {
+        // given
+        var programme = new ProgrammeBuilder()
+            .Build();
+
+        var milestones = new DeliveryPhaseMilestones(
+            false,
+            acquisitionMilestone: new AcquisitionMilestoneDetailsBuilder().WithMilestoneDate(Now.AddDays(101)).WithPaymentDate(Now).Build());
+
+        // when
+        var action = () => milestones.ValidateMilestoneDates(programme, _dateTimeProvider);
+
+        // then
+        action.Should().Throw<DomainValidationException>().WithMessage("The acquisition date must be before, or the same as, the forecast acquisition claim date");
+    }
+
+    [Fact]
+    public void ShouldThrowException_WhenStartOnSiteMilestoneIsAfterStartOnSiteClaimDate()
+    {
+        // given
+        var programme = new ProgrammeBuilder()
+            .Build();
+        var milestones = new DeliveryPhaseMilestones(
+            false,
+            startOnSiteMilestone: new StartOnSiteMilestoneDetailsBuilder().WithMilestoneDate(Now.AddDays(101)).WithPaymentDate(Now).Build());
+
+        // when
+        var action = () => milestones.ValidateMilestoneDates(programme, _dateTimeProvider);
+
+        // then
+        action.Should().Throw<DomainValidationException>().WithMessage("The start on site date must be before, or the same as, the forecast start on site claim date");
+    }
+
+    [Fact]
+    public void ShouldThrowException_WhenCompletionMilestoneIsAfterCompletionClaimDate()
+    {
+        // given
+        var programme = new ProgrammeBuilder()
+            .Build();
+        var milestones = new DeliveryPhaseMilestones(
+            false,
+            completionMilestone: new CompletionMilestoneDetailsBuilder().WithMilestoneDate(Now.AddDays(101)).WithPaymentDate(Now).Build());
+
+        // when
+        var action = () => milestones.ValidateMilestoneDates(programme, _dateTimeProvider);
+
+        // then
+        action.Should().Throw<DomainValidationException>().WithMessage("The completion date must be before, or the same as, the forecast completion claim date");
     }
 
     [Fact]

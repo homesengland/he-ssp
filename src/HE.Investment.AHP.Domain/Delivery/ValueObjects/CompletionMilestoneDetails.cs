@@ -3,7 +3,7 @@ namespace HE.Investment.AHP.Domain.Delivery.ValueObjects;
 public sealed class CompletionMilestoneDetails : MilestoneDetails<CompletionDate>
 {
     private CompletionMilestoneDetails(CompletionDate? milestoneDate, MilestonePaymentDate? paymentDate)
-        : base(milestoneDate, paymentDate)
+        : base(milestoneDate, paymentDate, "completion")
     {
     }
 

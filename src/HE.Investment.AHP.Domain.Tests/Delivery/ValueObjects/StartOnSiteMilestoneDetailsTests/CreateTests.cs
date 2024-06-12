@@ -17,7 +17,7 @@ public class CreateTests
         var create = () => StartOnSiteMilestoneDetails.Create(milestoneDate, paymentDate);
 
         // then
-        create.Should().Throw<DomainValidationException>().WithMessage("The milestone payment date must be on or after the milestone date");
+        create.Should().Throw<DomainValidationException>().WithMessage("The start on site date must be before, or the same as, the forecast start on site claim date");
     }
 
     [Fact]

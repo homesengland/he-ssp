@@ -1,4 +1,5 @@
 using HE.Investments.Common.Contract.Exceptions;
+using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Utils;
@@ -60,12 +61,14 @@ public class DeliveryPhaseMilestones : ValueObject, IQuestion
 
     public void ValidateMilestoneDates(Programme programme, IDateTimeProvider dateTimeProvider)
     {
-        MilestonesShouldFollowEachOther();
-        MilestoneClaimsShouldFollowEachOther();
-        MilestoneClaimsShouldBeInTheFuture(dateTimeProvider);
-        MilestoneClaimsShouldBeWithinProgrammeFundingDates(programme);
-        StartOnSiteMilestoneShouldBeWithinProgrammeStartOnSiteDates(programme);
-        CompletionMilestoneShouldBeWithinProgrammeCompletionDates(programme);
+        var result = OperationResult.New();
+        result.Aggregate(() => MilestonesShouldFollowEachOther());
+        result.Aggregate(() => MilestoneClaimsShouldBeWithinProgrammeFundingDates(programme));
+        result.Aggregate(() => MilestoneClaimsShouldFollowEachOther());
+        result.Aggregate(() => MilestonesShouldBeBeforeMilestoneClaims());
+        result.Aggregate(() => MilestoneClaimsShouldBeInTheFuture(dateTimeProvider));
+        result.Aggregate(() => StartOnSiteAndCompletionMilestonesShouldBeWithinProgrammeDates(programme));
+        result.CheckErrors();
     }
 
     protected override IEnumerable<object?> GetAtomicValues()
@@ -82,71 +85,99 @@ public class DeliveryPhaseMilestones : ValueObject, IQuestion
     {
         if (IsOnlyCompletionMilestone && acquisitionMilestone.IsProvided())
         {
-            throw new DomainValidationException(
-                "Cannot provide Acquisition Milestone details");
+            throw new DomainValidationException("Cannot provide Acquisition Milestone details");
         }
 
         if (IsOnlyCompletionMilestone && startOnSiteMilestone.IsProvided())
         {
-            throw new DomainValidationException(
-                "Cannot provide Start On Site Milestone details");
+            throw new DomainValidationException("Cannot provide Start On Site Milestone details");
         }
     }
 
     private void MilestonesShouldFollowEachOther()
     {
-        if (StartOnSiteMilestone?.MilestoneDate?.IsBefore(AcquisitionMilestone?.MilestoneDate) == true
-            || CompletionMilestone?.MilestoneDate?.IsBefore(StartOnSiteMilestone?.MilestoneDate) == true)
+        if (StartOnSiteMilestone?.MilestoneDate?.IsBefore(AcquisitionMilestone?.MilestoneDate) == true)
         {
-            throw new DomainValidationException("Milestone dates should follow each other");
+            throw new DomainValidationException("Milestones", "The acquisition date must be before, or the same as, the start on site date");
+        }
+
+        if (CompletionMilestone?.MilestoneDate?.IsBefore(StartOnSiteMilestone?.MilestoneDate) == true)
+        {
+            throw new DomainValidationException("Milestones", "The start on site date must be before, or the same as, the completion date");
         }
     }
 
     private void MilestoneClaimsShouldFollowEachOther()
     {
-        if (StartOnSiteMilestone?.PaymentDate?.IsBefore(AcquisitionMilestone?.PaymentDate) == true
-            || CompletionMilestone?.PaymentDate?.IsBefore(StartOnSiteMilestone?.PaymentDate) == true)
+        if (StartOnSiteMilestone?.PaymentDate?.IsBefore(AcquisitionMilestone?.PaymentDate) == true)
         {
-            throw new DomainValidationException("Milestone claim dates should follow each other");
+            throw new DomainValidationException("Milestones", "The forecast acquisition claim date must be before, or the same as, the forecast start on site claim date");
+        }
+
+        if (CompletionMilestone?.PaymentDate?.IsBefore(StartOnSiteMilestone?.PaymentDate) == true)
+        {
+            throw new DomainValidationException("Milestones", "The forecast start on site claim date must be before, or the same as, the forecast completion claim date");
+        }
+    }
+
+    private void MilestonesShouldBeBeforeMilestoneClaims()
+    {
+        if (AcquisitionMilestone?.PaymentDate?.IsBefore(AcquisitionMilestone?.MilestoneDate) == true)
+        {
+            throw new DomainValidationException("Milestones", "The acquisition date must be before, or the same as, the forecast acquisition claim date");
+        }
+
+        if (StartOnSiteMilestone?.PaymentDate?.IsBefore(StartOnSiteMilestone?.MilestoneDate) == true)
+        {
+            throw new DomainValidationException("Milestones", "The start on site date must be before, or the same as, the forecast start on site claim date");
+        }
+
+        if (CompletionMilestone?.PaymentDate?.IsBefore(CompletionMilestone?.MilestoneDate) == true)
+        {
+            throw new DomainValidationException("Milestones", "The completion date must be before, or the same as, the forecast completion claim date");
         }
     }
 
     private void MilestoneClaimsShouldBeInTheFuture(IDateTimeProvider dateTimeProvider)
     {
         var today = dateTimeProvider.Now.Date;
-        if (AcquisitionMilestone?.PaymentDate?.IsBefore(today) == true
-            || StartOnSiteMilestone?.PaymentDate?.IsBefore(today) == true
-            || CompletionMilestone?.PaymentDate?.IsBefore(today) == true)
+        if (AcquisitionMilestone?.PaymentDate?.IsBefore(today) == true)
         {
-            throw new DomainValidationException("Milestone claim dates should be in the future");
+            throw new DomainValidationException("Milestones", "The forecast acquisition claim date must be today or in the future");
+        }
+
+        if (StartOnSiteMilestone?.PaymentDate?.IsBefore(today) == true)
+        {
+            throw new DomainValidationException("Milestones", "The forecast start on site claim date must be today or in the future");
+        }
+
+        if (CompletionMilestone?.PaymentDate?.IsBefore(today) == true)
+        {
+            throw new DomainValidationException("Milestones", "The forecast completion claim date must be today or in the future");
         }
     }
 
     private void MilestoneClaimsShouldBeWithinProgrammeFundingDates(Programme programme)
     {
         if (AcquisitionMilestone?.PaymentDate?.IsBefore(programme.FundingDates.StartDate) == true
+            || StartOnSiteMilestone?.PaymentDate?.IsBefore(programme.FundingDates.StartDate) == true
             || CompletionMilestone?.PaymentDate?.IsBefore(programme.FundingDates.StartDate) == true
+            || AcquisitionMilestone?.PaymentDate?.IsAfter(programme.FundingDates.EndDate) == true
+            || StartOnSiteMilestone?.PaymentDate?.IsAfter(programme.FundingDates.EndDate) == true
             || CompletionMilestone?.PaymentDate?.IsAfter(programme.FundingDates.EndDate) == true)
         {
-            throw new DomainValidationException("Milestone claim dates should be withing Programme Funding dates");
+            throw new DomainValidationException("Milestones", "Dates fall outside of the programme requirements. Check your dates against the published funding requirements");
         }
     }
 
-    private void StartOnSiteMilestoneShouldBeWithinProgrammeStartOnSiteDates(Programme programme)
+    private void StartOnSiteAndCompletionMilestonesShouldBeWithinProgrammeDates(Programme programme)
     {
         if (StartOnSiteMilestone?.MilestoneDate?.IsBefore(programme.StartOnSiteDates.StartDate) == true
-            || StartOnSiteMilestone?.MilestoneDate?.IsAfter(programme.StartOnSiteDates.EndDate) == true)
-        {
-            throw new DomainValidationException("Start on Site milestone dates should be within programme Start on Site dates");
-        }
-    }
-
-    private void CompletionMilestoneShouldBeWithinProgrammeCompletionDates(Programme programme)
-    {
-        if (CompletionMilestone?.MilestoneDate?.IsBefore(programme.CompletionDates.StartDate) == true
+            || StartOnSiteMilestone?.MilestoneDate?.IsAfter(programme.StartOnSiteDates.EndDate) == true
+            || CompletionMilestone?.MilestoneDate?.IsBefore(programme.CompletionDates.StartDate) == true
             || CompletionMilestone?.MilestoneDate?.IsAfter(programme.CompletionDates.EndDate) == true)
         {
-            throw new DomainValidationException("Completion milestone dates should be within programme Completion dates");
+            throw new DomainValidationException("Milestones", "Dates fall outside of the programme requirements. Check your dates against the published funding requirements");
         }
     }
 }
