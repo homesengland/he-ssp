@@ -67,7 +67,6 @@
   </entity>
     <entity name="invln_milestoneframeworkitem" displayname="Milestone framework item" etc="11110" primaryidfield="invln_milestoneframeworkitemid" primarynamefield="invln_milestoneframeworkitemname" disableplugins="false">
     <fields>
-      <field displayname="[Deprecated] Programme" name="invln_programme" type="entityreference" lookupType="invln_milestoneframeworkitem" customfield="true" />
       <field displayname="Framework Name" name="invln_milestoneframeworkitemname" type="string" customfield="true" />
       <field displayname="Import Sequence Number" name="importsequencenumber" type="number" />
       <field displayname="Is Milestone Payable?" name="invln_ismilestonepayable" type="bool" customfield="true" />
