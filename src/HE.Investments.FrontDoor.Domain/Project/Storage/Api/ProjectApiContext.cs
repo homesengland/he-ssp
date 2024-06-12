@@ -16,16 +16,17 @@ public sealed class ProjectApiContext : ApiHttpClientBase, IProjectContext
     {
     }
 
-    public Task<IList<FrontDoorProjectDto>> GetOrganisationProjects(string userGlobalId, string organisationId, CancellationToken cancellationToken)
+    public async Task<IList<FrontDoorProjectDto>> GetOrganisationProjects(string userGlobalId, string organisationId, CancellationToken cancellationToken)
     {
-        // TODO: AB#98936 Implement API connection
-        return Task.FromResult<IList<FrontDoorProjectDto>>([]);
+        var response = await SendAsync<GetProjectsResponse>(ProjectApiUrls.GetProjects(organisationId), HttpMethod.Get, cancellationToken);
+
+        return response.Select(GetProjectResponseMapper.Map).ToList();
     }
 
-    public Task<IList<FrontDoorProjectDto>> GetUserProjects(string userGlobalId, string organisationId, CancellationToken cancellationToken)
+    public async Task<IList<FrontDoorProjectDto>> GetUserProjects(string userGlobalId, string organisationId, CancellationToken cancellationToken)
     {
-        // TODO: AB#98936 Implement API connection
-        return Task.FromResult<IList<FrontDoorProjectDto>>([]);
+        // TODO: AB#98936 Support User projects when API is ready
+        return await GetOrganisationProjects(userGlobalId, organisationId, cancellationToken);
     }
 
     public async Task<FrontDoorProjectDto> GetOrganisationProjectById(string projectId, string userGlobalId, string organisationId, CancellationToken cancellationToken)
