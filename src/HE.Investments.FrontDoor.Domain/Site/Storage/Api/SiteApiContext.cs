@@ -34,7 +34,7 @@ public sealed class SiteApiContext : ApiHttpClientBase, ISiteContext
         {
             items = sites,
             paging = pagination,
-            totalItemsCount = 0,
+            totalItemsCount = response.Count,
         };
     }
 
