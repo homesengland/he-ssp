@@ -1,9 +1,9 @@
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investments.Account.Shared.User;
 
-namespace HE.Investments.FrontDoor.Domain.Site.Crm;
+namespace HE.Investments.FrontDoor.Domain.Site;
 
-public interface ISiteCrmContext
+public interface ISiteContext
 {
     Task<PagedResponseDto<FrontDoorProjectSiteDto>> GetSites(string projectId, UserAccount userAccount, PagingRequestDto pagination, CancellationToken cancellationToken);
 

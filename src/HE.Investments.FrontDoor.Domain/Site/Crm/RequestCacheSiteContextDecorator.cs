@@ -5,15 +5,15 @@ using HE.Investments.Common.Infrastructure.Cache;
 
 namespace HE.Investments.FrontDoor.Domain.Site.Crm;
 
-internal sealed class RequestCacheSiteCrmContextDecorator : ISiteCrmContext
+internal sealed class RequestCacheSiteContextDecorator : ISiteContext
 {
     private readonly InMemoryCache<FrontDoorProjectSiteDto, string> _siteCache = new();
 
     private readonly InMemoryCache<PagedResponseDto<FrontDoorProjectSiteDto>, string> _sitesCache = new();
 
-    private readonly ISiteCrmContext _decorated;
+    private readonly ISiteContext _decorated;
 
-    public RequestCacheSiteCrmContextDecorator(ISiteCrmContext decorated)
+    public RequestCacheSiteContextDecorator(ISiteContext decorated)
     {
         _decorated = decorated;
     }

@@ -1,8 +1,8 @@
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 
-namespace HE.Investments.FrontDoor.Domain.Project.Crm;
+namespace HE.Investments.FrontDoor.Domain.Project;
 
-public interface IProjectCrmContext
+public interface IProjectContext
 {
     Task<IList<FrontDoorProjectDto>> GetOrganisationProjects(string userGlobalId, string organisationId, CancellationToken cancellationToken);
 

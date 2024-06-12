@@ -1,9 +1,11 @@
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Enum;
+using HE.Investments.FrontDoor.Domain.Project;
 using HE.Investments.FrontDoor.Domain.Project.Crm;
 using HE.Investments.FrontDoor.Domain.Project.Crm.Mappers;
 using HE.Investments.FrontDoor.Domain.Project.ValueObjects;
+using HE.Investments.FrontDoor.Domain.Site;
 using HE.Investments.FrontDoor.Domain.Site.Crm;
 using HE.Investments.FrontDoor.Shared.Project.Contract;
 using HE.Investments.IntegrationTestsFramework.Auth;
@@ -17,14 +19,14 @@ public class FrontDoorDataManipulator
 {
     public static readonly LocalAuthority Oxford = new(new LocalAuthorityCode("7000178"), "Oxford");
 
-    private readonly IProjectCrmContext _projectCrmContext;
+    private readonly IProjectContext _projectContext;
 
-    private readonly ISiteCrmContext _siteCrmContext;
+    private readonly ISiteContext _siteContext;
 
-    public FrontDoorDataManipulator(IProjectCrmContext projectCrmContext, ISiteCrmContext siteCrmContext)
+    public FrontDoorDataManipulator(IProjectContext projectContext, ISiteContext siteContext)
     {
-        _projectCrmContext = projectCrmContext;
-        _siteCrmContext = siteCrmContext;
+        _projectContext = projectContext;
+        _siteContext = siteContext;
     }
 
     public async Task<(string ProjectId, string SiteId)> FrontDoorProjectEligibleForAhpExist(ILoginData loginData, string? projectName = null, string? siteName = null)
@@ -48,7 +50,7 @@ public class FrontDoorDataManipulator
             StartofProjectYear = 2024,
         };
 
-        var projectId = await _projectCrmContext.Save(projectDto, loginData.UserGlobalId, loginData.OrganisationId, CancellationToken.None);
+        var projectId = await _projectContext.Save(projectDto, loginData.UserGlobalId, loginData.OrganisationId, CancellationToken.None);
         var siteId = await CreateFrontDoorSite(loginData, siteName, projectDto, projectId);
 
         return (projectId, siteId);
@@ -65,7 +67,7 @@ public class FrontDoorDataManipulator
             LocalAuthorityName = Oxford.Name,
         };
 
-        var siteId = await _siteCrmContext.Save(projectId, siteDto, loginData.UserGlobalId, loginData.OrganisationId, CancellationToken.None);
+        var siteId = await _siteContext.Save(projectId, siteDto, loginData.UserGlobalId, loginData.OrganisationId, CancellationToken.None);
         return siteId;
     }
 }

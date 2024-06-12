@@ -12,10 +12,10 @@ public class ArchitectureTests
     {
         get
         {
-            yield return new object[] { typeof(Program).Assembly };
-            yield return new object[] { typeof(Domain.Config.DomainModule).Assembly };
-            yield return new object[] { typeof(Contract.Site.SiteDetails).Assembly };
-            yield return new object[] { typeof(Shared.Config.FrontDoorSharedModule).Assembly };
+            yield return [typeof(Program).Assembly];
+            yield return [typeof(Domain.Config.DomainModule).Assembly];
+            yield return [typeof(Contract.Site.SiteDetails).Assembly];
+            yield return [typeof(Shared.Config.FrontDoorSharedModule).Assembly];
         }
     }
 

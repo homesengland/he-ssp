@@ -1,3 +1,4 @@
+using HE.Investments.Api.Config;
 using HE.Investments.Common;
 using HE.Investments.Common.Config;
 using HE.Investments.Common.Contract.Enum;
@@ -40,6 +41,7 @@ public static class FrontDoorWebModule
         AddConfiguration(services);
         services.AddDomainModule();
         services.AddProgrammeSubdomainModule();
+        services.AddApiModule();
         services.AddHttpUserContext();
         services.AddEventInfrastructure();
     }
