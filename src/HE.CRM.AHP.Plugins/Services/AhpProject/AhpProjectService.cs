@@ -275,14 +275,8 @@ namespace HE.CRM.AHP.Plugins.Services.AhpProject
             ahpProjects = ahpProjects.OrderByDescending(x => x.CreatedOn).ToList();
             TracingService.Trace($"Core records OrderBy.");
 
-            foreach (var project in ahpProjects)
-            {
-                if (CheckAccessToAhpProject(contactWebRole, project, externalContactId, organisationId) == null)
-                {
-                    TracingService.Trace("AhpProject removed from the list.");
-                    ahpProjects.Remove(project);
-                }
-            }
+            ahpProjects.RemoveAll(x => CheckAccessToAhpProject(contactWebRole, x, externalContactId, organisationId) == null);
+
             List<invln_ahpproject> filteredProject = new List<invln_ahpproject>();
             foreach (var project in ahpProjects)
             {
