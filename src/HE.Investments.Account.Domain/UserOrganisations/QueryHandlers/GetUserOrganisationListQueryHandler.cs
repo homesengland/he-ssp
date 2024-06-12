@@ -1,10 +1,10 @@
-using HE.Investments.Account.Contract.UserOrganisation.Queries;
+using HE.Investments.Account.Contract.UserOrganisations.Queries;
 using HE.Investments.Account.Domain.Organisation.Repositories;
 using HE.Investments.Consortium.Shared.UserContext;
 using HE.Investments.Organisation.Contract;
 using MediatR;
 
-namespace HE.Investments.Account.Domain.UserOrganisation.QueryHandlers;
+namespace HE.Investments.Account.Domain.UserOrganisations.QueryHandlers;
 
 public class GetUserOrganisationListQueryHandler : IRequestHandler<GetUserOrganisationListQuery, IList<OrganisationDetails>>
 {

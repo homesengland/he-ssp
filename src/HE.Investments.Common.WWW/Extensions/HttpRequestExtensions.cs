@@ -27,4 +27,16 @@ public static class HttpRequestExtensions
         workflow = string.Empty;
         return false;
     }
+
+    public static bool TryGetCallbackQueryParameter(this HttpRequest httpRequest, out string callbackUrl)
+    {
+        if (QueryHelpers.ParseQuery(httpRequest.QueryString.Value).TryGetValue("callback", out var callback))
+        {
+            callbackUrl = callback.ToString();
+            return true;
+        }
+
+        callbackUrl = string.Empty;
+        return false;
+    }
 }

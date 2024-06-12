@@ -7,6 +7,7 @@ using HE.Investments.Account.WWW.Views.Organisation;
 using HE.Investments.Account.WWW.Views.User;
 using HE.Investments.Account.WWW.Views.UserOrganisation;
 using HE.Investments.Account.WWW.Views.UserOrganisation.Const;
+using HE.Investments.Account.WWW.Views.UserOrganisations.Const;
 using HE.Investments.IntegrationTestsFramework;
 using HE.Investments.TestsUtils.Extensions;
 using Xunit;
@@ -162,7 +163,7 @@ public class Order01CompleteUserProfile : AccountIntegrationTest
         // then
         organisationsList
             .UrlEndWith(MainPagesUrl.OrganisationList)
-            .HasTitle(UserOrganisationPageTitles.OrganisationsList)
+            .HasTitle(UserOrganisationsPageTitles.List)
             .HasLinkWithTestId("add-another-organisation-link", out _)
             .HasLinkWithTestId("manage-profile-link", out _);
 

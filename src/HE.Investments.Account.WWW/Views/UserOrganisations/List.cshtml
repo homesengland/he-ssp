@@ -1,8 +1,8 @@
 @using HE.Investments.Account.WWW.Views.Shared.Components.OrganisationListCard
-@using HE.Investments.Account.WWW.Views.UserOrganisation.Const
-@model HE.Investments.Account.WWW.Models.UserOrganisation.UserOrganisationListModel;
+@using HE.Investments.Account.WWW.Views.UserOrganisations.Const
+@model HE.Investments.Account.WWW.Models.UserOrganisations.UserOrganisationsListModel;
 @{
-    ViewData["Title"] = UserOrganisationPageTitles.OrganisationsList;
+    ViewData["Title"] = UserOrganisationsPageTitles.List;
     var organisationInformation = Model.Organisations == null ?
         "You are not associated with any organisations."
         : "Your account is associated with these organisations. Select an organisation to continue.";
@@ -14,7 +14,7 @@
     </he-div-grid-column-full>
 
     <gds-div-grid-column-two-thirds class="govuk-!-padding-0 govuk-!-margin-top-8">
-        <vc:page-header title="@UserOrganisationPageTitles.OrganisationsList"/>
+        <vc:page-header title="@UserOrganisationsPageTitles.List"/>
         <gds-p>
             @organisationInformation
         </gds-p>

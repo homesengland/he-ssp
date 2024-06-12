@@ -7,7 +7,6 @@ using HE.Investments.Account.IntegrationTests.Framework;
 using HE.Investments.Account.IntegrationTests.Pages;
 using HE.Investments.Account.WWW;
 using HE.Investments.Account.WWW.Views.User;
-using HE.Investments.Account.WWW.Views.UserOrganisation;
 using HE.Investments.Account.WWW.Views.UserOrganisation.Const;
 using HE.Investments.IntegrationTestsFramework;
 using HE.Investments.TestsUtils.Extensions;
@@ -37,6 +36,7 @@ public class Order02UserOrganisation : AccountIntegrationTest
         dashboardPage
             .UrlEndWith(MainPagesUrl.Dashboard)
             .HasMatchingTitle(".+'s Homes England account$")
+            .HasActionLink(MainPagesUrl.OrganisationSearch, out _)
             .HasActionLink(MainPagesUrl.UserOrganisationDetails, out _)
             .HasActionLink(MainPagesUrl.ManageUsers, out _)
             .HasActionLink(MainPagesUrl.ProfileDetails, out _)

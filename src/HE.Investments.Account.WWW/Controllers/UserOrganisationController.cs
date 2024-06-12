@@ -118,35 +118,6 @@ public class UserOrganisationController : Controller
             cancellationToken);
     }
 
-    [HttpGet("list")]
-    public async Task<IActionResult> UserOrganisationList()
-    {
-        var userOrganisationList = await _mediator.Send(new GetUserOrganisationListQuery());
-
-        List<ActionModel> userOrganisationListActions = [
-            new(
-                "Add another organisation",
-                "SearchOrganisation",
-                "Organisation",
-                new { callback = Url.Action("UserOrganisationList") },
-                HasAccess: true,
-                DataTestId: "add-another-organisation-link"),
-            new(
-                "Manage your account",
-                "GetProfileDetails",
-                "User",
-                new { callback = Url.Action("UserOrganisationList") },
-                HasAccess: true,
-                DataTestId: "manage-profile-link"),
-        ];
-
-        return View(
-            "UserOrganisationList",
-            new UserOrganisationListModel(
-                userOrganisationList,
-                userOrganisationListActions));
-    }
-
     private async Task<string?> GetStartNewProjectUrl()
     {
         if (await _accountAccessContext.CanEditApplication())
@@ -170,7 +141,17 @@ public class UserOrganisationController : Controller
     private async Task<List<ActionModel>> UserOrganisationActions(string organisationName)
     {
         var canViewOrganisationDetails = await _accountAccessContext.CanAccessOrganisationView();
-        var userOrganisationActions = new List<ActionModel>();
+        var userOrganisationActions = new List<ActionModel>
+        {
+            new(
+                "Add another organisation",
+                "SearchOrganisation",
+                "Organisation",
+                new { callback = Url.Action("Index", "UserOrganisation") },
+                HasAccess: true,
+                DataTestId: "add-another-organisation-link"),
+        };
+
         if (canViewOrganisationDetails)
         {
             userOrganisationActions.AddRange(
@@ -194,7 +175,7 @@ public class UserOrganisationController : Controller
             "Manage your account",
             "GetProfileDetails",
             "User",
-            new { callback = Url.Action("Index") },
+            new { callback = Url.Action("Index", "UserOrganisation") },
             HasAccess: true,
             DataTestId: "manage-profile-link"));
 
