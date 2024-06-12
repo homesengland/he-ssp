@@ -1,8 +1,7 @@
 using HE.Investments.Account.Shared.User;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Infrastructure.Events;
-using HE.Investments.FrontDoor.Domain.Project.Crm;
-using HE.Investments.FrontDoor.Domain.Project.Crm.Mappers;
+using HE.Investments.FrontDoor.Domain.Project.Storage.Crm.Mappers;
 using HE.Investments.FrontDoor.Domain.Project.ValueObjects;
 using HE.Investments.FrontDoor.Shared.Project;
 
