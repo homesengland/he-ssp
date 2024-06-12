@@ -18,5 +18,5 @@ public class CompletionDate : DateValueObject
     }
 
     public static CompletionDate FromDateDetails(DateDetails? date) =>
-        new(date is { IsNotEmpty: true }, date?.Day, date?.Month, date?.Year);
+        new(date is { IsEmpty: false }, date?.Day, date?.Month, date?.Year);
 }

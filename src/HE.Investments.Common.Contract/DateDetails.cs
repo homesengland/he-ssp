@@ -4,7 +4,7 @@ namespace HE.Investments.Common.Contract;
 
 public record DateDetails(string? Day, string? Month, string? Year)
 {
-    public bool IsNotEmpty => !string.IsNullOrEmpty(Day) && !string.IsNullOrEmpty(Month) && !string.IsNullOrEmpty(Year);
+    public bool IsEmpty => string.IsNullOrEmpty(Day) && string.IsNullOrEmpty(Month) && string.IsNullOrEmpty(Year);
 
     public static DateDetails Empty() => new(string.Empty, string.Empty, string.Empty);
 

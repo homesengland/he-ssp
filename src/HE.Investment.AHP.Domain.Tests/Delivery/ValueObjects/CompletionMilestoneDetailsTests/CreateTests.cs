@@ -6,6 +6,32 @@ namespace HE.Investment.AHP.Domain.Tests.Delivery.ValueObjects.CompletionMilesto
 
 public class CreateTests
 {
+    [Theory]
+    [InlineData("", "1", "2024", "day")]
+    [InlineData("1", "", "2024", "month")]
+    [InlineData("1", "1", "", "year")]
+    [InlineData("1", "", "", "month and year")]
+    [InlineData("", "1", "", "day and year")]
+    [InlineData("", "", "2024", "day and month")]
+    public void ShouldThrowDomainValidationException_WhenDateIsRequiredsAndSomePartsAreAbsent(string day, string month, string year, string missingPartsText)
+    {
+        // when
+        var date = () => new CompletionDate(true, day, month, year);
+
+        // then
+        date.Should().Throw<DomainValidationException>().WithMessage($"The completion date must include a {missingPartsText}");
+    }
+
+    [Fact]
+    public void ShouldCreateEmptyDate_WhenDateIsOptional()
+    {
+        // when
+        var date = new CompletionDate(false, string.Empty, string.Empty, string.Empty);
+
+        date.Should().NotBeNull();
+        date.Value.Should().BeNull();
+    }
+
     [Fact]
     public void ShouldThrowDomainValidationException_WhenPaymentDateBeforeCompletionDate()
     {
