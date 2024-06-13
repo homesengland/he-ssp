@@ -430,7 +430,7 @@ public class HomeTypesWorkflow : EncodedStateRouting<HomeTypesWorkflowState>
     private bool IsOlderPersonsSharedOwnershipEligible() =>
         !(IsTenure(Tenure.OlderPersonsSharedOwnership) && _homeTypeModel is { Conditionals.IsProspectiveRentIneligible: true });
 
-    private bool IsMmcRequired() => _homeTypeModel is { Conditionals.SiteUsingModernMethodsOfConstruction: SiteUsingModernMethodsOfConstruction.OnlyForSomeHomes };
+    private bool IsMmcRequired() => _homeTypeModel is { Conditionals.SiteUsingModernMethodsOfConstruction: SiteUsingModernMethodsOfConstruction.Yes or SiteUsingModernMethodsOfConstruction.OnlyForSomeHomes };
 
     private bool IsMmcUsed() => IsMmcRequired() && _homeTypeModel is { Conditionals.ModernMethodsConstructionApplied: YesNoType.Yes };
 

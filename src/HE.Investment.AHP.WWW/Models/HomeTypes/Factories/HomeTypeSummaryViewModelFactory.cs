@@ -80,7 +80,8 @@ public class HomeTypeSummaryViewModelFactory : IHomeTypeSummaryViewModelFactory
             yield return CreateOlderPersonsSharedOwnershipSection(homeType.TenureDetails, factory);
         }
 
-        if (homeType.ModernMethodsConstruction.SiteUsingModernMethodsOfConstruction == SiteUsingModernMethodsOfConstruction.OnlyForSomeHomes)
+        if (homeType.ModernMethodsConstruction.SiteUsingModernMethodsOfConstruction == SiteUsingModernMethodsOfConstruction.Yes
+            || homeType.ModernMethodsConstruction.SiteUsingModernMethodsOfConstruction == SiteUsingModernMethodsOfConstruction.OnlyForSomeHomes)
         {
             yield return CreateModernMethodsConstructionSection(homeType.ModernMethodsConstruction, factory);
         }
