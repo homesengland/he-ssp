@@ -24,4 +24,6 @@ public class HomeTypeListModel : HomeTypeModelBase, IEditableViewModel
     public int TotalExpectedNumberOfHomes { get; set; }
 
     public IList<HomeTypeItemModel> HomeTypes { get; set; }
+
+    public string ProjectId { get; set; }
 }

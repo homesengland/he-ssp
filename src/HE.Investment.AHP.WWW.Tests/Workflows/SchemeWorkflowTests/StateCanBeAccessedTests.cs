@@ -2,6 +2,7 @@ using FluentAssertions;
 using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.Scheme;
 using HE.Investments.Common.Contract;
+using HE.Investments.FrontDoor.Shared.Project;
 
 namespace HE.Investment.AHP.WWW.Tests.Workflows.SchemeWorkflowTests;
 
@@ -37,6 +38,7 @@ public class StateCanBeAccessedTests
     {
         // given
         var applicationDetails = new ApplicationDetails(
+            new FrontDoorProjectId("project-1234"),
             new AhpApplicationId("test-1234"),
             "appName",
             tenure,

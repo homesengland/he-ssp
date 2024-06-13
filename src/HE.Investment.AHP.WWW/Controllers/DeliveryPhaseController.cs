@@ -504,7 +504,13 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
 
     private static ApplicationDetails ToApplicationDetails(Application application)
     {
-        return new ApplicationDetails(application.Id, application.Name, application.Tenure, application.Status, application.AllowedOperations);
+        return new ApplicationDetails(
+            application.ProjectId,
+            application.Id,
+            application.Name,
+            application.Tenure,
+            application.Status,
+            application.AllowedOperations);
     }
 
     private async Task<IActionResult> GetBuildActivityType(

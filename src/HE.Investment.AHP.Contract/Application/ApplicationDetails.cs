@@ -1,8 +1,10 @@
 using HE.Investments.Common.Contract;
+using HE.Investments.FrontDoor.Shared.Project;
 
 namespace HE.Investment.AHP.Contract.Application;
 
 public record ApplicationDetails(
+    FrontDoorProjectId ProjectId,
     AhpApplicationId Id,
     string Name,
     Tenure Tenure,

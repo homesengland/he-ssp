@@ -8,7 +8,7 @@
     ViewData["Title"] = SitePageTitles.SiteSplashScreen;
     ViewBag.Breadcrumbs = AhpBreadcrumbsBuilder
         .New()
-        .WithSites()
+        .WithSites(Model.Page.Items.Select(x => x.ProjectId).First())
         .Build();
 
     var actionName = Model.Page.Items.Any() ? "Index" : "Details";

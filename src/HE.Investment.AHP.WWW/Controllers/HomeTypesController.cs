@@ -74,6 +74,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
 
         return View(new HomeTypeListModel(homeTypes.Application.Name)
         {
+            ProjectId = homeTypes.Application.ProjectId.ToString(),
             HomeTypes = homeTypes.HomeTypes.Select(x => new HomeTypeItemModel(x.Id.Value, x.Name, x.HousingType, x.NumberOfHomes)).ToList(),
             AllowedOperations = homeTypes.Application.AllowedOperations.ToArray(),
             TotalExpectedNumberOfHomes = scheme.HousesToDeliver ?? 0,
