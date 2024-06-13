@@ -7,4 +7,6 @@ public record OrganisationBasicInfo(
     string RegisteredCompanyName,
     string CompanyRegistrationNumber,
     string AddressLine1,
+    string City,
+    string PostalCode,
     bool IsUnregisteredBody);

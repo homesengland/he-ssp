@@ -5,4 +5,6 @@ public record OrganisationDetails(
     string CompanyRegisteredName,
     string CompanyRegistrationNumber,
     string CompanyAddressLine1,
+    string City,
+    string PostalCode,
     bool IsUnregisteredBody);

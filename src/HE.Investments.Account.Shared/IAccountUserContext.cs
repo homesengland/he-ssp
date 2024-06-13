@@ -4,4 +4,5 @@ namespace HE.Investments.Account.Shared;
 
 public interface IAccountUserContext : IUserAccountContext<UserAccount>
 {
+    Task<IList<UserAccount>?> GetAccounts();
 }
