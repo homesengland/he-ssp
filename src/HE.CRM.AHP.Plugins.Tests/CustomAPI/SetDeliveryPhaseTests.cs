@@ -1,18 +1,15 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
 using DataverseModel;
 using FakeXrmEasy;
 using FakeXrmEasy.Extensions;
-using HE.Base.Common.Extensions;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
-using HE.CRM.AHP.Plugins.Plugins.CustomApi;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Metadata;
+using HE.Base.Common.Extensions;
+using HE.CRM.AHP.Plugins.Plugins.CustomApi;
 
 namespace HE.CRM.AHP.Plugins.Tests.CustomAPI
 {
@@ -64,16 +61,21 @@ namespace HE.CRM.AHP.Plugins.Tests.CustomAPI
                 invln_externalid = contactId.ToString()
             };
 
-
             fakedContext.Initialize(new List<Entity>()
             {
+                new Account()
+                {
+                    Id = organizationId,
+                    invln_UnregisteredBody = false,
+                },
                 new invln_scheme()
                 {
                 Id = applicatioId,
                 invln_programmelookup = programmeId.ToEntityReference<invln_programme>(),
                 invln_contactid = contactId.ToEntityReference<Contact>(),
                 invln_noofhomes = 10,
-                invln_fundingrequired = new Money(10000)
+                invln_fundingrequired = new Money(10000),
+                invln_organisationid = organizationId.ToEntityReference<Account>(),
                 },
                 contact,
                 new invln_programme()
@@ -143,7 +145,6 @@ namespace HE.CRM.AHP.Plugins.Tests.CustomAPI
                     { deliveryPhaseId_2.ToString(), 2}
                 }
             };
-
 
             pluginContext.InputParameters = new ParameterCollection
             {

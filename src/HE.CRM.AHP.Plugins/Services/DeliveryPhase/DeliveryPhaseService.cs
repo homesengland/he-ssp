@@ -259,44 +259,41 @@ namespace HE.CRM.AHP.Plugins.Services.DeliveryPhase
                 if (deliveryPhase.invln_AcquisitionPercentageValue != null)
                 {
                     deliveryPhase.invln_AcquisitionValue = new Money(fundingForPhase * deliveryPhase.invln_AcquisitionPercentageValue.Value);
-                    CalculateFieldValue(deliveryPhase, fundingForPhase, df);
+                    CalculateFieldValue(deliveryPhase.invln_AcquisitionValue.Value, df.invln_StartOnSiteValue.Value, df.invln_CompletionValue.Value,
+                                        deliveryPhase.invln_AcquisitionPercentageValue.Value, df.invln_StartOnSitePercentageValue.Value, df.invln_CompletionPercentageValue.Value,
+                                        deliveryPhase, fundingForPhase);
                 }
                 if (deliveryPhase.invln_StartOnSitePercentageValue != null)
                 {
                     deliveryPhase.invln_StartOnSiteValue = new Money(fundingForPhase * deliveryPhase.invln_StartOnSitePercentageValue.Value);
-                    CalculateFieldValue(deliveryPhase, fundingForPhase, df);
+                    CalculateFieldValue(df.invln_AcquisitionValue.Value, deliveryPhase.invln_StartOnSiteValue.Value, df.invln_CompletionValue.Value,
+                                        df.invln_AcquisitionPercentageValue.Value, deliveryPhase.invln_StartOnSitePercentageValue.Value, df.invln_CompletionPercentageValue.Value,
+                                        deliveryPhase, fundingForPhase);
                 }
                 if (deliveryPhase.invln_CompletionPercentageValue != null)
                 {
                     deliveryPhase.invln_CompletionValue = new Money(fundingForPhase * deliveryPhase.invln_CompletionPercentageValue.Value);
-                    CalculateFieldValue(deliveryPhase, fundingForPhase, df);
+                    CalculateFieldValue(df.invln_AcquisitionValue.Value, df.invln_StartOnSiteValue.Value, deliveryPhase.invln_CompletionValue.Value,
+                                        df.invln_AcquisitionPercentageValue.Value, df.invln_StartOnSitePercentageValue.Value, deliveryPhase.invln_CompletionPercentageValue.Value,
+                                        deliveryPhase, fundingForPhase);
                 }
-                deliveryPhase.invln_sumofcalculatedfounds = new Money(deliveryPhase.invln_AcquisitionValue.Value
-                                            + deliveryPhase.invln_StartOnSiteValue.Value
-                                            + deliveryPhase.invln_CompletionValue.Value);
             }
             TracingService.Trace("End Of Calculation");
         }
 
-        private void CalculateFieldValue(invln_DeliveryPhase deliveryPhase, decimal fundingForPhase, invln_DeliveryPhase df)
+        private void CalculateFieldValue(decimal acquisition, decimal startOnSite, decimal completion,
+                                            decimal acquisitionPer, decimal startOnSitePer, decimal completionPer,
+                                            invln_DeliveryPhase deliveryPhase, decimal fundingForPhase)
         {
-            if (df == null)
+            if (acquisitionPer + startOnSitePer + completionPer == 1)
             {
-                TracingService.Trace("Delivery phase not exist yet skip recalculation");
-                return;
-            }
-
-            if (deliveryPhase.invln_AcquisitionPercentageValue + df.invln_StartOnSitePercentageValue + df.invln_CompletionPercentageValue == 1)
-            {
-                var leftOver = fundingForPhase
-                                - (deliveryPhase.invln_AcquisitionValue.Value
-                                    + df.invln_StartOnSiteValue.Value
-                                    + df.invln_CompletionValue.Value);
+                var leftOver = fundingForPhase - (acquisition + startOnSite + completion);
                 if (leftOver > 0 && (leftOver < fundingForPhase * 0.01m || leftOver < 1))
                 {
                     deliveryPhase.invln_CompletionValue.Value += leftOver;
                 }
             }
+            deliveryPhase.invln_sumofcalculatedfounds = new Money(acquisition + startOnSite + completion);
         }
 
         private void SetHomesinDeliveryPhase(Dictionary<string, int?> numberOfHomes, Guid deliveryPhaseId)
