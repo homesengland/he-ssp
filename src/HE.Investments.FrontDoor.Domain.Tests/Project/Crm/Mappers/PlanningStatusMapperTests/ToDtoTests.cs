@@ -1,6 +1,6 @@
 using FluentAssertions;
 using HE.Investments.Common.Contract.Enum;
-using HE.Investments.FrontDoor.Domain.Project.Crm.Mappers;
+using HE.Investments.FrontDoor.Domain.Project.Storage.Crm.Mappers;
 using HE.Investments.TestsUtils.TestFramework;
 using Xunit;
 

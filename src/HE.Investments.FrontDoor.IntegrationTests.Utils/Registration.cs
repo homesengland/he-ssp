@@ -1,7 +1,7 @@
 using HE.Investments.FrontDoor.Domain.Project;
-using HE.Investments.FrontDoor.Domain.Project.Crm;
+using HE.Investments.FrontDoor.Domain.Project.Storage.Crm;
 using HE.Investments.FrontDoor.Domain.Site;
-using HE.Investments.FrontDoor.Domain.Site.Crm;
+using HE.Investments.FrontDoor.Domain.Site.Storage.Crm;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace HE.Investments.FrontDoor.IntegrationTests.Utils;

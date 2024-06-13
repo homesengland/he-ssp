@@ -1,9 +1,8 @@
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investments.Account.Shared.User;
 using HE.Investments.Common.Contract.Enum;
-using HE.Investments.FrontDoor.Domain.Project.Crm.Mappers;
+using HE.Investments.FrontDoor.Domain.Project.Storage.Crm.Mappers;
 using HE.Investments.FrontDoor.Domain.Project.ValueObjects;
-using HE.Investments.FrontDoor.Domain.Site.Crm;
 using HE.Investments.FrontDoor.Domain.Site.ValueObjects;
 using HE.Investments.FrontDoor.Shared.Project;
 using SiteLocalAuthority = HE.Investments.Organisation.LocalAuthorities.ValueObjects.LocalAuthority;
@@ -51,9 +50,9 @@ public class SiteRepository : ISiteRepository, IRemoveSiteRepository
         return site;
     }
 
-    public async Task<string> Remove(FrontDoorSiteId siteId, UserAccount userAccount, CancellationToken cancellationToken)
+    public async Task Remove(FrontDoorSiteId siteId, UserAccount userAccount, CancellationToken cancellationToken)
     {
-        return await _siteContext.Remove(siteId.Value, userAccount, cancellationToken);
+        await _siteContext.Remove(siteId.Value, userAccount, cancellationToken);
     }
 
     private FrontDoorProjectSiteDto ToDto(ProjectSiteEntity entity)
