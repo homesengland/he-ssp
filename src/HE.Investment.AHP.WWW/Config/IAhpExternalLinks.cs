@@ -4,6 +4,8 @@ public interface IAhpExternalLinks
 {
     public string BuildingRegulations { get; }
 
+    public string HomesEnglandMainPage { get; }
+
     public string ApplyForAffordableHousingFunding { get; }
 
     public string ApplyForAffordableHousingFundingApplySection { get; }
