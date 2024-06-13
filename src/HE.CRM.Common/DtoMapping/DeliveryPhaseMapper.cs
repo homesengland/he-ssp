@@ -129,7 +129,7 @@ namespace HE.CRM.Common.DtoMapping
                 return null;
             }
 
-            return value.Value ? "newBuild" : "rehab";
+            return value.Value ? "rehab" : "newBuild";
         }
 
         private static Nullable<bool> MapTypeOfHome(string value)
@@ -139,7 +139,7 @@ namespace HE.CRM.Common.DtoMapping
                 return null;
             }
 
-            return value == "newBuild";
+            return value == "rehab";
         }
 
         private static string MapYesNo(Nullable<bool> value)
