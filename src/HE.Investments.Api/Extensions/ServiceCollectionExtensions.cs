@@ -11,7 +11,7 @@ public static class ServiceCollectionExtensions
         where TContextSelector : class, TContext
     {
         services.AddScoped<TCrmContext>();
-        services.AddHttpClient<TApiContext>().ConfigureApiHttpClient();
+        services.AddHttpClient<TApiContext>(typeof(TApiContext).FullName ?? string.Empty).ConfigureApiHttpClient();
         services.AddScoped<Func<TCrmContext>>(x => x.GetRequiredService<TCrmContext>);
         services.AddScoped<Func<TApiContext>>(x => x.GetRequiredService<TApiContext>);
         services.AddScoped<TContext, TContextSelector>();

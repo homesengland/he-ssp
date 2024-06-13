@@ -1,6 +1,6 @@
-namespace HE.Investments.FrontDoor.Domain.Site.Storage.Api.Contract.Responses;
+namespace HE.Investments.FrontDoor.Shared.Project.Storage.Api.Contract.Responses;
 
-internal sealed record GetSiteResponse(
+public sealed record GetSiteResponse(
     DateTimeOffset CreatedOn,
     string? LocalAuthority,
     string? LocalAuthorityName,

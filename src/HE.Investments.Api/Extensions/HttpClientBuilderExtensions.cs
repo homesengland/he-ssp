@@ -13,8 +13,6 @@ public static class HttpClientBuilderExtensions
             if (!string.IsNullOrEmpty(config.BaseUri))
             {
                 client.BaseAddress = new Uri(config.BaseUri);
-                client.DefaultRequestHeaders.Add("Ocp-Apim-Trace", "true");
-                client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", config.SubscriptionKey);
             }
         });
     }

@@ -5,7 +5,7 @@ namespace HE.Investments.Api.Auth;
 
 internal sealed class CachedApiTokenProvider : IApiTokenProvider
 {
-    private const string CrmApiTokenCacheKey = "crm-api-token";
+    private const string ApiTokenCacheKey = "investments-api-token";
 
     private const int InvalidateCachedTokenTimeoutInMinutes = 5;
 
@@ -15,7 +15,7 @@ internal sealed class CachedApiTokenProvider : IApiTokenProvider
 
     private readonly IDateTimeProvider _dateTimeProvider;
 
-    private ApiTokenProvider.CrmApiAccessToken? _token;
+    private ApiTokenProvider.ApiAccessToken? _token;
 
     public CachedApiTokenProvider(ApiTokenProvider tokenProvider, ICacheService cacheService, IDateTimeProvider dateTimeProvider)
     {
@@ -26,10 +26,10 @@ internal sealed class CachedApiTokenProvider : IApiTokenProvider
 
     public async Task<string> GetToken()
     {
-        _token ??= await _cacheService.GetValueAsync(CrmApiTokenCacheKey, async () => await _tokenProvider.GetToken());
+        _token ??= await _cacheService.GetValueAsync(ApiTokenCacheKey, async () => await _tokenProvider.GetToken());
         if (_token!.ExpiresOn.AddMinutes(-InvalidateCachedTokenTimeoutInMinutes) <= new DateTimeOffset(_dateTimeProvider.UtcNow, TimeSpan.Zero))
         {
-            await _cacheService.DeleteAsync(CrmApiTokenCacheKey);
+            await _cacheService.DeleteAsync(ApiTokenCacheKey);
         }
 
         return _token!.AccessToken;

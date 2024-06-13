@@ -12,8 +12,8 @@ public static class Module
         services.TryAddSingleton<ApiTokenProvider>();
         services.TryAddScoped<IApiTokenProvider, CachedApiTokenProvider>();
 
-        services.AddAppConfiguration<IApiConfig, ApiConfig>("CrmApi");
-        services.AddAppConfiguration<IApiAuthConfig, ApiAuthConfig>("CrmApi:Auth");
+        services.AddAppConfiguration<IApiConfig, ApiConfig>("InvestmentsApi");
+        services.AddAppConfiguration<IApiAuthConfig, ApiAuthConfig>("InvestmentsApi:Auth");
 
         return services;
     }
