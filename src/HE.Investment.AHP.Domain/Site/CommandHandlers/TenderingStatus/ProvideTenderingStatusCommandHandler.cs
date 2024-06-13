@@ -15,6 +15,10 @@ public class ProvideTenderingStatusCommandHandler : ProvideSiteDetailsBaseComman
 
     protected override void Provide(ProvideTenderingStatusCommand request, SiteEntity site)
     {
-        site.ProvideTenderingStatusDetails(new TenderingStatusDetails(request.TenderingStatus, site.TenderingStatusDetails.ContractorName, site.TenderingStatusDetails.IsSmeContractor));
+        site.ProvideTenderingStatusDetails(TenderingStatusDetails.Create(
+            request.TenderingStatus,
+            site.TenderingStatusDetails.ContractorName,
+            site.TenderingStatusDetails.IsSmeContractor,
+            site.TenderingStatusDetails.IsIntentionToWorkWithSme));
     }
 }
