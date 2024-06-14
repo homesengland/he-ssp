@@ -516,6 +516,7 @@ public class ProjectController : WorkflowController<ProjectWorkflowState>
     public async Task<IActionResult> Complete([FromRoute] string projectId, CancellationToken cancellationToken)
     {
         var (operationResult, applicationType) = await _mediator.Send(new ValidateProjectAnswersQuery(FrontDoorProjectId.From(projectId)), cancellationToken);
+        await _mediator.Send(new UpdateFrontDoorDecisionCommand(FrontDoorProjectId.From(projectId), applicationType), cancellationToken);
 
         if (operationResult.HasValidationErrors)
         {

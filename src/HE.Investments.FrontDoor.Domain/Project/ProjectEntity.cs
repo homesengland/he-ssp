@@ -35,7 +35,8 @@ public class ProjectEntity : DomainEntity
         RequiredFunding? requiredFunding = null,
         IsProfit? isProfit = null,
         ExpectedStartDate? expectedStartDate = null,
-        ProjectLocalAuthority? localAuthority = null)
+        ProjectLocalAuthority? localAuthority = null,
+        int? frontDoorDecision = null)
     {
         Id = id;
         Name = name;
@@ -54,6 +55,7 @@ public class ProjectEntity : DomainEntity
         IsProfit = isProfit ?? IsProfit.Empty;
         ExpectedStartDate = expectedStartDate ?? ExpectedStartDate.Empty;
         LocalAuthority = localAuthority;
+        FrontDoorDecision = frontDoorDecision;
     }
 
     public FrontDoorProjectId Id { get; private set; }
@@ -89,6 +91,8 @@ public class ProjectEntity : DomainEntity
     public ExpectedStartDate ExpectedStartDate { get; private set; }
 
     public ProjectLocalAuthority? LocalAuthority { get; private set; }
+
+    public int? FrontDoorDecision { get; private set; }
 
     public bool IsModified => _modificationTracker.IsModified || Id.IsNew;
 
@@ -206,6 +210,11 @@ public class ProjectEntity : DomainEntity
     public void ProvideLocalAuthority(ProjectLocalAuthority localAuthority)
     {
         LocalAuthority = _modificationTracker.Change(LocalAuthority, localAuthority);
+    }
+
+    public void UpdateFrontDoorDecision(int? decisionId)
+    {
+        FrontDoorDecision = decisionId;
     }
 
     public void CanBeCompleted()
