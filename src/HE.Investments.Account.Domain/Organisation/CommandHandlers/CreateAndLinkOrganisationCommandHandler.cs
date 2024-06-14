@@ -4,9 +4,7 @@ using HE.Investments.Account.Domain.Organisation.Entities;
 using HE.Investments.Account.Domain.Organisation.Repositories;
 using HE.Investments.Account.Domain.Organisation.ValueObjects;
 using HE.Investments.Account.Shared;
-using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Contract.Validators;
-using HE.Investments.Common.Errors;
 using MediatR;
 using IContactRepository = HE.Investments.Account.Domain.Organisation.Repositories.IContactRepository;
 
@@ -33,13 +31,6 @@ public class CreateAndLinkOrganisationCommandHandler : IRequestHandler<CreateAnd
 
     public async Task<OperationResult> Handle(CreateAndLinkOrganisationCommand request, CancellationToken cancellationToken)
     {
-        if (await _userContext.IsLinkedWithOrganisation())
-        {
-            throw new DomainException(
-                $"Cannot link organization to user account id: {_userContext.UserGlobalId}, because it is already linked to other organization.",
-                CommonErrorCodes.ContactAlreadyLinkedWithOrganization);
-        }
-
         var operationResult = OperationResult.New();
         var name = operationResult.Aggregate(() => new OrganisationName(request.Name));
         var address = operationResult.Aggregate(() =>

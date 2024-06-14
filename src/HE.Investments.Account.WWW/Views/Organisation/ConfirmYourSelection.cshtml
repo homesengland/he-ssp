@@ -4,12 +4,13 @@
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Links
 @using HE.Investments.Account.WWW.Views.Shared.Components.SelectedOrganisationInformation
 @using Microsoft.AspNetCore.Mvc.TagHelpers
-@model HE.Investments.Common.WWW.Models.ConfirmModel<HE.Investments.Account.Contract.Organisation.Queries.OrganisationBasicDetails>
+@using HE.Investments.Account.Contract.Organisation.Queries
+@model HE.Investments.Common.WWW.Models.ConfirmModel<OrganisationBasicDetails>
 @{
     ViewData["Title"] = OrganisationPageTitles.ConfirmYourSelection;
     var organisationInformation = new DynamicComponentViewModel(
         nameof(SelectedOrganisationInformation),
-        new { name = Model.ViewModel.Name, street = Model.ViewModel.Street, city = Model.ViewModel.City, postalCode = Model.ViewModel.City, companiesHouseNumber = Model.ViewModel.CompaniesHouseNumber });
+        new { name = Model.ViewModel.Name, street = Model.ViewModel.Street, city = Model.ViewModel.City, postalCode = Model.ViewModel.PostalCode, companiesHouseNumber = Model.ViewModel.CompaniesHouseNumber });
 }
 
 <gds-div-grid-column-two-thirds>
@@ -27,5 +28,13 @@
             value="@Model.IsConfirmed"/>
 
         <vc:form-button/>
+
+        <input type="hidden" asp-for="ViewModel.Name"/>
+        <input type="hidden" asp-for="ViewModel.Street"/>
+        <input type="hidden" asp-for="ViewModel.City"/>
+        <input type="hidden" asp-for="ViewModel.PostalCode"/>
+        <input type="hidden" asp-for="ViewModel.CompaniesHouseNumber"/>
+        <input type="hidden" asp-for="ViewModel.OrganisationId"/>
+        <input type="hidden" asp-for="SearchPhrase"/>
     </form>
 </gds-div-grid-column-two-thirds>
