@@ -47,6 +47,13 @@ public class AccountUserContextTestBuilder
         return this;
     }
 
+    public AccountUserContextTestBuilder ReturnUserAccounts(IList<UserAccount> userAccounts)
+    {
+        _mock.Setup(x => x.GetAccounts()).ReturnsAsync(userAccounts);
+
+        return this;
+    }
+
     public IAccountUserContext Build()
     {
         return _mock.Object;

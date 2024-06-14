@@ -1,11 +1,9 @@
 using HE.Investments.Account.Contract.Organisation;
 using HE.Investments.Account.Contract.Organisation.Commands;
 using HE.Investments.Account.Contract.Organisation.Queries;
-using HE.Investments.Account.Shared.Authorization.Attributes;
 using HE.Investments.Account.Shared.Routing;
 using HE.Investments.Common.Contract.Pagination;
 using HE.Investments.Common.Extensions;
-using HE.Investments.Common.Messages;
 using HE.Investments.Common.WWW.Controllers;
 using HE.Investments.Common.WWW.Models;
 using HE.Investments.Common.WWW.Utils;
@@ -65,23 +63,19 @@ public class OrganisationController : Controller
     }
 
     [HttpPost("{organisationNumberOrId}/confirm")]
-    public async Task<IActionResult> ConfirmOrganisationPost(string organisationNumberOrId, ConfirmModel<OrganisationBasicDetails> model, [FromQuery] string searchPhrase)
+    public async Task<IActionResult> ConfirmOrganisationPost(string organisationNumberOrId, ConfirmModel<OrganisationBasicDetails> model, CancellationToken cancellationToken)
     {
-        if (model.IsConfirmed.IsNotProvided())
+        if (model.IsConfirmed.IsProvided() && !model.IsConfirmed!.Value)
         {
-            ModelState.AddModelError(nameof(model.IsConfirmed), ValidationErrorMessage.ChooseYourAnswer);
-            model.ViewModel = await _mediator.Send(new GetOrganisationQuery(organisationNumberOrId));
-            model.SearchPhrase = searchPhrase;
-            return View("ConfirmYourSelection", model);
+            return RedirectToAction("SearchOrganisationResult", "Organisation", new { model.SearchPhrase });
         }
 
-        if (!model.IsConfirmed!.Value)
-        {
-            return RedirectToAction("SearchOrganisationResult", "Organisation", new { searchPhrase });
-        }
-
-        await _mediator.Send(new LinkContactWithOrganisationCommand(organisationNumberOrId));
-        return RedirectToAction("List", "UserOrganisations");
+        return await this.ExecuteCommand<ConfirmModel<OrganisationBasicDetails>>(
+            _mediator,
+            new LinkContactWithOrganisationCommand(organisationNumberOrId, model.IsConfirmed),
+            async () => await Task.FromResult(RedirectToAction("List", "UserOrganisations")),
+            async () => await Task.FromResult(View("ConfirmYourSelection", model)),
+            cancellationToken);
     }
 
     [HttpGet("no-match-found")]
