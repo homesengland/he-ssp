@@ -13,6 +13,10 @@ public class AhpExternalLinks : CommonExternalLinks, IAhpExternalLinks
         nameof(BuildingRegulations),
         "https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/540330/BR_PDF_AD_M1_2015_with_2016_amendments_V3.pdf");
 
+    public string HomesEnglandMainPage => GetExternalLink(
+        nameof(HomesEnglandMainPage),
+        "https://www.gov.uk/government/organisations/homes-england");
+
     public string ApplyForAffordableHousingFunding => GetExternalLink(
         nameof(ApplyForAffordableHousingFunding),
         "https://www.gov.uk/guidance/apply-for-affordable-housing-funding");
