@@ -1,5 +1,4 @@
 @using HE.Investments.Common.Gds
-@using Microsoft.CodeAnalysis
 @model (string ProgrammeName, string ProjectId, bool IsReadOnly)
 
 <he-div-grid-column-full class="govuk-!-padding-left-0">
@@ -17,7 +16,7 @@
 
     <gds-h2>View sites</gds-h2>
     <gds-p>
-        View a list of your competed and in progress sites.
+        View a list of your completed and in progress sites.
     </gds-p>
     <link-button action-url="@Url.Action("Sites", "Project", new { projectId = Model.ProjectId })" button-type="@ButtonType.Secondary">
         View
