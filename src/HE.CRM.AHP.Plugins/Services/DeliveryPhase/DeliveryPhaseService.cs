@@ -235,9 +235,9 @@ namespace HE.CRM.AHP.Plugins.Services.DeliveryPhase
             }
             if (deliveryPhase.invln_AcquisitionPercentageValue == null && deliveryPhase.invln_StartOnSitePercentageValue == null && deliveryPhase.invln_CompletionPercentageValue == null)
             {
-                deliveryPhase.invln_AcquisitionPercentageValue = acquisitionPercentageValue;
-                deliveryPhase.invln_StartOnSitePercentageValue = startOnSitePercentageValue;
-                deliveryPhase.invln_CompletionPercentageValue = completionPercentageValue;
+                deliveryPhase.invln_AcquisitionPercentageValue = df.invln_AcquisitionPercentageValue == acquisitionPercentageValue ? acquisitionPercentageValue : df.invln_AcquisitionPercentageValue;
+                deliveryPhase.invln_StartOnSitePercentageValue = df.invln_StartOnSitePercentageValue == startOnSitePercentageValue ? startOnSitePercentageValue : df.invln_StartOnSitePercentageValue;
+                deliveryPhase.invln_CompletionPercentageValue = df.invln_CompletionPercentageValue == completionPercentageValue ? completionPercentageValue : df.invln_CompletionPercentageValue;
                 deliveryPhase.invln_AcquisitionValue = new Money(fundingForPhase * deliveryPhase.invln_AcquisitionPercentageValue.Value);
                 deliveryPhase.invln_StartOnSiteValue = new Money(fundingForPhase * deliveryPhase.invln_StartOnSitePercentageValue.Value);
                 deliveryPhase.invln_CompletionValue = new Money(fundingForPhase * deliveryPhase.invln_CompletionPercentageValue.Value);
