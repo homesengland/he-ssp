@@ -303,7 +303,7 @@ public class Order05CompleteDeliveryPhases : AhpApplicationIntegrationTest
         checkAnswersPage
             .UrlEndWith(BuildDeliveryPhasesPage(DeliveryPhasePagesUrl.CheckAnswers, RehabDeliveryPhase))
             .HasTitle(DeliveryPageTitles.CheckAnswers)
-            .HasSummaryErrorMessage("Milestones", text: "The information you have entered doesn't meet what is required, check and try again")
+            .HasSummaryErrorMessage("Milestones", text: "Dates fall outside of the programme requirements. Check your dates against the published funding requirements")
             .HasSaveAndContinueButton();
         SaveCurrentPage();
     }
