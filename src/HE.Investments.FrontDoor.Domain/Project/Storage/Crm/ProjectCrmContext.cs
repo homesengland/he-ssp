@@ -4,7 +4,7 @@ using HE.Investments.Common.CRM.Model;
 using HE.Investments.Common.CRM.Serialization;
 using HE.Investments.Common.CRM.Services;
 using HE.Investments.Common.Extensions;
-using HE.Investments.FrontDoor.Shared.Project.Crm;
+using HE.Investments.FrontDoor.Shared.Project.Storage.Crm;
 
 namespace HE.Investments.FrontDoor.Domain.Project.Storage.Crm;
 

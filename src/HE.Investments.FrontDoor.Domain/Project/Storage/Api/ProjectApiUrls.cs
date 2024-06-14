@@ -8,7 +8,5 @@ internal static class ProjectApiUrls
 
     public const string SaveProject = "UpsertProject";
 
-    public static string GetProject(string projectId) => $"getProject/{projectId.ToGuidAsString()}";
-
     public static string GetProjects(string organisationId) => $"getProjects/{organisationId.ToGuidAsString()}";
 }

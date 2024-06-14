@@ -12,7 +12,7 @@ internal sealed class ApiTokenProvider
         _config = config;
     }
 
-    public async Task<CrmApiAccessToken> GetToken()
+    public async Task<ApiAccessToken> GetToken()
     {
         var app = ConfidentialClientApplicationBuilder
             .Create(_config.ClientId)
@@ -22,8 +22,8 @@ internal sealed class ApiTokenProvider
 
         var result = await app.AcquireTokenForClient([_config.Scope]).ExecuteAsync();
 
-        return new CrmApiAccessToken(result.AccessToken, result.ExpiresOn);
+        return new ApiAccessToken(result.AccessToken, result.ExpiresOn);
     }
 
-    public sealed record CrmApiAccessToken(string AccessToken, DateTimeOffset ExpiresOn);
+    public sealed record ApiAccessToken(string AccessToken, DateTimeOffset ExpiresOn);
 }

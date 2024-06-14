@@ -6,6 +6,9 @@ using HE.Investments.Common.Extensions;
 using HE.Investments.FrontDoor.Domain.Project.Storage.Api.Contract.Requests;
 using HE.Investments.FrontDoor.Domain.Project.Storage.Api.Contract.Responses;
 using HE.Investments.FrontDoor.Domain.Project.Storage.Api.Mappers;
+using HE.Investments.FrontDoor.Shared.Project.Storage.Api;
+using HE.Investments.FrontDoor.Shared.Project.Storage.Api.Contract.Responses;
+using HE.Investments.FrontDoor.Shared.Project.Storage.Api.Mappers;
 
 namespace HE.Investments.FrontDoor.Domain.Project.Storage.Api;
 
@@ -63,7 +66,7 @@ public sealed class ProjectApiContext : ApiHttpClientBase, IProjectContext
 
     private async Task<FrontDoorProjectDto> GetProject(string projectId, CancellationToken cancellationToken)
     {
-        var response = await SendAsync<GetProjectResponse>(ProjectApiUrls.GetProject(projectId), HttpMethod.Get, cancellationToken);
+        var response = await SendAsync<GetProjectResponse>(CommonProjectApiUrls.GetProject(projectId), HttpMethod.Get, cancellationToken);
 
         return GetProjectResponseMapper.Map(response);
     }

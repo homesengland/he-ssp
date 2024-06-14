@@ -8,6 +8,9 @@ using HE.Investments.Common.Extensions;
 using HE.Investments.FrontDoor.Domain.Site.Storage.Api.Contract.Requests;
 using HE.Investments.FrontDoor.Domain.Site.Storage.Api.Contract.Responses;
 using HE.Investments.FrontDoor.Domain.Site.Storage.Api.Mappers;
+using HE.Investments.FrontDoor.Shared.Project.Storage.Api;
+using HE.Investments.FrontDoor.Shared.Project.Storage.Api.Contract.Responses;
+using HE.Investments.FrontDoor.Shared.Project.Storage.Api.Mappers;
 
 namespace HE.Investments.FrontDoor.Domain.Site.Storage.Api;
 
@@ -24,7 +27,7 @@ public sealed class SiteApiContext : ApiHttpClientBase, ISiteContext
         PagingRequestDto pagination,
         CancellationToken cancellationToken)
     {
-        var response = await SendAsync<GetMultipleSitesResponse>(SiteApiUrls.GetSites(projectId), HttpMethod.Get, cancellationToken);
+        var response = await SendAsync<GetMultipleSitesResponse>(CommonProjectApiUrls.GetSites(projectId), HttpMethod.Get, cancellationToken);
         var sites = response
             .TakePage(new PaginationRequest(pagination.pageNumber, pagination.pageSize))
             .Select(GetSiteResponseMapper.Map)
@@ -40,7 +43,7 @@ public sealed class SiteApiContext : ApiHttpClientBase, ISiteContext
 
     public async Task<FrontDoorProjectSiteDto> GetSite(string projectId, string siteId, UserAccount userAccount, CancellationToken cancellationToken)
     {
-        var response = await SendAsync<GetSiteResponse>(SiteApiUrls.GetSite(siteId), HttpMethod.Get, cancellationToken);
+        var response = await SendAsync<GetSiteResponse>(CommonProjectApiUrls.GetSite(siteId), HttpMethod.Get, cancellationToken);
 
         return GetSiteResponseMapper.Map(response);
     }

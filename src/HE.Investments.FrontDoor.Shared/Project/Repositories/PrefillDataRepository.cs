@@ -4,18 +4,18 @@ using HE.Investments.Account.Shared.User;
 using HE.Investments.Common.Contract.Enum;
 using HE.Investments.Common.CRM.Mappers;
 using HE.Investments.FrontDoor.Shared.Project.Contract;
-using HE.Investments.FrontDoor.Shared.Project.Crm;
 using HE.Investments.FrontDoor.Shared.Project.Data;
+using HE.Investments.FrontDoor.Shared.Project.Storage.Crm;
 
 namespace HE.Investments.FrontDoor.Shared.Project.Repositories;
 
 internal sealed class PrefillDataRepository : IPrefillDataRepository
 {
-    private readonly IProjectCrmContext _crmContext;
+    private readonly IProjectContext _context;
 
-    public PrefillDataRepository(IProjectCrmContext crmContext)
+    public PrefillDataRepository(IProjectContext context)
     {
-        _crmContext = crmContext;
+        _context = context;
     }
 
     public async Task<ProjectPrefillData> GetProjectPrefillData(
@@ -25,11 +25,11 @@ internal sealed class PrefillDataRepository : IPrefillDataRepository
     {
         var organisationId = userAccount.SelectedOrganisationId().Value;
         var project = userAccount.CanViewAllApplications()
-            ? await _crmContext.GetOrganisationProjectById(projectId.Value, organisationId, cancellationToken)
-            : await _crmContext.GetUserProjectById(projectId.Value, userAccount.UserGlobalId.Value, organisationId, cancellationToken);
+            ? await _context.GetOrganisationProjectById(projectId.Value, organisationId, cancellationToken)
+            : await _context.GetUserProjectById(projectId.Value, userAccount.UserGlobalId.Value, organisationId, cancellationToken);
 
         var sites = project.IdentifiedSite == true
-            ? await _crmContext.GetProjectSites(projectId.Value, cancellationToken)
+            ? await _context.GetProjectSites(projectId.Value, cancellationToken)
             : null;
 
         return Map(project, sites?.items);
@@ -37,7 +37,7 @@ internal sealed class PrefillDataRepository : IPrefillDataRepository
 
     public async Task<SitePrefillData> GetSitePrefillData(FrontDoorProjectId projectId, FrontDoorSiteId siteId, CancellationToken cancellationToken)
     {
-        var site = await _crmContext.GetProjectSite(projectId.Value, siteId.Value, cancellationToken);
+        var site = await _context.GetProjectSite(projectId.Value, siteId.Value, cancellationToken);
 
         return new SitePrefillData(
             siteId,
@@ -49,7 +49,7 @@ internal sealed class PrefillDataRepository : IPrefillDataRepository
 
     public async Task MarkProjectAsUsed(FrontDoorProjectId projectId, CancellationToken cancellationToken)
     {
-        await _crmContext.DeactivateProject(projectId.Value, cancellationToken);
+        await _context.DeactivateProject(projectId.Value, cancellationToken);
     }
 
     private ProjectPrefillData Map(FrontDoorProjectDto project, IList<FrontDoorProjectSiteDto>? frontDoorSites)

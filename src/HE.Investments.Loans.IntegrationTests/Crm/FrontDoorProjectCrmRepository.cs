@@ -4,7 +4,7 @@ using HE.Investments.Common.CRM.Serialization;
 using HE.Investments.Common.CRM.Services;
 using HE.Investments.FrontDoor.Shared.Project;
 using HE.Investments.FrontDoor.Shared.Project.Contract;
-using HE.Investments.FrontDoor.Shared.Project.Crm;
+using HE.Investments.FrontDoor.Shared.Project.Storage.Crm;
 using HE.Investments.IntegrationTestsFramework.Auth;
 using HE.Investments.Loans.IntegrationTests.Config;
 

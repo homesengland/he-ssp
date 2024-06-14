@@ -1,6 +1,6 @@
-namespace HE.Investments.FrontDoor.Domain.Project.Storage.Api.Contract.Responses;
+namespace HE.Investments.FrontDoor.Shared.Project.Storage.Api.Contract.Responses;
 
-internal sealed record GetProjectResponse
+public sealed record GetProjectResponse
 {
     public string ProjectId { get; init; }
 

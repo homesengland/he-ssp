@@ -1,9 +1,9 @@
 using HE.Common.IntegrationModel.PortalIntegrationModel;
-using HE.Investments.FrontDoor.Domain.Project.Storage.Api.Contract.Responses;
+using HE.Investments.FrontDoor.Shared.Project.Storage.Api.Contract.Responses;
 
-namespace HE.Investments.FrontDoor.Domain.Project.Storage.Api.Mappers;
+namespace HE.Investments.FrontDoor.Shared.Project.Storage.Api.Mappers;
 
-internal static class GetProjectResponseMapper
+public static class GetProjectResponseMapper
 {
     public static FrontDoorProjectDto Map(GetProjectResponse response)
     {

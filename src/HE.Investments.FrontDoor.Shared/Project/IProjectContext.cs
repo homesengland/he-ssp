@@ -1,8 +1,8 @@
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 
-namespace HE.Investments.FrontDoor.Shared.Project.Crm;
+namespace HE.Investments.FrontDoor.Shared.Project;
 
-internal interface IProjectCrmContext
+internal interface IProjectContext
 {
     Task<FrontDoorProjectDto> GetOrganisationProjectById(string projectId, string organisationId, CancellationToken cancellationToken);
 

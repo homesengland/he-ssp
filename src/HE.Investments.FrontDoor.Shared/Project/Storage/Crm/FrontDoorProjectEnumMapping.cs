@@ -2,7 +2,7 @@ using HE.Investments.Common.Contract.Enum;
 using HE.Investments.Common.CRM.Model;
 using HE.Investments.FrontDoor.Shared.Project.Contract;
 
-namespace HE.Investments.FrontDoor.Shared.Project.Crm;
+namespace HE.Investments.FrontDoor.Shared.Project.Storage.Crm;
 
 public static class FrontDoorProjectEnumMapping
 {

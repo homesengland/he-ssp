@@ -5,9 +5,9 @@ using HE.Investments.Common.CRM.Serialization;
 using HE.Investments.Common.CRM.Services;
 using HE.Investments.Common.Extensions;
 
-namespace HE.Investments.FrontDoor.Shared.Project.Crm;
+namespace HE.Investments.FrontDoor.Shared.Project.Storage.Crm;
 
-internal sealed class ProjectCrmContext : IProjectCrmContext
+internal sealed class ProjectCrmContext : IProjectContext
 {
     private readonly ICrmService _service;
 

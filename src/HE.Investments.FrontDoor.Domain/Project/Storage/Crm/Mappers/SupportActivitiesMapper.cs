@@ -1,7 +1,7 @@
 using HE.Investments.Common.CRM.Mappers;
 using HE.Investments.FrontDoor.Domain.Project.ValueObjects;
 using HE.Investments.FrontDoor.Shared.Project.Contract;
-using HE.Investments.FrontDoor.Shared.Project.Crm;
+using HE.Investments.FrontDoor.Shared.Project.Storage.Crm;
 
 namespace HE.Investments.FrontDoor.Domain.Project.Storage.Crm.Mappers;
 

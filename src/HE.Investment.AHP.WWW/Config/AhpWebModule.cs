@@ -9,6 +9,7 @@ using HE.Investment.AHP.WWW.Models.Site.Factories;
 using HE.Investment.AHP.WWW.Notifications;
 using HE.Investment.AHP.WWW.Routing;
 using HE.Investments.AHP.Consortium.Domain.Config;
+using HE.Investments.Api.Config;
 using HE.Investments.Common;
 using HE.Investments.Common.Config;
 using HE.Investments.Common.Contract.Enum;
@@ -44,6 +45,7 @@ public static class AhpWebModule
         services.AddNotificationPublisher(ApplicationType.Ahp);
         services.AddNotificationConsumer(ApplicationType.Ahp, typeof(HomeTypeHasBeenCreatedDisplayNotificationFactory).Assembly);
         services.AddDocumentServiceModule();
+        services.AddApiModule();
         AddViewModelFactories(services);
 
         services.AddSingleton<IAhpExternalLinks, AhpExternalLinks>();
