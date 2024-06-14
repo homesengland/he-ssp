@@ -162,10 +162,12 @@ public class Order01CompleteUserProfile : AccountIntegrationTest
 
         // then
         organisationsList
-            .UrlEndWith(MainPagesUrl.OrganisationList)
-            .HasTitle(UserOrganisationsPageTitles.List)
-            .HasLinkWithTestId("add-another-organisation-link", out _)
-            .HasLinkWithTestId("manage-profile-link", out _);
+            .UrlEndWith(MainPagesUrl.Dashboard)
+            .HasTitle(UserOrganisationPageTitles.OrganisationDetails(FreshProfileData.OrganisationName))
+            .HasNoElementWithTestId("manage-users-link")
+            .HasNoElementWithTestId("manage-organisation-link")
+            .HasLinkWithTestId("manage-profile-link", out _)
+            .HasNoElementWithTestId("manage-consortium-link");
 
         SaveCurrentPage();
     }

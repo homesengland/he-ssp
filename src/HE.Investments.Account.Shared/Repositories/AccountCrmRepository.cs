@@ -79,6 +79,8 @@ public class AccountCrmRepository : IAccountRepository
             organisation.registeredCompanyName,
             organisation.companyRegistrationNumber,
             organisation.addressLine1,
+            organisation.city,
+            organisation.postalcode,
             organisation.isUnregisteredBody);
     }
 }

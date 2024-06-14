@@ -1,4 +1,5 @@
 using System.Security.Claims;
+using HE.Investments.Common.Contract;
 using HE.Investments.Common.User;
 using HE.Investments.Common.WWW.Extensions;
 using Microsoft.AspNetCore.Http;
@@ -25,9 +26,13 @@ public class UserContext : IUserContext
         {
             UserGlobalId = GetRequiredClaimValue(httpUser, IdentifierClaimName);
         }
+
+        // todo AB#95739 get selected organisation id
     }
 
     public string UserGlobalId { get; }
+
+    public OrganisationId? OrganisationId { get; }
 
     public string Email { get; }
 

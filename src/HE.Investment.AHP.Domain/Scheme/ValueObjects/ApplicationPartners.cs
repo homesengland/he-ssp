@@ -39,7 +39,14 @@ public class ApplicationPartners : ValueObject
 
     public static ApplicationPartners ConfirmedPartner(OrganisationId organisationId)
     {
-        return ConfirmedPartner(new OrganisationBasicInfo(organisationId, string.Empty, string.Empty, string.Empty, false));
+        return ConfirmedPartner(new OrganisationBasicInfo(
+            organisationId,
+            string.Empty,
+            string.Empty,
+            string.Empty,
+            string.Empty,
+            string.Empty,
+            false));
     }
 
     public static ApplicationPartners FromSitePartners(SitePartners sitePartners)

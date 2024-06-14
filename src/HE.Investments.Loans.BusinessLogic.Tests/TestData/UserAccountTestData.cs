@@ -11,6 +11,13 @@ public static class UserAccountTestData
     public static readonly UserAccount UserAccountOne = new(
         UserGlobalId.From("UserOne"),
         "User@one.com",
-        new OrganisationBasicInfo(new OrganisationId(GuidTestData.GuidTwo.ToString()), "AccountOne", "4321", "London", false),
+        new OrganisationBasicInfo(
+            new OrganisationId(GuidTestData.GuidTwo.ToString()),
+            "AccountOne",
+            "4321",
+            "Main street",
+            "London",
+            "Postal code",
+            false),
         [UserRole.Limited]);
 }

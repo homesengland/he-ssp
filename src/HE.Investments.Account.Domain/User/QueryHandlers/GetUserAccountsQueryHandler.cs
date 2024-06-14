@@ -36,6 +36,8 @@ public class GetUserAccountsQueryHandler : IRequestHandler<GetUserAccountsQuery,
                     userAccount.Organisation.RegisteredCompanyName,
                     userAccount.Organisation.CompanyRegistrationNumber,
                     userAccount.Organisation.AddressLine1,
+                    userAccount.Organisation.City,
+                    userAccount.Organisation.PostalCode,
                     userAccount.Organisation.IsUnregisteredBody),
                 userAccount.Roles);
         }

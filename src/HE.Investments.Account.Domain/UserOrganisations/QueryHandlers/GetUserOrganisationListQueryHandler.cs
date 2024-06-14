@@ -1,6 +1,5 @@
 using HE.Investments.Account.Contract.UserOrganisations.Queries;
-using HE.Investments.Account.Domain.Organisation.Repositories;
-using HE.Investments.Consortium.Shared.UserContext;
+using HE.Investments.Account.Shared;
 using HE.Investments.Organisation.Contract;
 using MediatR;
 
@@ -8,32 +7,25 @@ namespace HE.Investments.Account.Domain.UserOrganisations.QueryHandlers;
 
 public class GetUserOrganisationListQueryHandler : IRequestHandler<GetUserOrganisationListQuery, IList<OrganisationDetails>>
 {
-    private readonly IConsortiumUserContext _accountUserContext;
-    private readonly IOrganizationRepository _organizationRepository;
+    private readonly IAccountUserContext _accountUserContext;
 
-    public GetUserOrganisationListQueryHandler(
-        IOrganizationRepository organizationRepository,
-        IConsortiumUserContext accountUserContext)
+    public GetUserOrganisationListQueryHandler(IAccountUserContext accountUserContext)
     {
         _accountUserContext = accountUserContext;
-        _organizationRepository = organizationRepository;
     }
 
     public async Task<IList<OrganisationDetails>> Handle(GetUserOrganisationListQuery request, CancellationToken cancellationToken)
     {
-        // todo this is a temporary solution to get the organisation details for the user -> to be updated in the next pr AB#95737
-        var account = await _accountUserContext.GetSelectedAccount();
-        var organisationDetails = await _organizationRepository.GetBasicInformation(account.SelectedOrganisationId(), cancellationToken);
+        var accounts = await _accountUserContext.GetAccounts();
 
-        return
-        [
-            new(
-                organisationDetails.RegisteredCompanyName,
-                organisationDetails.Address.Line1,
-                organisationDetails.Address.City,
-                organisationDetails.Address.PostalCode,
-                organisationDetails.CompanyRegistrationNumber,
-                Guid.NewGuid().ToString()),
-        ];
+        return accounts?.Where(account => account.Organisation != null)
+            .Select(account => new OrganisationDetails(
+                account.Organisation!.RegisteredCompanyName,
+                account.Organisation.AddressLine1,
+                account.Organisation.City,
+                account.Organisation.PostalCode,
+                account.Organisation.CompanyRegistrationNumber,
+                account.Organisation.OrganisationId.ToString()))
+            .ToList() ?? [];
     }
 }

@@ -41,7 +41,16 @@ public class AccountUserContext : IAccountUserContext
     public async Task<UserAccount> GetSelectedAccount()
     {
         var accounts = await _userAccounts.GetAsync();
-        return accounts?.MinBy(x => x.Organisation?.OrganisationId.Value) ?? throw new NotFoundException(nameof(UserAccount));
+        var selectedAccount = _userContext.OrganisationId != null
+            ? accounts?.FirstOrDefault(x => x.Organisation?.OrganisationId == _userContext.OrganisationId)
+            : accounts?.MinBy(x => x.Organisation?.OrganisationId.Value);
+
+        return selectedAccount ?? throw new NotFoundException(nameof(UserAccount));
+    }
+
+    public async Task<IList<UserAccount>?> GetAccounts()
+    {
+        return await _userAccounts.GetAsync();
     }
 
     public async Task RefreshUserData()

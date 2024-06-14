@@ -32,6 +32,8 @@ internal sealed class AccountHttpRepository : IAccountRepository
                     x.Organisation.CompanyRegisteredName,
                     x.Organisation.CompanyRegistrationNumber,
                     x.Organisation.CompanyAddressLine1,
+                    x.Organisation.City,
+                    x.Organisation.PostalCode,
                     x.Organisation.IsUnregisteredBody),
                 x.Roles))
             .ToList();

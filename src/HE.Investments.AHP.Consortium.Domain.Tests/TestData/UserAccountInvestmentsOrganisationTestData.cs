@@ -10,6 +10,13 @@ public static class UserAccountInvestmentsOrganisationTestData
     public static readonly UserAccount JjCompanyEmployee = new(
         UserGlobalId.From("MasterJ"),
         "User@company.com",
-        new OrganisationBasicInfo(InvestmentsOrganisationTestData.JjCompany.Id, "AccountOne", "1234", "London", false),
+        new OrganisationBasicInfo(
+            InvestmentsOrganisationTestData.JjCompany.Id,
+            "AccountOne",
+            "1234",
+            "Main street",
+            "London",
+            "Postal code",
+            false),
         [UserRole.Admin, UserRole.Limited]);
 }

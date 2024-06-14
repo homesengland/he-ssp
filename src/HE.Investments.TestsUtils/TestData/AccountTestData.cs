@@ -9,5 +9,14 @@ public static class AccountTestData
         => new("Paul", "Smith", "Developer", emailAddress, "020 960 194", null, true);
 
     public static UserOrganisation PwCAdmin(string organisationId) =>
-        new(new OrganisationDetails(organisationId, "PwC", "100200300", "Warsaw", false), [UserRole.Admin]);
+        new(
+            new OrganisationDetails(
+                organisationId,
+                "PwC",
+                "100200300",
+                "Polna",
+                "Warsaw",
+                "Postal code",
+                false),
+            [UserRole.Admin]);
 }
