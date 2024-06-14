@@ -29,7 +29,7 @@ public class UserOrganisationsController : Controller
     [HttpGet(UserOrganisationsAccountEndpoints.ListSuffix)]
     public async Task<IActionResult> List()
     {
-        if (await _featureManager.IsEnabledAsync(FeatureFlags.OrganisationsListImplemented, CancellationToken.None))
+        if (!await _featureManager.IsEnabledAsync(FeatureFlags.OrganisationsListImplemented, CancellationToken.None))
         {
             return RedirectToAction("Index", "UserOrganisation");
         }
