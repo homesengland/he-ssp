@@ -5,6 +5,7 @@ using HE.Investment.AHP.Domain.Application.ValueObjects;
 using HE.Investment.AHP.Domain.Common;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Tests.TestData;
+using HE.Investments.FrontDoor.Shared.Project;
 
 namespace HE.Investment.AHP.Domain.Tests.Application.TestData;
 
@@ -14,6 +15,7 @@ public static class ApplicationBasicInfoTestData
 
     public static readonly ApplicationBasicInfo SharedOwnershipInDraftState = new(
         AhpApplicationId.From(GuidTestData.GuidOne),
+        FrontDoorProjectId.From(GuidTestData.GuidTwo.ToString()),
         new SiteId("test-site-12312"),
         new ApplicationName(GuidTestData.GuidOne.ToString()),
         Tenure.SharedOwnership,
@@ -29,6 +31,7 @@ public static class ApplicationBasicInfoTestData
 
     public static ApplicationBasicInfo CreateAffordableRentInDraftState() => new(
         AhpApplicationId.From(GuidTestData.GuidTwo),
+        FrontDoorProjectId.From(GuidTestData.GuidTwo.ToString()),
         new SiteId("test-site-12312"),
         new ApplicationName(GuidTestData.GuidTwo.ToString()),
         Tenure.AffordableRent,

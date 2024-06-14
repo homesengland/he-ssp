@@ -8,6 +8,7 @@ public static class ApplicationBasicInfoMapper
     public static ApplicationDetails Map(ApplicationBasicInfo application)
     {
         return new ApplicationDetails(
+            application.ProjectId,
             application.Id,
             application.Name.Value,
             application.Tenure,

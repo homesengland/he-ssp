@@ -3,6 +3,7 @@ using HE.Investment.AHP.Contract.Common;
 using HE.Investment.AHP.Contract.Scheme;
 using HE.Investment.AHP.WWW.Workflows;
 using HE.Investments.Common.Contract;
+using HE.Investments.FrontDoor.Shared.Project;
 using HE.Investments.Organisation.Contract;
 
 namespace HE.Investment.AHP.WWW.Tests.Workflows.SchemeWorkflowTests;
@@ -29,6 +30,7 @@ public static class SchemeWorkflowFactory
     {
         var scheme = new Scheme(
             application ?? new ApplicationDetails(
+                new FrontDoorProjectId("project-1234"),
                 new AhpApplicationId("test-1234"),
                 "appName",
                 Tenure.AffordableRent,

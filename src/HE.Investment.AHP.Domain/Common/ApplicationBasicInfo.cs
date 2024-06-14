@@ -4,6 +4,7 @@ using HE.Investment.AHP.Domain.Application.Entities;
 using HE.Investment.AHP.Domain.Application.Factories;
 using HE.Investment.AHP.Domain.Application.ValueObjects;
 using HE.Investments.Common.Contract;
+using HE.Investments.FrontDoor.Shared.Project;
 
 namespace HE.Investment.AHP.Domain.Common;
 
@@ -13,6 +14,7 @@ public class ApplicationBasicInfo
 
     public ApplicationBasicInfo(
         AhpApplicationId id,
+        FrontDoorProjectId projectId,
         SiteId siteId,
         ApplicationName name,
         Tenure tenure,
@@ -21,6 +23,7 @@ public class ApplicationBasicInfo
         IApplicationStateFactory applicationStateFactory)
     {
         Id = id;
+        ProjectId = projectId;
         SiteId = siteId;
         Name = name;
         Tenure = tenure;
@@ -30,6 +33,8 @@ public class ApplicationBasicInfo
     }
 
     public AhpApplicationId Id { get; }
+
+    public FrontDoorProjectId ProjectId { get; }
 
     public SiteId SiteId { get; }
 

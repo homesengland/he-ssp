@@ -1,5 +1,4 @@
 using HE.Investment.AHP.WWW.Controllers;
-using HE.Investments.Account.Shared;
 using HE.Investments.Common.WWW.Routing;
 
 namespace HE.Investment.AHP.WWW.Routing;
@@ -23,9 +22,9 @@ public class AhpBreadcrumbsBuilder : BreadcrumbsBuilderBase
         return this;
     }
 
-    public AhpBreadcrumbsBuilder WithSites()
+    public AhpBreadcrumbsBuilder WithSites(string projectId)
     {
-        AddBreadcrumb("Sites", nameof(SiteController.Index), GetControllerName(nameof(SiteController)));
+        AddBreadcrumb("Sites", nameof(SiteController.Index), GetControllerName(nameof(SiteController)), new { projectId });
 
         return this;
     }

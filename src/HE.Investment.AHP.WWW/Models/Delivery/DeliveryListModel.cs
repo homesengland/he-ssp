@@ -24,4 +24,6 @@ public class DeliveryListModel : DeliveryModelBase, IEditableViewModel
     public int UnusedHomeTypesCount { get; set; }
 
     public IList<DeliveryPhaseItemModel> DeliveryPhases { get; set; }
+
+    public string ProjectId { get; set; }
 }

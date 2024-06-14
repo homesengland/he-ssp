@@ -12,7 +12,7 @@
 
     ViewBag.Breadcrumbs = AhpBreadcrumbsBuilder
         .New()
-        .WithSites()
+        .WithSites(Model.ProjectId)
         .WithApplication(applicationId, Model.ApplicationName)
         .Build();
     ViewData["Title"] = HomeTypesPageTitles.HomeTypes;

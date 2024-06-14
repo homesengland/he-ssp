@@ -39,6 +39,7 @@ public class DeliveryController : Controller
 
         return View(new DeliveryListModel(deliveryPhases.Application.Name)
         {
+            ProjectId = deliveryPhases.Application.ProjectId.ToString(),
             AllowedOperations = deliveryPhases.Application.AllowedOperations.ToArray(),
             UnusedHomeTypesCount = deliveryPhases.UnusedHomeTypesCount,
             DeliveryPhases = deliveryPhases.DeliveryPhases

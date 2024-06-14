@@ -4,6 +4,7 @@ using HE.Investment.AHP.Contract.HomeTypes.Enums;
 using HE.Investment.AHP.Contract.Site;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Enum;
+using HE.Investments.FrontDoor.Shared.Project;
 
 namespace HE.Investment.AHP.WWW.Tests.TestDataBuilders;
 
@@ -109,6 +110,7 @@ public class HomeTypeTestDataBuilder
     {
         return new HomeType(
             new ApplicationDetails(
+                new FrontDoorProjectId("project-1234"),
                 new AhpApplicationId("test-1234"),
                 "appName",
                 _tenure,

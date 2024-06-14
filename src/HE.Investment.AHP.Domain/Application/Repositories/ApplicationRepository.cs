@@ -74,6 +74,7 @@ public class ApplicationRepository : IApplicationRepository
 
         return new ApplicationBasicInfo(
             application.Id,
+            application.ProjectId,
             application.SiteId,
             application.Name,
             application.Tenure.Value,
