@@ -42,6 +42,7 @@ public class DeliveryController : Controller
             ProjectId = deliveryPhases.Application.ProjectId.ToString(),
             AllowedOperations = deliveryPhases.Application.AllowedOperations.ToArray(),
             UnusedHomeTypesCount = deliveryPhases.UnusedHomeTypesCount,
+            IsUnregisteredBody = deliveryPhases.IsUnregisteredBody,
             DeliveryPhases = deliveryPhases.DeliveryPhases
                 .Select(x => new DeliveryPhaseItemModel(
                     x.Id,
@@ -49,7 +50,8 @@ public class DeliveryController : Controller
                     x.NumberOfHomes,
                     DateHelper.DisplayAsUkFormatDate(x.Acquisition),
                     DateHelper.DisplayAsUkFormatDate(x.StartOnSite),
-                    DateHelper.DisplayAsUkFormatDate(x.PracticalCompletion)))
+                    DateHelper.DisplayAsUkFormatDate(x.PracticalCompletion),
+                    x.IsOnlyCompletionMilestone))
                 .ToList(),
         });
     }

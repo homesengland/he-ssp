@@ -6,4 +6,5 @@ public record DeliveryPhaseItemModel(
     int? NumberOfHomes,
     string? Acquisition,
     string? StartOnSite,
-    string? PracticalCompletion);
+    string? PracticalCompletion,
+    bool IsOnlyCompletionMilestone);

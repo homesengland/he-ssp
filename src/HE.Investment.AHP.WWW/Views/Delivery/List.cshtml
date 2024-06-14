@@ -6,6 +6,7 @@
 @{
     var applicationId = this.GetApplicationIdFromRoute();
     var title = DeliveryPageTitles.List;
+    var columnCount = Model.IsUnregisteredBody ? 4 : 6;
 
     ViewBag.Breadcrumbs = AhpBreadcrumbsBuilder
         .New()
@@ -28,6 +29,7 @@
     <form asp-controller="Delivery" asp-action="List" asp-method="post" novalidate>
         @Html.HiddenFor(m => Model.ApplicationName)
         @Html.HiddenFor(m => Model.UnusedHomeTypesCount)
+        @Html.HiddenFor(m => Model.IsUnregisteredBody)
         @for (var i = 0; i < Model.AllowedOperations.Length; i++)
         {
             var index = i;
@@ -41,8 +43,11 @@
                 <tr class="govuk-table__row">
                     <th scope="col" class="govuk-table__header">Phase</th>
                     <th scope="col" class="govuk-table__header">Number of homes</th>
-                    <th scope="col" class="govuk-table__header">Acquisition</th>
-                    <th scope="col" class="govuk-table__header">Start on site</th>
+                    @if (!Model.IsUnregisteredBody)
+                    {
+                        <th scope="col" class="govuk-table__header">Acquisition</th>
+                        <th scope="col" class="govuk-table__header">Start on site</th>
+                    }
                     <th scope="col" class="govuk-table__header">Practical completion</th>
                     <td class="govuk-table__header"/>
                 </tr>
@@ -58,6 +63,7 @@
                     @Html.HiddenFor(model => Model.DeliveryPhases[index].Acquisition)
                     @Html.HiddenFor(model => Model.DeliveryPhases[index].StartOnSite)
                     @Html.HiddenFor(model => Model.DeliveryPhases[index].PracticalCompletion)
+                    @Html.HiddenFor(model => Model.DeliveryPhases[index].IsOnlyCompletionMilestone)
 
                     <tr class="govuk-table__row">
                         <td class="govuk-table__cell">
@@ -69,13 +75,18 @@
                         <td class="govuk-table__cell">
                             @(Model.DeliveryPhases[index].NumberOfHomes?.ToString() ?? "Not provided")
                         </td>
-                        <td class="govuk-table__cell">
-                            @(Model.DeliveryPhases[index].Acquisition ?? "Not provided")
-                        </td>
-                        <td class="govuk-table__cell">
-                            @(Model.DeliveryPhases[index].StartOnSite ?? "Not provided")
-                        </td>
-                        <td class="govuk-table__cell">
+
+                        @if (!Model.IsUnregisteredBody)
+                        {
+                            <td class="govuk-table__cell" data-testid="acquisition-milestone">
+                                @(Model.DeliveryPhases[index].Acquisition ?? (Model.DeliveryPhases[index].IsOnlyCompletionMilestone ? "Not applicable" : "Not provided"))
+                            </td>
+                            <td class="govuk-table__cell" data-testid="start-on-site-milestone">
+                                @(Model.DeliveryPhases[index].StartOnSite ?? (Model.DeliveryPhases[index].IsOnlyCompletionMilestone ? "Not applicable" : "Not provided"))
+                            </td>
+                        }
+
+                        <td class="govuk-table__cell" data-testid="completion-milestone">
                             @(Model.DeliveryPhases[index].PracticalCompletion ?? "Not provided")
                         </td>
                         <td class="govuk-table__cell govuk-!-text-align-right" hidden="@Model.IsReadOnly">
@@ -91,14 +102,14 @@
                 @if (Model.UnusedHomeTypesCount > 0)
                 {
                     <tr>
-                        <td colspan="6">
+                        <td colspan="@columnCount">
                             <gds-div-inset-text>
                                 You have @Model.UnusedHomeTypesCount homes that you need to add to your delivery phases.
                             </gds-div-inset-text>
                         </td>
                     </tr>
                     <tr>
-                        <td colspan="6">
+                        <td colspan="@columnCount">
                             <link-button button-type="@ButtonType.Standard"
                                          href="@Url.Action("Create", "DeliveryPhase", new { applicationId })"
                                          data-testid="add-delivery-phase"
@@ -111,7 +122,7 @@
                 else if (Model.UnusedHomeTypesCount < 0)
                 {
                     <tr>
-                        <td colspan="6">
+                        <td colspan="@columnCount">
                             <gds-div-inset-text>
                                 You have changed the number of homes you are delivering in this application and have now assigned too many homes to delivery phases.
                                 <br/>
@@ -121,7 +132,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td colspan="6">
+                        <td colspan="@columnCount">
                             <vc:form-button is-disabled="@Model.IsReadOnly"/>
                         </td>
                     </tr>
@@ -129,7 +140,7 @@
                 else
                 {
                     <tr>
-                        <td colspan="6">
+                        <td colspan="@columnCount">
                             <gds-div-inset-text>
                                 All of your homes have been added to delivery phase. If you want to add another delivery phase, edit the homes in an existing phase or remove a phase.
                                 <br/>
@@ -139,7 +150,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td colspan="6">
+                        <td colspan="@columnCount">
                             <vc:form-button is-disabled="@Model.IsReadOnly"/>
                         </td>
                     </tr>
