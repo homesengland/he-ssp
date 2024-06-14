@@ -15,6 +15,7 @@ public static class DeliveryPhaseEntityMapper
             deliveryPhase.TotalHomesToBeDeliveredInThisPhase,
             DateDetails.FromDateTime(deliveryPhase.DeliveryPhaseMilestones.AcquisitionMilestone?.PaymentDate?.Value),
             DateDetails.FromDateTime(deliveryPhase.DeliveryPhaseMilestones.StartOnSiteMilestone?.PaymentDate?.Value),
-            DateDetails.FromDateTime(deliveryPhase.DeliveryPhaseMilestones.CompletionMilestone?.PaymentDate?.Value));
+            DateDetails.FromDateTime(deliveryPhase.DeliveryPhaseMilestones.CompletionMilestone?.PaymentDate?.Value),
+            deliveryPhase.IsOnlyCompletionMilestone);
     }
 }

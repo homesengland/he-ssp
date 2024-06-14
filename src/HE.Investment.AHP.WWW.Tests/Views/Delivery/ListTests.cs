@@ -1,7 +1,8 @@
+using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
+using FluentAssertions;
 using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.WWW.Models.Delivery;
-
 using Microsoft.AspNetCore.Routing;
 
 namespace HE.Investment.AHP.WWW.Tests.Views.Delivery;
@@ -24,7 +25,7 @@ public class ListTests : AhpViewTestBase
             UnusedHomeTypesCount = 0,
             DeliveryPhases =
             [
-                new DeliveryPhaseItemModel("1", "Phase 1", 2, null, null, null),
+                new DeliveryPhaseItemModel("1", "Phase 1", 2, null, null, null, false),
             ],
         };
 
@@ -49,7 +50,7 @@ public class ListTests : AhpViewTestBase
             UnusedHomeTypesCount = -1,
             DeliveryPhases =
             [
-                new DeliveryPhaseItemModel("1", "Phase 1", 2, null, null, null),
+                new DeliveryPhaseItemModel("1", "Phase 1", 2, null, null, null, false),
             ],
         };
 
@@ -95,7 +96,7 @@ public class ListTests : AhpViewTestBase
             UnusedHomeTypesCount = 1,
             DeliveryPhases =
             [
-                new DeliveryPhaseItemModel("1", "Phase 1", 1, null, null, null),
+                new DeliveryPhaseItemModel("1", "Phase 1", 1, null, null, null, false),
             ],
         };
 
@@ -107,6 +108,76 @@ public class ListTests : AhpViewTestBase
         document.HasElementWithText("a", "Phase 1")
             .ContainsInsetText("You have 1 homes that you need to add to your delivery phases.")
             .HasLinkButton("Add another delivery phase");
+    }
+
+    [Fact]
+    public async Task ShouldDisplayNotProvided_WhenMilestoneDatesAreNotProvidedAndIsNotOnlyCompletionMilestone()
+    {
+        // given
+        var model = new DeliveryListModel(ApplicationName)
+        {
+            AllowedOperations = [AhpApplicationOperation.Modification],
+            DeliveryPhases =
+            [
+                new DeliveryPhaseItemModel("1", "Phase 1", 1, null, null, null, false),
+            ],
+        };
+
+        // when
+        var document = await RenderView(model);
+
+        // then
+        AssertView(document);
+        document.GetElementByTestId("acquisition-milestone").Text().Should().Contain("Not provided");
+        document.GetElementByTestId("start-on-site-milestone").Text().Should().Contain("Not provided");
+        document.GetElementByTestId("completion-milestone").Text().Should().Contain("Not provided");
+    }
+
+    [Fact]
+    public async Task ShouldDisplayNotApplicable_WhenMilestoneDatesAreNotProvidedAndIsOnlyCompletionMilestone()
+    {
+        // given
+        var model = new DeliveryListModel(ApplicationName)
+        {
+            AllowedOperations = [AhpApplicationOperation.Modification],
+            DeliveryPhases =
+            [
+                new DeliveryPhaseItemModel("1", "Phase 1", 1, null, null, null, true),
+            ],
+        };
+
+        // when
+        var document = await RenderView(model);
+
+        // then
+        AssertView(document);
+        document.GetElementByTestId("acquisition-milestone").Text().Should().Contain("Not applicable");
+        document.GetElementByTestId("start-on-site-milestone").Text().Should().Contain("Not applicable");
+        document.GetElementByTestId("completion-milestone").Text().Should().Contain("Not provided");
+    }
+
+    [Fact]
+    public async Task ShouldDisplayOnlyCompletionMilestone_WhenOrganisationIsUnregisteredBody()
+    {
+        // given
+        var model = new DeliveryListModel(ApplicationName)
+        {
+            AllowedOperations = [AhpApplicationOperation.Modification],
+            IsUnregisteredBody = true,
+            DeliveryPhases =
+            [
+                new DeliveryPhaseItemModel("1", "Phase 1", 1, null, null, null, true),
+            ],
+        };
+
+        // when
+        var document = await RenderView(model);
+
+        // then
+        AssertView(document);
+        document.HasNoElementWithTestId("acquisition-milestone");
+        document.HasNoElementWithTestId("start-on-site-milestone");
+        document.GetElementByTestId("completion-milestone").Text().Should().Contain("Not provided");
     }
 
     private static void AssertView(IHtmlDocument document)

@@ -9,4 +9,5 @@ public record DeliveryPhaseBasicDetails(
     int? NumberOfHomes,
     DateDetails? Acquisition,
     DateDetails? StartOnSite,
-    DateDetails? PracticalCompletion);
+    DateDetails? PracticalCompletion,
+    bool IsOnlyCompletionMilestone);
