@@ -75,7 +75,7 @@ public class SiteRepository : ISiteRepository
             .Select(CreateApplicationBasicDetails)
             .ToList();
 
-        return new PaginationResult<ApplicationBasicDetails>(applications, paginationRequest.Page, paginationRequest.ItemsPerPage, applications.Count);
+        return new PaginationResult<ApplicationBasicDetails>(applications, paginationRequest.Page, paginationRequest.ItemsPerPage, siteApplications.AhpApplications.Count);
     }
 
     public async Task<bool> IsExist(SiteName name, CancellationToken cancellationToken)
