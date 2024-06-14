@@ -12,6 +12,6 @@ public enum ModernMethodsConstruction2DSubcategoriesType
     [Description("Enhanced consolidation, for example insulation or internal linings ")]
     EnhancedConsolidation,
 
-    [Description("Further enhanced consolidation, including: insulation, linings, external, cladding, roofing, doors, windows")]
+    [Description("Further enhanced consolidation, including: insulation, linings, external cladding, roofing, doors, windows")]
     FurtherEnhancedConsolidation,
 }
