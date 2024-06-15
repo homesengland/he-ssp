@@ -14,22 +14,22 @@ namespace HE.CRM.AHP.Plugins.Plugins.DeliveryPhase
         StageEnum.PreOperation,
         ExecutionModeEnum.Synchronous,
         invln_DeliveryPhase.Fields.StatusCode + "," +
-        invln_DeliveryPhase.Fields.invln_NoofHomes + "," +
-        invln_DeliveryPhase.Fields.invln_buildactivitytype + "," +
-        invln_DeliveryPhase.Fields.invln_rehabactivitytype + "," +
-        invln_DeliveryPhase.Fields.invln_nbrh,
+            invln_DeliveryPhase.Fields.invln_NoofHomes + "," +
+            invln_DeliveryPhase.Fields.invln_buildactivitytype + "," +
+            invln_DeliveryPhase.Fields.invln_rehabactivitytype + "," +
+            invln_DeliveryPhase.Fields.invln_nbrh,
         "HE.CRM.AHP.Plugins.Plugins.DeliveryPhase.PreUpdateDeliveryPhase : PreUpdate of Delivery Phase",
         1,
         IsolationModeEnum.Sandbox,
         Id = "acb6edf2-59bf-42fd-8416-74ba9b55e51a",
         Image1Name = "PreImage",
         Image1Attributes = invln_DeliveryPhase.Fields.StatusCode + "," +
-        invln_DeliveryPhase.Fields.invln_Application + "," +
-        invln_DeliveryPhase.Fields.ModifiedBy + "," +
-        invln_DeliveryPhase.Fields.invln_NoofHomes + "," +
-        invln_DeliveryPhase.Fields.invln_buildactivitytype + "," +
-        invln_DeliveryPhase.Fields.invln_rehabactivitytype + "," +
-        invln_DeliveryPhase.Fields.invln_nbrh,
+            invln_DeliveryPhase.Fields.invln_Application + "," +
+            invln_DeliveryPhase.Fields.ModifiedBy + "," +
+            invln_DeliveryPhase.Fields.invln_NoofHomes + "," +
+            invln_DeliveryPhase.Fields.invln_buildactivitytype + "," +
+            invln_DeliveryPhase.Fields.invln_rehabactivitytype + "," +
+            invln_DeliveryPhase.Fields.invln_nbrh,
         Image1Type = ImageTypeEnum.PreImage)]
     public class PreUpdateDeliveryPhase : PluginBase<DataverseContext>, IPlugin
     {

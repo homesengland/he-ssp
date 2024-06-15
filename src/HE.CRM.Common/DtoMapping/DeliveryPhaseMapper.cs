@@ -29,11 +29,11 @@ namespace HE.CRM.Common.DtoMapping
                 requiresAdditionalPayments = MapYesNo(deliveryPhase.invln_urbrequestingearlymilestonepayments),
                 isCompleted = deliveryPhase.invln_iscompleted,
                 acquisitionValue = deliveryPhase.invln_AcquisitionValue?.Value,
-                acquisitionPercentageValue = deliveryPhase.invln_AcquisitionPercentageValue,
+                acquisitionPercentageValue = deliveryPhase.invln_AcquisitionPercentageValue.HasValue ? deliveryPhase.invln_AcquisitionPercentageValue.Value / 100 : deliveryPhase.invln_AcquisitionPercentageValue,
                 startOnSiteValue = deliveryPhase.invln_StartOnSiteValue?.Value,
-                startOnSitePercentageValue = deliveryPhase.invln_StartOnSitePercentageValue,
+                startOnSitePercentageValue = deliveryPhase.invln_StartOnSitePercentageValue.HasValue ? deliveryPhase.invln_StartOnSitePercentageValue / 100 : deliveryPhase.invln_StartOnSitePercentageValue,
                 completionValue = deliveryPhase.invln_CompletionValue?.Value,
-                completionPercentageValue = deliveryPhase.invln_CompletionPercentageValue,
+                completionPercentageValue = deliveryPhase.invln_CompletionPercentageValue.HasValue ? deliveryPhase.invln_CompletionPercentageValue / 100 : deliveryPhase.invln_CompletionPercentageValue,
                 claimingtheMilestoneConfirmed = deliveryPhase.invln_ClaimingtheMilestoneConfirmed,
                 sumOfCalculatedFounds = deliveryPhase.invln_sumofcalculatedfounds?.Value,
                 statusCode = deliveryPhase.StatusCode.Value
@@ -78,9 +78,9 @@ namespace HE.CRM.Common.DtoMapping
                 invln_urbrequestingearlymilestonepayments = MapYesNo(deliveryPhaseDto.requiresAdditionalPayments),
                 invln_invln_homesindeliveryphase_deliveryphasel = MapHomesInDeliveryPhase(deliveryPhaseDto),
                 invln_iscompleted = deliveryPhaseDto.isCompleted,
-                invln_AcquisitionPercentageValue = deliveryPhaseDto.acquisitionPercentageValue,
-                invln_StartOnSitePercentageValue = deliveryPhaseDto.startOnSitePercentageValue,
-                invln_CompletionPercentageValue = deliveryPhaseDto.completionPercentageValue,
+                invln_AcquisitionPercentageValue = deliveryPhaseDto.acquisitionPercentageValue.HasValue ? deliveryPhaseDto.acquisitionPercentageValue * 100 : deliveryPhaseDto.acquisitionPercentageValue,
+                invln_StartOnSitePercentageValue = deliveryPhaseDto.startOnSitePercentageValue.HasValue ? deliveryPhaseDto.startOnSitePercentageValue * 100 : deliveryPhaseDto.startOnSitePercentageValue,
+                invln_CompletionPercentageValue = deliveryPhaseDto.completionPercentageValue.HasValue ? deliveryPhaseDto.completionPercentageValue * 100 : deliveryPhaseDto.completionPercentageValue,
                 invln_ClaimingtheMilestoneConfirmed = deliveryPhaseDto.claimingtheMilestoneConfirmed,
             };
 

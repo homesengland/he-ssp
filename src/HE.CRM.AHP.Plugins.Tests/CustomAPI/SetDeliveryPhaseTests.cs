@@ -23,7 +23,9 @@ namespace HE.CRM.AHP.Plugins.Tests.CustomAPI
         [TestInitialize]
         public void Initialize()
         {
+#pragma warning disable CS0618 // Type or member is obsolete
             fakedContext = new XrmFakedContext();
+#pragma warning restore CS0618 // Type or member is obsolete
             pluginContext = fakedContext.GetDefaultPluginContext();
 
             var entityMetadata = new EntityMetadata()
@@ -61,6 +63,7 @@ namespace HE.CRM.AHP.Plugins.Tests.CustomAPI
                 invln_externalid = contactId.ToString()
             };
 
+#pragma warning disable CS0618 // Type or member is obsolete
             fakedContext.Initialize(new List<Entity>()
             {
                 new Account()
@@ -108,9 +111,9 @@ namespace HE.CRM.AHP.Plugins.Tests.CustomAPI
                     Id = deliveryPhaseId_1,
                     invln_Application = applicatioId.ToEntityReference<invln_scheme>(),
                     invln_NoofHomes = 5,
-                    invln_AcquisitionPercentageValue = 0.4m,
-                    invln_StartOnSitePercentageValue = 0.4m,
-                    invln_CompletionPercentageValue = 0.3m,
+                    invln_AcquisitionPercentageValue = 40m,
+                    invln_StartOnSitePercentageValue = 35m,
+                    invln_CompletionPercentageValue = 25m,
                     invln_AcquisitionValue = new Money(4000),
                     invln_StartOnSiteValue = new Money(4000),
                     invln_CompletionValue = new Money(3000)
@@ -123,6 +126,7 @@ namespace HE.CRM.AHP.Plugins.Tests.CustomAPI
                 },
             })
             ;
+#pragma warning restore CS0618 // Type or member is obsolete
 
             var metadata = fakedContext.GetEntityMetadataByName("contact");
             var keymetadata = new EntityKeyMetadata[]

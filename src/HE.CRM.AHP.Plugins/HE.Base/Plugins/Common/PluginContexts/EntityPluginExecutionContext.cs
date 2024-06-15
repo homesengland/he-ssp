@@ -162,7 +162,8 @@ namespace HE.Base.Plugins.Common.PluginContexts
 
                     if (!PreImage.Contains(field))
                     {
-                        return true;
+                        // PreImage does not contain a field if it is null
+                        return null != Target[field];
                     }
 
                     return !object.Equals(PreImage[field], Target[field]);
