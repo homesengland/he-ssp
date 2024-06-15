@@ -5,7 +5,7 @@ namespace HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
 
 public class FloorArea : TheRequiredDecimalValueObject
 {
-    private const string DisplayName = "square meterage in the internal floor each of each home";
+    private const string DisplayName = "square meterage in the internal floor area of each home";
 
     private const decimal MinValue = 0;
 
