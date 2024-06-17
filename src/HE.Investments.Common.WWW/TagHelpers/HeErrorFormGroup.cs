@@ -16,6 +16,9 @@ public class HeErrorFormGroup : TagHelper
     [HtmlAttributeName("asp-for")]
     public ModelExpression For { get; set; }
 
+    [HtmlAttributeName("id")]
+    public string? Id { get; set; }
+
     public override void Process(TagHelperContext context, TagHelperOutput? output)
     {
         if (output != null)
@@ -31,6 +34,11 @@ public class HeErrorFormGroup : TagHelper
             else
             {
                 TagConstruct.ConstructClass(output, CssConstants.GovUkFormGroup);
+            }
+
+            if (!string.IsNullOrEmpty(Id))
+            {
+                TagConstruct.ConstructId(output, Id);
             }
 
             output.Content.SetHtmlContent(TagConstruct.ConstructSetHtml(output));
