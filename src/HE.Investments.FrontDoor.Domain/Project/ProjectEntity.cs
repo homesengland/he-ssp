@@ -1,3 +1,4 @@
+using HE.Investments.Common.Contract.Enum;
 using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Domain;
@@ -7,6 +8,7 @@ using HE.Investments.Common.Messages;
 using HE.Investments.FrontDoor.Contract.Project.Events;
 using HE.Investments.FrontDoor.Domain.Project.Repository;
 using HE.Investments.FrontDoor.Domain.Project.ValueObjects;
+using HE.Investments.FrontDoor.Domain.Services;
 using HE.Investments.FrontDoor.Shared.Project;
 using HE.Investments.FrontDoor.Shared.Project.Contract;
 using ProjectGeographicFocus = HE.Investments.FrontDoor.Domain.Project.ValueObjects.ProjectGeographicFocus;
@@ -36,7 +38,7 @@ public class ProjectEntity : DomainEntity
         IsProfit? isProfit = null,
         ExpectedStartDate? expectedStartDate = null,
         ProjectLocalAuthority? localAuthority = null,
-        int? frontDoorDecision = null)
+        ApplicationType? frontDoorDecision = null)
     {
         Id = id;
         Name = name;
@@ -92,7 +94,7 @@ public class ProjectEntity : DomainEntity
 
     public ProjectLocalAuthority? LocalAuthority { get; private set; }
 
-    public int? FrontDoorDecision { get; private set; }
+    public ApplicationType? FrontDoorDecision { get; private set; }
 
     public bool IsModified => _modificationTracker.IsModified || Id.IsNew;
 
@@ -212,11 +214,6 @@ public class ProjectEntity : DomainEntity
         LocalAuthority = _modificationTracker.Change(LocalAuthority, localAuthority);
     }
 
-    public void UpdateFrontDoorDecision(int? decisionId)
-    {
-        FrontDoorDecision = decisionId;
-    }
-
     public void CanBeCompleted()
     {
         if (!IsAnswered())
@@ -225,6 +222,17 @@ public class ProjectEntity : DomainEntity
                 .AddValidationError("IsSectionCompleted", ValidationErrorMessage.ProvideAllProjectAnswers)
                 .CheckErrors();
         }
+    }
+
+    public async Task<(OperationResult Result, ApplicationType Type)> Complete(IEligibilityService service)
+    {
+        var result = await service.GetEligibleApplication(this, CancellationToken.None);
+        if (result.OperationResult.IsValid)
+        {
+            FrontDoorDecision = _modificationTracker.Change(FrontDoorDecision, result.ApplicationType);
+        }
+
+        return result;
     }
 
     private static async Task<ProjectName> ValidateProjectNameUniqueness(
