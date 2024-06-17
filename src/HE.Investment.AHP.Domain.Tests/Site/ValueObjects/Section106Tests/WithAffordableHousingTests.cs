@@ -32,4 +32,22 @@ public class WithAffordableHousingTests
             .Which.OperationResult.Errors.Should()
             .ContainSingle(x => x.ErrorMessage == ValidationErrorMessage.MustProvideRequiredField("Affordable Housing answer"));
     }
+
+    [Fact]
+    public void ShouldClearFollowUpAnswers_WhenAffordableHousingWasChanged()
+    {
+        // given
+        var section = new Section106(true, true, false, true, false, "test");
+
+        // when
+        var result = section.WithAffordableHousing(false);
+
+        // then
+        result.GeneralAgreement.Should().BeTrue();
+        result.AffordableHousing.Should().BeFalse();
+        result.OnlyAffordableHousing.Should().BeNull();
+        result.AdditionalAffordableHousing.Should().BeNull();
+        result.CapitalFundingEligibility.Should().BeNull();
+        result.LocalAuthorityConfirmation.Should().BeNull();
+    }
 }
