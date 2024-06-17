@@ -119,7 +119,7 @@ public static class ValidationErrorMessage
 
     public static string MustIncludeThePence(string displayName, string? example) => $"The {displayName} must include pence{Example(example)}";
 
-    public static string MustIncludeThePrecision(string displayName, int precision, string? example) => $"Enter the {displayName} up to {precision} decimal places{Example(example)}";
+    public static string MustIncludeThePrecision(string displayName, int precision, string? example) => $"The {displayName} must include {precision} decimal places{Example(example)}";
 
     public static string MustBeTheNumber(string displayName, string? example) => $"The {displayName} must be a number{Example(example)}";
 
