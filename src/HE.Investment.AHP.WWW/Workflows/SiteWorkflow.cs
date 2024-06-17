@@ -10,10 +10,13 @@ public class SiteWorkflow : EncodedStateRouting<SiteWorkflowState>
 {
     private readonly SiteModel? _siteModel;
 
+    private readonly SiteSection106WorkflowConditions _section106;
+
     public SiteWorkflow(SiteWorkflowState currentWorkflowState, SiteModel? siteModel, bool isLocked = false)
         : base(currentWorkflowState, isLocked)
     {
         _siteModel = siteModel;
+        _section106 = new(_siteModel);
         ConfigureTransitions();
     }
 
@@ -24,17 +27,18 @@ public class SiteWorkflow : EncodedStateRouting<SiteWorkflowState>
             return state == SiteWorkflowState.CheckAnswers;
         }
 
-        return state switch
+        var isStateEligible = BuildDeadEndConditions(state).All(isValid => isValid());
+        return isStateEligible && state switch
         {
             SiteWorkflowState.Start => true,
             SiteWorkflowState.Name => true,
-            SiteWorkflowState.Section106GeneralAgreement => true,
-            SiteWorkflowState.Section106AffordableHousing => _siteModel?.Section106?.GeneralAgreement == true,
-            SiteWorkflowState.Section106OnlyAffordableHousing => _siteModel?.Section106?.AffordableHousing == true,
-            SiteWorkflowState.Section106AdditionalAffordableHousing => _siteModel?.Section106?.OnlyAffordableHousing == false,
-            SiteWorkflowState.Section106CapitalFundingEligibility => _siteModel?.Section106?.GeneralAgreement == true,
-            SiteWorkflowState.Section106LocalAuthorityConfirmation => _siteModel?.Section106?.AdditionalAffordableHousing == true,
-            SiteWorkflowState.Section106Ineligible => _siteModel?.Section106?.IsIneligible == true,
+            SiteWorkflowState.Section106GeneralAgreement => _section106.IsGeneralAgreementAvailable,
+            SiteWorkflowState.Section106AffordableHousing => _section106.IsAffordableHousingAvailable,
+            SiteWorkflowState.Section106OnlyAffordableHousing => _section106.IsOnlyAffordableHousingAvailable,
+            SiteWorkflowState.Section106AdditionalAffordableHousing => _section106.IsAdditionalAffordableHousingAvailable,
+            SiteWorkflowState.Section106CapitalFundingEligibility => _section106.IsCapitalFundingEligibilityAvailable,
+            SiteWorkflowState.Section106Ineligible => _section106.IsIneligible,
+            SiteWorkflowState.Section106LocalAuthorityConfirmation => _section106.IsLocalAuthorityConfirmationAvailable,
             SiteWorkflowState.LocalAuthoritySearch => true,
             SiteWorkflowState.LocalAuthorityResult => true,
             SiteWorkflowState.LocalAuthorityConfirm => true,
@@ -69,6 +73,14 @@ public class SiteWorkflow : EncodedStateRouting<SiteWorkflowState>
         };
     }
 
+    private IEnumerable<Func<bool>> BuildDeadEndConditions(SiteWorkflowState state)
+    {
+        if (state > SiteWorkflowState.Section106Ineligible)
+        {
+            yield return () => !_section106.IsIneligible;
+        }
+    }
+
     private void ConfigureTransitions()
     {
         Machine.Configure(SiteWorkflowState.Name)
@@ -76,31 +88,31 @@ public class SiteWorkflow : EncodedStateRouting<SiteWorkflowState>
             .Permit(Trigger.Back, SiteWorkflowState.Start);
 
         Machine.Configure(SiteWorkflowState.Section106GeneralAgreement)
-            .PermitIf(Trigger.Continue, SiteWorkflowState.Section106AffordableHousing, () => _siteModel?.Section106?.GeneralAgreement == true)
-            .PermitIf(Trigger.Continue, SiteWorkflowState.LocalAuthoritySearch, () => _siteModel?.Section106?.GeneralAgreement == false)
+            .PermitIf(Trigger.Continue, SiteWorkflowState.Section106AffordableHousing, () => _section106.IsAffordableHousingAvailable)
+            .PermitIf(Trigger.Continue, SiteWorkflowState.LocalAuthoritySearch, () => !_section106.IsAffordableHousingAvailable)
             .Permit(Trigger.Back, SiteWorkflowState.Start);
 
         Machine.Configure(SiteWorkflowState.Section106AffordableHousing)
-            .PermitIf(Trigger.Continue, SiteWorkflowState.Section106OnlyAffordableHousing, () => _siteModel?.Section106?.AffordableHousing == true)
-            .PermitIf(Trigger.Continue, SiteWorkflowState.Section106CapitalFundingEligibility, () => _siteModel?.Section106?.AffordableHousing == false)
+            .PermitIf(Trigger.Continue, SiteWorkflowState.Section106OnlyAffordableHousing, () => _section106.IsOnlyAffordableHousingAvailable)
+            .PermitIf(Trigger.Continue, SiteWorkflowState.Section106CapitalFundingEligibility, () => !_section106.IsOnlyAffordableHousingAvailable)
             .Permit(Trigger.Back, SiteWorkflowState.Section106GeneralAgreement);
 
         Machine.Configure(SiteWorkflowState.Section106OnlyAffordableHousing)
-            .PermitIf(Trigger.Continue, SiteWorkflowState.Section106CapitalFundingEligibility, () => _siteModel?.Section106?.OnlyAffordableHousing == true)
-            .PermitIf(Trigger.Continue, SiteWorkflowState.Section106AdditionalAffordableHousing, () => _siteModel?.Section106?.OnlyAffordableHousing == false)
+            .PermitIf(Trigger.Continue, SiteWorkflowState.Section106CapitalFundingEligibility, () => !_section106.IsAdditionalAffordableHousingAvailable)
+            .PermitIf(Trigger.Continue, SiteWorkflowState.Section106AdditionalAffordableHousing, () => _section106.IsAdditionalAffordableHousingAvailable)
             .Permit(Trigger.Back, SiteWorkflowState.Section106AffordableHousing);
 
         Machine.Configure(SiteWorkflowState.Section106AdditionalAffordableHousing)
             .Permit(Trigger.Continue, SiteWorkflowState.Section106CapitalFundingEligibility)
-            .Permit(Trigger.Back, SiteWorkflowState.Section106AffordableHousing);
+            .Permit(Trigger.Back, SiteWorkflowState.Section106OnlyAffordableHousing);
 
         Machine.Configure(SiteWorkflowState.Section106CapitalFundingEligibility)
-            .PermitIf(Trigger.Continue, SiteWorkflowState.Section106Ineligible, () => _siteModel?.Section106?.IsIneligible == true)
-            .PermitIf(Trigger.Continue, SiteWorkflowState.Section106LocalAuthorityConfirmation, IsSection106EligibleWithAdditionalAffordableHousing)
-            .PermitIf(Trigger.Continue, SiteWorkflowState.LocalAuthoritySearch, IsSection106EligibleWithoutAdditionalAffordableHousing)
-            .PermitIf(Trigger.Back, SiteWorkflowState.Section106AdditionalAffordableHousing, () => _siteModel?.Section106?.OnlyAffordableHousing == false)
-            .PermitIf(Trigger.Back, SiteWorkflowState.Section106OnlyAffordableHousing, () => _siteModel?.Section106?.OnlyAffordableHousing == true)
-            .PermitIf(Trigger.Back, SiteWorkflowState.Section106AffordableHousing, () => _siteModel?.Section106?.OnlyAffordableHousing == null);
+            .PermitIf(Trigger.Continue, SiteWorkflowState.Section106Ineligible, () => _section106.IsIneligible)
+            .PermitIf(Trigger.Continue, SiteWorkflowState.Section106LocalAuthorityConfirmation, () => _section106.IsLocalAuthorityConfirmationAvailable)
+            .PermitIf(Trigger.Continue, SiteWorkflowState.LocalAuthoritySearch, () => _section106 is { IsEligible: true, IsLocalAuthorityConfirmationAvailable: false })
+            .PermitIf(Trigger.Back, SiteWorkflowState.Section106AdditionalAffordableHousing, () => _section106.IsAdditionalAffordableHousingAvailable)
+            .PermitIf(Trigger.Back, SiteWorkflowState.Section106OnlyAffordableHousing, () => _section106 is { IsAdditionalAffordableHousingAvailable: false, IsOnlyAffordableHousingAvailable: true })
+            .PermitIf(Trigger.Back, SiteWorkflowState.Section106AffordableHousing, () => _section106 is { IsAdditionalAffordableHousingAvailable: false, IsOnlyAffordableHousingAvailable: false });
 
         Machine.Configure(SiteWorkflowState.Section106LocalAuthorityConfirmation)
             .Permit(Trigger.Continue, SiteWorkflowState.LocalAuthoritySearch)
@@ -268,12 +280,6 @@ public class SiteWorkflow : EncodedStateRouting<SiteWorkflowState>
     private bool IsTenderForWorksContractOrContractingHasNotYetBegun() =>
         _siteModel?.TenderingStatusDetails.TenderingStatus is SiteTenderingStatus.TenderForWorksContract or
             SiteTenderingStatus.ContractingHasNotYetBegun;
-
-    private bool IsSection106EligibleWithAdditionalAffordableHousing() =>
-        _siteModel?.Section106?.IsIneligible == false && _siteModel?.Section106?.AdditionalAffordableHousing == true;
-
-    private bool IsSection106EligibleWithoutAdditionalAffordableHousing() =>
-        _siteModel?.Section106?.IsIneligible == false && _siteModel?.Section106?.AdditionalAffordableHousing != true;
 
     private bool IsNotApplicableOrMissing() => _siteModel?.TenderingStatusDetails.TenderingStatus is SiteTenderingStatus.NotApplicable or null;
 

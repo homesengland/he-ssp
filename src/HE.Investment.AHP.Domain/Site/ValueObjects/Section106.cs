@@ -95,13 +95,12 @@ public class Section106 : ValueObject, IQuestion
 
     public Section106 WithGeneralAgreement(bool? generalAgreement)
     {
-        var result = this;
-        if (GeneralAgreement != generalAgreement || generalAgreement == null)
+        if (GeneralAgreement != generalAgreement)
         {
-            result = new Section106(generalAgreement);
+            return new Section106(generalAgreement);
         }
 
-        return result;
+        return this;
     }
 
     public Section106 WithAffordableHousing(bool? affordableHousing)

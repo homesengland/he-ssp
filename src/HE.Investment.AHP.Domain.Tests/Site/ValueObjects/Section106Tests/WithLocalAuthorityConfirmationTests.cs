@@ -45,4 +45,22 @@ public class WithLocalAuthorityConfirmationTests
             .Which.OperationResult.Errors.Should()
             .ContainSingle(x => x.ErrorMessage == ValidationErrorMessage.StringLengthExceeded("local authority confirmation", MaximumInputLength.LongInput));
     }
+
+    [Fact]
+    public void ShouldNotClearAnyAnswer_WhenLocalAuthorityConfirmationWasChanged()
+    {
+        // given
+        var section = new Section106(true, true, false, true, false, "test");
+
+        // when
+        var result = section.WithLocalAuthorityConfirmation("Something else");
+
+        // then
+        result.GeneralAgreement.Should().BeTrue();
+        result.AffordableHousing.Should().BeTrue();
+        result.OnlyAffordableHousing.Should().BeFalse();
+        result.AdditionalAffordableHousing.Should().BeTrue();
+        result.CapitalFundingEligibility.Should().BeFalse();
+        result.LocalAuthorityConfirmation.Should().Be("Something else");
+    }
 }

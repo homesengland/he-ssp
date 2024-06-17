@@ -277,7 +277,7 @@ public class SiteController : SiteControllerBase<SiteWorkflowState>
     [WorkflowState(SiteWorkflowState.Section106Ineligible)]
     public async Task<IActionResult> Section106Ineligible([FromRoute] string siteId, CancellationToken cancellationToken)
     {
-        var siteModel = await _mediator.Send(new GetSiteQuery(siteId), cancellationToken);
+        var siteModel = await GetSiteDetails(siteId, cancellationToken);
         return View("Section106Ineligible", siteModel.Section106);
     }
 
