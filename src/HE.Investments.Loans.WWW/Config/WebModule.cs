@@ -1,4 +1,5 @@
 using FluentValidation;
+using HE.Investments.Api.Config;
 using HE.Investments.Common;
 using HE.Investments.Common.Config;
 using HE.Investments.Common.Contract.Enum;
@@ -35,6 +36,7 @@ public static class WebModule
         services.AddOrganisationCrmModule();
         services.AddEventInfrastructure();
         services.AddHttpUserContext();
+        services.AddApiModule();
         services.AddSingleton<IErrorViewPaths, LoansErrorViewPaths>();
     }
 }

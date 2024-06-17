@@ -22,6 +22,8 @@ trigger:
       - src/HE.Investments.Organisation/*
       - src/HE.Investments.TestsUtils/*
       - src/He.AspNetCore.Mvc.Gds.Components/*
+      - src/HE.Investments.FrontDoor.Shared/*
+      - src/HE.Investments.Api/*
 
 pr:
   branches:
@@ -40,6 +42,8 @@ pr:
       - src/HE.Investments.Organisation/*
       - src/HE.Investments.TestsUtils/*
       - src/He.AspNetCore.Mvc.Gds.Components/*
+      - src/HE.Investments.FrontDoor.Shared/*
+      - src/HE.Investments.Api/*
 
 pool:
   vmImage: 'ubuntu-22.04'

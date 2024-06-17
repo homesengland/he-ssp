@@ -9,7 +9,7 @@ using Xunit;
 using Xunit.Abstractions;
 using Xunit.Extensions.Ordering;
 
-namespace HE.Investments.FrontDoor.IntegrationTests.ProjectForAhp;
+namespace HE.Investments.FrontDoor.IntegrationTests.ProjectFor;
 
 [Order(1)]
 [SuppressMessage("xUnit", "xUnit1004", Justification = "Waits for DevOps configuration - #76791")]
