@@ -35,7 +35,8 @@ public class ProjectEntity : DomainEntity
         RequiredFunding? requiredFunding = null,
         IsProfit? isProfit = null,
         ExpectedStartDate? expectedStartDate = null,
-        ProjectLocalAuthority? localAuthority = null)
+        ProjectLocalAuthority? localAuthority = null,
+        bool? isConsortiumProject = null)
     {
         Id = id;
         Name = name;
@@ -54,6 +55,7 @@ public class ProjectEntity : DomainEntity
         IsProfit = isProfit ?? IsProfit.Empty;
         ExpectedStartDate = expectedStartDate ?? ExpectedStartDate.Empty;
         LocalAuthority = localAuthority;
+        IsConsortiumProject = isConsortiumProject ?? false;
     }
 
     public FrontDoorProjectId Id { get; private set; }
@@ -92,9 +94,11 @@ public class ProjectEntity : DomainEntity
 
     public bool IsModified => _modificationTracker.IsModified || Id.IsNew;
 
-    public static async Task<ProjectEntity> New(ProjectName projectName, IProjectNameExists projectNameExists, CancellationToken cancellationToken)
+    public bool IsConsortiumProject { get; private set; }
+
+    public static async Task<ProjectEntity> New(ProjectName projectName, IProjectNameExists projectNameExists, bool isConsortiumProject, CancellationToken cancellationToken)
     {
-        return new(FrontDoorProjectId.New(), await ValidateProjectNameUniqueness(projectName, projectNameExists, cancellationToken));
+        return new(FrontDoorProjectId.New(), await ValidateProjectNameUniqueness(projectName, projectNameExists, cancellationToken), isConsortiumProject: isConsortiumProject);
     }
 
     public static bool ValidateEnglandHousingDelivery(bool? isEnglandHousingDelivery)

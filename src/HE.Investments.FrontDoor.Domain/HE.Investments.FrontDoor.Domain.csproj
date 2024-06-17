@@ -5,17 +5,18 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="MediatR" Version="12.1.1"/>
-    <PackageReference Include="Scrutor" Version="4.2.2"/>
+    <PackageReference Include="MediatR" Version="12.1.1" />
+    <PackageReference Include="Scrutor" Version="4.2.2" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\HE.Investments.Account.Shared\HE.Investments.Account.Shared.csproj"/>
+    <ProjectReference Include="..\HE.Investments.Account.Shared\HE.Investments.Account.Shared.csproj" />
     <ProjectReference Include="..\HE.Investments.Api\HE.Investments.Api.csproj" />
-    <ProjectReference Include="..\HE.Investments.Common.CRM\HE.Investments.Common.CRM.csproj"/>
-    <ProjectReference Include="..\HE.Investments.Common\HE.Investments.Common.csproj"/>
-    <ProjectReference Include="..\HE.Investments.FrontDoor.Contract\HE.Investments.FrontDoor.Contract.csproj"/>
-    <ProjectReference Include="..\HE.Investments.FrontDoor.Shared\HE.Investments.FrontDoor.Shared.csproj"/>
+    <ProjectReference Include="..\HE.Investments.Common.CRM\HE.Investments.Common.CRM.csproj" />
+    <ProjectReference Include="..\HE.Investments.Common\HE.Investments.Common.csproj" />
+    <ProjectReference Include="..\HE.Investments.Consortium.Shared\HE.Investments.Consortium.Shared.csproj" />
+    <ProjectReference Include="..\HE.Investments.FrontDoor.Contract\HE.Investments.FrontDoor.Contract.csproj" />
+    <ProjectReference Include="..\HE.Investments.FrontDoor.Shared\HE.Investments.FrontDoor.Shared.csproj" />
     <ProjectReference Include="..\HE.Investments.Programme.Contract\HE.Investments.Programme.Contract.csproj" />
   </ItemGroup>
 </Project>

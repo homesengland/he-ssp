@@ -1,5 +1,6 @@
 using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract.Validators;
+using HE.Investments.Consortium.Shared.UserContext;
 using HE.Investments.FrontDoor.Contract.Project.Commands;
 using HE.Investments.FrontDoor.Domain.Project.Repository;
 using HE.Investments.FrontDoor.Domain.Project.ValueObjects;
@@ -12,19 +13,19 @@ public class CreateProjectCommandHandler : IRequestHandler<CreateProjectCommand,
 {
     private readonly IProjectRepository _repository;
 
-    private readonly IAccountUserContext _accountUserContext;
+    private readonly IConsortiumUserContext _consortiumUserContext;
 
-    public CreateProjectCommandHandler(IProjectRepository repository, IAccountUserContext accountUserContext)
+    public CreateProjectCommandHandler(IProjectRepository repository, IConsortiumUserContext consortiumUserContext)
     {
         _repository = repository;
-        _accountUserContext = accountUserContext;
+        _consortiumUserContext = consortiumUserContext;
     }
 
     public async Task<OperationResult<FrontDoorProjectId>> Handle(CreateProjectCommand request, CancellationToken cancellationToken)
     {
-        var userAccount = await _accountUserContext.GetSelectedAccount();
+        var userAccount = await _consortiumUserContext.GetSelectedAccount();
         var projectNameExist = new ProjectNameWithinOrganisationExists(_repository, userAccount);
-        var project = await ProjectEntity.New(new ProjectName(request.Name ?? string.Empty), projectNameExist, cancellationToken);
+        var project = await ProjectEntity.New(new ProjectName(request.Name ?? string.Empty), projectNameExist, !userAccount.Consortium.HasNoConsortium, cancellationToken);
 
         await _repository.Save(project, userAccount, cancellationToken);
         return new OperationResult<FrontDoorProjectId>(project.Id);

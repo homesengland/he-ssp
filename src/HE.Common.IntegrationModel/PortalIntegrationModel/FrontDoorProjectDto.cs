@@ -32,5 +32,6 @@ namespace HE.Common.IntegrationModel.PortalIntegrationModel
         public int? StartofProjectYear { get; set; }
         public DateTime? CreatedOn { get; set; }
         public UserAccountDto FrontDoorProjectContact { get; set; }
+        public bool? IsConsortiumProject { get; set; }
     }
 }

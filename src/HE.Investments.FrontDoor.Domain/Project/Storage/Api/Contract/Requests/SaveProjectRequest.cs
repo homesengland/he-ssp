@@ -49,4 +49,6 @@ internal sealed record SaveProjectRequest
     public int[]? ProposedInterventions { get; init; }
 
     public int? LeadDirectorate { get; init; }
+
+    public bool? IsConsortiumProject { get; init; }
 }

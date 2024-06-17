@@ -30,6 +30,7 @@ internal static class SaveProjectRequestMapper
             IntentionToMakeAProfit = dto.IntentiontoMakeaProfit,
             StartOfProjectMonth = dto.StartofProjectMonth,
             StartOfProjectYear = dto.StartofProjectYear,
+            IsConsortiumProject = dto.IsConsortiumProject,
         };
     }
 }
