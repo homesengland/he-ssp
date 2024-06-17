@@ -13,10 +13,12 @@ namespace HE.CRM.AHP.Plugins.Handlers.HomeType
     public class CalculatePercentageValueOfNDSSStandardHandler : CrmEntityHandlerBase<invln_HomeType, DataverseContext>
     {
         private readonly INdssRepository _ndssRepository;
+        private readonly IAhpApplicationRepository _ahpApplicationRepository;
 
-        public CalculatePercentageValueOfNDSSStandardHandler(INdssRepository ndssRepository)
+        public CalculatePercentageValueOfNDSSStandardHandler(INdssRepository ndssRepository, IAhpApplicationRepository ahpApplicationRepository)
         {
-            this._ndssRepository = ndssRepository;
+            _ndssRepository = ndssRepository;
+            _ahpApplicationRepository = ahpApplicationRepository;
         }
 
         public override bool CanWork()
