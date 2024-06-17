@@ -40,7 +40,7 @@ public class ProjectController : Controller
         if (userAccount.Consortium.HasNoConsortium || await _consortiumAccessContext.IsConsortiumLeadPartner())
         {
             var ahpProgramme = await _mediator.Send(new GetTheAhpProgrammeQuery(), cancellationToken);
-            return View(new ProjectBasicModel(fdProjectId, ahpProgramme));
+            return View(new ProjectStartModel(fdProjectId, ahpProgramme, userAccount.Role() != Investments.Account.Api.Contract.User.UserRole.Limited));
         }
 
         return RedirectToAction("ContactHomesEngland", "ConsortiumMember", new { consortiumId = userAccount.Consortium.ConsortiumId.Value });
