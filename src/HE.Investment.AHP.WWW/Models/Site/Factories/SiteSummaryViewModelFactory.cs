@@ -3,7 +3,6 @@ using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Contract.Site.Enums;
 using HE.Investment.AHP.WWW.Controllers;
 using HE.Investment.AHP.WWW.Workflows;
-using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.WWW.Components.SectionSummary;
@@ -104,6 +103,13 @@ public class SiteSummaryViewModelFactory : ISiteSummaryViewModelFactory
                 createAction(nameof(Controller.Section106CapitalFundingEligibility)),
                 IsEditable: isEditable),
             section?.GeneralAgreement == true);
+        summary.AddWhen(
+            new(
+                "Section 106 ineligible",
+                null,
+                createAction(nameof(Controller.Section106Ineligible)),
+                IsVisible: false),
+            section?.IsIneligible == true);
         summary.AddWhen(
             new(
                 "Local authority confirmation",

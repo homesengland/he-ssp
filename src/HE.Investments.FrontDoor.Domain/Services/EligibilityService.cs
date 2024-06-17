@@ -14,8 +14,6 @@ namespace HE.Investments.FrontDoor.Domain.Services;
 
 public class EligibilityService : IEligibilityService
 {
-    private readonly IProjectRepository _projectRepository;
-
     private readonly ISiteRepository _siteRepository;
 
     private readonly IAccountUserContext _accountUserContext;
@@ -25,13 +23,11 @@ public class EligibilityService : IEligibilityService
     private readonly IList<IProjectConversionStrategy> _strategies;
 
     public EligibilityService(
-        IProjectRepository projectRepository,
         IAccountUserContext accountUserContext,
         ISiteRepository siteRepository,
         ILogger<EligibilityService> logger,
         IList<IProjectConversionStrategy> strategies)
     {
-        _projectRepository = projectRepository;
         _accountUserContext = accountUserContext;
         _siteRepository = siteRepository;
         _logger = logger;

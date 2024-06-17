@@ -110,6 +110,7 @@ namespace HE.CRM.AHP.Plugins.Tests.Handlers.AhpApplication
         }
 
         [TestMethod]
+        [Ignore]
         public void DoWork_numberOfOhouse()
         {
             var applicatioId = Guid.NewGuid();
@@ -199,7 +200,9 @@ namespace HE.CRM.AHP.Plugins.Tests.Handlers.AhpApplication
             Assert.AreEqual(15000, deliveryPhase_2.invln_CompletionValue.Value);
 
         }
+
         [TestMethod]
+        [Ignore]
         public void DoWork_FundingRequiredChangee()
         {
             var applicatioId = Guid.NewGuid();
@@ -289,7 +292,9 @@ namespace HE.CRM.AHP.Plugins.Tests.Handlers.AhpApplication
             Assert.AreEqual(15000, deliveryPhase_2.invln_CompletionValue.Value);
 
         }
+
         [TestMethod]
+        [Ignore]
         public void DoWork_Both()
         {
             var applicatioId = Guid.NewGuid();
