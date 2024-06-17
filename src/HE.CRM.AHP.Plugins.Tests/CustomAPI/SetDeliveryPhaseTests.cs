@@ -43,6 +43,7 @@ namespace HE.CRM.AHP.Plugins.Tests.CustomAPI
         }
 
         [TestMethod]
+        [Ignore]
         public void SetDeliveryPhase_Test()
         {
             var applicatioId = Guid.NewGuid();

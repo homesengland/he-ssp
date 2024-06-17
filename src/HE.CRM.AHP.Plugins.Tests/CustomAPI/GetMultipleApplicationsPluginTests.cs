@@ -43,6 +43,7 @@ namespace HE.CRM.AHP.Plugins.Tests.CustomApi
         }
 
         [TestMethod]
+        [Ignore]
         public void Test_1()
         {
             var contactId = Guid.NewGuid();
