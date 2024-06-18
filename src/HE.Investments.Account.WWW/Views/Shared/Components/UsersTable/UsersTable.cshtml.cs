@@ -1,12 +1,12 @@
 using HE.Investments.Account.Contract.Users;
 using HE.Investments.Account.Shared;
 using HE.Investments.Account.WWW.Controllers;
-using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Pagination;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.WWW.Components;
 using HE.Investments.Common.WWW.Components.Link;
 using HE.Investments.Common.WWW.Components.Table;
+using HE.Investments.Common.WWW.Extensions;
 using HE.Investments.Common.WWW.Helpers;
 using HE.Investments.Common.WWW.Utils;
 using Microsoft.AspNetCore.Mvc;
@@ -60,6 +60,11 @@ public class UsersTable : ViewComponent
         return View("UsersTable", (tableHeaders, rows));
     }
 
-    private DynamicComponentViewModel CreateUsersLinkComponent(string id, string text, string action) =>
-        new(nameof(Link), new { text, action, controller = new ControllerName(nameof(UsersController)).WithoutPrefix(), values = new { id } });
+    private DynamicComponentViewModel CreateUsersLinkComponent(string id, string text, string action)
+    {
+        var organisationId = Request.GetOrganisationIdFromRoute();
+        return new(
+            nameof(Link),
+            new { text, action, controller = new ControllerName(nameof(UsersController)).WithoutPrefix(), values = new { id, organisationId } });
+    }
 }

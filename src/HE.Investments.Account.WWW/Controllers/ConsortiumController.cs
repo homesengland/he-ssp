@@ -5,7 +5,7 @@ using Microsoft.FeatureManagement;
 
 namespace HE.Investments.Account.WWW.Controllers;
 
-[Route("consortium")]
+[Route("{organisationId}/consortium")]
 public class ConsortiumController : Controller
 {
     private readonly ProgrammeUrlConfig _programmeUrlConfig;

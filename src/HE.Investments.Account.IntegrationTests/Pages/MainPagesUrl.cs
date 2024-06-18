@@ -8,8 +8,6 @@ public static class MainPagesUrl
 
     public const string ManageUsers = "/users";
 
-    public const string Dashboard = "/user-organisation";
-
     public const string OrganisationList = "/user-organisations/list";
 
     public const string ProfileDetails = "/user/profile-details";
@@ -20,5 +18,7 @@ public static class MainPagesUrl
 
     public const string OrganisationSearch = "/organisation/search";
 
-    public static string ManageUser(string userGlobalId) => $"users/{HttpUtility.UrlEncode(userGlobalId)}/manage";
+    public static string Dashboard(string organisationId) => $"{organisationId}/user-organisation";
+
+    public static string ManageUser(string userGlobalId, string organisationId) => $"{organisationId}/users/{HttpUtility.UrlEncode(userGlobalId)}/manage";
 }

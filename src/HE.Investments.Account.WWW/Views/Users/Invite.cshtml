@@ -2,6 +2,7 @@
 @using HE.Investments.Common.WWW.Components.FormButton
 @using HE.Investments.Common.WWW.Components.RadioList
 @using HE.Investments.Common.WWW.Components.TextInput
+@using HE.Investments.Common.WWW.Extensions
 @model InviteUserViewModel
 @{
     var title = $"Invite a user to {Model.OrganisationName}";
@@ -9,7 +10,7 @@
 }
 
 <gds-div-grid-column-two-thirds>
-    <gds-back-link class="govuk-!-margin-bottom-8" href="@Url.Action("Index", "Users")"></gds-back-link>
+    <gds-back-link class="govuk-!-margin-bottom-8" href="@Url.OrganisationAction("Index", "Users")"></gds-back-link>
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
     <vc:page-header title=@title/>
 
@@ -48,5 +49,5 @@
         <vc:form-button/>
 
     </form>
-    <gds-link href="@Url.Action("Index", "Users")">Cancel</gds-link>
+    <gds-link href="@Url.OrganisationAction("Index", "Users")">Cancel</gds-link>
 </gds-div-grid-column-two-thirds>

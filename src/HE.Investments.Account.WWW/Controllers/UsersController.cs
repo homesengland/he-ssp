@@ -15,7 +15,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HE.Investments.Account.WWW.Controllers;
 
-[Route("users")]
+[Route("{organisationId}/users")]
 [AuthorizeWithCompletedProfile(AccountAccessContext.OrganisationView)]
 public class UsersController : Controller
 {
