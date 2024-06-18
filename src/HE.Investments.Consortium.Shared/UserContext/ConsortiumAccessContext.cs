@@ -36,7 +36,7 @@ public class ConsortiumAccessContext : IConsortiumAccessContext
     public async Task<bool> CanEditApplication()
     {
         var account = await _consortiumUserContext.GetSelectedAccount();
-        return account.CanEditApplication;
+        return account.CanEditApplication && (account.Consortium.IsLeadPartner || account.Consortium.HasNoConsortium);
     }
 
     private static UserRole[] ToUserAccountRoles(string roles)

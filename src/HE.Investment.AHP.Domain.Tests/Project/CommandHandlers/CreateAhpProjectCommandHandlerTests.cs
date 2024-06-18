@@ -20,7 +20,7 @@ public class CreateAhpProjectCommandHandlerTests : TestBase<CreateAhpProjectComm
 
         var projectId = AhpProjectId.From(prefillProject.Id.Value);
 
-        var userAccount = AhpUserContextTestBuilder
+        var userAccount = ConsortiumUserContextTestBuilder
             .New()
             .Register(this)
             .ConsortiumUserFromMock;

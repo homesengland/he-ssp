@@ -18,7 +18,7 @@ public class GetProjectSitesQueryHandlerTests : TestBase<GetProjectSitesQueryHan
         var projectSites = AhpProjectSitesTestData.FirstAhpProjectWithSites;
         var paginationRequest = new PaginationRequest(1);
 
-        var userAccount = AhpUserContextTestBuilder
+        var userAccount = ConsortiumUserContextTestBuilder
             .New()
             .Register(this)
             .ConsortiumUserFromMock;
@@ -61,7 +61,7 @@ public class GetProjectSitesQueryHandlerTests : TestBase<GetProjectSitesQueryHan
         var projectSites = AhpProjectSitesTestData.ProjectWithoutSites;
         var paginationRequest = new PaginationRequest(1);
 
-        var userAccount = AhpUserContextTestBuilder
+        var userAccount = ConsortiumUserContextTestBuilder
             .New()
             .Register(this)
             .ConsortiumUserFromMock;
@@ -101,7 +101,7 @@ public class GetProjectSitesQueryHandlerTests : TestBase<GetProjectSitesQueryHan
         var projectSites = AhpProjectSitesTestData.FirstAhpProjectWithSites;
         var paginationRequest = new PaginationRequest(1, 1);
 
-        var userAccount = AhpUserContextTestBuilder
+        var userAccount = ConsortiumUserContextTestBuilder
             .New()
             .Register(this)
             .ConsortiumUserFromMock;
