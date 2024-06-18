@@ -55,7 +55,6 @@ namespace HE.CRM.AHP.Plugins.Services.AhpStatusChange
                         invln_scheme.Fields.invln_contactid,
                         invln_scheme.Fields.invln_organisationid,
                         invln_scheme.Fields.invln_programmelookup,
-                        invln_scheme.Fields.invln_GrantAmountRequested,
                         invln_scheme.Fields.invln_Tenure,
                         invln_scheme.Fields.invln_fundingrequired,
                         invln_scheme.Fields.invln_noofhomes
@@ -111,7 +110,6 @@ namespace HE.CRM.AHP.Plugins.Services.AhpStatusChange
                     if (ahpStatusChange.invln_ChangeSource.Value == (int)invln_ChangesourceSet.Internal)
                     {
                         _govNotifyEmailService.SendNotifications_AHP_INTERNAL_APPLICATION_APPROVED_SUBJECT_TO_CONTRACT(ahpStatusChange, ahpApplication);
-                        _govNotifyEmailService.SendNotifications_AHP_EXTERNAL_APPLICATION_APPROVED_OUTCOME(ahpStatusChange, ahpApplication);
                     }
                     break;
                 case (int)invln_AHPInternalStatus.Deleted:

@@ -683,11 +683,6 @@ namespace HE.CRM.AHP.Plugins.Services.GovNotifyEmail
                 TracingService.Trace("Prepare parameters.");
                 var subject = emailTemplate.invln_subject;
 
-                if (ahpApplication.invln_GrantAmountRequested == null)
-                {
-                    TracingService.Trace("There is no invln_GrantAmountRequested on ahpApplication. Mail not sent.");
-                    return;
-                }
                 if (ahpApplication.invln_Tenure == null)
                 {
                     TracingService.Trace("There is no invln_Tenure on ahpApplication. Mail not sent.");
@@ -719,7 +714,7 @@ namespace HE.CRM.AHP.Plugins.Services.GovNotifyEmail
                         recipientEmail = contact.EMailAddress1,
                         subject = subject,
                         name = contact.FullName,
-                        grantamount = decimal.Round(ahpApplication.invln_GrantAmountRequested.Value, 2).ToString(),
+                        grantamount = decimal.Round(ahpApplication.invln_fundingrequired.Value, 2).ToString(),
                         applicationname = ahpApplication.invln_schemename,
                         applicationid = ahpApplication.invln_applicationid,
                         partnername = account.Name,
@@ -731,7 +726,7 @@ namespace HE.CRM.AHP.Plugins.Services.GovNotifyEmail
                     }
                 };
 
-                if (ahpStatusChange.invln_Changeto.Value == (int)invln_AHPInternalStatus.ApprovedSubjecttoContract)
+                if (ahpStatusChange.invln_Changeto.Value == (int)invln_AHPInternalStatus.Approved)
                 {
                     govNotParams.personalisation.allocationofgrant = "This allocation of grant under the 21-26 Affordable Homes Programme is subject to entering in to an AHP 2021 to 2026 grant agreement with Homes England. Our contracting team will be in touch with a copy of the agreement. We operate using standard, non-negotiable contracts. You are required to enter into this contract prior to any milestone payments being claimed.";
                 }
