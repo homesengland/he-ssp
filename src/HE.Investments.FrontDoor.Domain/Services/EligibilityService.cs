@@ -3,6 +3,7 @@ using HE.Investments.Common.Contract.Enum;
 using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Messages;
+using HE.Investments.FrontDoor.Domain.Project;
 using HE.Investments.FrontDoor.Domain.Project.Repository;
 using HE.Investments.FrontDoor.Domain.Services.Strategies;
 using HE.Investments.FrontDoor.Domain.Site.Repository;
@@ -13,8 +14,6 @@ namespace HE.Investments.FrontDoor.Domain.Services;
 
 public class EligibilityService : IEligibilityService
 {
-    private readonly IProjectRepository _projectRepository;
-
     private readonly ISiteRepository _siteRepository;
 
     private readonly IAccountUserContext _accountUserContext;
@@ -24,24 +23,21 @@ public class EligibilityService : IEligibilityService
     private readonly IList<IProjectConversionStrategy> _strategies;
 
     public EligibilityService(
-        IProjectRepository projectRepository,
         IAccountUserContext accountUserContext,
         ISiteRepository siteRepository,
         ILogger<EligibilityService> logger,
         IList<IProjectConversionStrategy> strategies)
     {
-        _projectRepository = projectRepository;
         _accountUserContext = accountUserContext;
         _siteRepository = siteRepository;
         _logger = logger;
         _strategies = strategies;
     }
 
-    public async Task<(OperationResult OperationResult, ApplicationType ApplicationType)> GetEligibleApplication(FrontDoorProjectId projectId, CancellationToken cancellationToken)
+    public async Task<(OperationResult OperationResult, ApplicationType ApplicationType)> GetEligibleApplication(ProjectEntity project, CancellationToken cancellationToken)
     {
         var userAccount = await _accountUserContext.GetSelectedAccount();
-        var project = await _projectRepository.GetProject(projectId, userAccount, cancellationToken);
-        var projectSites = await _siteRepository.GetProjectSites(projectId, userAccount, cancellationToken);
+        var projectSites = await _siteRepository.GetProjectSites(project.Id, userAccount, cancellationToken);
 
         try
         {

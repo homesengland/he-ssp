@@ -125,6 +125,7 @@
     <Compile Include="Handlers\Accounts\GenerateRandomAccountNameSampleHandler.cs" />
     <Compile Include="Handlers\Accounts\OnCurrentCrrFieldUpdateHandler.cs" />
     <Compile Include="Handlers\Accounts\SendEmailOnRatingChangeHandler.cs" />
+    <Compile Include="Handlers\ContactWebrole\PopulateParentCustomerOnContactHandler.cs" />
     <Compile Include="Handlers\Contract\RejectAddingWhenRelatedLoanInApprovedStatusHandler.cs" />
     <Compile Include="Handlers\CustomApi\ChangeLoanApplicationExternalStatusHandler.cs" />
     <Compile Include="Handlers\CustomApi\CheckIfLoanApplicationWithGivenNameExistsHandler.cs" />
@@ -174,6 +175,7 @@
     <Compile Include="Handlers\SiteDetails\UpdateLoansApplicationAfterStatusChange.cs" />
     <Compile Include="Models\AzureAdToken.cs" />
     <Compile Include="Plugins\Accounts\SendEmailOnRatingChangePlugin.cs" />
+    <Compile Include="Plugins\ContactWebrole\PostCreate.cs" />
     <Compile Include="Plugins\Contract\RejectAddingWhenRelatedLoanInApprovedStatusPlugin.cs" />
     <Compile Include="Plugins\CustomApi\ChangeLoanApplicationExternalStatusPlugin.cs" />
     <Compile Include="Plugins\CustomApi\CheckIfLoanApplicationWithGivenNameExistsPlugin.cs" />

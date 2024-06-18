@@ -5,4 +5,4 @@ using MediatR;
 
 namespace HE.Investments.FrontDoor.Contract.Project.Queries;
 
-public record ValidateProjectAnswersQuery(FrontDoorProjectId ProjectId) : IRequest<(OperationResult OperationResult, ApplicationType ApplicationType)>;
+public record DetermineProjectDecisionCommand(FrontDoorProjectId ProjectId) : IRequest<(OperationResult OperationResult, ApplicationType ApplicationType)>;
