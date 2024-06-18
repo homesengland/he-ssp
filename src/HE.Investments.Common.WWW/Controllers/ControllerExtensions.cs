@@ -3,6 +3,7 @@ using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Validators;
 using HE.Investments.Common.WWW.Attributes;
 using HE.Investments.Common.WWW.Extensions;
+using HE.Investments.Common.WWW.Utils;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -32,6 +33,19 @@ public static class ControllerExtensions
         }
 
         return await onSuccess();
+    }
+
+    public static RedirectToActionResult RedirectToActionWithOrganisationId(
+        this Controller controller,
+        string actionName,
+        string? controllerName = null,
+        object? routeValues = null)
+    {
+        var organisationId = controller.HttpContext.GetOrganisationIdFromRoute();
+        return controller.RedirectToAction(
+            actionName,
+            controllerName ?? new ControllerName(controller.GetType().Name).WithoutPrefix(),
+            routeValues.ExpandRouteValues(new { organisationId }));
     }
 
     public static void AddOrderedErrors<T>(this Controller controller, OperationResult operationResult)

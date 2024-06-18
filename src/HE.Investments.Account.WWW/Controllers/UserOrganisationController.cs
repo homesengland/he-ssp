@@ -123,7 +123,7 @@ public class UserOrganisationController : Controller
     {
         if (await _accountAccessContext.CanEditApplication())
         {
-            return $"{_programmeUrlConfig.FrontDoor}/project/start";
+            return $"{_programmeUrlConfig.FrontDoor}/{Request.GetOrganisationIdFromRoute()}/project/start";
         }
 
         return null;
@@ -131,7 +131,7 @@ public class UserOrganisationController : Controller
 
     private string GetProjectUrl(HeProjectId projectId)
     {
-        return $"{_programmeUrlConfig.FrontDoor}/project/{projectId}";
+        return $"{_programmeUrlConfig.FrontDoor}/{Request.GetOrganisationIdFromRoute()}/project/{projectId}";
     }
 
     private Dictionary<ProgrammeType, ProgrammeModel> GetProgrammes(IList<ProgrammeType> programmeTypes)
