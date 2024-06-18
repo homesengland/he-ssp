@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Text.Json.Serialization;
 using Microsoft.Xrm.Sdk;
 
-
 namespace HE.Common.IntegrationModel.PortalIntegrationModel
 {
     public class FrontDoorProjectDto
@@ -32,5 +31,6 @@ namespace HE.Common.IntegrationModel.PortalIntegrationModel
         public int? StartofProjectYear { get; set; }
         public DateTime? CreatedOn { get; set; }
         public UserAccountDto FrontDoorProjectContact { get; set; }
+        public int? FrontDoorDecision { get; set; }
     }
 }

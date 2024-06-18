@@ -22,6 +22,8 @@ public class ProjectCrmMapper : IProjectCrmMapper
 
     private readonly RequiredFundingMapper _requiredFundingMapper = new();
 
+    private readonly ApplicationTypeMapper _applicationTypeMapper = new();
+
     public FrontDoorProjectDto ToDto(ProjectEntity entity, UserAccount userAccount)
     {
         return new FrontDoorProjectDto
@@ -47,6 +49,7 @@ public class ProjectCrmMapper : IProjectCrmMapper
             IntentiontoMakeaProfit = entity.IsProfit.Value,
             StartofProjectMonth = entity.ExpectedStartDate.Value?.Month,
             StartofProjectYear = entity.ExpectedStartDate.Value?.Year,
+            FrontDoorDecision = _applicationTypeMapper.ToDto(entity.FrontDoorDecision),
         };
     }
 
@@ -69,6 +72,7 @@ public class ProjectCrmMapper : IProjectCrmMapper
             requiredFunding: _requiredFundingMapper.Map(dto.AmountofFundingRequired),
             isProfit: dto.IntentiontoMakeaProfit.IsProvided() ? new IsProfit(dto.IntentiontoMakeaProfit) : null,
             expectedStartDate: ExpectedStartDate.Create(dto.StartofProjectMonth, dto.StartofProjectYear),
-            localAuthority: string.IsNullOrWhiteSpace(dto.LocalAuthorityCode) ? null : ProjectLocalAuthority.New(dto.LocalAuthorityCode, dto.LocalAuthorityName));
+            localAuthority: string.IsNullOrWhiteSpace(dto.LocalAuthorityCode) ? null : ProjectLocalAuthority.New(dto.LocalAuthorityCode, dto.LocalAuthorityName),
+            frontDoorDecision: _applicationTypeMapper.ToDomain(dto.FrontDoorDecision));
     }
 }
