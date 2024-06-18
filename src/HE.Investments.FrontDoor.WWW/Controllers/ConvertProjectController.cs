@@ -28,8 +28,12 @@ public class ConvertProjectController : Controller
     {
         var urlWithRouteData = applicationType switch
         {
-            ApplicationType.Loans => $"{_programmeUrlConfig.StartLoanApplication}?fdProjectId={fdProjectId}?organisationId={Request.GetOrganisationIdFromRoute()}",
-            ApplicationType.Ahp => $"{_programmeUrlConfig.StartAhpProject}?fdProjectId={fdProjectId}?organisationId={Request.GetOrganisationIdFromRoute()}",
+            ApplicationType.Loans => _programmeUrlConfig.StartLoanApplication
+                                         .Replace("{organisationId}", Request.GetOrganisationIdFromRoute()!.ToString()) +
+                                     $"?fdProjectId={fdProjectId}",
+            ApplicationType.Ahp => _programmeUrlConfig.StartAhpProject
+                                       .Replace("{organisationId}", Request.GetOrganisationIdFromRoute()!.ToString()) +
+                                   $"?fdProjectId={fdProjectId}",
             _ => string.Empty,
         };
 
