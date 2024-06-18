@@ -37,5 +37,7 @@ namespace HE.CRM.Common.Repositories.Implementations
             var milestoneFrameworkItem = result.Entities.Select(x => x.ToEntity<invln_milestoneframeworkitem>()).AsEnumerable().ToList();
             return milestoneFrameworkItem;
         }
+
+        
     }
 }

@@ -20,7 +20,10 @@ namespace HE.CRM.Common.Repositories.implementations
             var homesInDeliveryPhase = new List<invln_homesindeliveryphase>();
             var qe = new QueryExpression(invln_homesindeliveryphase.EntityLogicalName);
             qe.Criteria.AddCondition(invln_homesindeliveryphase.Fields.invln_deliveryphaselookup, ConditionOperator.Equal, deliveryPhaseId);
-            qe.ColumnSet = new ColumnSet(invln_homesindeliveryphase.Fields.invln_name, invln_homesindeliveryphase.Fields.invln_hometypelookup, invln_homesindeliveryphase.Fields.invln_numberofhomes);
+            qe.ColumnSet = new ColumnSet(
+                invln_homesindeliveryphase.Fields.invln_name,
+                invln_homesindeliveryphase.Fields.invln_hometypelookup,
+                invln_homesindeliveryphase.Fields.invln_numberofhomes);
 
             var result = this.RetrieveAll(qe);
             if (result != null && result.Entities.Count > 0)

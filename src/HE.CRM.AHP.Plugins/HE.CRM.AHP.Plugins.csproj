@@ -139,6 +139,7 @@
     <Compile Include="Handlers\CustomApi\SendReminderEmailForRefferedBackToApplicantHandler.cs" />
     <Compile Include="Handlers\CustomApi\SentInviteContactToJoinOrganisationHandler.cs" />
     <Compile Include="Handlers\CustomApi\SetApplicationHandler.cs" />
+    <Compile Include="Handlers\CustomApi\SetDeliveryPhaseHandler2.cs" />
     <Compile Include="Handlers\CustomApi\SetDeliveryPhaseHandler.cs" />
     <Compile Include="Handlers\CustomApi\SetHomeTypeHandler.cs" />
     <Compile Include="Handlers\CustomApi\Site\CheckIfSiteWithGivenNameExistsHandler.cs" />
@@ -289,7 +290,9 @@
     <Compile Include="Services\Consortium\IConsortiumService.cs" />
     <Compile Include="Services\Contacts\ContactService.cs" />
     <Compile Include="Services\Contacts\IContactService.cs" />
+    <Compile Include="Services\DeliveryPhase\DeliveryPhaseService2.cs" />
     <Compile Include="Services\DeliveryPhase\DeliveryPhaseService.cs" />
+    <Compile Include="Services\DeliveryPhase\IDeliveryPhaseService2.cs" />
     <Compile Include="Services\DeliveryPhase\IDeliveryPhaseService.cs" />
     <Compile Include="Services\GovNotifyEmail\GovNotifyEmailService.cs" />
     <Compile Include="Services\GovNotifyEmail\IGovNotifyEmailService.cs" />

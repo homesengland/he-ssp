@@ -7,11 +7,12 @@ using HE.Base.Services;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.CRM.Common.DtoMapping;
 using HE.CRM.Common.Repositories.Interfaces;
+using Microsoft.Crm.Sdk.Messages;
 using Microsoft.Xrm.Sdk;
 
 namespace HE.CRM.AHP.Plugins.Services.DeliveryPhase
 {
-    public class DeliveryPhaseService : CrmService, IDeliveryPhaseService
+    public class DeliveryPhaseService2 : CrmService, IDeliveryPhaseService2
     {
         private readonly IDeliveryPhaseRepository _deliveryPhaseRepository;
         private readonly IHomesInDeliveryPhaseRepository _homesInDeliveryPhaseRepository;
@@ -20,7 +21,7 @@ namespace HE.CRM.AHP.Plugins.Services.DeliveryPhase
         private readonly IMilestoneFrameworkItemRepository _ahpMilestoneFrameworkItemRepository;
         private readonly IAccountRepository _accountRepository;
 
-        public DeliveryPhaseService(CrmServiceArgs args) : base(args)
+        public DeliveryPhaseService2(CrmServiceArgs args) : base(args)
         {
             _deliveryPhaseRepository = CrmRepositoriesFactory.Get<IDeliveryPhaseRepository>();
             _contactRepository = CrmRepositoriesFactory.Get<IContactRepository>();
@@ -30,181 +31,152 @@ namespace HE.CRM.AHP.Plugins.Services.DeliveryPhase
             _accountRepository = CrmRepositoriesFactory.Get<IAccountRepository>();
         }
 
-        public void DeleteDeliveryPhase(string applicationId, string organisationId, string deliveryPhaseId, string externalUserId)
-        {
-            if (Guid.TryParse(deliveryPhaseId, out var deliveryPhaseGuid) && Guid.TryParse(organisationId, out var organisationGuid) &&
-                Guid.TryParse(applicationId, out var applicationGuid))
-            {
-                if (_deliveryPhaseRepository.CheckIfGivenDeliveryPhaseIsAssignedToGivenOrganisationAndApplication(deliveryPhaseGuid, organisationGuid, applicationGuid))
-                {
-                    var contact = _contactRepository.GetContactViaExternalId(externalUserId);
-                    _deliveryPhaseRepository.Delete(new invln_DeliveryPhase()
-                    {
-                        Id = deliveryPhaseGuid
-                    });
-                    UpdateApplicationModificationFields(applicationGuid, contact.Id);
-                }
-            }
-        }
-
-        public DeliveryPhaseDto GetDeliveryPhase(string applicationId, string organizationId, string externalUserId, string deliveryPhaseId, string fieldsToRetrieve = null)
-        {
-            TracingService.Trace("Start GetDeliveryPhase");
-            DeliveryPhaseDto deliveryPhaseDto = null;
-            string attributes = null;
-            if (!string.IsNullOrEmpty(fieldsToRetrieve))
-            {
-                attributes = GenerateFetchXmlAttributes(fieldsToRetrieve);
-            }
-            var deliveryPhase = _deliveryPhaseRepository.GetDeliveryPhaseForNullableUserAndOrganisationByIdAndApplicationId(deliveryPhaseId, applicationId, externalUserId, organizationId, attributes);
-            if (deliveryPhase != null)
-            {
-                var homesInDeliveryPhase = _homesInDeliveryPhaseRepository.GetHomesInDeliveryPhase(Guid.Parse(deliveryPhaseId));
-                deliveryPhaseDto = DeliveryPhaseMapper.MapRegularEntityToDto(deliveryPhase, homesInDeliveryPhase);
-            }
-
-            return deliveryPhaseDto;
-        }
-
-        public List<DeliveryPhaseDto> GetDeliveryPhases(string applicationId, string organizationId, string externalUserId, string fieldsToRetrieve = null)
-        {
-            var deliveryPhasesDto = new List<DeliveryPhaseDto>();
-            string attributes = null;
-            if (!string.IsNullOrEmpty(fieldsToRetrieve))
-            {
-                attributes = GenerateFetchXmlAttributes(fieldsToRetrieve);
-            }
-            var deliveryPhases = _deliveryPhaseRepository.GetDeliveryPhasesForNullableUserAndOrganisationRelatedToApplication(applicationId, externalUserId, organizationId, attributes);
-            {
-                foreach (var deliveryPhase in deliveryPhases)
-                {
-                    var homesInDeliveryPhase = _homesInDeliveryPhaseRepository.GetHomesInDeliveryPhase(deliveryPhase.Id);
-                    deliveryPhasesDto.Add(DeliveryPhaseMapper.MapRegularEntityToDto(deliveryPhase, homesInDeliveryPhase));
-                }
-            }
-            return deliveryPhasesDto;
-        }
-
-        public Guid SetDeliveryPhase(string deliveryPhase, string userId, string organisationId, string applicationId, string fieldsToSet = null)
+        public Guid SetDeliveryPhase(string deliveryPhaseInput, string userId, string organisationId, string applicationId, string fieldsToSet = null)
         {
             Logger.Trace($"{nameof(DeliveryPhaseService)}.{nameof(SetDeliveryPhase)}");
-            if (Guid.TryParse(applicationId, out var applicationGuid) && Guid.TryParse(organisationId, out var organisationGuid))
+            if (!Guid.TryParse(applicationId, out var applicationGuid) || !Guid.TryParse(organisationId, out var organisationGuid))
             {
-                Logger.Trace("Get application");
-                var application = _ahpApplicationRepository.GetById(
-                    applicationGuid,
-                    new string[] {
+                return Guid.Empty;
+            }
+
+            Logger.Trace("Get application");
+            var application = _ahpApplicationRepository.GetById(
+                applicationGuid,
+                new string[] {
                         invln_scheme.Fields.invln_noofhomes,
                         invln_scheme.Fields.invln_fundingrequired,
                         invln_scheme.Fields.invln_programmelookup,
                         invln_scheme.Fields.invln_organisationid
-                    });
+                });
 
-                Logger.Trace("Deserialize and Map input data");
-                var devlieryPhaseDto = JsonSerializer.Deserialize<DeliveryPhaseDto>(deliveryPhase);
-                var deliveryPhaseMapped = DeliveryPhaseMapper.MapDtoToRegularEntity(devlieryPhaseDto, applicationId);
+            Logger.Trace("Deserialize and Map input data");
+            var devlieryPhaseDto = JsonSerializer.Deserialize<DeliveryPhaseDto>(deliveryPhaseInput);
+            var deliveryPhaseMapped = DeliveryPhaseMapper.MapDtoToRegularEntity(devlieryPhaseDto, applicationId);
 
-                Logger.Trace($"Get Contact by invln_externalid: {userId}");
-                var contact = _contactRepository.GetContactViaExternalId(userId);
+            Logger.Trace($"Get Contact by invln_externalid: {userId}");
+            var contact = _contactRepository.GetContactViaExternalId(userId);
 
-                Logger.Trace($"Get Milestones");
-                var milestones = new List<invln_milestoneframeworkitem>();
-                if (application.invln_programmelookup != null)
+            if (string.IsNullOrEmpty(devlieryPhaseDto.id))
+            { // new delivery phase
+                if (!_ahpApplicationRepository.ApplicationWithGivenIdExistsForOrganisation(applicationGuid, organisationGuid))
                 {
-                    milestones = _ahpMilestoneFrameworkItemRepository.GetByAttribute(
-                        invln_milestoneframeworkitem.Fields.invln_programmeId,
-                        application.invln_programmelookup.Id,
-                        new string[] {
-                            invln_milestoneframeworkitem.Fields.invln_milestone,
-                            invln_milestoneframeworkitem.Fields.invln_percentagepaidonmilestone
-                        }).ToList();
+                    return Guid.Empty;
                 }
 
-                Logger.Trace($"{organisationGuid}");
-                if (string.IsNullOrEmpty(devlieryPhaseDto.id) &&
-                   _ahpApplicationRepository.ApplicationWithGivenIdExistsForOrganisation(applicationGuid, organisationGuid))
+                Logger.Trace($"Create new delivery phase");
+
+                var deliveryPhaseId = _deliveryPhaseRepository.Create(deliveryPhaseMapped);
+                UpdateApplicationModificationFields(applicationGuid, contact.Id);
+                return deliveryPhaseId;
+            }
+
+            Logger.Trace($"Get Milestones");
+            var milestones = Enumerable.Empty<invln_milestoneframeworkitem>();
+            if (application.invln_programmelookup != null)
+            {
+                milestones = _ahpMilestoneFrameworkItemRepository.GetByAttribute(
+                    invln_milestoneframeworkitem.Fields.invln_programmeId,
+                    application.invln_programmelookup.Id,
+                    new string[] {
+                        invln_milestoneframeworkitem.Fields.invln_milestone,
+                        invln_milestoneframeworkitem.Fields.invln_percentagepaidonmilestone
+                });
+            }
+
+            //Logger.Trace($"{organisationGuid}");
+            //if (string.IsNullOrEmpty(devlieryPhaseDto.id) &&
+            //   _ahpApplicationRepository.ApplicationWithGivenIdExistsForOrganisation(applicationGuid, organisationGuid))
+            //{
+            //    Logger.Trace("new delivery home");
+            //    if (deliveryPhaseMapped.invln_NoofHomes != null)
+            //    {
+            //        CalculateFunding(application, deliveryPhaseMapped, milestones, null);
+            //    }
+
+            //    UpdateApplicationModificationFields(applicationGuid, contact.Id);
+
+            //    var deliveryPhaseId = _deliveryPhaseRepository.Create(deliveryPhaseMapped);
+
+            //    SetHomesinDeliveryPhase(devlieryPhaseDto.numberOfHomes, deliveryPhaseId);
+            //    return deliveryPhaseId;
+            //}
+
+            if (!Guid.TryParse(devlieryPhaseDto.id, out var deliveryPhaseDtoGuid))
+            {
+                return Guid.Empty;
+            }
+
+            var deliveryPhaseToUpdate = new invln_DeliveryPhase();
+
+            if (!string.IsNullOrEmpty(fieldsToSet))
+            {
+                var fields = fieldsToSet.Split(',');
+                foreach (var field in fields)
                 {
-                    if (deliveryPhaseMapped.invln_NoofHomes != null)
+                    Logger.Trace($"field name {field}");
+                    if (deliveryPhaseMapped.Contains(field))
                     {
-                        CalculateFunding(application, deliveryPhaseMapped, milestones, null);
+                        Logger.Trace($"contains");
+                        deliveryPhaseToUpdate[field] = deliveryPhaseMapped[field];
                     }
-                    UpdateApplicationModificationFields(applicationGuid, contact.Id);
-                    var deliveryPhaseId = _deliveryPhaseRepository.Create(deliveryPhaseMapped);
-                    SetHomesinDeliveryPhase(devlieryPhaseDto.numberOfHomes, deliveryPhaseId);
-                    return deliveryPhaseId;
-                }
-                else if (Guid.TryParse(devlieryPhaseDto.id, out var deliveryPhaseGuid))
-                {
-                    invln_DeliveryPhase deliveryPhaseToUpdateOrCreate;
-                    if (!string.IsNullOrEmpty(fieldsToSet))
-                    {
-                        var fields = fieldsToSet.Split(',');
-                        deliveryPhaseToUpdateOrCreate = new invln_DeliveryPhase();
-                        foreach (var field in fields)
-                        {
-                            TracingService.Trace($"field name {field}");
-                            if (deliveryPhaseMapped.Contains(field))
-                            {
-                                TracingService.Trace($"contains");
-                                deliveryPhaseToUpdateOrCreate[field] = deliveryPhaseMapped[field];
-                            }
-                        }
-                    }
-                    else
-                    {
-                        deliveryPhaseToUpdateOrCreate = deliveryPhaseMapped;
-                    }
-                    TracingService.Trace($"After mapping");
-                    deliveryPhaseToUpdateOrCreate.Id = deliveryPhaseGuid;
-                    if (deliveryPhaseMapped.invln_NoofHomes != null)
-                    {
-                        // to remove !
-                        CalculateFunding(application, deliveryPhaseMapped, milestones, deliveryPhaseToUpdateOrCreate);
-                    }
-                    TracingService.Trace($"Update DF");
-                    _deliveryPhaseRepository.Update(deliveryPhaseToUpdateOrCreate);
-                    //DeleteHomesFromDeliveryPhase(deliveryPhaseGuid);
-                    //SetHomesinDeliveryPhase(devlieryPhaseDto.numberOfHomes, deliveryPhaseGuid);
-                    UpdateApplicationModificationFields(applicationGuid, contact.Id);
-
-                    // update: Homes in Delivery Phase
-                    //var homesToRemove = deliveryPhaseToUpdateOrCreate.invln_invln_homesindeliveryphase_deliveryphasel
-                    //    .Select(x => x.invln_invln_homesindeliveryphase_hometypelookup.Id).Any(x => devlieryPhaseDto.numberOfHomes.ContainsKey(x.ToString()));
-
-                    var homesInDeliveryPhaseToUpdate = _homesInDeliveryPhaseRepository.GetHomesInDeliveryPhase(deliveryPhaseGuid);
-                    foreach (var home in homesInDeliveryPhaseToUpdate)
-                    {
-                        Logger.Trace($"homeId: {home.Id}, numberofhomes: {home.invln_numberofhomes}, home type: {home.invln_hometypelookup.Id}");
-                    }
-
-                    foreach (var homesOnDeliveryPhase in deliveryPhaseMapped.invln_invln_homesindeliveryphase_deliveryphasel)
-                    {
-                        Logger.Trace($"numberofhomes: {homesOnDeliveryPhase.invln_numberofhomes}, home type: {homesOnDeliveryPhase.invln_hometypelookup.Id}");
-
-
-                        var homesOnDeliveryPhaseToUpdate = homesInDeliveryPhaseToUpdate.Single(x => x.invln_hometypelookup.Id == homesOnDeliveryPhase.invln_hometypelookup.Id);
-                        if (homesOnDeliveryPhaseToUpdate.invln_numberofhomes != homesOnDeliveryPhase.invln_numberofhomes)
-                        {
-                            Logger.Trace($"Update invln_homesindeliveryphase.id: {homesOnDeliveryPhaseToUpdate.Id}, nohomes: {homesOnDeliveryPhase.invln_numberofhomes}");
-                            _homesInDeliveryPhaseRepository.Update(
-                                new invln_homesindeliveryphase()
-                                {
-                                    Id = homesOnDeliveryPhaseToUpdate.Id,
-                                    invln_numberofhomes = homesOnDeliveryPhase.invln_numberofhomes
-                                });
-                        }
-                    }
-
-                    return deliveryPhaseToUpdateOrCreate.Id;
                 }
             }
-            return Guid.Empty;
+            else
+            {
+                deliveryPhaseToUpdate = deliveryPhaseMapped;
+            }
+
+            Logger.Trace($"After mapping");
+            deliveryPhaseToUpdate.Id = deliveryPhaseDtoGuid;
+            if (deliveryPhaseMapped.invln_NoofHomes != null)
+            {
+                // to remove !
+                //CalculateFunding(application, deliveryPhaseMapped, milestones, deliveryPhaseToUpdate);
+            }
+            Logger.Trace($"Update Delivery Phase");
+            _deliveryPhaseRepository.Update(deliveryPhaseToUpdate);
+            //DeleteHomesFromDeliveryPhase(deliveryPhaseGuid);
+            //SetHomesinDeliveryPhase(devlieryPhaseDto.numberOfHomes, deliveryPhaseDtoGuid);
+
+            SetHomesInDeliveryPhase2(devlieryPhaseDto.numberOfHomes, deliveryPhaseDtoGuid);
+
+            UpdateApplicationModificationFields(applicationGuid, contact.Id);
+
+            // update: Homes in Delivery Phase
+            //var homesToRemove = deliveryPhaseToUpdateOrCreate.invln_invln_homesindeliveryphase_deliveryphasel
+            //    .Select(x => x.invln_invln_homesindeliveryphase_hometypelookup.Id).Any(x => devlieryPhaseDto.numberOfHomes.ContainsKey(x.ToString()));
+
+            /*
+            var homesInDeliveryPhaseToUpdate = _homesInDeliveryPhaseRepository.GetHomesInDeliveryPhase(deliveryPhaseDtoGuid);
+            foreach (var home in homesInDeliveryPhaseToUpdate)
+            {
+                Logger.Trace($"homeId: {home.Id}, numberofhomes: {home.invln_numberofhomes}, home type: {home.invln_hometypelookup.Id}");
+            }
+
+            foreach (var homesOnDeliveryPhase in deliveryPhaseMapped.invln_invln_homesindeliveryphase_deliveryphasel)
+            {
+                Logger.Trace($"numberofhomes: {homesOnDeliveryPhase.invln_numberofhomes}, home type: {homesOnDeliveryPhase.invln_hometypelookup.Id}");
+
+                var homesOnDeliveryPhaseToUpdate = homesInDeliveryPhaseToUpdate.Single(x => x.invln_hometypelookup.Id == homesOnDeliveryPhase.invln_hometypelookup.Id);
+                if (homesOnDeliveryPhaseToUpdate.invln_numberofhomes != homesOnDeliveryPhase.invln_numberofhomes)
+                {
+                    Logger.Trace($"Update invln_homesindeliveryphase.id: {homesOnDeliveryPhaseToUpdate.Id}, nohomes: {homesOnDeliveryPhase.invln_numberofhomes}");
+                    _homesInDeliveryPhaseRepository.Update(
+                        new invln_homesindeliveryphase()
+                        {
+                            Id = homesOnDeliveryPhaseToUpdate.Id,
+                            invln_numberofhomes = homesOnDeliveryPhase.invln_numberofhomes
+                        });
+                }
+            }
+            */
+            return deliveryPhaseToUpdate.Id;
         }
 
-        public void CalculateFunding(invln_scheme application, invln_DeliveryPhase deliveryPhaseMapped, List<invln_milestoneframeworkitem> milestones, invln_DeliveryPhase deliveryPhaseToUpdateOrCreate = null)
+        public void CalculateFunding(invln_scheme application, invln_DeliveryPhase deliveryPhaseMapped, IEnumerable<invln_milestoneframeworkitem> milestones, invln_DeliveryPhase deliveryPhaseToUpdateOrCreate = null)
         {
             Logger.Trace($"Calculation");
-            if (milestones.Count == 0)
+            if (!milestones.Any())
             {
                 return;
             }
@@ -334,6 +306,57 @@ namespace HE.CRM.AHP.Plugins.Services.DeliveryPhase
                 }
             }
             deliveryPhase.invln_sumofcalculatedfounds = new Money(acquisition + startOnSite + completion);
+        }
+
+        private void SetHomesInDeliveryPhase2(Dictionary<string, int?> numberOfHomes, Guid deliveryPhaseId)
+        {
+            Logger.Trace($"{nameof(SetHomesInDeliveryPhase2)}, deliveryPhaseId: {deliveryPhaseId}");
+            var homesInDeliveryPhaseToUpdate = _homesInDeliveryPhaseRepository.GetHomesInDeliveryPhase(deliveryPhaseId);
+
+            foreach (var homeDeliveryPhase in homesInDeliveryPhaseToUpdate)
+            {
+                Logger.Trace($"foreach: {homeDeliveryPhase.Id}");
+                var homeExists = numberOfHomes.FirstOrDefault(x => Guid.Parse(x.Key).Equals(homeDeliveryPhase.Id));
+                if (string.IsNullOrEmpty(homeExists.Key))
+                {
+                    Logger.Trace($"home Exists: {homeDeliveryPhase.Id}");
+                    _homesInDeliveryPhaseRepository.Delete(homeDeliveryPhase);
+                }
+                else
+                {
+                    Logger.Trace($"home Not Exists");
+                    homeDeliveryPhase.invln_numberofhomes = homeExists.Value;
+                    CalculateFundings(homeDeliveryPhase, )
+                    _homesInDeliveryPhaseRepository.Update(homeDeliveryPhase);
+                }
+            }
+
+            foreach (var numHome in numberOfHomes)
+            {
+                if (!homesInDeliveryPhaseToUpdate.Any(x => x.invln_hometypelookup.Id.Equals(numHome.Key)))
+                {
+                    _homesInDeliveryPhaseRepository.Create(new invln_homesindeliveryphase()
+                    {
+                        invln_deliveryphaselookup = new EntityReference(invln_DeliveryPhase.EntityLogicalName, deliveryPhaseId),
+                        invln_hometypelookup = new EntityReference(invln_HomeType.EntityLogicalName, Guid.Parse(numHome.Key)),
+                        invln_numberofhomes = numHome.Value
+                    });
+                }
+            }
+
+            // update existing homes in delivery phase
+            //foreach (var numHome in numberOfHomes)
+            //{
+            //    if (Guid.TryParse(numHome.Key, out var homeTypeDtoId))
+            //    {
+            //        _homesInDeliveryPhaseRepository.Create(new invln_homesindeliveryphase()
+            //        {
+            //            invln_deliveryphaselookup = new EntityReference(invln_DeliveryPhase.EntityLogicalName, deliveryPhaseId),
+            //            invln_hometypelookup = new EntityReference(invln_HomeType.EntityLogicalName, homeTypeDtoId),
+            //            invln_numberofhomes = numHome.Value
+            //        });
+            //    }
+            //}
         }
 
         private void SetHomesinDeliveryPhase(Dictionary<string, int?> numberOfHomes, Guid deliveryPhaseId)

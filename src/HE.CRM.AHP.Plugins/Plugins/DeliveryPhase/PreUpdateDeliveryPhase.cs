@@ -36,7 +36,7 @@ namespace HE.CRM.AHP.Plugins.Plugins.DeliveryPhase
         public override void RegisterHandlers(CrmHandlerFactory<DataverseContext> handlerFactory, IList<ICrmHandler> registeredHandlers)
         {
             registeredHandlers.Add(handlerFactory.GetHandler<AcceptOrRejectPaymentProportion>());
-            registeredHandlers.Add(handlerFactory.GetHandler<ChangeNumberOfHomes>());
+            //registeredHandlers.Add(handlerFactory.GetHandler<ChangeNumberOfHomes>());
         }
     }
 }
