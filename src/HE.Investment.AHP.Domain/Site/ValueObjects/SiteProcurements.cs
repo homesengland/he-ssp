@@ -13,7 +13,7 @@ public class SiteProcurements : ValueObject, IQuestion
         if (procurements != null && procurements.Any(x => x == SiteProcurement.None) && procurements.Count > 1)
         {
             OperationResult.New()
-                .AddValidationError("SiteProcurements", ValidationErrorMessage.InvalidValue)
+                .AddValidationError("SiteProcurements", ValidationErrorMessage.ExclusiveOptionSelected("Site Procurement", "None"))
                 .CheckErrors();
         }
 

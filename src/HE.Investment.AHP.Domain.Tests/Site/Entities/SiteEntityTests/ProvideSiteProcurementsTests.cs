@@ -35,6 +35,6 @@ public class ProvideSiteProcurementsTests
         var act = () => new SiteProcurements(procurements);
 
         // then
-        act.Should().Throw<DomainValidationException>().WithMessage(ValidationErrorMessage.InvalidValue);
+        act.Should().Throw<DomainValidationException>().WithMessage(ValidationErrorMessage.ExclusiveOptionSelected("Site Procurement", "None"));
     }
 }
