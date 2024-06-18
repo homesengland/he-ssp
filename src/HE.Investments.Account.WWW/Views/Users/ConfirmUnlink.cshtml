@@ -1,4 +1,5 @@
 @using HE.Investments.Common.WWW.Components.FormButton
+@using HE.Investments.Common.WWW.Extensions
 @model (string UserId, string OrganisationName, string UserFullName)
 @{
     var title = $"Are you sure you want to remove {Model.UserFullName} from {Model.OrganisationName}?";
@@ -6,7 +7,7 @@
 }
 
 <gds-div-grid-column-two-thirds>
-    <gds-back-link class="govuk-!-margin-bottom-8" href="@Url.Action("Index", "Users", new { id = Model.UserId })"></gds-back-link>
+    <gds-back-link class="govuk-!-margin-bottom-8" href="@Url.OrganisationAction("Index", "Users", new { id = Model.UserId })"></gds-back-link>
 
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
     <vc:page-header title="@title"/>

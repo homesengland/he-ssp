@@ -28,9 +28,9 @@ public class AccountIntegrationTest : IntegrationTestBase<Program>
         }
 
         SetFreshProfileData();
-        SetUserOrganisationData();
         fixture.CheckUserLoginData();
         LoginData = fixture.LoginData;
+        SetUserOrganisationData();
         TestClient.AsLoggedUser();
     }
 

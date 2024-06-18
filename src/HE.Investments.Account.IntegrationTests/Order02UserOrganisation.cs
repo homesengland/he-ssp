@@ -29,12 +29,13 @@ public class Order02UserOrganisation : AccountIntegrationTest
     public async Task Order01_ShouldOpenOrganisationDashboard()
     {
         // given & when
+        UserOrganisationData.SetOrganisationId(LoginData.OrganisationId);
         var dashboardPage = await TestClient
-            .NavigateTo(MainPagesUrl.Dashboard);
+            .NavigateTo(MainPagesUrl.Dashboard(UserOrganisationData.OrganisationId));
 
         // then
         dashboardPage
-            .UrlEndWith(MainPagesUrl.Dashboard)
+            .UrlEndWith(MainPagesUrl.Dashboard(UserOrganisationData.OrganisationId))
             .HasMatchingTitle(".+'s Homes England account$")
             .HasActionLink(MainPagesUrl.OrganisationSearch, out _)
             .HasActionLink(MainPagesUrl.UserOrganisationDetails, out _)
@@ -49,9 +50,9 @@ public class Order02UserOrganisation : AccountIntegrationTest
     public async Task Order02_ShouldOpenProfileDetails()
     {
         // given
-        var currentPage = await GetCurrentPage(MainPagesUrl.Dashboard);
+        var currentPage = await GetCurrentPage(MainPagesUrl.Dashboard(UserOrganisationData.OrganisationId));
         currentPage
-            .UrlEndWith(MainPagesUrl.Dashboard)
+            .UrlEndWith(MainPagesUrl.Dashboard(UserOrganisationData.OrganisationId))
             .HasActionLink(MainPagesUrl.ProfileDetails, out var profileDetailsLink);
 
         // when
@@ -80,7 +81,7 @@ public class Order02UserOrganisation : AccountIntegrationTest
             ("SecondaryTelephoneNumber", TelephoneNumberGenerator.GenerateWithoutCountryCode()));
 
         // then
-        nextPage.UrlEndWith(MainPagesUrl.Dashboard);
+        nextPage.UrlEndWith(MainPagesUrl.Dashboard(UserOrganisationData.OrganisationId));
         SaveCurrentPage();
     }
 
@@ -89,9 +90,9 @@ public class Order02UserOrganisation : AccountIntegrationTest
     public async Task Order04_ShouldOpenManageUsers()
     {
         // given
-        var currentPage = await GetCurrentPage(MainPagesUrl.Dashboard);
+        var currentPage = await GetCurrentPage(MainPagesUrl.Dashboard(UserOrganisationData.OrganisationId));
         currentPage
-            .UrlEndWith(MainPagesUrl.Dashboard)
+            .UrlEndWith(MainPagesUrl.Dashboard(UserOrganisationData.OrganisationId))
             .HasActionLink(MainPagesUrl.ManageUsers, out var manageUsersLink);
 
         // when
@@ -122,7 +123,7 @@ public class Order02UserOrganisation : AccountIntegrationTest
 
         // then
         nextPage
-            .UrlEndWith(MainPagesUrl.ManageUser(LoginData.UserGlobalId))
+            .UrlEndWith(MainPagesUrl.ManageUser(LoginData.UserGlobalId, UserOrganisationData.OrganisationId))
             .HasMatchingTitle("^Manage .+'s role")
             .HasBackLink(out _)
             .HasRadio("Role", value: "Admin")
@@ -135,7 +136,7 @@ public class Order02UserOrganisation : AccountIntegrationTest
     public async Task Order06_ShouldNavigateBackwardsToDashboard()
     {
         // given
-        var currentPage = await GetCurrentPage(MainPagesUrl.ManageUser(LoginData.UserGlobalId));
+        var currentPage = await GetCurrentPage(MainPagesUrl.ManageUser(LoginData.UserGlobalId, UserOrganisationData.OrganisationId));
         currentPage.HasBackLink(out var backLink);
 
         // when
@@ -151,7 +152,7 @@ public class Order02UserOrganisation : AccountIntegrationTest
 
         // then
         nextPage
-            .UrlEndWith(MainPagesUrl.Dashboard)
+            .UrlEndWith(MainPagesUrl.Dashboard(UserOrganisationData.OrganisationId))
 ;
     }
 
@@ -160,9 +161,9 @@ public class Order02UserOrganisation : AccountIntegrationTest
     public async Task Order07_ShouldNavigateToOrganisationDetails()
     {
         // given
-        var dashboardPage = await GetCurrentPage(MainPagesUrl.Dashboard);
+        var dashboardPage = await GetCurrentPage(MainPagesUrl.Dashboard(UserOrganisationData.OrganisationId));
         dashboardPage
-            .UrlEndWith(MainPagesUrl.Dashboard)
+            .UrlEndWith(MainPagesUrl.Dashboard(UserOrganisationData.OrganisationId))
             .HasActionLink(MainPagesUrl.UserOrganisationDetails, out var organisationDetailsLink);
 
         // when

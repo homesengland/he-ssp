@@ -12,6 +12,7 @@ using HE.Investments.Account.WWW.Routing;
 using HE.Investments.Account.WWW.Utils;
 using HE.Investments.Common;
 using HE.Investments.Common.WWW.Controllers;
+using HE.Investments.Common.WWW.Extensions;
 using HE.Investments.Common.WWW.Models;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -19,7 +20,7 @@ using Microsoft.FeatureManagement;
 
 namespace HE.Investments.Account.WWW.Controllers;
 
-[Route(UserOrganisationAccountEndpoints.Controller)]
+[Route($"{{organisationId}}/{UserOrganisationAccountEndpoints.Controller}")]
 [AuthorizeWithCompletedProfile]
 public class UserOrganisationController : Controller
 {
@@ -140,6 +141,7 @@ public class UserOrganisationController : Controller
 
     private async Task<List<ActionModel>> UserOrganisationActions(string organisationName)
     {
+        var organisationId = Request.GetOrganisationIdFromRoute();
         var canViewOrganisationDetails = await _accountAccessContext.CanAccessOrganisationView();
         var userOrganisationActions = new List<ActionModel>
         {
@@ -160,12 +162,14 @@ public class UserOrganisationController : Controller
                     "Add or manage users at this Organisation",
                     "Index",
                     "Users",
+                    new { organisationId },
                     HasAccess: canViewOrganisationDetails,
                     DataTestId: "manage-users-link"),
                 new(
                     $"Manage {organisationName} details",
                     "Details",
                     "UserOrganisation",
+                    new { organisationId },
                     HasAccess: canViewOrganisationDetails,
                     DataTestId: "manage-organisation-link"),
             ]);
@@ -185,6 +189,7 @@ public class UserOrganisationController : Controller
                 "Consortium management",
                 "Index",
                 "Consortium",
+                new { organisationId },
                 HasAccess: canViewOrganisationDetails,
                 DataTestId: "manage-consortium-link"));
         }
