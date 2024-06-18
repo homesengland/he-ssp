@@ -10,7 +10,7 @@ public class SiteProcurements : ValueObject, IQuestion
 {
     public SiteProcurements(IList<SiteProcurement>? procurements = null)
     {
-        if (procurements != null && procurements.Any(x => x == SiteProcurement.Other) && procurements.Count > 1)
+        if (procurements != null && procurements.Any(x => x == SiteProcurement.None) && procurements.Count > 1)
         {
             OperationResult.New()
                 .AddValidationError("SiteProcurements", ValidationErrorMessage.InvalidValue)
