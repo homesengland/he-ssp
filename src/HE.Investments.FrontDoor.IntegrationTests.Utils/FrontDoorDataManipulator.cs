@@ -37,7 +37,7 @@ public class FrontDoorDataManipulator
             externalId = loginData.UserGlobalId,
             ActivitiesinThisProject = new SupportActivitiesMapper().Map(new SupportActivities([SupportActivityType.DevelopingHomes])),
             AmountofAffordableHomes = new AffordableHomesAmountMapper().ToDto(AffordableHomesAmount.OnlyAffordableHomes),
-            InfrastructureDelivered = new ProjectInfrastructureMapper().Map(new ProjectInfrastructure([InfrastructureType.IDoNotKnow])),
+            InfrastructureDelivered = [],
             PreviousResidentialBuildingExperience = 1,
             IdentifiedSite = true,
             WouldyourprojectfailwithoutHEsupport = true,
@@ -46,6 +46,36 @@ public class FrontDoorDataManipulator
             IntentiontoMakeaProfit = true,
             StartofProjectMonth = 5,
             StartofProjectYear = 2024,
+        };
+
+        var projectId = await _projectContext.Save(projectDto, loginData.UserGlobalId, loginData.OrganisationId, CancellationToken.None);
+        var siteId = await CreateFrontDoorSite(loginData, siteName, projectDto, projectId);
+
+        return (projectId, siteId);
+    }
+
+    public async Task<(string ProjectId, string SiteId)> FrontDoorProjectEligibleForLoansExist(
+        ILoginData loginData,
+        string? projectName = null,
+        string? siteName = null)
+    {
+        var projectDto = new FrontDoorProjectDto
+        {
+            ProjectName = projectName ?? "IT Project".WithTimestampSuffix(),
+            ProjectSupportsHousingDeliveryinEngland = true,
+            OrganisationId = ShortGuid.ToGuid(loginData.OrganisationId),
+            externalId = loginData.UserGlobalId,
+            ActivitiesinThisProject = new SupportActivitiesMapper().Map(new SupportActivities([SupportActivityType.DevelopingHomes])),
+            AmountofAffordableHomes = new AffordableHomesAmountMapper().ToDto(AffordableHomesAmount.OnlyOpenMarketHomes),
+            InfrastructureDelivered = [],
+            PreviousResidentialBuildingExperience = 1,
+            IdentifiedSite = true,
+            WouldyourprojectfailwithoutHEsupport = true,
+            FundingRequired = true,
+            AmountofFundingRequired = new RequiredFundingMapper().Map(new RequiredFunding(RequiredFundingOption.Between1MlnAnd5Mln)),
+            IntentiontoMakeaProfit = true,
+            StartofProjectMonth = 1,
+            StartofProjectYear = 2025,
         };
 
         var projectId = await _projectContext.Save(projectDto, loginData.UserGlobalId, loginData.OrganisationId, CancellationToken.None);

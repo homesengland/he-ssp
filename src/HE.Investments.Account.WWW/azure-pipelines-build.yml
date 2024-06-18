@@ -17,6 +17,7 @@ trigger:
       - src/HE.Investments.IntegrationTestsFramework/*
       - src/HE.Investments.Organisation/*
       - src/HE.Investments.TestsUtils/*
+      - src/HE.Investments.Programme.*/*
 
 pr:
   branches:
@@ -31,6 +32,7 @@ pr:
       - src/HE.Investments.IntegrationTestsFramework/*
       - src/HE.Investments.Organisation/*
       - src/HE.Investments.TestsUtils/*
+      - src/HE.Investments.Programme.*/*
 
 pool:
   vmImage: 'ubuntu-22.04'
