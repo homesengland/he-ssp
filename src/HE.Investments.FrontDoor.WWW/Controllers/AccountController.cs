@@ -1,6 +1,7 @@
 using HE.Investments.Account.Shared.Authorization.Attributes;
 using HE.Investments.Account.Shared.Routing;
 using HE.Investments.Common;
+using HE.Investments.Common.WWW.Controllers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.FeatureManagement;
 
@@ -25,7 +26,7 @@ public class AccountController : Controller
     {
         if (await _featureManager.IsEnabledAsync(FeatureFlags.StayInCurrentApplication, cancellationToken))
         {
-            return RedirectToAction("Index", "Projects");
+            return this.OrganisationRedirectToAction("Index", "Projects");
         }
 
         return new RedirectResult(_accountConfig.Url);

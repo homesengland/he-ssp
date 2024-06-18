@@ -6,7 +6,6 @@
 @using HE.Investments.Common.WWW.Models
 @using HE.Investments.Account.Api.Contract.User
 @using HE.Investments.Common.WWW.Extensions
-@using Microsoft.AspNetCore.Mvc.TagHelpers
 @model (string OrganisationName, HE.Investments.Account.Contract.Users.UserDetails UserDetails)
 @{
     ViewData["Title"] = "Manage users";
@@ -30,7 +29,7 @@
         <vc:summary-item title="Email" value="@Model.UserDetails.Email"/>
     </gds-summary-list>
 
-    <form asp-controller="Users" asp-action="ChangeRole" asp-route-id="@Model.UserDetails.Id.Value" asp-route-organisationId="@Context.Request.GetOrganisationIdFromRoute()" asp-method="post" novalidate>
+    <he-organisation-form asp-controller="Users" asp-action="ChangeRole" asp-route-id="@Model.UserDetails.Id.Value" asp-method="post" novalidate>
 
         <vc:radio-list-with-or
             field-name="Role"
@@ -42,5 +41,5 @@
 
         <vc:form-button/>
 
-    </form>
+    </he-organisation-form>
 </gds-div-grid-column-two-thirds>

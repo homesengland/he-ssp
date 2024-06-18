@@ -1,11 +1,14 @@
+@using HE.Investments.Common.WWW.Extensions
 @model (Enum CurrentPage, string projectId, string siteId);
 @{
     object RedirectParametersFactory(Enum currentPage)
     {
+        var organisationId = Context.Request.GetOrganisationIdFromRoute();
         return new
         {
-            projectId = Model.projectId,
-            siteId = Model.siteId,
+            Model.projectId,
+            Model.siteId,
+            organisationId,
             currentPage = currentPage.ToString(),
         };
     }

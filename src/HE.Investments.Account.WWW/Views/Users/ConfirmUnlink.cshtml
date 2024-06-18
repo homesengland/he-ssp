@@ -12,12 +12,12 @@
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
     <vc:page-header title="@title"/>
 
-    <form asp-controller="Users" asp-action="Unlink" asp-route-id="@Model.UserId" asp-route-organisationId="@Context.Request.GetOrganisationIdFromRoute()" asp-method="post" novalidate>
-
+    <he-organisation-form  asp-controller="Users" asp-action="Unlink" asp-route-id="@Model.UserId" asp-method="post" novalidate>
         <vc:radio-yes-no
             field-name="Unlink"
             hint="They will no longer be able to access information or applications for this organisation."/>
 
         <vc:form-button text="Continue"/>
-    </form>
+    </he-organisation-form>
+
 </gds-div-grid-column-two-thirds>

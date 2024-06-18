@@ -14,7 +14,7 @@
 
     <vc:page-header caption="@ViewBag.ProjectName"/>
 
-    <form asp-controller="Project" asp-action="Infrastructure" asp-route-workflow="@Context.Request.Query["workflow"]" asp-route-redirect="@Context.Request.Query["redirect"]" asp-method="post" novalidate>
+    <he-organisation-form asp-controller="Project" asp-action="Infrastructure" asp-route-workflow="@Context.Request.Query["workflow"]" asp-route-redirect="@Context.Request.Query["redirect"]" asp-method="post" novalidate>
 
         <vc:checkbox-list-with-or title="@ProjectPageTitles.Infrastructure"
                                   title-type="InputTitleType.PageHeader"
@@ -26,5 +26,5 @@
 
         <vc:form-button/>
         <vc:return-to-account-link/>
-    </form>
+    </he-organisation-form>
 </gds-div-grid-column-two-thirds>

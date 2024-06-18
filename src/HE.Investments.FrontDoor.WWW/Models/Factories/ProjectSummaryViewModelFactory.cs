@@ -1,5 +1,6 @@
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.WWW.Components.SectionSummary;
+using HE.Investments.Common.WWW.Extensions;
 using HE.Investments.Common.WWW.Helpers;
 using HE.Investments.Common.WWW.Models.Summary;
 using HE.Investments.Common.WWW.Utils;
@@ -245,7 +246,7 @@ public class ProjectSummaryViewModelFactory : IProjectSummaryViewModelFactory
 
     private static string CreateProjectActionUrl(IUrlHelper urlHelper, FrontDoorProjectId projectId, string actionName, bool useWorkflowRedirection)
     {
-        var action = urlHelper.Action(
+        var action = urlHelper.OrganisationAction(
             actionName,
             new ControllerName(nameof(ProjectController)).WithoutPrefix(),
             new { projectId = projectId.Value, redirect = useWorkflowRedirection ? nameof(ProjectController.CheckAnswers) : null });
@@ -257,13 +258,13 @@ public class ProjectSummaryViewModelFactory : IProjectSummaryViewModelFactory
     {
         if (siteId.IsNew)
         {
-            return urlHelper.Action(
+            return urlHelper.OrganisationAction(
                 nameof(SiteController.NewName),
                 new ControllerName(nameof(SiteController)).WithoutPrefix(),
                 new { projectId = projectId.Value, redirect = useWorkflowRedirection ? nameof(ProjectController.CheckAnswers) : null }) ?? string.Empty;
         }
 
-        var action = urlHelper.Action(
+        var action = urlHelper.OrganisationAction(
             actionName,
             new ControllerName(nameof(SiteController)).WithoutPrefix(),
             new { projectId = projectId.Value, siteId = siteId.Value, redirect = useWorkflowRedirection ? nameof(ProjectController.CheckAnswers) : null });

@@ -1,13 +1,14 @@
 using HE.Investments.Account.Shared.Authorization.Attributes;
 using HE.Investments.Common;
 using HE.Investments.Common.Contract.Enum;
+using HE.Investments.Common.WWW.Extensions;
 using HE.Investments.FrontDoor.WWW.Config;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.FeatureManagement;
 
 namespace HE.Investments.FrontDoor.WWW.Controllers;
 
-[Route("redirect-to-another-application")]
+[Route("{organisationId}/redirect-to-another-application")]
 [AuthorizeWithCompletedProfile]
 public class ConvertProjectController : Controller
 {
@@ -27,8 +28,8 @@ public class ConvertProjectController : Controller
     {
         var urlWithRouteData = applicationType switch
         {
-            ApplicationType.Loans => $"{_programmeUrlConfig.StartLoanApplication}?fdProjectId={fdProjectId}",
-            ApplicationType.Ahp => $"{_programmeUrlConfig.StartAhpProject}?fdProjectId={fdProjectId}",
+            ApplicationType.Loans => $"{_programmeUrlConfig.StartLoanApplication}?fdProjectId={fdProjectId}?organisationId={Request.GetOrganisationIdFromRoute()}",
+            ApplicationType.Ahp => $"{_programmeUrlConfig.StartAhpProject}?fdProjectId={fdProjectId}?organisationId={Request.GetOrganisationIdFromRoute()}",
             _ => string.Empty,
         };
 

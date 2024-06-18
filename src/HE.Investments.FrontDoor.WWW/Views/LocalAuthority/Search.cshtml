@@ -22,7 +22,7 @@
 
     <vc:page-header title="@title" caption="@ViewBag.ProjectName" />
 
-    <form asp-controller="LocalAuthority" asp-action="Search" asp-route-workflow="@Context.Request.Query["workflow"]" asp-route-redirect="@Context.Request.Query["redirect"]" asp-route-optional="@Context.Request.Query["optional"]" asp-method="post" novalidate>
+    <he-organisation-form asp-controller="LocalAuthority" asp-action="Search" asp-route-workflow="@Context.Request.Query["workflow"]" asp-route-redirect="@Context.Request.Query["redirect"]" asp-route-optional="@Context.Request.Query["optional"]" asp-method="post" novalidate>
 
         @Html.HiddenFor(m => m.ProjectId)
         @Html.HiddenFor(m => m.SiteId)
@@ -37,5 +37,5 @@
 
         <vc:form-button text="Search" />
         <vc:return-to-account-link is-editable="false" />
-    </form>
+    </he-organisation-form>
 </gds-div-grid-column-two-thirds>

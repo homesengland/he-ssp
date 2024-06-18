@@ -1,3 +1,4 @@
+using System.Dynamic;
 using System.Reflection;
 
 namespace HE.Investments.Common.WWW.Extensions;
@@ -7,6 +8,12 @@ public static class ObjectExtensions
     public static TValue? GetPropertyValue<TValue>(this object item, string propertyName)
     {
         var itemType = item.GetType();
+
+        if (itemType == typeof(ExpandoObject))
+        {
+            return ((ExpandoObject)item).GetValue<TValue>(propertyName);
+        }
+
         var itemProperty = itemType.GetProperty(propertyName);
         if (itemProperty == null)
         {
@@ -19,7 +26,7 @@ public static class ObjectExtensions
 
     public static object ExpandRouteValues(this object? routeValues, object? additionalRouteValues)
     {
-        var dynamicRouteData = new System.Dynamic.ExpandoObject() as IDictionary<string, object>;
+        var dynamicRouteData = new ExpandoObject() as IDictionary<string, object>;
         if (routeValues != null)
         {
             foreach (var property in routeValues.GetType().GetProperties(BindingFlags.Instance | BindingFlags.Public))
