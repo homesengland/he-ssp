@@ -45,6 +45,26 @@ public static class CollectionExtensions
         return source.Count == 0;
     }
 
+    public static bool IsTheSameAs<T>(this IList<T> source, IList<T> other)
+    {
+        if (source.Count != other.Count)
+        {
+            return false;
+        }
+
+        for (var i = 0; i < source.Count; i++)
+        {
+            if (!source[i]!.Equals(other[i]))
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public static bool IsNotTheSameAs<T>(this IList<T> source, IList<T> other) => !source.IsTheSameAs(other);
+
     public static TItem? PopItem<TItem>(this List<TItem> items)
         where TItem : class
     {

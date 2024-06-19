@@ -1,6 +1,7 @@
 using FluentAssertions;
 using HE.Investment.AHP.Domain.Site.Entities;
 using HE.Investment.AHP.Domain.Tests.Common.TestData;
+using HE.Investments.AHP.Consortium.Domain.Tests.TestData;
 using HE.Investments.FrontDoor.Shared.Project;
 using HE.Investments.Organisation.ValueObjects;
 

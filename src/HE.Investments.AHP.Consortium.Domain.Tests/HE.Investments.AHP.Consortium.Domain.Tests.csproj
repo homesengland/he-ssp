@@ -9,7 +9,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\HE.Investment.AHP.Domain.Tests\HE.Investment.AHP.Domain.Tests.csproj" />
     <ProjectReference Include="..\HE.Investments.AHP.Consortium.Domain\HE.Investments.AHP.Consortium.Domain.csproj"/>
     <ProjectReference Include="..\HE.Investments.Common.Tests\HE.Investments.Common.Tests.csproj"/>
     <ProjectReference Include="..\HE.Investments.TestsUtils\HE.Investments.TestsUtils.csproj"/>
