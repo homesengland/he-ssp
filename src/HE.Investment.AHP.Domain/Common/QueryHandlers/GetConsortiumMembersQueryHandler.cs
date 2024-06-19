@@ -1,5 +1,4 @@
 using HE.Investment.AHP.Contract.Common.Queries;
-using HE.Investment.AHP.Domain.UserContext;
 using HE.Investments.AHP.Consortium.Contract;
 using HE.Investments.AHP.Consortium.Contract.Enums;
 using HE.Investments.AHP.Consortium.Contract.Queries;

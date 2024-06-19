@@ -12,6 +12,7 @@ using HE.Investments.Account.Shared.User;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Infrastructure.Events;
+using HE.Investments.Consortium.Shared.UserContext;
 
 namespace HE.Investment.AHP.Domain.HomeTypes.Repositories;
 
@@ -51,7 +52,7 @@ public class HomeTypeRepository : IHomeTypeRepository
 
     public async Task<HomeTypesEntity> GetByApplicationId(
         AhpApplicationId applicationId,
-        UserAccount userAccount,
+        ConsortiumUserAccount userAccount,
         CancellationToken cancellationToken)
     {
         var organisationId = userAccount.SelectedOrganisationId().Value;
@@ -71,7 +72,7 @@ public class HomeTypeRepository : IHomeTypeRepository
     public async Task<IHomeTypeEntity> GetById(
         AhpApplicationId applicationId,
         HomeTypeId homeTypeId,
-        UserAccount userAccount,
+        ConsortiumUserAccount userAccount,
         CancellationToken cancellationToken,
         bool loadFiles = false)
     {

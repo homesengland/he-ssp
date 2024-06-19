@@ -4,9 +4,9 @@ using HE.Investment.AHP.Domain.Common.ValueObjects;
 using HE.Investment.AHP.Domain.Documents.Config;
 using HE.Investment.AHP.Domain.HomeTypes.Entities;
 using HE.Investment.AHP.Domain.HomeTypes.Repositories;
-using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Contract.Validators;
+using HE.Investments.Consortium.Shared.UserContext;
 using MediatR;
 using UploadedFileContract = HE.Investment.AHP.Contract.Common.UploadedFile;
 
@@ -16,11 +16,11 @@ public class UploadDesignPlansFileCommandHandler : IRequestHandler<UploadDesignP
 {
     private readonly IHomeTypeRepository _homeTypeRepository;
 
-    private readonly IAccountUserContext _accountUserContext;
+    private readonly IConsortiumUserContext _accountUserContext;
 
     private readonly IAhpDocumentSettings _documentSettings;
 
-    public UploadDesignPlansFileCommandHandler(IHomeTypeRepository homeTypeRepository, IAccountUserContext accountUserContext, IAhpDocumentSettings documentSettings)
+    public UploadDesignPlansFileCommandHandler(IHomeTypeRepository homeTypeRepository, IConsortiumUserContext accountUserContext, IAhpDocumentSettings documentSettings)
     {
         _homeTypeRepository = homeTypeRepository;
         _accountUserContext = accountUserContext;

@@ -3,7 +3,7 @@ using HE.Investment.AHP.Contract.HomeTypes.Queries;
 using HE.Investment.AHP.Domain.Application.Mappers;
 using HE.Investment.AHP.Domain.HomeTypes.Entities;
 using HE.Investment.AHP.Domain.HomeTypes.Repositories;
-using HE.Investments.Account.Shared;
+using HE.Investments.Consortium.Shared.UserContext;
 using MediatR;
 
 namespace HE.Investment.AHP.Domain.HomeTypes.QueryHandlers;
@@ -12,9 +12,9 @@ internal sealed class GetHomeTypesQueryHandler : IRequestHandler<GetHomeTypesQue
 {
     private readonly IHomeTypeRepository _repository;
 
-    private readonly IAccountUserContext _accountUserContext;
+    private readonly IConsortiumUserContext _accountUserContext;
 
-    public GetHomeTypesQueryHandler(IHomeTypeRepository repository, IAccountUserContext accountUserContext)
+    public GetHomeTypesQueryHandler(IHomeTypeRepository repository, IConsortiumUserContext accountUserContext)
     {
         _repository = repository;
         _accountUserContext = accountUserContext;

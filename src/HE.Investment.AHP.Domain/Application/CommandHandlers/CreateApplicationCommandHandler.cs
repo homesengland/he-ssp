@@ -1,7 +1,5 @@
 using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.Application.Commands;
-using HE.Investment.AHP.Contract.Project;
-using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Domain.Application.Entities;
 using HE.Investment.AHP.Domain.Application.Factories;
 using HE.Investment.AHP.Domain.Application.Repositories;
@@ -9,11 +7,9 @@ using HE.Investment.AHP.Domain.Application.ValueObjects;
 using HE.Investment.AHP.Domain.Scheme.ValueObjects;
 using HE.Investment.AHP.Domain.Site.Entities;
 using HE.Investment.AHP.Domain.Site.Repositories;
-using HE.Investment.AHP.Domain.UserContext;
 using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Consortium.Shared.UserContext;
-using HE.Investments.FrontDoor.Shared.Project;
 using MediatR;
 
 namespace HE.Investment.AHP.Domain.Application.CommandHandlers;
@@ -24,9 +20,9 @@ public class CreateApplicationCommandHandler : IRequestHandler<CreateApplication
 
     private readonly ISiteRepository _siteRepository;
 
-    private readonly IConsortiumUserContext _consortiumUserContext;
+    private readonly IConsortiumAccessContext _consortiumUserContext;
 
-    public CreateApplicationCommandHandler(IApplicationRepository repository, ISiteRepository siteRepository, IConsortiumUserContext consortiumUserContext)
+    public CreateApplicationCommandHandler(IApplicationRepository repository, ISiteRepository siteRepository, IConsortiumAccessContext consortiumUserContext)
     {
         _repository = repository;
         _siteRepository = siteRepository;

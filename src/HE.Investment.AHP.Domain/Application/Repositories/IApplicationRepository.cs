@@ -5,18 +5,19 @@ using HE.Investment.AHP.Domain.Common;
 using HE.Investments.Account.Shared.User;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Domain;
+using HE.Investments.Consortium.Shared.UserContext;
 
 namespace HE.Investment.AHP.Domain.Application.Repositories;
 
 public interface IApplicationRepository
 {
-    Task<ApplicationEntity> GetById(AhpApplicationId id, UserAccount userAccount, CancellationToken cancellationToken);
+    Task<ApplicationEntity> GetById(AhpApplicationId id, ConsortiumUserAccount userAccount, CancellationToken cancellationToken);
 
     Task<bool> IsNameExist(ApplicationName applicationName, OrganisationId organisationId, CancellationToken cancellationToken);
 
     Task<bool> IsExist(AhpApplicationId applicationId, UserAccount userAccount, CancellationToken cancellationToken);
 
-    Task<ApplicationBasicInfo> GetApplicationBasicInfo(AhpApplicationId id, UserAccount userAccount, CancellationToken cancellationToken);
+    Task<ApplicationBasicInfo> GetApplicationBasicInfo(AhpApplicationId id, ConsortiumUserAccount userAccount, CancellationToken cancellationToken);
 
     Task<ApplicationWithFundingDetails> GetApplicationWithFundingDetailsById(AhpApplicationId id, UserAccount userAccount, CancellationToken cancellationToken);
 

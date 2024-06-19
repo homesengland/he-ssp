@@ -2,10 +2,10 @@ using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.HomeTypes.Events;
 using HE.Investment.AHP.Contract.Scheme.Events;
 using HE.Investment.AHP.Domain.Application.Repositories;
-using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Infrastructure.Events;
+using HE.Investments.Consortium.Shared.UserContext;
 
 namespace HE.Investment.AHP.Domain.HomeTypes.EventHandlers;
 
@@ -19,12 +19,12 @@ public class MarkHomeTypesAsInProgressEventHandler :
 
     private readonly IApplicationSectionStatusChanger _sectionStatusChanger;
 
-    private readonly IAccountUserContext _accountUserContext;
+    private readonly IConsortiumUserContext _accountUserContext;
 
     public MarkHomeTypesAsInProgressEventHandler(
         IApplicationRepository applicationRepository,
         IApplicationSectionStatusChanger sectionStatusChanger,
-        IAccountUserContext accountUserContext)
+        IConsortiumUserContext accountUserContext)
     {
         _applicationRepository = applicationRepository;
         _sectionStatusChanger = sectionStatusChanger;

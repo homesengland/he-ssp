@@ -2,14 +2,14 @@ using HE.Investment.AHP.Contract.Delivery.Commands;
 using HE.Investment.AHP.Domain.Delivery.Entities;
 using HE.Investment.AHP.Domain.Delivery.Repositories;
 using HE.Investment.AHP.Domain.Delivery.ValueObjects;
-using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract.Validators;
+using HE.Investments.Consortium.Shared.UserContext;
 
 namespace HE.Investment.AHP.Domain.Delivery.CommandHandlers;
 
 public class ProvideAdditionalPaymentRequestCommandHandler : UpdateDeliveryPhaseCommandHandler<ProvideAdditionalPaymentRequestCommand>
 {
-    public ProvideAdditionalPaymentRequestCommandHandler(IDeliveryPhaseRepository repository, IAccountUserContext accountUserContext)
+    public ProvideAdditionalPaymentRequestCommandHandler(IDeliveryPhaseRepository repository, IConsortiumUserContext accountUserContext)
         : base(repository, accountUserContext)
     {
     }

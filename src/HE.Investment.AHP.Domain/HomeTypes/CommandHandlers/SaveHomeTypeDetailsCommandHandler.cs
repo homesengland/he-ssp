@@ -2,11 +2,11 @@ using HE.Investment.AHP.Contract.HomeTypes;
 using HE.Investment.AHP.Contract.HomeTypes.Commands;
 using HE.Investment.AHP.Domain.HomeTypes.Entities;
 using HE.Investment.AHP.Domain.HomeTypes.Repositories;
-using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Extensions;
+using HE.Investments.Consortium.Shared.UserContext;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
@@ -16,9 +16,9 @@ public class SaveHomeTypeDetailsCommandHandler : HomeTypeCommandHandlerBase, IRe
 {
     private readonly IHomeTypeRepository _repository;
 
-    private readonly IAccountUserContext _accountUserContext;
+    private readonly IConsortiumUserContext _accountUserContext;
 
-    public SaveHomeTypeDetailsCommandHandler(IHomeTypeRepository repository, IAccountUserContext accountUserContext, ILogger<SaveHomeTypeDetailsCommand> logger)
+    public SaveHomeTypeDetailsCommandHandler(IHomeTypeRepository repository, IConsortiumUserContext accountUserContext, ILogger<SaveHomeTypeDetailsCommand> logger)
         : base(logger)
     {
         _repository = repository;

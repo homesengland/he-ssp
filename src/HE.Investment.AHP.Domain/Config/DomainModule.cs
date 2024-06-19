@@ -23,7 +23,6 @@ using HE.Investment.AHP.Domain.Scheme.Services;
 using HE.Investment.AHP.Domain.Scheme.ValueObjects;
 using HE.Investment.AHP.Domain.Site.Crm;
 using HE.Investment.AHP.Domain.Site.Repositories;
-using HE.Investment.AHP.Domain.UserContext;
 using HE.Investments.Account.Shared.Config;
 using HE.Investments.Common;
 using HE.Investments.Common.Extensions;

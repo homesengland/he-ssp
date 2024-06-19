@@ -60,6 +60,11 @@ namespace HE.CRM.AHP.Plugins.Handlers.AHPApplication
 
         private void MapData(IList<invln_HomeType> hometypes)
         {
+            if (CurrentState.invln_Tenure.Value == (int)invln_Tenure.Socialrent)
+            {
+                return;
+            }
+
             var percentageValueofNDSSStandardMax = hometypes.Max(x => x.invln_PercentageValueofNDSSStandard);
             var percentageValueofNDSSStandardMin = hometypes.Min(x => x.invln_PercentageValueofNDSSStandard);
             ExecutionData.Target.invln_Maximumm2asofNDSSoftheHomeTypesonthis = percentageValueofNDSSStandardMax;

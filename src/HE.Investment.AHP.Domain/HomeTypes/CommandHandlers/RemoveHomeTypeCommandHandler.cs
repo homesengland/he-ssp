@@ -1,8 +1,8 @@
 using HE.Investment.AHP.Contract.HomeTypes.Commands;
 using HE.Investment.AHP.Domain.Delivery.Repositories;
 using HE.Investment.AHP.Domain.HomeTypes.Repositories;
-using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract.Validators;
+using HE.Investments.Consortium.Shared.UserContext;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
@@ -14,12 +14,12 @@ public class RemoveHomeTypeCommandHandler : HomeTypeCommandHandlerBase, IRequest
 
     private readonly IDeliveryPhaseRepository _deliveryRepository;
 
-    private readonly IAccountUserContext _accountUserContext;
+    private readonly IConsortiumUserContext _accountUserContext;
 
     public RemoveHomeTypeCommandHandler(
         IHomeTypeRepository repository,
         IDeliveryPhaseRepository deliveryRepository,
-        IAccountUserContext accountUserContext,
+        IConsortiumUserContext accountUserContext,
         ILogger<RemoveHomeTypeCommandHandler> logger)
         : base(logger)
     {

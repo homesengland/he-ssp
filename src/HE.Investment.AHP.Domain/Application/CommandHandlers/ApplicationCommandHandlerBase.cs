@@ -1,20 +1,20 @@
 using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Domain.Application.Entities;
 using HE.Investment.AHP.Domain.Application.Repositories;
-using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract.Validators;
+using HE.Investments.Consortium.Shared.UserContext;
 
 namespace HE.Investment.AHP.Domain.Application.CommandHandlers;
 
 public abstract class ApplicationCommandHandlerBase
 {
-    private readonly IAccountUserContext _accountUserContext;
+    private readonly IConsortiumUserContext _accountUserContext;
 
     private readonly IApplicationRepository _applicationRepository;
 
     protected ApplicationCommandHandlerBase(
         IApplicationRepository applicationRepository,
-        IAccountUserContext accountUserContext)
+        IConsortiumUserContext accountUserContext)
     {
         _accountUserContext = accountUserContext;
         _applicationRepository = applicationRepository;

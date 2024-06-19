@@ -6,10 +6,10 @@ using HE.Investment.AHP.Domain.Delivery.Crm;
 using HE.Investment.AHP.Domain.Delivery.Entities;
 using HE.Investment.AHP.Domain.Delivery.ValueObjects;
 using HE.Investment.AHP.Domain.HomeTypes.Repositories;
-using HE.Investments.Account.Shared.User;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Infrastructure.Events;
+using HE.Investments.Consortium.Shared.UserContext;
 
 namespace HE.Investment.AHP.Domain.Delivery.Repositories;
 
@@ -43,7 +43,7 @@ public class DeliveryPhaseRepository : IDeliveryPhaseRepository
         _crmMapper = crmMapper;
     }
 
-    public async Task<DeliveryPhasesEntity> GetByApplicationId(AhpApplicationId applicationId, UserAccount userAccount, CancellationToken cancellationToken)
+    public async Task<DeliveryPhasesEntity> GetByApplicationId(AhpApplicationId applicationId, ConsortiumUserAccount userAccount, CancellationToken cancellationToken)
     {
         var organisation = userAccount.SelectedOrganisation();
         var organisationId = organisation.OrganisationId.Value;
@@ -63,7 +63,7 @@ public class DeliveryPhaseRepository : IDeliveryPhaseRepository
     public async Task<IDeliveryPhaseEntity> GetById(
         AhpApplicationId applicationId,
         DeliveryPhaseId deliveryPhaseId,
-        UserAccount userAccount,
+        ConsortiumUserAccount userAccount,
         CancellationToken cancellationToken)
     {
         var organisation = userAccount.SelectedOrganisation();
@@ -98,7 +98,7 @@ public class DeliveryPhaseRepository : IDeliveryPhaseRepository
         return entity.Id;
     }
 
-    public async Task Save(DeliveryPhasesEntity deliveryPhases, UserAccount userAccount, CancellationToken cancellationToken)
+    public async Task Save(DeliveryPhasesEntity deliveryPhases, ConsortiumUserAccount userAccount, CancellationToken cancellationToken)
     {
         if (deliveryPhases.IsStatusChanged)
         {
@@ -127,7 +127,7 @@ public class DeliveryPhaseRepository : IDeliveryPhaseRepository
 
     private async Task<IEnumerable<HomesToDeliver>> GetHomesToDeliver(
         AhpApplicationId applicationId,
-        UserAccount userAccount,
+        ConsortiumUserAccount userAccount,
         CancellationToken cancellationToken)
     {
         var homeTypes = await _homeTypeRepository.GetByApplicationId(

@@ -13,6 +13,7 @@ export class AhpApplication {
   public static onLoad(eCtx) {
     const eventLogic = new AhpApplication(eCtx)
     eventLogic.registerEvents();
+    eventLogic.ahpApplicationService.nDSSNotification()
   }
 
   public static onChangeAhpApplicationStatusButtonClick(eCtx) {
@@ -21,6 +22,6 @@ export class AhpApplication {
   }
 
   public registerEvents() {
-    
+
   }
 }

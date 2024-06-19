@@ -2,7 +2,6 @@ using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Contract.Site.Queries;
 using HE.Investment.AHP.Domain.Site.Repositories;
-using HE.Investment.AHP.Domain.UserContext;
 using HE.Investments.Common.Contract.Pagination;
 using HE.Investments.Consortium.Shared.UserContext;
 using MediatR;

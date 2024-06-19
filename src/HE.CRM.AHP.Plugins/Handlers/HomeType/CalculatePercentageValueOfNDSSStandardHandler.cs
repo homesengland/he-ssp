@@ -16,7 +16,7 @@ namespace HE.CRM.AHP.Plugins.Handlers.HomeType
 
         public CalculatePercentageValueOfNDSSStandardHandler(INdssRepository ndssRepository)
         {
-            this._ndssRepository = ndssRepository;
+            _ndssRepository = ndssRepository;
         }
 
         public override bool CanWork()
