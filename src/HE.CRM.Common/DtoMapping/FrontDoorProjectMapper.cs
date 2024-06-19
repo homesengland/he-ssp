@@ -150,6 +150,7 @@ namespace HE.CRM.Common.DtoMapping
                 StartofProjectYear = project.he_startofprojectyear,
                 CreatedOn = project.CreatedOn,
                 IntentiontoMakeaProfit = project.he_intentiontomakeaprofit,
+                EligibleApplication = new List<int>(),
             };
 
             if (project.he_activitiesinthisproject != null && project.he_activitiesinthisproject.Any())
@@ -157,6 +158,14 @@ namespace HE.CRM.Common.DtoMapping
                 foreach (var activitiinThisProjec in project.he_activitiesinthisproject)
                 {
                     frontDoorProjectDto.ActivitiesinThisProject.Add(activitiinThisProjec.Value);
+                }
+            }
+
+            if (project.he_FrontDoorDecision != null && project.he_FrontDoorDecision.Any())
+            {
+                foreach (var decision in project.he_FrontDoorDecision)
+                {
+                    frontDoorProjectDto.EligibleApplication.Add(decision.Value);
                 }
             }
 
@@ -212,6 +221,7 @@ namespace HE.CRM.Common.DtoMapping
                 he_startofprojectyear = frontDoorProjectDto.StartofProjectYear,
                 he_intentiontomakeaprofit = frontDoorProjectDto.IntentiontoMakeaProfit,
                 he_Projecttype = MapNullableIntToOptionSetValue(((int)he_Pipeline_he_Projecttype.Site)),
+                he_FrontDoorDecision = MapNullableIntToOptionSetValueCollection(frontDoorProjectDto.EligibleApplication),
             };
 
             if (!string.IsNullOrEmpty(organisationId) && Guid.TryParse(organisationId, out Guid organisationGUID))
