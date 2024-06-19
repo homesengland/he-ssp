@@ -6,6 +6,7 @@ using HE.Investment.AHP.Contract.Delivery.Queries;
 using HE.Investment.AHP.WWW.Extensions;
 using HE.Investment.AHP.WWW.Models.Delivery;
 using HE.Investments.Common.Validators;
+using HE.Investments.Common.WWW.Controllers;
 using HE.Investments.Common.WWW.Extensions;
 using HE.Investments.Common.WWW.Helpers;
 using HE.Investments.Consortium.Shared.Authorization;
@@ -72,7 +73,7 @@ public class DeliveryController : Controller
 
         return HttpContext.Request.IsSaveAndReturnAction()
             ? Url.RedirectToTaskList(applicationId)
-            : RedirectToAction("Complete", new { applicationId });
+            : this.OrganisationRedirectToAction("Complete", routeValues: new { applicationId });
     }
 
     [HttpGet("complete")]
@@ -96,6 +97,6 @@ public class DeliveryController : Controller
 
         return HttpContext.Request.IsSaveAndReturnAction() || model.IsDeliveryCompleted == IsDeliveryCompleted.Yes
             ? Url.RedirectToTaskList(applicationId)
-            : RedirectToAction("List", new { applicationId });
+            : this.OrganisationRedirectToAction("List", routeValues: new { applicationId });
     }
 }

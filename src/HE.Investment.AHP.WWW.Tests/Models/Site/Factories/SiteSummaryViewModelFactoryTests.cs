@@ -37,9 +37,9 @@ public class SiteSummaryViewModelFactoryTests : TestBase<SiteSummaryViewModelFac
             .BeEquivalentTo(
                 new[]
                 {
-                    new SectionSummaryItemModel("Developing partner", ["My developing partner"], "SitePartners/DevelopingPartner?siteId=1"),
-                    new SectionSummaryItemModel("Owner of the land", ["My owner of the land"], "SitePartners/OwnerOfTheLand?siteId=1"),
-                    new SectionSummaryItemModel("Owner of the homes", ["My owner of the homes"], "SitePartners/OwnerOfTheHomes?siteId=1"),
+                    new SectionSummaryItemModel("Developing partner", ["My developing partner"], "SitePartners/DevelopingPartner"),
+                    new SectionSummaryItemModel("Owner of the land", ["My owner of the land"], "SitePartners/OwnerOfTheLand"),
+                    new SectionSummaryItemModel("Owner of the homes", ["My owner of the homes"], "SitePartners/OwnerOfTheHomes"),
                 });
     }
 
@@ -62,7 +62,7 @@ public class SiteSummaryViewModelFactoryTests : TestBase<SiteSummaryViewModelFac
         result.Should().ContainKey("URB");
         result["URB"]
             .Should()
-            .BeEquivalentTo(new[] { new SectionSummaryItemModel("Owner of the homes", ["My owner of the homes"], "SitePartners/UnregisteredBodySearch?siteId=1") });
+            .BeEquivalentTo(new[] { new SectionSummaryItemModel("Owner of the homes", ["My owner of the homes"], "SitePartners/UnregisteredBodySearch") });
     }
 
     private static IUrlHelper MockUrlHelper()
