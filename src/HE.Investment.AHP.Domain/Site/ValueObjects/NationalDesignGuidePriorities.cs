@@ -12,7 +12,7 @@ public class NationalDesignGuidePriorities : ValueObject, IQuestion
         if (priorities.Any(x => x == NationalDesignGuidePriority.NoneOfTheAbove) && priorities.Count > 1)
         {
             OperationResult.New()
-                .AddValidationError("DesignPriorities", ValidationErrorMessage.InvalidValue)
+                .AddValidationError("DesignPriorities", ValidationErrorMessage.ExclusiveOptionSelected("Design Priority", "None of the above"))
                 .CheckErrors();
         }
 
