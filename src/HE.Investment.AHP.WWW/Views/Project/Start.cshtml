@@ -3,7 +3,7 @@
 @using HE.Investment.AHP.WWW.Views.Project.Const
 @inject IAhpExternalLinks ExternalLinks
 
-@model ProjectBasicModel;
+@model ProjectStartModel;
 @{
     var title = ProjectPageTitles.Start(Model.SelectedProgramme.Name, Model.SelectedProgramme.ShortName);
     ViewData["Title"] = title;
@@ -39,16 +39,18 @@
             Email: <a href="mailto:enquiries@homesengland.gov.uk">enquiries@homesengland.gov.uk</a>
         </gds-p>
 
-        <div class="govuk-heading-s">
-            Consortium applications
-        </div>
-
-        <gds-p>
-            If you intend to apply as part of consortium, you need to
-            <a href="@Url.Action("Index", "Consortium")">
-                create a consortium before you apply
-            </a>.
-        </gds-p>
+        @if (Model.DisplayConsortiumInfo)
+        {
+            <div class="govuk-heading-s">
+                Consortium applications
+            </div>
+            <gds-p>
+                    If you intend to apply as part of consortium, you need to
+                <a href="@Url.Action("Index", "Consortium")">
+                    create a consortium before you apply
+                </a>.
+            </gds-p>
+        }
 
         <div class="govuk-heading-s">
             Your application
