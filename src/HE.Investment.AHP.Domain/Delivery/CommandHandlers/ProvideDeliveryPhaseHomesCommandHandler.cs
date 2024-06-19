@@ -4,8 +4,8 @@ using HE.Investment.AHP.Contract.HomeTypes;
 using HE.Investment.AHP.Domain.Delivery.Entities;
 using HE.Investment.AHP.Domain.Delivery.Repositories;
 using HE.Investment.AHP.Domain.Delivery.ValueObjects;
-using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract.Validators;
+using HE.Investments.Consortium.Shared.UserContext;
 using Microsoft.Extensions.Logging;
 
 namespace HE.Investment.AHP.Domain.Delivery.CommandHandlers;
@@ -14,7 +14,7 @@ public class ProvideDeliveryPhaseHomesCommandHandler : DeliveryCommandHandlerBas
 {
     public ProvideDeliveryPhaseHomesCommandHandler(
         IDeliveryPhaseRepository repository,
-        IAccountUserContext accountUserContext,
+        IConsortiumUserContext accountUserContext,
         ILogger<ProvideDeliveryPhaseHomesCommandHandler> logger)
         : base(repository, accountUserContext, logger)
     {

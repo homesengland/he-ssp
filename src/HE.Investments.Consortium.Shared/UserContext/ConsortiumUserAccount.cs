@@ -11,7 +11,7 @@ public record ConsortiumUserAccount(
     OrganisationBasicInfo? Organisation,
     IReadOnlyCollection<UserRole> Roles,
     ConsortiumBasicInfo Consortium)
-    : UserAccount(UserGlobalId, UserEmail, Organisation, Roles)
+    : UserAccount(UserGlobalId, UserEmail, Organisation, Roles), IConsortiumUserAccount
 {
     public ConsortiumUserAccount(UserAccount userAccount, ConsortiumBasicInfo consortium)
         : this(userAccount.UserGlobalId, userAccount.UserEmail, userAccount.Organisation, userAccount.Roles, consortium)
@@ -19,4 +19,8 @@ public record ConsortiumUserAccount(
     }
 
     public bool CanManageConsortium => HasOneOfRole([.. ConsortiumAccessContext.ManageConsortiumRoles]);
+
+    public bool CanEdit => CanEditApplication && (Consortium.IsLeadPartner || Consortium.HasNoConsortium);
+
+    public bool CanSubmit => CanSubmitApplication && (Consortium.IsLeadPartner || Consortium.HasNoConsortium);
 }

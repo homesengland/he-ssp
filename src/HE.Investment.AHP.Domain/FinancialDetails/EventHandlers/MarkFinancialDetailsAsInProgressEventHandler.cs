@@ -1,9 +1,9 @@
 using HE.Investment.AHP.Contract.Scheme.Events;
 using HE.Investment.AHP.Domain.FinancialDetails.Repositories;
-using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Infrastructure.Events;
+using HE.Investments.Consortium.Shared.UserContext;
 
 namespace HE.Investment.AHP.Domain.FinancialDetails.EventHandlers;
 
@@ -11,9 +11,9 @@ public class MarkFinancialDetailsAsInProgressEventHandler : IEventHandler<Scheme
 {
     private readonly IFinancialDetailsRepository _financialDetailsRepository;
 
-    private readonly IAccountUserContext _accountUserContext;
+    private readonly IConsortiumUserContext _accountUserContext;
 
-    public MarkFinancialDetailsAsInProgressEventHandler(IFinancialDetailsRepository financialDetailsRepository, IAccountUserContext accountUserContext)
+    public MarkFinancialDetailsAsInProgressEventHandler(IFinancialDetailsRepository financialDetailsRepository, IConsortiumUserContext accountUserContext)
     {
         _financialDetailsRepository = financialDetailsRepository;
         _accountUserContext = accountUserContext;

@@ -1,8 +1,8 @@
 using HE.Investment.AHP.Contract.Application.Queries;
 using HE.Investment.AHP.Domain.Application.Repositories;
 using HE.Investment.AHP.Domain.Application.ValueObjects;
-using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract;
+using HE.Investments.Consortium.Shared.UserContext;
 using MediatR;
 using ApplicationSection = HE.Investment.AHP.Contract.Application.ApplicationSection;
 using ContractApplication = HE.Investment.AHP.Contract.Application.Application;
@@ -13,9 +13,9 @@ public class GetApplicationQueryHandler : IRequestHandler<GetApplicationQuery, C
 {
     private readonly IApplicationRepository _repository;
 
-    private readonly IAccountUserContext _accountUserContext;
+    private readonly IConsortiumUserContext _accountUserContext;
 
-    public GetApplicationQueryHandler(IApplicationRepository repository, IAccountUserContext accountUserContext)
+    public GetApplicationQueryHandler(IApplicationRepository repository, IConsortiumUserContext accountUserContext)
     {
         _repository = repository;
         _accountUserContext = accountUserContext;

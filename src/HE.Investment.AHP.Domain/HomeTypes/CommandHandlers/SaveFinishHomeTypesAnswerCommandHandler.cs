@@ -1,8 +1,8 @@
 using HE.Investment.AHP.Contract.HomeTypes.Commands;
 using HE.Investment.AHP.Domain.HomeTypes.Repositories;
 using HE.Investment.AHP.Domain.Scheme.Repositories;
-using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract.Validators;
+using HE.Investments.Consortium.Shared.UserContext;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
@@ -12,11 +12,15 @@ public class SaveFinishHomeTypesAnswerCommandHandler : HomeTypeCommandHandlerBas
 {
     private readonly IHomeTypeRepository _repository;
 
-    private readonly IAccountUserContext _accountUserContext;
+    private readonly IConsortiumUserContext _accountUserContext;
 
     private readonly ISchemeRepository _schemeRepository;
 
-    public SaveFinishHomeTypesAnswerCommandHandler(IHomeTypeRepository repository, ISchemeRepository schemeRepository, IAccountUserContext accountUserContext, ILogger<SaveFinishHomeTypesAnswerCommandHandler> logger)
+    public SaveFinishHomeTypesAnswerCommandHandler(
+        IHomeTypeRepository repository,
+        ISchemeRepository schemeRepository,
+        IConsortiumUserContext accountUserContext,
+        ILogger<SaveFinishHomeTypesAnswerCommandHandler> logger)
         : base(logger)
     {
         _repository = repository;

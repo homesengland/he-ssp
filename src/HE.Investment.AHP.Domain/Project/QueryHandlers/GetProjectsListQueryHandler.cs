@@ -1,8 +1,6 @@
 using HE.Investment.AHP.Contract.Project;
 using HE.Investment.AHP.Contract.Project.Queries;
-using HE.Investment.AHP.Domain.Config;
 using HE.Investment.AHP.Domain.Project.Repositories;
-using HE.Investment.AHP.Domain.UserContext;
 using HE.Investments.Common.Contract.Pagination;
 using HE.Investments.Consortium.Shared.UserContext;
 using HE.Investments.Programme.Contract;

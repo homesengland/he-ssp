@@ -3,7 +3,7 @@ using HE.Investment.AHP.Contract.HomeTypes.Queries;
 using HE.Investment.AHP.Domain.HomeTypes.Entities;
 using HE.Investment.AHP.Domain.HomeTypes.Mappers;
 using HE.Investment.AHP.Domain.HomeTypes.Repositories;
-using HE.Investments.Account.Shared;
+using HE.Investments.Consortium.Shared.UserContext;
 using MediatR;
 
 namespace HE.Investment.AHP.Domain.HomeTypes.QueryHandlers;
@@ -17,9 +17,12 @@ internal abstract class GetHomeTypeSegmentQueryHandlerBase<TQuery, TSegment, TRe
 
     private readonly IHomeTypeSegmentContractMapper<TSegment, TResult> _mapper;
 
-    private readonly IAccountUserContext _accountUserContext;
+    private readonly IConsortiumUserContext _accountUserContext;
 
-    protected GetHomeTypeSegmentQueryHandlerBase(IHomeTypeRepository repository, IHomeTypeSegmentContractMapper<TSegment, TResult> mapper, IAccountUserContext accountUserContext)
+    protected GetHomeTypeSegmentQueryHandlerBase(
+        IHomeTypeRepository repository,
+        IHomeTypeSegmentContractMapper<TSegment, TResult> mapper,
+        IConsortiumUserContext accountUserContext)
     {
         _repository = repository;
         _mapper = mapper;

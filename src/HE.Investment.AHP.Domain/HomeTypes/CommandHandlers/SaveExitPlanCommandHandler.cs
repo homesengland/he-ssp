@@ -2,8 +2,8 @@ using HE.Investment.AHP.Contract.HomeTypes.Commands;
 using HE.Investment.AHP.Domain.HomeTypes.Entities;
 using HE.Investment.AHP.Domain.HomeTypes.Repositories;
 using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
-using HE.Investments.Account.Shared;
 using HE.Investments.Common.Extensions;
+using HE.Investments.Consortium.Shared.UserContext;
 using Microsoft.Extensions.Logging;
 
 namespace HE.Investment.AHP.Domain.HomeTypes.CommandHandlers;
@@ -12,7 +12,7 @@ public class SaveExitPlanCommandHandler : SaveHomeTypeSegmentCommandHandlerBase<
 {
     public SaveExitPlanCommandHandler(
         IHomeTypeRepository homeTypeRepository,
-        IAccountUserContext accountUserContext,
+        IConsortiumUserContext accountUserContext,
         ILogger<SaveExitPlanCommandHandler> logger)
         : base(homeTypeRepository, accountUserContext, logger)
     {

@@ -12,6 +12,7 @@ using HE.Investment.AHP.Domain.Scheme.ValueObjects;
 using HE.Investment.AHP.Domain.Site.Repositories;
 using HE.Investments.Account.Shared.User;
 using HE.Investments.Common.Extensions;
+using HE.Investments.Consortium.Shared.UserContext;
 
 namespace HE.Investment.AHP.Domain.FinancialDetails.Repositories;
 
@@ -37,7 +38,7 @@ public class FinancialDetailsRepository : IFinancialDetailsRepository
         _siteRepository = siteRepository;
     }
 
-    public async Task<FinancialDetailsEntity> GetById(AhpApplicationId id, UserAccount userAccount, CancellationToken cancellationToken)
+    public async Task<FinancialDetailsEntity> GetById(AhpApplicationId id, ConsortiumUserAccount userAccount, CancellationToken cancellationToken)
     {
         var organisationId = userAccount.SelectedOrganisationId().Value;
         var application = userAccount.CanViewAllApplications()

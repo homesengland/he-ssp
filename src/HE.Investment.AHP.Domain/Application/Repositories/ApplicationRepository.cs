@@ -1,7 +1,6 @@
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.Application.Events;
-using HE.Investment.AHP.Contract.Project;
 using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Domain.Application.Crm;
 using HE.Investment.AHP.Domain.Application.Entities;
@@ -9,7 +8,6 @@ using HE.Investment.AHP.Domain.Application.Factories;
 using HE.Investment.AHP.Domain.Application.Mappers;
 using HE.Investment.AHP.Domain.Application.ValueObjects;
 using HE.Investment.AHP.Domain.Common;
-using HE.Investment.AHP.Domain.Config;
 using HE.Investment.AHP.Domain.FinancialDetails.Mappers;
 using HE.Investments.Account.Shared.User;
 using HE.Investments.Common.Contract;
@@ -18,6 +16,7 @@ using HE.Investments.Common.CRM.Mappers;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Infrastructure.Events;
+using HE.Investments.Consortium.Shared.UserContext;
 using HE.Investments.FrontDoor.Shared.Project;
 using HE.Investments.Programme.Contract.Config;
 
@@ -38,7 +37,7 @@ public class ApplicationRepository : IApplicationRepository
         _settings = settings;
     }
 
-    public async Task<ApplicationEntity> GetById(AhpApplicationId id, UserAccount userAccount, CancellationToken cancellationToken)
+    public async Task<ApplicationEntity> GetById(AhpApplicationId id, ConsortiumUserAccount userAccount, CancellationToken cancellationToken)
     {
         var application = await GetAhpApplicationDto(id, userAccount, cancellationToken);
 
@@ -68,7 +67,7 @@ public class ApplicationRepository : IApplicationRepository
         }
     }
 
-    public async Task<ApplicationBasicInfo> GetApplicationBasicInfo(AhpApplicationId id, UserAccount userAccount, CancellationToken cancellationToken)
+    public async Task<ApplicationBasicInfo> GetApplicationBasicInfo(AhpApplicationId id, ConsortiumUserAccount userAccount, CancellationToken cancellationToken)
     {
         var application = await GetById(id, userAccount, cancellationToken);
 
@@ -143,7 +142,7 @@ public class ApplicationRepository : IApplicationRepository
         await _eventDispatcher.Publish(domainEntity, cancellationToken);
     }
 
-    private static ApplicationEntity CreateEntity(AhpApplicationDto application, UserAccount userAccount)
+    private static ApplicationEntity CreateEntity(AhpApplicationDto application, ConsortiumUserAccount userAccount)
     {
         var applicationStatus = AhpApplicationStatusMapper.MapToPortalStatus(application.applicationStatus);
         ApplicationStatus? previousStatus = application.previousExternalStatus.IsProvided()

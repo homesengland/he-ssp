@@ -2,8 +2,8 @@ using HE.Investment.AHP.Contract.HomeTypes;
 using HE.Investment.AHP.Contract.HomeTypes.Enums;
 using HE.Investment.AHP.Contract.HomeTypes.Queries;
 using HE.Investment.AHP.Domain.HomeTypes.Repositories;
-using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract;
+using HE.Investments.Consortium.Shared.UserContext;
 using MediatR;
 
 namespace HE.Investment.AHP.Domain.HomeTypes.QueryHandlers;
@@ -12,9 +12,9 @@ public class GetFinishHomesTypeAnswerQueryHandler : IRequestHandler<GetFinishHom
 {
     private readonly IHomeTypeRepository _repository;
 
-    private readonly IAccountUserContext _accountUserContext;
+    private readonly IConsortiumUserContext _accountUserContext;
 
-    public GetFinishHomesTypeAnswerQueryHandler(IHomeTypeRepository repository, IAccountUserContext accountUserContext)
+    public GetFinishHomesTypeAnswerQueryHandler(IHomeTypeRepository repository, IConsortiumUserContext accountUserContext)
     {
         _repository = repository;
         _accountUserContext = accountUserContext;

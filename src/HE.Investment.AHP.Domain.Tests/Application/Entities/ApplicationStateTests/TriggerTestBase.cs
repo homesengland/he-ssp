@@ -20,8 +20,9 @@ public abstract class TriggerTestBase
 
         return new ApplicationState(
             applicationStatus,
-            userAccount.Object,
             previousApplicationStatus,
+            userAccount.Object.CanEditApplication,
+            userAccount.Object.CanSubmitApplication,
             wasSubmitted);
     }
 }

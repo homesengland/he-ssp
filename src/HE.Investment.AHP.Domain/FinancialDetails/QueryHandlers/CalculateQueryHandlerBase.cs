@@ -2,9 +2,9 @@ using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.FinancialDetails;
 using HE.Investment.AHP.Domain.FinancialDetails.Entities;
 using HE.Investment.AHP.Domain.FinancialDetails.Repositories;
-using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Contract.Validators;
+using HE.Investments.Consortium.Shared.UserContext;
 using Microsoft.Extensions.Logging;
 
 namespace HE.Investment.AHP.Domain.FinancialDetails.QueryHandlers;
@@ -13,11 +13,11 @@ public abstract class CalculateQueryHandlerBase
 {
     private readonly IFinancialDetailsRepository _financialDetailsRepository;
 
-    private readonly IAccountUserContext _accountUserContext;
+    private readonly IConsortiumUserContext _accountUserContext;
 
     private readonly ILogger _logger;
 
-    protected CalculateQueryHandlerBase(IFinancialDetailsRepository financialDetailsRepository, IAccountUserContext accountUserContext, ILogger logger)
+    protected CalculateQueryHandlerBase(IFinancialDetailsRepository financialDetailsRepository, IConsortiumUserContext accountUserContext, ILogger logger)
     {
         _financialDetailsRepository = financialDetailsRepository;
         _accountUserContext = accountUserContext;

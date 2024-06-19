@@ -4,8 +4,8 @@ using HE.Investment.AHP.Domain.Application.Mappers;
 using HE.Investment.AHP.Domain.HomeTypes.Entities;
 using HE.Investment.AHP.Domain.HomeTypes.Mappers;
 using HE.Investment.AHP.Domain.HomeTypes.Repositories;
-using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract;
+using HE.Investments.Consortium.Shared.UserContext;
 using MediatR;
 
 namespace HE.Investment.AHP.Domain.HomeTypes.QueryHandlers;
@@ -14,7 +14,7 @@ internal sealed class GetFullHomeTypeQueryHandler : IRequestHandler<GetFullHomeT
 {
     private readonly IHomeTypeRepository _repository;
 
-    private readonly IAccountUserContext _accountUserContext;
+    private readonly IConsortiumUserContext _accountUserContext;
 
     private readonly IHomeTypeSegmentContractMapper<DesignPlansSegmentEntity, DesignPlans> _designPlansSegmentMapper;
 
@@ -32,7 +32,7 @@ internal sealed class GetFullHomeTypeQueryHandler : IRequestHandler<GetFullHomeT
 
     public GetFullHomeTypeQueryHandler(
         IHomeTypeRepository repository,
-        IAccountUserContext accountUserContext,
+        IConsortiumUserContext accountUserContext,
         IHomeTypeSegmentContractMapper<DesignPlansSegmentEntity, DesignPlans> designPlansSegmentMapper,
         IHomeTypeSegmentContractMapper<DisabledPeopleHomeTypeDetailsSegmentEntity, DisabledPeopleHomeTypeDetails> disabledPeopleSegmentMapper,
         IHomeTypeSegmentContractMapper<HomeInformationSegmentEntity, HomeInformation> homeInformationSegmentMapper,
