@@ -23,7 +23,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace HE.Investment.AHP.WWW.Controllers;
 
 [ConsortiumAuthorize(ConsortiumAccessContext.Edit)]
-[Route("application")]
+[Route("{organisationId}/application")]
 public class ApplicationController : WorkflowController<ApplicationWorkflowState>
 {
     private readonly IMediator _mediator;
@@ -44,10 +44,10 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
     {
         if (string.IsNullOrEmpty(projectId))
         {
-            return RedirectToAction("Index", "Projects");
+            return this.OrganisationRedirectToAction("Index", "Projects");
         }
 
-        return RedirectToAction("Applications", "Project", new { projectId });
+        return this.OrganisationRedirectToAction("Applications", "Project", new { projectId });
     }
 
     [HttpGet("start")]
@@ -62,11 +62,11 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
     [WorkflowState(ApplicationWorkflowState.Start)]
     public IActionResult StartPost([FromQuery] string projectId)
     {
-        return RedirectToAction("Select", "Site", new { projectId });
+        return this.OrganisationRedirectToAction("Select", "Site", new { projectId });
     }
 
     [WorkflowState(ApplicationWorkflowState.ApplicationName)]
-    [HttpGet("/{siteId}/application/name")]
+    [HttpGet("/{organisationId}/site/{siteId}/application/name")]
     public async Task<IActionResult> Name([FromRoute] string siteId, [FromQuery] string? applicationName, CancellationToken cancellationToken)
     {
         var site = await GetSiteDetails(siteId, cancellationToken);
@@ -75,11 +75,11 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
             return View("Name", new ApplicationBasicModel(site.ProjectId, null, applicationName, Contract.Application.Tenure.Undefined));
         }
 
-        return RedirectToAction("Start", "Site", new { siteId = site.Id });
+        return this.OrganisationRedirectToAction("Start", "Site", new { siteId = site.Id });
     }
 
     [WorkflowState(ApplicationWorkflowState.ApplicationName)]
-    [HttpPost("/{siteId}/application/name")]
+    [HttpPost("/{organisationId}/site/{siteId}/application/name")]
     public async Task<IActionResult> Name([FromRoute] string siteId, ApplicationBasicModel model, CancellationToken cancellationToken)
     {
         var result = await _mediator.Send(new IsApplicationNameAvailableQuery(model.Name), cancellationToken);
@@ -91,18 +91,19 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
         }
 
         return await this.ReturnToProjectOrContinue(
-            async () => await Continue(new { applicationName = model.Name, siteId, projectId = model.ProjectId }), model.ProjectId);
+            async () => await Continue(new { applicationName = model.Name, siteId, projectId = model.ProjectId }),
+            model.ProjectId);
     }
 
     [WorkflowState(ApplicationWorkflowState.ApplicationTenure)]
-    [HttpGet("/{siteId}/application/tenure")]
+    [HttpGet("/{organisationId}/site/{siteId}/application/tenure")]
     public IActionResult Tenure([FromQuery] string applicationName, [FromQuery] string projectId)
     {
         return View("Tenure", new ApplicationBasicModel(projectId, null, applicationName, Contract.Application.Tenure.Undefined));
     }
 
     [WorkflowState(ApplicationWorkflowState.ApplicationTenure)]
-    [HttpPost("/{siteId}/application/tenure")]
+    [HttpPost("/{organisationId}/site/{siteId}/application/tenure")]
     public async Task<IActionResult> Tenure([FromRoute] string siteId, ApplicationBasicModel model, CancellationToken cancellationToken)
     {
         var result = await _mediator.Send(new CreateApplicationCommand(SiteId.From(siteId), model.Name, model.Tenure), cancellationToken);
@@ -114,7 +115,8 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
         }
 
         return await this.ReturnToProjectOrContinue(
-            async () => await Task.FromResult(RedirectToAction(nameof(TaskList), new { applicationId = result.ReturnedData.Value })), model.ProjectId);
+            async () => await Task.FromResult(this.OrganisationRedirectToAction(nameof(TaskList), routeValues: new { applicationId = result.ReturnedData.Value })),
+            model.ProjectId);
     }
 
     [ConsortiumAuthorize]

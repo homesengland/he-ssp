@@ -9,6 +9,7 @@ using HE.Investments.Common.Contract;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Workflow;
 using HE.Investments.Common.WWW.Components.SectionSummary;
+using HE.Investments.Common.WWW.Extensions;
 using HE.Investments.Common.WWW.Helpers;
 using HE.Investments.Common.WWW.Models.Summary;
 using HE.Investments.Common.WWW.Utils;
@@ -219,15 +220,10 @@ public class DeliveryPhaseCheckAnswersViewModelFactory : IDeliveryPhaseCheckAnsw
         string actionName,
         EncodedWorkflow<DeliveryPhaseWorkflowState>? encodedWorkflow)
     {
-        var action = urlHelper.Action(
+        var action = urlHelper.OrganisationAction(
             actionName,
             new ControllerName(nameof(DeliveryPhaseController)).WithoutPrefix(),
-            new
-            {
-                applicationId = applicationId.Value,
-                deliveryPhaseId = deliveryPhaseId.Value,
-                workflow = encodedWorkflow?.Value,
-            });
+            new { applicationId = applicationId.Value, deliveryPhaseId = deliveryPhaseId.Value, workflow = encodedWorkflow?.Value, });
 
         return action ?? string.Empty;
     }

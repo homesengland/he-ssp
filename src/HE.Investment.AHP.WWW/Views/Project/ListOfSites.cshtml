@@ -3,6 +3,7 @@
 @using HE.Investment.AHP.WWW.Views.Shared.Components.SitesTable
 @using HE.Investment.AHP.WWW.Views.Site.Const
 @using HE.Investments.Common.WWW.Components.PageHeader
+@using HE.Investments.Common.WWW.Extensions
 @inject IFrontDoorLinks FrontDoorLinks
 @model HE.Investment.AHP.Contract.Project.ProjectSitesModel
 @{
@@ -10,7 +11,7 @@
 }
 
 <div class="govuk-grid-column-full">
-    <gds-back-link href="@Url.Action("Details", "Project", new { projectId = @Model.ProjectId.Value })" class="govuk-!-margin-bottom-8"></gds-back-link>
+    <gds-back-link href="@Url.OrganisationAction("Details", "Project", new { projectId = @Model.ProjectId.Value })" class="govuk-!-margin-bottom-8"></gds-back-link>
     <vc:page-header title="@SitePageTitles.SiteList"
                     caption="@Model.OrganisationName"
                     hint="Select a site to view site details or applications within the site."/>

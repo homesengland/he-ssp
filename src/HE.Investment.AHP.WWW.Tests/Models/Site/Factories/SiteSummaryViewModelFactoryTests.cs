@@ -3,6 +3,7 @@ using HE.Investment.AHP.WWW.Models.Site.Factories;
 using HE.Investment.AHP.WWW.Tests.TestDataBuilders;
 using HE.Investments.Common.WWW.Components.SectionSummary;
 using HE.Investments.TestsUtils.TestFramework;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.AspNetCore.WebUtilities;
@@ -67,6 +68,12 @@ public class SiteSummaryViewModelFactoryTests : TestBase<SiteSummaryViewModelFac
     private static IUrlHelper MockUrlHelper()
     {
         var urlHelper = new Mock<IUrlHelper>();
+        var actionContext = new ActionContext
+        {
+            HttpContext = new DefaultHttpContext(),
+        };
+
+        urlHelper.Setup(x => x.ActionContext).Returns(actionContext);
 
         urlHelper.Setup(x => x.Action(It.IsAny<UrlActionContext>()))
             .Returns<UrlActionContext>(context =>

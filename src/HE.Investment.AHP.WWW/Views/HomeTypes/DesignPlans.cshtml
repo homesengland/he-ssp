@@ -1,6 +1,7 @@
 @using HE.Investment.AHP.WWW.Extensions
 @using HE.Investment.AHP.WWW.Views.HomeTypes.Const
 @using HE.Investment.AHP.Contract.HomeTypes
+@using HE.Investments.Common.WWW.Extensions
 @model HE.Investment.AHP.WWW.Models.HomeTypes.DesignPlansModel;
 
 @{
@@ -11,7 +12,7 @@
 }
 
 <div class="govuk-grid-column-full">
-    <form asp-controller="HomeTypes" asp-action="DesignPlans" asp-method="post" enctype="multipart/form-data" asp-route-workflow="@workflow" novalidate>
+    <he-organisation-form asp-controller="HomeTypes" asp-action="DesignPlans" asp-method="post" enctype="multipart/form-data" asp-route-workflow="@workflow" novalidate>
         <vc:home-type-form-header title="@HomeTypesPageTitles.DesignPlans"
                                   current-page="@HomeTypesWorkflowState.DesignPlans"
                                   caption="@Model.Header"/>
@@ -26,9 +27,9 @@
                         allowed-extensions="@Model.AllowedExtensions"
                         is-multiple="true"
                         max-file-size-in-mb="@Model.MaxFileSizeInMegabytes"
-                        upload-one-file-url="@Url.Action("UploadDesignPlansFile", "HomeTypes", new { applicationId, homeTypeId })"
-                        remove-file-url-template="@Url.Action("RemoveDesignPlansFile", "HomeTypes", new { applicationId, homeTypeId, workflow, fileId = ":fileId" })"
-                        download-file-url-template="@Url.Action("DownloadDesignPlansFile", "HomeTypes", new { applicationId, homeTypeId, fileId = ":fileId" })"/>
+                        upload-one-file-url="@Url.OrganisationAction("UploadDesignPlansFile", "HomeTypes", new { applicationId, homeTypeId })"
+                        remove-file-url-template="@Url.OrganisationAction("RemoveDesignPlansFile", "HomeTypes", new { applicationId, homeTypeId, workflow, fileId = ":fileId" })"
+                        download-file-url-template="@Url.OrganisationAction("DownloadDesignPlansFile", "HomeTypes", new { applicationId, homeTypeId, fileId = ":fileId" })"/>
 
         <vc:files-table asp-for="@Model.UploadedFiles"/>
 
@@ -45,5 +46,5 @@
             <br/>
             <vc:return-to-application-link application-id="@applicationId"/>
         </div>
-    </form>
+    </he-organisation-form>
 </div>

@@ -34,6 +34,7 @@ public class AhpIntegrationTest : IntegrationTestBase<Program>
         _fixture = fixture;
         LoginData = fixture.LoginData;
         InFrontDoor = fixture.ServiceProvider.GetRequiredService<FrontDoorDataManipulator>();
+        SetUserOrganisationData();
     }
 
     public ApplicationData ApplicationData { get; private set; }
@@ -47,6 +48,8 @@ public class AhpIntegrationTest : IntegrationTestBase<Program>
     protected AhpCrmContext AhpCrmContext => _fixture.AhpCrmContext;
 
     protected ILoginData LoginData { get; }
+
+    protected UserOrganisationData UserOrganisationData { get; private set; }
 
     protected FrontDoorDataManipulator InFrontDoor { get; }
 
@@ -109,5 +112,18 @@ public class AhpIntegrationTest : IntegrationTestBase<Program>
         }
 
         Stopwatch = stopwatch;
+    }
+
+    private void SetUserOrganisationData()
+    {
+        var userOrganisationData = GetSharedDataOrNull<UserOrganisationData>(nameof(UserOrganisationData));
+        if (userOrganisationData is null)
+        {
+            userOrganisationData = new UserOrganisationData();
+            userOrganisationData.SetOrganisationId(LoginData.OrganisationId);
+            SetSharedData(nameof(UserOrganisationData), userOrganisationData);
+        }
+
+        UserOrganisationData = userOrganisationData;
     }
 }

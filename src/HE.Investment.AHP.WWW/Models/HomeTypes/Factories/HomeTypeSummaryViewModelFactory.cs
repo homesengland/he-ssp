@@ -4,6 +4,7 @@ using HE.Investment.AHP.Contract.HomeTypes;
 using HE.Investment.AHP.Contract.Site;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Extensions;
+using HE.Investments.Common.WWW.Extensions;
 using HE.Investments.Common.WWW.Helpers;
 using HE.Investments.Common.WWW.Models.Summary;
 using Microsoft.AspNetCore.Mvc;
@@ -94,7 +95,10 @@ public class HomeTypeSummaryViewModelFactory : IHomeTypeSummaryViewModelFactory
             factory.Question("Type of home", nameof(Controller.HomeTypeDetails), homeType.HousingType));
     }
 
-    private static SectionSummaryViewModel CreateDisabledPeopleSection(DisabledPeopleHomeTypeDetails disabledPeople, DesignPlans? designPlans, HomeTypeQuestionFactory factory)
+    private static SectionSummaryViewModel CreateDisabledPeopleSection(
+        DisabledPeopleHomeTypeDetails disabledPeople,
+        DesignPlans? designPlans,
+        HomeTypeQuestionFactory factory)
     {
         return SectionSummaryViewModel.New(
             "Disabled and vulnerable people",
@@ -103,7 +107,10 @@ public class HomeTypeSummaryViewModelFactory : IHomeTypeSummaryViewModelFactory
             factory.Question("HAPPI principles", nameof(Controller.HappiDesignPrinciples), designPlans?.DesignPrinciples.ToArray()));
     }
 
-    private static SectionSummaryViewModel CreateOlderPeopleSection(OlderPeopleHomeTypeDetails olderPeople, DesignPlans? designPlans, HomeTypeQuestionFactory factory)
+    private static SectionSummaryViewModel CreateOlderPeopleSection(
+        OlderPeopleHomeTypeDetails olderPeople,
+        DesignPlans? designPlans,
+        HomeTypeQuestionFactory factory)
     {
         return SectionSummaryViewModel.New(
             "Older people",
@@ -111,7 +118,11 @@ public class HomeTypeSummaryViewModelFactory : IHomeTypeSummaryViewModelFactory
             factory.Question("HAPPI principles", nameof(Controller.HappiDesignPrinciples), designPlans?.DesignPrinciples.ToArray()));
     }
 
-    private static SectionSummaryViewModel CreateDesignPlansSection(FullHomeType homeType, DesignPlans designPlans, HomeTypeQuestionFactory factory, IUrlHelper urlHelper)
+    private static SectionSummaryViewModel CreateDesignPlansSection(
+        FullHomeType homeType,
+        DesignPlans designPlans,
+        HomeTypeQuestionFactory factory,
+        IUrlHelper urlHelper)
     {
         var files = designPlans.UploadedFiles.ToDictionary(
             x => x.FileName,
@@ -183,7 +194,10 @@ public class HomeTypeSummaryViewModelFactory : IHomeTypeSummaryViewModelFactory
             factory.Question("Market value of each home", nameof(Controller.AffordableRent), CurrencyHelper.DisplayPounds(tenure.MarketValue)),
             factory.Question("Market rent per week", nameof(Controller.AffordableRent), tenure.MarketRentPerWeek.DisplayPoundsPences()),
             factory.Question("Affordable Rent per week", nameof(Controller.AffordableRent), tenure.RentPerWeek.DisplayPoundsPences()),
-            factory.Question("Affordable Rent as percentage of market rent", nameof(Controller.AffordableRent), tenure.ProspectiveRentAsPercentageOfMarketRent.ToWholePercentage()),
+            factory.Question(
+                "Affordable Rent as percentage of market rent",
+                nameof(Controller.AffordableRent),
+                tenure.ProspectiveRentAsPercentageOfMarketRent.ToWholePercentage()),
             factory.Question("Target rent exceeded 80% of market rent", nameof(Controller.AffordableRent), tenure.TargetRentExceedMarketRent),
             factory.DeadEnd(nameof(Controller.AffordableRentIneligible)),
             factory.Question(
@@ -228,7 +242,10 @@ public class HomeTypeSummaryViewModelFactory : IHomeTypeSummaryViewModelFactory
             factory.Question("Market value of each home", nameof(Controller.RentToBuy), CurrencyHelper.DisplayPounds(tenure.MarketValue)),
             factory.Question("Market rent per week", nameof(Controller.RentToBuy), tenure.MarketRentPerWeek.DisplayPoundsPences()),
             factory.Question("Rent per week", nameof(Controller.RentToBuy), tenure.RentPerWeek.DisplayPoundsPences()),
-            factory.Question("Rent as percentage of market rent", nameof(Controller.RentToBuy), tenure.ProspectiveRentAsPercentageOfMarketRent.ToPercentageWithTwoDecimal()),
+            factory.Question(
+                "Rent as percentage of market rent",
+                nameof(Controller.RentToBuy),
+                tenure.ProspectiveRentAsPercentageOfMarketRent.ToPercentageWithTwoDecimal()),
             factory.Question("Target rent exceed 80% of market rent", nameof(Controller.RentToBuy), tenure.TargetRentExceedMarketRent),
             factory.DeadEnd(nameof(Controller.RentToBuyIneligible)));
     }
@@ -263,7 +280,9 @@ public class HomeTypeSummaryViewModelFactory : IHomeTypeSummaryViewModelFactory
             factory.DeadEnd(nameof(Controller.ProspectiveRentIneligible)));
     }
 
-    private static SectionSummaryViewModel CreateModernMethodsConstructionSection(ModernMethodsConstruction modernMethodsConstruction, HomeTypeQuestionFactory factory)
+    private static SectionSummaryViewModel CreateModernMethodsConstructionSection(
+        ModernMethodsConstruction modernMethodsConstruction,
+        HomeTypeQuestionFactory factory)
     {
         return SectionSummaryViewModel.New(
             "Modern Methods of Construction (MMC)",
@@ -284,7 +303,7 @@ public class HomeTypeSummaryViewModelFactory : IHomeTypeSummaryViewModelFactory
 
     private static string DownloadDesignFileUrl(IUrlHelper urlHelper, AhpApplicationId applicationId, HomeTypeId homeTypeId, FileId fileId)
     {
-        return urlHelper.Action(
+        return urlHelper.OrganisationAction(
                    "DownloadDesignPlansFile",
                    "HomeTypes",
                    new { applicationId = applicationId.Value, homeTypeId = homeTypeId.Value, fileId = fileId.Value })

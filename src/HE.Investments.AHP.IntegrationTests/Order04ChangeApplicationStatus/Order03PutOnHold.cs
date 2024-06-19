@@ -25,7 +25,7 @@ public class Order03PutOnHold : AhpIntegrationTest
     public async Task Order01_ShouldNavigateToOnHoldPage_WhenApplicationHasStatusRequestedEditing()
     {
         // given
-        var taskListPage = await TestClient.NavigateTo(ApplicationPagesUrl.TaskList(ApplicationData.ApplicationId));
+        var taskListPage = await TestClient.NavigateTo(ApplicationPagesUrl.TaskList(UserOrganisationData.OrganisationId, ApplicationData.ApplicationId));
         taskListPage
             .UrlEndWith(ApplicationPagesUrl.TaskListSuffix)
             .HasTitle(ApplicationData.ApplicationName)

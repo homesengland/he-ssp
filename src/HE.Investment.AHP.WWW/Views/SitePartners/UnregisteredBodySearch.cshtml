@@ -5,7 +5,6 @@
 @using HE.Investment.AHP.WWW.Views.SitePartners.Const
 @using HE.Investments.Common.WWW.Components.PageHeader
 @using HE.Investments.Common.WWW.Components.TextInput
-@using Microsoft.AspNetCore.Mvc.TagHelpers
 @model string;
 @{
     ViewData["Title"] = SitePartnersPageTitles.UnregisteredBodySearch;
@@ -22,7 +21,7 @@
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
     <vc:page-header caption="@ViewBag.SiteName"/>
 
-    <form asp-controller="SitePartners" asp-action="UnregisteredBodySearch" asp-route-workflow=@workflow asp-method="post" novalidate>
+    <he-organisation-form asp-controller="SitePartners" asp-action="UnregisteredBodySearch" asp-route-workflow=@workflow asp-method="post" novalidate>
         <vc:text-input
             title-type="InputTitleType.PageHeader"
             title="@SitePartnersPageTitles.UnregisteredBodySearch"
@@ -32,5 +31,5 @@
 
         <vc:form-button text="Search"/>
         <vc:return-to-sites-link is-editable="@false" project-id="@ViewBag.ProjectId"/>
-    </form>
+    </he-organisation-form>
 </gds-div-grid-column-two-thirds>

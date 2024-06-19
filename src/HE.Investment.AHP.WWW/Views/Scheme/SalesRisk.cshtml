@@ -12,7 +12,7 @@
 <gds-div-grid-column-two-thirds>
     <vc:ahp-workflow-back-button current-page="@SchemeWorkflowState.SalesRisk"/>
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
-    <form asp-controller="Scheme" asp-action="SalesRisk" asp-method="post" asp-route-redirect="@Context.Request.Query["redirect"]" novalidate>
+    <he-organisation-form asp-controller="Scheme" asp-action="SalesRisk" asp-method="post" asp-route-redirect="@Context.Request.Query["redirect"]" novalidate>
         <vc:page-header caption="@Model.ApplicationName" title="@title"/>
         @Html.HiddenFor(m => Model.ApplicationName)
         <vc:text-area-input-with-counter
@@ -21,5 +21,5 @@
             value="@Model.SalesRisk"/>
         <vc:form-button/>
         <vc:return-to-application-link application-id="@Model.ApplicationId"/>
-    </form>
+    </he-organisation-form>
 </gds-div-grid-column-two-thirds>

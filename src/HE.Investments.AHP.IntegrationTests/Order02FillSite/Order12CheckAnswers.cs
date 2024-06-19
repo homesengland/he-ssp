@@ -28,9 +28,9 @@ public class Order12CheckAnswers : AhpIntegrationTest
     public async Task Order01_CheckAnswersHasValidSummary()
     {
         // given
-        var checkAnswersPage = await GetCurrentPage(SitePagesUrl.SiteCheckAnswers(SiteData.SiteId));
+        var checkAnswersPage = await GetCurrentPage(SitePagesUrl.SiteCheckAnswers(UserOrganisationData.OrganisationId, SiteData.SiteId));
         checkAnswersPage
-            .UrlEndWith(SitePagesUrl.SiteCheckAnswers(SiteData.SiteId))
+            .UrlEndWith(SitePagesUrl.SiteCheckAnswers(UserOrganisationData.OrganisationId, SiteData.SiteId))
             .HasTitle(SitePageTitles.CheckAnswers)
             .HasStatusTagByTestId("In progress", "site-status-tag");
 
@@ -84,9 +84,9 @@ public class Order12CheckAnswers : AhpIntegrationTest
     public async Task Order02_CheckAnswersChangeMmcAnswer()
     {
         // given
-        var checkAnswersPage = await GetCurrentPage(SitePagesUrl.SiteCheckAnswers(SiteData.SiteId));
+        var checkAnswersPage = await GetCurrentPage(SitePagesUrl.SiteCheckAnswers(UserOrganisationData.OrganisationId, SiteData.SiteId));
         var summary = checkAnswersPage
-            .UrlEndWith(SitePagesUrl.SiteCheckAnswers(SiteData.SiteId))
+            .UrlEndWith(SitePagesUrl.SiteCheckAnswers(UserOrganisationData.OrganisationId, SiteData.SiteId))
             .HasTitle(SitePageTitles.CheckAnswers)
             .GetSummaryListItems();
 
@@ -97,7 +97,7 @@ public class Order12CheckAnswers : AhpIntegrationTest
         var mmcPage = await TestClient.NavigateTo(summary["MMC"].ChangeAnswerLink!);
 
         // then
-        mmcPage.UrlWithoutQueryEndsWith(SitePagesUrl.SiteMmcUsing(SiteData.SiteId))
+        mmcPage.UrlWithoutQueryEndsWith(SitePagesUrl.SiteMmcUsing(UserOrganisationData.OrganisationId, SiteData.SiteId))
             .HasTitle(SitePageTitles.MmcUsing);
         SaveCurrentPage();
     }
@@ -108,9 +108,9 @@ public class Order12CheckAnswers : AhpIntegrationTest
     {
         var mmcUsing = SiteData.ChangeMmcUsingAnswer();
         await TestQuestionPage(
-            SitePagesUrl.SiteMmcUsing(SiteData.SiteId),
+            SitePagesUrl.SiteMmcUsing(UserOrganisationData.OrganisationId, SiteData.SiteId),
             SitePageTitles.MmcUsing,
-            SitePagesUrl.SiteCheckAnswers(SiteData.SiteId),
+            SitePagesUrl.SiteCheckAnswers(UserOrganisationData.OrganisationId, SiteData.SiteId),
             (nameof(SiteModernMethodsOfConstruction.UsingModernMethodsOfConstruction), mmcUsing.ToString()));
     }
 
@@ -119,9 +119,9 @@ public class Order12CheckAnswers : AhpIntegrationTest
     public async Task Order04_CheckAnswersHasValidSummaryAfterChangingMmc()
     {
         // given
-        var checkAnswersPage = await GetCurrentPage(SitePagesUrl.SiteCheckAnswers(SiteData.SiteId));
+        var checkAnswersPage = await GetCurrentPage(SitePagesUrl.SiteCheckAnswers(UserOrganisationData.OrganisationId, SiteData.SiteId));
         checkAnswersPage
-            .UrlWithoutQueryEndsWith(SitePagesUrl.SiteCheckAnswers(SiteData.SiteId))
+            .UrlWithoutQueryEndsWith(SitePagesUrl.SiteCheckAnswers(UserOrganisationData.OrganisationId, SiteData.SiteId))
             .HasTitle(SitePageTitles.CheckAnswers);
 
         // when
@@ -139,9 +139,9 @@ public class Order12CheckAnswers : AhpIntegrationTest
     public async Task Order05_CheckAnswersCompleteSite()
     {
         await TestQuestionPage(
-            SitePagesUrl.SiteCheckAnswers(SiteData.SiteId),
+            SitePagesUrl.SiteCheckAnswers(UserOrganisationData.OrganisationId, SiteData.SiteId),
             SitePageTitles.CheckAnswers,
-            SitePagesUrl.SiteDetails(ShortGuid.FromString(SiteData.SiteId).Value),
+            SitePagesUrl.SiteDetails(UserOrganisationData.OrganisationId, ShortGuid.FromString(SiteData.SiteId).Value),
             (nameof(IsSectionCompleted), IsSectionCompleted.Yes.ToString()));
     }
 
@@ -149,7 +149,7 @@ public class Order12CheckAnswers : AhpIntegrationTest
     [Order(6)]
     public async Task Order06_SiteIsNotEditableAfterCompletion()
     {
-        var checkAnswersPage = await GetCurrentPage(SitePagesUrl.SiteCheckAnswers(SiteData.SiteId));
+        var checkAnswersPage = await GetCurrentPage(SitePagesUrl.SiteCheckAnswers(UserOrganisationData.OrganisationId, SiteData.SiteId));
         checkAnswersPage.HasStatusTagByTestId("Submitted", "site-status-tag");
 
         var summaryItems = checkAnswersPage.GetSummaryListItems();

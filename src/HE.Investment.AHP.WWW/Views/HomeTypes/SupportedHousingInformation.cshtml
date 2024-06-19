@@ -14,7 +14,7 @@
 }
 
 <gds-div-grid-column-two-thirds>
-    <form asp-controller="HomeTypes" asp-action="SupportedHousingInformation" asp-method="post" asp-route-workflow="@workflow" novalidate>
+    <he-organisation-form asp-controller="HomeTypes" asp-action="SupportedHousingInformation" asp-method="post" asp-route-workflow="@workflow" novalidate>
         @Html.HiddenFor(m => Model.ApplicationName)
         @Html.HiddenFor(m => Model.HomeTypeName)
         <vc:home-type-form-header title="@HomeTypesPageTitles.SupportedHousingInformation"
@@ -56,8 +56,7 @@
             </gds-radio>
 
             <vc:form-button/>
-
         </gds-field-set>
         <vc:return-to-application-link application-id="@applicationId"/>
-    </form>
+    </he-organisation-form>
 </gds-div-grid-column-two-thirds>

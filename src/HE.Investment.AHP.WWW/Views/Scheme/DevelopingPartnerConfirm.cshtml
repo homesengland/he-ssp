@@ -4,6 +4,7 @@
 @using HE.Investments.Common.WWW.Components.FormButton
 @using HE.Investments.Common.WWW.Components.PageHeader
 @using HE.Investments.Common.WWW.Components.RadioYesNo
+@using HE.Investments.Common.WWW.Extensions
 @using Microsoft.AspNetCore.Mvc.TagHelpers
 @model (HE.Investments.Organisation.Contract.OrganisationDetails Organisation, bool? IsPartnerConfirmed)
 @{
@@ -14,11 +15,11 @@
 }
 
 <gds-div-grid-column-two-thirds>
-    <gds-back-link href="@Url.Action("DevelopingPartner", "Scheme", new { applicationId, redirect })" class="govuk-!-margin-bottom-8"></gds-back-link>
+    <gds-back-link href="@Url.OrganisationAction("DevelopingPartner", "Scheme", new { applicationId, redirect })" class="govuk-!-margin-bottom-8"></gds-back-link>
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
     <vc:page-header caption="@ViewBag.ApplicationName"/>
 
-    <form asp-controller="Scheme" asp-action="DevelopingPartnerConfirm" asp-route-redirect=@redirect asp-method="post" novalidate>
+    <he-organisation-form asp-controller="Scheme" asp-action="DevelopingPartnerConfirm" asp-route-redirect=@redirect asp-method="post" novalidate>
         <vc:radio-yes-no
             title="@SharedPageTitles.DevelopingPartnerConfirm"
             title-type="InputTitleType.PageHeader"
@@ -28,5 +29,5 @@
 
         <vc:form-button/>
         <vc:return-to-application-link application-id="@applicationId"/>
-    </form>
+    </he-organisation-form>
 </gds-div-grid-column-two-thirds>

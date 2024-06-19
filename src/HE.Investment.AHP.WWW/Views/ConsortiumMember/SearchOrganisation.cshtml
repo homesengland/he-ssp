@@ -13,7 +13,7 @@
     <vc:ahp-workflow-back-button current-page="@ConsortiumMemberWorkflowState.SearchOrganisation"/>
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
 
-    <form asp-controller="ConsortiumMember" asp-action="SearchOrganisation" asp-method="post" novalidate>
+    <he-organisation-form asp-controller="ConsortiumMember" asp-action="SearchOrganisation" asp-method="post" novalidate>
         <vc:text-input
             title-type="InputTitleType.PageHeader"
             title="@ConsortiumMemberPageTitles.SearchOrganisation"
@@ -22,5 +22,5 @@
             value=@Model/>
 
         <vc:form-button text="Search"/>
-    </form>
+    </he-organisation-form>
 </gds-div-grid-column-two-thirds>

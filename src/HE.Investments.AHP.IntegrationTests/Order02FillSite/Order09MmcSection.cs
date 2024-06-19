@@ -1,14 +1,9 @@
 using System.Diagnostics.CodeAnalysis;
-using FluentAssertions;
-using HE.Investment.AHP.Contract.Common.Enums;
 using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.WWW.Views.Site.Const;
 using HE.Investments.AHP.IntegrationTests.Extensions;
 using HE.Investments.AHP.IntegrationTests.Framework;
 using HE.Investments.AHP.IntegrationTests.Pages;
-using HE.Investments.Common.Contract;
-using HE.Investments.IntegrationTestsFramework.Assertions;
-using HE.Investments.TestsUtils.Extensions;
 using Xunit;
 using Xunit.Abstractions;
 using Xunit.Extensions.Ordering;
@@ -29,9 +24,9 @@ public class Order09MmcSection : AhpSiteIntegrationTest
     public async Task Order01_ShouldProvideSiteMmcUsing()
     {
         await TestSiteQuestionPage(
-            SitePagesUrl.SiteMmcUsing(SiteData.SiteId),
+            SitePagesUrl.SiteMmcUsing(UserOrganisationData.OrganisationId, SiteData.SiteId),
             SitePageTitles.MmcUsing,
-            SitePagesUrl.SiteMmcInformation(SiteData.SiteId),
+            SitePagesUrl.SiteMmcInformation(UserOrganisationData.OrganisationId, SiteData.SiteId),
             (nameof(SiteModernMethodsOfConstruction.UsingModernMethodsOfConstruction), SiteData.UsingMmc.ToString()));
     }
 
@@ -40,9 +35,9 @@ public class Order09MmcSection : AhpSiteIntegrationTest
     public async Task Order02_ShouldProvideSiteMmcInformation()
     {
         await TestSiteQuestionPage(
-            SitePagesUrl.SiteMmcInformation(SiteData.SiteId),
+            SitePagesUrl.SiteMmcInformation(UserOrganisationData.OrganisationId, SiteData.SiteId),
             SitePageTitles.MmcInformation,
-            SitePagesUrl.SiteMmcCategories(SiteData.SiteId),
+            SitePagesUrl.SiteMmcCategories(UserOrganisationData.OrganisationId, SiteData.SiteId),
             (nameof(SiteModernMethodsOfConstruction.InformationBarriers), SiteData.GenerateInformationBarriers()),
             (nameof(SiteModernMethodsOfConstruction.InformationImpact), SiteData.GenerateInformationImpact()));
     }
@@ -52,9 +47,9 @@ public class Order09MmcSection : AhpSiteIntegrationTest
     public async Task Order03_ShouldProvideSiteMmcCategories()
     {
         await TestSiteQuestionPage(
-            SitePagesUrl.SiteMmcCategories(SiteData.SiteId),
+            SitePagesUrl.SiteMmcCategories(UserOrganisationData.OrganisationId, SiteData.SiteId),
             SitePageTitles.MmcCategories,
-            SitePagesUrl.SiteMmcCategory3D(SiteData.SiteId),
+            SitePagesUrl.SiteMmcCategory3D(UserOrganisationData.OrganisationId, SiteData.SiteId),
             SiteData.MmcCategories.ToFormInputs(nameof(SiteModernMethodsOfConstruction.ModernMethodsConstructionCategories)));
     }
 
@@ -63,9 +58,9 @@ public class Order09MmcSection : AhpSiteIntegrationTest
     public async Task Order04_ShouldProvideSiteMmcCategory3D()
     {
         await TestSiteQuestionPage(
-            SitePagesUrl.SiteMmcCategory3D(SiteData.SiteId),
+            SitePagesUrl.SiteMmcCategory3D(UserOrganisationData.OrganisationId, SiteData.SiteId),
             SitePageTitles.Mmc3DCategory,
-            SitePagesUrl.SiteMmcCategory2D(SiteData.SiteId),
+            SitePagesUrl.SiteMmcCategory2D(UserOrganisationData.OrganisationId, SiteData.SiteId),
             (nameof(SiteModernMethodsOfConstruction.ModernMethodsConstruction3DSubcategories), SiteData.Mmc3DSubcategory.ToString()));
     }
 
@@ -74,9 +69,9 @@ public class Order09MmcSection : AhpSiteIntegrationTest
     public async Task Order05_ShouldProvideSiteMmcCategory2D()
     {
         await TestSiteQuestionPage(
-            SitePagesUrl.SiteMmcCategory2D(SiteData.SiteId),
+            SitePagesUrl.SiteMmcCategory2D(UserOrganisationData.OrganisationId, SiteData.SiteId),
             SitePageTitles.Mmc2DCategory,
-            SitePagesUrl.SiteProcurements(SiteData.SiteId),
+            SitePagesUrl.SiteProcurements(UserOrganisationData.OrganisationId, SiteData.SiteId),
             (nameof(SiteModernMethodsOfConstruction.ModernMethodsConstruction2DSubcategories), SiteData.Mmc2DSubcategory.ToString()));
     }
 }
