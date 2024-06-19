@@ -30,7 +30,7 @@
         <vc:summary-item title="Email" value="@Model.UserDetails.Email"/>
     </gds-summary-list>
 
-    <form asp-controller="Users" asp-action="ChangeRole" asp-route-id="@Model.UserDetails.Id.Value" asp-method="post" novalidate>
+    <form asp-controller="Users" asp-action="ChangeRole" asp-route-id="@Model.UserDetails.Id.Value" asp-route-organisationId="@Context.Request.GetOrganisationIdFromRoute()" asp-method="post" novalidate>
 
         <vc:radio-list-with-or
             field-name="Role"

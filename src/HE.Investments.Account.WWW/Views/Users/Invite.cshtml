@@ -14,7 +14,7 @@
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
     <vc:page-header title=@title/>
 
-    <form asp-controller="Users" asp-action="Invite" asp-method="post" novalidate>
+    <form asp-controller="Users" asp-action="Invite" asp-route-organisationId="@Context.Request.GetOrganisationIdFromRoute()" asp-method="post" novalidate>
         @Html.HiddenFor(m => m.OrganisationName)
         <gds-field-set>
             <vc:text-input
