@@ -1,29 +1,71 @@
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Net.Http;
+using System.Runtime.Serialization.Json;
+using System.Text;
 using System.Threading.Tasks;
-using HE.CRM.Common.Api.Config;
-using Microsoft.Identity.Client;
+using HE.Base.Services;
+using HE.CRM.Common.Api.Auth.Contract;
+using HE.CRM.Common.Repositories.Interfaces;
 
 namespace HE.CRM.Common.Api.Auth
 {
-    public class ApiTokenProvider : IApiTokenProvider
+    public class ApiTokenProvider : CrmService, IApiTokenProvider
     {
-        private readonly IApiAuthConfig _config;
+        private readonly IEnvironmentVariableRepository _variables;
 
-        public ApiTokenProvider(IApiAuthConfig config)
+        public ApiTokenProvider(CrmServiceArgs args)
+            : base(args)
         {
-            _config = config;
+            _variables = CrmRepositoriesFactory.GetSystem<IEnvironmentVariableRepository>();
         }
 
         public async Task<string> GetToken()
         {
-            var app = ConfidentialClientApplicationBuilder
-                .Create(_config.ClientId)
-                .WithTenantId(_config.TenantId)
-                .WithClientSecret(_config.ClientSecret)
-                .Build();
+            var accessToken = string.Empty;
 
-            var result = await app.AcquireTokenForClient(new[] { _config.Scope }).ExecuteAsync();
+            Logger.Trace($"AzureAdHttpClientService.CheckAccessToken: executing");
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("https://login.microsoftonline.com");
+                var request = new HttpRequestMessage(HttpMethod.Post, $"/{EnvironmentVariables.AzureAd.TenantId}/oauth2/token");
 
-            return result.AccessToken;
+                var keyValues = new List<KeyValuePair<string, string>>
+                {
+                    new KeyValuePair<string, string>("grant_type", "client_credentials"),
+                    new KeyValuePair<string, string>("client_id", _variables.GetEnvironmentVariableValue(EnvironmentVariables.AzureAd.ClientId)),
+                    new KeyValuePair<string, string>("client_secret", _variables.GetEnvironmentVariableValue(EnvironmentVariables.AzureAd.ClientSecret)),
+                    new KeyValuePair<string, string>("scope", $"api://{_variables.GetEnvironmentVariableValue(EnvironmentVariables.AzureAd.Scope)}/.default")
+                };
+
+                request.Content = new FormUrlEncodedContent(keyValues);
+                var response = await client.SendAsync(request);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var result = await response.Content.ReadAsStringAsync();
+                    var adToken = Deserialize<AzureAdToken>(result);
+                    accessToken = adToken?.AccessToken;
+
+                    Logger.Trace("ApiTokenProvider.GetToken: token retrieved from Azure AD");
+                }
+                else
+                {
+                    Logger.Error($"ApiTokenProvider.GetToken: Azure AD execution failed, response code: {response.StatusCode}");
+                }
+            }
+
+            return accessToken;
+        }
+
+        private static TEntity Deserialize<TEntity>(string json)
+        {
+            var serializer = new DataContractJsonSerializer(typeof(TEntity));
+            using (var ms = new MemoryStream(Encoding.UTF8.GetBytes(json)))
+            {
+                return (TEntity)serializer.ReadObject(ms);
+            }
         }
     }
 }

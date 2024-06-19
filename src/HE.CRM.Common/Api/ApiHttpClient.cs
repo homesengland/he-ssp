@@ -11,7 +11,7 @@ using HE.CRM.Common.Api.Exceptions;
 
 namespace HE.CRM.Common.Api
 {
-    internal sealed class ApiHttpClient : IApiHttpClient
+    internal sealed class ApiHttpClient : IDisposable
     {
         private readonly HttpClient _httpClient;
 
@@ -24,9 +24,9 @@ namespace HE.CRM.Common.Api
             DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
         };
 
-        public ApiHttpClient(HttpClient httpClient, IApiTokenProvider apiTokenProvider)
+        public ApiHttpClient(Uri baseUrl, IApiTokenProvider apiTokenProvider)
         {
-            _httpClient = httpClient;
+            _httpClient = new HttpClient { BaseAddress = baseUrl };
             _apiTokenProvider = apiTokenProvider;
         }
 
@@ -103,6 +103,11 @@ namespace HE.CRM.Common.Api
                     throw new ApiSerializationException(ex, responseContent);
                 }
             }
+        }
+
+        public void Dispose()
+        {
+            _httpClient?.Dispose();
         }
     }
 }
