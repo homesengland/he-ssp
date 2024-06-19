@@ -11,9 +11,11 @@ using HE.CRM.Common.Repositories.Interfaces;
 
 namespace HE.CRM.Common.Api.Auth
 {
-    public class ApiTokenProvider : CrmService, IApiTokenProvider
+    public sealed class ApiTokenProvider : CrmService, IApiTokenProvider
     {
         private readonly IEnvironmentVariableRepository _variables;
+
+        private string _accessToken;
 
         public ApiTokenProvider(CrmServiceArgs args)
             : base(args)
@@ -23,7 +25,10 @@ namespace HE.CRM.Common.Api.Auth
 
         public async Task<string> GetToken()
         {
-            var accessToken = string.Empty;
+            if (!string.IsNullOrEmpty(_accessToken))
+            {
+                return _accessToken;
+            }
 
             Logger.Trace($"AzureAdHttpClientService.CheckAccessToken: executing");
             using (var client = new HttpClient())
@@ -46,7 +51,7 @@ namespace HE.CRM.Common.Api.Auth
                 {
                     var result = await response.Content.ReadAsStringAsync();
                     var adToken = Deserialize<AzureAdToken>(result);
-                    accessToken = adToken?.AccessToken;
+                    _accessToken = adToken?.AccessToken;
 
                     Logger.Trace("ApiTokenProvider.GetToken: token retrieved from Azure AD");
                 }
@@ -56,7 +61,7 @@ namespace HE.CRM.Common.Api.Auth
                 }
             }
 
-            return accessToken;
+            return _accessToken;
         }
 
         private static TEntity Deserialize<TEntity>(string json)
