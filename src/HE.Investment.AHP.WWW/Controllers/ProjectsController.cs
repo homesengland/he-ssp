@@ -1,12 +1,13 @@
 using HE.Investment.AHP.Contract.Project.Queries;
 using HE.Investments.Account.Shared.Authorization.Attributes;
 using HE.Investments.Common.Contract.Pagination;
+using HE.Investments.Consortium.Shared.Authorization;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HE.Investment.AHP.WWW.Controllers;
 
-[AuthorizeWithCompletedProfile]
+[ConsortiumAuthorize]
 [Route("projects")]
 public class ProjectsController : Controller
 {

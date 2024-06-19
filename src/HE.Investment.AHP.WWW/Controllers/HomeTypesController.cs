@@ -26,12 +26,14 @@ using HE.Investments.Common.WWW.Extensions;
 using HE.Investments.Common.WWW.Helpers;
 using HE.Investments.Common.WWW.Models;
 using HE.Investments.Common.WWW.Routing;
+using HE.Investments.Consortium.Shared.Authorization;
+using HE.Investments.Consortium.Shared.UserContext;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HE.Investment.AHP.WWW.Controllers;
 
-[AuthorizeWithCompletedProfile]
+[ConsortiumAuthorize(ConsortiumAccessContext.Edit)]
 [Route("application/{applicationId}/home-types")]
 public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
 {
@@ -59,6 +61,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         return View(new HomeTypeModelBase(application.Name));
     }
 
+    [ConsortiumAuthorize]
     [HttpGet("back")]
     public Task<IActionResult> Back([FromRoute] string applicationId, string homeTypeId, HomeTypesWorkflowState currentPage)
     {
@@ -1310,6 +1313,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
             cancellationToken);
     }
 
+    [ConsortiumAuthorize]
     [WorkflowState(HomeTypesWorkflowState.CheckAnswers)]
     [HttpGet("{homeTypeId}/check-answers")]
     public async Task<IActionResult> CheckAnswers([FromRoute] string applicationId, string homeTypeId, CancellationToken cancellationToken)

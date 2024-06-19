@@ -10,22 +10,20 @@ using HE.Investment.AHP.WWW.Models.Application;
 using HE.Investment.AHP.WWW.Models.Application.Factories;
 using HE.Investment.AHP.WWW.Models.Project;
 using HE.Investment.AHP.WWW.Workflows;
-using HE.Investments.Account.Shared.Authorization.Attributes;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Validators;
 using HE.Investments.Common.WWW.Controllers;
 using HE.Investments.Common.WWW.Helpers;
 using HE.Investments.Common.WWW.Routing;
+using HE.Investments.Consortium.Shared.Authorization;
 using HE.Investments.Consortium.Shared.UserContext;
-using HE.Investments.Programme.Contract.Enums;
-using HE.Investments.Programme.Contract.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HE.Investment.AHP.WWW.Controllers;
 
+[ConsortiumAuthorize(ConsortiumAccessContext.Edit)]
 [Route("application")]
-[AuthorizeWithCompletedProfile]
 public class ApplicationController : WorkflowController<ApplicationWorkflowState>
 {
     private readonly IMediator _mediator;
@@ -39,6 +37,7 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
         _applicationSummaryViewModelFactory = applicationSummaryViewModelFactory;
     }
 
+    [ConsortiumAuthorize]
     [HttpGet]
     [WorkflowState(ApplicationWorkflowState.ApplicationsList)]
     public IActionResult Index(string? projectId)
@@ -53,7 +52,6 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
 
     [HttpGet("start")]
     [WorkflowState(ApplicationWorkflowState.Start)]
-    [AuthorizeWithCompletedProfile(ConsortiumAccessContext.EditApplications)]
     public async Task<IActionResult> Start([FromQuery] string projectId, CancellationToken cancellationToken)
     {
         var ahpProgramme = await _mediator.Send(new GetTheAhpProgrammeQuery(), cancellationToken);
@@ -62,7 +60,6 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
 
     [HttpPost("start")]
     [WorkflowState(ApplicationWorkflowState.Start)]
-    [AuthorizeWithCompletedProfile(ConsortiumAccessContext.EditApplications)]
     public IActionResult StartPost([FromQuery] string projectId)
     {
         return RedirectToAction("Select", "Site", new { projectId });
@@ -70,7 +67,6 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
 
     [WorkflowState(ApplicationWorkflowState.ApplicationName)]
     [HttpGet("/{siteId}/application/name")]
-    [AuthorizeWithCompletedProfile(ConsortiumAccessContext.EditApplications)]
     public async Task<IActionResult> Name([FromRoute] string siteId, [FromQuery] string? applicationName, CancellationToken cancellationToken)
     {
         var site = await GetSiteDetails(siteId, cancellationToken);
@@ -84,7 +80,6 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
 
     [WorkflowState(ApplicationWorkflowState.ApplicationName)]
     [HttpPost("/{siteId}/application/name")]
-    [AuthorizeWithCompletedProfile(ConsortiumAccessContext.EditApplications)]
     public async Task<IActionResult> Name([FromRoute] string siteId, ApplicationBasicModel model, CancellationToken cancellationToken)
     {
         var result = await _mediator.Send(new IsApplicationNameAvailableQuery(model.Name), cancellationToken);
@@ -101,7 +96,6 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
 
     [WorkflowState(ApplicationWorkflowState.ApplicationTenure)]
     [HttpGet("/{siteId}/application/tenure")]
-    [AuthorizeWithCompletedProfile(ConsortiumAccessContext.EditApplications)]
     public IActionResult Tenure([FromQuery] string applicationName, [FromQuery] string projectId)
     {
         return View("Tenure", new ApplicationBasicModel(projectId, null, applicationName, Contract.Application.Tenure.Undefined));
@@ -109,7 +103,6 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
 
     [WorkflowState(ApplicationWorkflowState.ApplicationTenure)]
     [HttpPost("/{siteId}/application/tenure")]
-    [AuthorizeWithCompletedProfile(ConsortiumAccessContext.EditApplications)]
     public async Task<IActionResult> Tenure([FromRoute] string siteId, ApplicationBasicModel model, CancellationToken cancellationToken)
     {
         var result = await _mediator.Send(new CreateApplicationCommand(SiteId.From(siteId), model.Name, model.Tenure), cancellationToken);
@@ -124,6 +117,7 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
             async () => await Task.FromResult(RedirectToAction(nameof(TaskList), new { applicationId = result.ReturnedData.Value })), model.ProjectId);
     }
 
+    [ConsortiumAuthorize]
     [WorkflowState(ApplicationWorkflowState.TaskList)]
     [HttpGet("{applicationId}/task-list")]
     [HttpGet("{applicationId}")]
@@ -147,6 +141,7 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
         return View("TaskList", model);
     }
 
+    [ConsortiumAuthorize]
     [WorkflowState(ApplicationWorkflowState.CheckAnswers)]
     [HttpGet("{applicationId}/check-answers")]
     public async Task<IActionResult> CheckAnswers(string applicationId, CancellationToken cancellationToken)
@@ -159,9 +154,9 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
         return View("CheckAnswers", applicationSummary);
     }
 
+    [ConsortiumAuthorize(ConsortiumAccessContext.Submit)]
     [WorkflowState(ApplicationWorkflowState.CheckAnswers)]
     [HttpPost("{applicationId}/check-answers")]
-    [AuthorizeWithCompletedProfile(ConsortiumAccessContext.SubmitApplication)]
     public async Task<IActionResult> CheckAnswersPost(string applicationId, CancellationToken cancellationToken)
     {
         var result = await _mediator.Send(new CheckAnswersCommand(AhpApplicationId.From(applicationId)), cancellationToken);
@@ -186,9 +181,9 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
         return View(nameof(Submit), model);
     }
 
+    [ConsortiumAuthorize(ConsortiumAccessContext.Submit)]
     [WorkflowState(ApplicationWorkflowState.Submit)]
     [HttpPost("{applicationId}/submit")]
-    [AuthorizeWithCompletedProfile(ConsortiumAccessContext.SubmitApplication)]
     public async Task<IActionResult> Submit(string applicationId, ApplicationSubmitModel model, CancellationToken cancellationToken)
     {
         return await this.ExecuteCommand<ApplicationSubmitModel>(
@@ -204,9 +199,9 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
             cancellationToken);
     }
 
+    [ConsortiumAuthorize(ConsortiumAccessContext.Submit)]
     [WorkflowState(ApplicationWorkflowState.Completed)]
     [HttpGet("{applicationId}/completed")]
-    [AuthorizeWithCompletedProfile(ConsortiumAccessContext.SubmitApplication)]
     public async Task<IActionResult> Completed(string applicationId, CancellationToken cancellationToken)
     {
         var model = await GetApplicationSubmitModel(applicationId, cancellationToken);
@@ -214,17 +209,17 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
         return View(nameof(Completed), model);
     }
 
+    [ConsortiumAuthorize]
     [WorkflowState(ApplicationWorkflowState.OnHold)]
     [HttpGet("{applicationId}/on-hold")]
-    [AuthorizeWithCompletedProfile]
     public async Task<IActionResult> OnHold(string applicationId, CancellationToken cancellationToken)
     {
         return await ReturnViewToChangeApplicationStatus(applicationId, cancellationToken);
     }
 
+    [ConsortiumAuthorize]
     [WorkflowState(ApplicationWorkflowState.OnHold)]
     [HttpPost("{applicationId}/on-hold")]
-    [AuthorizeWithCompletedProfile]
     public async Task<IActionResult> OnHold(string applicationId, ChangeApplicationStatusModel model, CancellationToken cancellationToken)
     {
         return await this.ExecuteCommand<ChangeApplicationStatusModel>(
@@ -235,9 +230,9 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
             cancellationToken);
     }
 
+    [ConsortiumAuthorize]
     [WorkflowState(ApplicationWorkflowState.Reactivate)]
     [HttpGet("{applicationId}/reactivate")]
-    [AuthorizeWithCompletedProfile]
     public async Task<IActionResult> Reactivate(string applicationId, ChangeApplicationStatusModel model, CancellationToken cancellationToken)
     {
         return await this.ExecuteCommand<ChangeApplicationStatusModel>(
@@ -248,17 +243,17 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
             cancellationToken);
     }
 
+    [ConsortiumAuthorize]
     [WorkflowState(ApplicationWorkflowState.RequestToEdit)]
     [HttpGet("{applicationId}/request-to-edit")]
-    [AuthorizeWithCompletedProfile]
     public async Task<IActionResult> RequestToEdit(string applicationId, CancellationToken cancellationToken)
     {
         return await ReturnViewToChangeApplicationStatus(applicationId, cancellationToken);
     }
 
+    [ConsortiumAuthorize]
     [WorkflowState(ApplicationWorkflowState.RequestToEdit)]
     [HttpPost("{applicationId}/request-to-edit")]
-    [AuthorizeWithCompletedProfile]
     public async Task<IActionResult> RequestToEdit(string applicationId, ChangeApplicationStatusModel model, CancellationToken cancellationToken)
     {
         return await this.ExecuteCommand<ChangeApplicationStatusModel>(
@@ -269,17 +264,17 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
             cancellationToken);
     }
 
+    [ConsortiumAuthorize]
     [WorkflowState(ApplicationWorkflowState.Withdraw)]
     [HttpGet("{applicationId}/withdraw")]
-    [AuthorizeWithCompletedProfile]
     public async Task<IActionResult> Withdraw(string applicationId, CancellationToken cancellationToken)
     {
         return await ReturnViewToChangeApplicationStatus(applicationId, cancellationToken);
     }
 
+    [ConsortiumAuthorize]
     [WorkflowState(ApplicationWorkflowState.Withdraw)]
     [HttpPost("{applicationId}/withdraw")]
-    [AuthorizeWithCompletedProfile]
     public async Task<IActionResult> Withdraw(string applicationId, ChangeApplicationStatusModel model, CancellationToken cancellationToken)
     {
         return await this.ExecuteCommand<ChangeApplicationStatusModel>(
@@ -290,6 +285,7 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
             cancellationToken);
     }
 
+    [ConsortiumAuthorize]
     [HttpGet("{applicationId}/back")]
     public async Task<IActionResult> Back([FromRoute] string applicationId, string? projectId, ApplicationWorkflowState currentPage)
     {

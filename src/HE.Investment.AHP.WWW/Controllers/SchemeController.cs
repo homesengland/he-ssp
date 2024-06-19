@@ -24,6 +24,8 @@ using HE.Investments.Common.WWW.Extensions;
 using HE.Investments.Common.WWW.Helpers;
 using HE.Investments.Common.WWW.Models;
 using HE.Investments.Common.WWW.Routing;
+using HE.Investments.Consortium.Shared.Authorization;
+using HE.Investments.Consortium.Shared.UserContext;
 using HE.Investments.Organisation.Contract;
 using HE.Investments.Organisation.Contract.Queries;
 using HE.Investments.Organisation.ValueObjects;
@@ -33,7 +35,7 @@ using UploadedFile = HE.Investment.AHP.Contract.Common.UploadedFile;
 
 namespace HE.Investment.AHP.WWW.Controllers;
 
-[AuthorizeWithCompletedProfile]
+[ConsortiumAuthorize(ConsortiumAccessContext.Edit)]
 [Route("application/{applicationId}/scheme")]
 public class SchemeController : WorkflowController<SchemeWorkflowState>
 {
@@ -57,6 +59,7 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
         return View("Start", application.Name);
     }
 
+    [ConsortiumAuthorize]
     [HttpGet("back")]
     public async Task<IActionResult> Back([FromRoute] string applicationId, SchemeWorkflowState currentPage)
     {
@@ -331,6 +334,7 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
         return File(response.Content, "application/octet-stream", response.Name);
     }
 
+    [ConsortiumAuthorize]
     [WorkflowState(SchemeWorkflowState.CheckAnswers)]
     [HttpGet("check-answers")]
     public async Task<IActionResult> CheckAnswers([FromRoute] string applicationId, CancellationToken cancellationToken)

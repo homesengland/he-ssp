@@ -6,6 +6,7 @@ using HE.Investment.AHP.Contract.Site.Queries;
 using HE.Investment.AHP.WWW.Models.Project;
 using HE.Investments.Account.Shared.Authorization.Attributes;
 using HE.Investments.Common.Contract.Pagination;
+using HE.Investments.Consortium.Shared.Authorization;
 using HE.Investments.Consortium.Shared.UserContext;
 using HE.Investments.FrontDoor.Shared.Project;
 using HE.Investments.Programme.Contract.Enums;
@@ -15,7 +16,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HE.Investment.AHP.WWW.Controllers;
 
-[AuthorizeWithCompletedProfile]
+[ConsortiumAuthorize]
 [Route("project")]
 public class ProjectController : Controller
 {
@@ -33,7 +34,7 @@ public class ProjectController : Controller
     }
 
     [HttpGet("start")]
-    [AuthorizeWithCompletedProfile(ConsortiumAccessContext.EditApplications)]
+    [ConsortiumAuthorize]
     public async Task<IActionResult> Start([FromQuery] string fdProjectId, CancellationToken cancellationToken)
     {
         var userAccount = await _consortiumUserContext.GetSelectedAccount();
@@ -47,7 +48,7 @@ public class ProjectController : Controller
     }
 
     [HttpPost("start")]
-    [AuthorizeWithCompletedProfile(ConsortiumAccessContext.EditApplications)]
+    [ConsortiumAuthorize(ConsortiumAccessContext.Edit)]
     public async Task<IActionResult> StartPost([FromQuery] string fdProjectId, CancellationToken cancellationToken)
     {
         await _mediator.Send(new CreateAhpProjectCommand(FrontDoorProjectId.From(fdProjectId)), cancellationToken);

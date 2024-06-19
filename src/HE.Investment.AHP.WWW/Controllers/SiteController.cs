@@ -15,7 +15,6 @@ using HE.Investment.AHP.WWW.Models.Site;
 using HE.Investment.AHP.WWW.Models.Site.Factories;
 using HE.Investment.AHP.WWW.Workflows;
 using HE.Investments.Account.Shared;
-using HE.Investments.Account.Shared.Authorization.Attributes;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Constants;
 using HE.Investments.Common.Contract.Enum;
@@ -27,6 +26,8 @@ using HE.Investments.Common.WWW.Controllers;
 using HE.Investments.Common.WWW.Extensions;
 using HE.Investments.Common.WWW.Models;
 using HE.Investments.Common.WWW.Routing;
+using HE.Investments.Consortium.Shared.Authorization;
+using HE.Investments.Consortium.Shared.UserContext;
 using HE.Investments.FrontDoor.Shared.Project;
 using HE.Investments.Organisation.LocalAuthorities.ValueObjects;
 using MediatR;
@@ -35,8 +36,8 @@ using LocalAuthority = HE.Investments.Common.Contract.LocalAuthority;
 
 namespace HE.Investment.AHP.WWW.Controllers;
 
+[ConsortiumAuthorize(ConsortiumAccessContext.Edit)]
 [Route("site")]
-[AuthorizeWithCompletedProfile]
 public class SiteController : SiteControllerBase<SiteWorkflowState>
 {
     private readonly IMediator _mediator;
@@ -53,6 +54,7 @@ public class SiteController : SiteControllerBase<SiteWorkflowState>
         _siteSummaryViewModelFactory = siteSummaryViewModelFactory;
     }
 
+    [ConsortiumAuthorize]
     [HttpGet]
     public IActionResult Index(string projectId)
     {
@@ -88,6 +90,7 @@ public class SiteController : SiteControllerBase<SiteWorkflowState>
             : RedirectToAction("Select", new { projectId = site.ProjectId });
     }
 
+    [ConsortiumAuthorize]
     [HttpGet("{siteId}")]
     public async Task<IActionResult> Details(string siteId, [FromQuery] int? page, CancellationToken cancellationToken)
     {
@@ -911,6 +914,7 @@ public class SiteController : SiteControllerBase<SiteWorkflowState>
             cancellationToken);
     }
 
+    [ConsortiumAuthorize]
     [HttpGet("{siteId}/check-answers")]
     [WorkflowState(SiteWorkflowState.CheckAnswers)]
     public async Task<IActionResult> CheckAnswers(CancellationToken cancellationToken)
