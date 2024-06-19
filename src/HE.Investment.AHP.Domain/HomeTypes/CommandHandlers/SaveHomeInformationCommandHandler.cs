@@ -1,7 +1,7 @@
 using HE.Investment.AHP.Contract.HomeTypes.Commands;
 using HE.Investment.AHP.Domain.HomeTypes.Entities;
 using HE.Investment.AHP.Domain.HomeTypes.Repositories;
-using HE.Investments.Account.Shared;
+using HE.Investments.Consortium.Shared.UserContext;
 using Microsoft.Extensions.Logging;
 
 namespace HE.Investment.AHP.Domain.HomeTypes.CommandHandlers;
@@ -10,7 +10,7 @@ public class SaveHomeInformationCommandHandler : SaveHomeTypeSegmentCommandHandl
 {
     public SaveHomeInformationCommandHandler(
         IHomeTypeRepository homeTypeRepository,
-        IAccountUserContext accountUserContext,
+        IConsortiumUserContext accountUserContext,
         ILogger<SaveHomeInformationCommandHandler> logger)
         : base(homeTypeRepository, accountUserContext, logger)
     {

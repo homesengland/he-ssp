@@ -1,7 +1,6 @@
 using HE.Investment.AHP.Contract.Project;
 using HE.Investment.AHP.Contract.Project.Commands;
 using HE.Investment.AHP.Domain.Project.Repositories;
-using HE.Investment.AHP.Domain.UserContext;
 using HE.Investments.Consortium.Shared.UserContext;
 using HE.Investments.FrontDoor.Shared.Project.Repositories;
 using MediatR;

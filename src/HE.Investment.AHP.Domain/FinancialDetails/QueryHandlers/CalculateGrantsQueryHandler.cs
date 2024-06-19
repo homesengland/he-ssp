@@ -3,9 +3,9 @@ using HE.Investment.AHP.Contract.FinancialDetails.Queries;
 using HE.Investment.AHP.Domain.FinancialDetails.Entities;
 using HE.Investment.AHP.Domain.FinancialDetails.Repositories;
 using HE.Investment.AHP.Domain.FinancialDetails.ValueObjects;
-using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Extensions;
+using HE.Investments.Consortium.Shared.UserContext;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
@@ -16,7 +16,7 @@ internal sealed class CalculateGrantsQueryHandler : CalculateQueryHandlerBase,
 {
     public CalculateGrantsQueryHandler(
         IFinancialDetailsRepository financialDetailsRepository,
-        IAccountUserContext accountUserContext,
+        IConsortiumUserContext accountUserContext,
         ILogger<CalculateGrantsQueryHandler> logger)
         : base(financialDetailsRepository, accountUserContext, logger)
     {

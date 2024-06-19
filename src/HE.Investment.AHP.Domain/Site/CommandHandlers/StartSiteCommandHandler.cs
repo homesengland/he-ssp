@@ -1,7 +1,6 @@
 using HE.Investment.AHP.Contract.Site.Commands;
 using HE.Investment.AHP.Domain.Site.Entities;
 using HE.Investment.AHP.Domain.Site.Repositories;
-using HE.Investment.AHP.Domain.UserContext;
 using HE.Investments.Account.Shared;
 using HE.Investments.Consortium.Shared.UserContext;
 

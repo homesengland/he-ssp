@@ -2,9 +2,9 @@ using System.Diagnostics.CodeAnalysis;
 using HE.Investment.AHP.Contract.Delivery.Commands;
 using HE.Investment.AHP.Domain.Delivery.Entities;
 using HE.Investment.AHP.Domain.Delivery.Repositories;
-using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Contract.Validators;
+using HE.Investments.Consortium.Shared.UserContext;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
@@ -45,9 +45,9 @@ public abstract class DeliveryCommandHandlerBase<TCommand> : DeliveryCommandHand
 {
     private readonly IDeliveryPhaseRepository _repository;
 
-    private readonly IAccountUserContext _accountUserContext;
+    private readonly IConsortiumUserContext _accountUserContext;
 
-    protected DeliveryCommandHandlerBase(IDeliveryPhaseRepository repository, IAccountUserContext accountUserContext, ILogger logger)
+    protected DeliveryCommandHandlerBase(IDeliveryPhaseRepository repository, IConsortiumUserContext accountUserContext, ILogger logger)
         : base(logger)
     {
         _accountUserContext = accountUserContext;

@@ -1,7 +1,7 @@
 using HE.Investment.AHP.Contract.Delivery.Commands;
 using HE.Investment.AHP.Domain.Delivery.Entities;
 using HE.Investment.AHP.Domain.Delivery.Repositories;
-using HE.Investments.Account.Shared;
+using HE.Investments.Consortium.Shared.UserContext;
 using Microsoft.Extensions.Logging;
 
 namespace HE.Investment.AHP.Domain.Delivery.CommandHandlers;
@@ -10,7 +10,7 @@ public class RemoveDeliveryPhaseCommandHandler : DeliveryCommandHandlerBase<Remo
 {
     public RemoveDeliveryPhaseCommandHandler(
         IDeliveryPhaseRepository repository,
-        IAccountUserContext accountUserContext,
+        IConsortiumUserContext accountUserContext,
         ILogger<RemoveDeliveryPhaseCommandHandler> logger)
         : base(repository, accountUserContext, logger)
     {

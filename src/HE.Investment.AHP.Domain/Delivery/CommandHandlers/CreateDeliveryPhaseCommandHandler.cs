@@ -2,9 +2,9 @@ using HE.Investment.AHP.Contract.Delivery;
 using HE.Investment.AHP.Contract.Delivery.Commands;
 using HE.Investment.AHP.Domain.Delivery.Repositories;
 using HE.Investment.AHP.Domain.Delivery.ValueObjects;
-using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Contract.Validators;
+using HE.Investments.Consortium.Shared.UserContext;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
@@ -14,11 +14,11 @@ public class CreateDeliveryPhaseCommandHandler : DeliveryCommandHandlerBase, IRe
 {
     private readonly IDeliveryPhaseRepository _deliveryPhaseRepository;
 
-    private readonly IAccountUserContext _accountUserContext;
+    private readonly IConsortiumUserContext _accountUserContext;
 
     public CreateDeliveryPhaseCommandHandler(
         IDeliveryPhaseRepository repository,
-        IAccountUserContext accountUserContext,
+        IConsortiumUserContext accountUserContext,
         ILogger<CreateDeliveryPhaseCommandHandler> logger)
         : base(logger)
     {

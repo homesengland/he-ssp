@@ -21,6 +21,8 @@ public class ConsortiumAccessContext : IConsortiumAccessContext
         _consortiumUserContext = consortiumUserContext;
     }
 
+    public async Task<ConsortiumUserAccount> GetSelectedAccount() => await _consortiumUserContext.GetSelectedAccount();
+
     public async Task<bool> CanManageConsortium()
     {
         var account = await _consortiumUserContext.GetSelectedAccount();
@@ -37,6 +39,12 @@ public class ConsortiumAccessContext : IConsortiumAccessContext
     {
         var account = await _consortiumUserContext.GetSelectedAccount();
         return account.CanEditApplication && (account.Consortium.IsLeadPartner || account.Consortium.HasNoConsortium);
+    }
+
+    public async Task<bool> CanSubmit()
+    {
+        var account = await _consortiumUserContext.GetSelectedAccount();
+        return account.CanSubmitApplication && (account.Consortium.IsLeadPartner || account.Consortium.HasNoConsortium);
     }
 
     private static UserRole[] ToUserAccountRoles(string roles)

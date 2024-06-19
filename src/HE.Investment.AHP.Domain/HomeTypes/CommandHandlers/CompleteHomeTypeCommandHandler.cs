@@ -1,7 +1,7 @@
 ﻿using HE.Investment.AHP.Contract.HomeTypes.Commands;
 using HE.Investment.AHP.Domain.HomeTypes.Repositories;
-using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract.Validators;
+using HE.Investments.Consortium.Shared.UserContext;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
@@ -11,9 +11,9 @@ public class CompleteHomeTypeCommandHandler : HomeTypeCommandHandlerBase, IReque
 {
     private readonly IHomeTypeRepository _homeTypeRepository;
 
-    private readonly IAccountUserContext _accountUserContext;
+    private readonly IConsortiumUserContext _accountUserContext;
 
-    public CompleteHomeTypeCommandHandler(IHomeTypeRepository homeTypeRepository, IAccountUserContext accountUserContext, ILogger<CompleteHomeTypeCommandHandler> logger)
+    public CompleteHomeTypeCommandHandler(IHomeTypeRepository homeTypeRepository, IConsortiumUserContext accountUserContext, ILogger<CompleteHomeTypeCommandHandler> logger)
         : base(logger)
     {
         _homeTypeRepository = homeTypeRepository;

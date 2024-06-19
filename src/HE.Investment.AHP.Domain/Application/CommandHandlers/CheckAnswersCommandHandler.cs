@@ -1,19 +1,19 @@
 using HE.Investment.AHP.Contract.Application.Commands;
 using HE.Investment.AHP.Domain.Application.Repositories;
-using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract.Validators;
+using HE.Investments.Consortium.Shared.UserContext;
 using MediatR;
 
 namespace HE.Investment.AHP.Domain.Application.CommandHandlers;
 
 public class CheckAnswersCommandHandler : IRequestHandler<CheckAnswersCommand, OperationResult>
 {
-    private readonly IAccountUserContext _accountUserContext;
+    private readonly IConsortiumUserContext _accountUserContext;
     private readonly IApplicationRepository _applicationRepository;
 
     public CheckAnswersCommandHandler(
         IApplicationRepository applicationRepository,
-        IAccountUserContext accountUserContext)
+        IConsortiumUserContext accountUserContext)
     {
         _accountUserContext = accountUserContext;
         _applicationRepository = applicationRepository;

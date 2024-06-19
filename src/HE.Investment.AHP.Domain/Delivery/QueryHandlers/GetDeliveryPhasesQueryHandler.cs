@@ -3,7 +3,7 @@ using HE.Investment.AHP.Contract.Delivery.Queries;
 using HE.Investment.AHP.Domain.Application.Mappers;
 using HE.Investment.AHP.Domain.Delivery.Mappers;
 using HE.Investment.AHP.Domain.Delivery.Repositories;
-using HE.Investments.Account.Shared;
+using HE.Investments.Consortium.Shared.UserContext;
 using MediatR;
 
 namespace HE.Investment.AHP.Domain.Delivery.QueryHandlers;
@@ -12,9 +12,9 @@ public class GetDeliveryPhasesQueryHandler : IRequestHandler<GetDeliveryPhasesQu
 {
     private readonly IDeliveryPhaseRepository _repository;
 
-    private readonly IAccountUserContext _accountUserContext;
+    private readonly IConsortiumUserContext _accountUserContext;
 
-    public GetDeliveryPhasesQueryHandler(IDeliveryPhaseRepository repository, IAccountUserContext accountUserContext)
+    public GetDeliveryPhasesQueryHandler(IDeliveryPhaseRepository repository, IConsortiumUserContext accountUserContext)
     {
         _repository = repository;
         _accountUserContext = accountUserContext;

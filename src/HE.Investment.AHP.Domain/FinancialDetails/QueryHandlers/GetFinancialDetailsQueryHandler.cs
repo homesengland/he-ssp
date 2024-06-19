@@ -2,7 +2,7 @@ using HE.Investment.AHP.Contract.FinancialDetails.Queries;
 using HE.Investment.AHP.Domain.Application.Mappers;
 using HE.Investment.AHP.Domain.FinancialDetails.Entities;
 using HE.Investment.AHP.Domain.FinancialDetails.Repositories;
-using HE.Investments.Account.Shared;
+using HE.Investments.Consortium.Shared.UserContext;
 using MediatR;
 
 namespace HE.Investment.AHP.Domain.FinancialDetails.QueryHandlers;
@@ -11,9 +11,9 @@ public class GetFinancialDetailsQueryHandler : IRequestHandler<GetFinancialDetai
 {
     private readonly IFinancialDetailsRepository _financialDetailsRepository;
 
-    private readonly IAccountUserContext _accountUserContext;
+    private readonly IConsortiumUserContext _accountUserContext;
 
-    public GetFinancialDetailsQueryHandler(IFinancialDetailsRepository financialDetailsRepository, IAccountUserContext accountUserContext)
+    public GetFinancialDetailsQueryHandler(IFinancialDetailsRepository financialDetailsRepository, IConsortiumUserContext accountUserContext)
     {
         _financialDetailsRepository = financialDetailsRepository;
         _accountUserContext = accountUserContext;

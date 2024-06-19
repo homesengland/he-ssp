@@ -3,6 +3,7 @@ using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Domain.Application.Factories;
 using HE.Investment.AHP.Domain.Application.ValueObjects;
 using HE.Investment.AHP.Domain.Common;
+using HE.Investments.AHP.Consortium.Domain.Tests.TestData;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Tests.TestData;
 using HE.Investments.FrontDoor.Shared.Project;
@@ -27,7 +28,7 @@ public static class ApplicationBasicInfoTestData
             new HE.Investment.AHP.Domain.Application.ValueObjects.ApplicationSection(SectionType.FinancialDetails),
             new HE.Investment.AHP.Domain.Application.ValueObjects.ApplicationSection(SectionType.DeliveryPhases),
         ]),
-        new ApplicationStateFactory(UserAccountTestData.AdminUserAccountOne));
+        new ApplicationStateFactory(AhpUserAccountTestData.UserAccountOneNoConsortium));
 
     public static ApplicationBasicInfo CreateAffordableRentInDraftState() => new(
         AhpApplicationId.From(GuidTestData.GuidTwo),
@@ -43,5 +44,5 @@ public static class ApplicationBasicInfoTestData
             new HE.Investment.AHP.Domain.Application.ValueObjects.ApplicationSection(SectionType.FinancialDetails),
             new HE.Investment.AHP.Domain.Application.ValueObjects.ApplicationSection(SectionType.DeliveryPhases),
         ]),
-        new ApplicationStateFactory(UserAccountTestData.AdminUserAccountOne));
+        new ApplicationStateFactory(AhpUserAccountTestData.UserAccountOneNoConsortium));
 }

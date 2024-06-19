@@ -1,10 +1,10 @@
 using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.Common.ValueObjects;
-using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Utils;
+using HE.Investments.Consortium.Shared.UserContext;
 using HE.Investments.DocumentService.Models;
 using HE.Investments.DocumentService.Services;
 
@@ -16,14 +16,14 @@ public class AhpFileService<TFileParams> : IAhpFileService<TFileParams>
 
     private readonly IDateTimeProvider _dateTimeProvider;
 
-    private readonly IAccountUserContext _userContext;
+    private readonly IConsortiumUserContext _userContext;
 
     private readonly IAhpFileLocationProvider<TFileParams> _fileLocationProvider;
 
     public AhpFileService(
         IDocumentService documentService,
         IDateTimeProvider dateTimeProvider,
-        IAccountUserContext userContext,
+        IConsortiumUserContext userContext,
         IAhpFileLocationProvider<TFileParams> fileLocationProvider)
     {
         _documentService = documentService;
