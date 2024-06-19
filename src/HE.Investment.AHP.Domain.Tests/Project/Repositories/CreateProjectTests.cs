@@ -17,7 +17,7 @@ public class CreateProjectTests : TestBase<ProjectRepository>
         var prefillProject = ProjectPrefillDataTestData.FirstProjectPrefillData;
         var ahpProjectId = AhpProjectId.From(prefillProject.Id.Value);
 
-        var userAccount = AhpUserContextTestBuilder
+        var userAccount = ConsortiumUserContextTestBuilder
             .New()
             .Register(this)
             .ConsortiumUserFromMock;

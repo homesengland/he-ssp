@@ -25,7 +25,7 @@ public class GetProjectsListQueryHandlerTests : TestBase<GetProjectsListQueryHan
             10,
             2);
 
-        var userAccount = AhpUserContextTestBuilder
+        var userAccount = ConsortiumUserContextTestBuilder
             .New()
             .Register(this)
             .ConsortiumUserFromMock;
@@ -70,7 +70,7 @@ public class GetProjectsListQueryHandlerTests : TestBase<GetProjectsListQueryHan
             10,
             0);
 
-        var userAccount = AhpUserContextTestBuilder
+        var userAccount = ConsortiumUserContextTestBuilder
             .New()
             .Register(this)
             .ConsortiumUserFromMock;

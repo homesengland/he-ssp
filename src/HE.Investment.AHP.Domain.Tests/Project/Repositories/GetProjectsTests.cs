@@ -27,7 +27,7 @@ public class GetProjectsTests : TestBase<ProjectRepository>
             totalItemsCount = 4,
         };
 
-        var userAccount = AhpUserContextTestBuilder
+        var userAccount = ConsortiumUserContextTestBuilder
             .New()
             .Register(this)
             .ConsortiumUserFromMock;
@@ -61,7 +61,7 @@ public class GetProjectsTests : TestBase<ProjectRepository>
             totalItemsCount = 0,
         };
 
-        var userAccount = AhpUserContextTestBuilder
+        var userAccount = ConsortiumUserContextTestBuilder
             .New()
             .Register(this)
             .ConsortiumUserFromMock;

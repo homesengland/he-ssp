@@ -16,7 +16,7 @@ public class GetProjectApplicationsTests : TestBase<ProjectRepository>
         // given
         var ahpProjectDto = AhpProjectDtoTestData.FirstAhpProject;
 
-        var userAccount = AhpUserContextTestBuilder
+        var userAccount = ConsortiumUserContextTestBuilder
             .New()
             .Register(this)
             .ConsortiumUserFromMock;
@@ -45,7 +45,7 @@ public class GetProjectApplicationsTests : TestBase<ProjectRepository>
         // given
         var ahpProjectDto = AhpProjectDtoTestData.FourthAhpProjectWithoutSitesAndApplications;
 
-        var userAccount = AhpUserContextTestBuilder
+        var userAccount = ConsortiumUserContextTestBuilder
             .New()
             .Register(this)
             .ConsortiumUserFromMock;
