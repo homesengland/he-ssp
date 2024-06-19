@@ -2,13 +2,12 @@ using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investments.Api;
 using HE.Investments.Api.Auth;
 using HE.Investments.Api.Config;
+using HE.Investments.Api.Serialization;
+using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Extensions;
-using HE.Investments.FrontDoor.Domain.Project.Storage.Api.Contract.Requests;
-using HE.Investments.FrontDoor.Domain.Project.Storage.Api.Contract.Responses;
-using HE.Investments.FrontDoor.Domain.Project.Storage.Api.Mappers;
+using HE.Investments.FrontDoor.Domain.Project.Storage.Api.Contract;
 using HE.Investments.FrontDoor.Shared.Project.Storage.Api;
-using HE.Investments.FrontDoor.Shared.Project.Storage.Api.Contract.Responses;
-using HE.Investments.FrontDoor.Shared.Project.Storage.Api.Mappers;
+using HE.Investments.FrontDoor.Shared.Project.Storage.Api.Contract;
 
 namespace HE.Investments.FrontDoor.Domain.Project.Storage.Api;
 
@@ -21,53 +20,98 @@ public sealed class ProjectApiContext : ApiHttpClientBase, IProjectContext
 
     public async Task<IList<FrontDoorProjectDto>> GetOrganisationProjects(string userGlobalId, string organisationId, CancellationToken cancellationToken)
     {
-        var response = await SendAsync<GetProjectsResponse>(ProjectApiUrls.GetProjects(organisationId), HttpMethod.Get, cancellationToken);
+        var request = new GetMultipleFrontDoorProjectsRequest { OrganisationId = organisationId.TryToGuidAsString() };
 
-        return response.Select(GetProjectResponseMapper.Map).ToList();
+        return await GetProjects(request, cancellationToken);
     }
 
     public async Task<IList<FrontDoorProjectDto>> GetUserProjects(string userGlobalId, string organisationId, CancellationToken cancellationToken)
     {
-        // TODO: AB#98936 Support User projects when API is ready
-        return await GetOrganisationProjects(userGlobalId, organisationId, cancellationToken);
+        var request = new GetMultipleFrontDoorProjectsRequest
+        {
+            UserId = userGlobalId,
+            OrganisationId = organisationId.TryToGuidAsString(),
+        };
+
+        return await GetProjects(request, cancellationToken);
     }
 
     public async Task<FrontDoorProjectDto> GetOrganisationProjectById(string projectId, string userGlobalId, string organisationId, CancellationToken cancellationToken)
     {
-        return await GetProject(projectId, cancellationToken);
+        var request = new GetSingleFrontDoorProjectRequest
+        {
+            OrganisationId = organisationId.TryToGuidAsString(),
+            ProjectId = projectId.ToGuidAsString(),
+        };
+
+        return await GetProject(request, cancellationToken);
     }
 
     public async Task<FrontDoorProjectDto> GetUserProjectById(string projectId, string userGlobalId, string organisationId, CancellationToken cancellationToken)
     {
-        return await GetProject(projectId, cancellationToken);
+        var request = new GetSingleFrontDoorProjectRequest
+        {
+            OrganisationId = organisationId.TryToGuidAsString(),
+            UserId = userGlobalId,
+            ProjectId = projectId.ToGuidAsString(),
+        };
+
+        return await GetProject(request, cancellationToken);
     }
 
     public async Task<bool> IsThereProjectWithName(string projectName, string organisationId, CancellationToken cancellationToken)
     {
-        var response = await SendAsync<CheckProjectExistsRequest, CheckProjectExistsResponse>(
-            new CheckProjectExistsRequest(organisationId.ToGuidAsString(), projectName),
+        var request = new IsThereProjectWithNameRequest
+        {
+            ProjectName = projectName,
+            OrganisationId = organisationId.TryToGuidAsString(),
+        };
+        var response = await SendAsync<IsThereProjectWithNameRequest, IsThereProjectWithNameResponse>(
+            request,
             ProjectApiUrls.IsThereProjectWithName,
             HttpMethod.Post,
             cancellationToken);
 
-        return response.Result;
+        return response.Exists;
     }
 
     public async Task<string> Save(FrontDoorProjectDto dto, string userGlobalId, string organisationId, CancellationToken cancellationToken)
     {
-        var response = await SendAsync<SaveProjectRequest, SaveProjectResponse>(
-            SaveProjectRequestMapper.Map(dto, organisationId),
+        var request = new SaveFrontDoorProjectRequest
+        {
+            UserId = userGlobalId,
+            OrganisationId = organisationId.ToGuidAsString(),
+            ProjectId = dto.ProjectId.IsProvided() ? dto.ProjectId.ToGuidAsString() : string.Empty,
+            Project = ApiSerializer.Serialize(dto),
+        };
+        var response = await SendAsync<SaveFrontDoorProjectRequest, SaveFrontDoorProjectResponse>(
+            request,
             ProjectApiUrls.SaveProject,
             HttpMethod.Post,
             cancellationToken);
 
-        return response.Result;
+        return response.ProjectId;
     }
 
-    private async Task<FrontDoorProjectDto> GetProject(string projectId, CancellationToken cancellationToken)
+    private async Task<IList<FrontDoorProjectDto>> GetProjects(GetMultipleFrontDoorProjectsRequest request, CancellationToken cancellationToken)
     {
-        var response = await SendAsync<GetProjectResponse>(CommonProjectApiUrls.GetProject(projectId), HttpMethod.Get, cancellationToken);
+        return await SendAsync<GetMultipleFrontDoorProjectsRequest, GetMultipleFrontDoorProjectsResponse, IList<FrontDoorProjectDto>>(
+            request,
+            ProjectApiUrls.GetProjects,
+            HttpMethod.Post,
+            x => string.IsNullOrEmpty(x.Projects) ? "[]" : x.Projects,
+            cancellationToken);
+    }
 
-        return GetProjectResponseMapper.Map(response);
+    private async Task<FrontDoorProjectDto> GetProject(GetSingleFrontDoorProjectRequest request, CancellationToken cancellationToken)
+    {
+        var projects = await SendAsync<GetSingleFrontDoorProjectRequest, GetSingleFrontDoorProjectResponse, IList<FrontDoorProjectDto>>(
+            request,
+            CommonProjectApiUrls.GetProject,
+            HttpMethod.Post,
+            x => string.IsNullOrEmpty(x.Projects) ? "[]" : x.Projects,
+            cancellationToken);
+
+        return projects.FirstOrDefault() ?? throw new NotFoundException("Project", request.ProjectId);
     }
 }

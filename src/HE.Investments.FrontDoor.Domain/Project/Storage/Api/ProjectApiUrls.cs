@@ -1,5 +1,3 @@
-using HE.Investments.Common.Extensions;
-
 namespace HE.Investments.FrontDoor.Domain.Project.Storage.Api;
 
 internal static class ProjectApiUrls
@@ -8,5 +6,5 @@ internal static class ProjectApiUrls
 
     public const string SaveProject = "UpsertProject";
 
-    public static string GetProjects(string organisationId) => $"getProjects/{organisationId.ToGuidAsString()}";
+    public const string GetProjects = "getProjects";
 }

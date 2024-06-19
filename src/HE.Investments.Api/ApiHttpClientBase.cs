@@ -2,10 +2,11 @@ using System.Net;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using HE.Investments.Api.Auth;
 using HE.Investments.Api.Config;
 using HE.Investments.Api.Exceptions;
+using HE.Investments.Api.Serialization;
+using HE.Investments.Common.Contract.Exceptions;
 using Polly;
 using Polly.Retry;
 
@@ -19,13 +20,6 @@ public abstract class ApiHttpClientBase
 
     private readonly AsyncRetryPolicy<HttpResponseMessage> _httpPolicy;
 
-    private readonly JsonSerializerOptions _jsonSerializerOptions = new()
-    {
-        PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-        PropertyNameCaseInsensitive = true,
-        DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
-    };
-
     protected ApiHttpClientBase(HttpClient httpClient, IApiTokenProvider apiTokenProvider, IApiConfig config)
     {
         _httpClient = httpClient;
@@ -34,20 +28,29 @@ public abstract class ApiHttpClientBase
             .WaitAndRetryAsync(config.RetryCount, _ => TimeSpan.FromMilliseconds(config.RetryDelayInMilliseconds));
     }
 
-    protected async Task<TResponse> SendAsync<TResponse>(string relativeUrl, HttpMethod method, CancellationToken cancellationToken)
-    {
-        return await SendAsync<TResponse>(CreateHttpRequestFactory(null, relativeUrl, method), cancellationToken);
-    }
-
     protected async Task<TResponse> SendAsync<TRequest, TResponse>(
         TRequest request,
         string relativeUrl,
         HttpMethod method,
         CancellationToken cancellationToken)
     {
-        var requestBody = JsonSerializer.Serialize(request, _jsonSerializerOptions);
+        var requestBody = JsonSerializer.Serialize(request, ApiSerializer.Options);
 
         return await SendAsync<TResponse>(CreateHttpRequestFactory(requestBody, relativeUrl, method), cancellationToken);
+    }
+
+    protected async Task<TDto> SendAsync<TRequest, TResponse, TDto>(
+        TRequest request,
+        string relativeUrl,
+        HttpMethod method,
+        Func<TResponse, string> getResponse,
+        CancellationToken cancellationToken)
+    {
+        var response = await SendAsync<TRequest, TResponse>(request, relativeUrl, method, cancellationToken);
+        var jsonResponse = getResponse(response);
+
+        return JsonSerializer.Deserialize<TDto>(jsonResponse, ApiSerializer.Options)
+            ?? throw new NotFoundException($"Cannot find resource for {typeof(TRequest).Name} request");
     }
 
     private Func<Task<HttpRequestMessage>> CreateHttpRequestFactory(string? requestBody, string relativeUrl, HttpMethod method)
@@ -85,7 +88,7 @@ public abstract class ApiHttpClientBase
 
         try
         {
-            return JsonSerializer.Deserialize<TResponse>(responseContent, _jsonSerializerOptions) ??
+            return JsonSerializer.Deserialize<TResponse>(responseContent, ApiSerializer.Options) ??
                    throw new ApiSerializationException(responseContent: responseContent);
         }
         catch (Exception ex) when (ex is JsonException or NotSupportedException or ArgumentNullException)
