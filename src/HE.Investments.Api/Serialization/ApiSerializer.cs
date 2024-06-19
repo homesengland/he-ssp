@@ -5,10 +5,8 @@ namespace HE.Investments.Api.Serialization;
 
 public static class ApiSerializer
 {
-    public static JsonSerializerOptions Options => new()
+    private static readonly JsonSerializerOptions Options = new()
     {
-        PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-        PropertyNameCaseInsensitive = true,
         DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
         Converters = { new BoolConverter() },
     };

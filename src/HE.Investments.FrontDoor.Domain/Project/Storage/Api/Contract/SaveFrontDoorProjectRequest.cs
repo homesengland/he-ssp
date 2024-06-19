@@ -11,7 +11,7 @@ internal sealed class SaveFrontDoorProjectRequest : HeTablesRequestBase
     [JsonPropertyName("invln_organisationid")]
     public string OrganisationId { get; init; }
 
-    [JsonPropertyName("inlvn_userid")]
+    [JsonPropertyName("invln_userid")]
     public string UserId { get; init; }
 
     [JsonPropertyName("invln_entityfieldsparameters")]

@@ -2,6 +2,7 @@ using System.Net;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using HE.Investments.Api.Auth;
 using HE.Investments.Api.Config;
 using HE.Investments.Api.Exceptions;
@@ -20,6 +21,14 @@ public abstract class ApiHttpClientBase
 
     private readonly AsyncRetryPolicy<HttpResponseMessage> _httpPolicy;
 
+    private readonly JsonSerializerOptions _jsonSerializerOptions = new()
+    {
+        PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+        PropertyNameCaseInsensitive = true,
+        DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
+        Converters = { new BoolConverter() },
+    };
+
     protected ApiHttpClientBase(HttpClient httpClient, IApiTokenProvider apiTokenProvider, IApiConfig config)
     {
         _httpClient = httpClient;
@@ -34,7 +43,7 @@ public abstract class ApiHttpClientBase
         HttpMethod method,
         CancellationToken cancellationToken)
     {
-        var requestBody = JsonSerializer.Serialize(request, ApiSerializer.Options);
+        var requestBody = JsonSerializer.Serialize(request, _jsonSerializerOptions);
 
         return await SendAsync<TResponse>(CreateHttpRequestFactory(requestBody, relativeUrl, method), cancellationToken);
     }
@@ -49,7 +58,7 @@ public abstract class ApiHttpClientBase
         var response = await SendAsync<TRequest, TResponse>(request, relativeUrl, method, cancellationToken);
         var jsonResponse = getResponse(response);
 
-        return JsonSerializer.Deserialize<TDto>(jsonResponse, ApiSerializer.Options)
+        return JsonSerializer.Deserialize<TDto>(jsonResponse, _jsonSerializerOptions)
             ?? throw new NotFoundException($"Cannot find resource for {typeof(TRequest).Name} request");
     }
 
@@ -88,7 +97,7 @@ public abstract class ApiHttpClientBase
 
         try
         {
-            return JsonSerializer.Deserialize<TResponse>(responseContent, ApiSerializer.Options) ??
+            return JsonSerializer.Deserialize<TResponse>(responseContent, _jsonSerializerOptions) ??
                    throw new ApiSerializationException(responseContent: responseContent);
         }
         catch (Exception ex) when (ex is JsonException or NotSupportedException or ArgumentNullException)

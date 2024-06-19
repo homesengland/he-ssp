@@ -8,6 +8,6 @@ internal sealed class GetMultipleFrontDoorProjectsRequest : HeTablesRequestBase
     [JsonPropertyName("invln_organisationid")]
     public string OrganisationId { get; init; }
 
-    [JsonPropertyName("inlvn_userid")]
+    [JsonPropertyName("invln_userid")]
     public string UserId { get; init; }
 }
