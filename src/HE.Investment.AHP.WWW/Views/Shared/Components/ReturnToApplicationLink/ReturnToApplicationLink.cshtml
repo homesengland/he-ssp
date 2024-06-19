@@ -2,12 +2,22 @@
 @using HE.Investments.Common.WWW.Components.LinkWorkingAsButton
 
 
-@model (string ApplicationId, bool IsEditable)
+@model (string ApplicationId, bool IsEditable, bool ShouldSubmit)
 
 <div>
     @if (Model.IsEditable)
     {
-        <vc:link-working-as-button text="Save and return to application" name="action" value="@GenericMessages.SaveAndReturn"/>
+        @if (Model.ShouldSubmit)
+        {
+            <vc:link-working-as-button text="Save and return to application" name="action" value="@GenericMessages.SaveAndReturn"/>
+        }
+        else
+        {
+            <gds-link class="govuk-link--no-visited-state"
+                      href="@Url.Action("TaskList", "Application", new { applicationId = Model.ApplicationId })">
+                Save and return to application
+            </gds-link>
+        }
     }
     else
     {
