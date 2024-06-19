@@ -27,11 +27,14 @@ public class FrontDoorIntegrationTest : IntegrationTestBase<Program>, IDisposabl
         fixture.MockUserAccount();
         LoginData = fixture.LoginData;
         InFrontDoor = fixture.ServiceProvider.GetRequiredService<FrontDoorDataManipulator>();
+        SetUserOrganisationData();
     }
 
     public ProjectData ProjectData { get; private set; }
 
     public SiteData SiteData => ProjectData.SiteData;
+
+    public UserOrganisationData UserOrganisationData { get; private set; }
 
     public SiteData SecondSiteData => ProjectData.SecondSiteData;
 
@@ -71,5 +74,18 @@ public class FrontDoorIntegrationTest : IntegrationTestBase<Program>, IDisposabl
         }
 
         Stopwatch = stopwatch;
+    }
+
+    private void SetUserOrganisationData()
+    {
+        var userOrganisationData = GetSharedDataOrNull<UserOrganisationData>(nameof(UserOrganisationData));
+        if (userOrganisationData is null)
+        {
+            userOrganisationData = new UserOrganisationData();
+            userOrganisationData.SetOrganisationId(LoginData.OrganisationId);
+            SetSharedData(nameof(UserOrganisationData), userOrganisationData);
+        }
+
+        UserOrganisationData = userOrganisationData;
     }
 }

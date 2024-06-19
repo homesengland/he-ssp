@@ -1,3 +1,4 @@
+@using HE.Investments.Common.WWW.Extensions
 @using HE.Investments.Common.WWW.Models.Summary;
 @using HE.Investments.FrontDoor.WWW.Extensions
 @using HE.Investments.FrontDoor.WWW.Helpers
@@ -17,7 +18,7 @@
         @if (!Model.isReadOnly)
         {
             <div class="remove-site-link">
-                <gds-link href="@Url.Action("Remove", "Site", new { projectId, siteId })" data-testId="@(site.Title)-remove-site">
+                <gds-link href="@Url.OrganisationAction("Remove", "Site", new { projectId, siteId })" data-testId="@(site.Title)-remove-site">
                     Remove site
                 </gds-link>
             </div>

@@ -29,9 +29,9 @@ public class Order01CreateFrontDoorProject : FrontDoorIntegrationTest
     public async Task Order01_ProjectsListPage()
     {
         // given
-        var currentPage = await GetCurrentPage(ProjectsPagesUrl.List);
+        var currentPage = await GetCurrentPage(ProjectsPagesUrl.List(UserOrganisationData.OrganisationId));
         currentPage
-            .UrlEndWith(ProjectsPagesUrl.List)
+            .UrlEndWith(ProjectsPagesUrl.List(UserOrganisationData.OrganisationId))
             .HasTitle("Morelas Ltd. Homes England account")
             .HasLinkButtonForTestId("start-new-project", out var startProjectLink);
 
@@ -39,7 +39,7 @@ public class Order01CreateFrontDoorProject : FrontDoorIntegrationTest
         var nextPage = await TestClient.NavigateTo(startProjectLink);
 
         // then
-        nextPage.UrlEndWith(ProjectPagesUrl.Start);
+        nextPage.UrlEndWith(ProjectPagesUrl.Start(UserOrganisationData.OrganisationId));
         SaveCurrentPage();
     }
 
@@ -48,9 +48,9 @@ public class Order01CreateFrontDoorProject : FrontDoorIntegrationTest
     public async Task Order02_ProjectStartPage()
     {
         // given
-        var currentPage = await GetCurrentPage(ProjectPagesUrl.Start);
+        var currentPage = await GetCurrentPage(ProjectPagesUrl.Start(UserOrganisationData.OrganisationId));
         var startNowLink = currentPage
-            .UrlEndWith(ProjectPagesUrl.Start)
+            .UrlEndWith(ProjectPagesUrl.Start(UserOrganisationData.OrganisationId))
             .HasTitle(ProjectPageTitles.Start)
             .GetStartButton("Start now")
             .Parent as IHtmlAnchorElement;
@@ -62,7 +62,7 @@ public class Order01CreateFrontDoorProject : FrontDoorIntegrationTest
         var nextPage = await TestClient.NavigateTo(startNowLink.Href);
 
         // then
-        nextPage.UrlEndWith(ProjectPagesUrl.NewEnglandHousingDelivery);
+        nextPage.UrlEndWith(ProjectPagesUrl.NewEnglandHousingDelivery(UserOrganisationData.OrganisationId));
         SaveCurrentPage();
     }
 
@@ -71,9 +71,9 @@ public class Order01CreateFrontDoorProject : FrontDoorIntegrationTest
     public async Task Order03_ProvideEnglandHousingDelivery()
     {
         // given
-        var currentPage = await GetCurrentPage(ProjectPagesUrl.NewEnglandHousingDelivery);
+        var currentPage = await GetCurrentPage(ProjectPagesUrl.NewEnglandHousingDelivery(UserOrganisationData.OrganisationId));
         currentPage
-            .UrlEndWith(ProjectPagesUrl.NewEnglandHousingDelivery)
+            .UrlEndWith(ProjectPagesUrl.NewEnglandHousingDelivery(UserOrganisationData.OrganisationId))
             .HasTitle(ProjectPageTitles.EnglandHousingDelivery)
             .HasBackLink(out _)
             .HasContinueButton(out var continueButton);
@@ -84,7 +84,7 @@ public class Order01CreateFrontDoorProject : FrontDoorIntegrationTest
             (nameof(ProjectDetails.IsEnglandHousingDelivery), ProjectData.IsEnglandHousingDelivery.MapToTrueFalse()));
 
         // then
-        ThenTestQuestionPage(nextPage, ProjectPagesUrl.NewName);
+        ThenTestQuestionPage(nextPage, ProjectPagesUrl.NewName(UserOrganisationData.OrganisationId));
     }
 
     [Fact(Skip = FrontDoorConfig.SkipTest)]
@@ -92,9 +92,9 @@ public class Order01CreateFrontDoorProject : FrontDoorIntegrationTest
     public async Task Order04_ProvideProjectName()
     {
         // given
-        var currentPage = await GetCurrentPage(ProjectPagesUrl.NewName);
+        var currentPage = await GetCurrentPage(ProjectPagesUrl.NewName(UserOrganisationData.OrganisationId));
         currentPage
-            .UrlEndWith(ProjectPagesUrl.NewName)
+            .UrlEndWith(ProjectPagesUrl.NewName(UserOrganisationData.OrganisationId))
             .HasTitle(ProjectPageTitles.Name)
             .HasBackLink(out _)
             .HasSaveAndContinueButton(out var continueButton);
@@ -106,7 +106,7 @@ public class Order01CreateFrontDoorProject : FrontDoorIntegrationTest
 
         // then
         ProjectData.SetProjectId(nextPage.Url.GetProjectGuidFromUrl());
-        nextPage.UrlEndWith(ProjectPagesUrl.SupportRequiredActivities(ProjectData.Id));
+        nextPage.UrlEndWith(ProjectPagesUrl.SupportRequiredActivities(UserOrganisationData.OrganisationId, ProjectData.Id));
 
         SaveCurrentPage();
     }
@@ -116,9 +116,9 @@ public class Order01CreateFrontDoorProject : FrontDoorIntegrationTest
     public async Task Order05_ProvideSupportRequiredActivities()
     {
         await TestQuestionPage(
-            ProjectPagesUrl.SupportRequiredActivities(ProjectData.Id),
+            ProjectPagesUrl.SupportRequiredActivities(UserOrganisationData.OrganisationId, ProjectData.Id),
             ProjectPageTitles.SupportRequiredActivities,
-            ProjectPagesUrl.Tenure(ProjectData.Id),
+            ProjectPagesUrl.Tenure(UserOrganisationData.OrganisationId, ProjectData.Id),
             (nameof(ProjectDetails.SupportActivityTypes), ProjectData.ActivityType.ToString()));
     }
 
@@ -127,9 +127,9 @@ public class Order01CreateFrontDoorProject : FrontDoorIntegrationTest
     public async Task Order06_ProvideTenure()
     {
         await TestQuestionPage(
-            ProjectPagesUrl.Tenure(ProjectData.Id),
+            ProjectPagesUrl.Tenure(UserOrganisationData.OrganisationId, ProjectData.Id),
             ProjectPageTitles.Tenure,
-            ProjectPagesUrl.OrganisationHomesBuilt(ProjectData.Id),
+            ProjectPagesUrl.OrganisationHomesBuilt(UserOrganisationData.OrganisationId, ProjectData.Id),
             (nameof(ProjectDetails.AffordableHomesAmount), ProjectData.AffordableHomeAmount.ToString()));
     }
 
@@ -138,9 +138,9 @@ public class Order01CreateFrontDoorProject : FrontDoorIntegrationTest
     public async Task Order07_ProvideOrganisationHomesBuilt()
     {
         await TestQuestionPage(
-            ProjectPagesUrl.OrganisationHomesBuilt(ProjectData.Id),
+            ProjectPagesUrl.OrganisationHomesBuilt(UserOrganisationData.OrganisationId, ProjectData.Id),
             ProjectPageTitles.OrganisationHomesBuilt,
-            ProjectPagesUrl.IdentifiedSite(ProjectData.Id),
+            ProjectPagesUrl.IdentifiedSite(UserOrganisationData.OrganisationId, ProjectData.Id),
             (nameof(ProjectDetails.OrganisationHomesBuilt), ProjectData.OrganisationHomesBuilt.ToString(CultureInfo.InvariantCulture)));
     }
 }

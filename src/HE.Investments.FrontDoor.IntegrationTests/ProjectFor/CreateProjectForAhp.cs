@@ -26,11 +26,11 @@ public class CreateProjectForAhp : FrontDoorIntegrationTest
     {
         // given
         var (projectId, _) = await InFrontDoor.FrontDoorProjectEligibleForAhpExist(LoginData);
-        var currentPage = await TestClient.NavigateTo(ProjectPagesUrl.CheckAnswers(projectId));
+        var currentPage = await TestClient.NavigateTo(ProjectPagesUrl.CheckAnswers(UserOrganisationData.OrganisationId, projectId));
 
         // when
         var continueButton = currentPage
-            .UrlEndWith(ProjectPagesUrl.CheckAnswers(projectId))
+            .UrlEndWith(ProjectPagesUrl.CheckAnswers(UserOrganisationData.OrganisationId, projectId))
             .HasTitle(ProjectPageTitles.CheckAnswers)
             .GetSubmitButton("Accept and submit");
 

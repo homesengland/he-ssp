@@ -55,12 +55,12 @@ public class UsersController : Controller
 
         if (role == UserRole.Admin)
         {
-            return this.RedirectToActionWithOrganisationId("AdminInfo", routeValues: new { id });
+            return this.OrganisationRedirectToAction("AdminInfo", routeValues: new { id });
         }
 
         if (role == UserRole.Undefined)
         {
-            return this.RedirectToActionWithOrganisationId("ConfirmUnlink", routeValues: new { id });
+            return this.OrganisationRedirectToAction("ConfirmUnlink", routeValues: new { id });
         }
 
         var result = await _mediator.Send(new ChangeUserRoleCommand(UserGlobalId.From(id), role.Value), cancellationToken);
@@ -70,7 +70,7 @@ public class UsersController : Controller
             return await Manage(id, cancellationToken);
         }
 
-        return this.RedirectToActionWithOrganisationId("Index");
+        return this.OrganisationRedirectToAction("Index");
     }
 
     [HttpGet("{id}/admin-info")]
@@ -114,7 +114,7 @@ public class UsersController : Controller
             }
         }
 
-        return this.RedirectToActionWithOrganisationId("Index");
+        return this.OrganisationRedirectToAction("Index");
     }
 
     [HttpGet("invite")]
@@ -133,7 +133,7 @@ public class UsersController : Controller
         return await this.ExecuteCommand<InviteUserToOrganisationCommand>(
             _mediator,
             new InviteUserToOrganisationCommand(model.FirstName, model.LastName, model.EmailAddress, model.JobTitle, model.Role),
-            () => Task.FromResult<IActionResult>(this.RedirectToActionWithOrganisationId("Index")),
+            () => Task.FromResult<IActionResult>(this.OrganisationRedirectToAction("Index")),
             () => Task.FromResult<IActionResult>(View(model)),
             cancellationToken);
     }

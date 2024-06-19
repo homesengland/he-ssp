@@ -35,7 +35,7 @@ public static class ControllerExtensions
         return await onSuccess();
     }
 
-    public static RedirectToActionResult RedirectToActionWithOrganisationId(
+    public static RedirectToActionResult OrganisationRedirectToAction(
         this Controller controller,
         string actionName,
         string? controllerName = null,

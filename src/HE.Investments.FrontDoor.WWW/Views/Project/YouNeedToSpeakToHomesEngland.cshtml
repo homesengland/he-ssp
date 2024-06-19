@@ -2,12 +2,13 @@
 @using HE.Investments.FrontDoor.WWW.Config
 @using HE.Investments.FrontDoor.WWW.Views.Project.Const
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Links
+@using HE.Investments.Common.WWW.Extensions
 @inject IFrontDoorExternalLinks ExternalLinks
 @{
     var title = ProjectPageTitles.YouNeedToSpeakToHomesEngland;
     ViewData["Title"] = title;
     var projectId = ViewContext.RouteData.Values.FirstOrDefault(x => x.Key == "projectId").Value as string;
-    var backUrl = Url.Action("CheckAnswers", "Project", new { projectId });
+    var backUrl = Url.OrganisationAction("CheckAnswers", "Project", new { projectId });
 }
 
 <gds-div-grid-column-two-thirds>

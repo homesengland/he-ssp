@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace HE.Investments.FrontDoor.WWW.Controllers;
 
 [AuthorizeWithCompletedProfile]
-[Route("projects")]
+[Route("{organisationId}/projects")]
 public class ProjectsController : Controller
 {
     private readonly IProjectRepository _projectRepository;

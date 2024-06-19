@@ -15,17 +15,16 @@
 
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
 
-    <form asp-controller="Site" asp-action="Remove" asp-route-workflow="@Context.Request.Query["workflow"]" asp-method="post" novalidate>
+    <he-organisation-form asp-controller="Site" asp-action="Remove" asp-route-workflow="@Context.Request.Query["workflow"]" asp-method="post" novalidate>
 
         <vc:radio-list
             title="@title"
             title-type="InputTitleType.PageHeader"
             field-name="@nameof(Model.RemoveSiteAnswer)"
-            available-options="@SelectListHelper.FromEnumToExtendedList<RemoveSiteAnswer>()"
-        />
+            available-options="@SelectListHelper.FromEnumToExtendedList<RemoveSiteAnswer>()"/>
 
         <vc:form-button/>
         <vc:return-to-account-link/>
-    </form>
+    </he-organisation-form>
 
 </gds-div-grid-column-two-thirds>
