@@ -12,6 +12,8 @@ public class AccountAccessContext : IAccountAccessContext
 
     public const string SubmitApplication = $"{nameof(UserRole.Admin)},{nameof(UserRole.Enhanced)},{nameof(UserRole.Limited)}";
 
+    public const string ViewOnly = $"{nameof(UserRole.ViewOnly)}";
+
     public static readonly IReadOnlyCollection<UserRole> OrganisationViewRoles = ToUserAccountRoles(OrganisationView);
 
     public static readonly IReadOnlyCollection<UserRole> ManageUsersRoles = ToUserAccountRoles(ManageUsers);
@@ -19,6 +21,8 @@ public class AccountAccessContext : IAccountAccessContext
     public static readonly IReadOnlyCollection<UserRole> EditApplicationRoles = ToUserAccountRoles(EditApplications);
 
     public static readonly IReadOnlyCollection<UserRole> SubmitApplicationRoles = ToUserAccountRoles(SubmitApplication);
+
+    public static readonly IReadOnlyCollection<UserRole> ViewOnlyRoles = ToUserAccountRoles(ViewOnly);
 
     private readonly IAccountUserContext _accountUserContext;
 

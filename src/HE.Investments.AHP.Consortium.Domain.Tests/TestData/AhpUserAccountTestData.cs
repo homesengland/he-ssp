@@ -1,9 +1,8 @@
-using HE.Investment.AHP.Domain.UserContext;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Tests.TestData;
 using HE.Investments.Consortium.Shared.UserContext;
 
-namespace HE.Investment.AHP.Domain.Tests.Common.TestData;
+namespace HE.Investments.AHP.Consortium.Domain.Tests.TestData;
 
 public static class AhpUserAccountTestData
 {

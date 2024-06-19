@@ -18,12 +18,14 @@ using HE.Investments.Common.WWW.Extensions;
 using HE.Investments.Common.WWW.Helpers;
 using HE.Investments.Common.WWW.Routing;
 using HE.Investments.Common.WWW.Utils;
+using HE.Investments.Consortium.Shared.Authorization;
+using HE.Investments.Consortium.Shared.UserContext;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HE.Investment.AHP.WWW.Controllers;
 
-[AuthorizeWithCompletedProfile]
+[ConsortiumAuthorize(ConsortiumAccessContext.Edit)]
 [Route("application/{applicationId}/financial-details")]
 public class FinancialDetailsController : WorkflowController<FinancialDetailsWorkflowState>
 {
@@ -244,6 +246,7 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
             cancellationToken);
     }
 
+    [ConsortiumAuthorize]
     [HttpGet("check-answers")]
     [WorkflowState(FinancialDetailsWorkflowState.CheckAnswers)]
     public async Task<IActionResult> CheckAnswers(string applicationId, CancellationToken cancellationToken)
@@ -279,6 +282,7 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
             new { model.ApplicationId });
     }
 
+    [ConsortiumAuthorize]
     [HttpGet]
     [WorkflowState(FinancialDetailsWorkflowState.ReturnToTaskList)]
     public IActionResult ReturnToTaskList(string applicationId)
@@ -289,6 +293,7 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
                 new { ApplicationId = applicationId });
     }
 
+    [ConsortiumAuthorize]
     [HttpGet("back")]
     public async Task<IActionResult> Back(FinancialDetailsWorkflowState currentPage, string applicationId)
     {

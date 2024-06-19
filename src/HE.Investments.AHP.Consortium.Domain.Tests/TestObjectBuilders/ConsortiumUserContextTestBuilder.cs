@@ -1,17 +1,16 @@
-using HE.Investment.AHP.Domain.Tests.Common.TestData;
-using HE.Investment.AHP.Domain.UserContext;
 using HE.Investments.Account.Shared.User.Entities;
+using HE.Investments.AHP.Consortium.Domain.Tests.TestData;
 using HE.Investments.Consortium.Shared.UserContext;
 using HE.Investments.TestsUtils.TestFramework;
 using Moq;
 
-namespace HE.Investment.AHP.Domain.Tests.Common.TestDataBuilders;
+namespace HE.Investments.AHP.Consortium.Domain.Tests.TestObjectBuilders;
 
-public class AhpUserContextTestBuilder
+public class ConsortiumUserContextTestBuilder
 {
     private readonly Mock<IConsortiumUserContext> _mock;
 
-    private AhpUserContextTestBuilder(ConsortiumUserAccount? userAccount)
+    private ConsortiumUserContextTestBuilder(ConsortiumUserAccount? userAccount)
     {
         _mock = new Mock<IConsortiumUserContext>();
         ReturnUserAccount(userAccount ?? AhpUserAccountTestData.UserAccountOneWithConsortium);
@@ -19,9 +18,9 @@ public class AhpUserContextTestBuilder
 
     public ConsortiumUserAccount ConsortiumUserFromMock { get; private set; }
 
-    public static AhpUserContextTestBuilder New(ConsortiumUserAccount? userAccount = null) => new(userAccount);
+    public static ConsortiumUserContextTestBuilder New(ConsortiumUserAccount? userAccount = null) => new(userAccount);
 
-    public AhpUserContextTestBuilder ReturnUserAccount(ConsortiumUserAccount userAccount)
+    public ConsortiumUserContextTestBuilder ReturnUserAccount(ConsortiumUserAccount userAccount)
     {
         ConsortiumUserFromMock = userAccount;
         _mock.Setup(x => x.GetSelectedAccount()).ReturnsAsync(userAccount);
@@ -31,14 +30,14 @@ public class AhpUserContextTestBuilder
         return this;
     }
 
-    public AhpUserContextTestBuilder IsNotLinkedWithOrganization()
+    public ConsortiumUserContextTestBuilder IsNotLinkedWithOrganization()
     {
         _mock.Setup(x => x.IsLinkedWithOrganisation()).ReturnsAsync(false);
 
         return this;
     }
 
-    public AhpUserContextTestBuilder IsLinkedWithOrganization()
+    public ConsortiumUserContextTestBuilder IsLinkedWithOrganization()
     {
         _mock.Setup(x => x.IsLinkedWithOrganisation()).ReturnsAsync(true);
 
@@ -50,14 +49,14 @@ public class AhpUserContextTestBuilder
         return _mock.Object;
     }
 
-    public AhpUserContextTestBuilder Register(IRegisterDependency registerDependency)
+    public ConsortiumUserContextTestBuilder Register(IRegisterDependency registerDependency)
     {
         var mockedObject = Build();
         registerDependency.RegisterDependency(mockedObject);
         return this;
     }
 
-    public AhpUserContextTestBuilder ReturnProfileDetails(UserProfileDetails profileDetails)
+    public ConsortiumUserContextTestBuilder ReturnProfileDetails(UserProfileDetails profileDetails)
     {
         _mock.Setup(x => x.GetProfileDetails()).ReturnsAsync(profileDetails);
 

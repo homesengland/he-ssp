@@ -3,6 +3,7 @@ using HE.Investment.AHP.Domain.Project.Repositories;
 using HE.Investment.AHP.Domain.Tests.Common.TestDataBuilders;
 using HE.Investment.AHP.Domain.Tests.Project.TestData;
 using HE.Investment.AHP.Domain.Tests.Project.TestDataBuilders;
+using HE.Investments.AHP.Consortium.Domain.Tests.TestObjectBuilders;
 using HE.Investments.FrontDoor.Shared.Project;
 using HE.Investments.TestsUtils.TestFramework;
 
@@ -16,7 +17,7 @@ public class GetProjectSitesTests : TestBase<ProjectRepository>
         // given
         var ahpProjectDto = AhpProjectDtoTestData.FirstAhpProject;
 
-        var userAccount = AhpUserContextTestBuilder
+        var userAccount = ConsortiumUserContextTestBuilder
             .New()
             .Register(this)
             .ConsortiumUserFromMock;
@@ -43,7 +44,7 @@ public class GetProjectSitesTests : TestBase<ProjectRepository>
         // given
         var ahpProjectDto = AhpProjectDtoTestData.FourthAhpProjectWithoutSitesAndApplications;
 
-        var userAccount = AhpUserContextTestBuilder
+        var userAccount = ConsortiumUserContextTestBuilder
             .New()
             .Register(this)
             .ConsortiumUserFromMock;

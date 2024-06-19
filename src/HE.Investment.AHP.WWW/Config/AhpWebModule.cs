@@ -8,6 +8,7 @@ using HE.Investment.AHP.WWW.Models.Scheme.Factories;
 using HE.Investment.AHP.WWW.Models.Site.Factories;
 using HE.Investment.AHP.WWW.Notifications;
 using HE.Investment.AHP.WWW.Routing;
+using HE.Investments.Account.Shared.Authorization;
 using HE.Investments.AHP.Consortium.Domain.Config;
 using HE.Investments.Api.Config;
 using HE.Investments.Common;
@@ -20,6 +21,7 @@ using HE.Investments.Common.WWW.Config;
 using HE.Investments.Common.WWW.Infrastructure.Authorization;
 using HE.Investments.Common.WWW.Infrastructure.ErrorHandling;
 using HE.Investments.Common.WWW.Infrastructure.Middlewares;
+using HE.Investments.Consortium.Shared.Authorization;
 using HE.Investments.DocumentService.Extensions;
 using HE.Investments.Organisation.Config;
 using HE.Investments.Programme.Domain.Config;
@@ -50,6 +52,12 @@ public static class AhpWebModule
 
         services.AddSingleton<IAhpExternalLinks, AhpExternalLinks>();
         services.AddSingleton<IFrontDoorLinks, FrontDoorLinks>();
+        AddConsortiumAuthorization(services);
+    }
+
+    private static void AddConsortiumAuthorization(IServiceCollection services)
+    {
+        services.AddScoped<ConsortiumAccessPolicy>();
     }
 
     private static void AddConfiguration(IServiceCollection services)

@@ -1,8 +1,6 @@
 using HE.Investment.AHP.Contract.Project;
 using HE.Investment.AHP.Contract.Project.Queries;
-using HE.Investment.AHP.Domain.Config;
 using HE.Investment.AHP.Domain.Project.Repositories;
-using HE.Investment.AHP.Domain.UserContext;
 using HE.Investments.Common.Contract.Pagination;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Consortium.Shared.UserContext;
@@ -21,18 +19,22 @@ public class GetProjectDetailsQueryHandler : IRequestHandler<GetProjectDetailsQu
 
     private readonly IConsortiumUserContext _userContext;
 
+    private readonly IConsortiumAccessContext _accessContext;
+
     private readonly IProgrammeSettings _programmeSettings;
 
     public GetProjectDetailsQueryHandler(
         IProjectRepository projectRepository,
         IMediator mediator,
         IConsortiumUserContext userContext,
-        IProgrammeSettings programmeSettings)
+        IProgrammeSettings programmeSettings,
+        IConsortiumAccessContext accessContext)
     {
         _projectRepository = projectRepository;
         _mediator = mediator;
         _userContext = userContext;
         _programmeSettings = programmeSettings;
+        _accessContext = accessContext;
     }
 
     public async Task<ProjectDetailsModel> Handle(GetProjectDetailsQuery request, CancellationToken cancellationToken)
@@ -61,6 +63,6 @@ public class GetProjectDetailsQueryHandler : IRequestHandler<GetProjectDetailsQu
                 request.ApplicationPaginationRequest.Page,
                 request.ApplicationPaginationRequest.ItemsPerPage,
                 applications.Count),
-            !userAccount.CanEditApplication);
+            !await _accessContext.CanEditApplication());
     }
 }

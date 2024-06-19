@@ -4,9 +4,9 @@ namespace HE.Investments.Consortium.Shared.UserContext;
 
 public class ConsortiumAccessContext : IConsortiumAccessContext
 {
-    public const string EditApplications = $"{nameof(UserRole.Admin)},{nameof(UserRole.Enhanced)},{nameof(UserRole.Input)},{nameof(UserRole.Limited)}";
+    public const string Edit = $"{nameof(UserRole.Admin)},{nameof(UserRole.Enhanced)},{nameof(UserRole.Input)},{nameof(UserRole.Limited)}";
 
-    public const string SubmitApplication = $"{nameof(UserRole.Admin)},{nameof(UserRole.Enhanced)},{nameof(UserRole.Limited)}";
+    public const string Submit = $"{nameof(UserRole.Admin)},{nameof(UserRole.Enhanced)},{nameof(UserRole.Limited)}";
 
     public const string ViewConsortium = $"{nameof(UserRole.Admin)},{nameof(UserRole.Enhanced)},{nameof(UserRole.Input)},{nameof(UserRole.ViewOnly)}";
 
@@ -36,7 +36,7 @@ public class ConsortiumAccessContext : IConsortiumAccessContext
     public async Task<bool> CanEditApplication()
     {
         var account = await _consortiumUserContext.GetSelectedAccount();
-        return account.CanEditApplication;
+        return account.CanEditApplication && (account.Consortium.IsLeadPartner || account.Consortium.HasNoConsortium);
     }
 
     private static UserRole[] ToUserAccountRoles(string roles)

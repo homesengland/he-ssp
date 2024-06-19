@@ -5,6 +5,7 @@ using HE.Investment.AHP.Domain.Project.ValueObjects;
 using HE.Investment.AHP.Domain.Tests.Common.TestDataBuilders;
 using HE.Investment.AHP.Domain.Tests.Project.TestData;
 using HE.Investment.AHP.Domain.Tests.Project.TestDataBuilders;
+using HE.Investments.AHP.Consortium.Domain.Tests.TestObjectBuilders;
 using HE.Investments.Common.Contract.Pagination;
 using HE.Investments.TestsUtils.TestFramework;
 
@@ -25,7 +26,7 @@ public class GetProjectsListQueryHandlerTests : TestBase<GetProjectsListQueryHan
             10,
             2);
 
-        var userAccount = AhpUserContextTestBuilder
+        var userAccount = ConsortiumUserContextTestBuilder
             .New()
             .Register(this)
             .ConsortiumUserFromMock;
@@ -70,7 +71,7 @@ public class GetProjectsListQueryHandlerTests : TestBase<GetProjectsListQueryHan
             10,
             0);
 
-        var userAccount = AhpUserContextTestBuilder
+        var userAccount = ConsortiumUserContextTestBuilder
             .New()
             .Register(this)
             .ConsortiumUserFromMock;

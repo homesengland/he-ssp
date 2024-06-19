@@ -4,6 +4,7 @@ using HE.Investment.AHP.Domain.Project.Repositories;
 using HE.Investment.AHP.Domain.Tests.Common.TestDataBuilders;
 using HE.Investment.AHP.Domain.Tests.Project.TestData;
 using HE.Investment.AHP.Domain.Tests.Project.TestDataBuilders;
+using HE.Investments.AHP.Consortium.Domain.Tests.TestObjectBuilders;
 using HE.Investments.TestsUtils.TestFramework;
 
 namespace HE.Investment.AHP.Domain.Tests.Project.Repositories;
@@ -17,7 +18,7 @@ public class CreateProjectTests : TestBase<ProjectRepository>
         var prefillProject = ProjectPrefillDataTestData.FirstProjectPrefillData;
         var ahpProjectId = AhpProjectId.From(prefillProject.Id.Value);
 
-        var userAccount = AhpUserContextTestBuilder
+        var userAccount = ConsortiumUserContextTestBuilder
             .New()
             .Register(this)
             .ConsortiumUserFromMock;
