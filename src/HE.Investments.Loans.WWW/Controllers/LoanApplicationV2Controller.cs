@@ -136,10 +136,10 @@ public class LoanApplicationV2Controller : WorkflowController<LoanApplicationWor
 
         if (model.FundingPurpose == FundingPurpose.BuildingNewHomes)
         {
-            return RedirectToAction(nameof(ApplicationName), new { fdProjectId });
+            return this.OrganisationRedirectToAction(nameof(ApplicationName), routeValues: new { fdProjectId });
         }
 
-        return RedirectToAction(nameof(Ineligible), new { fdProjectId });
+        return this.OrganisationRedirectToAction(nameof(Ineligible), routeValues: new { fdProjectId });
     }
 
     [HttpGet("application-name")]
