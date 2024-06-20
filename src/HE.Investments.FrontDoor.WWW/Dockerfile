@@ -19,18 +19,22 @@ ENV VSS_NUGET_EXTERNAL_FEED_ENDPOINTS \
 WORKDIR /src
 COPY ["Directory.Build.props", "."]
 COPY ["nuget.config", "."]
-COPY ["HE.Investments.FrontDoor.WWW/HE.Investments.FrontDoor.WWW.csproj", "HE.Investments.FrontDoor.WWW/"]
-COPY ["HE.Investments.FrontDoor.Contract/HE.Investments.FrontDoor.Contract.csproj", "HE.Investments.FrontDoor.Contract/"]
+COPY ["HE.Common.IntegrationModel.Crm/HE.Common.IntegrationModel.Crm.csproj", "HE.Common.IntegrationModel.Crm/"]
+COPY ["HE.Investments.Account.Api.Contract/HE.Investments.Account.Api.Contract.csproj", "HE.Investments.Account.Api.Contract/"]
+COPY ["HE.Investments.Account.Shared/HE.Investments.Account.Shared.csproj", "HE.Investments.Account.Shared/"]
+COPY ["HE.Investments.Api/HE.Investments.Api.csproj", "HE.Investments.Api/"]
+COPY ["HE.Investments.Common/HE.Investments.Common.csproj", "HE.Investments.Common/"]
 COPY ["HE.Investments.Common.Contract/HE.Investments.Common.Contract.csproj", "HE.Investments.Common.Contract/"]
+COPY ["HE.Investments.Common.CRM/HE.Investments.Common.CRM.csproj", "HE.Investments.Common.CRM/"]
+COPY ["HE.Investments.Common.WWW/HE.Investments.Common.WWW.csproj", "HE.Investments.Common.WWW/"]
+COPY ["HE.Investments.FrontDoor.Contract/HE.Investments.FrontDoor.Contract.csproj", "HE.Investments.FrontDoor.Contract/"]
 COPY ["HE.Investments.FrontDoor.Domain/HE.Investments.FrontDoor.Domain.csproj", "HE.Investments.FrontDoor.Domain/"]
 COPY ["HE.Investments.FrontDoor.Shared/HE.Investments.FrontDoor.Shared.csproj", "HE.Investments.FrontDoor.Shared/"]
-COPY ["HE.Investments.Account.Shared/HE.Investments.Account.Shared.csproj", "HE.Investments.Account.Shared/"]
-COPY ["HE.Investments.Account.Contract/HE.Investments.Account.Contract.csproj", "HE.Investments.Account.Contract/"]
-COPY ["HE.Investments.Common.CRM/HE.Investments.Common.CRM.csproj", "HE.Investments.Common.CRM/"]
-COPY ["HE.Investments.Common/HE.Investments.Common.csproj", "HE.Investments.Common/"]
+COPY ["HE.Investments.FrontDoor.WWW/HE.Investments.FrontDoor.WWW.csproj", "HE.Investments.FrontDoor.WWW/"]
 COPY ["HE.Investments.Organisation/HE.Investments.Organisation.csproj", "HE.Investments.Organisation/"]
-COPY ["HE.Investments.Common.WWW/HE.Investments.Common.WWW.csproj", "HE.Investments.Common.WWW/"]
-COPY ["HE.Common.IntegrationModel.Crm/HE.Common.IntegrationModel.Crm.csproj", "HE.Common.IntegrationModel.Crm/"]
+COPY ["HE.Investments.Programme.Contract/HE.Investments.Programme.Contract.csproj", "HE.Investments.Programme.Contract/"]
+COPY ["HE.Investments.Programme.Domain/HE.Investments.Programme.Domain.csproj", "HE.Investments.Programme.Domain/"]
+
 RUN dotnet restore "./HE.Investments.FrontDoor.WWW/./HE.Investments.FrontDoor.WWW.csproj"
 
 COPY . .

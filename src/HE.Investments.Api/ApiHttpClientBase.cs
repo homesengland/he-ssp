@@ -37,6 +37,14 @@ public abstract class ApiHttpClientBase
             .WaitAndRetryAsync(config.RetryCount, _ => TimeSpan.FromMilliseconds(config.RetryDelayInMilliseconds));
     }
 
+    protected async Task<TResponse> SendAsync<TResponse>(
+        string relativeUrl,
+        HttpMethod method,
+        CancellationToken cancellationToken)
+    {
+        return await SendAsync<TResponse>(CreateHttpRequestFactory(null, relativeUrl, method), cancellationToken);
+    }
+
     protected async Task<TResponse> SendAsync<TRequest, TResponse>(
         TRequest request,
         string relativeUrl,
@@ -46,20 +54,6 @@ public abstract class ApiHttpClientBase
         var requestBody = JsonSerializer.Serialize(request, _jsonSerializerOptions);
 
         return await SendAsync<TResponse>(CreateHttpRequestFactory(requestBody, relativeUrl, method), cancellationToken);
-    }
-
-    protected async Task<TDto> SendAsync<TRequest, TResponse, TDto>(
-        TRequest request,
-        string relativeUrl,
-        HttpMethod method,
-        Func<TResponse, string> getResponse,
-        CancellationToken cancellationToken)
-    {
-        var response = await SendAsync<TRequest, TResponse>(request, relativeUrl, method, cancellationToken);
-        var jsonResponse = getResponse(response);
-
-        return JsonSerializer.Deserialize<TDto>(jsonResponse, _jsonSerializerOptions)
-            ?? throw new NotFoundException($"Cannot find resource for {typeof(TRequest).Name} request");
     }
 
     private Func<Task<HttpRequestMessage>> CreateHttpRequestFactory(string? requestBody, string relativeUrl, HttpMethod method)
@@ -92,7 +86,7 @@ public abstract class ApiHttpClientBase
         var responseContent = await httpResponse.Content.ReadAsStringAsync(cancellationToken);
         if (string.IsNullOrEmpty(responseContent))
         {
-            throw new ApiSerializationException(responseContent: responseContent);
+            throw new NotFoundException($"Cannot find resource for {typeof(TResponse).Name}.");
         }
 
         try

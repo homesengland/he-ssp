@@ -18,17 +18,22 @@ ENV VSS_NUGET_EXTERNAL_FEED_ENDPOINTS \
 WORKDIR /src
 COPY ["Directory.Build.props", "."]
 COPY ["nuget.config", "."]
-COPY ["HE.Investments.Account.WWW/HE.Investments.Account.WWW.csproj", "HE.Investments.Account.WWW/"]
-COPY ["HE.Investments.Common.CRM/HE.Investments.Common.CRM.csproj", "HE.Investments.Common.CRM/"]
-COPY ["HE.Investments.Common.Contract/HE.Investments.Common.Contract.csproj", "HE.Investments.Common.Contract/"]
-COPY ["HE.Investments.Common/HE.Investments.Common.csproj", "HE.Investments.Common/"]
-COPY ["HE.Investments.Account.Domain/HE.Investments.Account.Domain.csproj", "HE.Investments.Account.Domain/"]
-COPY ["HE.Investments.Account.Contract/HE.Investments.Account.Contract.csproj", "HE.Investments.Account.Contract/"]
-COPY ["HE.Investments.Account.Shared/HE.Investments.Account.Shared.csproj", "HE.Investments.Account.Shared/"]
-COPY ["HE.Investments.Organisation/HE.Investments.Organisation.csproj", "HE.Investments.Organisation/"]
-COPY ["HE.Investments.Common.WWW/HE.Investments.Common.WWW.csproj", "HE.Investments.Common.WWW/"]
-COPY ["HE.Investments.Consortium.Shared/HE.Investments.Consortium.Shared.csproj", "HE.Investments.Consortium.Shared/"]
 COPY ["HE.Common.IntegrationModel.Crm/HE.Common.IntegrationModel.Crm.csproj", "HE.Common.IntegrationModel.Crm/"]
+COPY ["HE.Investments.Account.Api.Contract/HE.Investments.Account.Api.Contract.csproj", "HE.Investments.Account.Api.Contract/"]
+COPY ["HE.Investments.Account.Contract/HE.Investments.Account.Contract.csproj", "HE.Investments.Account.Contract/"]
+COPY ["HE.Investments.Account.Domain/HE.Investments.Account.Domain.csproj", "HE.Investments.Account.Domain/"]
+COPY ["HE.Investments.Account.Shared/HE.Investments.Account.Shared.csproj", "HE.Investments.Account.Shared/"]
+COPY ["HE.Investments.Account.WWW/HE.Investments.Account.WWW.csproj", "HE.Investments.Account.WWW/"]
+COPY ["HE.Investments.Api/HE.Investments.Api.csproj", "HE.Investments.Api/"]
+COPY ["HE.Investments.Consortium.Shared/HE.Investments.Consortium.Shared.csproj", "HE.Investments.Consortium.Shared/"]
+COPY ["HE.Investments.Common/HE.Investments.Common.csproj", "HE.Investments.Common/"]
+COPY ["HE.Investments.Common.Contract/HE.Investments.Common.Contract.csproj", "HE.Investments.Common.Contract/"]
+COPY ["HE.Investments.Common.CRM/HE.Investments.Common.CRM.csproj", "HE.Investments.Common.CRM/"]
+COPY ["HE.Investments.Common.WWW/HE.Investments.Common.WWW.csproj", "HE.Investments.Common.WWW/"]
+COPY ["HE.Investments.Organisation/HE.Investments.Organisation.csproj", "HE.Investments.Organisation/"]
+COPY ["HE.Investments.Programme.Contract/HE.Investments.Programme.Contract.csproj", "HE.Investments.Programme.Contract/"]
+COPY ["HE.Investments.Programme.Domain/HE.Investments.Programme.Domain.csproj", "HE.Investments.Programme.Domain/"]
+
 RUN dotnet restore "./HE.Investments.Account.WWW/./HE.Investments.Account.WWW.csproj"
 COPY . .
 WORKDIR "/src/HE.Investments.Account.WWW"

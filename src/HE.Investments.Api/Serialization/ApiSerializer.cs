@@ -3,6 +3,7 @@ using System.Text.Json.Serialization;
 
 namespace HE.Investments.Api.Serialization;
 
+// TODO: remove this class
 public static class ApiSerializer
 {
     private static readonly JsonSerializerOptions Options = new()
