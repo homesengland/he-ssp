@@ -1,5 +1,5 @@
 using HE.Investments.Common.Extensions;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Extensions;
 
 namespace HE.Investments.FrontDoor.Shared.Project.Storage.Api;
 
@@ -8,13 +8,18 @@ public static class CommonProjectApiUrls
     public static string Project(string organisationId, string projectId, string? userGlobalId = null, bool? includeInactive = null)
     {
         var url = $"{organisationId.ToGuidAsString()}/projects/{projectId.ToGuidAsString()}";
-        var query = QueryString.Create([
-                new KeyValuePair<string, string?>("userId", userGlobalId),
-                new KeyValuePair<string, string?>("includeInactive", includeInactive?.ToString())
-            ])
-            .ToUriComponent();
+        var query = new QueryBuilder();
+        if (!string.IsNullOrEmpty(userGlobalId))
+        {
+            query.Add("userId", userGlobalId);
+        }
 
-        return $"{url}{query}";
+        if (includeInactive != null)
+        {
+            query.Add("includeInactive", includeInactive.Value.ToString());
+        }
+
+        return $"{url}{query.ToQueryString()}";
     }
 
     public static string DeleteProject(string projectId) => $"projects/{projectId.ToGuidAsString()}";
