@@ -489,7 +489,7 @@ namespace HE.CRM.AHP.Plugins.Services.GovNotifyEmail
                     {
                         recipientEmail = "",
                         subject = subject,
-                        name = user.FullName ?? "NO NAME",
+                        name = "Housing Contracts",
                         organisationname = account.Name ?? "NO NAME",
                         applicationname = ahpApplication.invln_schemename ?? "NO NAME",
                         applicationurl = GetAhpApplicationUrl(ahpApplication.ToEntityReference()),
