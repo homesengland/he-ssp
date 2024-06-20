@@ -24,7 +24,7 @@ public class InitialSale : ValueObject
         {
             NumberParseResult.ValueMissing => ThrowValidationError(
                 nameof(InitialSale),
-                isCalculation ? ValidationErrorMessage.MustBeProvidedForCalculation(DisplayName) : ValidationErrorMessage.MustProvideRequiredField(DisplayName)),
+                isCalculation ? ValidationErrorMessage.MustBeProvidedForCalculationWithPercentage(DisplayName) : ValidationErrorMessage.MustProvideRequiredField(DisplayName)),
             NumberParseResult.ValueNotANumber => ThrowValidationError(nameof(InitialSale), ValidationErrorMessage.MustBeTheWholeNumber(DisplayName, null)),
             NumberParseResult.ValueInvalidPrecision => ThrowValidationError(nameof(InitialSale), ValidationErrorMessage.MustBeTheWholeNumber(DisplayName, null)),
             NumberParseResult.ValueTooHigh => ThrowValidationError(nameof(InitialSale), ValidationErrorMessage.MustProvideNumberBetween(DisplayName, minValue, maxValue)),
