@@ -144,6 +144,7 @@
     <Compile Include="Handlers\CustomApi\SendReminderEmailForFinaliseDraftApplicationHandler.cs" />
     <Compile Include="Handlers\CustomApi\SendReminderEmailForRefferedBackToApplicantHandler.cs" />
     <Compile Include="Handlers\CustomApi\SentInviteContactToJoinOrganisationHandler.cs" />
+    <Compile Include="Handlers\CustomApi\SentInviteContactToJoinOrganisationPowerAppsHandler.cs" />
     <Compile Include="Handlers\CustomApi\SetApplicationHandler.cs" />
     <Compile Include="Handlers\CustomApi\SetDeliveryPhaseHandler.cs" />
     <Compile Include="Handlers\CustomApi\SetHomeTypeHandler.cs" />
@@ -262,6 +263,7 @@
     <Compile Include="Plugins\CustomApi\GetTypeOfHomesListPlugin.cs" />
     <Compile Include="Plugins\CustomApi\SendReminderEmailForRefferedBackToApplicantPlugin.cs" />
     <Compile Include="Plugins\CustomApi\SentInviteContactToJoinOrganisationPlugin.cs" />
+    <Compile Include="Plugins\CustomApi\SentInviteContactToJoinOrganisationPowerAppsPlugin.cs" />
     <Compile Include="Plugins\CustomApi\SetApplicationPlugin.cs" />
     <Compile Include="Plugins\CustomApi\SetDeliveryPhasePlugin.cs" />
     <Compile Include="Plugins\CustomApi\SetHomeTypePlugin.cs" />

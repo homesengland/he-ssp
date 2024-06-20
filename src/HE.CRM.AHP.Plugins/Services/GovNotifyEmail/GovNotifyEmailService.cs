@@ -196,7 +196,49 @@ namespace HE.CRM.AHP.Plugins.Services.GovNotifyEmail
             }
         }
 
-        #region !!! Probably not used. To be checked and removed. !!!
+        public void SendNotifications_COMMON_INVITE_CONTACT_TO_JOIN_ORGANIZATION_BY_POWER_APPS(EntityReference invitedContactId, EntityReference userId)
+        {
+            TracingService.Trace("SendNotifications_COMMON_INVITE_CONTACT_TO_JOIN_ORGANIZATION_BY_POWER_APPS");
+            var invitedContact = _contactRepositoryAdmin.GetById(invitedContactId.Id, Contact.Fields.OwnerId, Contact.Fields.FullName, Contact.Fields.EMailAddress1, Contact.Fields.ParentCustomerId);
+            var user = _systemUserRepositoryAdmin.GetById(userId.Id, SystemUser.Fields.FullName);
+
+            if (invitedContact.ParentCustomerId == null)
+            {
+                TracingService.Trace("There is no data in ParentCustomerId on Contact. Mail not sent.");
+                return;
+            }
+
+            var account = _accountRepositoryAdmin.GetById(invitedContact.ParentCustomerId.Id, Account.Fields.Name);
+
+            if (account == null)
+            {
+                TracingService.Trace("There is no Account in ParentCustomerId on Contact. Mail not sent.");
+                return;
+            }
+
+            var emailTemplate = _notificationSettingRepositoryAdmin.GetTemplateViaTypeName("COMMON_INVITE_CONTACT_TO_JOIN_ORGANIZATION");
+            var govNotParams = new COMMON_INVITE_CONTACT_TO_JOIN_ORGANIZATION()
+            {
+                templateId = emailTemplate?.invln_templateid,
+                personalisation = new parameters_COMMON_INVITE_CONTACT_TO_JOIN_ORGANIZATION()
+                {
+                    recipientEmail = invitedContact.EMailAddress1,
+                    username = invitedContact.FullName ?? "NO NAME",
+                    subject = emailTemplate.invln_subject,
+                    invitername = user.FullName ?? "NO NAME",
+                    organisationname = account.Name
+                }
+            };
+
+            var options = new JsonSerializerOptions
+            {
+                Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+                WriteIndented = true
+            };
+
+            var parameters = JsonSerializer.Serialize(govNotParams, options);
+            this.SendGovNotifyEmail(invitedContact.OwnerId, invitedContact.ToEntityReference(), emailTemplate.invln_subject, parameters, emailTemplate);
+        }
 
         public void SendNotifications_AHP_EXTERNAL_REMINDER_TO_FINALIZE_APPLICATION_REFERRED_BACK(EntityReference ahpApplicationId, EntityReference contactId)
         {
@@ -260,8 +302,6 @@ namespace HE.CRM.AHP.Plugins.Services.GovNotifyEmail
                 this.SendGovNotifyEmail(ahpApplication.OwnerId, ahpApplicationId, emailTemplate.invln_subject, parameters, emailTemplate);
             }
         }
-
-        #endregion !!! Probably not used. To be checked and removed. !!!
 
         public void SendNotifications_AHP_INTERNAL_EXTERNAL_WANTS_ADDITIONAL_PAYMENTS_FOR_PHASE(EntityReference deliveryPhaseId)
         {
