@@ -205,7 +205,7 @@ public class DeliveryPhaseCheckAnswersViewModelFactory : IDeliveryPhaseCheckAnsw
         items.AddWhen(
             new(
                 "Request additional payments",
-                deliveryPhase.IsAdditionalPaymentRequested?.ToString().ToOneElementList(),
+                deliveryPhase.IsAdditionalPaymentRequested?.MapToCommonResponse().ToOneElementList(),
                 IsEditable: isEditable,
                 ActionUrl: createAction(nameof(DeliveryPhaseController.UnregisteredBodyFollowUp))),
             deliveryPhase.IsUnregisteredBody);

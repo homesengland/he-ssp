@@ -29,7 +29,10 @@ namespace HE.CRM.AHP.Plugins.Plugins.DeliveryPhase
         invln_DeliveryPhase.Fields.invln_NoofHomes + "," +
         invln_DeliveryPhase.Fields.invln_buildactivitytype + "," +
         invln_DeliveryPhase.Fields.invln_rehabactivitytype + "," +
-        invln_DeliveryPhase.Fields.invln_nbrh,
+        invln_DeliveryPhase.Fields.invln_nbrh + "," +
+        invln_DeliveryPhase.Fields.invln_AcquisitionPercentageValue + "," +
+        invln_DeliveryPhase.Fields.invln_StartOnSitePercentageValue + "," +
+        invln_DeliveryPhase.Fields.invln_CompletionPercentageValue,
         Image1Type = ImageTypeEnum.PreImage)]
     public class PreUpdateDeliveryPhase : PluginBase<DataverseContext>, IPlugin
     {
