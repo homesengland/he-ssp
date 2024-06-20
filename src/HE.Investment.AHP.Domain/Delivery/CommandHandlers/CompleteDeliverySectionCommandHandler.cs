@@ -1,7 +1,7 @@
 using HE.Investment.AHP.Contract.Delivery.Commands;
 using HE.Investment.AHP.Domain.Delivery.Repositories;
-using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract.Validators;
+using HE.Investments.Consortium.Shared.UserContext;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
@@ -11,11 +11,11 @@ public class CompleteDeliverySectionCommandHandler : DeliveryCommandHandlerBase,
 {
     private readonly IDeliveryPhaseRepository _repository;
 
-    private readonly IAccountUserContext _accountUserContext;
+    private readonly IConsortiumUserContext _accountUserContext;
 
     public CompleteDeliverySectionCommandHandler(
         IDeliveryPhaseRepository repository,
-        IAccountUserContext accountUserContext,
+        IConsortiumUserContext accountUserContext,
         ILogger<CompleteDeliverySectionCommandHandler> logger)
         : base(logger)
     {

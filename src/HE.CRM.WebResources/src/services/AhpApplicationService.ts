@@ -7,6 +7,27 @@ export class AhpApplicationService {
     this.common = new CommonLib(eCtx)
   }
 
+  public nDSSNotification() {
+    this.common.clearFormNotification("NDSSNotification");
+    this.common.clearFormNotification("NDSSNotCoveredNotification");
+    let ndssmax = this.common.getAttribute("invln_maximumm2asofndssofthehometypesonthis").getValue();
+    let ndssmin = this.common.getAttribute("invln_minimumm2asofndssofthehometypesonthis").getValue();
+    let tenure = this.common.getAttribute("invln_tenure").getValue();
+    let status = this.common.getAttribute("invln_externalstatus").getValue();
+    if (status == 858110001) //draft
+      return;
+
+    if (!(ndssmax == null && ndssmin == null))
+      return;
+
+    if (tenure == 858110001) {
+      this.common.setFormNotification("NDSS cannot be calulated because Tenure is set to Social Rent", XrmEnum.FormNotificationLevel.Info, "NDSSNotification");
+    } else {
+      this.common.setFormNotification("Home type not covered by NDSS.", XrmEnum.FormNotificationLevel.Info, "NDSSNotCoveredNotification");
+    }
+
+  }
+
   public openCustomPage() {
     var recordId = this.common.trimBraces(this.common.getCurrentEntityId())
     var pageInput: any = {

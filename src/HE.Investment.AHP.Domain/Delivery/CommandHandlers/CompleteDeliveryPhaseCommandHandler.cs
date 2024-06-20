@@ -1,10 +1,9 @@
 using HE.Investment.AHP.Contract.Delivery.Commands;
-using HE.Investment.AHP.Domain.Config;
 using HE.Investment.AHP.Domain.Delivery.Entities;
 using HE.Investment.AHP.Domain.Delivery.Repositories;
-using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Utils;
+using HE.Investments.Consortium.Shared.UserContext;
 using HE.Investments.Programme.Contract;
 using HE.Investments.Programme.Contract.Config;
 using HE.Investments.Programme.Contract.Queries;
@@ -23,7 +22,7 @@ public class CompleteDeliveryPhaseCommandHandler : UpdateDeliveryPhaseCommandHan
     public CompleteDeliveryPhaseCommandHandler(
         IDeliveryPhaseRepository repository,
         IMediator mediator,
-        IAccountUserContext accountUserContext,
+        IConsortiumUserContext accountUserContext,
         IProgrammeSettings programmeSettings,
         IDateTimeProvider dateTimeProvider)
         : base(repository, accountUserContext)

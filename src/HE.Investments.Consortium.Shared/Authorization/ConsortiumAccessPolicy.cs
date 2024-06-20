@@ -6,11 +6,11 @@ using HE.Investments.Consortium.Shared.UserContext;
 
 namespace HE.Investments.Consortium.Shared.Authorization;
 
-public class ConsortiumCanAccess : ICanAccess
+public class ConsortiumAccessPolicy : IAccessPolicy
 {
     private readonly IConsortiumUserContext _consortiumUserContext;
 
-    public ConsortiumCanAccess(IConsortiumUserContext consortiumUserContext)
+    public ConsortiumAccessPolicy(IConsortiumUserContext consortiumUserContext)
     {
         _consortiumUserContext = consortiumUserContext;
     }

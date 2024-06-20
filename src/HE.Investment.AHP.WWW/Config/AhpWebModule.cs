@@ -57,7 +57,7 @@ public static class AhpWebModule
 
     private static void AddConsortiumAuthorization(IServiceCollection services)
     {
-        services.AddScoped<ICanAccess, ConsortiumCanAccess>();
+        services.AddScoped<ConsortiumAccessPolicy>();
     }
 
     private static void AddConfiguration(IServiceCollection services)

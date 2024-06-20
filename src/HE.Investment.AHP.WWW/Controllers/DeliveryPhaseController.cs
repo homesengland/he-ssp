@@ -17,12 +17,14 @@ using HE.Investments.Common.Validators;
 using HE.Investments.Common.WWW.Controllers;
 using HE.Investments.Common.WWW.Extensions;
 using HE.Investments.Common.WWW.Routing;
+using HE.Investments.Consortium.Shared.Authorization;
+using HE.Investments.Consortium.Shared.UserContext;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HE.Investment.AHP.WWW.Controllers;
 
-[AuthorizeWithCompletedProfile]
+[ConsortiumAuthorize(ConsortiumAccessContext.Edit)]
 [Route("application/{applicationId}/delivery-phase")]
 public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowState>
 {
@@ -37,12 +39,14 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
         _deliveryPhaseCheckAnswersViewModelFactory = deliveryPhaseCheckAnswersViewModelFactory;
     }
 
+    [ConsortiumAuthorize]
     [HttpGet("{deliveryPhaseId}/back")]
     public async Task<IActionResult> Back([FromRoute] string applicationId, [FromRoute] string deliveryPhaseId, DeliveryPhaseWorkflowState currentPage)
     {
         return await Back(currentPage, new { applicationId, deliveryPhaseId });
     }
 
+    [ConsortiumAuthorize]
     [HttpGet("{deliveryPhaseId}/start")]
     public async Task<IActionResult> Start([FromRoute] string applicationId, [FromRoute] string deliveryPhaseId, CancellationToken cancellationToken)
     {
@@ -87,8 +91,8 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
         return View("Name", model);
     }
 
-    [WorkflowState(DeliveryPhaseWorkflowState.Name)]
     [HttpPost("{deliveryPhaseId}/name")]
+    [WorkflowState(DeliveryPhaseWorkflowState.Name)]
     public async Task<IActionResult> Name(
         [FromRoute] string applicationId,
         [FromRoute] string deliveryPhaseId,
@@ -463,6 +467,7 @@ public class DeliveryPhaseController : WorkflowController<DeliveryPhaseWorkflowS
             cancellationToken);
     }
 
+    [ConsortiumAuthorize]
     [WorkflowState(DeliveryPhaseWorkflowState.CheckAnswers)]
     [HttpGet("{deliveryPhaseId}/check-answers")]
     public async Task<IActionResult> CheckAnswers(CancellationToken cancellationToken)

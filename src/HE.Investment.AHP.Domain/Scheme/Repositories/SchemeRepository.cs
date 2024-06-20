@@ -7,8 +7,8 @@ using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.Documents.Services;
 using HE.Investment.AHP.Domain.Scheme.Entities;
 using HE.Investment.AHP.Domain.Scheme.ValueObjects;
-using HE.Investments.Account.Shared.User;
 using HE.Investments.Common.Infrastructure.Events;
+using HE.Investments.Consortium.Shared.UserContext;
 
 namespace HE.Investment.AHP.Domain.Scheme.Repositories;
 
@@ -34,7 +34,7 @@ public class SchemeRepository : ISchemeRepository
         _eventDispatcher = eventDispatcher;
     }
 
-    public async Task<SchemeEntity> GetByApplicationId(AhpApplicationId id, UserAccount userAccount, bool includeFiles, CancellationToken cancellationToken)
+    public async Task<SchemeEntity> GetByApplicationId(AhpApplicationId id, ConsortiumUserAccount userAccount, bool includeFiles, CancellationToken cancellationToken)
     {
         var organisationId = userAccount.SelectedOrganisationId().Value;
         var application = userAccount.CanViewAllApplications()
@@ -53,7 +53,7 @@ public class SchemeRepository : ISchemeRepository
         return CreateEntity(application, applicationBasicInfo, file);
     }
 
-    public async Task<SchemeEntity> Save(SchemeEntity entity, UserAccount userAccount, CancellationToken cancellationToken)
+    public async Task<SchemeEntity> Save(SchemeEntity entity, ConsortiumUserAccount userAccount, CancellationToken cancellationToken)
     {
         if (!entity.IsModified)
         {

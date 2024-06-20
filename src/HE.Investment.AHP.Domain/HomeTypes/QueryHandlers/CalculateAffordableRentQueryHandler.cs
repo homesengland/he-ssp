@@ -2,7 +2,7 @@ using HE.Investment.AHP.Contract.HomeTypes;
 using HE.Investment.AHP.Contract.HomeTypes.Queries;
 using HE.Investment.AHP.Domain.HomeTypes.Entities;
 using HE.Investment.AHP.Domain.HomeTypes.Repositories;
-using HE.Investments.Account.Shared;
+using HE.Investments.Consortium.Shared.UserContext;
 using Microsoft.Extensions.Logging;
 
 namespace HE.Investment.AHP.Domain.HomeTypes.QueryHandlers;
@@ -11,7 +11,7 @@ internal sealed class CalculateAffordableRentQueryHandler : CalculateQueryHandle
 {
     public CalculateAffordableRentQueryHandler(
         IHomeTypeRepository homeTypeRepository,
-        IAccountUserContext accountUserContext,
+        IConsortiumUserContext accountUserContext,
         ILogger<CalculateAffordableRentQueryHandler> logger)
         : base(homeTypeRepository, accountUserContext, logger)
     {

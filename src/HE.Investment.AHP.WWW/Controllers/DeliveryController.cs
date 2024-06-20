@@ -9,12 +9,14 @@ using HE.Investments.Account.Shared.Authorization.Attributes;
 using HE.Investments.Common.Validators;
 using HE.Investments.Common.WWW.Extensions;
 using HE.Investments.Common.WWW.Helpers;
+using HE.Investments.Consortium.Shared.Authorization;
+using HE.Investments.Consortium.Shared.UserContext;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HE.Investment.AHP.WWW.Controllers;
 
-[AuthorizeWithCompletedProfile]
+[ConsortiumAuthorize(ConsortiumAccessContext.Edit)]
 [Route("application/{applicationId}/delivery")]
 public class DeliveryController : Controller
 {
@@ -32,6 +34,7 @@ public class DeliveryController : Controller
         return View("Index", application);
     }
 
+    [ConsortiumAuthorize]
     [HttpGet]
     public async Task<IActionResult> List([FromRoute] string applicationId, CancellationToken cancellationToken)
     {

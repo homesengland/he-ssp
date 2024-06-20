@@ -1,8 +1,8 @@
 using HE.Investment.AHP.Contract.HomeTypes.Commands;
 using HE.Investment.AHP.Domain.HomeTypes.Entities;
 using HE.Investment.AHP.Domain.HomeTypes.Repositories;
-using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract.Validators;
+using HE.Investments.Consortium.Shared.UserContext;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
@@ -13,9 +13,9 @@ public abstract class SaveHomeTypeSegmentCommandHandlerBase<TCommand> : HomeType
 {
     private readonly IHomeTypeRepository _homeTypeRepository;
 
-    private readonly IAccountUserContext _accountUserContext;
+    private readonly IConsortiumUserContext _accountUserContext;
 
-    protected SaveHomeTypeSegmentCommandHandlerBase(IHomeTypeRepository homeTypeRepository, IAccountUserContext accountUserContext, ILogger logger)
+    protected SaveHomeTypeSegmentCommandHandlerBase(IHomeTypeRepository homeTypeRepository, IConsortiumUserContext accountUserContext, ILogger logger)
         : base(logger)
     {
         _homeTypeRepository = homeTypeRepository;

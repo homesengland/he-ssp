@@ -9,6 +9,7 @@ import { AhpApplication } from './events/AhpApplication'
 import { Programme } from './events/Programme'
 import { ProjectDetails } from './events/ProjectDetails'
 import { DeliveryPhase } from './events/DeliveryPhase'
+import { HomeType } from './events/HomeType'
 
 export function initialize() {
   console.log('Initialize main library')
@@ -25,3 +26,4 @@ exports.AhpApplication = AhpApplication
 exports.Programme = Programme
 exports.ProjectDetails = ProjectDetails
 exports.DeliveryPhase = DeliveryPhase
+exports.HomeType = HomeType

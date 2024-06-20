@@ -1,12 +1,10 @@
-using HE.Investment.AHP.Domain.Tests.Common.TestData;
-using HE.Investment.AHP.Domain.UserContext;
-using HE.Investments.Account.Api.Contract.User;
 using HE.Investments.Account.Shared.User.Entities;
+using HE.Investments.AHP.Consortium.Domain.Tests.TestData;
 using HE.Investments.Consortium.Shared.UserContext;
 using HE.Investments.TestsUtils.TestFramework;
 using Moq;
 
-namespace HE.Investment.AHP.Domain.Tests.Common.TestDataBuilders;
+namespace HE.Investments.AHP.Consortium.Domain.Tests.TestObjectBuilders;
 
 public class ConsortiumUserContextTestBuilder
 {

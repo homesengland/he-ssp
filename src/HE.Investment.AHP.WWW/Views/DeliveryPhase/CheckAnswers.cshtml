@@ -52,7 +52,7 @@
             value="@Model.IsSectionCompleted"/>
 
         <vc:form-button/>
+        <vc:return-to-application-link application-id="@Model.ApplicationId" is-editable="@Model.IsEditable" should-submit="@false"/>
     </form>
 
-    <vc:return-to-application-link application-id="@Model.ApplicationId" is-editable="@false"/>
 </gds-div-grid-column-two-thirds>

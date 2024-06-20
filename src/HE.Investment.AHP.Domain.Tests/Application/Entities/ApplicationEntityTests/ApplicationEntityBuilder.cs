@@ -5,8 +5,10 @@ using HE.Investment.AHP.Domain.Application.Factories;
 using HE.Investment.AHP.Domain.Application.ValueObjects;
 using HE.Investment.AHP.Domain.Scheme.ValueObjects;
 using HE.Investments.Account.Shared.User;
+using HE.Investments.AHP.Consortium.Domain.Tests.TestData;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Tests.TestData;
+using HE.Investments.Consortium.Shared.UserContext;
 using HE.Investments.FrontDoor.Shared.Project;
 using Moq;
 using ApplicationSection = HE.Investment.AHP.Domain.Application.ValueObjects.ApplicationSection;
@@ -33,7 +35,7 @@ public class ApplicationEntityBuilder
 
     private IList<ApplicationSection>? _sections;
 
-    private IUserAccount _userAccount = UserAccountTestData.AdminUserAccountOne;
+    private IConsortiumUserAccount _userAccount = AhpUserAccountTestData.UserAccountOneNoConsortium;
 
     public static ApplicationEntityBuilder New() => new();
 
@@ -60,9 +62,9 @@ public class ApplicationEntityBuilder
 
     public ApplicationEntityBuilder WithUserPermissions(bool canEditApplication, bool canSubmitApplication)
     {
-        _userAccount = Mock.Of<IUserAccount>();
-        Mock.Get(_userAccount).Setup(x => x.CanEditApplication).Returns(canEditApplication);
-        Mock.Get(_userAccount).Setup(x => x.CanSubmitApplication).Returns(canSubmitApplication);
+        _userAccount = Mock.Of<IConsortiumUserAccount>();
+        Mock.Get(_userAccount).Setup(x => x.CanEdit).Returns(canEditApplication);
+        Mock.Get(_userAccount).Setup(x => x.CanSubmit).Returns(canSubmitApplication);
 
         return this;
     }

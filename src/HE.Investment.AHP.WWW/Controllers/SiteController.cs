@@ -14,8 +14,6 @@ using HE.Investment.AHP.WWW.Extensions;
 using HE.Investment.AHP.WWW.Models.Site;
 using HE.Investment.AHP.WWW.Models.Site.Factories;
 using HE.Investment.AHP.WWW.Workflows;
-using HE.Investments.Account.Shared;
-using HE.Investments.Account.Shared.Authorization.Attributes;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Constants;
 using HE.Investments.Common.Contract.Enum;
@@ -27,6 +25,8 @@ using HE.Investments.Common.WWW.Controllers;
 using HE.Investments.Common.WWW.Extensions;
 using HE.Investments.Common.WWW.Models;
 using HE.Investments.Common.WWW.Routing;
+using HE.Investments.Consortium.Shared.Authorization;
+using HE.Investments.Consortium.Shared.UserContext;
 using HE.Investments.FrontDoor.Shared.Project;
 using HE.Investments.Organisation.LocalAuthorities.ValueObjects;
 using MediatR;
@@ -35,17 +35,17 @@ using LocalAuthority = HE.Investments.Common.Contract.LocalAuthority;
 
 namespace HE.Investment.AHP.WWW.Controllers;
 
+[ConsortiumAuthorize(ConsortiumAccessContext.Edit)]
 [Route("site")]
-[AuthorizeWithCompletedProfile]
 public class SiteController : SiteControllerBase<SiteWorkflowState>
 {
     private readonly IMediator _mediator;
 
-    private readonly IAccountAccessContext _accountAccessContext;
+    private readonly IConsortiumUserContext _accountAccessContext;
 
     private readonly ISiteSummaryViewModelFactory _siteSummaryViewModelFactory;
 
-    public SiteController(IMediator mediator, IAccountAccessContext accountAccessContext, ISiteSummaryViewModelFactory siteSummaryViewModelFactory)
+    public SiteController(IMediator mediator, IConsortiumUserContext accountAccessContext, ISiteSummaryViewModelFactory siteSummaryViewModelFactory)
         : base(mediator)
     {
         _mediator = mediator;
@@ -53,6 +53,7 @@ public class SiteController : SiteControllerBase<SiteWorkflowState>
         _siteSummaryViewModelFactory = siteSummaryViewModelFactory;
     }
 
+    [ConsortiumAuthorize]
     [HttpGet]
     public IActionResult Index(string projectId)
     {
@@ -88,6 +89,7 @@ public class SiteController : SiteControllerBase<SiteWorkflowState>
             : RedirectToAction("Select", new { projectId = site.ProjectId });
     }
 
+    [ConsortiumAuthorize]
     [HttpGet("{siteId}")]
     public async Task<IActionResult> Details(string siteId, [FromQuery] int? page, CancellationToken cancellationToken)
     {
@@ -95,6 +97,7 @@ public class SiteController : SiteControllerBase<SiteWorkflowState>
         return View("Details", response);
     }
 
+    [ConsortiumAuthorize]
     [HttpGet("{siteId}/continue-answering")]
     public async Task<IActionResult> ContinueAnswering(string siteId, CancellationToken cancellationToken)
     {
@@ -911,6 +914,7 @@ public class SiteController : SiteControllerBase<SiteWorkflowState>
             cancellationToken);
     }
 
+    [ConsortiumAuthorize]
     [HttpGet("{siteId}/check-answers")]
     [WorkflowState(SiteWorkflowState.CheckAnswers)]
     public async Task<IActionResult> CheckAnswers(CancellationToken cancellationToken)
@@ -998,7 +1002,7 @@ public class SiteController : SiteControllerBase<SiteWorkflowState>
     {
         var siteId = this.GetSiteIdFromRoute();
         var siteDetails = await GetSiteDetails(siteId.Value, cancellationToken);
-        var isEditable = await _accountAccessContext.CanEditApplication() && siteDetails.Status != SiteStatus.Submitted;
+        var isEditable = (await _accountAccessContext.GetSelectedAccount()).CanEdit && siteDetails.Status != SiteStatus.Submitted;
         var sections = _siteSummaryViewModelFactory.CreateSiteSummary(siteDetails, Url, isEditable, useWorkflowRedirection);
 
         return new SiteSummaryViewModel(

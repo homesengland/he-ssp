@@ -12,6 +12,8 @@ using HE.Investments.Common.Contract.Pagination;
 using HE.Investments.Common.WWW.Controllers;
 using HE.Investments.Common.WWW.Extensions;
 using HE.Investments.Common.WWW.Routing;
+using HE.Investments.Consortium.Shared.Authorization;
+using HE.Investments.Consortium.Shared.UserContext;
 using HE.Investments.Organisation.Contract;
 using HE.Investments.Organisation.Contract.Commands;
 using HE.Investments.Organisation.Contract.Queries;
@@ -21,8 +23,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HE.Investment.AHP.WWW.Controllers;
 
+[ConsortiumAuthorize(ConsortiumAccessContext.Edit)]
 [Route("site-partners")]
-[AuthorizeWithCompletedProfile]
 public class SitePartnersController : SiteControllerBase<SitePartnersWorkflowState>
 {
     private readonly IMediator _mediator;
@@ -33,6 +35,7 @@ public class SitePartnersController : SiteControllerBase<SitePartnersWorkflowSta
         _mediator = mediator;
     }
 
+    [ConsortiumAuthorize]
     [HttpGet("{siteId}/back")]
     public async Task<IActionResult> Back([FromRoute] string siteId, SitePartnersWorkflowState currentPage)
     {

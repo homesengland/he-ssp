@@ -125,6 +125,8 @@ public static class ValidationErrorMessage
 
     public static string MustBeProvidedForCalculation(string displayName) => $"Enter the {displayName} to calculate";
 
+    public static string MustBeProvidedForCalculationWithPercentage(string displayName) => $"Enter the {displayName} percentage to calculate";
+
     public static string MustBeSelectedForCalculation(string displayName) => $"Select if {displayName} to calculate";
 
     public static string StringLengthExceeded(string displayName, int maxLength) => new($"The {displayName} must be {maxLength} characters or less");

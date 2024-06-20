@@ -2,14 +2,14 @@ using HE.Investment.AHP.Contract.Delivery.MilestonePayments.Commands;
 using HE.Investment.AHP.Domain.Delivery.CommandHandlers;
 using HE.Investment.AHP.Domain.Delivery.Entities;
 using HE.Investment.AHP.Domain.Delivery.Repositories;
-using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract.Validators;
+using HE.Investments.Consortium.Shared.UserContext;
 
 namespace HE.Investment.AHP.Domain.Delivery.Tranches.CommandHandlers;
 
 public class ClaimMilestonesCommandHandler : UpdateDeliveryPhaseCommandHandler<ClaimMilestonesCommand>
 {
-    public ClaimMilestonesCommandHandler(IDeliveryPhaseRepository repository, IAccountUserContext accountUserContext)
+    public ClaimMilestonesCommandHandler(IDeliveryPhaseRepository repository, IConsortiumUserContext accountUserContext)
         : base(repository, accountUserContext)
     {
     }
