@@ -80,7 +80,7 @@
         </gds-p>
     </div>
 
-    <form asp-controller="Project" asp-action="StartPost" asp-route-fdProjectId="@Model.Id" asp-method="post" novalidate>
+    <form asp-controller="Project" asp-action="StartPost" asp-route-fdProjectId="@Model.Id" asp-route-shouldCreateNewProject="@Model.ShouldCreateNewProject" asp-method="post" novalidate>
         <gds-button-start type="submit">Start now</gds-button-start>
     </form>
 </div>
