@@ -9,6 +9,7 @@ using HE.Investments.Common.Contract;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Workflow;
 using HE.Investments.Common.WWW.Components.SectionSummary;
+using HE.Investments.Common.WWW.Extensions;
 using HE.Investments.Common.WWW.Helpers;
 using HE.Investments.Common.WWW.Models.Summary;
 using HE.Investments.Common.WWW.Utils;
@@ -204,7 +205,7 @@ public class DeliveryPhaseCheckAnswersViewModelFactory : IDeliveryPhaseCheckAnsw
         items.AddWhen(
             new(
                 "Request additional payments",
-                deliveryPhase.IsAdditionalPaymentRequested?.ToString().ToOneElementList(),
+                deliveryPhase.IsAdditionalPaymentRequested?.MapToCommonResponse().ToOneElementList(),
                 IsEditable: isEditable,
                 ActionUrl: createAction(nameof(DeliveryPhaseController.UnregisteredBodyFollowUp))),
             deliveryPhase.IsUnregisteredBody);
