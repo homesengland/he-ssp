@@ -162,7 +162,7 @@ namespace HE.CRM.Plugins.Services.FrontDoorProjectSite
             this.TracingService.Trace($"entityFieldsParameters: {entityFieldsParameters}");
             this.TracingService.Trace($"useHeTables: {useHeTables}");
 
-            FrontDoorProjectSiteDto frontDoorSiteFromPortal = JsonSerializer.Deserialize<FrontDoorProjectSiteDto>(entityFieldsParameters);
+            FrontDoorProjectSiteDto frontDoorSiteFromPortal = JsonSerializer.Deserialize<FrontDoorProjectSiteDto>(entityFieldsParameters, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
 
             if (useHeTables)
             {

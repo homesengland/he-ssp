@@ -60,7 +60,7 @@ namespace HE.CRM.Plugins.Handlers.CustomApi.LocalAuthority
             }
 
             var useHeTables = !string.IsNullOrEmpty(useHeTablesFromPortal);
-            var paging = JsonSerializer.Deserialize<PagingRequestDto>(pagingRequest);
+            var paging = JsonSerializer.Deserialize<PagingRequestDto>(pagingRequest, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
             if (paging != null)
             {
                 var localAuthorities = CrmServicesFactory.Get<ILocalAuthorityService>().GetLocalAuthoritiesForModule(paging, searchPhrase, moduleSelected, useHeTables);
