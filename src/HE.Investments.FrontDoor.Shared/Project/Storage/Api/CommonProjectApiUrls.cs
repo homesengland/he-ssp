@@ -1,14 +1,32 @@
 using HE.Investments.Common.Extensions;
+using Microsoft.AspNetCore.Http.Extensions;
 
 namespace HE.Investments.FrontDoor.Shared.Project.Storage.Api;
 
 public static class CommonProjectApiUrls
 {
-    public const string DeactivateProject = "DeactivateProject";
+    public static string Project(string organisationId, string projectId, string? userGlobalId = null, bool? includeInactive = null)
+    {
+        var url = $"{organisationId.ToGuidAsString()}/projects/{projectId.ToGuidAsString()}";
+        var query = new QueryBuilder();
+        if (!string.IsNullOrEmpty(userGlobalId))
+        {
+            query.Add("userId", userGlobalId);
+        }
 
-    public static string GetProject(string projectId) => $"getProject/{projectId.ToGuidAsString()}";
+        if (includeInactive != null)
+        {
+            query.Add("includeInactive", includeInactive.Value.ToString());
+        }
 
-    public static string GetSite(string siteId) => $"getProjectSite/{siteId.ToGuidAsString()}";
+        return $"{url}{query.ToQueryString()}";
+    }
 
-    public static string GetSites(string projectId) => $"getProjectSites/{projectId.ToGuidAsString()}";
+    public static string DeleteProject(string projectId) => $"projects/{projectId.ToGuidAsString()}";
+
+    public static string Site(string projectId, string siteId) =>
+        $"projects/{projectId.ToGuidAsString()}/sites/{siteId.ToGuidAsString()}";
+
+    public static string Sites(string projectId, int pageNumber, int pageSize) =>
+        $"projects/{projectId.ToGuidAsString()}/sites?pageNumber={pageNumber}&pageSize={pageSize}";
 }

@@ -4,6 +4,7 @@ using HE.Investments.Account.Shared.Routing;
 using HE.Investments.Account.WWW.Notifications;
 using HE.Investments.Account.WWW.Routing;
 using HE.Investments.Account.WWW.Utils;
+using HE.Investments.Api.Config;
 using HE.Investments.Common.Config;
 using HE.Investments.Common.Contract.Enum;
 using HE.Investments.Common.CRM;
@@ -36,6 +37,7 @@ public static class OrganisationWebModule
         services.AddScoped<IAccountRoutes, AccountRoutes>();
         services.AddSingleton<IErrorViewPaths, AccountErrorViewPaths>();
         services.AddSingleton<IAccountExternalLinks, AccountExternalLinks>();
+        services.AddApiModule();
     }
 
     private static void AddConfiguration(IServiceCollection services)

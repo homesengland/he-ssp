@@ -5,5 +5,5 @@ namespace HE.Investments.FrontDoor.Domain.Site.Repository;
 
 public interface IRemoveSiteRepository
 {
-    Task Remove(FrontDoorSiteId siteId, UserAccount userAccount, CancellationToken cancellationToken);
+    Task Remove(FrontDoorProjectId projectId, FrontDoorSiteId siteId, UserAccount userAccount, CancellationToken cancellationToken);
 }

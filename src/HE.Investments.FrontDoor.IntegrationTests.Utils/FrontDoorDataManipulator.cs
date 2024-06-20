@@ -57,7 +57,8 @@ public class FrontDoorDataManipulator
     public async Task<(string ProjectId, string SiteId)> FrontDoorProjectEligibleForLoansExist(
         ILoginData loginData,
         string? projectName = null,
-        string? siteName = null)
+        string? siteName = null,
+        SupportActivityType supportActivityType = SupportActivityType.DevelopingHomes)
     {
         var projectDto = new FrontDoorProjectDto
         {
@@ -65,7 +66,7 @@ public class FrontDoorDataManipulator
             ProjectSupportsHousingDeliveryinEngland = true,
             OrganisationId = ShortGuid.ToGuid(loginData.OrganisationId),
             externalId = loginData.UserGlobalId,
-            ActivitiesinThisProject = new SupportActivitiesMapper().Map(new SupportActivities([SupportActivityType.DevelopingHomes])),
+            ActivitiesinThisProject = new SupportActivitiesMapper().Map(new SupportActivities([supportActivityType])),
             AmountofAffordableHomes = new AffordableHomesAmountMapper().ToDto(AffordableHomesAmount.OnlyOpenMarketHomes),
             InfrastructureDelivered = [],
             PreviousResidentialBuildingExperience = 1,
