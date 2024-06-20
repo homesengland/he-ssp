@@ -37,6 +37,7 @@ public class RemoveSiteTests : TestBase<ProjectSiteEntity>
         // then
         removeSiteRepository.Verify(
             repo => repo.Remove(
+                projectId,
                 siteId,
                 userAccount,
                 CancellationToken.None),
@@ -66,6 +67,7 @@ public class RemoveSiteTests : TestBase<ProjectSiteEntity>
         // then
         removeSiteRepository.Verify(
             repo => repo.Remove(
+                projectId,
                 siteId,
                 userAccount,
                 CancellationToken.None),

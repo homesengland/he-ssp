@@ -11,5 +11,5 @@ public interface ISiteContext
 
     Task<string> Save(string projectId, FrontDoorProjectSiteDto dto, string userGlobalId, string organisationId, CancellationToken cancellationToken);
 
-    Task Remove(string siteId, UserAccount userAccount, CancellationToken cancellationToken);
+    Task Remove(string projectId, string siteId, UserAccount userAccount, CancellationToken cancellationToken);
 }

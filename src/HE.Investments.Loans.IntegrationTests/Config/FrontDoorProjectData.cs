@@ -5,10 +5,10 @@ namespace HE.Investments.Loans.IntegrationTests.Config;
 
 public class FrontDoorProjectData
 {
-    public FrontDoorProjectData(string name, IReadOnlyCollection<SupportActivityType> supportActivities)
+    public FrontDoorProjectData(string name, SupportActivityType supportActivity)
     {
         Name = name;
-        SupportActivities = supportActivities;
+        SupportActivity = supportActivity;
     }
 
     public FrontDoorProjectId Id { get; private set; }
@@ -17,7 +17,7 @@ public class FrontDoorProjectData
 
     public bool IsEnglandHousingDelivery => true;
 
-    public IReadOnlyCollection<SupportActivityType> SupportActivities { get; private set; }
+    public SupportActivityType SupportActivity { get; private set; }
 
     public void SetProjectId(FrontDoorProjectId projectId)
     {

@@ -41,11 +41,11 @@ internal sealed class RequestCacheSiteContextDecorator : ISiteContext
         return dto.SiteId;
     }
 
-    public async Task Remove(string siteId, UserAccount userAccount, CancellationToken cancellationToken)
+    public async Task Remove(string projectId, string siteId, UserAccount userAccount, CancellationToken cancellationToken)
     {
         _siteCache.Delete(siteId);
         _sitesCache.Purge();
 
-        await _decorated.Remove(siteId, userAccount, cancellationToken);
+        await _decorated.Remove(projectId, siteId, userAccount, cancellationToken);
     }
 }
