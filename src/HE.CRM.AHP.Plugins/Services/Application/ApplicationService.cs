@@ -7,6 +7,7 @@ using DataverseModel;
 using HE.Base.Services;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.CRM.AHP.Plugins.Repositories;
+using HE.CRM.AHP.Plugins.Services.Consortium;
 using HE.CRM.AHP.Plugins.Services.GovNotifyEmail;
 using HE.CRM.Common.DtoMapping;
 using HE.CRM.Common.Repositories.Interfaces;
@@ -27,6 +28,7 @@ namespace HE.CRM.AHP.Plugins.Services.Application
         private readonly IHeLocalAuthorityRepository _heLocalAuthorityRepository;
         private readonly IGovNotifyEmailService _govNotifyEmailService;
         private readonly IAhpProjectRepository _projectRepository;
+        private readonly IConsortiumService _consortiumService;
 
         public ApplicationService(CrmServiceArgs args) : base(args)
         {
@@ -40,6 +42,7 @@ namespace HE.CRM.AHP.Plugins.Services.Application
             _heLocalAuthorityRepository = CrmRepositoriesFactory.Get<IHeLocalAuthorityRepository>();
             _govNotifyEmailService = CrmServicesFactory.Get<IGovNotifyEmailService>();
             _projectRepository = CrmRepositoriesFactory.Get<IAhpProjectRepository>();
+            _consortiumService = CrmServicesFactory.Get<IConsortiumService>();
         }
 
         public void ChangeApplicationStatus(string organisationId, string contactId, string applicationId, int newStatus, string changeReason, bool representationsandwarranties)
@@ -219,58 +222,93 @@ namespace HE.CRM.AHP.Plugins.Services.Application
         public List<AhpApplicationDto> GetApplication(string organisationId, string contactId = null, string fieldsToRetrieve = null, string applicationId = null)
         {
             TracingService.Trace("GetApplication");
-            var listOfApplications = new List<AhpApplicationDto>();
-            var additionalFilters = GetFetchXmlConditionForGivenField(applicationId, nameof(invln_scheme.invln_schemeId).ToLower());
-
-            var contactExternalIdFilter = GetFetchXmlConditionForGivenField(contactId, nameof(Contact.invln_externalid).ToLower());
-            contactExternalIdFilter = GenerateFilterMarksForCondition(contactExternalIdFilter);
-            string attributes = null;
-            if (!string.IsNullOrEmpty(fieldsToRetrieve))
+            string consortiumId = null;
+            if (app.invln_Site != null)
             {
-                attributes = GenerateFetchXmlAttributes(fieldsToRetrieve);
-            }
-            var applications = _applicationRepository.GetApplicationsForOrganisationAndContact(organisationId, contactExternalIdFilter, attributes, additionalFilters);
-            if (applications.Any())
-            {
-                foreach (var application in applications)
+                var site = _siteRepository.GetById(app.invln_Site.Id, invln_Sites.Fields.invln_AHPProjectId);
+                if (site.invln_AHPProjectId != null)
                 {
-                    var contact = _contactRepository.GetById(application.invln_contactid.Id, new string[] { Contact.Fields.FirstName, Contact.Fields.LastName, nameof(Contact.invln_externalid).ToLower() });
-                    invln_ahpproject ahpProject = null;
-                    if (application.invln_Site != null)
+                    var ahpProject = _projectRepository.GetById(site.invln_AHPProjectId.Id, invln_ahpproject.Fields.invln_ConsortiumId);
+                    if (ahpProject != null && ahpProject.invln_ConsortiumId != null)
                     {
-                        var site = _siteRepository.GetById(application.invln_Site.Id, invln_Sites.Fields.invln_AHPProjectId);
-                        if (site.invln_AHPProjectId != null)
-                        {
-                            ahpProject = _projectRepository.GetById(site.invln_AHPProjectId.Id, invln_ahpproject.Fields.invln_HeProjectId);
-                        }
+                        consortiumId = ahpProject.invln_ConsortiumId.Id.ToString();
                     }
-
-                    var applicationDto = AhpApplicationMapper.MapRegularEntityToDto(application, contact.invln_externalid, ahpProject);
-                    if (application.invln_lastexternalmodificationby != null)
-                    {
-                        var lastExternalModificationBy = _contactRepository.GetById(application.invln_lastexternalmodificationby.Id,
-                        new string[] { nameof(Contact.FirstName).ToLower(), nameof(Contact.LastName).ToLower() });
-                        applicationDto.lastExternalModificationBy = new ContactDto()
-                        {
-                            firstName = lastExternalModificationBy.FirstName,
-                            lastName = lastExternalModificationBy.LastName,
-                        };
-                    }
-
-                    if (application.invln_submitedby != null)
-                    {
-                        var submitedBy = _contactRepository.GetById(application.invln_submitedby.Id, new string[] { Contact.Fields.FirstName, Contact.Fields.LastName });
-                        applicationDto.lastExternalSubmittedBy = new ContactDto()
-                        {
-                            firstName = submitedBy.FirstName,
-                            lastName = submitedBy.LastName,
-                        };
-                    }
-
-                    listOfApplications.Add(applicationDto);
                 }
             }
+
+            var listOfApplications = new List<AhpApplicationDto>();
+            if (string.IsNullOrEmpty(applicationId))
+            {
+                var additionalFilters = GetFetchXmlConditionForGivenField(applicationId, nameof(invln_scheme.invln_schemeId).ToLower());
+                var contactExternalIdFilter = GetFetchXmlConditionForGivenField(contactId, nameof(Contact.invln_externalid).ToLower());
+                contactExternalIdFilter = GenerateFilterMarksForCondition(contactExternalIdFilter);
+                string attributes = null;
+                if (!string.IsNullOrEmpty(fieldsToRetrieve))
+                {
+                    attributes = GenerateFetchXmlAttributes(fieldsToRetrieve);
+                }
+                var applications = _applicationRepository.GetApplicationsForOrganisationAndContact(organisationId, contactExternalIdFilter, attributes, additionalFilters);
+                if (applications.Any())
+                {
+                    foreach (var application in applications)
+                    {
+                        var applicationDto = fillApplicationData(app);
+
+                        listOfApplications.Add(applicationDto);
+                    }
+                }
+            }
+            else
+            {
+                string[] columns = fieldsToRetrieve == null ? null : fieldsToRetrieve.Split(',');
+                var app = _applicationRepository.GetById(new Guid(applicationId), columns);
+                var applicationDto = fillApplicationData(app);
+
+                if (_consortiumService.CheckAccess(ConsortiumService.Operation.Get, ConsortiumService.RecordType.AHPProject,
+                    contactId, null, applicationId, consortiumId, organisationId, null))
+
+                    listOfApplications.Add(applicationDto);
+
+            }
             return listOfApplications;
+        }
+
+        private AhpApplicationDto fillApplicationData(invln_scheme app)
+        {
+            var contact = _contactRepository.GetById(app.invln_contactid.Id, new string[] { Contact.Fields.FirstName, Contact.Fields.LastName, nameof(Contact.invln_externalid).ToLower() });
+            invln_ahpproject ahpProject = null;
+            if (app.invln_Site != null)
+            {
+                var site = _siteRepository.GetById(app.invln_Site.Id, invln_Sites.Fields.invln_AHPProjectId);
+                if (site.invln_AHPProjectId != null)
+                {
+                    ahpProject = _projectRepository.GetById(site.invln_AHPProjectId.Id, invln_ahpproject.Fields.invln_HeProjectId);
+                }
+            }
+
+            var applicationDto = AhpApplicationMapper.MapRegularEntityToDto(app, contact.invln_externalid, ahpProject);
+            if (app.invln_lastexternalmodificationby != null)
+            {
+                var lastExternalModificationBy = _contactRepository.GetById(app.invln_lastexternalmodificationby.Id,
+                new string[] { nameof(Contact.FirstName).ToLower(), nameof(Contact.LastName).ToLower() });
+                applicationDto.lastExternalModificationBy = new ContactDto()
+                {
+                    firstName = lastExternalModificationBy.FirstName,
+                    lastName = lastExternalModificationBy.LastName,
+                };
+            }
+
+            if (app.invln_submitedby != null)
+            {
+                var submitedBy = _contactRepository.GetById(app.invln_submitedby.Id, new string[] { Contact.Fields.FirstName, Contact.Fields.LastName });
+                applicationDto.lastExternalSubmittedBy = new ContactDto()
+                {
+                    firstName = submitedBy.FirstName,
+                    lastName = submitedBy.LastName,
+                };
+            }
+
+            return applicationDto;
         }
 
         public Guid SetApplication(string applicationSerialized, string organisationId, string contactId, string fieldsToUpdate = null)
