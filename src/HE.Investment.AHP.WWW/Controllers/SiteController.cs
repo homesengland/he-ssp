@@ -37,7 +37,7 @@ using LocalAuthority = HE.Investments.Common.Contract.LocalAuthority;
 namespace HE.Investment.AHP.WWW.Controllers;
 
 [ConsortiumAuthorize(ConsortiumAccessContext.Edit)]
-[Route("site")]
+[Route("{organisationId}/site")]
 public class SiteController : SiteControllerBase<SiteWorkflowState>
 {
     private readonly IMediator _mediator;
@@ -58,7 +58,7 @@ public class SiteController : SiteControllerBase<SiteWorkflowState>
     [HttpGet]
     public IActionResult Index(string projectId)
     {
-        return RedirectToAction("Sites", "Project", new { projectId });
+        return this.OrganisationRedirectToAction("Sites", "Project", new { projectId });
     }
 
     [HttpGet("select")]
@@ -86,8 +86,8 @@ public class SiteController : SiteControllerBase<SiteWorkflowState>
         }
 
         return isConfirmed!.Value
-            ? RedirectToAction("Name", "Application", new { siteId })
-            : RedirectToAction("Select", new { projectId = site.ProjectId });
+            ? this.OrganisationRedirectToAction("Name", "Application", new { siteId })
+            : this.OrganisationRedirectToAction("Select", routeValues: new { projectId = site.ProjectId });
     }
 
     [ConsortiumAuthorize]
@@ -102,7 +102,7 @@ public class SiteController : SiteControllerBase<SiteWorkflowState>
     public async Task<IActionResult> ContinueAnswering(string siteId, CancellationToken cancellationToken)
     {
         var summary = await CreateSiteSummary(cancellationToken, useWorkflowRedirection: false);
-        return this.ContinueSectionAnswering(summary, () => RedirectToAction("CheckAnswers", new { siteId }));
+        return this.ContinueSectionAnswering(summary, () => this.OrganisationRedirectToAction("CheckAnswers", routeValues: new { siteId }));
     }
 
     [HttpGet("{siteId}/start")]
@@ -295,12 +295,20 @@ public class SiteController : SiteControllerBase<SiteWorkflowState>
 
     [HttpPost("{siteId}/local-authority/search")]
     [WorkflowState(SiteWorkflowState.LocalAuthoritySearch)]
-    public async Task<IActionResult> LocalAuthoritySearch(string siteId, [FromQuery] string? workflow, LocalAuthorities model, CancellationToken cancellationToken)
+    public async Task<IActionResult> LocalAuthoritySearch(
+        string siteId,
+        [FromQuery] string? workflow,
+        LocalAuthorities model,
+        CancellationToken cancellationToken)
     {
         return await this.ExecuteCommand<LocalAuthorities>(
             _mediator,
             new ProvideLocalAuthoritySearchPhraseCommand(SiteId.From(siteId), model.Phrase),
-            async () => await this.ReturnToSitesListOrContinue((await GetSiteDetails(siteId, cancellationToken)).ProjectId, () => Task.FromResult<IActionResult>(RedirectToAction("LocalAuthorityResult", new { siteId, phrase = model.Phrase, workflow }))),
+            async () => await this.ReturnToSitesListOrContinue(
+                (await GetSiteDetails(siteId, cancellationToken)).ProjectId,
+                () => Task.FromResult<IActionResult>(this.OrganisationRedirectToAction(
+                        "LocalAuthorityResult",
+                        routeValues: new { siteId, phrase = model.Phrase, workflow }))),
             () => Task.FromResult<IActionResult>(View("LocalAuthoritySearch", model)),
             cancellationToken);
     }
@@ -319,7 +327,7 @@ public class SiteController : SiteControllerBase<SiteWorkflowState>
 
         if (result.ReturnedData.Page?.TotalItems == 0)
         {
-            return RedirectToAction(nameof(LocalAuthorityNotFound), new { siteId, workflow });
+            return this.OrganisationRedirectToAction(nameof(LocalAuthorityNotFound), routeValues: new { siteId, workflow });
         }
 
         var model = result.ReturnedData;
@@ -370,7 +378,7 @@ public class SiteController : SiteControllerBase<SiteWorkflowState>
     {
         if (model.Response == YesNoType.No.ToString() && !Request.IsSaveAndReturnAction())
         {
-            return RedirectToAction(nameof(LocalAuthoritySearch), new { siteId, workflow });
+            return this.OrganisationRedirectToAction(nameof(LocalAuthoritySearch), routeValues: new { siteId, workflow });
         }
 
         return await ExecuteSiteCommand<ConfirmModel<LocalAuthorities>>(
@@ -415,7 +423,9 @@ public class SiteController : SiteControllerBase<SiteWorkflowState>
         return await this.ExecuteCommand<SitePlanningDetails>(
             _mediator,
             new ProvideSitePlanningStatusCommand(this.GetSiteIdFromRoute(), model.PlanningStatus),
-            async () => await this.ReturnToSitesListOrContinue((await GetSiteDetails(siteId.Value, cancellationToken)).ProjectId, () => Task.FromResult<IActionResult>(RedirectToAction("PlanningDetails", new { siteId, workflow }))),
+            async () => await this.ReturnToSitesListOrContinue(
+                (await GetSiteDetails(siteId.Value, cancellationToken)).ProjectId,
+                () => Task.FromResult<IActionResult>(this.OrganisationRedirectToAction("PlanningDetails", routeValues: new { siteId, workflow }))),
             async () =>
             {
                 var siteDetails = await GetSiteDetails(siteId.Value, cancellationToken);
@@ -560,7 +570,7 @@ public class SiteController : SiteControllerBase<SiteWorkflowState>
     {
         return isBack
             ? await Back(new { siteId })
-            : RedirectToAction("StartSitePartnersFlow", "SitePartners", new { siteId, workflow });
+            : this.OrganisationRedirectToAction("StartSitePartnersFlow", "SitePartners", new { siteId, workflow });
     }
 
     [HttpGet("{siteId}/finish-site-partners")]
@@ -568,7 +578,7 @@ public class SiteController : SiteControllerBase<SiteWorkflowState>
     public async Task<IActionResult> FinishSitePartnersFlow([FromRoute] string siteId, [FromQuery] string? workflow, bool isBack)
     {
         return isBack
-            ? RedirectToAction("FinishSitePartnersFlow", "SitePartners", new { siteId, isBack })
+            ? this.OrganisationRedirectToAction("FinishSitePartnersFlow", "SitePartners", new { siteId, isBack })
             : await Continue(new { siteId, workflow });
     }
 
@@ -929,7 +939,7 @@ public class SiteController : SiteControllerBase<SiteWorkflowState>
         return await this.ExecuteCommand<SiteSummaryViewModel>(
             _mediator,
             new CompleteSiteCommand(SiteId.From(siteId), isSectionCompleted),
-            () => Task.FromResult<IActionResult>(RedirectToAction("Details", new { siteId })),
+            () => Task.FromResult<IActionResult>(this.OrganisationRedirectToAction("Details", routeValues: new { siteId })),
             async () => View("CheckAnswers", await CreateSiteSummary(cancellationToken, isSectionCompleted)),
             cancellationToken);
     }

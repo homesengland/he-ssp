@@ -2,13 +2,14 @@
 @using HE.Investments.Common.WWW.Components.BackLinkWithCallback
 @using HE.Investments.Common.WWW.Components.SectionSummary
 @using HE.Investment.AHP.WWW.Views.Application
+@using HE.Investments.Common.WWW.Extensions
 @model HE.Investment.AHP.WWW.Models.Application.ApplicationSummaryViewModel
 @{
     ViewData["Title"] = "Submit application";
 }
 <gds-div-grid-column-two-thirds>
 
-    <vc:back-link-with-callback url="@Url.Action("Index", "Application")"/>
+    <vc:back-link-with-callback url="@Url.OrganisationAction("Index", "Application")"/>
 
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
 
@@ -19,8 +20,8 @@
         <vc:section-summary title="@item.Title" items="@item.Items"/>
     }
 
-    <form asp-controller="Application" asp-action="CheckAnswersPost" asp-route-applicationId="@Model.ApplicationId" asp-method="post" novalidate>
+    <he-organisation-form asp-controller="Application" asp-action="CheckAnswersPost" asp-route-applicationId="@Model.ApplicationId" asp-method="post" novalidate>
         <vc:form-button text="Accept and submit"/>
-    </form>
+    </he-organisation-form>
     <vc:return-to-application-link is-editable="false"/>
 </gds-div-grid-column-two-thirds>

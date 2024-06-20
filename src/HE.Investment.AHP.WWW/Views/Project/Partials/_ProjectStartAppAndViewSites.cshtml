@@ -1,4 +1,5 @@
 @using HE.Investments.Common.Gds
+@using HE.Investments.Common.WWW.Extensions
 @model (string ProgrammeName, string ProjectId, bool IsReadOnly)
 
 <he-div-grid-column-full class="govuk-!-padding-left-0">
@@ -9,7 +10,7 @@
         You will be asked to choose a site for this application, you can have more than one application per site.
     </gds-p>
     <link-button button-type="@ButtonType.Start"
-                 action-url="@Url.Action("Start", "Application", new { projectId = Model.ProjectId })"
+                 action-url="@Url.OrganisationAction("Start", "Application", new { projectId = Model.ProjectId })"
                  is-disabled="@Model.IsReadOnly">
         Start
     </link-button>
@@ -18,7 +19,7 @@
     <gds-p>
         View a list of your completed and in progress sites.
     </gds-p>
-    <link-button action-url="@Url.Action("Sites", "Project", new { projectId = Model.ProjectId })" button-type="@ButtonType.Secondary">
+    <link-button action-url="@Url.OrganisationAction("Sites", "Project", new { projectId = Model.ProjectId })" button-type="@ButtonType.Secondary">
         View
     </link-button>
 </he-div-grid-column-full>

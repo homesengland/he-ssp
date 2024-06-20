@@ -4,6 +4,7 @@
 @using HE.Investments.Common.WWW.Components.BackLinkWithCallback
 @using HE.Investments.Common.WWW.Components.PageHeader
 @using HE.Investments.Common.WWW.Components.SelectList
+@using HE.Investments.Common.WWW.Extensions
 @using SelectList = Microsoft.AspNetCore.Mvc.Rendering.SelectList
 @inject IFrontDoorLinks FrontDoorLinks
 @model HE.Investment.AHP.Contract.Project.ProjectSitesModel
@@ -11,7 +12,7 @@
     ViewData["Title"] = SitePageTitles.SiteSelect;
     var items = new PaginationResult<SelectListItemViewModel>(
         Model.Sites.Items.Select(i => new SelectListItemViewModel(
-            Url.Action("ConfirmSelect", "Site", new { siteId = i.Id }) ?? string.Empty,
+            Url.OrganisationAction("ConfirmSelect", "Site", new { siteId = i.Id }) ?? string.Empty,
             i.Name,
             i.LocalAuthorityName)).ToList(),
         Model.Sites.CurrentPage,
@@ -19,7 +20,7 @@
         Model.Sites.TotalItems);
 }
  <div class="govuk-grid-column-full">
-    <vc:back-link-with-callback url="@Url.Action("Start", "Application", new { projectId = Model.ProjectId.Value })"/>
+    <vc:back-link-with-callback url="@Url.OrganisationAction("Start", "Application", new { projectId = Model.ProjectId.Value })"/>
 
     <vc:page-header title="@SitePageTitles.SiteSelect"/>
 
@@ -30,6 +31,6 @@
 
     <vc:select-list
         items="@items"
-        paging-navigation-url="@Url.Action("Select", new { projectId = Model.ProjectId })" />
+        paging-navigation-url="@Url.OrganisationAction("Select", "Site", new { projectId = Model.ProjectId })" />
 
 </div>

@@ -16,7 +16,7 @@
 }
 
 <div class="govuk-grid-column-two-thirds">
-    <form asp-controller="HomeTypes" asp-action="@action" asp-method="post" asp-route-workflow="@workflow" novalidate>
+    <he-organisation-form asp-controller="HomeTypes" asp-action="@action" asp-method="post" asp-route-workflow="@workflow" novalidate>
         @Html.HiddenFor(m => Model.ApplicationName)
         <vc:home-type-form-header title="@HomeTypesPageTitles.HomeTypeDetails"
                                   current-page="@HomeTypesWorkflowState.HomeTypeDetails"
@@ -51,9 +51,8 @@
             </he-error-form-group>
 
             <vc:form-button/>
-
         </gds-field-set>
 
         <vc:return-to-application-link application-id="@applicationId"/>
-    </form>
+    </he-organisation-form>
 </div>

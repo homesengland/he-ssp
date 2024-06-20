@@ -1,15 +1,14 @@
 using System.Globalization;
-using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.Project;
 using HE.Investment.AHP.WWW.Controllers;
+using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Pagination;
-using HE.Investments.Common.Messages;
 using HE.Investments.Common.WWW.Components;
 using HE.Investments.Common.WWW.Components.ApplicationStatusTagComponent;
 using HE.Investments.Common.WWW.Components.Link;
 using HE.Investments.Common.WWW.Components.Table;
+using HE.Investments.Common.WWW.Extensions;
 using HE.Investments.Common.WWW.Helpers;
-using HE.Investments.Common.WWW.TagHelpers;
 using HE.Investments.Common.WWW.Utils;
 using Microsoft.AspNetCore.Mvc;
 
@@ -27,11 +26,12 @@ public class ApplicationsTable : ViewComponent
             new("Status", CellWidth.OneFifth),
         };
 
+        var organisationId = HttpContext.GetOrganisationIdFromRoute();
         var applicationsPage = applications.Items.Select(x =>
             {
                 var tableItems = new List<TableValueViewModel>
                 {
-                    new(Component: CreateLinkComponent(x)),
+                    new(Component: CreateLinkComponent(x, organisationId)),
                     new(x.Unit?.ToString(CultureInfo.InvariantCulture)),
                     new(x.Grant.DisplayPounds()),
                     new(Component: CreateApplicationStatusComponent(x)),
@@ -46,7 +46,7 @@ public class ApplicationsTable : ViewComponent
         return Task.FromResult<IViewComponentResult>(View("ApplicationsTable", (tableHeaders, rows, projectId)));
     }
 
-    private static DynamicComponentViewModel CreateLinkComponent(ApplicationProjectModel application)
+    private static DynamicComponentViewModel CreateLinkComponent(ApplicationProjectModel application, OrganisationId? organisationId)
     {
         return new DynamicComponentViewModel(
             nameof(Link),
@@ -55,7 +55,7 @@ public class ApplicationsTable : ViewComponent
                 text = application.Name,
                 controller = new ControllerName(nameof(ApplicationController)).WithoutPrefix(),
                 action = nameof(ApplicationController.TaskList),
-                values = new { applicationId = application.Id.Value },
+                values = new { applicationId = application.Id.Value, organisationId },
                 isStrong = true,
             });
     }

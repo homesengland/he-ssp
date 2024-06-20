@@ -1,11 +1,12 @@
 using HE.Investments.Account.Shared.Routing;
 using HE.Investments.Common;
+using HE.Investments.Common.WWW.Controllers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.FeatureManagement;
 
 namespace HE.Investment.AHP.WWW.Controllers;
 
-[Route("account")]
+[Route("{organisationId}/account")]
 public class AccountController : Controller
 {
     private readonly AccountConfig _accountConfig;
@@ -23,7 +24,7 @@ public class AccountController : Controller
     {
         if (await _featureManager.IsEnabledAsync(FeatureFlags.StayInCurrentApplication, cancellationToken))
         {
-            return RedirectToAction("Index", "Home");
+            return this.OrganisationRedirectToAction("Index", "Home");
         }
 
         return new RedirectResult(_accountConfig.Url);

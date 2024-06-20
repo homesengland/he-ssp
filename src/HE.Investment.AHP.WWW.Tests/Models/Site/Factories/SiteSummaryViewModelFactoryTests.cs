@@ -3,6 +3,7 @@ using HE.Investment.AHP.WWW.Models.Site.Factories;
 using HE.Investment.AHP.WWW.Tests.TestDataBuilders;
 using HE.Investments.Common.WWW.Components.SectionSummary;
 using HE.Investments.TestsUtils.TestFramework;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.AspNetCore.WebUtilities;
@@ -36,9 +37,9 @@ public class SiteSummaryViewModelFactoryTests : TestBase<SiteSummaryViewModelFac
             .BeEquivalentTo(
                 new[]
                 {
-                    new SectionSummaryItemModel("Developing partner", ["My developing partner"], "SitePartners/DevelopingPartner?siteId=1"),
-                    new SectionSummaryItemModel("Owner of the land", ["My owner of the land"], "SitePartners/OwnerOfTheLand?siteId=1"),
-                    new SectionSummaryItemModel("Owner of the homes", ["My owner of the homes"], "SitePartners/OwnerOfTheHomes?siteId=1"),
+                    new SectionSummaryItemModel("Developing partner", ["My developing partner"], "SitePartners/DevelopingPartner"),
+                    new SectionSummaryItemModel("Owner of the land", ["My owner of the land"], "SitePartners/OwnerOfTheLand"),
+                    new SectionSummaryItemModel("Owner of the homes", ["My owner of the homes"], "SitePartners/OwnerOfTheHomes"),
                 });
     }
 
@@ -61,12 +62,18 @@ public class SiteSummaryViewModelFactoryTests : TestBase<SiteSummaryViewModelFac
         result.Should().ContainKey("URB");
         result["URB"]
             .Should()
-            .BeEquivalentTo(new[] { new SectionSummaryItemModel("Owner of the homes", ["My owner of the homes"], "SitePartners/UnregisteredBodySearch?siteId=1") });
+            .BeEquivalentTo(new[] { new SectionSummaryItemModel("Owner of the homes", ["My owner of the homes"], "SitePartners/UnregisteredBodySearch") });
     }
 
     private static IUrlHelper MockUrlHelper()
     {
         var urlHelper = new Mock<IUrlHelper>();
+        var actionContext = new ActionContext
+        {
+            HttpContext = new DefaultHttpContext(),
+        };
+
+        urlHelper.Setup(x => x.ActionContext).Returns(actionContext);
 
         urlHelper.Setup(x => x.Action(It.IsAny<UrlActionContext>()))
             .Returns<UrlActionContext>(context =>

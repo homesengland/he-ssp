@@ -24,9 +24,9 @@ public class Order07LandDetailsSection : AhpSiteIntegrationTest
     public async Task Order01_ShouldProvideLandAcquisitionStatus()
     {
         await TestSiteQuestionPage(
-            SitePagesUrl.SiteLandAcquisitionStatus(SiteData.SiteId),
+            SitePagesUrl.SiteLandAcquisitionStatus(UserOrganisationData.OrganisationId, SiteData.SiteId),
             SitePageTitles.LandAcquisitionStatus,
-            SitePagesUrl.SiteTenderingStatus(SiteData.SiteId),
+            SitePagesUrl.SiteTenderingStatus(UserOrganisationData.OrganisationId, SiteData.SiteId),
             (nameof(SiteModel.LandAcquisitionStatus), SiteData.LandAcquisitionStatus.ToString()));
     }
 
@@ -35,9 +35,9 @@ public class Order07LandDetailsSection : AhpSiteIntegrationTest
     public async Task Order02_ShouldProvideTenderingStatus()
     {
         await TestSiteQuestionPage(
-            SitePagesUrl.SiteTenderingStatus(SiteData.SiteId),
+            SitePagesUrl.SiteTenderingStatus(UserOrganisationData.OrganisationId, SiteData.SiteId),
             SitePageTitles.TenderingStatus,
-            SitePagesUrl.SiteContractorDetails(SiteData.SiteId),
+            SitePagesUrl.SiteContractorDetails(UserOrganisationData.OrganisationId, SiteData.SiteId),
             (nameof(SiteTenderingStatusDetails.TenderingStatus), SiteData.TenderingStatus.ToString()));
     }
 
@@ -46,9 +46,9 @@ public class Order07LandDetailsSection : AhpSiteIntegrationTest
     public async Task Order03_ShouldProvideContractorDetails()
     {
         await TestSiteQuestionPage(
-            SitePagesUrl.SiteContractorDetails(SiteData.SiteId),
+            SitePagesUrl.SiteContractorDetails(UserOrganisationData.OrganisationId, SiteData.SiteId),
             SitePageTitles.ContractorDetails,
-            SitePagesUrl.SiteStrategicSite(SiteData.SiteId),
+            SitePagesUrl.SiteStrategicSite(UserOrganisationData.OrganisationId, SiteData.SiteId),
             (nameof(SiteTenderingStatusDetails.ContractorName), SiteData.GenerateContractorName()),
             (nameof(SiteTenderingStatusDetails.IsSmeContractor), SiteData.IsSmeContractor.ToBoolAnswer()));
     }
@@ -58,9 +58,9 @@ public class Order07LandDetailsSection : AhpSiteIntegrationTest
     public async Task Order04_ShouldProvideStrategicSite()
     {
         await TestSiteQuestionPage(
-            SitePagesUrl.SiteStrategicSite(SiteData.SiteId),
+            SitePagesUrl.SiteStrategicSite(UserOrganisationData.OrganisationId, SiteData.SiteId),
             SitePageTitles.StrategicSite,
-            SitePagesUrl.SiteType(SiteData.SiteId),
+            SitePagesUrl.SiteType(UserOrganisationData.OrganisationId, SiteData.SiteId),
             (nameof(StrategicSite.IsStrategicSite), SiteData.IsStrategicSite.ToBoolAnswer()),
             (nameof(StrategicSite.StrategicSiteName), SiteData.GenerateStrategicSiteName()));
     }
@@ -70,9 +70,9 @@ public class Order07LandDetailsSection : AhpSiteIntegrationTest
     public async Task Order05_ShouldProvideSiteType()
     {
         await TestSiteQuestionPage(
-            SitePagesUrl.SiteType(SiteData.SiteId),
+            SitePagesUrl.SiteType(UserOrganisationData.OrganisationId, SiteData.SiteId),
             SitePageTitles.SiteType,
-            SitePagesUrl.SiteUse(SiteData.SiteId),
+            SitePagesUrl.SiteUse(UserOrganisationData.OrganisationId, SiteData.SiteId),
             (nameof(SiteTypeDetails.SiteType), SiteData.SiteType.ToString()),
             (nameof(SiteTypeDetails.IsOnGreenBelt), SiteData.IsOnGreenBelt.ToBoolAnswer()),
             (nameof(SiteTypeDetails.IsRegenerationSite), SiteData.IsRegenerationSite.ToBoolAnswer()));

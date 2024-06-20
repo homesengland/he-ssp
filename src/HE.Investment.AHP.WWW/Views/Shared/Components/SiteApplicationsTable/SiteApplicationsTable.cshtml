@@ -1,10 +1,11 @@
 @using HE.Investments.Common.WWW.Components.Table
 @using HE.Investments.Common.Contract.Pagination
 @using HE.Investments.Common.WWW.Components.PagedTable
+@using HE.Investments.Common.WWW.Extensions
 
 @model (HE.Investment.AHP.Contract.Site.SiteId siteId, List<TableHeaderViewModel> headers, PaginationResult<TableRowViewModel> rows);
 
 <vc:paged-table
     headers="@Model.headers"
     rows="@Model.rows"
-    navigation-url="@Url.Action("Details", "Site", new { siteId = Model.siteId.Value})"/>
+    navigation-url="@Url.OrganisationAction("Details", "Site", new { siteId = Model.siteId.Value})"/>

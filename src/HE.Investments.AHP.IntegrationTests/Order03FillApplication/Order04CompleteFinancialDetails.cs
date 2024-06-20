@@ -42,7 +42,7 @@ public class Order04CompleteFinancialDetails : AhpApplicationIntegrationTest
     public async Task Order01_StartFinancialDetails()
     {
         // given
-        var taskListPage = await TestClient.NavigateTo(ApplicationPagesUrl.TaskList(ApplicationData.ApplicationId));
+        var taskListPage = await TestClient.NavigateTo(ApplicationPagesUrl.TaskList(UserOrganisationData.OrganisationId, ApplicationData.ApplicationId));
         taskListPage.HasLinkWithTestId("enter-financial-details", out var enterSchemeInformationLink);
 
         // when
@@ -67,7 +67,7 @@ public class Order04CompleteFinancialDetails : AhpApplicationIntegrationTest
 
         // when & then
         await TestApplicationQuestionPage(
-            FinancialDetailsPagesUrl.LandStatus(ApplicationData.ApplicationId),
+            FinancialDetailsPagesUrl.LandStatus(UserOrganisationData.OrganisationId, ApplicationData.ApplicationId),
             FinancialDetailsPageTitles.LandStatusPage,
             FinancialDetailsPagesUrl.LandValueSuffix,
             ("PurchasePrice", FinancialDetailsData.LandStatus.ToString(CultureInfo.InvariantCulture)));
@@ -82,7 +82,7 @@ public class Order04CompleteFinancialDetails : AhpApplicationIntegrationTest
 
         // when & then
         await TestApplicationQuestionPage(
-            FinancialDetailsPagesUrl.LandValue(ApplicationData.ApplicationId),
+            FinancialDetailsPagesUrl.LandValue(UserOrganisationData.OrganisationId, ApplicationData.ApplicationId),
             FinancialDetailsPageTitles.LandValuePage,
             FinancialDetailsPagesUrl.OtherApplicationCostsSuffix,
             ("IsOnPublicLand", FinancialDetailsData.IsPublicLand.MapToTrueFalse()),
@@ -98,7 +98,7 @@ public class Order04CompleteFinancialDetails : AhpApplicationIntegrationTest
 
         // when & then
         await TestApplicationQuestionPage(
-            FinancialDetailsPagesUrl.OtherApplicationCosts(ApplicationData.ApplicationId),
+            FinancialDetailsPagesUrl.OtherApplicationCosts(UserOrganisationData.OrganisationId, ApplicationData.ApplicationId),
             FinancialDetailsPageTitles.OtherSchemeCosts,
             FinancialDetailsPagesUrl.ExpectedContributionsSuffix,
             ("ExpectedWorksCosts", FinancialDetailsData.ExpectedWorksCosts.ToString(CultureInfo.InvariantCulture)),
@@ -114,7 +114,7 @@ public class Order04CompleteFinancialDetails : AhpApplicationIntegrationTest
 
         // when & then
         await TestApplicationQuestionPage(
-            FinancialDetailsPagesUrl.ExpectedContributions(ApplicationData.ApplicationId),
+            FinancialDetailsPagesUrl.ExpectedContributions(UserOrganisationData.OrganisationId, ApplicationData.ApplicationId),
             FinancialDetailsPageTitles.ExpectedContributions,
             FinancialDetailsPagesUrl.GrantsSuffix,
             ("RentalIncomeBorrowing", FinancialDetailsData.ExpectedContributionsRentalIncomeBorrowing.ToString(CultureInfo.InvariantCulture)),
@@ -135,7 +135,7 @@ public class Order04CompleteFinancialDetails : AhpApplicationIntegrationTest
 
         // when & then
         await TestApplicationQuestionPage(
-            FinancialDetailsPagesUrl.Grants(ApplicationData.ApplicationId),
+            FinancialDetailsPagesUrl.Grants(UserOrganisationData.OrganisationId, ApplicationData.ApplicationId),
             FinancialDetailsPageTitles.ExpectedGrants,
             FinancialDetailsPagesUrl.CheckAnswersSuffix,
             ("CountyCouncilGrants", FinancialDetailsData.CountyCouncilGrants.ToString(CultureInfo.InvariantCulture)),
@@ -152,7 +152,7 @@ public class Order04CompleteFinancialDetails : AhpApplicationIntegrationTest
     public async Task Order07_CheckAnswersAndCompleteSection()
     {
         // given
-        var checkAnswersPage = await GetCurrentPage(FinancialDetailsPagesUrl.CheckAnswers(ApplicationData.ApplicationId));
+        var checkAnswersPage = await GetCurrentPage(FinancialDetailsPagesUrl.CheckAnswers(UserOrganisationData.OrganisationId, ApplicationData.ApplicationId));
         checkAnswersPage
             .UrlEndWith(FinancialDetailsPagesUrl.CheckAnswersSuffix)
             .HasTitle(FinancialDetailsPageTitles.CheckAnswers)
@@ -165,7 +165,10 @@ public class Order04CompleteFinancialDetails : AhpApplicationIntegrationTest
         summary.Should().ContainKey("Public land").WithValue(YesNoType.Yes);
         summary.Should().ContainKey("Works costs").WhoseValue.Value.Should().BePoundsOnly(FinancialDetailsData.ExpectedWorksCosts);
         summary.Should().ContainKey("On costs").WhoseValue.Value.Should().BePoundsOnly(FinancialDetailsData.ExpectedOnCosts);
-        summary.Should().ContainKey("Total scheme costs").WhoseValue.Value.Should().BePoundsOnly(FinancialDetailsData.PublicLandValue + FinancialDetailsData.ExpectedWorksCosts + FinancialDetailsData.ExpectedOnCosts);
+        summary.Should()
+            .ContainKey("Total scheme costs")
+            .WhoseValue.Value.Should()
+            .BePoundsOnly(FinancialDetailsData.PublicLandValue + FinancialDetailsData.ExpectedWorksCosts + FinancialDetailsData.ExpectedOnCosts);
         summary.Should().ContainKey("Your contributions").WhoseValue.Value.Should().BePoundsOnly(FinancialDetailsData.TotalExpectedContributions);
         summary.Should().ContainKey("Grants from other public bodies").WhoseValue.Value.Should().BePoundsOnly(FinancialDetailsData.TotalGrants);
         summary.Should().ContainKey("Total contributions").WhoseValue.Value.Should().BePoundsOnly(FinancialDetailsData.TotalContributions);

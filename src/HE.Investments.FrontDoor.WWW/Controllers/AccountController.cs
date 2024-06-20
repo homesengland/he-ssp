@@ -7,7 +7,7 @@ using Microsoft.FeatureManagement;
 
 namespace HE.Investments.FrontDoor.WWW.Controllers;
 
-[Route("account")]
+[Route("{organisationId}/account")]
 [AuthorizeWithCompletedProfile]
 public class AccountController : Controller
 {

@@ -1,10 +1,10 @@
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Divs
-@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Headings
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Links
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Paragraphs
 @using HE.Investment.AHP.Contract.Site
 @using HE.Investment.AHP.WWW.Views.Shared.Components.AhpWorkflowBackButton
 @using HE.Investment.AHP.WWW.Views.Site.Const
+@using HE.Investments.Common.WWW.Extensions
 @model HE.Investment.AHP.Contract.Site.LocalAuthorities;
 @{
     ViewData["Title"] = SitePageTitles.LocalAuthorityNotFound;
@@ -22,14 +22,14 @@
 
     <gds-p>
         If you think you have entered the wrong details, you can
-        <gds-link href="@Url.Action("LocalAuthoritySearch", "Site", new { siteId = Model.SiteId, workflow })" data-testid="local-authority-search-link">
+        <gds-link href="@Url.OrganisationAction("LocalAuthoritySearch", "Site", new { siteId = Model.SiteId, workflow })" data-testid="local-authority-search-link">
             try again using a different name.
         </gds-link>
     </gds-p>
 
     <gds-p>
         If your local authority is not listed above, your
-        <gds-link href="@Url.Action("LocalAuthorityReset", "Site", new { siteId = Model.SiteId, workflow })" data-testid="assign-empty-local-authority-link">
+        <gds-link href="@Url.OrganisationAction("LocalAuthorityReset", "Site", new { siteId = Model.SiteId, workflow })" data-testid="assign-empty-local-authority-link">
             Growth Manager can add this for you later.
         </gds-link>
     </gds-p>

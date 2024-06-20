@@ -7,7 +7,6 @@ using HE.Investment.AHP.WWW.Extensions;
 using HE.Investment.AHP.WWW.Models.FinancialDetails;
 using HE.Investment.AHP.WWW.Models.FinancialDetails.Factories;
 using HE.Investment.AHP.WWW.Workflows;
-using HE.Investments.Account.Shared.Authorization.Attributes;
 using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Extensions;
@@ -26,7 +25,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace HE.Investment.AHP.WWW.Controllers;
 
 [ConsortiumAuthorize(ConsortiumAccessContext.Edit)]
-[Route("application/{applicationId}/financial-details")]
+[Route("{organisationId}/application/{applicationId}/financial-details")]
 public class FinancialDetailsController : WorkflowController<FinancialDetailsWorkflowState>
 {
     private readonly IMediator _mediator;
@@ -263,7 +262,9 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
     [WorkflowState(FinancialDetailsWorkflowState.CheckAnswers)]
     public async Task<IActionResult> Complete(string applicationId, FinancialDetailsCheckAnswersModel model, CancellationToken cancellationToken)
     {
-        var result = await _mediator.Send(new CompleteFinancialDetailsCommand(AhpApplicationId.From(applicationId), model.IsSectionCompleted), cancellationToken);
+        var result = await _mediator.Send(
+            new CompleteFinancialDetailsCommand(AhpApplicationId.From(applicationId), model.IsSectionCompleted),
+            cancellationToken);
 
         if (result.HasValidationErrors)
         {
@@ -276,7 +277,7 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
             return View("CheckAnswers", summary);
         }
 
-        return RedirectToAction(
+        return this.OrganisationRedirectToAction(
             nameof(ApplicationController.TaskList),
             new ControllerName(nameof(ApplicationController)).WithoutPrefix(),
             new { model.ApplicationId });
@@ -287,10 +288,10 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
     [WorkflowState(FinancialDetailsWorkflowState.ReturnToTaskList)]
     public IActionResult ReturnToTaskList(string applicationId)
     {
-        return RedirectToAction(
-                nameof(ApplicationController.TaskList),
-                new ControllerName(nameof(ApplicationController)).WithoutPrefix(),
-                new { ApplicationId = applicationId });
+        return this.OrganisationRedirectToAction(
+            nameof(ApplicationController.TaskList),
+            new ControllerName(nameof(ApplicationController)).WithoutPrefix(),
+            new { ApplicationId = applicationId });
     }
 
     [ConsortiumAuthorize]

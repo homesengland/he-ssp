@@ -5,6 +5,7 @@
 @using HE.Investment.AHP.WWW.Views.Shared.Components.OrganisationNotListedParagraph
 @using HE.Investment.AHP.WWW.Views.Shared.Components.ReturnToSitesLink
 @using HE.Investments.Common.WWW.Components.PageHeader
+@using HE.Investments.Common.WWW.Extensions
 @using SelectList = Microsoft.AspNetCore.Mvc.Rendering.SelectList
 @model HE.Investment.AHP.WWW.Models.Common.SearchOrganisationResultModel;
 @{
@@ -15,8 +16,8 @@
         nameof(OrganisationNotListedParagraph),
         new
         {
-            searchOrganisationUrl = Url.Action("UnregisteredBodySearch", "SitePartners", new { siteId, workflow }),
-            enterDetailsUrl = Url.Action("UnregisteredBodyCreateManual", "SitePartners", new { siteId, workflow })
+            searchOrganisationUrl = Url.OrganisationAction("UnregisteredBodySearch", "SitePartners", new { siteId, workflow }),
+            enterDetailsUrl = Url.OrganisationAction("UnregisteredBodyCreateManual", "SitePartners", new { siteId, workflow })
         });
 }
 
@@ -26,7 +27,7 @@
     <gds-p>This is the partner who will own the homes after completion.</gds-p>
 
     <vc:select-list
-        items="@Model.ToSelectListItemViewModel(x => Url.Action("UnregisteredBodyConfirm", "SitePartners", new { siteId, organisationIdentifier = x, workflow }))"
+        items="@Model.ToSelectListItemViewModel(x => Url.OrganisationAction("UnregisteredBodyConfirm", "SitePartners", new { siteId, organisationIdentifier = x, workflow }))"
         paging-navigation-url="@Model.NavigationUrl"
         additional-content="@organisationNotListedParagraph"/>
 

@@ -26,8 +26,9 @@ public class Order01StartAhpProjectWithOneSite : AhpIntegrationTest
     public async Task Order01_AhpProjectShouldBeCreated()
     {
         // given
-        var (projectId, siteId) = await InFrontDoor.FrontDoorProjectEligibleForAhpExist(LoginData, ProjectData.GenerateProjectName(), SiteData.GenerateSiteName());
-        var currentPage = await TestClient.NavigateTo(ProjectPagesUrl.ProjectStart(projectId));
+        var (projectId, siteId) =
+            await InFrontDoor.FrontDoorProjectEligibleForAhpExist(LoginData, ProjectData.GenerateProjectName(), SiteData.GenerateSiteName());
+        var currentPage = await TestClient.NavigateTo(ProjectPagesUrl.ProjectStart(UserOrganisationData.OrganisationId, projectId));
         ProjectData.SetProjectId(projectId);
         SiteData.SetSiteId(siteId);
 
@@ -40,7 +41,7 @@ public class Order01StartAhpProjectWithOneSite : AhpIntegrationTest
 
         // then
         nextPage
-            .UrlEndWith(SitePagesUrl.SiteSelect(ProjectData.ProjectId))
+            .UrlEndWith(SitePagesUrl.SiteSelect(UserOrganisationData.OrganisationId, ProjectData.ProjectId))
             .HasTitle(SitePageTitles.SiteSelect);
 
         SaveCurrentPage();
@@ -51,8 +52,8 @@ public class Order01StartAhpProjectWithOneSite : AhpIntegrationTest
     public async Task Order02_ShouldRedirectToSiteStartPage_WhenSelectedSiteIsNotCompleted()
     {
         // given
-        (await GetCurrentPage(SitePagesUrl.SiteSelect(ProjectData.ProjectId)))
-                                .HasNavigationListItem("select-list", out var selectedSiteLink);
+        (await GetCurrentPage(SitePagesUrl.SiteSelect(UserOrganisationData.OrganisationId, ProjectData.ProjectId)))
+            .HasNavigationListItem("select-list", out var selectedSiteLink);
 
         // when
         (await TestClient.NavigateTo(selectedSiteLink))
@@ -67,7 +68,7 @@ public class Order01StartAhpProjectWithOneSite : AhpIntegrationTest
         // then
         pageAfterConfirmation
             .HasTitle(SitePageTitles.SiteDetails)
-            .UrlEndWith(SitePagesUrl.SiteStart(selectedSiteLink.Href.GetSiteGuidFromUrl()));
+            .UrlEndWith(SitePagesUrl.SiteStart(UserOrganisationData.OrganisationId, selectedSiteLink.Href.GetSiteGuidFromUrl()));
 
         SaveCurrentPage();
     }
