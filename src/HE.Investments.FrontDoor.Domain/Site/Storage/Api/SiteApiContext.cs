@@ -3,14 +3,8 @@ using HE.Investments.Account.Shared.User;
 using HE.Investments.Api;
 using HE.Investments.Api.Auth;
 using HE.Investments.Api.Config;
-using HE.Investments.Common.Contract.Pagination;
-using HE.Investments.Common.Extensions;
-using HE.Investments.FrontDoor.Domain.Site.Storage.Api.Contract.Requests;
-using HE.Investments.FrontDoor.Domain.Site.Storage.Api.Contract.Responses;
-using HE.Investments.FrontDoor.Domain.Site.Storage.Api.Mappers;
+using HE.Investments.FrontDoor.Domain.Site.Storage.Api.Contract;
 using HE.Investments.FrontDoor.Shared.Project.Storage.Api;
-using HE.Investments.FrontDoor.Shared.Project.Storage.Api.Contract.Responses;
-using HE.Investments.FrontDoor.Shared.Project.Storage.Api.Mappers;
 
 namespace HE.Investments.FrontDoor.Domain.Site.Storage.Api;
 
@@ -27,25 +21,15 @@ public sealed class SiteApiContext : ApiHttpClientBase, ISiteContext
         PagingRequestDto pagination,
         CancellationToken cancellationToken)
     {
-        var response = await SendAsync<GetMultipleSitesResponse>(CommonProjectApiUrls.GetSites(projectId), HttpMethod.Get, cancellationToken);
-        var sites = response
-            .TakePage(new PaginationRequest(pagination.pageNumber, pagination.pageSize))
-            .Select(GetSiteResponseMapper.Map)
-            .ToList();
-
-        return new PagedResponseDto<FrontDoorProjectSiteDto>
-        {
-            items = sites,
-            paging = pagination,
-            totalItemsCount = response.Count,
-        };
+        return await SendAsync<PagedResponseDto<FrontDoorProjectSiteDto>>(
+            CommonProjectApiUrls.Sites(projectId, pagination.pageNumber, pagination.pageSize),
+            HttpMethod.Get,
+            cancellationToken);
     }
 
     public async Task<FrontDoorProjectSiteDto> GetSite(string projectId, string siteId, UserAccount userAccount, CancellationToken cancellationToken)
     {
-        var response = await SendAsync<GetSiteResponse>(CommonProjectApiUrls.GetSite(siteId), HttpMethod.Get, cancellationToken);
-
-        return GetSiteResponseMapper.Map(response);
+        return await SendAsync<FrontDoorProjectSiteDto>(CommonProjectApiUrls.Site(projectId, siteId), HttpMethod.Get, cancellationToken);
     }
 
     public async Task<string> Save(
@@ -55,15 +39,17 @@ public sealed class SiteApiContext : ApiHttpClientBase, ISiteContext
         string organisationId,
         CancellationToken cancellationToken)
     {
-        var request = SaveSiteRequestMapper.Map(dto, projectId);
-        var response = await SendAsync<SaveSiteRequest, SaveSiteResponse>(request, SiteApiUrls.SaveSite, HttpMethod.Post, cancellationToken);
+        var response = await SendAsync<FrontDoorProjectSiteDto, SaveFrontDoorSiteResponse>(
+            dto,
+            SiteApiUrls.Site(projectId, dto.SiteId),
+            string.IsNullOrEmpty(dto.SiteId) ? HttpMethod.Post : HttpMethod.Put,
+            cancellationToken);
 
-        return response.Result;
+        return response.SiteId;
     }
 
-    public async Task Remove(string siteId, UserAccount userAccount, CancellationToken cancellationToken)
+    public async Task Remove(string projectId, string siteId, UserAccount userAccount, CancellationToken cancellationToken)
     {
-        var request = new RemoveSiteRequest(siteId.ToGuidAsString());
-        await SendAsync<RemoveSiteRequest, RemoveSiteResponse>(request, SiteApiUrls.RemoveSite, HttpMethod.Post, cancellationToken);
+        await SendAsync<RemoveFrontDoorSiteResponse>(SiteApiUrls.RemoveSite(projectId, siteId), HttpMethod.Delete, cancellationToken);
     }
 }

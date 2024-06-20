@@ -6,6 +6,8 @@ using System.Text.Json.Serialization;
 using HE.Investments.Api.Auth;
 using HE.Investments.Api.Config;
 using HE.Investments.Api.Exceptions;
+using HE.Investments.Api.Serialization;
+using HE.Investments.Common.Contract.Exceptions;
 using Polly;
 using Polly.Retry;
 
@@ -24,6 +26,7 @@ public abstract class ApiHttpClientBase
         PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
         PropertyNameCaseInsensitive = true,
         DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
+        Converters = { new BoolConverter() },
     };
 
     protected ApiHttpClientBase(HttpClient httpClient, IApiTokenProvider apiTokenProvider, IApiConfig config)
@@ -34,7 +37,10 @@ public abstract class ApiHttpClientBase
             .WaitAndRetryAsync(config.RetryCount, _ => TimeSpan.FromMilliseconds(config.RetryDelayInMilliseconds));
     }
 
-    protected async Task<TResponse> SendAsync<TResponse>(string relativeUrl, HttpMethod method, CancellationToken cancellationToken)
+    protected async Task<TResponse> SendAsync<TResponse>(
+        string relativeUrl,
+        HttpMethod method,
+        CancellationToken cancellationToken)
     {
         return await SendAsync<TResponse>(CreateHttpRequestFactory(null, relativeUrl, method), cancellationToken);
     }
@@ -80,7 +86,7 @@ public abstract class ApiHttpClientBase
         var responseContent = await httpResponse.Content.ReadAsStringAsync(cancellationToken);
         if (string.IsNullOrEmpty(responseContent))
         {
-            throw new ApiSerializationException(responseContent: responseContent);
+            throw new NotFoundException($"Cannot find resource for {typeof(TResponse).Name}.");
         }
 
         try

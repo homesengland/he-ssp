@@ -1,35 +1,26 @@
-using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investments.Account.Contract.UserOrganisation;
+using HE.Investments.Account.Domain.UserOrganisation.Storage;
 using HE.Investments.Account.Shared.User;
 using HE.Investments.Common.Contract;
-using HE.Investments.Common.CRM.Model;
-using HE.Investments.Common.CRM.Services;
 using HE.Investments.Common.Extensions;
 
 namespace HE.Investments.Account.Domain.UserOrganisation.Repositories;
 
 public class ProjectRepository : IProjectRepository
 {
-    private readonly ICrmService _crmService;
+    private readonly IProjectContext _projectContext;
 
-    public ProjectRepository(ICrmService crmService)
+    public ProjectRepository(IProjectContext projectContext)
     {
-        _crmService = crmService;
+        _projectContext = projectContext;
     }
 
     public async Task<IList<UserProject>> GetUserProjects(UserAccount userAccount, CancellationToken cancellationToken)
     {
-        var request = new invln_getmultiplefrontdoorprojectsRequest
-        {
-            invln_organisationid = userAccount.SelectedOrganisationId().ToGuidAsString(),
-            inlvn_userid = userAccount.CanViewAllApplications() ? string.Empty : userAccount.UserGlobalId.ToString(),
-            invln_usehetables = "true",
-        };
-
-        var projects = await _crmService.ExecuteAsync<invln_getmultiplefrontdoorprojectsRequest, invln_getmultiplefrontdoorprojectsResponse, IList<FrontDoorProjectDto>>(
-            request,
-            r => string.IsNullOrEmpty(r.invln_frontdoorprojects) ? "[]" : r.invln_frontdoorprojects,
-            cancellationToken);
+        var organisationId = userAccount.SelectedOrganisationId();
+        var projects = userAccount.CanViewAllApplications()
+            ? await _projectContext.GetOrganisationProjects(organisationId.ToString(), cancellationToken)
+            : await _projectContext.GetUserProjects(userAccount.UserGlobalId.ToString(), organisationId.ToString(), cancellationToken);
 
         return projects
             .OrderByDescending(x => x.CreatedOn ?? DateTime.MinValue)

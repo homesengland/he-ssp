@@ -1,5 +1,4 @@
 using HE.Investments.FrontDoor.Shared.Project.Contract;
-using HE.Investments.IntegrationTestsFramework.Data;
 using HE.Investments.TestsUtils.Extensions;
 
 namespace HE.Investments.Loans.IntegrationTests.Config;
@@ -39,7 +38,7 @@ public class IntegrationUserData
     {
         return ProjectPrefillData = new FrontDoorProjectData(
             "IT-FD-Project".WithTimestampSuffix(),
-            [SupportActivityType.DevelopingHomes]);
+            SupportActivityType.DevelopingHomes);
     }
 
     public string GenerateApplicationName()

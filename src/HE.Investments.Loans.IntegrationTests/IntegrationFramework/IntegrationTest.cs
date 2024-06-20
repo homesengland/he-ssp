@@ -1,10 +1,12 @@
 using AngleSharp.Html.Dom;
+using HE.Investments.FrontDoor.IntegrationTests.Utils;
 using HE.Investments.IntegrationTestsFramework;
 using HE.Investments.IntegrationTestsFramework.Auth;
 using HE.Investments.IntegrationTestsFramework.Config;
 using HE.Investments.Loans.IntegrationTests.Config;
 using HE.Investments.Loans.IntegrationTests.Crm;
 using HE.Investments.Loans.WWW;
+using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 
 namespace HE.Investments.Loans.IntegrationTests.IntegrationFramework;
@@ -23,9 +25,10 @@ public class IntegrationTest : IntegrationTestBase<Program>
         fixture.MockUserAccount();
         _fixture = fixture;
         SetUserOrganisationData();
+        InFrontDoor = fixture.ServiceProvider.GetRequiredService<FrontDoorDataManipulator>();
     }
 
-    protected FrontDoorProjectCrmRepository FrontDoorProjectCrmRepository => _fixture.FrontDoorProjectCrmRepository;
+    public FrontDoorDataManipulator InFrontDoor { get; }
 
     protected LoanApplicationCrmRepository LoanApplicationCrmRepository => _fixture.LoanApplicationCrmRepository;
 
