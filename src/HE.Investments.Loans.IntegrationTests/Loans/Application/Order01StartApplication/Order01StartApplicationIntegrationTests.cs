@@ -1,6 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using HE.Investments.Common.Extensions;
+using HE.Investments.FrontDoor.Shared.Project;
 using HE.Investments.IntegrationTestsFramework.Assertions;
 using HE.Investments.Loans.Contract.Application.Enums;
 using HE.Investments.Loans.IntegrationTests.IntegrationFramework;
@@ -50,7 +51,12 @@ public class Order01StartApplicationIntegrationTests : IntegrationTest
     public async Task Order03_ShouldRedirectToLoanApplyInformation_WhenContinueButtonIsClicked()
     {
         // given
-        await FrontDoorProjectCrmRepository.CreateProject(UserData.GenerateProjectPrefillData(), LoginData);
+        var prefillData = UserData.GenerateProjectPrefillData();
+        var (projectId, _) = await InFrontDoor.FrontDoorProjectEligibleForLoansExist(
+            LoginData,
+            projectName: prefillData.Name,
+            supportActivityType: prefillData.SupportActivity);
+        prefillData.SetProjectId(FrontDoorProjectId.From(projectId));
 
         var currentPage = await TestClient.NavigateTo(ApplicationPagesUrls.AboutLoanPage(UserData.ProjectPrefillData.Id));
         var continueButton = currentPage

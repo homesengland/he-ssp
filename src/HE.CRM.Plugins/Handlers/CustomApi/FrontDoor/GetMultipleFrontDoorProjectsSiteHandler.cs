@@ -25,7 +25,7 @@ namespace HE.CRM.Plugins.Handlers.CustomApi.FrontDoor
         {
             this.TracingService.Trace("GetMultipleFrontDoorProjectsSiteHandler");
             var useHeTables = !string.IsNullOrEmpty(useHeTablesFromPortal);
-            var paging = JsonSerializer.Deserialize<PagingRequestDto>(pagingRequest);
+            var paging = JsonSerializer.Deserialize<PagingRequestDto>(pagingRequest, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
             var frontDoorProjectSiteDtoList = CrmServicesFactory.Get<IFrontDoorProjectSiteService>().GetFrontDoorProjectSites(paging, frontDoorProjectId, useHeTables, fieldsToRetrieve);
             this.TracingService.Trace("Send Response");
             if (frontDoorProjectSiteDtoList != null)

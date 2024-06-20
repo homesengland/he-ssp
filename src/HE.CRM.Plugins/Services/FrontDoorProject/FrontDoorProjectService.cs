@@ -51,7 +51,9 @@ namespace HE.CRM.Plugins.Services.FrontDoorProject
         {
             Guid frontdoorprojectGUID = Guid.NewGuid();
             this.TracingService.Trace("entityFieldsParameters:" + entityFieldsParameters);
-            FrontDoorProjectDto frontDoorProjectFromPortal = JsonSerializer.Deserialize<FrontDoorProjectDto>(entityFieldsParameters);
+            FrontDoorProjectDto frontDoorProjectFromPortal = JsonSerializer.Deserialize<FrontDoorProjectDto>(
+                entityFieldsParameters,
+                new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
             var requestContact = _contactRepository.GetContactViaExternalId(externalContactId);
 
             if (useHeTables)

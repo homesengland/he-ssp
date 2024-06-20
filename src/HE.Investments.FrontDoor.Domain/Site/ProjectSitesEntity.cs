@@ -57,7 +57,7 @@ public class ProjectSitesEntity
         }
         else if (removeAnswer == RemoveSiteAnswer.Yes)
         {
-            await removeSiteRepository.Remove(siteId, userAccount, cancellationToken);
+            await removeSiteRepository.Remove(ProjectId, siteId, userAccount, cancellationToken);
         }
     }
 
@@ -65,7 +65,7 @@ public class ProjectSitesEntity
     {
         foreach (var site in Sites)
         {
-            await removeSiteRepository.Remove(site.Id, userAccount, cancellationToken);
+            await removeSiteRepository.Remove(ProjectId, site.Id, userAccount, cancellationToken);
         }
     }
 
