@@ -1,12 +1,13 @@
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Paragraphs
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Links
+@using HE.Investments.Common.WWW.Extensions
 
 @{
     var id = ViewContext.RouteData.Values["id"];
 }
 
 <gds-p>
-    <gds-link href="@Url.Action("TaskList","LoanApplicationV2", new {id = id})">
+    <gds-link href="@Url.OrganisationAction("TaskList","LoanApplicationV2", new { id })!">
         Return to application
     </gds-link>
 </gds-p>

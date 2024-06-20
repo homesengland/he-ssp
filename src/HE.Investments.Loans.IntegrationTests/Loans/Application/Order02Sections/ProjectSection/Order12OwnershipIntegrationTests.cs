@@ -1,12 +1,9 @@
 using System.Diagnostics.CodeAnalysis;
 using HE.Investments.Common.Contract.Constants;
-using HE.Investments.IntegrationTestsFramework;
-using HE.Investments.Loans.Common.Utils.Constants.FormOption;
 using HE.Investments.Loans.Contract.Projects.ViewModels;
 using HE.Investments.Loans.IntegrationTests.IntegrationFramework;
 using HE.Investments.Loans.IntegrationTests.Loans.LoansHelpers.Extensions;
 using HE.Investments.Loans.IntegrationTests.Loans.LoansHelpers.Pages;
-using HE.Investments.Loans.WWW;
 using HE.Investments.Loans.WWW.Views.Project.Consts;
 using HE.Investments.TestsUtils.Extensions;
 using Xunit;
@@ -34,7 +31,7 @@ public class Order12OwnershipIntegrationTests : IntegrationTest
     public async Task Order01_ShouldRedirectToGrantFunding_WhenNoWasSelected()
     {
         // given
-        var ownershipPage = await TestClient.NavigateTo(ProjectPagesUrls.Ownership(_applicationLoanId, _projectId));
+        var ownershipPage = await TestClient.NavigateTo(ProjectPagesUrls.Ownership(UserOrganisationData.OrganisationId, _applicationLoanId, _projectId));
 
         var continueButton = ownershipPage.GetGdsSubmitButtonById("continue-button");
 
@@ -54,7 +51,7 @@ public class Order12OwnershipIntegrationTests : IntegrationTest
     public async Task Order02_ShouldRedirectToAdditionalDetails_WhenYesWasSelected()
     {
         // given
-        var ownershipPage = await GetCurrentPage(ProjectPagesUrls.Ownership(_applicationLoanId, _projectId));
+        var ownershipPage = await GetCurrentPage(ProjectPagesUrls.Ownership(UserOrganisationData.OrganisationId, _applicationLoanId, _projectId));
 
         var continueButton = ownershipPage.GetGdsSubmitButtonById("continue-button");
 

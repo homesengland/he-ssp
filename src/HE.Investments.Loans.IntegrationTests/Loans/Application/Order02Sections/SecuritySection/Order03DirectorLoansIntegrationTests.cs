@@ -1,11 +1,9 @@
 using System.Diagnostics.CodeAnalysis;
 using AngleSharp.Html.Dom;
 using He.AspNetCore.Mvc.Gds.Components.Constants;
-using HE.Investments.IntegrationTestsFramework;
 using HE.Investments.Loans.IntegrationTests.IntegrationFramework;
 using HE.Investments.Loans.IntegrationTests.Loans.LoansHelpers.Extensions;
 using HE.Investments.Loans.IntegrationTests.Loans.LoansHelpers.Pages;
-using HE.Investments.Loans.WWW;
 using HE.Investments.Loans.WWW.Views.Security.Consts;
 using HE.Investments.TestsUtils.Extensions;
 using Xunit;
@@ -30,12 +28,13 @@ public class Order03DirectorLoansIntegrationTests : IntegrationTest
     public async Task Order01_ShouldMoveToCheckAnswers_WhenNoIsSelectedAndContinueButtonIsClicked()
     {
         // given
-        var dirLoansPage = await TestClient.NavigateTo(SecurityPageUrls.DirectorLoans(_applicationId));
+        var dirLoansPage = await TestClient.NavigateTo(SecurityPageUrls.DirectorLoans(UserOrganisationData.OrganisationId, _applicationId));
         var continueButton = dirLoansPage.GetGdsSubmitButtonById("continue-button");
 
         // when
         var checkAnswersPage = await TestClient.SubmitButton(
-            continueButton, new Dictionary<string, string> { { "DirLoans", CommonResponse.No } });
+            continueButton,
+            new Dictionary<string, string> { { "DirLoans", CommonResponse.No } });
 
         // then
         checkAnswersPage
@@ -55,7 +54,8 @@ public class Order03DirectorLoansIntegrationTests : IntegrationTest
 
         // when
         var checkAnswersPage = await TestClient.SubmitButton(
-            continueButton, new Dictionary<string, string> { { "DirLoans", string.Empty } });
+            continueButton,
+            new Dictionary<string, string> { { "DirLoans", string.Empty } });
 
         // then
         checkAnswersPage
@@ -73,7 +73,8 @@ public class Order03DirectorLoansIntegrationTests : IntegrationTest
 
         // when
         var dirLoansSubPage = await TestClient.SubmitButton(
-            continueButton, new Dictionary<string, string> { { "DirLoans", CommonResponse.Yes } });
+            continueButton,
+            new Dictionary<string, string> { { "DirLoans", CommonResponse.Yes } });
 
         // then
         dirLoansSubPage

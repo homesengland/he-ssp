@@ -40,7 +40,7 @@ public class HomeController : Controller
         return View();
     }
 
-    [HttpGet("/dashboard")]
+    [HttpGet("/{organisationId}/dashboard")]
     [AuthorizeWithCompletedProfile]
     [WorkflowState(LoanApplicationWorkflow.State.UserDashboard)]
     public async Task<IActionResult> Dashboard()
@@ -49,12 +49,14 @@ public class HomeController : Controller
     }
 
     [HttpGet("/accept-he-terms-and-conditions")]
+    [HttpGet("/{organisationId}/accept-he-terms-and-conditions")]
     public IActionResult AcceptHeTermsAndConditions()
     {
         return View();
     }
 
     [HttpPost("/accept-he-terms-and-conditions")]
+    [HttpPost("/{organisationId}/accept-he-terms-and-conditions")]
     public IActionResult AcceptHeTermsAndConditionsPost(AcceptHeTermsAndConditionsModel model, RedirectOption redirect)
     {
         if (model.AcceptHeTermsAndConditions != "checked")

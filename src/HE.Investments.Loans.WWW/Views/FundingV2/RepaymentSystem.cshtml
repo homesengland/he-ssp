@@ -16,10 +16,10 @@
 @{
     var refinanceInfoName = modelProvider.GetExpressionText((FundingViewModel x) => x.RefinanceInfo);
 
-    var ids = new string[] { refinanceInfoName };
-    var labels = new string[] { "Tell us more about your refinance exit strategy." };
-    var names = new string[] { refinanceInfoName };
-    var values = new string[] { Model.RefinanceInfo };
+    var ids = new[] { refinanceInfoName };
+    var labels = new[] { "Tell us more about your refinance exit strategy." };
+    var names = new[] { refinanceInfoName };
+    var values = new[] { Model.RefinanceInfo };
 
     var refinanceName = modelProvider.GetExpressionText((FundingViewModel x) => x.Refinance);
 
@@ -28,10 +28,10 @@
 }
 
 <gds-div-grid-column-two-thirds>
-    <form asp-controller="FundingV2" asp-action="RepaymentSystemPost" asp-route-id="@Model.LoanApplicationId" asp-route-redirect="@Context.Request.Query["redirect"]" asp-method="post" novalidate>
-        <gds-back-link href="@Url.Action("Back","FundingV2", new {id = Model.LoanApplicationId, currentPage = FundingState.Refinance})" text="Back" class="govuk-!-margin-bottom-8">
-    </gds-back-link>
-    <partial name="_ErrorSummaryPartial" model="null" />
+    <he-organisation-form asp-controller="FundingV2" asp-action="RepaymentSystemPost" asp-route-id="@Model.LoanApplicationId" asp-route-redirect="@Context.Request.Query["redirect"]" asp-method="post" novalidate>
+        <vc:loans-workflow-back-button current-page="@FundingState.Refinance"/>
+
+        <partial name="_ErrorSummaryPartial" model="null" />
     <gds-field-set>
         <gds-div-form-group invalid="radioInvalid">
             <gds-legend size="ControlSize.L">
@@ -64,7 +64,7 @@
         </button>
     </gds-field-set>
 
-    </form>
+    </he-organisation-form>
 
     <partial name="_HomeAndCheckAnswersLinks" />
 </gds-div-grid-column-two-thirds>

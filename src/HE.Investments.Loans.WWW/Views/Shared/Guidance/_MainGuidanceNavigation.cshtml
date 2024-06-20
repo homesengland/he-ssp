@@ -4,6 +4,7 @@
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Lists
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Paragraphs
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Divs
+@using HE.Investments.Common.WWW.Extensions
 <gds-h1 class="govuk-!-margin-top-9" size="ControlSize.Xl">
     Levelling Up Home Building Fund
 </gds-h1>
@@ -18,19 +19,19 @@
     Contents
     <ul class="govuk-list">
         <gds-li class="guidance-list_list-item">
-            <gds-link href="@Url.Action("WhatTheHomeBuildingFundIs","Guidance")">What the Home Building Fund is</gds-link>
+            <gds-link href="@Url.OrganisationAction("WhatTheHomeBuildingFundIs","Guidance")">What the Home Building Fund is</gds-link>
         </gds-li>
         <gds-li class="guidance-list_list-item">
-            <gds-link href="@Url.Action("Eligibility","Guidance")">Eligibility</gds-link>
+            <gds-link href="@Url.OrganisationAction("Eligibility","Guidance")">Eligibility</gds-link>
         </gds-li>
         <gds-li class="guidance-list_list-item">
-            <gds-link href="@Url.Action("Apply","Guidance")">Apply</gds-link>
+            <gds-link href="@Url.OrganisationAction("Apply","Guidance")">Apply</gds-link>
         </gds-li>
         <gds-li class="guidance-list_list-item">
-            <gds-link href="@Url.Action("AfterApply","Guidance")">What happens after you apply</gds-link>
+            <gds-link href="@Url.OrganisationAction("AfterApply","Guidance")">What happens after you apply</gds-link>
         </gds-li>
         <gds-li class="guidance-list_list-item">
-            <gds-link href="@Url.Action("PrioritiseApplications","Guidance")">How we prioritise applications</gds-link>
+            <gds-link href="@Url.OrganisationAction("PrioritiseApplications","Guidance")">How we prioritise applications</gds-link>
         </gds-li>
     </ul>
 </gds-p>

@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HE.Investments.Loans.WWW.Controllers;
 
+[Route("{organisationId}/guidance")]
 [Route("guidance")]
 public class GuidanceController : Controller
 {

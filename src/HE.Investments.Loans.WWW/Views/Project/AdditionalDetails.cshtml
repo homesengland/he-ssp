@@ -6,10 +6,8 @@
 @model HE.Investments.Loans.Contract.Projects.ViewModels.ProjectViewModel;
 
 <gds-div-grid-column-two-thirds>
-    <form asp-controller="Project" asp-action="AdditionalDetails" asp-route-id="@Model.ApplicationId" asp-route-projectId="@Model.ProjectId" asp-route-redirect="@Context.Request.Query["redirect"]" asp-method="post" novalidate>
-
-        <gds-back-link href="@Url.Action("Back", "Project", new {id = Model.ApplicationId, projectId = Model.ProjectId, currentPage = ProjectState.Additional})" text="Back" class="govuk-!-margin-bottom-8">
-        </gds-back-link>
+    <he-organisation-form asp-controller="Project" asp-action="AdditionalDetails" asp-route-id="@Model.ApplicationId" asp-route-projectId="@Model.ProjectId" asp-route-redirect="@Context.Request.Query["redirect"]" asp-method="post" novalidate>
+        <vc:loans-workflow-back-button current-page="@ProjectState.Additional"/>
 
         <partial name="_ErrorSummaryPartial" model="null" />
         <gds-field-set role="group">
@@ -82,7 +80,7 @@
 
         </gds-field-set>
 
-    </form>
+    </he-organisation-form>
 
     <partial name="_HomeAndCheckAnswersLinks" />
 </gds-div-grid-column-two-thirds>

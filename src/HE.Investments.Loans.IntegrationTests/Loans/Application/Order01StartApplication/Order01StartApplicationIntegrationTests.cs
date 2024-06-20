@@ -31,7 +31,7 @@ public class Order01StartApplicationIntegrationTests : IntegrationTest
         var mainPage = await TestClient.NavigateTo(PagesUrls.MainPage);
 
         // then
-        mainPage.UrlEndWith(PagesUrls.DashboardPage);
+        mainPage.UrlEndWith(PagesUrls.DashboardPage(UserOrganisationData.OrganisationId));
     }
 
     [Fact(Skip = LoansConfig.SkipTest)]
@@ -39,10 +39,10 @@ public class Order01StartApplicationIntegrationTests : IntegrationTest
     public async Task Order02_ShouldRedirectToDashboardPage()
     {
         // given && when
-        var dashboardPage = await TestClient.NavigateTo(PagesUrls.DashboardPage);
+        var dashboardPage = await TestClient.NavigateTo(PagesUrls.DashboardPage(UserOrganisationData.OrganisationId));
 
         // then
-        dashboardPage.UrlEndWith(PagesUrls.DashboardPage);
+        dashboardPage.UrlEndWith(PagesUrls.DashboardPage(UserOrganisationData.OrganisationId));
     }
 
     [Fact(Skip = LoansConfig.SkipTest)]
@@ -52,9 +52,9 @@ public class Order01StartApplicationIntegrationTests : IntegrationTest
         // given
         await FrontDoorProjectCrmRepository.CreateProject(UserData.GenerateProjectPrefillData(), LoginData);
 
-        var currentPage = await TestClient.NavigateTo(ApplicationPagesUrls.AboutLoanPage(UserData.ProjectPrefillData.Id));
+        var currentPage = await TestClient.NavigateTo(ApplicationPagesUrls.AboutLoanPage(UserOrganisationData.OrganisationId, UserData.ProjectPrefillData.Id));
         var continueButton = currentPage
-            .UrlEndWith(ApplicationPagesUrls.AboutLoanPage(UserData.ProjectPrefillData.Id))
+            .UrlEndWith(ApplicationPagesUrls.AboutLoanPage(UserOrganisationData.OrganisationId, UserData.ProjectPrefillData.Id))
             .HasTitle(LoanApplicationPageTitles.AboutLoan)
             .GetGdsSubmitButtonById("continue-button");
 
@@ -63,7 +63,7 @@ public class Order01StartApplicationIntegrationTests : IntegrationTest
 
         // then
         nextPage
-            .UrlEndWith(ApplicationPagesUrls.LoanApplyInformation(UserData.ProjectPrefillData.Id))
+            .UrlEndWith(ApplicationPagesUrls.LoanApplyInformation(UserOrganisationData.OrganisationId, UserData.ProjectPrefillData.Id))
             .HasTitle(LoanApplicationPageTitles.LoanApplyInformation);
         SaveCurrentPage();
     }
@@ -73,9 +73,9 @@ public class Order01StartApplicationIntegrationTests : IntegrationTest
     public async Task Order04_ShouldRedirectToCheckYouDetailsPageAndDisplayMyData_WhenContinueButtonIsClicked()
     {
         // given
-        var currentPage = await GetCurrentPage(ApplicationPagesUrls.LoanApplyInformation(UserData.ProjectPrefillData.Id));
+        var currentPage = await GetCurrentPage(ApplicationPagesUrls.LoanApplyInformation(UserOrganisationData.OrganisationId, UserData.ProjectPrefillData.Id));
         var continueButton = currentPage
-            .UrlEndWith(ApplicationPagesUrls.LoanApplyInformation(UserData.ProjectPrefillData.Id))
+            .UrlEndWith(ApplicationPagesUrls.LoanApplyInformation(UserOrganisationData.OrganisationId, UserData.ProjectPrefillData.Id))
             .HasTitle(LoanApplicationPageTitles.LoanApplyInformation)
             .GetGdsSubmitButtonById("continue-button");
 
@@ -84,7 +84,7 @@ public class Order01StartApplicationIntegrationTests : IntegrationTest
 
         // then
         var summary = nextPage
-            .UrlEndWith(ApplicationPagesUrls.CheckYourDetails(UserData.ProjectPrefillData.Id))
+            .UrlEndWith(ApplicationPagesUrls.CheckYourDetails(UserOrganisationData.OrganisationId, UserData.ProjectPrefillData.Id))
             .HasTitle("Check your details")
             .GetSummaryListItems();
 
@@ -101,9 +101,9 @@ public class Order01StartApplicationIntegrationTests : IntegrationTest
     public async Task Order05_ShouldRedirectToLoanPurpose_WhenContinueButtonIsClicked()
     {
         // given
-        var currentPage = await GetCurrentPage(ApplicationPagesUrls.CheckYourDetails(UserData.ProjectPrefillData.Id));
+        var currentPage = await GetCurrentPage(ApplicationPagesUrls.CheckYourDetails(UserOrganisationData.OrganisationId, UserData.ProjectPrefillData.Id));
         var continueButton = currentPage
-            .UrlEndWith(ApplicationPagesUrls.CheckYourDetails(UserData.ProjectPrefillData.Id))
+            .UrlEndWith(ApplicationPagesUrls.CheckYourDetails(UserOrganisationData.OrganisationId, UserData.ProjectPrefillData.Id))
             .HasTitle("Check your details")
             .GetGdsSubmitButtonById("continue-button");
 
@@ -112,7 +112,7 @@ public class Order01StartApplicationIntegrationTests : IntegrationTest
 
         // then
         nextPage
-            .UrlEndWith(ApplicationPagesUrls.LoanPurpose(UserData.ProjectPrefillData.Id))
+            .UrlEndWith(ApplicationPagesUrls.LoanPurpose(UserOrganisationData.OrganisationId, UserData.ProjectPrefillData.Id))
             .HasTitle("What do you require Homes England funding for?")
             .HasRadio("FundingPurpose", value: FundingPurpose.BuildingNewHomes.ToString());
         SaveCurrentPage();
@@ -123,9 +123,9 @@ public class Order01StartApplicationIntegrationTests : IntegrationTest
     public async Task Order06_ShouldRedirectToApplicationName_WhenContinueButtonIsClicked()
     {
         // given
-        var currentPage = await GetCurrentPage(ApplicationPagesUrls.LoanPurpose(UserData.ProjectPrefillData.Id));
+        var currentPage = await GetCurrentPage(ApplicationPagesUrls.LoanPurpose(UserOrganisationData.OrganisationId, UserData.ProjectPrefillData.Id));
         var continueButton = currentPage
-            .UrlEndWith(ApplicationPagesUrls.LoanPurpose(UserData.ProjectPrefillData.Id))
+            .UrlEndWith(ApplicationPagesUrls.LoanPurpose(UserOrganisationData.OrganisationId, UserData.ProjectPrefillData.Id))
             .HasTitle("What do you require Homes England funding for?")
             .HasRadio("FundingPurpose", value: FundingPurpose.BuildingNewHomes.ToString())
             .GetGdsSubmitButtonById("continue-button");
@@ -137,7 +137,7 @@ public class Order01StartApplicationIntegrationTests : IntegrationTest
 
         // then
         nextPage
-            .UrlEndWith(ApplicationPagesUrls.ApplicationName(UserData.ProjectPrefillData.Id))
+            .UrlEndWith(ApplicationPagesUrls.ApplicationName(UserOrganisationData.OrganisationId, UserData.ProjectPrefillData.Id))
             .HasTitle("Name your application")
             .HasInput("LoanApplicationName", value: UserData.ProjectPrefillData.Name);
         SaveCurrentPage();
@@ -148,9 +148,9 @@ public class Order01StartApplicationIntegrationTests : IntegrationTest
     public async Task Order07_ShouldCreateLoanApplicationWithDraftStatus_WhenContinueButtonIsClicked()
     {
         // given
-        var currentPage = await GetCurrentPage(ApplicationPagesUrls.ApplicationName(UserData.ProjectPrefillData.Id));
+        var currentPage = await GetCurrentPage(ApplicationPagesUrls.ApplicationName(UserOrganisationData.OrganisationId, UserData.ProjectPrefillData.Id));
         var continueButton = currentPage
-            .UrlEndWith(ApplicationPagesUrls.ApplicationName(UserData.ProjectPrefillData.Id))
+            .UrlEndWith(ApplicationPagesUrls.ApplicationName(UserOrganisationData.OrganisationId, UserData.ProjectPrefillData.Id))
             .HasTitle("Name your application")
             .GetGdsSubmitButtonById("continue-button");
         var applicationName = UserData.GenerateApplicationName();

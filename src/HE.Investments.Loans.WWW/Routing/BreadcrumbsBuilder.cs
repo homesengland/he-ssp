@@ -14,24 +14,27 @@ public class BreadcrumbsBuilder : BreadcrumbsBuilderBase
         return this;
     }
 
-    public BreadcrumbsBuilder WithOrganisation(string name)
+    public BreadcrumbsBuilder WithOrganisation(string organisationId, string name)
     {
-        //// TODO: Fix link - should point to organisation with specific Id
-        AddBreadcrumb(name, nameof(AccountsController.OrganisationDashboard), GetControllerName(nameof(AccountsController)));
+        AddBreadcrumb(name, nameof(AccountsController.OrganisationDashboard), GetControllerName(nameof(AccountsController)), new { organisationId });
 
         return this;
     }
 
-    public BreadcrumbsBuilder WithLuhbfApplications()
+    public BreadcrumbsBuilder WithLuhbfApplications(string organisationId)
     {
-        AddBreadcrumb("LUHBF applications", nameof(HomeController.Dashboard), GetControllerName(nameof(HomeController)));
+        AddBreadcrumb("LUHBF applications", nameof(HomeController.Dashboard), GetControllerName(nameof(HomeController)), new { organisationId });
 
         return this;
     }
 
-    public BreadcrumbsBuilder WithApplication(string name, Guid id)
+    public BreadcrumbsBuilder WithApplication(string organisationId, string name, Guid id)
     {
-        AddBreadcrumb(name, nameof(LoanApplicationV2Controller.ApplicationDashboard), GetControllerName(nameof(LoanApplicationV2Controller)), new { id });
+        AddBreadcrumb(
+            name,
+            nameof(LoanApplicationV2Controller.ApplicationDashboard),
+            GetControllerName(nameof(LoanApplicationV2Controller)),
+            new { id, organisationId });
 
         return this;
     }

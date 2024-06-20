@@ -2,19 +2,18 @@ using System.Diagnostics.CodeAnalysis;
 using AngleSharp.Html.Dom;
 using FluentAssertions;
 using He.AspNetCore.Mvc.Gds.Components.Constants;
-using HE.Investments.IntegrationTestsFramework;
 using HE.Investments.Loans.Common.Tests.TestData;
 using HE.Investments.Loans.IntegrationTests.IntegrationFramework;
 using HE.Investments.Loans.IntegrationTests.Loans.LoansHelpers;
 using HE.Investments.Loans.IntegrationTests.Loans.LoansHelpers.Extensions;
 using HE.Investments.Loans.IntegrationTests.Loans.LoansHelpers.Pages;
-using HE.Investments.Loans.WWW;
 using HE.Investments.Loans.WWW.Views.Security.Consts;
 using HE.Investments.TestsUtils.Extensions;
 using Xunit;
 using Xunit.Extensions.Ordering;
 
 namespace HE.Investments.Loans.IntegrationTests.Loans.Application.Order02Sections.SecuritySection;
+
 [Order(2)]
 [SuppressMessage("xUnit", "xUnit1004", Justification = "Waits for DevOps configuration - #76791")]
 public class Order05CheckYourAnswersIntegrationTests : IntegrationTest
@@ -32,7 +31,7 @@ public class Order05CheckYourAnswersIntegrationTests : IntegrationTest
     public async Task Order01_ShouldDisplayDataSummary()
     {
         // given
-        var checkYourAnswersPage = await TestClient.NavigateTo(SecurityPageUrls.CheckYourAnswers(_applicationId));
+        var checkYourAnswersPage = await TestClient.NavigateTo(SecurityPageUrls.CheckYourAnswers(UserOrganisationData.OrganisationId, _applicationId));
 
         // when
         var companyStructureSummary = checkYourAnswersPage.GetSummaryListItems();
@@ -41,7 +40,10 @@ public class Order05CheckYourAnswersIntegrationTests : IntegrationTest
         companyStructureSummary[SecurityFields.ChargesDebt].Value.Should().Be(CommonResponse.Yes);
         companyStructureSummary[SecurityFields.Debenture].Value.Should().Contain(TextTestData.TextThatNotExceedsLongInputLimit);
         companyStructureSummary[SecurityFields.DirLoans].Value.Should().Be(CommonResponse.Yes);
-        companyStructureSummary[SecurityFields.DirLoansSub].Value.Should().Contain(CommonResponse.No).And.Contain(TextTestData.TextThatNotExceedsLongInputLimit);
+        companyStructureSummary[SecurityFields.DirLoansSub]
+            .Value.Should()
+            .Contain(CommonResponse.No)
+            .And.Contain(TextTestData.TextThatNotExceedsLongInputLimit);
 
         SetSharedData(SharedKeys.CurrentPageKey, checkYourAnswersPage);
     }
@@ -56,7 +58,8 @@ public class Order05CheckYourAnswersIntegrationTests : IntegrationTest
 
         // when
         checkYourAnswersPage = await TestClient.SubmitButton(
-            continueButton, new Dictionary<string, string> { { "CheckAnswers", string.Empty } });
+            continueButton,
+            new Dictionary<string, string> { { "CheckAnswers", string.Empty } });
 
         // then
         checkYourAnswersPage
@@ -93,7 +96,11 @@ public class Order05CheckYourAnswersIntegrationTests : IntegrationTest
         // when
         var continueButton = chargesDebtPage.GetGdsSubmitButtonById("continue-button");
         var returnPage = await TestClient.SubmitButton(
-            continueButton, new Dictionary<string, string> { { "ChargesDebtCompany", CommonResponse.Yes }, { "ChargesDebtCompanyInfo", TextTestData.TextThatNotExceedsLongInputLimit } });
+            continueButton,
+            new Dictionary<string, string>
+            {
+                { "ChargesDebtCompany", CommonResponse.Yes }, { "ChargesDebtCompanyInfo", TextTestData.TextThatNotExceedsLongInputLimit },
+            });
 
         // then
         returnPage
@@ -147,7 +154,8 @@ public class Order05CheckYourAnswersIntegrationTests : IntegrationTest
         // when
         var continueButton = chargesDebtPage.GetGdsSubmitButtonById("continue-button");
         var returnPage = await TestClient.SubmitButton(
-            continueButton, new Dictionary<string, string> { { "DirLoans", CommonResponse.No } });
+            continueButton,
+            new Dictionary<string, string> { { "DirLoans", CommonResponse.No } });
 
         // then
         returnPage
@@ -167,7 +175,8 @@ public class Order05CheckYourAnswersIntegrationTests : IntegrationTest
         // when
         var continueButton = chargesDebtPage.GetGdsSubmitButtonById("continue-button");
         var returnPage = await TestClient.SubmitButton(
-            continueButton, new Dictionary<string, string> { { "DirLoans", CommonResponse.Yes } });
+            continueButton,
+            new Dictionary<string, string> { { "DirLoans", CommonResponse.Yes } });
 
         // then
         returnPage
@@ -204,7 +213,8 @@ public class Order05CheckYourAnswersIntegrationTests : IntegrationTest
         // when
         var continueButton = dirLoansSubPage.GetGdsSubmitButtonById("continue-button");
         var returnPage = await TestClient.SubmitButton(
-            continueButton, new Dictionary<string, string> { { "DirLoansSub", CommonResponse.No }, { "DirLoansSubMore", TextTestData.TextThatNotExceedsLongInputLimit } });
+            continueButton,
+            new Dictionary<string, string> { { "DirLoansSub", CommonResponse.No }, { "DirLoansSubMore", TextTestData.TextThatNotExceedsLongInputLimit } });
 
         // then
         returnPage
@@ -222,11 +232,14 @@ public class Order05CheckYourAnswersIntegrationTests : IntegrationTest
 
         // when
         var taskListPage = await TestClient.SubmitButton(
-            continueButton, new Dictionary<string, string> { { "CheckAnswers", CommonResponse.Yes } });
+            continueButton,
+            new Dictionary<string, string> { { "CheckAnswers", CommonResponse.Yes } });
 
         // then
         taskListPage
-            .UrlEndWith(ApplicationPagesUrls.TaskList(_applicationId))
-            .GetTaskListItems()[TaskListFields.ProvideDetailsAboutSecurity].Should().Be("Completed");
+            .UrlEndWith(ApplicationPagesUrls.TaskList(UserOrganisationData.OrganisationId, _applicationId))
+            .GetTaskListItems()[TaskListFields.ProvideDetailsAboutSecurity]
+            .Should()
+            .Be("Completed");
     }
 }

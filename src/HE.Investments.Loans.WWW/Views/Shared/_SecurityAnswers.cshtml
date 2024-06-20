@@ -1,4 +1,5 @@
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Summary
+@using HE.Investments.Common.WWW.Extensions
 @model HE.Investments.Loans.Contract.Security.SecurityViewModel
 @{
     var id = ViewContext.RouteData.Values["id"];
@@ -9,7 +10,7 @@
            {
                { "Title", "Charges outstanding or debt secured on organisation" },
                { "Value", Model.ChargesDebtCompany },
-               { "Link", Url.Action("ChargesDebtCompany", "Security", new { id = id, redirect = "CheckAnswers" }) },
+               { "Link", Url.OrganisationAction("ChargesDebtCompany", "Security", new { id = id, redirect = "CheckAnswers" }) },
                { "LinkId", "charges-debt-change" },
                { "IsEditable", Model.IsEditable() }
            })
@@ -20,7 +21,7 @@
                {
                    { "Title", "Debenture" },
                    { "Value", $"{Model.ChargesDebtCompanyInfo}" },
-                   { "Link", Url.Action("ChargesDebtCompany", "Security", new { id = id, redirect = "CheckAnswers" }) },
+                   { "Link", Url.OrganisationAction("ChargesDebtCompany", "Security", new { id = id, redirect = "CheckAnswers" }) },
                    { "LinkId", "debenture-change" },
                    { "IsEditable", Model.IsEditable() }
                })
@@ -31,7 +32,7 @@
            {
                { "Title", "Directors' loans" },
                { "Value", Model.DirLoans },
-               { "Link", Url.Action("DirLoans", "Security", new { id = id, redirect = "CheckAnswers" }) },
+               { "Link", Url.OrganisationAction("DirLoans", "Security", new { id = id, redirect = "CheckAnswers" }) },
                { "LinkId", "dir-loans-change" },
                { "IsEditable", Model.IsEditable() }
            })
@@ -42,7 +43,7 @@
                {
                    { "Title", "Subordinated loans" },
                    { "Value", Model.DirLoansSub == "No" ? $"{Model.DirLoansSub}, {Model.DirLoansSubMore}" : Model.DirLoansSub },
-                   { "Link", Url.Action("DirLoansSub", "Security", new { id = id, redirect = "CheckAnswers" }) },
+                   { "Link", Url.OrganisationAction("DirLoansSub", "Security", new { id = id, redirect = "CheckAnswers" }) },
                    { "LinkId", "dir-loans-sub-change" },
                    { "IsEditable", Model.IsEditable() }
                })
