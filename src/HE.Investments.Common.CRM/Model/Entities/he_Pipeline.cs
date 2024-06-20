@@ -503,6 +503,8 @@ namespace HE.Investments.Common.CRM.Model
 			public const string he_estimatedcapitalfundingask_Base = "he_estimatedcapitalfundingask_base";
 			public const string he_EstimatedRDELfundingask = "he_estimatedrdelfundingask";
 			public const string he_estimatedrdelfundingask_Base = "he_estimatedrdelfundingask_base";
+			public const string he_FrontDoorDecision = "he_frontdoordecision";
+			public const string he_frontdoordecisionName = "he_frontdoordecisionname";
 			public const string he_fundingask = "he_fundingask";
 			public const string he_fundingaskName = "he_fundingaskname";
 			public const string he_he_infrastructuredoesyourprojectdeliver = "he_he_infrastructuredoesyourprojectdeliver";
@@ -603,6 +605,7 @@ namespace HE.Investments.Common.CRM.Model
 			public const string he_whatisthegeographicfocusoftheproject = "he_whatisthegeographicfocusoftheproject";
 			public const string he_whatisthegeographicfocusoftheprojectName = "he_whatisthegeographicfocusoftheprojectname";
 			public const string ImportSequenceNumber = "importsequencenumber";
+			public const string invln_ahpproject_HeProjectId_he_pipeline = "invln_ahpproject_HeProjectId_he_pipeline";
 			public const string invln_loanapplication_HeProjectId_he_pipeline = "invln_loanapplication_HeProjectId_he_pipeline";
 			public const string lk_he_pipeline_createdby = "lk_he_pipeline_createdby";
 			public const string lk_he_pipeline_createdonbehalfby = "lk_he_pipeline_createdonbehalfby";
@@ -1225,6 +1228,40 @@ namespace HE.Investments.Common.CRM.Model
 			get
 			{
 				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("he_estimatedrdelfundingask_base");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("he_frontdoordecision")]
+		public virtual Microsoft.Xrm.Sdk.OptionSetValueCollection he_FrontDoorDecision
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValueCollection>("he_frontdoordecision");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("he_FrontDoorDecision");
+				this.SetAttributeValue("he_frontdoordecision", value);
+				this.OnPropertyChanged("he_FrontDoorDecision");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("he_frontdoordecisionname")]
+		public string he_frontdoordecisionName
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				if (this.FormattedValues.Contains("he_frontdoordecision"))
+				{
+					return this.FormattedValues["he_frontdoordecision"];
+				}
+				else
+				{
+					return default(string);
+				}
 			}
 		}
 		
@@ -3344,6 +3381,26 @@ namespace HE.Investments.Common.CRM.Model
 				this.OnPropertyChanging("Referencedhe_strategic_parentproject_he_Pipeline");
 				this.SetRelatedEntities<HE.Investments.Common.CRM.Model.he_Pipeline>("he_strategic_parentproject_he_Pipeline", Microsoft.Xrm.Sdk.EntityRole.Referenced, value);
 				this.OnPropertyChanged("Referencedhe_strategic_parentproject_he_Pipeline");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N invln_ahpproject_HeProjectId_he_pipeline
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_ahpproject_HeProjectId_he_pipeline")]
+		public System.Collections.Generic.IEnumerable<HE.Investments.Common.CRM.Model.invln_ahpproject> invln_ahpproject_HeProjectId_he_pipeline
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<HE.Investments.Common.CRM.Model.invln_ahpproject>("invln_ahpproject_HeProjectId_he_pipeline", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_ahpproject_HeProjectId_he_pipeline");
+				this.SetRelatedEntities<HE.Investments.Common.CRM.Model.invln_ahpproject>("invln_ahpproject_HeProjectId_he_pipeline", null, value);
+				this.OnPropertyChanged("invln_ahpproject_HeProjectId_he_pipeline");
 			}
 		}
 		
