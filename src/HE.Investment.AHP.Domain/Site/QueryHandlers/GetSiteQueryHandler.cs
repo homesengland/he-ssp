@@ -68,6 +68,7 @@ public class GetSiteQueryHandler : IRequestHandler<GetSiteQuery, SiteModel>
             ModernMethodsOfConstruction = CreateSiteModernMethodsOfConstruction(site.ModernMethodsOfConstruction),
             IsConsortiumMember = !userAccount.Consortium.HasNoConsortium,
             IsUnregisteredBody = userAccount.SelectedOrganisation().IsUnregisteredBody,
+            IsReadOnly = site.Status == SiteStatus.Submitted || !userAccount.CanEdit,
         };
     }
 
