@@ -29,13 +29,13 @@ public class Order02UserOrganisation : AccountIntegrationTest
     public async Task Order01_ShouldOpenOrganisationDashboard()
     {
         // given & when
-        UserOrganisationData.SetOrganisationId(LoginData.OrganisationId);
+        UserOrganisationsData.SetOrganisationId(LoginData.OrganisationId);
         var dashboardPage = await TestClient
-            .NavigateTo(MainPagesUrl.Dashboard(UserOrganisationData.OrganisationId));
+            .NavigateTo(MainPagesUrl.Dashboard(UserOrganisationsData.MainOrganisationId));
 
         // then
         dashboardPage
-            .UrlEndWith(MainPagesUrl.Dashboard(UserOrganisationData.OrganisationId))
+            .UrlEndWith(MainPagesUrl.Dashboard(UserOrganisationsData.MainOrganisationId))
             .HasMatchingTitle(".+'s Homes England account$")
             .HasActionLink(MainPagesUrl.OrganisationSearch, out _)
             .HasActionLink(MainPagesUrl.UserOrganisationDetails, out _)
@@ -50,9 +50,9 @@ public class Order02UserOrganisation : AccountIntegrationTest
     public async Task Order02_ShouldOpenProfileDetails()
     {
         // given
-        var currentPage = await GetCurrentPage(MainPagesUrl.Dashboard(UserOrganisationData.OrganisationId));
+        var currentPage = await GetCurrentPage(MainPagesUrl.Dashboard(UserOrganisationsData.MainOrganisationId));
         currentPage
-            .UrlEndWith(MainPagesUrl.Dashboard(UserOrganisationData.OrganisationId))
+            .UrlEndWith(MainPagesUrl.Dashboard(UserOrganisationsData.MainOrganisationId))
             .HasActionLink(MainPagesUrl.ProfileDetails, out var profileDetailsLink);
 
         // when
@@ -81,7 +81,7 @@ public class Order02UserOrganisation : AccountIntegrationTest
             ("SecondaryTelephoneNumber", TelephoneNumberGenerator.GenerateWithoutCountryCode()));
 
         // then
-        nextPage.UrlEndWith(MainPagesUrl.Dashboard(UserOrganisationData.OrganisationId));
+        nextPage.UrlEndWith(MainPagesUrl.Dashboard(UserOrganisationsData.MainOrganisationId));
         SaveCurrentPage();
     }
 
@@ -90,9 +90,9 @@ public class Order02UserOrganisation : AccountIntegrationTest
     public async Task Order04_ShouldOpenManageUsers()
     {
         // given
-        var currentPage = await GetCurrentPage(MainPagesUrl.Dashboard(UserOrganisationData.OrganisationId));
+        var currentPage = await GetCurrentPage(MainPagesUrl.Dashboard(UserOrganisationsData.MainOrganisationId));
         currentPage
-            .UrlEndWith(MainPagesUrl.Dashboard(UserOrganisationData.OrganisationId))
+            .UrlEndWith(MainPagesUrl.Dashboard(UserOrganisationsData.MainOrganisationId))
             .HasActionLink(MainPagesUrl.ManageUsers, out var manageUsersLink);
 
         // when
@@ -123,7 +123,7 @@ public class Order02UserOrganisation : AccountIntegrationTest
 
         // then
         nextPage
-            .UrlEndWith(MainPagesUrl.ManageUser(LoginData.UserGlobalId, UserOrganisationData.OrganisationId))
+            .UrlEndWith(MainPagesUrl.ManageUser(LoginData.UserGlobalId, UserOrganisationsData.MainOrganisationId))
             .HasMatchingTitle("^Manage .+'s role")
             .HasBackLink(out _)
             .HasRadio("Role", value: "Admin")
@@ -136,7 +136,7 @@ public class Order02UserOrganisation : AccountIntegrationTest
     public async Task Order06_ShouldNavigateBackwardsToDashboard()
     {
         // given
-        var currentPage = await GetCurrentPage(MainPagesUrl.ManageUser(LoginData.UserGlobalId, UserOrganisationData.OrganisationId));
+        var currentPage = await GetCurrentPage(MainPagesUrl.ManageUser(LoginData.UserGlobalId, UserOrganisationsData.MainOrganisationId));
         currentPage.HasBackLink(out var backLink);
 
         // when
@@ -152,7 +152,7 @@ public class Order02UserOrganisation : AccountIntegrationTest
 
         // then
         nextPage
-            .UrlEndWith(MainPagesUrl.Dashboard(UserOrganisationData.OrganisationId))
+            .UrlEndWith(MainPagesUrl.Dashboard(UserOrganisationsData.MainOrganisationId))
 ;
     }
 
@@ -161,9 +161,9 @@ public class Order02UserOrganisation : AccountIntegrationTest
     public async Task Order07_ShouldNavigateToOrganisationDetails()
     {
         // given
-        var dashboardPage = await GetCurrentPage(MainPagesUrl.Dashboard(UserOrganisationData.OrganisationId));
+        var dashboardPage = await GetCurrentPage(MainPagesUrl.Dashboard(UserOrganisationsData.MainOrganisationId));
         dashboardPage
-            .UrlEndWith(MainPagesUrl.Dashboard(UserOrganisationData.OrganisationId))
+            .UrlEndWith(MainPagesUrl.Dashboard(UserOrganisationsData.MainOrganisationId))
             .HasActionLink(MainPagesUrl.UserOrganisationDetails, out var organisationDetailsLink);
 
         // when
@@ -179,7 +179,7 @@ public class Order02UserOrganisation : AccountIntegrationTest
         summary.Should().ContainKey("Organisation address").WhoseValue.Value.Should().NotBeNull();
         summary.Should().ContainKey("Companies House Registration number").WhoseValue.Value.Should().NotBeNull();
 
-        UserOrganisationData.SetOrganisationName(summary["Registered company name"].Value);
+        UserOrganisationsData.SetOrganisationName(summary["Registered company name"].Value);
         SaveCurrentPage();
     }
 
@@ -191,7 +191,7 @@ public class Order02UserOrganisation : AccountIntegrationTest
         var organisationDetailsPage = await GetCurrentPage(MainPagesUrl.UserOrganisationDetails);
         organisationDetailsPage
             .UrlEndWith(MainPagesUrl.UserOrganisationDetails)
-            .HasTitle(UserOrganisationPageTitles.Details(UserOrganisationData.OrganisationName))
+            .HasTitle(UserOrganisationPageTitles.Details(UserOrganisationsData.MainOrganisationName))
             .HasLinkWithTestId("request-details-change-link", out var changeOrganisationDetailsLink);
 
         // when
@@ -201,7 +201,7 @@ public class Order02UserOrganisation : AccountIntegrationTest
         changeOrganisationDetailsPage
             .UrlEndWith(MainPagesUrl.ChangeOrganisationDetails)
             .HasTitle(UserOrganisationPageTitles.ChangeOrganisationDetails)
-            .HasInput("Name", value: HttpUtility.HtmlDecode(UserOrganisationData.OrganisationName));
+            .HasInput("Name", value: HttpUtility.HtmlDecode(UserOrganisationsData.MainOrganisationName));
         SaveCurrentPage();
     }
 
@@ -221,7 +221,7 @@ public class Order02UserOrganisation : AccountIntegrationTest
         // when
         var changeOrganisationDetailsPage = await TestClient.SubmitButton(
             sendRequestButton,
-            ("Name", UserOrganisationData.OrganisationName),
+            ("Name", UserOrganisationsData.MainOrganisationName),
             ("PhoneNumber", tooLongShortString),
             ("AddressLine1", tooLongShortString),
             ("AddressLine2", string.Empty),

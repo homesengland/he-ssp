@@ -36,7 +36,7 @@ public class AccountIntegrationTest : IntegrationTestBase<Program>
 
     protected FreshProfileData FreshProfileData { get; private set; }
 
-    protected UserOrganisationData UserOrganisationData { get; private set; }
+    protected UserOrganisationsData UserOrganisationsData { get; private set; }
 
     protected ILoginData LoginData { get; private set; }
 
@@ -89,13 +89,13 @@ public class AccountIntegrationTest : IntegrationTestBase<Program>
 
     private void SetUserOrganisationData()
     {
-        var userOrganisationData = GetSharedDataOrNull<UserOrganisationData>(nameof(UserOrganisationData));
+        var userOrganisationData = GetSharedDataOrNull<UserOrganisationsData>(nameof(UserOrganisationsData));
         if (userOrganisationData is null)
         {
-            userOrganisationData = new UserOrganisationData();
-            SetSharedData(nameof(UserOrganisationData), userOrganisationData);
+            userOrganisationData = new UserOrganisationsData();
+            SetSharedData(nameof(UserOrganisationsData), userOrganisationData);
         }
 
-        UserOrganisationData = userOrganisationData;
+        UserOrganisationsData = userOrganisationData;
     }
 }
