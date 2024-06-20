@@ -94,7 +94,7 @@ public abstract class WorkflowController<TState> : Controller
             workflow = queryWorkflow;
         }
 
-        routeData.ExpandRouteValues(new { workflow });
+        routeData = routeData.ExpandRouteValues(new { workflow });
 
         return Continue(routeData);
     }
@@ -214,6 +214,7 @@ public abstract class WorkflowController<TState> : Controller
     private object AddOrganisationIdToRouteData(object? routeData)
     {
         var organisationId = Request.GetOrganisationIdFromRoute();
-        return routeData.ExpandRouteValues(new { organisationId });
+        routeData = routeData.ExpandRouteValues(new { organisationId });
+        return routeData;
     }
 }

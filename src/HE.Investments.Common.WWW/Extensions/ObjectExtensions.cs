@@ -1,5 +1,6 @@
 using System.Dynamic;
 using System.Reflection;
+using HE.Investments.Common.Extensions;
 
 namespace HE.Investments.Common.WWW.Extensions;
 
@@ -27,25 +28,35 @@ public static class ObjectExtensions
     public static object ExpandRouteValues(this object? routeValues, object? additionalRouteValues)
     {
         var dynamicRouteData = new ExpandoObject() as IDictionary<string, object>;
-        if (routeValues != null)
-        {
-            foreach (var property in routeValues.GetType().GetProperties(BindingFlags.Instance | BindingFlags.Public))
-            {
-                dynamicRouteData.Add(property.Name, property.GetValue(routeValues)!);
-            }
-        }
 
-        if (additionalRouteValues != null)
+        AddPropertiesToDictionary(routeValues, dynamicRouteData);
+        AddPropertiesToDictionary(additionalRouteValues, dynamicRouteData);
+
+        return dynamicRouteData;
+    }
+
+    private static void AddPropertiesToDictionary(object? values, IDictionary<string, object> dictionary)
+    {
+        if (values is ExpandoObject expando)
         {
-            foreach (var property in additionalRouteValues.GetType().GetProperties(BindingFlags.Instance | BindingFlags.Public))
+            foreach (var kvp in expando)
             {
-                if (!dynamicRouteData.ContainsKey(property.Name))
+                if (kvp.Value.IsProvided() && !dictionary.ContainsKey(kvp.Key))
                 {
-                    dynamicRouteData.Add(property.Name, property.GetValue(additionalRouteValues)!);
+                    dictionary.Add(kvp.Key, kvp.Value!);
                 }
             }
         }
-
-        return dynamicRouteData;
+        else if (values != null)
+        {
+            foreach (var property in values.GetType().GetProperties(BindingFlags.Instance | BindingFlags.Public))
+            {
+                var value = property.GetValue(values);
+                if (value != null && !dictionary.ContainsKey(property.Name))
+                {
+                    dictionary.Add(property.Name, value);
+                }
+            }
+        }
     }
 }
