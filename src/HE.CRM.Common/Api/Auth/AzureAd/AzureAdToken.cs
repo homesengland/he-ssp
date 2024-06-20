@@ -1,6 +1,6 @@
 using System.Runtime.Serialization;
 
-namespace HE.CRM.Common.Api.Auth.Contract
+namespace HE.CRM.Common.Api.Auth.AzureAd
 {
     [DataContract]
     internal sealed class AzureAdToken

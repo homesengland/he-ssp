@@ -10,9 +10,13 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)Api\ApiHttpClient.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Api\Auth\ApiTokenProvider.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Api\Auth\Contract\AzureAdToken.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Api\Auth\IApiTokenProvider.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Api\Auth\AzureAd\AzureAdAuthConfig.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Api\Auth\AzureAd\AzureAdToken.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Api\Auth\AzureAd\AzureAdTokenProvider.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Api\Auth\AzureAd\AzureAdTokenProviderFactory.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Api\Auth\AzureAd\IAzureAdTokenProviderFactory.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Api\Auth\BearerTokenAuthorizationHandler.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Api\Auth\ITokenProvider.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Api\EnvironmentVariables.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Api\Exceptions\ApiCommunicationException.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Api\Exceptions\ApiException.cs" />
