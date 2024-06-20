@@ -1,12 +1,13 @@
 using HE.Investments.Account.Shared.Authorization.Attributes;
 using HE.Investments.Common;
+using HE.Investments.Common.WWW.Controllers;
 using HE.Investments.Loans.WWW.Config;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.FeatureManagement;
 
 namespace HE.Investments.Loans.WWW.Controllers;
 
-[Route("apply-for-support")]
+[Route("apply-for-support/{organisationId}")]
 [AuthorizeWithCompletedProfile]
 public class FrontDoorController : Controller
 {
@@ -22,26 +23,26 @@ public class FrontDoorController : Controller
 
     [HttpGet]
     [Route("")]
-    public async Task<IActionResult> StartNewProject(CancellationToken cancellationToken)
+    public async Task<IActionResult> StartNewProject([FromRoute] string organisationId, CancellationToken cancellationToken)
     {
         if (await _featureManager.IsEnabledAsync(FeatureFlags.StayInCurrentApplication, cancellationToken))
         {
-            return RedirectToAction("AboutLoan", "LoanApplicationV2");
+            return this.OrganisationRedirectToAction("AboutLoan", "LoanApplicationV2");
         }
 
-        return new RedirectResult(_frontDoorConfig.StartNewProjectUrl);
+        return new RedirectResult(_frontDoorConfig.StartNewProjectUrl.Replace("{organisationId}", organisationId));
     }
 
     [HttpGet]
     [Route("return-to-project-check-answers")]
-    public async Task<IActionResult> BackToCheckAnswers([FromQuery] string fdProjectId, CancellationToken cancellationToken)
+    public async Task<IActionResult> BackToCheckAnswers([FromQuery] string fdProjectId, [FromRoute] string organisationId, CancellationToken cancellationToken)
     {
         if (await _featureManager.IsEnabledAsync(FeatureFlags.StayInCurrentApplication, cancellationToken))
         {
-            return RedirectToAction("Index", "Home");
+            return this.OrganisationRedirectToAction("Index", "Home");
         }
 
-        var redirectUrl = _frontDoorConfig.ProjectCheckAnswers.Replace("{projectId}", fdProjectId);
+        var redirectUrl = _frontDoorConfig.ProjectCheckAnswers.Replace("{projectId}", fdProjectId).Replace("{organisationId}", organisationId);
         return new RedirectResult(redirectUrl);
     }
 }

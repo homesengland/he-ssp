@@ -1,11 +1,9 @@
 using System.Diagnostics.CodeAnalysis;
 using AngleSharp.Html.Dom;
 using HE.Investments.Common.Messages;
-using HE.Investments.IntegrationTestsFramework;
 using HE.Investments.Loans.IntegrationTests.IntegrationFramework;
 using HE.Investments.Loans.IntegrationTests.Loans.LoansHelpers.Extensions;
 using HE.Investments.Loans.IntegrationTests.Loans.LoansHelpers.Pages;
-using HE.Investments.Loans.WWW;
 using HE.Investments.Loans.WWW.Views.FundingV2.Consts;
 using HE.Investments.TestsUtils.Extensions;
 using Xunit;
@@ -27,12 +25,14 @@ public class Order02GrossDevelopmentValueIntegrationTests : IntegrationTest
     public async Task Order01_ShouldDisplayValidationError_WhenProvidedValueIsNotADecimalNumber()
     {
         // given
-        var grossDevelopmentValuePage = await TestClient.NavigateTo(FundingPageUrls.GrossDevelopmentValue(UserData.LoanApplicationIdInDraftState));
+        var grossDevelopmentValuePage =
+            await TestClient.NavigateTo(FundingPageUrls.GrossDevelopmentValue(UserOrganisationData.OrganisationId, UserData.LoanApplicationIdInDraftState));
         var continueButton = grossDevelopmentValuePage.GetGdsSubmitButtonById("continue-button");
 
         // when
         grossDevelopmentValuePage = await TestClient.SubmitButton(
-            continueButton, new Dictionary<string, string> { { "GrossDevelopmentValue", "random string" } });
+            continueButton,
+            new Dictionary<string, string> { { "GrossDevelopmentValue", "random string" } });
 
         // then
         grossDevelopmentValuePage
@@ -53,7 +53,8 @@ public class Order02GrossDevelopmentValueIntegrationTests : IntegrationTest
 
         // when
         var estimatedTotalCostsPage = await TestClient.SubmitButton(
-            continueButton, new Dictionary<string, string> { { "GrossDevelopmentValue", "12" } });
+            continueButton,
+            new Dictionary<string, string> { { "GrossDevelopmentValue", "12" } });
 
         // then
         estimatedTotalCostsPage

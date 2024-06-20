@@ -1,13 +1,11 @@
 using System.Diagnostics.CodeAnalysis;
 using AngleSharp.Html.Dom;
 using HE.Investments.Common.Messages;
-using HE.Investments.IntegrationTestsFramework;
 using HE.Investments.Loans.Common.Tests.TestData;
 using HE.Investments.Loans.Common.Utils.Constants.FormOption;
 using HE.Investments.Loans.IntegrationTests.IntegrationFramework;
 using HE.Investments.Loans.IntegrationTests.Loans.LoansHelpers.Extensions;
 using HE.Investments.Loans.IntegrationTests.Loans.LoansHelpers.Pages;
-using HE.Investments.Loans.WWW;
 using HE.Investments.Loans.WWW.Views.Security.Consts;
 using HE.Investments.TestsUtils.Extensions;
 using Xunit;
@@ -33,12 +31,13 @@ public class Order04DirLoansSubIntegrationTests : IntegrationTest
     public async Task Order01_ShouldMoveToCheckAnswers_WhenYesIsSelectedAndContinueButtonIsClicked()
     {
         // given
-        var dirLoansSubPage = await TestClient.NavigateTo(SecurityPageUrls.DirLoansSub(_applicationId));
+        var dirLoansSubPage = await TestClient.NavigateTo(SecurityPageUrls.DirLoansSub(UserOrganisationData.OrganisationId, _applicationId));
         var continueButton = dirLoansSubPage.GetGdsSubmitButtonById("continue-button");
 
         // when
         var checkAnswersPage = await TestClient.SubmitButton(
-            continueButton, new Dictionary<string, string> { { "DirLoansSub", CommonResponse.Yes }, { "DirLoansSubMore", string.Empty } });
+            continueButton,
+            new Dictionary<string, string> { { "DirLoansSub", CommonResponse.Yes }, { "DirLoansSubMore", string.Empty } });
 
         // then
         checkAnswersPage
@@ -58,7 +57,8 @@ public class Order04DirLoansSubIntegrationTests : IntegrationTest
 
         // when
         dirLoansSubPage = await TestClient.SubmitButton(
-            continueButton, new Dictionary<string, string> { { "DirLoansSub", CommonResponse.No }, { "DirLoansSubMore", string.Empty } });
+            continueButton,
+            new Dictionary<string, string> { { "DirLoansSub", CommonResponse.No }, { "DirLoansSubMore", string.Empty } });
 
         // then
         dirLoansSubPage
@@ -76,7 +76,8 @@ public class Order04DirLoansSubIntegrationTests : IntegrationTest
 
         // when
         dirLoansSubPage = await TestClient.SubmitButton(
-            continueButton, new Dictionary<string, string> { { "DirLoansSub", CommonResponse.No }, { "DirLoansSubMore", TextTestData.TextThatExceedsLongInputLimit } });
+            continueButton,
+            new Dictionary<string, string> { { "DirLoansSub", CommonResponse.No }, { "DirLoansSubMore", TextTestData.TextThatExceedsLongInputLimit } });
 
         // then
         dirLoansSubPage
@@ -94,7 +95,8 @@ public class Order04DirLoansSubIntegrationTests : IntegrationTest
 
         // when
         var checkAnswersPage = await TestClient.SubmitButton(
-            continueButton, new Dictionary<string, string> { { "DirLoansSub", CommonResponse.No }, { "DirLoansSubMore", TextTestData.TextThatNotExceedsLongInputLimit } });
+            continueButton,
+            new Dictionary<string, string> { { "DirLoansSub", CommonResponse.No }, { "DirLoansSubMore", TextTestData.TextThatNotExceedsLongInputLimit } });
 
         // then
         checkAnswersPage

@@ -29,7 +29,8 @@ public class WithdrawDraftApplicationIntegrationTests : IntegrationTest
         // given
         var applicationToWithdrawId = await CreateNewApplicationDraft();
 
-        var applicationDashboardPage = await TestClient.NavigateTo(ApplicationPagesUrls.ApplicationDashboard(applicationToWithdrawId));
+        var applicationDashboardPage =
+            await TestClient.NavigateTo(ApplicationPagesUrls.ApplicationDashboard(UserOrganisationData.OrganisationId, applicationToWithdrawId));
 
         // when
         var withdrawApplicationButton = applicationDashboardPage.GetAnchorElementById("withdraw-application");
@@ -99,14 +100,14 @@ public class WithdrawDraftApplicationIntegrationTests : IntegrationTest
 
         // then
         dashboardPage
-            .UrlWithoutQueryEndsWith(PagesUrls.DashboardPage)
+            .UrlWithoutQueryEndsWith(PagesUrls.DashboardPage(UserOrganisationData.OrganisationId))
             .HasSuccessNotificationBanner("project has been withdrawn")
             .HasNotEmptyTitle();
     }
 
     private async Task<string> CreateNewApplicationDraft()
     {
-        var applicationNamePage = await TestClient.NavigateTo(ApplicationPagesUrls.ApplicationName());
+        var applicationNamePage = await TestClient.NavigateTo(ApplicationPagesUrls.ApplicationName(UserOrganisationData.OrganisationId));
 
         var continueButton = applicationNamePage.GetGdsSubmitButtonById("continue-button");
         var taskListPage = await TestClient.SubmitButton(

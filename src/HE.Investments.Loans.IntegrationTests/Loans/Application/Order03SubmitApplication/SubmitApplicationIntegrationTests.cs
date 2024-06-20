@@ -3,12 +3,10 @@ using AngleSharp.Html.Dom;
 using FluentAssertions;
 using He.AspNetCore.Mvc.Gds.Components.Constants;
 using HE.Investments.Common.Extensions;
-using HE.Investments.IntegrationTestsFramework;
 using HE.Investments.Loans.Contract.Projects.ViewModels;
 using HE.Investments.Loans.IntegrationTests.IntegrationFramework;
 using HE.Investments.Loans.IntegrationTests.Loans.LoansHelpers.Extensions;
 using HE.Investments.Loans.IntegrationTests.Loans.LoansHelpers.Pages;
-using HE.Investments.Loans.WWW;
 using HE.Investments.TestsUtils.Extensions;
 using Xunit;
 using Xunit.Extensions.Ordering;
@@ -32,7 +30,7 @@ public class SubmitApplicationIntegrationTests : IntegrationTest
     public async Task Order01_ShouldOpenCheckAllAnswersPage_WhenAllApplicationSectionAreFilled()
     {
         // given
-        var taskList = await TestClient.NavigateTo(ApplicationPagesUrls.TaskList(_applicationLoanId));
+        var taskList = await TestClient.NavigateTo(ApplicationPagesUrls.TaskList(UserOrganisationData.OrganisationId, _applicationLoanId));
 
         await RemoveNonCompletedProjectsFrom(taskList);
 
@@ -74,7 +72,7 @@ public class SubmitApplicationIntegrationTests : IntegrationTest
     public async Task Order03_ShouldDisplaySubmittedOnDate_WhenApplicationWasSubmitted()
     {
         // given && when
-        var taskListPage = await TestClient.NavigateTo(ApplicationPagesUrls.TaskList(_applicationLoanId));
+        var taskListPage = await TestClient.NavigateTo(ApplicationPagesUrls.TaskList(UserOrganisationData.OrganisationId, _applicationLoanId));
 
         // then
         taskListPage

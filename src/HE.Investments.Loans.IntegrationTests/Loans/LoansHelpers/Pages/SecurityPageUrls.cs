@@ -1,4 +1,5 @@
 namespace HE.Investments.Loans.IntegrationTests.Loans.LoansHelpers.Pages;
+
 internal static class SecurityPageUrls
 {
     public const string StartSuffix = "/security";
@@ -11,11 +12,12 @@ internal static class SecurityPageUrls
 
     public const string CheckYourAnswersSuffix = "/security/check-answers";
 
-    public static string ChargesDebt(string applicationId) => $"/application/{applicationId}{ChargesDebtSuffix}";
+    public static string ChargesDebt(string organisationId, string applicationId) => $"/{organisationId}/application/{applicationId}{ChargesDebtSuffix}";
 
-    public static string DirectorLoans(string applicationId) => $"/application/{applicationId}{DirectorLoansSuffix}";
+    public static string DirectorLoans(string organisationId, string applicationId) => $"/{organisationId}/application/{applicationId}{DirectorLoansSuffix}";
 
-    public static string DirLoansSub(string applicationId) => $"/application/{applicationId}{DirLoansSubSuffix}";
+    public static string DirLoansSub(string organisationId, string applicationId) => $"/{organisationId}/application/{applicationId}{DirLoansSubSuffix}";
 
-    public static string CheckYourAnswers(string applicationId) => $"/application/{applicationId}{CheckYourAnswersSuffix}";
+    public static string CheckYourAnswers(string organisationId, string applicationId) =>
+        $"/{organisationId}/application/{applicationId}{CheckYourAnswersSuffix}";
 }

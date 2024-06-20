@@ -1,3 +1,4 @@
+@using HE.Investments.Common.WWW.Extensions
 @model IList<HE.Investments.Common.WWW.Models.ActionModel>
 @if (Model.Any())
 {
@@ -5,7 +6,7 @@
     @foreach (var action in Model)
     {
         <strong class="govuk-!-display-inline-block govuk-!-padding-top-3">
-            <a href="@Url.Action(action.Action, action.Controller)">@action.Label</a>
+            <a href="@Url.OrganisationAction(action.Action, action.Controller)">@action.Label</a>
         </strong>
     }
 }

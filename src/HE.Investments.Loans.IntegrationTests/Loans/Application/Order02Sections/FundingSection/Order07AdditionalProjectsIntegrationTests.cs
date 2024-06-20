@@ -1,12 +1,9 @@
 using System.Diagnostics.CodeAnalysis;
 using AngleSharp.Html.Dom;
 using HE.Investments.Common.Contract.Constants;
-using HE.Investments.IntegrationTestsFramework;
-using HE.Investments.Loans.Common.Utils.Constants.FormOption;
 using HE.Investments.Loans.IntegrationTests.IntegrationFramework;
 using HE.Investments.Loans.IntegrationTests.Loans.LoansHelpers.Extensions;
 using HE.Investments.Loans.IntegrationTests.Loans.LoansHelpers.Pages;
-using HE.Investments.Loans.WWW;
 using HE.Investments.Loans.WWW.Views.FundingV2.Consts;
 using HE.Investments.TestsUtils.Extensions;
 using Xunit;
@@ -28,12 +25,14 @@ public class Order07AdditionalProjectsIntegrationTests : IntegrationTest
     public async Task Order01_ShouldMoveToAdditionalProjects_WhenYesIsSelected()
     {
         // given
-        var additionalProjectsPage = await TestClient.NavigateTo(FundingPageUrls.AdditionalProjects(UserData.LoanApplicationIdInDraftState));
+        var additionalProjectsPage =
+            await TestClient.NavigateTo(FundingPageUrls.AdditionalProjects(UserOrganisationData.OrganisationId, UserData.LoanApplicationIdInDraftState));
         var continueButton = additionalProjectsPage.GetGdsSubmitButtonById("continue-button");
 
         // when
         var checkAnswersPage = await TestClient.SubmitButton(
-            continueButton, new Dictionary<string, string> { { "AdditionalProjects", CommonResponse.Yes } });
+            continueButton,
+            new Dictionary<string, string> { { "AdditionalProjects", CommonResponse.Yes } });
 
         // then
         checkAnswersPage
@@ -53,7 +52,8 @@ public class Order07AdditionalProjectsIntegrationTests : IntegrationTest
 
         // when
         var checkAnswersPage = await TestClient.SubmitButton(
-            continueButton, new Dictionary<string, string> { { "AdditionalProjects", CommonResponse.No } });
+            continueButton,
+            new Dictionary<string, string> { { "AdditionalProjects", CommonResponse.No } });
 
         // then
         checkAnswersPage

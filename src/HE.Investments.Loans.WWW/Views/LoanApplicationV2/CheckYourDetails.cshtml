@@ -2,14 +2,15 @@
 @model HE.Investments.Loans.WWW.Models.CheckYourDetailsModel
 @{
     var fdProjectId = Context.Request.Query["fdProjectId"];
+    var organisationId = Context.Request.RouteValues["organisationId"]?.ToString();
     var callback = string.IsNullOrWhiteSpace(fdProjectId)
-        ? "/application/check-your-details"
-        : $"/application/check-your-details?fdProjectId={fdProjectId}";
+        ? $"/{organisationId}/application/check-your-details"
+        : $"/{organisationId}/application/check-your-details?fdProjectId={fdProjectId}";
 }
 
 <gds-div-grid-column-two-thirds>
-    <form asp-controller="LoanApplicationV2" asp-action="CheckYourDetailsPost" asp-method="post" asp-route-fdProjectId="@fdProjectId" novalidate>
-        <gds-back-link href="@Url.Action("Back","LoanApplicationV2", new { currentPage = LoanApplicationWorkflow.State.CheckYourDetails, fdProjectId })" text="Back" class="govuk-!-margin-bottom-8"></gds-back-link>
+    <he-organisation-form asp-controller="LoanApplicationV2" asp-action="CheckYourDetailsPost" asp-method="post" asp-route-fdProjectId="@fdProjectId" novalidate>
+        <vc:loans-workflow-back-button current-page="@LoanApplicationWorkflow.State.CheckYourDetails"/>
 
         <vc:page-header title="Check your details"/>
 
@@ -39,7 +40,8 @@
                        { "Link", Url.RouteUrl(new {
                            controller = "Accounts",
                            action = "UserProfile",
-                           callback
+                           callback,
+                           organisationId
                        }) }
                    })
 
@@ -56,12 +58,13 @@
                        { "Link", Url.RouteUrl(new {
                            controller = "Accounts",
                            action = "UserProfile",
-                           callback
+                           callback,
+                           organisationId
                        }) }
                    })
         </gds-summary-list>
     <gds-button name="action" type="submit" value="Continue" id="continue-button">
         Continue
     </gds-button>
-</form>
+</he-organisation-form>
 </gds-div-grid-column-two-thirds>

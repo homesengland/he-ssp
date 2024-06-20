@@ -32,7 +32,8 @@ public class Order11LocalAuthorityTests : IntegrationTest
     public async Task Order01_ShouldDisplayValidationError_WhenPhraseIsNotProvided()
     {
         // given
-        var localAuthoritySearchPage = await TestClient.NavigateTo(ProjectPagesUrls.LocalAuthoritySearch(_applicationLoanId, _projectId));
+        var localAuthoritySearchPage =
+            await TestClient.NavigateTo(ProjectPagesUrls.LocalAuthoritySearch(UserOrganisationData.OrganisationId, _applicationLoanId, _projectId));
 
         var continueButton = localAuthoritySearchPage.GetGdsSubmitButtonById("search-local-authority-button");
 
@@ -112,7 +113,8 @@ public class Order11LocalAuthorityTests : IntegrationTest
         var continueButton = localAuthoritySearchPage.GetGdsSubmitButtonById("search-local-authority-button");
 
         // when
-        var localAuthorityResultPage = await TestClient.SubmitButton(continueButton, new Dictionary<string, string> { { "Phrase", UserData.LocalAuthorityName } });
+        var localAuthorityResultPage =
+            await TestClient.SubmitButton(continueButton, new Dictionary<string, string> { { "Phrase", UserData.LocalAuthorityName } });
 
         // then
         localAuthorityResultPage
@@ -151,7 +153,8 @@ public class Order11LocalAuthorityTests : IntegrationTest
 
         // when
         var localAuthoritySearchPage = await TestClient.SubmitButton(
-            continueButton, new Dictionary<string, string> { { "Response", CommonResponse.No } });
+            continueButton,
+            new Dictionary<string, string> { { "Response", CommonResponse.No } });
 
         // then
         localAuthoritySearchPage
@@ -169,7 +172,8 @@ public class Order11LocalAuthorityTests : IntegrationTest
 
         // when
         var ownershipPage = await TestClient.SubmitButton(
-            continueButton, new Dictionary<string, string> { { "Response", CommonResponse.Yes } });
+            continueButton,
+            new Dictionary<string, string> { { "Response", CommonResponse.Yes } });
 
         // then
         ownershipPage

@@ -1,6 +1,7 @@
 using HE.Investments.Account.Shared.Authorization.Attributes;
 using HE.Investments.Common.Contract.Constants;
 using HE.Investments.Common.Validators;
+using HE.Investments.Common.WWW.Controllers;
 using HE.Investments.Common.WWW.Routing;
 using HE.Investments.Loans.Common.Utils.Enums;
 using HE.Investments.Loans.Contract.Application.ValueObjects;
@@ -13,7 +14,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HE.Investments.Loans.WWW.Controllers;
 
-[Route("application/{id}/security")]
+[Route("{organisationId}/application/{id}/security")]
 [AuthorizeWithCompletedProfile]
 public class SecurityController : WorkflowController<SecurityState>
 {
@@ -31,7 +32,7 @@ public class SecurityController : WorkflowController<SecurityState>
         var response = await _mediator.Send(new GetSecurity(LoanApplicationId.From(id), SecurityFieldsSet.GetEmpty));
         if (response.ViewModel.IsReadOnly())
         {
-            return RedirectToAction("CheckAnswers", new { Id = id });
+            return this.OrganisationRedirectToAction("CheckAnswers", routeValues: new { Id = id });
         }
 
         return View("Index", LoanApplicationId.From(id));

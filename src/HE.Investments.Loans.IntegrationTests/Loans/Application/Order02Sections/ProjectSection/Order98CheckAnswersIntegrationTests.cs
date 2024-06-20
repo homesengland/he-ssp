@@ -2,13 +2,11 @@ using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using HE.Investments.Common.Contract.Constants;
 using HE.Investments.Common.Messages;
-using HE.Investments.IntegrationTestsFramework;
 using HE.Investments.Loans.Common.Tests.TestData;
 using HE.Investments.Loans.Common.Utils.Constants.FormOption;
 using HE.Investments.Loans.IntegrationTests.IntegrationFramework;
 using HE.Investments.Loans.IntegrationTests.Loans.LoansHelpers.Extensions;
 using HE.Investments.Loans.IntegrationTests.Loans.LoansHelpers.Pages;
-using HE.Investments.Loans.WWW;
 using HE.Investments.Loans.WWW.Extensions;
 using HE.Investments.Loans.WWW.Models;
 using HE.Investments.Loans.WWW.Views.Project.Consts;
@@ -39,7 +37,7 @@ public class Order98CheckAnswersIntegrationTests : IntegrationTest
     public async Task Order01_ShouldDisplayDataSummary()
     {
         // given
-        var checkAnswersPage = await TestClient.NavigateTo(ProjectPagesUrls.CheckAnswers(_applicationLoanId, _projectId));
+        var checkAnswersPage = await TestClient.NavigateTo(ProjectPagesUrls.CheckAnswers(UserOrganisationData.OrganisationId, _applicationLoanId, _projectId));
 
         // when
         var projectSummary = checkAnswersPage.GetSummaryListItems();
@@ -80,12 +78,13 @@ public class Order98CheckAnswersIntegrationTests : IntegrationTest
     public async Task Order02_ShouldDisplayValidationError_WhenNoAnswersAreSelected()
     {
         // given
-        var checkYourAnswersPage = await GetCurrentPage(ProjectPagesUrls.CheckAnswers(_applicationLoanId, _projectId));
+        var checkYourAnswersPage = await GetCurrentPage(ProjectPagesUrls.CheckAnswers(UserOrganisationData.OrganisationId, _applicationLoanId, _projectId));
         var continueButton = checkYourAnswersPage.GetGdsSubmitButtonById("continue-button");
 
         // when
         checkYourAnswersPage = await TestClient.SubmitButton(
-            continueButton, new Dictionary<string, string> { { "CheckAnswers", string.Empty } });
+            continueButton,
+            new Dictionary<string, string> { { "CheckAnswers", string.Empty } });
 
         // then
         checkYourAnswersPage
@@ -99,12 +98,13 @@ public class Order98CheckAnswersIntegrationTests : IntegrationTest
     public async Task Order03_ShouldCompletedSection_WhenYesAnswerIsSelected()
     {
         // given
-        var checkYourAnswersPage = await GetCurrentPage(ProjectPagesUrls.CheckAnswers(_applicationLoanId, _projectId));
+        var checkYourAnswersPage = await GetCurrentPage(ProjectPagesUrls.CheckAnswers(UserOrganisationData.OrganisationId, _applicationLoanId, _projectId));
         var continueButton = checkYourAnswersPage.GetGdsSubmitButtonById("continue-button");
 
         // when
         var taskListPage = await TestClient.SubmitButton(
-            continueButton, new Dictionary<string, string> { { "CheckAnswers", CommonResponse.Yes } });
+            continueButton,
+            new Dictionary<string, string> { { "CheckAnswers", CommonResponse.Yes } });
 
         // then
         var (_, status, _) = taskListPage.GetProjectFromTaskList(_projectId);

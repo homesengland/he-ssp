@@ -1,11 +1,9 @@
 using System.Diagnostics.CodeAnalysis;
 using AngleSharp.Html.Dom;
-using HE.Investments.IntegrationTestsFramework;
 using HE.Investments.Loans.Common.Tests.TestData;
 using HE.Investments.Loans.IntegrationTests.IntegrationFramework;
 using HE.Investments.Loans.IntegrationTests.Loans.LoansHelpers.Extensions;
 using HE.Investments.Loans.IntegrationTests.Loans.LoansHelpers.Pages;
-using HE.Investments.Loans.WWW;
 using HE.Investments.TestsUtils.Extensions;
 using Xunit;
 using Xunit.Extensions.Ordering;
@@ -29,12 +27,14 @@ public class Order03MoreInformationAboutOrganizationIntegrationTests : Integrati
     public async Task Order01_ShouldDisplayValidationError_WhenTextIsTooLong()
     {
         // given
-        var moreInformationAboutOrganizationPage = await TestClient.NavigateTo(CompanyStructurePagesUrls.MoreInformationAboutOrganization(_applicationLoanId));
+        var moreInformationAboutOrganizationPage =
+            await TestClient.NavigateTo(CompanyStructurePagesUrls.MoreInformationAboutOrganization(UserOrganisationData.OrganisationId, _applicationLoanId));
         var continueButton = moreInformationAboutOrganizationPage.GetGdsSubmitButtonById("continue-button");
 
         // when
         moreInformationAboutOrganizationPage = await TestClient.SubmitButton(
-            continueButton, new Dictionary<string, string> { { "OrganisationMoreInformation", TextTestData.TextThatExceedsLongInputLimit } });
+            continueButton,
+            new Dictionary<string, string> { { "OrganisationMoreInformation", TextTestData.TextThatExceedsLongInputLimit } });
 
         // then
         moreInformationAboutOrganizationPage
@@ -54,7 +54,8 @@ public class Order03MoreInformationAboutOrganizationIntegrationTests : Integrati
 
         // when
         var howManyHomesBuiltPage = await TestClient.SubmitButton(
-            continueButton, new Dictionary<string, string> { { "OrganisationMoreInformation", TextTestData.TextThatNotExceedsLongInputLimit } });
+            continueButton,
+            new Dictionary<string, string> { { "OrganisationMoreInformation", TextTestData.TextThatNotExceedsLongInputLimit } });
 
         // then
         howManyHomesBuiltPage

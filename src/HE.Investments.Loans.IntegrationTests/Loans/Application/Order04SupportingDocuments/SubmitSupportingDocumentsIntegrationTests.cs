@@ -32,11 +32,12 @@ public class SubmitSupportingDocumentsIntegrationTests : IntegrationTest
         await LoanApplicationCrmRepository.ChangeApplicationStatus(_applicationLoanId, ApplicationStatus.ReferredBackToApplicant);
 
         // when
-        var supportingDocumentsPage = await TestClient.NavigateTo(ApplicationPagesUrls.ApplicationDashboardSupportingDocuments(_applicationLoanId));
+        var supportingDocumentsPage =
+            await TestClient.NavigateTo(ApplicationPagesUrls.ApplicationDashboardSupportingDocuments(UserOrganisationData.OrganisationId, _applicationLoanId));
 
         // then
         supportingDocumentsPage
-            .UrlEndWith(ApplicationPagesUrls.ApplicationDashboardSupportingDocuments(_applicationLoanId))
+            .UrlEndWith(ApplicationPagesUrls.ApplicationDashboardSupportingDocuments(UserOrganisationData.OrganisationId, _applicationLoanId))
             .HasHeader2(LoanApplicationPageTitles.SupportingDocuments)
             .HasStatusTagByTestId(ApplicationStatus.ReferredBackToApplicant.GetDescription(), "application-status");
 
@@ -48,7 +49,8 @@ public class SubmitSupportingDocumentsIntegrationTests : IntegrationTest
     public async Task Order02_ProvideSupportingDocuments()
     {
         // given
-        var supportingDocumentsPage = await GetCurrentPage(ApplicationPagesUrls.ApplicationDashboardSupportingDocuments(_applicationLoanId));
+        var supportingDocumentsPage =
+            await GetCurrentPage(ApplicationPagesUrls.ApplicationDashboardSupportingDocuments(UserOrganisationData.OrganisationId, _applicationLoanId));
         var submitButton = supportingDocumentsPage.GetGdsSubmitButtonByTestId("submit-button");
         using FileEntry doc = new("document.pdf", "application/pdf", new MemoryStream([1, 2, 3]));
         using FileEntry doc2 = new("another_documents.zip", "application/zip", new MemoryStream([1, 2, 3]));
@@ -67,7 +69,7 @@ public class SubmitSupportingDocumentsIntegrationTests : IntegrationTest
 
         // then
         nextPage
-            .UrlEndWith(ApplicationPagesUrls.ApplicationDashboardSupportingDocuments(_applicationLoanId))
+            .UrlEndWith(ApplicationPagesUrls.ApplicationDashboardSupportingDocuments(UserOrganisationData.OrganisationId, _applicationLoanId))
             .HasHeader2(LoanApplicationPageTitles.SupportingDocuments)
             .HasSuccessNotificationBanner("Files successfully uploaded")
             .HasUploadedFiles(supportingDocuments.Count)

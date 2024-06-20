@@ -26,7 +26,7 @@ public class Order02ApplicationDashboardIntegrationTests : IntegrationTest
     public async Task Order01_ShouldOpenApplicationDashboard()
     {
         // given
-        var dashboardPage = await TestClient.NavigateTo(PagesUrls.DashboardPage);
+        var dashboardPage = await TestClient.NavigateTo(PagesUrls.DashboardPage(UserOrganisationData.OrganisationId));
 
         // when
         var applicationLink = dashboardPage.GetAnchorElementById($"open-application-link-{_applicationLoanId}");
@@ -34,7 +34,7 @@ public class Order02ApplicationDashboardIntegrationTests : IntegrationTest
 
         // then
         applicationDashboardPage
-            .UrlEndWith(ApplicationPagesUrls.ApplicationDashboard(_applicationLoanId))
+            .UrlEndWith(ApplicationPagesUrls.ApplicationDashboard(UserOrganisationData.OrganisationId, _applicationLoanId))
             .HasNotEmptyTitle();
 
         SetSharedData(SharedKeys.CurrentPageKey, applicationDashboardPage);

@@ -1,3 +1,4 @@
+using HE.Investments.Account.Shared;
 using HE.Investments.Account.Shared.Authorization.Attributes;
 using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Messages;
@@ -18,21 +19,25 @@ public class HomeController : Controller
 {
     private readonly IMediator _mediator;
     private readonly IUserContext _userContext;
+    private readonly IAccountUserContext _accountUserContext;
 
-    public HomeController(IMediator mediator, IUserContext userContext)
+    public HomeController(IMediator mediator, IUserContext userContext, IAccountUserContext accountUserContext)
     {
         _mediator = mediator;
         _userContext = userContext;
+        _accountUserContext = accountUserContext;
     }
 
-    public IActionResult Index()
+    public async Task<IActionResult> Index()
     {
         if (!_userContext.IsAuthenticated)
         {
             return RedirectToAction(nameof(GuidanceController.WhatTheHomeBuildingFundIs), new ControllerName(nameof(GuidanceController)).WithoutPrefix());
         }
 
-        return RedirectToAction("Dashboard");
+        var userAccount = await _accountUserContext.GetSelectedAccount();
+        var organisationId = userAccount.SelectedOrganisationId();
+        return RedirectToAction("Dashboard", new { organisationId });
     }
 
     public IActionResult Privacy()
@@ -40,7 +45,7 @@ public class HomeController : Controller
         return View();
     }
 
-    [HttpGet("/dashboard")]
+    [HttpGet("{organisationId}/dashboard")]
     [AuthorizeWithCompletedProfile]
     [WorkflowState(LoanApplicationWorkflow.State.UserDashboard)]
     public async Task<IActionResult> Dashboard()

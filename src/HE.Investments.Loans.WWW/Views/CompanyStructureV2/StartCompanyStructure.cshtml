@@ -1,15 +1,15 @@
-@using Microsoft.AspNetCore.Mvc.TagHelpers
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Divs
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Links
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Lists
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Paragraphs
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Buttons
+@using HE.Investments.Common.WWW.Extensions
 @using HE.Investments.Loans.WWW.Views.CompanyStructureV2.Consts
 @model HE.Investments.Loans.Contract.Application.ValueObjects.LoanApplicationId
 
 <gds-div-grid-column-two-thirds>
-    <form asp-controller="CompanyStructureV2" asp-action="StartCompanyStructurePost" asp-route-id="@Model.Value" asp-method="post" novalidate>
-        <gds-back-link href="@Url.Action("TaskList","LoanApplicationV2", new {id = Model.Value})" text="Back to application" class="govuk-!-margin-bottom-8">
+    <he-organisation-form asp-controller="CompanyStructureV2" asp-action="StartCompanyStructurePost" asp-route-id="@Model.Value" asp-method="post" novalidate>
+        <gds-back-link href="@Url.OrganisationAction("TaskList","LoanApplicationV2", new {id = Model.Value})" text="Back to application" class="govuk-!-margin-bottom-8">
         </gds-back-link>
 
         <vc:page-header title="@CompanyStructurePageTitles.Start"/>
@@ -24,5 +24,5 @@
         <gds-button-start name="action" type="submit" value="Continue" Id="start-now-button">
             Start now
         </gds-button-start>
-    </form>
+    </he-organisation-form>
 </gds-div-grid-column-two-thirds>

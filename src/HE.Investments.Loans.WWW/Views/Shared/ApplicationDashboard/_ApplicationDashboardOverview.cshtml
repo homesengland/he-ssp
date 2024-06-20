@@ -5,6 +5,7 @@
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Summary
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Summary.V2
 @using HE.Investments.Common
+@using HE.Investments.Common.WWW.Extensions
 @inject Microsoft.FeatureManagement.IFeatureManager FeatureManager
 @model HE.Investments.Loans.WWW.Models.ApplicationDashboardModel
 @{
@@ -14,7 +15,7 @@
         {
             return new List<(string Title, string Desription, string Link)>
             {
-                ("Application details", "You can view or edit your company and project information.", Url.Action("TaskList", "LoanApplicationV2", new { id = Model.LoanApplicationId })),
+                ("Application details", "You can view or edit your company and project information.", Url.OrganisationAction("TaskList", "LoanApplicationV2", new { id = Model.LoanApplicationId })),
                 ("Conditions management", "You can upload evidence to satisfy your Conditions Precedent and Subsequent.", null),
                 ("Letters", "You'll be able to download letters and upload your signed copies here.", Url.Link("#", null)),
             };
@@ -22,7 +23,7 @@
 
         return new List<(string Title, string Desription, string Link)>
         {
-            ("Application details", "You can view or edit your company and project information.", Url.Action("TaskList", "LoanApplicationV2", new { id = Model.LoanApplicationId })),
+            ("Application details", "You can view or edit your company and project information.", Url.OrganisationAction("TaskList", "LoanApplicationV2", new { id = Model.LoanApplicationId })),
         };
     };
 }
@@ -39,7 +40,7 @@
                 <p class="govuk-body govuk-!-margin-bottom-2"> @singleData.Desription</p>
             </dt>
             <gds-summary-list-actions-v2>
-                <gds-link href=@(@singleData.Link ?? "#") id=@($"edit-link-{singleData.Title.ToLowerInvariant().Replace(' ', '-')}")>
+                <gds-link href=@(singleData.Link ?? "#") id=@($"edit-link-{singleData.Title.ToLowerInvariant().Replace(' ', '-')}")>
                     View or edit
                 </gds-link>
             </gds-summary-list-actions-v2>
@@ -54,7 +55,7 @@
         <gds-p>
             This will notify Homes England that you no longer wish to proceed with this application at this time. You can revisit this later on and submit once you're ready.
         </gds-p>
-        <a class="govuk-button govuk-button--secondary" data-module="govuk-button" href="@Url.Action("Hold", "LoanApplicationV2", new { id = Model.LoanApplicationId })">
+        <a class="govuk-button govuk-button--secondary" data-module="govuk-button" href="@Url.OrganisationAction("Hold", "LoanApplicationV2", new { id = Model.LoanApplicationId })">
             Hold
         </a>
     </div>
@@ -68,7 +69,7 @@
             This will notify Homes England that you no longer wish to proceed. Your application will be permanently deleted.
         </gds-p>
         <a class="govuk-button govuk-button--warning" data-module="govuk-button"
-           href="@Url.Action("Withdraw", "LoanApplicationV2", new { id = Model.LoanApplicationId })" id="withdraw-application">
+           href="@Url.OrganisationAction("Withdraw", "LoanApplicationV2", new { id = Model.LoanApplicationId })" id="withdraw-application">
             Withdraw
         </a>
     </div>
