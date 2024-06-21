@@ -140,7 +140,7 @@ public class Order01CompleteUserProfile : AccountIntegrationTest
             .UrlWithoutQueryEndsWith(OrganisationPagesUrls.Confirm(organisationId))
             .HasTitle(OrganisationPageTitles.ConfirmYourSelection);
         FreshProfileData.SetSelectedOrganisationId(organisationId);
-        UserOrganisationData.SetOrganisationId(organisationId);
+        UserOrganisationsData.SetOrganisationId(organisationId);
         SaveCurrentPage();
     }
 
