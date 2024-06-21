@@ -27,7 +27,7 @@ public class MilestoneDetails<T> : ValueObject, IQuestion
 
     public bool IsAnswered()
     {
-        return MilestoneDate.IsProvided() && PaymentDate.IsProvided();
+        return (MilestoneDate?.IsDateSet ?? false) && (PaymentDate?.IsDateSet ?? false);
     }
 
     protected override IEnumerable<object?> GetAtomicValues()

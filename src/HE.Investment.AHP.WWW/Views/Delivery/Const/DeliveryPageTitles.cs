@@ -36,5 +36,5 @@ public static class DeliveryPageTitles
 
     public const string Remove = "Are you sure you want to remove this delivery phase?";
 
-    public static string SummaryOfDelivery(string deliveryPhaseName) => $"Summary of {deliveryPhaseName} delivery and milestones";
+    public static string SummaryOfDelivery(string deliveryPhaseName) => $"Summary of {deliveryPhaseName} and milestones";
 }

@@ -21,6 +21,8 @@ public abstract class ApiHttpClientBase
 
     private readonly AsyncRetryPolicy<HttpResponseMessage> _httpPolicy;
 
+    private readonly string _apiUrl;
+
     private readonly JsonSerializerOptions _jsonSerializerOptions = new()
     {
         PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
@@ -29,12 +31,13 @@ public abstract class ApiHttpClientBase
         Converters = { new BoolConverter() },
     };
 
-    protected ApiHttpClientBase(HttpClient httpClient, IApiTokenProvider apiTokenProvider, IApiConfig config)
+    protected ApiHttpClientBase(HttpClient httpClient, IApiTokenProvider apiTokenProvider, IApiConfig config, string apiName)
     {
         _httpClient = httpClient;
         _apiTokenProvider = apiTokenProvider;
         _httpPolicy = Policy.HandleResult<HttpResponseMessage>(x => x.StatusCode is HttpStatusCode.RequestTimeout or >= HttpStatusCode.InternalServerError)
             .WaitAndRetryAsync(config.RetryCount, _ => TimeSpan.FromMilliseconds(config.RetryDelayInMilliseconds));
+        _apiUrl = config.GetApiUrl(apiName);
     }
 
     protected async Task<TResponse> SendAsync<TResponse>(
@@ -60,7 +63,7 @@ public abstract class ApiHttpClientBase
     {
         return async () =>
         {
-            var request = new HttpRequestMessage(method, relativeUrl)
+            var request = new HttpRequestMessage(method, Path.Combine(_apiUrl, relativeUrl))
             {
                 Headers = { Authorization = new AuthenticationHeaderValue("Bearer", await _apiTokenProvider.GetToken()) },
             };

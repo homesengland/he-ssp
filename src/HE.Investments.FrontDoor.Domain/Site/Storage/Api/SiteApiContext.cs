@@ -11,7 +11,7 @@ namespace HE.Investments.FrontDoor.Domain.Site.Storage.Api;
 public sealed class SiteApiContext : ApiHttpClientBase, ISiteContext
 {
     public SiteApiContext(HttpClient httpClient, IApiTokenProvider tokenProvider, IApiConfig config)
-        : base(httpClient, tokenProvider, config)
+        : base(httpClient, tokenProvider, config, "FrontDoor")
     {
     }
 

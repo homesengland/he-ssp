@@ -4,6 +4,7 @@ using HE.Investments.Account.Shared.User;
 using HE.Investments.Common;
 using HE.Investments.Common.CRM.Mappers;
 using HE.Investments.Common.CRM.Model;
+using HE.Investments.Common.CRM.Serialization;
 using HE.Investments.Common.CRM.Services;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Consortium.Shared.UserContext;
@@ -81,6 +82,7 @@ public class ProgrammeApplicationsRepository : IProgrammeApplicationsRepository
             invln_userid = userAccount.UserGlobalId.ToString(),
             invln_accountid = userAccount.SelectedOrganisationId().ToGuidAsString(),
             invln_consortiumid = userAccount.Consortium.GetConsortiumIdAsString()?.ToGuidAsString(),
+            invln_pagingrequest = CrmResponseSerializer.Serialize(new PagingRequestDto { pageNumber = 1, pageSize = 1000 }),
         };
 
         var projects = await _crmService.ExecuteAsync<invln_getahpprojectsRequest, invln_getahpprojectsResponse, PagedResponseDto<AhpProjectDto>>(
