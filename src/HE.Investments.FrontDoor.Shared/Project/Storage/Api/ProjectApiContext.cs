@@ -10,7 +10,7 @@ namespace HE.Investments.FrontDoor.Shared.Project.Storage.Api;
 internal sealed class ProjectApiContext : ApiHttpClientBase, IProjectContext
 {
     public ProjectApiContext(HttpClient httpClient, IApiTokenProvider apiTokenProvider, IApiConfig config)
-        : base(httpClient, apiTokenProvider, config)
+        : base(httpClient, apiTokenProvider, config, "FrontDoor")
     {
     }
 
