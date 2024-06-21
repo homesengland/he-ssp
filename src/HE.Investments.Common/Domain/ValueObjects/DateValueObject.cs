@@ -70,6 +70,8 @@ public abstract class DateValueObject : ValueObject
 
     public DateTime? Value { get; set; }
 
+    public bool IsDateSet => Value.HasValue;
+
     public bool IsBefore(DateValueObject? other)
     {
         if (Value == null || other?.Value == null)
