@@ -303,6 +303,7 @@ namespace HE.CRM.AHP.Plugins.Services.GovNotifyEmail
             }
         }
 
+        #region Probably to be removed
         public void SendNotifications_AHP_INTERNAL_EXTERNAL_WANTS_ADDITIONAL_PAYMENTS_FOR_PHASE(EntityReference deliveryPhaseId)
         {
             var deliveryPhase = _deliveryPhaseRepositoryAdmin.GetById(deliveryPhaseId.Id, nameof(invln_DeliveryPhase.invln_Application).ToLower());
@@ -312,6 +313,43 @@ namespace HE.CRM.AHP.Plugins.Services.GovNotifyEmail
             if (ahpApplication.OwnerId.LogicalName == SystemUser.EntityLogicalName)
             {
                 this.TracingService.Trace("AHP_DELIVERY_PHASE_NOTIFICATION_OF_ADDITIONAL_PAYMENTS_FOR_PHASE");
+                var emailTemplate = _notificationSettingRepositoryAdmin.GetTemplateViaTypeName("AHP_DELIVERY_PHASE_NOTIFICATION_OF_ADDITIONAL_PAYMENTS_FOR_PHASE");
+                var ownerData = _systemUserRepositoryAdmin.GetById(ahpApplication.OwnerId.Id, nameof(SystemUser.InternalEMailAddress).ToLower(), nameof(SystemUser.FullName).ToLower());
+                var account = _accountRepositoryAdmin.GetById(ahpApplication.invln_organisationid.Id, nameof(Account.Name).ToLower());
+                var subject = (account.Name ?? "NO NAME") + " " + emailTemplate.invln_subject;
+                var govNotParams = new AHP_DELIVERY_PHASE_NOTIFICATION_OF_ADDITIONAL_PAYMENTS_FOR_PHASE()
+                {
+                    templateId = emailTemplate?.invln_templateid,
+                    personalisation = new parameters_AHP_DELIVERY_PHASE_NOTIFICATION_OF_ADDITIONAL_PAYMENTS_FOR_PHASE()
+                    {
+                        recipientEmail = ownerData.InternalEMailAddress,
+                        subject = subject,
+                        username = ownerData.FullName ?? "NO NAME",
+                        organisationname = account.Name ?? "NO NAME",
+                    }
+                };
+
+                var options = new JsonSerializerOptions
+                {
+                    Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+                    WriteIndented = true
+                };
+
+                var parameters = JsonSerializer.Serialize(govNotParams, options);
+                this.SendGovNotifyEmail(ahpApplication.OwnerId, ahpApplication.ToEntityReference(), subject, parameters, emailTemplate);
+            }
+        }
+        #endregion
+
+        public void SendNotifications_AHP_INTERNAL_EXTERNAL_WANTS_ADDITIONAL_PAYMENTS_FOR_PHASE(invln_AHPStatusChange ahpStatusChange, invln_scheme ahpApplication)
+        {
+            TracingService.Trace("Checking Delivery Phases");
+            var DeliveryPhasesRequiresAdditionalPayments = _deliveryPhaseRepositoryAdmin.GetDeliveryPhasesRequiresAdditionalPaymentsForApplication(ahpApplication.Id);
+            TracingService.Trace($"Delivery Phases requires additional payments count: {DeliveryPhasesRequiresAdditionalPayments.Count}");
+
+            if (ahpApplication.OwnerId.LogicalName == SystemUser.EntityLogicalName && DeliveryPhasesRequiresAdditionalPayments.Count > 0)
+            {
+                TracingService.Trace("AHP_DELIVERY_PHASE_NOTIFICATION_OF_ADDITIONAL_PAYMENTS_FOR_PHASE");
                 var emailTemplate = _notificationSettingRepositoryAdmin.GetTemplateViaTypeName("AHP_DELIVERY_PHASE_NOTIFICATION_OF_ADDITIONAL_PAYMENTS_FOR_PHASE");
                 var ownerData = _systemUserRepositoryAdmin.GetById(ahpApplication.OwnerId.Id, nameof(SystemUser.InternalEMailAddress).ToLower(), nameof(SystemUser.FullName).ToLower());
                 var account = _accountRepositoryAdmin.GetById(ahpApplication.invln_organisationid.Id, nameof(Account.Name).ToLower());
