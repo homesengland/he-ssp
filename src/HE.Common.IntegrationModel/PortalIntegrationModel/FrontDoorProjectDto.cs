@@ -31,7 +31,6 @@ namespace HE.Common.IntegrationModel.PortalIntegrationModel
         public int? StartofProjectYear { get; set; }
         public DateTime? CreatedOn { get; set; }
         public UserAccountDto FrontDoorProjectContact { get; set; }
-        public int? FrontDoorDecision { get; set; } // to remove, instead "EligibleApplication" was created
         public List<int> EligibleApplication { get; set; }
     }
 }

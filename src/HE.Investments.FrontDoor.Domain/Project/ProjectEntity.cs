@@ -38,7 +38,7 @@ public class ProjectEntity : DomainEntity
         IsProfit? isProfit = null,
         ExpectedStartDate? expectedStartDate = null,
         ProjectLocalAuthority? localAuthority = null,
-        ApplicationType? frontDoorDecision = null)
+        List<ApplicationType>? eligibleApplication = null)
     {
         Id = id;
         Name = name;
@@ -57,7 +57,7 @@ public class ProjectEntity : DomainEntity
         IsProfit = isProfit ?? IsProfit.Empty;
         ExpectedStartDate = expectedStartDate ?? ExpectedStartDate.Empty;
         LocalAuthority = localAuthority;
-        FrontDoorDecision = frontDoorDecision;
+        EligibleApplication = eligibleApplication;
     }
 
     public FrontDoorProjectId Id { get; private set; }
@@ -94,7 +94,7 @@ public class ProjectEntity : DomainEntity
 
     public ProjectLocalAuthority? LocalAuthority { get; private set; }
 
-    public ApplicationType? FrontDoorDecision { get; private set; }
+    public List<ApplicationType>? EligibleApplication { get; private set; }
 
     public bool IsModified => _modificationTracker.IsModified || Id.IsNew;
 
@@ -229,7 +229,7 @@ public class ProjectEntity : DomainEntity
         var result = await service.GetEligibleApplication(this, CancellationToken.None);
         if (result.OperationResult.IsValid)
         {
-            FrontDoorDecision = _modificationTracker.Change(FrontDoorDecision, result.ApplicationType);
+            EligibleApplication = _modificationTracker.Change(EligibleApplication, [result.ApplicationType]);
         }
 
         return result;

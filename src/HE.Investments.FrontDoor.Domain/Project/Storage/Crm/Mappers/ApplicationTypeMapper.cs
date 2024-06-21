@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using HE.Investments.Common.Contract.Enum;
 using HE.Investments.Common.CRM.Mappers;
+using HE.Investments.Common.CRM.Model;
 
 namespace HE.Investments.FrontDoor.Domain.Project.Storage.Crm.Mappers;
 
@@ -12,8 +13,8 @@ public class ApplicationTypeMapper : EnumMapper<ApplicationType>
 {
     protected override IDictionary<ApplicationType, int?> Mapping => new Dictionary<ApplicationType, int?>
     {
-        { ApplicationType.Loans, 134370000 }, // todo replace with he_FrontDoorDecision enum cast to int
-        { ApplicationType.Ahp, 134370001 },
-        { ApplicationType.Undefined, 134370002 },
+        { ApplicationType.Loans, (int)he_FrontDoorDecision.Devfinance },
+        { ApplicationType.Ahp, (int)he_FrontDoorDecision.AHP },
+        { ApplicationType.Undefined, (int)he_FrontDoorDecision.Contactus },
     };
 }
