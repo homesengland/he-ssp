@@ -23,7 +23,7 @@ public class AdminUserInApplicationPartnerOrganisationOfConsortiumTests : Applic
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
-    public async Task GetProjectForSitePartner()
+    public async Task GetProjectForApplicationPartner()
     {
         await TestGetProjectEndpoint(
             AdminUserInApplicationPartnerOrganisationOfConsortium.UserData,
@@ -31,10 +31,18 @@ public class AdminUserInApplicationPartnerOrganisationOfConsortiumTests : Applic
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
-    public async Task GetSiteApplicationsForSitePartner()
+    public async Task GetSiteApplicationsForApplicationPartner()
     {
         await TestGetSiteApplicationsEndpoint(
             AdminUserInApplicationPartnerOrganisationOfConsortium.UserData,
             AdminUserInApplicationPartnerOrganisationOfConsortium.SitePartner);
+    }
+
+    [Fact(Skip = AhpConfig.SkipTest)]
+    public async Task GetApplicationDetailsForApplicationPartner()
+    {
+        await TestGetApplicationEndpoint(
+            AdminUserInApplicationPartnerOrganisationOfConsortium.UserData,
+            AdminUserInApplicationPartnerOrganisationOfConsortium.ApplicationPartnerForSitePartner);
     }
 }

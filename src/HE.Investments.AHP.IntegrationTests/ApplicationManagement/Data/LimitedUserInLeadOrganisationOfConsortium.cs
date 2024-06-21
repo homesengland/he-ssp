@@ -10,7 +10,7 @@ public static class LimitedUserInLeadOrganisationOfConsortium
         "2a7ef26a-c320-ef11-840a-000d3a0cff9a",
         "ee269470-c620-ef11-840a-002248c83519");
 
-    public static AhpApplication Application { get; } = new("AhpApplication-Limited-01");
+    public static AhpApplication Application { get; } = new("81510c5d-8822-ef11-840a-000d3a0cff9a", "AhpApplication-Limited-01");
 
     public static AhpSite AhpSite => new("6953bfa3-c420-ef11-840a-002248c5d15f", "AhpProjectSite-Limited", [Application]);
 
