@@ -10,6 +10,7 @@ import { Programme } from './events/Programme'
 import { ProjectDetails } from './events/ProjectDetails'
 import { DeliveryPhase } from './events/DeliveryPhase'
 import { HomeType } from './events/HomeType'
+import { Contact } from './events/Contact'
 
 export function initialize() {
   console.log('Initialize main library')
@@ -27,3 +28,4 @@ exports.Programme = Programme
 exports.ProjectDetails = ProjectDetails
 exports.DeliveryPhase = DeliveryPhase
 exports.HomeType = HomeType
+exports.Contact = Contact
