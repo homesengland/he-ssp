@@ -10,6 +10,7 @@ using HE.Investment.AHP.Domain.Project.ValueObjects;
 using HE.Investment.AHP.Domain.Scheme.ValueObjects;
 using HE.Investment.AHP.Domain.Site.Mappers;
 using HE.Investment.AHP.Domain.Site.ValueObjects;
+using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Contract.Pagination;
 using HE.Investments.Common.CRM.Mappers;
 using HE.Investments.Common.Extensions;
@@ -32,6 +33,24 @@ public class ProjectRepository : IProjectRepository
     {
         _projectCrmContext = projectCrmContext;
         _eventDispatcher = eventDispatcher;
+    }
+
+    public async Task<AhpProjectDto?> GetProjectOrNull(FrontDoorProjectId id, ConsortiumUserAccount userAccount, CancellationToken cancellationToken)
+    {
+        try
+        {
+            var project = await _projectCrmContext.GetProject(
+                id.ToGuidAsString(),
+                userAccount.UserGlobalId.ToString(),
+                userAccount.SelectedOrganisationId().ToString(),
+                userAccount.Consortium.GetConsortiumIdAsString(),
+                cancellationToken);
+            return project;
+        }
+        catch (NotFoundException)
+        {
+            return null;
+        }
     }
 
     public async Task<AhpProjectApplications> GetProjectApplications(FrontDoorProjectId id, ConsortiumUserAccount userAccount, CancellationToken cancellationToken)

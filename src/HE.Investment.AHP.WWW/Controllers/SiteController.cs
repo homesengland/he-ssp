@@ -1018,7 +1018,7 @@ public class SiteController : SiteControllerBase<SiteWorkflowState>
     private string? BuildSelectSitesCallBackUrl(string fdProjectId, bool isAfterFdProject)
     {
         return isAfterFdProject
-            ? Url.Action("Start", "Project", new { fdProjectId, shouldCreateNewProject = false })
+            ? Url.Action("Start", "Project", new { fdProjectId })
             : Url.Action("Start", "Application", new { projectId = fdProjectId });
     }
 }

@@ -35,7 +35,7 @@ public class ProjectController : Controller
 
     [HttpGet("start")]
     [ConsortiumAuthorize]
-    public async Task<IActionResult> Start([FromQuery] string fdProjectId, [FromQuery] bool? shouldCreateNewProject, CancellationToken cancellationToken)
+    public async Task<IActionResult> Start([FromQuery] string fdProjectId, CancellationToken cancellationToken)
     {
         var userAccount = await _consortiumUserContext.GetSelectedAccount();
         if (userAccount.Consortium.HasNoConsortium || await _consortiumAccessContext.IsConsortiumLeadPartner())
@@ -44,8 +44,7 @@ public class ProjectController : Controller
             return View(new ProjectStartModel(
                 fdProjectId,
                 ahpProgramme,
-                userAccount.Role() != Investments.Account.Api.Contract.User.UserRole.Limited,
-                shouldCreateNewProject ?? true));
+                userAccount.Role() != Investments.Account.Api.Contract.User.UserRole.Limited));
         }
 
         return RedirectToAction("ContactHomesEngland", "ConsortiumMember", new { consortiumId = userAccount.Consortium.ConsortiumId.Value });
@@ -53,12 +52,9 @@ public class ProjectController : Controller
 
     [HttpPost("start")]
     [ConsortiumAuthorize(ConsortiumAccessContext.Edit)]
-    public async Task<IActionResult> StartPost([FromQuery] string fdProjectId, [FromQuery] bool shouldCreateNewProject, CancellationToken cancellationToken)
+    public async Task<IActionResult> StartPost([FromQuery] string fdProjectId, CancellationToken cancellationToken)
     {
-        if (shouldCreateNewProject)
-        {
-            await _mediator.Send(new CreateAhpProjectCommand(FrontDoorProjectId.From(fdProjectId)), cancellationToken);
-        }
+        await _mediator.Send(new CreateAhpProjectIfDoesNotExistCommand(FrontDoorProjectId.From(fdProjectId)), cancellationToken);
 
         var response = await _mediator.Send(new GetSiteListQuery(new PaginationRequest(1, 1)), cancellationToken);
         if (response.Page.Items.Any())
