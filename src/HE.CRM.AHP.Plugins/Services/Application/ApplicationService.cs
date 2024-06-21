@@ -219,23 +219,9 @@ namespace HE.CRM.AHP.Plugins.Services.Application
             return urlToReturn;
         }
 
-        public List<AhpApplicationDto> GetApplication(string organisationId, string contactId = null, string fieldsToRetrieve = null, string applicationId = null)
+        public List<AhpApplicationDto> GetApplication(string organisationId, string contactId = null, string FieldsToRetrieve = null, string applicationId = null)
         {
             TracingService.Trace("GetApplication");
-            string consortiumId = null;
-            if (app.invln_Site != null)
-            {
-                var site = _siteRepository.GetById(app.invln_Site.Id, invln_Sites.Fields.invln_AHPProjectId);
-                if (site.invln_AHPProjectId != null)
-                {
-                    var ahpProject = _projectRepository.GetById(site.invln_AHPProjectId.Id, invln_ahpproject.Fields.invln_ConsortiumId);
-                    if (ahpProject != null && ahpProject.invln_ConsortiumId != null)
-                    {
-                        consortiumId = ahpProject.invln_ConsortiumId.Id.ToString();
-                    }
-                }
-            }
-
             var listOfApplications = new List<AhpApplicationDto>();
             if (string.IsNullOrEmpty(applicationId))
             {
@@ -243,16 +229,16 @@ namespace HE.CRM.AHP.Plugins.Services.Application
                 var contactExternalIdFilter = GetFetchXmlConditionForGivenField(contactId, nameof(Contact.invln_externalid).ToLower());
                 contactExternalIdFilter = GenerateFilterMarksForCondition(contactExternalIdFilter);
                 string attributes = null;
-                if (!string.IsNullOrEmpty(fieldsToRetrieve))
+                if (!string.IsNullOrEmpty(FieldsToRetrieve))
                 {
-                    attributes = GenerateFetchXmlAttributes(fieldsToRetrieve);
+                    attributes = GenerateFetchXmlAttributes(FieldsToRetrieve);
                 }
                 var applications = _applicationRepository.GetApplicationsForOrganisationAndContact(organisationId, contactExternalIdFilter, attributes, additionalFilters);
                 if (applications.Any())
                 {
                     foreach (var application in applications)
                     {
-                        var applicationDto = fillApplicationData(app);
+                        var applicationDto = FillApplicationData(application);
 
                         listOfApplications.Add(applicationDto);
                     }
@@ -260,20 +246,36 @@ namespace HE.CRM.AHP.Plugins.Services.Application
             }
             else
             {
-                string[] columns = fieldsToRetrieve == null ? null : fieldsToRetrieve.Split(',');
+                FieldsToRetrieve += ",invln_contactid";
+                string[] columns = FieldsToRetrieve == null ? null : FieldsToRetrieve.Split(',');
                 var app = _applicationRepository.GetById(new Guid(applicationId), columns);
-                var applicationDto = fillApplicationData(app);
+                var contact = _contactRepository.GetById(app.invln_contactid.Id, new string[] { Contact.Fields.FirstName, Contact.Fields.LastName, nameof(Contact.invln_externalid).ToLower() });
+
+                var applicationDto = FillApplicationData(app);
+                string consortiumId = null;
+                if (app.invln_Site != null)
+                {
+                    var site = _siteRepository.GetById(app.invln_Site.Id, invln_Sites.Fields.invln_AHPProjectId);
+                    if (site.invln_AHPProjectId != null)
+                    {
+                        var ahpProject = _projectRepository.GetById(site.invln_AHPProjectId.Id, invln_ahpproject.Fields.invln_ConsortiumId);
+                        if (ahpProject != null && ahpProject.invln_ConsortiumId != null)
+                        {
+                            consortiumId = ahpProject.invln_ConsortiumId.Id.ToString();
+                        }
+                    }
+                }
 
                 if (_consortiumService.CheckAccess(ConsortiumService.Operation.Get, ConsortiumService.RecordType.AHPProject,
-                    contactId, null, applicationId, consortiumId, organisationId, null))
-
+                    contact.invln_externalid, null, applicationId, consortiumId, organisationId, null))
+                {
                     listOfApplications.Add(applicationDto);
-
+                }
             }
             return listOfApplications;
         }
 
-        private AhpApplicationDto fillApplicationData(invln_scheme app)
+        private AhpApplicationDto FillApplicationData(invln_scheme app)
         {
             var contact = _contactRepository.GetById(app.invln_contactid.Id, new string[] { Contact.Fields.FirstName, Contact.Fields.LastName, nameof(Contact.invln_externalid).ToLower() });
             invln_ahpproject ahpProject = null;
