@@ -31,4 +31,12 @@ public class AdminUserInSitePartnerOrganisationOfConsortiumTests : ApplicationMa
     {
         await TestGetSiteApplicationsEndpoint(AdminUserInSitePartnerOrganisationOfConsortium.UserData, AdminUserInSitePartnerOrganisationOfConsortium.SitePartner);
     }
+
+    [Fact(Skip = AhpConfig.SkipTest)]
+    public async Task GetApplicationDetailsForSitePartner()
+    {
+        await TestGetApplicationEndpoint(
+            AdminUserInSitePartnerOrganisationOfConsortium.UserData,
+            AdminUserInSitePartnerOrganisationOfConsortium.ApplicationPartnerForSitePartner);
+    }
 }
