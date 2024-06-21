@@ -1,6 +1,6 @@
-namespace HE.CRM.Common.Api.Config
+namespace HE.CRM.Common.Api.Auth.AzureAd
 {
-    public class ApiAuthConfig : IApiAuthConfig
+    public class AzureAdAuthConfig
     {
         public string TenantId { get; set; }
 

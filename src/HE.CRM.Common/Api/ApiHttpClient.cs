@@ -1,21 +1,17 @@
 using System;
 using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
-using HE.CRM.Common.Api.Auth;
 using HE.CRM.Common.Api.Exceptions;
 
 namespace HE.CRM.Common.Api
 {
-    internal sealed class ApiHttpClient : IApiHttpClient
+    internal sealed class ApiHttpClient : IDisposable
     {
         private readonly HttpClient _httpClient;
-
-        private readonly IApiTokenProvider _apiTokenProvider;
 
         private readonly JsonSerializerOptions _jsonSerializerOptions = new JsonSerializerOptions
         {
@@ -24,16 +20,15 @@ namespace HE.CRM.Common.Api
             DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
         };
 
-        public ApiHttpClient(HttpClient httpClient, IApiTokenProvider apiTokenProvider)
+        public ApiHttpClient(HttpClient httpClient)
         {
             _httpClient = httpClient;
-            _apiTokenProvider = apiTokenProvider;
         }
 
         public async Task<TResponse> SendAsync<TResponse>(string relativeUrl, HttpMethod method, CancellationToken cancellationToken)
             where TResponse : class
         {
-            using (var httpRequest = await CreateHttpRequest(null, relativeUrl, method))
+            using (var httpRequest = CreateHttpRequest(null, relativeUrl, method))
             {
                 return await SendAsync<TResponse>(httpRequest, cancellationToken);
             }
@@ -47,19 +42,15 @@ namespace HE.CRM.Common.Api
             where TResponse : class
         {
             var requestBody = JsonSerializer.Serialize(request, _jsonSerializerOptions);
-            using (var httpRequest = await CreateHttpRequest(requestBody, relativeUrl, method))
+            using (var httpRequest = CreateHttpRequest(requestBody, relativeUrl, method))
             {
                 return await SendAsync<TResponse>(httpRequest, cancellationToken);
             }
         }
 
-        private async Task<HttpRequestMessage> CreateHttpRequest(string requestBody, string relativeUrl, HttpMethod method)
+        private static HttpRequestMessage CreateHttpRequest(string requestBody, string relativeUrl, HttpMethod method)
         {
-            var request = new HttpRequestMessage(method, relativeUrl)
-            {
-                Headers = { Authorization = new AuthenticationHeaderValue("Bearer", await _apiTokenProvider.GetToken()) },
-            };
-
+            var request = new HttpRequestMessage(method, relativeUrl);
             if (!string.IsNullOrEmpty(requestBody))
             {
                 request.Content = new StringContent(requestBody, Encoding.UTF8, "application/json");
@@ -103,6 +94,11 @@ namespace HE.CRM.Common.Api
                     throw new ApiSerializationException(ex, responseContent);
                 }
             }
+        }
+
+        public void Dispose()
+        {
+            _httpClient?.Dispose();
         }
     }
 }
