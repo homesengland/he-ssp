@@ -55,7 +55,6 @@ namespace HE.CRM.AHP.Plugins.Services.AhpStatusChange
                         invln_scheme.Fields.invln_contactid,
                         invln_scheme.Fields.invln_organisationid,
                         invln_scheme.Fields.invln_programmelookup,
-                        invln_scheme.Fields.invln_GrantAmountRequested,
                         invln_scheme.Fields.invln_Tenure,
                         invln_scheme.Fields.invln_fundingrequired,
                         invln_scheme.Fields.invln_noofhomes
