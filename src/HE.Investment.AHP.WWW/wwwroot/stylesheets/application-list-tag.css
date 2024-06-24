@@ -1,0 +1,15 @@
+.govuk-summary-list__key {
+  vertical-align: middle;
+}
+
+.govuk-summary-list__actions {
+  text-align: -webkit-right;
+  text-align: -moz-right;
+  text-align: -o-right;
+  text-align: -ms-right;
+}
+
+.application-status-project-list-govuk-tag {
+  display: table-cell;
+  text-align: left;
+}
