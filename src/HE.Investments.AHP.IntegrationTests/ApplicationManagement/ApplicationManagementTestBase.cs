@@ -1,5 +1,6 @@
 using FluentAssertions;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
+using HE.Investment.AHP.Domain.Application.Crm;
 using HE.Investment.AHP.Domain.Project.Crm;
 using HE.Investment.AHP.Domain.Site.Crm;
 using HE.Investments.AHP.IntegrationTests.ApplicationManagement.Data;
@@ -18,11 +19,14 @@ public class ApplicationManagementTestBase : AhpIntegrationTest
 
     private readonly ISiteCrmContext _siteCrmContext;
 
+    private readonly IApplicationCrmContext _applicationCrmContext;
+
     protected ApplicationManagementTestBase(AhpIntegrationTestFixture fixture, ITestOutputHelper output)
         : base(fixture, output)
     {
         _projectCrmContext = fixture.ServiceProvider.GetRequiredService<IProjectCrmContext>();
         _siteCrmContext = fixture.ServiceProvider.GetRequiredService<ISiteCrmContext>();
+        _applicationCrmContext = fixture.ServiceProvider.GetRequiredService<IApplicationCrmContext>();
         AssertionOptions.FormattingOptions.MaxDepth = 10;
     }
 
@@ -66,6 +70,19 @@ public class ApplicationManagementTestBase : AhpIntegrationTest
         ahpSiteApplications.Should().BeEquivalentTo(expectedAhpSiteApplications);
     }
 
+    protected async Task TestGetApplicationEndpoint(UserData userData, AhpApplication expectedAhpApplication)
+    {
+        // given
+        var (_, _, organisationId, _) = userData;
+
+        // when
+        var applicationDto = await _applicationCrmContext.GetOrganisationApplicationById(expectedAhpApplication.ApplicationId, organisationId, CancellationToken.None);
+        var ahpApplication = ConvertToAhpApplication(applicationDto);
+
+        // then
+        ahpApplication.Should().BeEquivalentTo(expectedAhpApplication);
+    }
+
     private AhpProject[] ConvertToAhpProjects(IList<AhpProjectDto> ahpProjectsDto)
     {
         return ahpProjectsDto.Select(projectDto =>
@@ -77,7 +94,7 @@ public class ApplicationManagementTestBase : AhpIntegrationTest
                         siteDto.name,
                         (projectDto.ListOfApplications ?? [])
                         .Where(z => z.siteId == siteDto.id)
-                        .Select(applicationDto => new AhpApplication(applicationDto.name))
+                        .Select(applicationDto => new AhpApplication(applicationDto.id, applicationDto.name))
                         .ToArray()))
                     .ToArray()))
             .ToArray();
@@ -92,7 +109,7 @@ public class ApplicationManagementTestBase : AhpIntegrationTest
                 siteDto.id,
                 siteDto.name,
                 (ahpProjectsDto.ListOfApplications ?? [])
-                .Select(applicationDto => new AhpApplication(applicationDto.name))
+                .Select(applicationDto => new AhpApplication(applicationDto.id, applicationDto.name))
                 .ToArray()))
             .ToArray());
     }
@@ -102,7 +119,12 @@ public class ApplicationManagementTestBase : AhpIntegrationTest
         return new AhpSite(
             siteApplicationsDto.SiteId,
             siteApplicationsDto.siteName,
-            siteApplicationsDto.AhpApplications.Select(x => new AhpApplication(x.applicationName))
+            siteApplicationsDto.AhpApplications.Select(x => new AhpApplication(x.applicationId, x.applicationName))
                 .ToArray());
+    }
+
+    private AhpApplication ConvertToAhpApplication(AhpApplicationDto applicationDto)
+    {
+        return new AhpApplication(applicationDto.id, applicationDto.name);
     }
 }

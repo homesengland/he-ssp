@@ -74,6 +74,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_sendgovnotifyemail.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_sendinternalcrmnotification.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_sendinvestmentloansdatatocrm.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_sendinvitationtocontacttojoinorganizationbypowerapps.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_sendinvitecontacttojoinorganisation.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_sendreminderemailforrefferedbacktoapplicant.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_sendremindertofinalisadraftapplication.cs" />

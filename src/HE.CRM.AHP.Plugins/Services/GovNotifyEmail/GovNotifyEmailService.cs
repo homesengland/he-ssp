@@ -196,7 +196,49 @@ namespace HE.CRM.AHP.Plugins.Services.GovNotifyEmail
             }
         }
 
-        #region !!! Probably not used. To be checked and removed. !!!
+        public void SendNotifications_COMMON_INVITE_CONTACT_TO_JOIN_ORGANIZATION_BY_POWER_APPS(EntityReference invitedContactId, EntityReference userId)
+        {
+            TracingService.Trace("SendNotifications_COMMON_INVITE_CONTACT_TO_JOIN_ORGANIZATION_BY_POWER_APPS");
+            var invitedContact = _contactRepositoryAdmin.GetById(invitedContactId.Id, Contact.Fields.OwnerId, Contact.Fields.FullName, Contact.Fields.EMailAddress1, Contact.Fields.ParentCustomerId);
+            var user = _systemUserRepositoryAdmin.GetById(userId.Id, SystemUser.Fields.FullName);
+
+            if (invitedContact.ParentCustomerId == null)
+            {
+                TracingService.Trace("There is no data in ParentCustomerId on Contact. Mail not sent.");
+                return;
+            }
+
+            var account = _accountRepositoryAdmin.GetById(invitedContact.ParentCustomerId.Id, Account.Fields.Name);
+
+            if (account == null)
+            {
+                TracingService.Trace("There is no Account in ParentCustomerId on Contact. Mail not sent.");
+                return;
+            }
+
+            var emailTemplate = _notificationSettingRepositoryAdmin.GetTemplateViaTypeName("COMMON_INVITE_CONTACT_TO_JOIN_ORGANIZATION");
+            var govNotParams = new COMMON_INVITE_CONTACT_TO_JOIN_ORGANIZATION()
+            {
+                templateId = emailTemplate?.invln_templateid,
+                personalisation = new parameters_COMMON_INVITE_CONTACT_TO_JOIN_ORGANIZATION()
+                {
+                    recipientEmail = invitedContact.EMailAddress1,
+                    username = invitedContact.FullName ?? "NO NAME",
+                    subject = emailTemplate.invln_subject,
+                    invitername = user.FullName ?? "NO NAME",
+                    organisationname = account.Name
+                }
+            };
+
+            var options = new JsonSerializerOptions
+            {
+                Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+                WriteIndented = true
+            };
+
+            var parameters = JsonSerializer.Serialize(govNotParams, options);
+            this.SendGovNotifyEmail(invitedContact.OwnerId, invitedContact.ToEntityReference(), emailTemplate.invln_subject, parameters, emailTemplate);
+        }
 
         public void SendNotifications_AHP_EXTERNAL_REMINDER_TO_FINALIZE_APPLICATION_REFERRED_BACK(EntityReference ahpApplicationId, EntityReference contactId)
         {
@@ -261,8 +303,7 @@ namespace HE.CRM.AHP.Plugins.Services.GovNotifyEmail
             }
         }
 
-        #endregion !!! Probably not used. To be checked and removed. !!!
-
+        #region Probably to be removed
         public void SendNotifications_AHP_INTERNAL_EXTERNAL_WANTS_ADDITIONAL_PAYMENTS_FOR_PHASE(EntityReference deliveryPhaseId)
         {
             var deliveryPhase = _deliveryPhaseRepositoryAdmin.GetById(deliveryPhaseId.Id, nameof(invln_DeliveryPhase.invln_Application).ToLower());
@@ -272,6 +313,43 @@ namespace HE.CRM.AHP.Plugins.Services.GovNotifyEmail
             if (ahpApplication.OwnerId.LogicalName == SystemUser.EntityLogicalName)
             {
                 this.TracingService.Trace("AHP_DELIVERY_PHASE_NOTIFICATION_OF_ADDITIONAL_PAYMENTS_FOR_PHASE");
+                var emailTemplate = _notificationSettingRepositoryAdmin.GetTemplateViaTypeName("AHP_DELIVERY_PHASE_NOTIFICATION_OF_ADDITIONAL_PAYMENTS_FOR_PHASE");
+                var ownerData = _systemUserRepositoryAdmin.GetById(ahpApplication.OwnerId.Id, nameof(SystemUser.InternalEMailAddress).ToLower(), nameof(SystemUser.FullName).ToLower());
+                var account = _accountRepositoryAdmin.GetById(ahpApplication.invln_organisationid.Id, nameof(Account.Name).ToLower());
+                var subject = (account.Name ?? "NO NAME") + " " + emailTemplate.invln_subject;
+                var govNotParams = new AHP_DELIVERY_PHASE_NOTIFICATION_OF_ADDITIONAL_PAYMENTS_FOR_PHASE()
+                {
+                    templateId = emailTemplate?.invln_templateid,
+                    personalisation = new parameters_AHP_DELIVERY_PHASE_NOTIFICATION_OF_ADDITIONAL_PAYMENTS_FOR_PHASE()
+                    {
+                        recipientEmail = ownerData.InternalEMailAddress,
+                        subject = subject,
+                        username = ownerData.FullName ?? "NO NAME",
+                        organisationname = account.Name ?? "NO NAME",
+                    }
+                };
+
+                var options = new JsonSerializerOptions
+                {
+                    Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+                    WriteIndented = true
+                };
+
+                var parameters = JsonSerializer.Serialize(govNotParams, options);
+                this.SendGovNotifyEmail(ahpApplication.OwnerId, ahpApplication.ToEntityReference(), subject, parameters, emailTemplate);
+            }
+        }
+        #endregion
+
+        public void SendNotifications_AHP_INTERNAL_EXTERNAL_WANTS_ADDITIONAL_PAYMENTS_FOR_PHASE(invln_AHPStatusChange ahpStatusChange, invln_scheme ahpApplication)
+        {
+            TracingService.Trace("Checking Delivery Phases");
+            var DeliveryPhasesRequiresAdditionalPayments = _deliveryPhaseRepositoryAdmin.GetDeliveryPhasesRequiresAdditionalPaymentsForApplication(ahpApplication.Id);
+            TracingService.Trace($"Delivery Phases requires additional payments count: {DeliveryPhasesRequiresAdditionalPayments.Count}");
+
+            if (ahpApplication.OwnerId.LogicalName == SystemUser.EntityLogicalName && DeliveryPhasesRequiresAdditionalPayments.Count > 0)
+            {
+                TracingService.Trace("AHP_DELIVERY_PHASE_NOTIFICATION_OF_ADDITIONAL_PAYMENTS_FOR_PHASE");
                 var emailTemplate = _notificationSettingRepositoryAdmin.GetTemplateViaTypeName("AHP_DELIVERY_PHASE_NOTIFICATION_OF_ADDITIONAL_PAYMENTS_FOR_PHASE");
                 var ownerData = _systemUserRepositoryAdmin.GetById(ahpApplication.OwnerId.Id, nameof(SystemUser.InternalEMailAddress).ToLower(), nameof(SystemUser.FullName).ToLower());
                 var account = _accountRepositoryAdmin.GetById(ahpApplication.invln_organisationid.Id, nameof(Account.Name).ToLower());
@@ -489,7 +567,7 @@ namespace HE.CRM.AHP.Plugins.Services.GovNotifyEmail
                     {
                         recipientEmail = "",
                         subject = subject,
-                        name = user.FullName ?? "NO NAME",
+                        name = "Housing Contracts",
                         organisationname = account.Name ?? "NO NAME",
                         applicationname = ahpApplication.invln_schemename ?? "NO NAME",
                         applicationurl = GetAhpApplicationUrl(ahpApplication.ToEntityReference()),

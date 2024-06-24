@@ -75,6 +75,25 @@ namespace HE.CRM.Common.Repositories.implementations
             }
         }
 
+        public List<invln_DeliveryPhase> GetDeliveryPhasesRequiresAdditionalPaymentsForApplication(Guid applicationId) {
+
+            var query_invln_urbrequestingearlymilestonepayments = true;
+            var query_invln_application = applicationId.ToString();
+
+            var query = new QueryExpression(invln_DeliveryPhase.EntityLogicalName);
+            query.ColumnSet.AddColumns(
+                invln_DeliveryPhase.Fields.invln_DeliveryPhaseId,
+                invln_DeliveryPhase.Fields.invln_Application,
+                invln_DeliveryPhase.Fields.invln_urbrequestingearlymilestonepayments);
+            query.Criteria.AddCondition(invln_DeliveryPhase.Fields.invln_urbrequestingearlymilestonepayments, ConditionOperator.Equal, query_invln_urbrequestingearlymilestonepayments);
+            query.Criteria.AddCondition(invln_DeliveryPhase.Fields.invln_Application, ConditionOperator.Equal, query_invln_application);
+
+            return service.RetrieveMultiple(query).Entities.Select(x => x.ToEntity<invln_DeliveryPhase>()).ToList();
+        }
+
+
+
+
         private string GenerateContactFilter(string userId)
         {
             if (!string.IsNullOrEmpty(userId))

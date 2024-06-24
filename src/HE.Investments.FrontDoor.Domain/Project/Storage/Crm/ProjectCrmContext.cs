@@ -24,6 +24,7 @@ public class ProjectCrmContext : IProjectContext
             invln_organisationid = organisationId.TryToGuidAsString(),
             invln_fieldstoretrieve = ProjectCrmFields.ProjectToRead.FormatFields(),
             invln_usehetables = "true",
+            inlvn_userid = string.Empty,
         };
 
         return await GetProjects(request, cancellationToken);
