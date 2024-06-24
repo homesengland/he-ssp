@@ -75,3 +75,12 @@
 .govuk-tag {
   display: inline;
 }
+
+.govuk-summary-list__key {
+  vertical-align: top;
+}
+
+.application-status-project-list-govuk-tag {
+  display: table-cell;
+  text-align: left;
+}
