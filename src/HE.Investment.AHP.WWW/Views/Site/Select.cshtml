@@ -10,6 +10,7 @@
 @model HE.Investment.AHP.Contract.Project.ProjectSitesModel
 @{
     ViewData["Title"] = SitePageTitles.SiteSelect;
+    var organisationId = Context.Request.GetOrganisationIdFromRoute();
     var items = new PaginationResult<SelectListItemViewModel>(
         Model.Sites.Items.Select(i => new SelectListItemViewModel(
             Url.OrganisationAction("ConfirmSelect", "Site", new { siteId = i.Id }) ?? string.Empty,
@@ -26,7 +27,7 @@
 
     <gds-p>Select a site to start your application.</gds-p>
      <gds-p>
-         To add a new site, <a href="@FrontDoorLinks.StartNewProject">start a new project</a>.
+         To add a new site, <a href="@FrontDoorLinks.StartNewProject.Replace("{organisationId}", organisationId?.ToString())">start a new project</a>.
      </gds-p>
 
     <vc:select-list

@@ -149,7 +149,7 @@ public class UserOrganisationController : Controller
                 "Add another organisation",
                 "SearchOrganisation",
                 "Organisation",
-                new { callback = Url.Action("Index", "UserOrganisation") },
+                new { callback = Url.OrganisationAction("Index", "UserOrganisation") },
                 HasAccess: true,
                 DataTestId: "add-another-organisation-link"),
         };
@@ -179,7 +179,7 @@ public class UserOrganisationController : Controller
             "Manage your account",
             "GetProfileDetails",
             "User",
-            new { callback = Url.Action("Index", "UserOrganisation") },
+            new { callback = Url.OrganisationAction("Index", "UserOrganisation") },
             HasAccess: true,
             DataTestId: "manage-profile-link"));
 
