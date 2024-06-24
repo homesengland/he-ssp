@@ -41,7 +41,7 @@ public class Order01StartAhpProjectWithOneSite : AhpIntegrationTest
 
         // then
         nextPage
-            .UrlEndWith(SitePagesUrl.SiteSelect(UserOrganisationData.OrganisationId, ProjectData.ProjectId))
+            .UrlEndWith(SitePagesUrl.SiteSelect(UserOrganisationData.OrganisationId, ProjectData.ProjectId, true))
             .HasTitle(SitePageTitles.SiteSelect);
 
         SaveCurrentPage();
@@ -52,7 +52,7 @@ public class Order01StartAhpProjectWithOneSite : AhpIntegrationTest
     public async Task Order02_ShouldRedirectToSiteStartPage_WhenSelectedSiteIsNotCompleted()
     {
         // given
-        (await GetCurrentPage(SitePagesUrl.SiteSelect(UserOrganisationData.OrganisationId, ProjectData.ProjectId)))
+        (await GetCurrentPage(SitePagesUrl.SiteSelect(UserOrganisationData.OrganisationId, ProjectData.ProjectId, true)))
             .HasNavigationListItem("select-list", out var selectedSiteLink);
 
         // when

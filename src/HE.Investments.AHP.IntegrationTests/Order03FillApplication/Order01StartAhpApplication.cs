@@ -78,7 +78,7 @@ public class Order01StartAhpApplication : AhpIntegrationTest
     public async Task Order04_ShouldNavigateToSiteConfirmPage()
     {
         // given
-        var siteSelectPage = await GetCurrentPage(SitePagesUrl.SiteSelect(UserOrganisationData.OrganisationId, ProjectData.ProjectId));
+        var siteSelectPage = await GetCurrentPage(SitePagesUrl.SiteSelect(UserOrganisationData.OrganisationId, ProjectData.ProjectId, false));
         siteSelectPage.HasNavigationListItem("select-list", out var selectSiteLink);
 
         // when

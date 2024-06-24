@@ -38,7 +38,10 @@ public class ProjectController : Controller
         if (userAccount.Consortium.HasNoConsortium || await _consortiumAccessContext.IsConsortiumLeadPartner())
         {
             var ahpProgramme = await _mediator.Send(new GetTheAhpProgrammeQuery(), cancellationToken);
-            return View(new ProjectStartModel(fdProjectId, ahpProgramme, userAccount.Role() != Investments.Account.Api.Contract.User.UserRole.Limited));
+            return View(new ProjectStartModel(
+                fdProjectId,
+                ahpProgramme,
+                userAccount.Role() != Investments.Account.Api.Contract.User.UserRole.Limited));
         }
 
         return this.OrganisationRedirectToAction("ContactHomesEngland", "ConsortiumMember", new { consortiumId = userAccount.Consortium.ConsortiumId.Value });
@@ -48,12 +51,12 @@ public class ProjectController : Controller
     [ConsortiumAuthorize(ConsortiumAccessContext.Edit)]
     public async Task<IActionResult> StartPost([FromQuery] string fdProjectId, CancellationToken cancellationToken)
     {
-        await _mediator.Send(new CreateAhpProjectCommand(FrontDoorProjectId.From(fdProjectId)), cancellationToken);
+        await _mediator.Send(new TryCreateAhpProjectCommand(FrontDoorProjectId.From(fdProjectId)), cancellationToken);
 
         var response = await _mediator.Send(new GetSiteListQuery(new PaginationRequest(1, 1)), cancellationToken);
         if (response.Page.Items.Any())
         {
-            return this.OrganisationRedirectToAction("Select", "Site", new { projectId = fdProjectId });
+            return this.OrganisationRedirectToAction("Select", "Site", new { projectId = fdProjectId, isAfterFdProject = true });
         }
 
         return this.OrganisationRedirectToAction("Start", "Site", new { projectId = fdProjectId });
