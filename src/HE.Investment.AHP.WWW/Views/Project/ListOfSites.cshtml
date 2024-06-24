@@ -8,6 +8,7 @@
 @model HE.Investment.AHP.Contract.Project.ProjectSitesModel
 @{
     ViewData["Title"] = SitePageTitles.SiteList;
+    var organisationId = Context.Request.GetOrganisationIdFromRoute();
 }
 
 <div class="govuk-grid-column-full">
@@ -17,7 +18,7 @@
                     hint="Select a site to view site details or applications within the site."/>
 
     <gds-p>
-        To add a new site, <a href="@FrontDoorLinks.StartNewProject">start a new project</a>.
+        To add a new site, <a href="@FrontDoorLinks.StartNewProject.Replace("{organisationId}", organisationId?.ToString())">start a new project</a>.
     </gds-p>
     <gds-h2 class="govuk-!-margin-top-6">Your sites</gds-h2>
     <vc:sites-table sites="@Model.Sites" project-id="@Model.ProjectId.Value"/>
