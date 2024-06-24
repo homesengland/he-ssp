@@ -98,7 +98,8 @@ public class Order06RepaymentSystemIntegrationTests : IntegrationTest
             continueButton,
             new Dictionary<string, string>
             {
-                { "Refinance", FundingFormOption.Refinance }, { "RefinanceInfo", TextTestData.TextThatNotExceedsLongInputLimit }
+                { "Refinance", FundingFormOption.Refinance },
+                { "RefinanceInfo", TextTestData.TextThatNotExceedsLongInputLimit },
             });
 
         // then

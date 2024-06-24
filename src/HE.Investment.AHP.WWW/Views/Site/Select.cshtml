@@ -12,7 +12,7 @@
     ViewData["Title"] = SitePageTitles.SiteSelect;
     var organisationId = Context.Request.GetOrganisationIdFromRoute();
     var items = new PaginationResult<SelectListItemViewModel>(
-        Model.ProjectSites.Items.Select(i => new SelectListItemViewModel(
+        Model.ProjectSites.Sites.Items.Select(i => new SelectListItemViewModel(
             Url.OrganisationAction("ConfirmSelect", "Site", new { siteId = i.Id }) ?? string.Empty,
             i.Name,
             i.LocalAuthorityName)).ToList(),
@@ -35,6 +35,6 @@
 
     <vc:select-list
         items="@items"
-        paging-navigation-url="@Url.OrganisationAction("Select", new { projectId = Model.ProjectSites.ProjectId })" />
+        paging-navigation-url="@Url.OrganisationAction("Select", "Site", new { projectId = Model.ProjectSites.ProjectId })" />
 
 </div>

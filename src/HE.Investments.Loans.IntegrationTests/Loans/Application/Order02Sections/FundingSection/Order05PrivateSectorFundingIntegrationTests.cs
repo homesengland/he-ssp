@@ -39,7 +39,7 @@ public class Order05PrivateSectorFundingIntegrationTests : IntegrationTest
             {
                 { "PrivateSectorFunding", CommonResponse.Yes },
                 { "PrivateSectorFundingResult", string.Empty },
-                { "PrivateSectorFundingReason", string.Empty }
+                { "PrivateSectorFundingReason", string.Empty },
             });
 
         // then
@@ -67,7 +67,7 @@ public class Order05PrivateSectorFundingIntegrationTests : IntegrationTest
             {
                 { "PrivateSectorFunding", CommonResponse.Yes },
                 { "PrivateSectorFundingResult", TextTestData.TextThatExceedsLongInputLimit },
-                { "PrivateSectorFundingReason", string.Empty }
+                { "PrivateSectorFundingReason", string.Empty },
             });
 
         // then
@@ -92,7 +92,7 @@ public class Order05PrivateSectorFundingIntegrationTests : IntegrationTest
             {
                 { "PrivateSectorFunding", CommonResponse.No },
                 { "PrivateSectorFundingResult", string.Empty },
-                { "PrivateSectorFundingReason", string.Empty }
+                { "PrivateSectorFundingReason", string.Empty },
             });
 
         // then
@@ -118,7 +118,7 @@ public class Order05PrivateSectorFundingIntegrationTests : IntegrationTest
             {
                 { "PrivateSectorFunding", CommonResponse.No },
                 { "PrivateSectorFundingResult", string.Empty },
-                { "PrivateSectorFundingReason", TextTestData.TextThatExceedsLongInputLimit }
+                { "PrivateSectorFundingReason", TextTestData.TextThatExceedsLongInputLimit },
             });
 
         // then
@@ -143,7 +143,7 @@ public class Order05PrivateSectorFundingIntegrationTests : IntegrationTest
             {
                 { "PrivateSectorFunding", CommonResponse.No },
                 { "PrivateSectorFundingResult", string.Empty },
-                { "PrivateSectorFundingReason", TextTestData.TextThatNotExceedsLongInputLimit }
+                { "PrivateSectorFundingReason", TextTestData.TextThatNotExceedsLongInputLimit },
             });
 
         // then
@@ -167,7 +167,7 @@ public class Order05PrivateSectorFundingIntegrationTests : IntegrationTest
             {
                 { "PrivateSectorFunding", CommonResponse.Yes },
                 { "PrivateSectorFundingResult", TextTestData.TextThatNotExceedsLongInputLimit },
-                { "PrivateSectorFundingReason", string.Empty }
+                { "PrivateSectorFundingReason", string.Empty },
             });
 
         // then

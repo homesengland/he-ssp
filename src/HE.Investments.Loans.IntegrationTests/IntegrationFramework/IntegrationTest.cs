@@ -36,7 +36,7 @@ public class IntegrationTest : IntegrationTestBase<Program>
 
     protected ILoginData LoginData { get; private set; }
 
-    public UserOrganisationData UserOrganisationData { get; private set; }
+    protected UserOrganisationData UserOrganisationData { get; private set; }
 
     protected async Task<IHtmlDocument> GetCurrentPage(Func<Task<IHtmlDocument>> alternativeNavigate)
     {
