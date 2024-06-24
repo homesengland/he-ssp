@@ -5,8 +5,8 @@ namespace HE.Investments.Common.WWW.Components.ApplicationStatusTagComponent;
 
 public class ApplicationStatusTagComponent : ViewComponent
 {
-    public IViewComponentResult Invoke(ApplicationStatus applicationStatus)
+    public IViewComponentResult Invoke(ApplicationStatus applicationStatus, string additionalClasses)
     {
-        return View("ApplicationStatusTagComponent", applicationStatus);
+        return View("ApplicationStatusTagComponent", (applicationStatus, additionalClasses));
     }
 }

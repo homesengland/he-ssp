@@ -19,7 +19,7 @@
             var applications = Model.Applications.Items.Select(x =>
                 new ListCardItemModel(
                     x.Name,
-                    new DynamicComponentViewModel(nameof(ApplicationStatusTagComponent), new { applicationStatus = x.Status }),
+            new DynamicComponentViewModel(nameof(ApplicationStatusTagComponent), new { applicationStatus = x.Status, additionalClasses = "application-status-project-list-govuk-tag" }),
                     Url.Action("TaskList", "Application", new { applicationId = x.Id.Value })!))
                     .ToList();
 

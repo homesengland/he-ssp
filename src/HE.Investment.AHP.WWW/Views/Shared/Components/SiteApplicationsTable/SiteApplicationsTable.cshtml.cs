@@ -60,6 +60,6 @@ public class SiteApplicationsTable : ViewComponent
 
     private static DynamicComponentViewModel CreateApplicationStatusComponent(ApplicationSiteModel application)
     {
-        return new DynamicComponentViewModel(nameof(ApplicationStatusTagComponent), new { applicationStatus = application.Status });
+        return new DynamicComponentViewModel(nameof(ApplicationStatusTagComponent), new { applicationStatus = application.Status, additionalClasses = string.Empty });
     }
 }

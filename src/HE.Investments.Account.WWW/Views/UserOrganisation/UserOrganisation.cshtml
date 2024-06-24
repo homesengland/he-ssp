@@ -74,7 +74,7 @@
                         programmeToAccess.Appliances.Select(x =>
                             new ListCardItemModel(
                                 x.Name,
-                                x.Status != null ? new DynamicComponentViewModel(nameof(ApplicationStatusTagComponent), new { ApplicationStatus = x.Status }) : null,
+                    x.Status != null ? new DynamicComponentViewModel(nameof(ApplicationStatusTagComponent), new { applicationStatus = x.Status, additionalClasses = string.Empty }) : null,
                                 x.Url)).ToList(),
                         Title: programmeToAccess.Programme.Title,
                         ViewAllLabel: programmeToAccess.Programme.ViewAllAppliancesLabel,

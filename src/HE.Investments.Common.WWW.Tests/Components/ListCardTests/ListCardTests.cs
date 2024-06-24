@@ -77,7 +77,7 @@ public class ListCardTests : ViewComponentTestBase<ListCardTests>
 
     private static DynamicComponentViewModel CreateStatusComponent(ApplicationStatus status)
     {
-        return new DynamicComponentViewModel(nameof(ApplicationStatusTagComponent), new { ApplicationStatus = status });
+        return new DynamicComponentViewModel(nameof(ApplicationStatusTagComponent), new { applicationStatus = status, additionalClasses = string.Empty });
     }
 
     private ListCardModel CreateTestModel(IList<ListCardItemModel>? applications = null)

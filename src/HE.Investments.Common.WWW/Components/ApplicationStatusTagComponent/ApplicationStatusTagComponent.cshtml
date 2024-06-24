@@ -1,3 +1,3 @@
-@model HE.Investments.Common.Contract.ApplicationStatus
+@model (HE.Investments.Common.Contract.ApplicationStatus ApplicationStatus, string AdditionalClasses)
 
-<application-status-tag application-status="@Model" additional-classes="application-status-project-list-govuk-tag"></application-status-tag>
+<application-status-tag application-status="@Model.ApplicationStatus" additional-classes="@Model.AdditionalClasses"></application-status-tag>
