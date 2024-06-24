@@ -5,8 +5,8 @@ using HE.Investment.AHP.Contract.Delivery.Enums;
 using HE.Investment.AHP.Contract.Delivery.Queries;
 using HE.Investment.AHP.WWW.Extensions;
 using HE.Investment.AHP.WWW.Models.Delivery;
-using HE.Investments.Account.Shared.Authorization.Attributes;
 using HE.Investments.Common.Validators;
+using HE.Investments.Common.WWW.Controllers;
 using HE.Investments.Common.WWW.Extensions;
 using HE.Investments.Common.WWW.Helpers;
 using HE.Investments.Consortium.Shared.Authorization;
@@ -17,7 +17,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace HE.Investment.AHP.WWW.Controllers;
 
 [ConsortiumAuthorize(ConsortiumAccessContext.Edit)]
-[Route("application/{applicationId}/delivery")]
+[Route("{organisationId}/application/{applicationId}/delivery")]
 public class DeliveryController : Controller
 {
     private readonly IMediator _mediator;
@@ -62,7 +62,9 @@ public class DeliveryController : Controller
     [HttpPost]
     public async Task<IActionResult> List(string applicationId, DeliveryListModel model, CancellationToken cancellationToken)
     {
-        var result = await _mediator.Send(new CompleteDeliverySectionCommand(AhpApplicationId.From(applicationId), IsDeliveryCompleted.Yes, true), cancellationToken);
+        var result = await _mediator.Send(
+            new CompleteDeliverySectionCommand(AhpApplicationId.From(applicationId), IsDeliveryCompleted.Yes, true),
+            cancellationToken);
         if (result.HasValidationErrors)
         {
             ModelState.AddValidationErrors(result);
@@ -71,7 +73,7 @@ public class DeliveryController : Controller
 
         return HttpContext.Request.IsSaveAndReturnAction()
             ? Url.RedirectToTaskList(applicationId)
-            : RedirectToAction("Complete", new { applicationId });
+            : this.OrganisationRedirectToAction("Complete", routeValues: new { applicationId });
     }
 
     [HttpGet("complete")]
@@ -84,7 +86,9 @@ public class DeliveryController : Controller
     [HttpPost("complete")]
     public async Task<IActionResult> Complete(string applicationId, CompleteDeliverySectionModel model, CancellationToken cancellationToken)
     {
-        var result = await _mediator.Send(new CompleteDeliverySectionCommand(AhpApplicationId.From(applicationId), model.IsDeliveryCompleted), cancellationToken);
+        var result = await _mediator.Send(
+            new CompleteDeliverySectionCommand(AhpApplicationId.From(applicationId), model.IsDeliveryCompleted),
+            cancellationToken);
         if (result.HasValidationErrors)
         {
             ModelState.AddValidationErrors(result);
@@ -93,6 +97,6 @@ public class DeliveryController : Controller
 
         return HttpContext.Request.IsSaveAndReturnAction() || model.IsDeliveryCompleted == IsDeliveryCompleted.Yes
             ? Url.RedirectToTaskList(applicationId)
-            : RedirectToAction("List", new { applicationId });
+            : this.OrganisationRedirectToAction("List", routeValues: new { applicationId });
     }
 }

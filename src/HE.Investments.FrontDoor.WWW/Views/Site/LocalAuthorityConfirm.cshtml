@@ -18,7 +18,7 @@
 
     <vc:page-header caption="@ViewBag.ProjectName"/>
 
-    <form asp-controller="Site" asp-action="LocalAuthorityConfirm" asp-route-workflow="@Context.Request.Query["workflow"]" asp-route-redirect="@Context.Request.Query["redirect"]" asp-route-optional="@Context.Request.Query["optional"]" asp-method="post" novalidate>
+    <he-organisation-form asp-controller="Site" asp-action="LocalAuthorityConfirm" asp-route-workflow="@Context.Request.Query["workflow"]" asp-route-redirect="@Context.Request.Query["redirect"]" asp-route-optional="@Context.Request.Query["optional"]" asp-method="post" novalidate>
 
         @Html.HiddenFor(m => m.LocalAuthorityCode)
         @Html.HiddenFor(m => m.LocalAuthorityName)
@@ -30,5 +30,5 @@
 
         <vc:form-button/>
         <vc:return-to-account-link/>
-    </form>
+    </he-organisation-form>
 </gds-div-grid-column-two-thirds>

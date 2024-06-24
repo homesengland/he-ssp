@@ -15,7 +15,7 @@
 
     <vc:page-header caption="@ViewBag.ProjectName"/>
 
-    <form asp-controller="Site" asp-action="HomesNumber" asp-route-workflow="@Context.Request.Query["workflow"]" asp-route-redirect="@Context.Request.Query["redirect"]" asp-route-optional="@Context.Request.Query["optional"]" asp-method="post" novalidate>
+    <he-organisation-form asp-controller="Site" asp-action="HomesNumber" asp-route-workflow="@Context.Request.Query["workflow"]" asp-route-redirect="@Context.Request.Query["redirect"]" asp-route-optional="@Context.Request.Query["optional"]" asp-method="post" novalidate>
 
         <vc:numeric-text-input
             field-name=@nameof(Model.HomesNumber)
@@ -26,5 +26,5 @@
 
         <vc:form-button/>
         <vc:return-to-account-link/>
-    </form>
+    </he-organisation-form>
 </gds-div-grid-column-two-thirds>

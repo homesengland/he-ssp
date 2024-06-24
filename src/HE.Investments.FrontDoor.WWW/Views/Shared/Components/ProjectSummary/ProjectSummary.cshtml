@@ -2,6 +2,7 @@
 @using HE.Investments.FrontDoor.WWW.Extensions
 @using HE.Investments.Common.Contract.Constants
 @using HE.Investments.Common.Extensions
+@using HE.Investments.Common.WWW.Extensions
 @using HE.Investments.FrontDoor.Contract.Site
 @using HE.Investments.FrontDoor.WWW.Constants
 
@@ -26,7 +27,7 @@
                 <vc:section-summary-item
                     name="Identified site"
                     values="CommonResponse.Yes.ToOneElementList()"
-                    action-url="@Url.Action("IdentifiedSite", "Project", new { projectId })"
+                    action-url="@Url.OrganisationAction("IdentifiedSite", "Project", new { projectId })"
                     is-editable="@(!Model.isReadOnly)"/>
             </gds-summary-list>
         }
@@ -34,7 +35,7 @@
         @if (!Model.isReadOnly)
         {
             <div class="govuk-!-margin-bottom-9 govuk-!-font-size-19">
-                <gds-link href="@Url.Action("NewName", "Site", new { projectId, optional=OptionalParameter.AddSite })" data-testId="add-another-site">
+                <gds-link href="@Url.OrganisationAction("NewName", "Site", new { projectId, optional=OptionalParameter.AddSite })" data-testId="add-another-site">
                     Add another site
                 </gds-link>
             </div>

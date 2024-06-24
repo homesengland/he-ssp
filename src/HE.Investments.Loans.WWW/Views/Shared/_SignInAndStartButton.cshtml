@@ -1,6 +1,7 @@
 @using HE.Investments.Common.Gds
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Headings
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Paragraphs
+@using HE.Investments.Common.WWW.Extensions
 
 <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
 
@@ -12,6 +13,6 @@
     Use your Homes England account to apply for and manage grants and loans.
     If you already have an account, you can <he-link href="@Url.Action("SignIn", "HeIdentity")" text="sign in to your account here."></he-link>
 </gds-p>
-<vc:button-start href="@Url.Action("AcceptHeTermsAndConditions", "Home")" text="Start"/>
+<vc:button-start href="@Url.OrganisationAction("AcceptHeTermsAndConditions", "Home")" text="Start"/>
 
 <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">

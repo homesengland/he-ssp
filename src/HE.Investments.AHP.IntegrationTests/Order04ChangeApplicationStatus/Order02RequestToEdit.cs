@@ -25,7 +25,7 @@ public class Order02RequestToEdit : AhpIntegrationTest
     public async Task Order01_ShouldNavigateToRequestToEditPage_WhenApplicationIsSubmitted()
     {
         // given
-        var taskListPage = await TestClient.NavigateTo(ApplicationPagesUrl.TaskList(ApplicationData.ApplicationId));
+        var taskListPage = await TestClient.NavigateTo(ApplicationPagesUrl.TaskList(UserOrganisationData.OrganisationId, ApplicationData.ApplicationId));
         taskListPage
             .UrlEndWith(ApplicationPagesUrl.TaskListSuffix)
             .HasTitle(ApplicationData.ApplicationName)

@@ -1,3 +1,4 @@
+using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investment.AHP.Contract.Project;
 using HE.Investment.AHP.Domain.Project.ValueObjects;
 using HE.Investments.Common.Contract.Pagination;
@@ -16,4 +17,6 @@ public interface IProjectRepository
     Task<AhpProjectSites> GetProjectSites(FrontDoorProjectId id, ConsortiumUserAccount userAccount, CancellationToken cancellationToken);
 
     Task<AhpProjectId> CreateProject(ProjectPrefillData frontDoorProject, ConsortiumUserAccount userAccount, CancellationToken cancellationToken);
+
+    Task<AhpProjectDto?> TryGetProject(FrontDoorProjectId id, ConsortiumUserAccount userAccount, CancellationToken cancellationToken);
 }

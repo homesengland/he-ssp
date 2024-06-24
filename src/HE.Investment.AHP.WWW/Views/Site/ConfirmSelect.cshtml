@@ -3,6 +3,7 @@
 @using HE.Investments.Common.WWW.Components.RadioYesNo
 @using HE.Investment.AHP.WWW.Views.Shared.Components.SiteConfirmSelectHeader
 @using HE.Investment.AHP.WWW.Views.Site.Const
+@using HE.Investments.Common.WWW.Extensions
 
 @model HE.Investment.AHP.Contract.Site.SiteModel
 
@@ -11,11 +12,11 @@
     var header = new DynamicComponentViewModel(nameof(SiteConfirmSelectHeader), new { header = SitePageTitles.SiteConfirmSelect, name = Model.Name, description = Model.LocalAuthority?.Name });
 }
 <gds-div-grid-column-two-thirds>
-    <vc:back-link-with-callback url="@Url.Action("Select", "Site", new { projectId = Model.ProjectId })"/>
+    <vc:back-link-with-callback url="@Url.OrganisationAction("Select", "Site", new { projectId = Model.ProjectId })"/>
 
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
 
-    <form asp-controller="Site" asp-action="SelectConfirmed" asp-route-siteId="@Model.Id" asp-method="post" novalidate>
+    <he-organisation-form asp-controller="Site" asp-action="SelectConfirmed" asp-route-siteId="@Model.Id" asp-method="post" novalidate>
 
         <vc:radio-yes-no
             additional-content="@header"
@@ -23,6 +24,6 @@
 
         <vc:form-button text="Continue"/>
         <vc:return-to-sites-link project-id="@Model.ProjectId" is-editable="false"/>
-    </form>
+    </he-organisation-form>
 
 </gds-div-grid-column-two-thirds>

@@ -32,7 +32,7 @@ public class Order07ReferredBackToApplicant : AhpIntegrationTest
     {
         // given && when
         await ChangeApplicationStatus(ApplicationData.ApplicationId, ApplicationStatus.ReferredBackToApplicant);
-        var taskListPage = await TestClient.NavigateTo(ApplicationPagesUrl.TaskList(ApplicationData.ApplicationId));
+        var taskListPage = await TestClient.NavigateTo(ApplicationPagesUrl.TaskList(UserOrganisationData.OrganisationId, ApplicationData.ApplicationId));
 
         // then
         taskListPage
@@ -51,9 +51,9 @@ public class Order07ReferredBackToApplicant : AhpIntegrationTest
     public async Task Order02_ShouldSubmitSchemeInformationSectionAgain()
     {
         // given
-        var checkAnswersPage = await GetCurrentPage(SchemeInformationPagesUrl.CheckAnswers(ApplicationData.ApplicationId));
+        var checkAnswersPage = await GetCurrentPage(SchemeInformationPagesUrl.CheckAnswers(UserOrganisationData.OrganisationId, ApplicationData.ApplicationId));
         checkAnswersPage
-            .UrlEndWith(SchemeInformationPagesUrl.CheckAnswers(ApplicationData.ApplicationId))
+            .UrlEndWith(SchemeInformationPagesUrl.CheckAnswers(UserOrganisationData.OrganisationId, ApplicationData.ApplicationId))
             .HasTitle(SchemeInformationPageTitles.CheckAnswers)
             .HasSaveAndContinueButton(out var continueButton);
 
@@ -73,9 +73,9 @@ public class Order07ReferredBackToApplicant : AhpIntegrationTest
     public async Task Order03_ShouldSubmitHomeTypesSectionAgain()
     {
         // given
-        var finishHomeTypesPage = await GetCurrentPage(HomeTypesPagesUrl.FinishHomeTypes(ApplicationData.ApplicationId));
+        var finishHomeTypesPage = await GetCurrentPage(HomeTypesPagesUrl.FinishHomeTypes(UserOrganisationData.OrganisationId, ApplicationData.ApplicationId));
         finishHomeTypesPage
-            .UrlEndWith(HomeTypesPagesUrl.FinishHomeTypes(ApplicationData.ApplicationId))
+            .UrlEndWith(HomeTypesPagesUrl.FinishHomeTypes(UserOrganisationData.OrganisationId, ApplicationData.ApplicationId))
             .HasTitle(HomeTypesPageTitles.FinishHomeTypes)
             .HasSaveAndContinueButton(out var continueButton);
 
@@ -83,7 +83,7 @@ public class Order07ReferredBackToApplicant : AhpIntegrationTest
         var taskListPage = await TestClient.SubmitButton(continueButton, ("FinishAnswer", true.MapToCommonResponse()));
 
         // then
-        taskListPage.UrlEndWith(ApplicationPagesUrl.TaskList(ApplicationData.ApplicationId))
+        taskListPage.UrlEndWith(ApplicationPagesUrl.TaskList(UserOrganisationData.OrganisationId, ApplicationData.ApplicationId))
             .HasSectionWithStatus("add-home-type-status", SectionStatus.Completed.GetDescription());
     }
 
@@ -92,7 +92,7 @@ public class Order07ReferredBackToApplicant : AhpIntegrationTest
     public async Task Order04_ShouldSubmitFinancialDetailsSectionAgain()
     {
         // given
-        var checkAnswersPage = await GetCurrentPage(FinancialDetailsPagesUrl.CheckAnswers(ApplicationData.ApplicationId));
+        var checkAnswersPage = await GetCurrentPage(FinancialDetailsPagesUrl.CheckAnswers(UserOrganisationData.OrganisationId, ApplicationData.ApplicationId));
         checkAnswersPage
             .UrlEndWith(FinancialDetailsPagesUrl.CheckAnswersSuffix)
             .HasTitle(FinancialDetailsPageTitles.CheckAnswers)
@@ -113,9 +113,10 @@ public class Order07ReferredBackToApplicant : AhpIntegrationTest
     public async Task Order05_ShouldSubmitDeliveryPhasesSectionAgain()
     {
         // given
-        var completeDeliveryPhasesPage = await GetCurrentPage(DeliveryPhasesPagesUrl.CompleteDeliveryPhases(ApplicationData.ApplicationId));
+        var completeDeliveryPhasesPage =
+            await GetCurrentPage(DeliveryPhasesPagesUrl.CompleteDeliveryPhases(UserOrganisationData.OrganisationId, ApplicationData.ApplicationId));
         completeDeliveryPhasesPage
-            .UrlEndWith(DeliveryPhasesPagesUrl.CompleteDeliveryPhases(ApplicationData.ApplicationId))
+            .UrlEndWith(DeliveryPhasesPagesUrl.CompleteDeliveryPhases(UserOrganisationData.OrganisationId, ApplicationData.ApplicationId))
             .HasTitle(DeliveryPageTitles.Complete)
             .HasSaveAndContinueButton(out var continueButton);
 
@@ -123,7 +124,7 @@ public class Order07ReferredBackToApplicant : AhpIntegrationTest
         var taskListPage = await TestClient.SubmitButton(continueButton, ("IsDeliveryCompleted", true.MapToCommonResponse()));
 
         // then
-        taskListPage.UrlEndWith(ApplicationPagesUrl.TaskList(ApplicationData.ApplicationId))
+        taskListPage.UrlEndWith(ApplicationPagesUrl.TaskList(UserOrganisationData.OrganisationId, ApplicationData.ApplicationId))
             .HasSectionWithStatus("add-delivery-phases-status", SectionStatus.Completed.GetDescription());
     }
 
@@ -132,7 +133,7 @@ public class Order07ReferredBackToApplicant : AhpIntegrationTest
     public async Task Order06_ShouldSubmitApplicationAgain_WhenAllSectionsAreCompleted()
     {
         // given
-        var taskListPage = await TestClient.NavigateTo(ApplicationPagesUrl.TaskList(ApplicationData.ApplicationId));
+        var taskListPage = await TestClient.NavigateTo(ApplicationPagesUrl.TaskList(UserOrganisationData.OrganisationId, ApplicationData.ApplicationId));
         taskListPage
             .UrlEndWith(ApplicationPagesUrl.TaskListSuffix)
             .HasTitle(ApplicationData.ApplicationName)
@@ -150,7 +151,7 @@ public class Order07ReferredBackToApplicant : AhpIntegrationTest
 
         // then
         applicationsPage
-            .UrlEndWith(ProjectPagesUrl.ProjectApplicationList(ShortGuid.FromString(ProjectData.ProjectId).Value))
+            .UrlEndWith(ProjectPagesUrl.ProjectApplicationList(UserOrganisationData.OrganisationId, ShortGuid.FromString(ProjectData.ProjectId).Value))
             .HasTitle(ProjectPageTitles.ApplicationList(ProjectData.ProjectName));
     }
 
@@ -159,7 +160,7 @@ public class Order07ReferredBackToApplicant : AhpIntegrationTest
     public async Task Order07_ShouldHaveUnderReviewStatus_WhenApplicationWasSubmittedFromReferredBackToApplicantStatus()
     {
         // given && when
-        var taskListPage = await TestClient.NavigateTo(ApplicationPagesUrl.TaskList(ApplicationData.ApplicationId));
+        var taskListPage = await TestClient.NavigateTo(ApplicationPagesUrl.TaskList(UserOrganisationData.OrganisationId, ApplicationData.ApplicationId));
 
         // then
         taskListPage

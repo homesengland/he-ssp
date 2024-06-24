@@ -27,7 +27,7 @@ public class UserContext : IUserContext
             UserGlobalId = GetRequiredClaimValue(httpUser, IdentifierClaimName);
         }
 
-        // todo AB#95739 get selected organisation id
+        OrganisationId = httpContext.GetOrganisationIdFromRoute();
     }
 
     public string UserGlobalId { get; }

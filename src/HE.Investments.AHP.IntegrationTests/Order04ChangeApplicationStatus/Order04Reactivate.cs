@@ -24,7 +24,7 @@ public class Order04Reactivate : AhpIntegrationTest
     public async Task Order01_ShouldChangeApplicationStatusToRequestedEditing_WhenApplicationIsReactivated()
     {
         // given
-        var taskListPage = await TestClient.NavigateTo(ApplicationPagesUrl.TaskList(ApplicationData.ApplicationId));
+        var taskListPage = await TestClient.NavigateTo(ApplicationPagesUrl.TaskList(UserOrganisationData.OrganisationId, ApplicationData.ApplicationId));
         taskListPage
             .UrlEndWith(ApplicationPagesUrl.TaskListSuffix)
             .HasTitle(ApplicationData.ApplicationName)

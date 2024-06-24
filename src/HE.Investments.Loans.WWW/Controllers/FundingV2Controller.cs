@@ -1,5 +1,6 @@
 using HE.Investments.Account.Shared.Authorization.Attributes;
 using HE.Investments.Common.Validators;
+using HE.Investments.Common.WWW.Controllers;
 using HE.Investments.Common.WWW.Routing;
 using HE.Investments.Loans.Common.Utils.Enums;
 using HE.Investments.Loans.Contract.Application.ValueObjects;
@@ -13,7 +14,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HE.Investments.Loans.WWW.Controllers;
 
-[Route("application/{id}/funding")]
+[Route("{organisationId}/application/{id}/funding")]
 [AuthorizeWithCompletedProfile]
 public class FundingV2Controller : WorkflowController<FundingState>
 {
@@ -31,7 +32,7 @@ public class FundingV2Controller : WorkflowController<FundingState>
         var response = await _mediator.Send(new GetFundingQuery(LoanApplicationId.From(id), FundingFieldsSet.GetEmpty));
         if (response.ViewModel.IsReadOnly())
         {
-            return RedirectToAction("CheckAnswers", new { Id = id });
+            return this.OrganisationRedirectToAction("CheckAnswers", routeValues: new { Id = id });
         }
 
         return View("StartFunding", LoanApplicationId.From(id));
@@ -54,7 +55,11 @@ public class FundingV2Controller : WorkflowController<FundingState>
 
     [HttpPost("gross-development-value")]
     [WorkflowState(FundingState.GDV)]
-    public async Task<IActionResult> GrossDevelopmentValuePost(Guid id, FundingViewModel viewModel, [FromQuery] string redirect, CancellationToken cancellationToken)
+    public async Task<IActionResult> GrossDevelopmentValuePost(
+        Guid id,
+        FundingViewModel viewModel,
+        [FromQuery] string redirect,
+        CancellationToken cancellationToken)
     {
         var result = await _mediator.Send(
             new ProvideGrossDevelopmentValueCommand(
@@ -83,7 +88,11 @@ public class FundingV2Controller : WorkflowController<FundingState>
 
     [HttpPost("estimated-total-costs")]
     [WorkflowState(FundingState.TotalCosts)]
-    public async Task<IActionResult> EstimatedTotalCostsPost(Guid id, FundingViewModel viewModel, [FromQuery] string redirect, CancellationToken cancellationToken)
+    public async Task<IActionResult> EstimatedTotalCostsPost(
+        Guid id,
+        FundingViewModel viewModel,
+        [FromQuery] string redirect,
+        CancellationToken cancellationToken)
     {
         var result = await _mediator.Send(
             new ProvideEstimatedTotalCostsCommand(
@@ -142,7 +151,11 @@ public class FundingV2Controller : WorkflowController<FundingState>
 
     [HttpPost("funding-private-sector")]
     [WorkflowState(FundingState.PrivateSectorFunding)]
-    public async Task<IActionResult> PrivateSectorFundingPost(Guid id, FundingViewModel viewModel, [FromQuery] string redirect, CancellationToken cancellationToken)
+    public async Task<IActionResult> PrivateSectorFundingPost(
+        Guid id,
+        FundingViewModel viewModel,
+        [FromQuery] string redirect,
+        CancellationToken cancellationToken)
     {
         var result = await _mediator.Send(
             new ProvidePrivateSectorFundingCommand(
@@ -203,7 +216,11 @@ public class FundingV2Controller : WorkflowController<FundingState>
 
     [HttpPost("additional-projects")]
     [WorkflowState(FundingState.AdditionalProjects)]
-    public async Task<IActionResult> AdditionalProjectsPost(Guid id, FundingViewModel viewModel, [FromQuery] string redirect, CancellationToken cancellationToken)
+    public async Task<IActionResult> AdditionalProjectsPost(
+        Guid id,
+        FundingViewModel viewModel,
+        [FromQuery] string redirect,
+        CancellationToken cancellationToken)
     {
         var result = await _mediator.Send(
             new ProvideAdditionalProjectsCommand(

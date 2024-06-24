@@ -7,6 +7,7 @@
 @using HE.Investment.AHP.Contract.Application
 @using HE.Investment.AHP.WWW.Notifications
 @using HE.Investments.Common.Services.Notifications
+@using HE.Investments.Common.WWW.Extensions
 @model HE.Investment.AHP.WWW.Models.Application.ApplicationSectionsModel
 @inject ContactInfo ContactInfo
 
@@ -44,7 +45,7 @@
         <vc:change-status-section
             title="Request to edit"
             paragraph="Send a request to your Growth Manager if you want to edit your application. They will review your request and will allow you to edit your application."
-            action-url="@Url.Action("RequestToEdit", "Application", new { applicationId = Model.ApplicationId })"
+            action-url="@Url.OrganisationAction("RequestToEdit", "Application", new { applicationId = Model.ApplicationId })"
             link-button-name="Request to edit"
             button-type="@ButtonType.Standard"
             test-id="request-to-edit-application"/>

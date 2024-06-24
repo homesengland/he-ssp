@@ -19,14 +19,12 @@ using HE.Investments.Consortium.Shared.UserContext;
 using HE.Investments.Organisation.Contract;
 using HE.Investments.Organisation.Contract.Queries;
 using HE.Investments.Organisation.ValueObjects;
-using HE.Investments.Programme.Contract.Enums;
-using HE.Investments.Programme.Contract.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HE.Investment.AHP.WWW.Controllers;
 
-[Route("consortium-member/{consortiumId}")]
+[Route("{organisationId}/consortium-member/{consortiumId}")]
 [AuthorizeWithCompletedProfile(ConsortiumAccessContext.ViewConsortium)]
 public class ConsortiumMemberController : WorkflowController<ConsortiumMemberWorkflowState>
 {
@@ -95,7 +93,9 @@ public class ConsortiumMemberController : WorkflowController<ConsortiumMemberWor
     {
         return await this.ExecuteCommand<SearchOrganisationResultModel>(
             _mediator,
-            new AddOrganisationToConsortiumCommand(ConsortiumId.From(consortiumId), model.SelectedMember.IsProvided() ? new OrganisationIdentifier(model.SelectedMember) : null),
+            new AddOrganisationToConsortiumCommand(
+                ConsortiumId.From(consortiumId),
+                model.SelectedMember.IsProvided() ? new OrganisationIdentifier(model.SelectedMember) : null),
             async () => await Continue(new { consortiumId }),
             async () => await SearchOrganisation(consortiumId, model.Phrase, model.Result.CurrentPage, model.SelectedMember, cancellationToken),
             cancellationToken);
@@ -207,7 +207,11 @@ public class ConsortiumMemberController : WorkflowController<ConsortiumMemberWor
         return await _mediator.Send(new GetConsortiumDetailsQuery(ConsortiumId.From(consortiumId), fetchAddress), cancellationToken);
     }
 
-    private async Task<OrganisationDetails> GetConsortiumMemberDetails(string consortiumId, string memberId, bool fetchAddress, CancellationToken cancellationToken)
+    private async Task<OrganisationDetails> GetConsortiumMemberDetails(
+        string consortiumId,
+        string memberId,
+        bool fetchAddress,
+        CancellationToken cancellationToken)
     {
         var consortium = await _mediator.Send(new GetConsortiumDetailsQuery(ConsortiumId.From(consortiumId), fetchAddress), cancellationToken);
         var member = consortium.Members.SingleOrDefault(x => x.OrganisationId.ToString() == memberId);
@@ -225,9 +229,11 @@ public class ConsortiumMemberController : WorkflowController<ConsortiumMemberWor
         var result = await _mediator.Send(new SearchOrganisationQuery(phrase ?? string.Empty, new PaginationRequest(page ?? 0)), cancellationToken);
         if (result.Page.TotalItems == 0)
         {
-            return RedirectToAction("SearchNoResults", "ConsortiumMember", new { consortiumId });
+            return this.OrganisationRedirectToAction("SearchNoResults", "ConsortiumMember", new { consortiumId });
         }
 
-        return View("SearchResult", new SearchOrganisationResultModel(phrase ?? string.Empty, $"search-result?phrase={phrase}", result.Page, selectedItem ?? string.Empty));
+        return View(
+            "SearchResult",
+            new SearchOrganisationResultModel(phrase ?? string.Empty, $"search-result?phrase={phrase}", result.Page, selectedItem ?? string.Empty));
     }
 }

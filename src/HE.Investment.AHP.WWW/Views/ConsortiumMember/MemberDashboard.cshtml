@@ -6,8 +6,10 @@
 @model HE.Investment.AHP.WWW.Models.ConsortiumMember.ManageConsortiumModel
 @{
     ViewData["Title"] = ConsortiumMemberPageTitles.ConsortiumMember(Model.Details.LeadPartner.Details.Name);
+    var organisationId = Context.Request.RouteValues["organisationId"]?.ToString();
+
     ViewBag.Breadcrumbs = AhpBreadcrumbsBuilder
-        .Empty()
+        .Empty(organisationId)
         .WithOrganisation(Model.OrganisationName)
         .WithConsortiumManagement()
         .WithApplicationsList(Model.Details.Programme.Name)

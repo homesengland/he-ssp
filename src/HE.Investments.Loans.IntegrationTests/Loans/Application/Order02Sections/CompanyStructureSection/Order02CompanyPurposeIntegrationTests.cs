@@ -25,12 +25,14 @@ public class Order02CompanyPurposeIntegrationTests : IntegrationTest
     public async Task Order01_ShouldMoveToNextPageMoreInformationAboutOrganization_WhenContinueButtonIsClicked()
     {
         // given
-        var companyPurposePage = await TestClient.NavigateTo(CompanyStructurePagesUrls.CompanyPurpose(UserData.LoanApplicationIdInDraftState));
+        var companyPurposePage =
+            await TestClient.NavigateTo(CompanyStructurePagesUrls.CompanyPurpose(UserOrganisationData.OrganisationId, UserData.LoanApplicationIdInDraftState));
         var continueButton = companyPurposePage.GetGdsSubmitButtonById("continue-button");
 
         // when
         var moreInformationAboutOrganizationPage = await TestClient.SubmitButton(
-            continueButton, new Dictionary<string, string> { { "Purpose", CommonResponse.Yes } });
+            continueButton,
+            new Dictionary<string, string> { { "Purpose", CommonResponse.Yes } });
 
         // then
         moreInformationAboutOrganizationPage

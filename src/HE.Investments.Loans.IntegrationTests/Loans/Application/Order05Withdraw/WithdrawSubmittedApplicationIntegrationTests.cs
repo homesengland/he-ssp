@@ -1,13 +1,11 @@
 using System.Diagnostics.CodeAnalysis;
 using AngleSharp.Html.Dom;
 using HE.Investments.Common.Messages;
-using HE.Investments.IntegrationTestsFramework;
 using HE.Investments.Loans.Common.Tests.TestData;
 using HE.Investments.Loans.Common.Utils.Constants.FormOption;
 using HE.Investments.Loans.IntegrationTests.IntegrationFramework;
 using HE.Investments.Loans.IntegrationTests.Loans.LoansHelpers.Extensions;
 using HE.Investments.Loans.IntegrationTests.Loans.LoansHelpers.Pages;
-using HE.Investments.Loans.WWW;
 using HE.Investments.Loans.WWW.Views.LoanApplicationV2.Consts;
 using HE.Investments.TestsUtils.Extensions;
 using Xunit;
@@ -33,7 +31,8 @@ public class WithdrawSubmittedApplicationIntegrationTests : IntegrationTest
     public async Task Order01_ShouldOpenWithdrawPage_WhenApplicationIsInApplicationSubmittedState()
     {
         // given
-        var applicationDashboardPage = await TestClient.NavigateTo(ApplicationPagesUrls.ApplicationDashboard(_applicationLoanId));
+        var applicationDashboardPage =
+            await TestClient.NavigateTo(ApplicationPagesUrls.ApplicationDashboard(UserOrganisationData.OrganisationId, _applicationLoanId));
 
         // when
         var withdrawApplicationButton = applicationDashboardPage.GetAnchorElementById("withdraw-application");
@@ -103,7 +102,7 @@ public class WithdrawSubmittedApplicationIntegrationTests : IntegrationTest
 
         // then
         applicationDashboardPage
-            .UrlEndWith(ApplicationPagesUrls.ApplicationDashboard(_applicationLoanId))
+            .UrlEndWith(ApplicationPagesUrls.ApplicationDashboard(UserOrganisationData.OrganisationId, _applicationLoanId))
             .HasSuccessNotificationBanner("project has been withdrawn")
             .HasNotEmptyTitle();
 
@@ -126,7 +125,7 @@ public class WithdrawSubmittedApplicationIntegrationTests : IntegrationTest
     public async Task Order06_ShouldSeeCompanyStructureInReadOnlyMode_WhenApplicationIsInWithdrawnState()
     {
         // given
-        var taskListPage = await TestClient.NavigateTo(ApplicationPagesUrls.TaskList(_applicationLoanId));
+        var taskListPage = await TestClient.NavigateTo(ApplicationPagesUrls.TaskList(UserOrganisationData.OrganisationId, _applicationLoanId));
         var linkToCompanyStructureSection = taskListPage.GetAnchorElementById("company-structure-section-link");
 
         // when
@@ -143,7 +142,7 @@ public class WithdrawSubmittedApplicationIntegrationTests : IntegrationTest
     public async Task Order07_ShouldSeeFundingInReadOnlyMode_WhenApplicationIsInWithdrawnState()
     {
         // given
-        var taskListPage = await TestClient.NavigateTo(ApplicationPagesUrls.TaskList(_applicationLoanId));
+        var taskListPage = await TestClient.NavigateTo(ApplicationPagesUrls.TaskList(UserOrganisationData.OrganisationId, _applicationLoanId));
         var linkToFundingSection = taskListPage.GetAnchorElementById("funding-section-link");
 
         // when
@@ -160,7 +159,7 @@ public class WithdrawSubmittedApplicationIntegrationTests : IntegrationTest
     public async Task Order08_ShouldSeeSecurityInReadOnlyMode_WhenApplicationIsInWithdrawnState()
     {
         // given
-        var taskListPage = await TestClient.NavigateTo(ApplicationPagesUrls.TaskList(_applicationLoanId));
+        var taskListPage = await TestClient.NavigateTo(ApplicationPagesUrls.TaskList(UserOrganisationData.OrganisationId, _applicationLoanId));
         var linkToSecuritySection = taskListPage.GetAnchorElementById("security-section-link");
 
         // when

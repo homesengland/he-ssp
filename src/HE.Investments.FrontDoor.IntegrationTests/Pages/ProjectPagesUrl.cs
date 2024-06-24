@@ -2,42 +2,42 @@ namespace HE.Investments.FrontDoor.IntegrationTests.Pages;
 
 internal static class ProjectPagesUrl
 {
-    public static string Start => "apply-for-support/project/start";
+    public static string Start(string organisationId) => $"apply-for-support/{organisationId}/project/start";
 
-    public static string NewEnglandHousingDelivery => "apply-for-support/project/new-england-housing-delivery";
+    public static string NewEnglandHousingDelivery(string organisationId) => $"apply-for-support/{organisationId}/project/new-england-housing-delivery";
 
-    public static string NewName => "apply-for-support/project/new-name";
+    public static string NewName(string organisationId) => $"apply-for-support/{organisationId}/project/new-name";
 
-    public static string SupportRequiredActivities(string projectId) => BuildProjectPage(projectId, "support-required-activities");
+    public static string SupportRequiredActivities(string organisationId, string projectId) => BuildProjectPage(organisationId, projectId, "support-required-activities");
 
-    public static string Tenure(string projectId) => BuildProjectPage(projectId, "tenure");
+    public static string Tenure(string organisationId, string projectId) => BuildProjectPage(organisationId, projectId, "tenure");
 
-    public static string OrganisationHomesBuilt(string projectId) => BuildProjectPage(projectId, "organisation-homes-built");
+    public static string OrganisationHomesBuilt(string organisationId, string projectId) => BuildProjectPage(organisationId, projectId, "organisation-homes-built");
 
-    public static string IdentifiedSite(string projectId) => BuildProjectPage(projectId, "identified-site");
+    public static string IdentifiedSite(string organisationId, string projectId) => BuildProjectPage(organisationId, projectId, "identified-site");
 
-    public static string GeographicFocus(string projectId) => BuildProjectPage(projectId, "geographic-focus");
+    public static string GeographicFocus(string organisationId, string projectId) => BuildProjectPage(organisationId, projectId, "geographic-focus");
 
-    public static string Region(string projectId) => BuildProjectPage(projectId, "region");
+    public static string Region(string organisationId, string projectId) => BuildProjectPage(organisationId, projectId, "region");
 
-    public static string HomesNumber(string projectId) => BuildProjectPage(projectId, "homes-number");
+    public static string HomesNumber(string organisationId, string projectId) => BuildProjectPage(organisationId, projectId, "homes-number");
 
-    public static string Progress(string projectId) => BuildProjectPage(projectId, "progress");
+    public static string Progress(string organisationId, string projectId) => BuildProjectPage(organisationId, projectId, "progress");
 
-    public static string RequiresFunding(string projectId) => BuildProjectPage(projectId, "requires-funding");
+    public static string RequiresFunding(string organisationId, string projectId) => BuildProjectPage(organisationId, projectId, "requires-funding");
 
-    public static string FundingAmount(string projectId) => BuildProjectPage(projectId, "funding-amount");
+    public static string FundingAmount(string organisationId, string projectId) => BuildProjectPage(organisationId, projectId, "funding-amount");
 
-    public static string Profit(string projectId) => BuildProjectPage(projectId, "profit");
+    public static string Profit(string organisationId, string projectId) => BuildProjectPage(organisationId, projectId, "profit");
 
-    public static string ExpectedStart(string projectId) => BuildProjectPage(projectId, "expected-start");
+    public static string ExpectedStart(string organisationId, string projectId) => BuildProjectPage(organisationId, projectId, "expected-start");
 
-    public static string CheckAnswers(string projectId) => BuildProjectPage(projectId, "check-answers");
+    public static string CheckAnswers(string organisationId, string projectId) => BuildProjectPage(organisationId, projectId, "check-answers");
 
-    public static string YouNeedToSpeakToHomesEngland(string projectId) => BuildProjectPage(projectId, "you-need-to-speak-to-homes-england");
+    public static string YouNeedToSpeakToHomesEngland(string organisationId, string projectId) => BuildProjectPage(organisationId, projectId, "you-need-to-speak-to-homes-england");
 
-    public static string BuildProjectPage(string projectId, string pageName)
+    public static string BuildProjectPage(string organisationId, string projectId, string pageName)
     {
-        return $"apply-for-support/project/{projectId}/{pageName}";
+        return $"apply-for-support/{organisationId}/project/{projectId}/{pageName}";
     }
 }

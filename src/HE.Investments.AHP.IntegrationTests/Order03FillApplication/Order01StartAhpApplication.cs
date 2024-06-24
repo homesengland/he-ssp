@@ -26,11 +26,11 @@ public class Order01StartAhpApplication : AhpIntegrationTest
     public async Task Order01_ShouldDisplayApplicationList()
     {
         // given & when
-        var mainPage = await TestClient.NavigateTo(ProjectPagesUrl.ProjectApplicationList(ProjectData.ProjectId));
+        var mainPage = await TestClient.NavigateTo(ProjectPagesUrl.ProjectApplicationList(UserOrganisationData.OrganisationId, ProjectData.ProjectId));
 
         // then
         mainPage
-            .UrlEndWith(ProjectPagesUrl.ProjectApplicationList(ProjectData.ProjectId));
+            .UrlEndWith(ProjectPagesUrl.ProjectApplicationList(UserOrganisationData.OrganisationId, ProjectData.ProjectId));
 
         SaveCurrentPage();
     }
@@ -40,14 +40,15 @@ public class Order01StartAhpApplication : AhpIntegrationTest
     public async Task Order02_ShouldNavigateToApplicationLandingPage()
     {
         // given
-        var startButton = (await GetCurrentPage(ProjectPagesUrl.ProjectApplicationList(ProjectData.ProjectId))).GetLinkButton("Start");
+        var startButton = (await GetCurrentPage(ProjectPagesUrl.ProjectApplicationList(UserOrganisationData.OrganisationId, ProjectData.ProjectId)))
+            .GetLinkButton("Start");
 
         // when
         var applicationNamePage = await TestClient.NavigateTo(startButton);
 
         // then
         applicationNamePage
-            .UrlEndWith(ApplicationPagesUrl.ApplicationStart(ShortGuid.FromString(ProjectData.ProjectId).Value))
+            .UrlEndWith(ApplicationPagesUrl.ApplicationStart(UserOrganisationData.OrganisationId, ShortGuid.FromString(ProjectData.ProjectId).Value))
             .HasTitle(ApplicationPageTitles.Start("Affordable Homes Programme 2021-2026 Continuous Market Engagement", "AHP 21-26 CME"));
 
         SaveCurrentPage();
@@ -58,14 +59,15 @@ public class Order01StartAhpApplication : AhpIntegrationTest
     public async Task Order03_ShouldNavigateToSiteSelectPage()
     {
         // given
-        var startButton = (await GetCurrentPage(ApplicationPagesUrl.ApplicationStart(ProjectData.ProjectId))).GetStartButton();
+        var startButton = (await GetCurrentPage(ApplicationPagesUrl.ApplicationStart(UserOrganisationData.OrganisationId, ProjectData.ProjectId)))
+            .GetStartButton();
 
         // when
         var siteSelectPage = await TestClient.SubmitButton(startButton);
 
         // then
         siteSelectPage
-            .UrlEndWith(SitePagesUrl.SiteSelect(ProjectData.ProjectId))
+            .UrlEndWith(SitePagesUrl.SiteSelect(UserOrganisationData.OrganisationId, ProjectData.ProjectId))
             .HasTitle(SitePageTitles.SiteSelect);
 
         SaveCurrentPage();
@@ -76,7 +78,7 @@ public class Order01StartAhpApplication : AhpIntegrationTest
     public async Task Order04_ShouldNavigateToSiteConfirmPage()
     {
         // given
-        var siteSelectPage = await GetCurrentPage(SitePagesUrl.SiteSelect(ProjectData.ProjectId));
+        var siteSelectPage = await GetCurrentPage(SitePagesUrl.SiteSelect(UserOrganisationData.OrganisationId, ProjectData.ProjectId, false));
         siteSelectPage.HasNavigationListItem("select-list", out var selectSiteLink);
 
         // when
@@ -85,7 +87,7 @@ public class Order01StartAhpApplication : AhpIntegrationTest
         // then
         ApplicationData.SetSiteId(siteConfirmPage.Url.GetSiteGuidFromUrl());
         siteConfirmPage
-            .UrlEndWith(SitePagesUrl.SiteConfirm(ApplicationData.SiteId))
+            .UrlEndWith(SitePagesUrl.SiteConfirm(UserOrganisationData.OrganisationId, ApplicationData.SiteId))
             .HasTitle(SitePageTitles.SiteConfirmSelect);
 
         SaveCurrentPage();
@@ -96,9 +98,9 @@ public class Order01StartAhpApplication : AhpIntegrationTest
     public async Task Order05_ShouldProvideSiteConfirmation()
     {
         // given
-        var siteConfirmPage = await GetCurrentPage(SitePagesUrl.SiteConfirm(ApplicationData.SiteId));
+        var siteConfirmPage = await GetCurrentPage(SitePagesUrl.SiteConfirm(UserOrganisationData.OrganisationId, ApplicationData.SiteId));
         siteConfirmPage
-            .UrlEndWith(SitePagesUrl.SiteConfirm(ApplicationData.SiteId))
+            .UrlEndWith(SitePagesUrl.SiteConfirm(UserOrganisationData.OrganisationId, ApplicationData.SiteId))
             .HasTitle(SitePageTitles.SiteConfirmSelect)
             .HasBackLink(out _)
             .HasContinueButton(out var continueButton);
@@ -108,7 +110,7 @@ public class Order01StartAhpApplication : AhpIntegrationTest
 
         // then
         applicationNamePage
-            .UrlEndWith(ApplicationPagesUrl.ApplicationName(ApplicationData.SiteId))
+            .UrlEndWith(ApplicationPagesUrl.ApplicationName(UserOrganisationData.OrganisationId, ApplicationData.SiteId))
             .HasTitle(ApplicationPageTitles.ApplicationName);
         SaveCurrentPage();
     }
@@ -119,9 +121,9 @@ public class Order01StartAhpApplication : AhpIntegrationTest
     {
         // given
         var applicationData = ApplicationData.GenerateApplicationName();
-        var applicationNamePage = await GetCurrentPage(ApplicationPagesUrl.ApplicationName(ApplicationData.SiteId));
+        var applicationNamePage = await GetCurrentPage(ApplicationPagesUrl.ApplicationName(UserOrganisationData.OrganisationId, ApplicationData.SiteId));
         applicationNamePage
-            .UrlEndWith(ApplicationPagesUrl.ApplicationName(ApplicationData.SiteId))
+            .UrlEndWith(ApplicationPagesUrl.ApplicationName(UserOrganisationData.OrganisationId, ApplicationData.SiteId))
             .HasTitle(ApplicationPageTitles.ApplicationName)
             .HasBackLink(out _)
             .HasContinueButton(out var continueButton);
@@ -131,7 +133,7 @@ public class Order01StartAhpApplication : AhpIntegrationTest
 
         // then
         applicationTenurePage
-            .UrlWithoutQueryEndsWith(ApplicationPagesUrl.Tenure(applicationData.SiteId))
+            .UrlWithoutQueryEndsWith(ApplicationPagesUrl.Tenure(UserOrganisationData.OrganisationId, applicationData.SiteId))
             .HasTitle(ApplicationPageTitles.Tenure);
         SaveCurrentPage();
     }
@@ -142,7 +144,7 @@ public class Order01StartAhpApplication : AhpIntegrationTest
     {
         // given & when & then
         var taskListPage = await TestQuestionPage(
-            ApplicationPagesUrl.Tenure(ApplicationData.SiteId),
+            ApplicationPagesUrl.Tenure(UserOrganisationData.OrganisationId, ApplicationData.SiteId),
             ApplicationPageTitles.Tenure,
             ApplicationPagesUrl.TaskListSuffix,
             ("Tenure", ApplicationData.Tenure.ToString()));

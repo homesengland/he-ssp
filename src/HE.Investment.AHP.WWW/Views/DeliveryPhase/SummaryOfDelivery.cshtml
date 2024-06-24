@@ -11,7 +11,6 @@
 @using HE.Investments.Common.WWW.Components.RadioYesNo
 @using HE.Investments.Common.WWW.Extensions
 @using HE.Investments.Common.WWW.Helpers
-@using Microsoft.AspNetCore.Mvc.TagHelpers
 @inject ModelExpressionProvider ModelProvider
 @model DeliveryPhaseDetails;
 @{
@@ -27,7 +26,7 @@
 <div class="govuk-grid-column-full">
     <vc:ahp-workflow-back-button current-page="@DeliveryPhaseWorkflowState.SummaryOfDelivery"/>
 
-    <form asp-controller="DeliveryPhase" asp-action="SummaryOfDelivery" asp-method="post" asp-route-applicationId="@applicationId" asp-route-deliveryPhaseId="@Model.Id" asp-route-workflow="@workflow" novalidate>
+    <he-organisation-form asp-controller="DeliveryPhase" asp-action="SummaryOfDelivery" asp-method="post" asp-route-applicationId="@applicationId" asp-route-deliveryPhaseId="@Model.Id" asp-route-workflow="@workflow" novalidate>
         <vc:page-header caption="@($"{Model.Application.Name} - {Model.Name}")" title="@title"/>
 
         @Html.HiddenFor(x => x.Tranches!.ShouldBeAmended)
@@ -55,7 +54,7 @@
                     <td class="govuk-table__cell">
                         <gds-link
                             data-testid="change-number-of-homes"
-                            href="@Url.Action("AddHomes", "DeliveryPhase", new { applicationId, deliveryPhaseId = Model.Id, workflow })">
+                            href="@Url.OrganisationAction("AddHomes", "DeliveryPhase", new { applicationId, deliveryPhaseId = Model.Id, workflow })">
                             Change
                         </gds-link>
                     </td>
@@ -156,5 +155,5 @@
                 }
             }
         </div>
-    </form>
+    </he-organisation-form>
 </div>

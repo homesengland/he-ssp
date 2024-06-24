@@ -148,6 +148,22 @@ public static class HtmlDocumentOtherExtensions
         return htmlDocument;
     }
 
+    public static IHtmlDocument HasSummaryCardWithTitle(this IHtmlDocument htmlDocument, string title)
+    {
+        var summaryCardsTitles = htmlDocument.GetElementsByClassName("govuk-summary-card__title");
+        summaryCardsTitles.Should().Contain(x => x.TextContent.Contains(title), $"There is no summary card with title: '{title}'");
+
+        return htmlDocument;
+    }
+
+    public static IHtmlDocument HasTotalSummaryCards(this IHtmlDocument htmlDocument, int total)
+    {
+        var summaryCards = htmlDocument.GetElementsByClassName("govuk-summary-card");
+        summaryCards.Should().HaveCount(total, $"There should be {total} summary cards");
+
+        return htmlDocument;
+    }
+
     public static IHtmlDocument HasSummaryDetails(this IHtmlDocument htmlDocument, string text)
     {
         var details = htmlDocument.GetElementsByClassName("govuk-details")

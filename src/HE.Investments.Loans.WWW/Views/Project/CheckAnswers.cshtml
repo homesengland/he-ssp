@@ -2,14 +2,11 @@
 @using HE.Investments.Loans.WWW.Views.Project.Consts
 @using HE.Investments.Loans.Contract.Application.Helper
 @using Microsoft.AspNetCore.Mvc.TagHelpers
-@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Links
 @model HE.Investments.Loans.Contract.Projects.ViewModels.ProjectViewModel;
 
 <he-div-grid-column-full>
-    <form asp-controller="Project" asp-action="CheckAnswers" asp-route-id="@Model.ApplicationId" asp-route-projectId="@Model.ProjectId" asp-method="post" novalidate>
-
-        <gds-back-link href="@Url.Action("Back", "Project", new {id = Model.ApplicationId, projectId = Model.ProjectId, currentPage = ProjectState.CheckAnswers})" text="Back" class="govuk-!-margin-bottom-8">
-        </gds-back-link>
+    <he-organisation-form asp-controller="Project" asp-action="CheckAnswers" asp-route-id="@Model.ApplicationId" asp-route-projectId="@Model.ProjectId" asp-method="post" novalidate>
+        <vc:loans-workflow-back-button current-page="@ProjectState.CheckAnswers"/>
 
         <partial name="_ErrorSummaryPartial" model="null" />
 
@@ -21,5 +18,5 @@
         @await Html.PartialAsync("_ProjectAnswers", Model)
 
         <partial name="Sections/_HaveYouCompletedThisSection" model="Model"/>
-    </form>
+    </he-organisation-form>
 </he-div-grid-column-full>

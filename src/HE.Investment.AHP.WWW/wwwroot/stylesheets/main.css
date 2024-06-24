@@ -10,7 +10,7 @@
 }
 
 .application-status-project-list-govuk-tag {
-  display: table-cell;
+  display: table-cell !important;
   text-align: left;
 }
 

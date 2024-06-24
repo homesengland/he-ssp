@@ -5,6 +5,7 @@ using HE.Investment.AHP.WWW.Controllers;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.WWW.Components.SectionSummary;
+using HE.Investments.Common.WWW.Extensions;
 using HE.Investments.Common.WWW.Helpers;
 using HE.Investments.Common.WWW.Models.Summary;
 using HE.Investments.Common.WWW.Utils;
@@ -48,9 +49,13 @@ public class FinancialDetailsSummaryViewModelFactory : IFinancialDetailsSummaryV
         return value.DisplayPounds().ToOneElementList() ?? Array.Empty<string>();
     }
 
-    private static string CreateFinancialDetailsActionUrl(IUrlHelper urlHelper, AhpApplicationId applicationId, string actionName, bool allowWcagDuplicate = false)
+    private static string CreateFinancialDetailsActionUrl(
+        IUrlHelper urlHelper,
+        AhpApplicationId applicationId,
+        string actionName,
+        bool allowWcagDuplicate = false)
     {
-        var action = urlHelper.Action(
+        var action = urlHelper.OrganisationAction(
             actionName,
             new ControllerName(nameof(FinancialDetailsController)).WithoutPrefix(),
             new { applicationId = applicationId.Value, redirect = nameof(FinancialDetailsController.CheckAnswers) });
@@ -58,7 +63,11 @@ public class FinancialDetailsSummaryViewModelFactory : IFinancialDetailsSummaryV
         return $"{action}{(allowWcagDuplicate ? "#" : string.Empty)}";
     }
 
-    private static SectionSummaryViewModel GetLandValueSectionSummary(LandValueSummary landValueSummary, AhpApplicationId applicationId, bool isEditable, IUrlHelper urlHelper)
+    private static SectionSummaryViewModel GetLandValueSectionSummary(
+        LandValueSummary landValueSummary,
+        AhpApplicationId applicationId,
+        bool isEditable,
+        IUrlHelper urlHelper)
     {
         var landValueItems = new List<SectionSummaryItemModel>
         {
@@ -82,7 +91,11 @@ public class FinancialDetailsSummaryViewModelFactory : IFinancialDetailsSummaryV
         return new SectionSummaryViewModel("Land value", landValueItems);
     }
 
-    private static SectionSummaryViewModel GetCostsSectionSummary(TotalSchemeCost totalSchemeCost, AhpApplicationId applicationId, bool isEditable, IUrlHelper urlHelper)
+    private static SectionSummaryViewModel GetCostsSectionSummary(
+        TotalSchemeCost totalSchemeCost,
+        AhpApplicationId applicationId,
+        bool isEditable,
+        IUrlHelper urlHelper)
     {
         var costsItems = new List<SectionSummaryItemModel>
         {
@@ -111,7 +124,11 @@ public class FinancialDetailsSummaryViewModelFactory : IFinancialDetailsSummaryV
         return new SectionSummaryViewModel("Total scheme costs", costsItems);
     }
 
-    private static SectionSummaryViewModel GetContributionsSectionSummary(TotalContributions totalContributions, AhpApplicationId applicationId, bool isEditable, IUrlHelper urlHelper)
+    private static SectionSummaryViewModel GetContributionsSectionSummary(
+        TotalContributions totalContributions,
+        AhpApplicationId applicationId,
+        bool isEditable,
+        IUrlHelper urlHelper)
     {
         var contributionsItems = new List<SectionSummaryItemModel>
         {

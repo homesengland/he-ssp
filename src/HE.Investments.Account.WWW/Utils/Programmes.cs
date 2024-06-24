@@ -1,7 +1,9 @@
 using System.ComponentModel;
 using HE.Investments.Account.Contract.UserOrganisation;
+using HE.Investments.Account.Shared;
 using HE.Investments.Account.WWW.Models.UserOrganisation;
 using HE.Investments.Account.WWW.Routing;
+using HE.Investments.Common.Contract;
 
 namespace HE.Investments.Account.WWW.Utils;
 
@@ -11,11 +13,14 @@ public class Programmes : IProgrammes
 
     private readonly Dictionary<ProgrammeType, ProgrammeModel> _programmes;
 
-    public Programmes(ProgrammeUrlConfig programmeUrlConfig)
+    public Programmes(ProgrammeUrlConfig programmeUrlConfig, IAccountUserContext accountUserContext)
     {
         _programmeUrlConfig = programmeUrlConfig;
+        SelectedOrganisationId = accountUserContext.GetSelectedAccount().Result.SelectedOrganisationId();
         _programmes = BuildProgrammeModels();
     }
+
+    private OrganisationId SelectedOrganisationId { get; }
 
     public ProgrammeModel GetProgramme(ProgrammeType programmeType)
     {
@@ -28,12 +33,12 @@ public class Programmes : IProgrammes
     {
         if (programmeType == ProgrammeType.Ahp)
         {
-            return $"{_programmeUrlConfig.Ahp}/project/{id}";
+            return $"{_programmeUrlConfig.Ahp}/{SelectedOrganisationId}/project/{id}";
         }
 
         if (programmeType == ProgrammeType.Loans)
         {
-            return $"{_programmeUrlConfig.Loans}/application/{id.ToGuidAsString()}";
+            return $"{_programmeUrlConfig.Loans}/{SelectedOrganisationId}/application/{id.ToGuidAsString()}";
         }
 
         throw new InvalidEnumArgumentException($"Programme for {programmeType} does not exist.");
@@ -50,7 +55,7 @@ public class Programmes : IProgrammes
                     "Applications",
                     "Start a new Levelling Up Home Building Fund application. This will not affect any of your previous applications.",
                     "View all applications",
-                    $"{_programmeUrlConfig.Loans}/dashboard",
+                    $"{_programmeUrlConfig.Loans}/{SelectedOrganisationId}/dashboard",
                     5)
             },
             {
@@ -60,7 +65,7 @@ public class Programmes : IProgrammes
                     null,
                     "Start a new Affordable Homes Programme application. This will not affect any of your previous applications.",
                     "View all projects",
-                    $"{_programmeUrlConfig.Ahp}/projects",
+                    $"{_programmeUrlConfig.Ahp}/{SelectedOrganisationId}/projects",
                     3)
             },
         };

@@ -1,11 +1,12 @@
 using HE.Investments.Account.WWW.Routing;
 using HE.Investments.Common;
+using HE.Investments.Common.WWW.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.FeatureManagement;
 
 namespace HE.Investments.Account.WWW.Controllers;
 
-[Route("consortium")]
+[Route("{organisationId}/consortium")]
 public class ConsortiumController : Controller
 {
     private readonly ProgrammeUrlConfig _programmeUrlConfig;
@@ -26,6 +27,6 @@ public class ConsortiumController : Controller
             return RedirectToAction("Index", "Home");
         }
 
-        return new RedirectResult($"{_programmeUrlConfig.Ahp}/consortium");
+        return new RedirectResult($"{_programmeUrlConfig.Ahp}/{Request.GetOrganisationIdFromRoute()}/consortium");
     }
 }

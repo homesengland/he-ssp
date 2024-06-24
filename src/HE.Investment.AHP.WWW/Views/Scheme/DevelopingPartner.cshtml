@@ -2,17 +2,18 @@
 @using HE.Investment.AHP.WWW.Views.Shared
 @using HE.Investments.Common.WWW.Components.PageHeader
 @using HE.Investments.Common.WWW.Components.SelectList
+@using HE.Investments.Common.WWW.Extensions
 @model HE.Investment.AHP.WWW.Models.Scheme.SelectPartnerModel;
 @{
     ViewData["Title"] = SharedPageTitles.DevelopingPartner;
     var redirect = Context.Request.Query["redirect"];
 
     var items = Model.ConsortiumMembers.ToSelectListViewModel(
-        x => Url.Action("DevelopingPartnerConfirm", "Scheme", new { Model.ApplicationId, organisationId = x.Value, redirect }));
+        x => Url.OrganisationAction("DevelopingPartnerConfirm", "Scheme", new { Model.ApplicationId, partnerId = x.Value, redirect }));
 }
 
 <gds-div-grid-column-two-thirds>
-    <gds-back-link href="@Url.Action("PartnerDetails", "Scheme", new { Model.ApplicationId, redirect })" class="govuk-!-margin-bottom-8"></gds-back-link>
+    <gds-back-link href="@Url.OrganisationAction("PartnerDetails", "Scheme", new { Model.ApplicationId, redirect })" class="govuk-!-margin-bottom-8"></gds-back-link>
     <vc:page-header title="@SharedPageTitles.DevelopingPartner" caption="@Model.ApplicationName"/>
 
     @foreach (var paragraph in SharedParagraphs.DevelopingPartner)
@@ -22,7 +23,7 @@
 
     <vc:select-list
         items="@items"
-        paging-navigation-url="@Url.Action("DevelopingPartner", "Scheme", new { Model.ApplicationId, redirect })"/>
+        paging-navigation-url="@Url.OrganisationAction("DevelopingPartner", "Scheme", new { Model.ApplicationId, redirect })"/>
 
     <vc:return-to-application-link application-id="@Model.ApplicationId" is-editable="false"/>
 </gds-div-grid-column-two-thirds>

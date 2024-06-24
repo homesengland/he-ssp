@@ -3,9 +3,8 @@
 @model HE.Investments.Loans.Contract.CompanyStructure.CompanyStructureViewModel
 
 <gds-div-grid-column-two-thirds>
-    <form asp-controller="CompanyStructureV2" asp-action="HowManyHomesBuiltPost" asp-route-id="@Model.LoanApplicationId" asp-route-redirect="@Context.Request.Query["redirect"]" asp-method="post" novalidate>
-        <gds-back-link href="@Url.Action("Back", "CompanyStructureV2", new { id = Model.LoanApplicationId, currentPage = CompanyStructureState.HomesBuilt })" text="Back" class="govuk-!-margin-bottom-8">
-        </gds-back-link>
+    <he-organisation-form asp-controller="CompanyStructureV2" asp-action="HowManyHomesBuiltPost" asp-route-id="@Model.LoanApplicationId" asp-route-redirect="@Context.Request.Query["redirect"]" asp-method="post" novalidate>
+        <vc:loans-workflow-back-button current-page="@CompanyStructureState.HomesBuilt"/>
         <vc:notification/>
         <partial name="_ErrorSummaryPartial" model="null"/>
 
@@ -28,7 +27,7 @@
         <button class="govuk-button" data-module="govuk-button" name="action" type="submit" value="@(Model.StateChanged ? "Change" : "Continue")" id="continue-button">
             Continue
         </button>
-    </form>
+    </he-organisation-form>
 
     <partial name="_HomeAndCheckAnswersLinks"/>
 </gds-div-grid-column-two-thirds>

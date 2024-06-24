@@ -6,6 +6,7 @@ using HE.Investment.AHP.WWW.Workflows;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.WWW.Components.SectionSummary;
+using HE.Investments.Common.WWW.Extensions;
 using HE.Investments.Common.WWW.Helpers;
 using HE.Investments.Common.WWW.Models.Summary;
 using HE.Investments.Common.WWW.Utils;
@@ -52,7 +53,9 @@ public class SiteSummaryViewModelFactory : ISiteSummaryViewModelFactory
 
         yield return new SectionSummaryViewModel("Land details", CreateLandDetailsSummary(siteDetails, CreateAction, isEditable));
         yield return new SectionSummaryViewModel("Site use", CreateSiteUseSummary(siteDetails, CreateAction, isEditable));
-        yield return new SectionSummaryViewModel("Modern Methods of Construction (MMC)", CreateMmcSummary(siteDetails.ModernMethodsOfConstruction, CreateAction, isEditable));
+        yield return new SectionSummaryViewModel(
+            "Modern Methods of Construction (MMC)",
+            CreateMmcSummary(siteDetails.ModernMethodsOfConstruction, CreateAction, isEditable));
         yield return new SectionSummaryViewModel("Procurement", CreateProcurementSummary(siteDetails, CreateAction, isEditable));
     }
 
@@ -138,7 +141,11 @@ public class SiteSummaryViewModelFactory : ISiteSummaryViewModelFactory
         var detailsAction = createAction(nameof(Controller.PlanningDetails));
         var summary = new List<SectionSummaryItemModel>
         {
-            new("Planning status", SummaryAnswerHelper.ToEnum(planning.PlanningStatus), createAction(nameof(Controller.PlanningStatus)), IsEditable: isEditable),
+            new(
+                "Planning status",
+                SummaryAnswerHelper.ToEnum(planning.PlanningStatus),
+                createAction(nameof(Controller.PlanningStatus)),
+                IsEditable: isEditable),
         };
 
         summary.AddWhen(
@@ -318,7 +325,9 @@ public class SiteSummaryViewModelFactory : ISiteSummaryViewModelFactory
             site.TenderingStatusDetails.TenderingStatus is SiteTenderingStatus.TenderForWorksContract or SiteTenderingStatus.ContractingHasNotYetBegun);
         summary.Add(new SectionSummaryItemModel(
             "Strategic site",
-            SummaryAnswerHelper.ToYesNo(site.StrategicSiteDetails.IsStrategicSite, site.StrategicSiteDetails.IsStrategicSite == true ? site.StrategicSiteDetails.StrategicSiteName : null),
+            SummaryAnswerHelper.ToYesNo(
+                site.StrategicSiteDetails.IsStrategicSite,
+                site.StrategicSiteDetails.IsStrategicSite == true ? site.StrategicSiteDetails.StrategicSiteName : null),
             createAction(nameof(Controller.StrategicSite)),
             IsEditable: isEditable));
         summary.Add(new SectionSummaryItemModel(
@@ -458,7 +467,7 @@ public class SiteSummaryViewModelFactory : ISiteSummaryViewModelFactory
 
     private static string CreateSiteActionUrl(IUrlHelper urlHelper, SiteId siteId, string controllerName, string actionName, string? workflow)
     {
-        var action = urlHelper.Action(
+        var action = urlHelper.OrganisationAction(
             actionName,
             controllerName,
             new { siteId = siteId.Value, workflow });
