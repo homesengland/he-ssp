@@ -1,6 +1,7 @@
 using He.AspNetCore.Mvc.Gds.Components.Extensions;
 using HE.Investment.AHP.Contract.Common.Enums;
 using HE.Investment.AHP.Contract.PrefillData.Queries;
+using HE.Investment.AHP.Contract.Project;
 using HE.Investment.AHP.Contract.Project.Queries;
 using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Contract.Site.Commands;
@@ -61,10 +62,11 @@ public class SiteController : SiteControllerBase<SiteWorkflowState>
     }
 
     [HttpGet("select")]
-    public async Task<IActionResult> Select([FromQuery] int? page, [FromQuery] string projectId, CancellationToken cancellationToken)
+    public async Task<IActionResult> Select([FromQuery] int? page, [FromQuery] string projectId, [FromQuery] bool isAfterFdProject, CancellationToken cancellationToken)
     {
         var response = await _mediator.Send(new GetProjectSitesQuery(FrontDoorProjectId.From(projectId), new PaginationRequest(page ?? 1)), cancellationToken);
-        return View("Select", response);
+        var model = new SelectProjectSitesModel(response, BuildSelectSitesCallBackUrl(projectId, isAfterFdProject));
+        return View("Select", model);
     }
 
     [HttpGet("{siteId}/confirm-select")]
@@ -1011,5 +1013,12 @@ public class SiteController : SiteControllerBase<SiteWorkflowState>
             isSectionCompleted ?? (siteDetails.Status == SiteStatus.Submitted ? IsSectionCompleted.Yes : IsSectionCompleted.Undefied),
             sections.ToList(),
             isEditable);
+    }
+
+    private string? BuildSelectSitesCallBackUrl(string fdProjectId, bool isAfterFdProject)
+    {
+        return isAfterFdProject
+            ? Url.Action("Start", "Project", new { fdProjectId })
+            : Url.Action("Start", "Application", new { projectId = fdProjectId });
     }
 }

@@ -8,7 +8,16 @@ public static class SitePagesUrl
 
     public static string SiteStart(string siteId) => $"/ahp/site/{siteId}/start";
 
-    public static string SiteSelect(string projectId) => $"ahp/site/select?projectid={projectId}";
+    public static string SiteSelect(string projectId, bool? isAfterFdProject = null)
+    {
+        var url = $"ahp/site/select?projectid={projectId}";
+        if (isAfterFdProject != null)
+        {
+            url += $"&isafterfdproject={isAfterFdProject}";
+        }
+
+        return url;
+    }
 
     public static string SiteDetails(string siteId) => $"ahp/site/{siteId}";
 
