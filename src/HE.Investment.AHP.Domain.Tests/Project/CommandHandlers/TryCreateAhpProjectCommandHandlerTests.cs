@@ -11,7 +11,7 @@ using Moq;
 
 namespace HE.Investment.AHP.Domain.Tests.Project.CommandHandlers;
 
-public class CreateAhpProjectIfDoesNotExistCommandHandlerTests : TestBase<CreateAhpProjectIfDoesNotExistCommandHandler>
+public class TryCreateAhpProjectCommandHandlerTests : TestBase<TryCreateAhpProjectCommandHandler>
 {
     [Fact]
     public async Task ShouldCreateAhpProject()
@@ -50,7 +50,7 @@ public class CreateAhpProjectIfDoesNotExistCommandHandlerTests : TestBase<Create
             .BuildMockAndRegister(this);
 
         // when
-        var result = await TestCandidate.Handle(new CreateAhpProjectIfDoesNotExistCommand(prefillProject.Id), CancellationToken.None);
+        var result = await TestCandidate.Handle(new TryCreateAhpProjectCommand(prefillProject.Id), CancellationToken.None);
 
         // then
         result.Should().Be(projectId);

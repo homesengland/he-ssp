@@ -35,7 +35,7 @@ public class ProjectRepository : IProjectRepository
         _eventDispatcher = eventDispatcher;
     }
 
-    public async Task<AhpProjectDto?> GetProjectOrNull(FrontDoorProjectId id, ConsortiumUserAccount userAccount, CancellationToken cancellationToken)
+    public async Task<AhpProjectDto?> TryGetProject(FrontDoorProjectId id, ConsortiumUserAccount userAccount, CancellationToken cancellationToken)
     {
         try
         {

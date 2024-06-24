@@ -18,5 +18,5 @@ public interface IProjectRepository
 
     Task<AhpProjectId> CreateProject(ProjectPrefillData frontDoorProject, ConsortiumUserAccount userAccount, CancellationToken cancellationToken);
 
-    Task<AhpProjectDto?> GetProjectOrNull(FrontDoorProjectId id, ConsortiumUserAccount userAccount, CancellationToken cancellationToken);
+    Task<AhpProjectDto?> TryGetProject(FrontDoorProjectId id, ConsortiumUserAccount userAccount, CancellationToken cancellationToken);
 }

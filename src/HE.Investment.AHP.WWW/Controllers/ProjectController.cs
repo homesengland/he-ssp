@@ -54,7 +54,7 @@ public class ProjectController : Controller
     [ConsortiumAuthorize(ConsortiumAccessContext.Edit)]
     public async Task<IActionResult> StartPost([FromQuery] string fdProjectId, CancellationToken cancellationToken)
     {
-        await _mediator.Send(new CreateAhpProjectIfDoesNotExistCommand(FrontDoorProjectId.From(fdProjectId)), cancellationToken);
+        await _mediator.Send(new TryCreateAhpProjectCommand(FrontDoorProjectId.From(fdProjectId)), cancellationToken);
 
         var response = await _mediator.Send(new GetSiteListQuery(new PaginationRequest(1, 1)), cancellationToken);
         if (response.Page.Items.Any())
