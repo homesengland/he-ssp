@@ -1,4 +1,5 @@
 namespace HE.Investments.Loans.IntegrationTests.Loans.LoansHelpers.Pages;
+
 internal static class ProjectPagesUrls
 {
     public const string StartSuffix = "/project/start";
@@ -45,98 +46,98 @@ internal static class ProjectPagesUrls
 
     public const string DeleteSuffix = "/delete";
 
-    public static string Start(string applicationId)
+    public static string Start(string organisationId, string applicationId)
     {
-        return $"application/{applicationId}{StartSuffix}";
+        return $"{organisationId}/application/{applicationId}{StartSuffix}";
     }
 
-    public static string Name(string applicationId, string projectId)
+    public static string Name(string organisationId, string applicationId, string projectId)
     {
-        return $"application/{applicationId}/project/{projectId}{NameSuffix}";
+        return $"{organisationId}/application/{applicationId}/project/{projectId}{NameSuffix}";
     }
 
-    public static string StartDate(string applicationId, string projectId)
+    public static string StartDate(string organisationId, string applicationId, string projectId)
     {
-        return $"application/{applicationId}/project/{projectId}{StartDateSuffix}";
+        return $"{organisationId}/application/{applicationId}/project/{projectId}{StartDateSuffix}";
     }
 
-    public static string ManyHomes(string applicationId, string projectId)
+    public static string ManyHomes(string organisationId, string applicationId, string projectId)
     {
-        return $"application/{applicationId}/project/{projectId}{ManyHomesSuffix}";
+        return $"{organisationId}/application/{applicationId}/project/{projectId}{ManyHomesSuffix}";
     }
 
-    public static string TypeHomes(string applicationId, string projectId)
+    public static string TypeHomes(string organisationId, string applicationId, string projectId)
     {
-        return $"application/{applicationId}/project/{projectId}{TypeHomesSuffix}";
+        return $"{organisationId}/application/{applicationId}/project/{projectId}{TypeHomesSuffix}";
     }
 
-    public static string ProjectType(string applicationId, string projectId)
+    public static string ProjectType(string organisationId, string applicationId, string projectId)
     {
-        return $"application/{applicationId}/project/{projectId}{ProjectTypeSuffix}";
+        return $"{organisationId}/application/{applicationId}/project/{projectId}{ProjectTypeSuffix}";
     }
 
-    public static string PlanningReferenceNumberExists(string applicationId, string projectId)
+    public static string PlanningReferenceNumberExists(string organisationId, string applicationId, string projectId)
     {
-        return $"application/{applicationId}/project/{projectId}{PlanningReferenceNumberExistsSuffix}";
+        return $"{organisationId}/application/{applicationId}/project/{projectId}{PlanningReferenceNumberExistsSuffix}";
     }
 
-    public static string PlanningReferenceNumber(string applicationId, string projectId)
+    public static string PlanningReferenceNumber(string organisationId, string applicationId, string projectId)
     {
-        return $"application/{applicationId}/project/{projectId}{PlanningReferenceNumberSuffix}";
+        return $"{organisationId}/application/{applicationId}/project/{projectId}{PlanningReferenceNumberSuffix}";
     }
 
-    public static string PlanningPermissionStatus(string applicationId, string projectId)
+    public static string PlanningPermissionStatus(string organisationId, string applicationId, string projectId)
     {
-        return $"application/{applicationId}/project/{projectId}{PlanningPermissionStatusSuffix}";
+        return $"{organisationId}/application/{applicationId}/project/{projectId}{PlanningPermissionStatusSuffix}";
     }
 
-    public static string Location(string applicationId, string projectId)
+    public static string Location(string organisationId, string applicationId, string projectId)
     {
-        return $"application/{applicationId}/project/{projectId}{LocationSuffix}";
+        return $"{organisationId}/application/{applicationId}/project/{projectId}{LocationSuffix}";
     }
 
-    public static string Ownership(string applicationId, string projectId)
+    public static string Ownership(string organisationId, string applicationId, string projectId)
     {
-        return $"application/{applicationId}/project/{projectId}{OwnershipSuffix}";
+        return $"{organisationId}/application/{applicationId}/project/{projectId}{OwnershipSuffix}";
     }
 
-    public static string LocalAuthoritySearch(string applicationId, string projectId)
+    public static string LocalAuthoritySearch(string organisationId, string applicationId, string projectId)
     {
-        return $"application/{applicationId}/project/{projectId}{LocalAuthoritySearchSuffix}";
+        return $"{organisationId}/application/{applicationId}/project/{projectId}{LocalAuthoritySearchSuffix}";
     }
 
-    public static string AdditionalDetails(string applicationId, string projectId)
+    public static string AdditionalDetails(string organisationId, string applicationId, string projectId)
     {
-        return $"application/{applicationId}/project/{projectId}{AdditionalDetailsSuffix}";
+        return $"{organisationId}/application/{applicationId}/project/{projectId}{AdditionalDetailsSuffix}";
     }
 
-    public static string GrantFundingExists(string applicationId, string projectId)
+    public static string GrantFundingExists(string organisationId, string applicationId, string projectId)
     {
-        return $"application/{applicationId}/project/{projectId}{GrantFundingExistsSuffix}";
+        return $"{organisationId}/application/{applicationId}/project/{projectId}{GrantFundingExistsSuffix}";
     }
 
-    public static string GrantFunding(string applicationId, string projectId)
+    public static string GrantFunding(string organisationId, string applicationId, string projectId)
     {
-        return $"application/{applicationId}/project/{projectId}{GrantFundingSuffix}";
+        return $"{organisationId}/application/{applicationId}/project/{projectId}{GrantFundingSuffix}";
     }
 
-    public static string ChargesDebt(string applicationId, string projectId)
+    public static string ChargesDebt(string organisationId, string applicationId, string projectId)
     {
-        return $"application/{applicationId}/project/{projectId}{ChargesDebtSuffix}";
+        return $"{organisationId}/application/{applicationId}/project/{projectId}{ChargesDebtSuffix}";
     }
 
-    public static string AffordableHomes(string applicationId, string projectId)
+    public static string AffordableHomes(string organisationId, string applicationId, string projectId)
     {
-        return $"application/{applicationId}/project/{projectId}{AffordableHomesSuffix}";
+        return $"{organisationId}/application/{applicationId}/project/{projectId}{AffordableHomesSuffix}";
     }
 
-    public static string CheckAnswers(string applicationId, string projectId)
+    public static string CheckAnswers(string organisationId, string applicationId, string projectId)
     {
-        return $"application/{applicationId}/project/{projectId}{CheckAnswersSuffix}";
+        return $"{organisationId}/application/{applicationId}/project/{projectId}{CheckAnswersSuffix}";
     }
 
-    public static string Delete(string applicationId, string projectId)
+    public static string Delete(string organisationId, string applicationId, string projectId)
     {
-        return $"application/{applicationId}/project/{projectId}{DeleteSuffix}";
+        return $"{organisationId}/application/{applicationId}/project/{projectId}{DeleteSuffix}";
     }
 }

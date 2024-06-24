@@ -12,9 +12,8 @@
 }
 
 <gds-div-grid-column-two-thirds>
-    <form asp-controller="Security" asp-action="ChargesDebtCompany" asp-route-id="@Model.LoanApplicationId" asp-route-redirect="@Context.Request.Query["redirect"]" asp-method="post" novalidate>
-        <gds-back-link href="@Url.Action("Back","Security", new {id = Model.LoanApplicationId, currentPage = SecurityState.ChargesDebtCompany})" text="Back" class="govuk-!-margin-bottom-8">
-        </gds-back-link>
+    <he-organisation-form asp-controller="Security" asp-action="ChargesDebtCompany" asp-route-id="@Model.LoanApplicationId" asp-route-redirect="@Context.Request.Query["redirect"]" asp-method="post" novalidate>
+        <vc:loans-workflow-back-button current-page="@SecurityState.ChargesDebtCompany"/>
 
         <partial name="_ErrorSummaryPartial" model="null" />
         @Html.HiddenFor(x => x.LoanApplicationId)
@@ -49,7 +48,7 @@
                 Continue
             </button>
         </gds-field-set>
-    </form>
+    </he-organisation-form>
 
     <partial name="_HomeAndCheckAnswersLinks" />
 </gds-div-grid-column-two-thirds>

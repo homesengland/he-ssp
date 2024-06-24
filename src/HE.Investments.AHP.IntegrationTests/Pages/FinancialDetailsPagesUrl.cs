@@ -16,15 +16,17 @@ public static class FinancialDetailsPagesUrl
 
     public const string CheckAnswersSuffix = "/financial-details/check-answers";
 
-    public static string LandStatus(string applicationId) => $"ahp/application/{applicationId}{LandStatusSuffix}";
+    public static string LandStatus(string organisationId, string applicationId) => $"ahp/{organisationId}/application/{applicationId}{LandStatusSuffix}";
 
-    public static string LandValue(string applicationId) => $"ahp/application/{applicationId}{LandValueSuffix}";
+    public static string LandValue(string organisationId, string applicationId) => $"ahp/{organisationId}/application/{applicationId}{LandValueSuffix}";
 
-    public static string OtherApplicationCosts(string applicationId) => $"ahp/application/{applicationId}{OtherApplicationCostsSuffix}";
+    public static string OtherApplicationCosts(string organisationId, string applicationId) =>
+        $"ahp/{organisationId}/application/{applicationId}{OtherApplicationCostsSuffix}";
 
-    public static string ExpectedContributions(string applicationId) => $"ahp/application/{applicationId}{ExpectedContributionsSuffix}";
+    public static string ExpectedContributions(string organisationId, string applicationId) =>
+        $"ahp/{organisationId}/application/{applicationId}{ExpectedContributionsSuffix}";
 
-    public static string Grants(string applicationId) => $"ahp/application/{applicationId}{GrantsSuffix}";
+    public static string Grants(string organisationId, string applicationId) => $"ahp/{organisationId}/application/{applicationId}{GrantsSuffix}";
 
-    public static string CheckAnswers(string applicationId) => $"ahp/application/{applicationId}{CheckAnswersSuffix}";
+    public static string CheckAnswers(string organisationId, string applicationId) => $"ahp/{organisationId}/application/{applicationId}{CheckAnswersSuffix}";
 }

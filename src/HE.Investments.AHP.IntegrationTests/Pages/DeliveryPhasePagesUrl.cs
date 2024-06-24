@@ -2,43 +2,47 @@ namespace HE.Investments.AHP.IntegrationTests.Pages;
 
 internal static class DeliveryPhasePagesUrl
 {
-    public static string Name(string applicationId, string deliveryPhaseId) => BuildDeliveryPhasePage(applicationId, deliveryPhaseId, "name");
+    public static string Name(string organisationId, string applicationId, string deliveryPhaseId) =>
+        BuildDeliveryPhasePage(organisationId, applicationId, deliveryPhaseId, "name");
 
-    public static string Details(string applicationId, string deliveryPhaseId) => BuildDeliveryPhasePage(applicationId, deliveryPhaseId, "details");
+    public static string Details(string organisationId, string applicationId, string deliveryPhaseId) =>
+        BuildDeliveryPhasePage(organisationId, applicationId, deliveryPhaseId, "details");
 
-    public static string NewBuildActivityType(string applicationId, string deliveryPhaseId) =>
-        BuildDeliveryPhasePage(applicationId, deliveryPhaseId, "new-build-activity-type");
+    public static string NewBuildActivityType(string organisationId, string applicationId, string deliveryPhaseId) =>
+        BuildDeliveryPhasePage(organisationId, applicationId, deliveryPhaseId, "new-build-activity-type");
 
-    public static string RehabBuildActivityType(string applicationId, string deliveryPhaseId) =>
-        BuildDeliveryPhasePage(applicationId, deliveryPhaseId, "rehab-build-activity-type");
+    public static string RehabBuildActivityType(string organisationId, string applicationId, string deliveryPhaseId) =>
+        BuildDeliveryPhasePage(organisationId, applicationId, deliveryPhaseId, "rehab-build-activity-type");
 
-    public static string ReconfiguringExisting(string applicationId, string deliveryPhaseId) =>
-        BuildDeliveryPhasePage(applicationId, deliveryPhaseId, "reconfiguring-existing");
+    public static string ReconfiguringExisting(string organisationId, string applicationId, string deliveryPhaseId) =>
+        BuildDeliveryPhasePage(organisationId, applicationId, deliveryPhaseId, "reconfiguring-existing");
 
-    public static string AddHomes(string applicationId, string deliveryPhaseId) =>
-        BuildDeliveryPhasePage(applicationId, deliveryPhaseId, "add-homes");
+    public static string AddHomes(string organisationId, string applicationId, string deliveryPhaseId) =>
+        BuildDeliveryPhasePage(organisationId, applicationId, deliveryPhaseId, "add-homes");
 
-    public static string AcquisitionMilestone(string applicationId, string deliveryPhaseId) =>
-        BuildDeliveryPhasePage(applicationId, deliveryPhaseId, "acquisition-milestone");
+    public static string AcquisitionMilestone(string organisationId, string applicationId, string deliveryPhaseId) =>
+        BuildDeliveryPhasePage(organisationId, applicationId, deliveryPhaseId, "acquisition-milestone");
 
-    public static string SummaryOfDelivery(string applicationId, string deliveryPhaseId) =>
-        BuildDeliveryPhasePage(applicationId, deliveryPhaseId, "summary-of-delivery");
+    public static string SummaryOfDelivery(string organisationId, string applicationId, string deliveryPhaseId) =>
+        BuildDeliveryPhasePage(organisationId, applicationId, deliveryPhaseId, "summary-of-delivery");
 
-    public static string StartOnSiteMilestone(string applicationId, string deliveryPhaseId) =>
-        BuildDeliveryPhasePage(applicationId, deliveryPhaseId, "start-on-site-milestone");
+    public static string StartOnSiteMilestone(string organisationId, string applicationId, string deliveryPhaseId) =>
+        BuildDeliveryPhasePage(organisationId, applicationId, deliveryPhaseId, "start-on-site-milestone");
 
-    public static string PracticalCompletionMilestone(string applicationId, string deliveryPhaseId) =>
-        BuildDeliveryPhasePage(applicationId, deliveryPhaseId, "practical-completion-milestone");
+    public static string PracticalCompletionMilestone(string organisationId, string applicationId, string deliveryPhaseId) =>
+        BuildDeliveryPhasePage(organisationId, applicationId, deliveryPhaseId, "practical-completion-milestone");
 
-    public static string UnregisteredBodyFollowUp(string applicationId, string deliveryPhaseId) =>
-        BuildDeliveryPhasePage(applicationId, deliveryPhaseId, "unregistered-body-follow-up");
+    public static string UnregisteredBodyFollowUp(string organisationId, string applicationId, string deliveryPhaseId) =>
+        BuildDeliveryPhasePage(organisationId, applicationId, deliveryPhaseId, "unregistered-body-follow-up");
 
-    public static string Remove(string applicationId, string deliveryPhaseId) => BuildDeliveryPhasePage(applicationId, deliveryPhaseId, "remove");
+    public static string Remove(string organisationId, string applicationId, string deliveryPhaseId) =>
+        BuildDeliveryPhasePage(organisationId, applicationId, deliveryPhaseId, "remove");
 
-    public static string CheckAnswers(string applicationId, string deliveryPhaseId) => BuildDeliveryPhasePage(applicationId, deliveryPhaseId, "check-answers");
+    public static string CheckAnswers(string organisationId, string applicationId, string deliveryPhaseId) =>
+        BuildDeliveryPhasePage(organisationId, applicationId, deliveryPhaseId, "check-answers");
 
-    private static string BuildDeliveryPhasePage(string applicationId, string deliveryPhaseId, string pageSuffix)
+    private static string BuildDeliveryPhasePage(string organisationId, string applicationId, string deliveryPhaseId, string pageSuffix)
     {
-        return $"ahp/application/{applicationId}/delivery-phase/{deliveryPhaseId}/{pageSuffix}";
+        return $"ahp/{organisationId}/application/{applicationId}/delivery-phase/{deliveryPhaseId}/{pageSuffix}";
     }
 }

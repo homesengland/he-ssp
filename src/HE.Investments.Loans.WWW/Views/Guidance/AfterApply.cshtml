@@ -5,11 +5,12 @@
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Links
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Paragraphs
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Buttons
+@using HE.Investments.Common.WWW.Extensions
 @{
     ViewData["Title"] = "Guidance";
-    ViewData["PreviousLink"] = Url.Action("Apply", "Guidance");
+    ViewData["PreviousLink"] = Url.OrganisationAction("Apply", "Guidance");
     ViewData["PreviousLinkName"] = "Apply";
-    ViewData["NextLink"] = Url.Action("PrioritiseApplications", "Guidance");
+    ViewData["NextLink"] = Url.OrganisationAction("PrioritiseApplications", "Guidance");
     ViewData["NextLinkName"] = "How we prioritise applications";
 }
 
@@ -43,7 +44,7 @@
     </gds-p>
 
     <div class="govuk-!-margin-top-9">
-        <a href="@Url.Action("AboutLoan", "LoanApplicationV2")">
+        <a href="@Url.OrganisationAction("AboutLoan", "LoanApplicationV2")">
             <gds-button-start type="button">
                 Apply Online
             </gds-button-start>

@@ -1,13 +1,11 @@
 using System.Diagnostics.CodeAnalysis;
 using AngleSharp.Html.Dom;
 using HE.Investments.Common.Messages;
-using HE.Investments.IntegrationTestsFramework;
 using HE.Investments.Loans.Common.Tests.TestData;
 using HE.Investments.Loans.Common.Utils.Constants.FormOption;
 using HE.Investments.Loans.IntegrationTests.IntegrationFramework;
 using HE.Investments.Loans.IntegrationTests.Loans.LoansHelpers.Extensions;
 using HE.Investments.Loans.IntegrationTests.Loans.LoansHelpers.Pages;
-using HE.Investments.Loans.WWW;
 using HE.Investments.Loans.WWW.Views.FundingV2.Consts;
 using HE.Investments.TestsUtils.Extensions;
 using Xunit;
@@ -30,12 +28,14 @@ public class Order04AbnormalCostsIntegrationTests : IntegrationTest
     public async Task Order01_ShouldDisplayValidationError_WhenYesIsSelectedAndAdditionalInformationIsNotProvided()
     {
         // given
-        var abnormalCostsPage = await TestClient.NavigateTo(FundingPageUrls.AbnormalCosts(UserData.LoanApplicationIdInDraftState));
+        var abnormalCostsPage =
+            await TestClient.NavigateTo(FundingPageUrls.AbnormalCosts(UserOrganisationData.OrganisationId, UserData.LoanApplicationIdInDraftState));
         var continueButton = abnormalCostsPage.GetGdsSubmitButtonById("continue-button");
 
         // when
         abnormalCostsPage = await TestClient.SubmitButton(
-            continueButton, new Dictionary<string, string> { { "AbnormalCosts", CommonResponse.Yes }, { "AbnormalCostsInfo", string.Empty } });
+            continueButton,
+            new Dictionary<string, string> { { "AbnormalCosts", CommonResponse.Yes }, { "AbnormalCostsInfo", string.Empty } });
 
         // then
         abnormalCostsPage
@@ -57,7 +57,8 @@ public class Order04AbnormalCostsIntegrationTests : IntegrationTest
 
         // when
         abnormalCostsPage = await TestClient.SubmitButton(
-            continueButton, new Dictionary<string, string> { { "AbnormalCosts", CommonResponse.Yes }, { "AbnormalCostsInfo", TextTestData.TextThatExceedsLongInputLimit } });
+            continueButton,
+            new Dictionary<string, string> { { "AbnormalCosts", CommonResponse.Yes }, { "AbnormalCostsInfo", TextTestData.TextThatExceedsLongInputLimit } });
 
         // then
         abnormalCostsPage
@@ -76,7 +77,8 @@ public class Order04AbnormalCostsIntegrationTests : IntegrationTest
 
         // when
         var privateSectorFundingPage = await TestClient.SubmitButton(
-            continueButton, new Dictionary<string, string> { { "AbnormalCosts", CommonResponse.No }, { "AbnormalCostsInfo", string.Empty } });
+            continueButton,
+            new Dictionary<string, string> { { "AbnormalCosts", CommonResponse.No }, { "AbnormalCostsInfo", string.Empty } });
 
         // then
         privateSectorFundingPage
@@ -94,7 +96,8 @@ public class Order04AbnormalCostsIntegrationTests : IntegrationTest
 
         // when
         var privateSectorFundingPage = await TestClient.SubmitButton(
-            continueButton, new Dictionary<string, string> { { "AbnormalCosts", CommonResponse.Yes }, { "AbnormalCostsInfo", TextTestData.TextThatNotExceedsLongInputLimit } });
+            continueButton,
+            new Dictionary<string, string> { { "AbnormalCosts", CommonResponse.Yes }, { "AbnormalCostsInfo", TextTestData.TextThatNotExceedsLongInputLimit } });
 
         // then
         privateSectorFundingPage

@@ -5,9 +5,11 @@
 @using HE.Investments.Loans.BusinessLogic.LoanApplication
 @using HE.Investments.Loans.BusinessLogic.Projects.ValueObjects
 @using HE.Investments.Common.Contract
+@using HE.Investments.Common.WWW.Extensions
 
 <gds-div-grid-column-two-thirds>
-    <gds-back-link href="@Url.Action("Back", "LoanApplicationV2", new { currentPage = LoanApplicationWorkflow.State.TaskList, ApplicationId = Model.Id })" text="Back to application dashboard" class="govuk-!-margin-bottom-8"></gds-back-link>
+    <vc:loans-workflow-back-button current-page="@LoanApplicationWorkflow.State.TaskList"/>
+
     <vc:notification/>
     <span class="govuk-caption-m">
         @Model.OrganisationName
@@ -44,7 +46,7 @@
             <ul class="app-task-list__items">
                 <li class="app-task-list__item">
                     <span class="app-task-list__task-name">
-                        <a href="@Url.Action("StartCompanyStructure", "CompanyStructureV2", new { id = Model.Id })" id="company-structure-section-link">
+                        <a href="@Url.OrganisationAction("StartCompanyStructure", "CompanyStructureV2", new { id = Model.Id })" id="company-structure-section-link">
                             Complete company information
                         </a>
                     </span>
@@ -60,7 +62,7 @@
             <ul class="app-task-list__items">
                 <li class="app-task-list__item">
                     <span class="app-task-list__task-name">
-                        <a href="@Url.Action("StartFunding", "FundingV2", new { id = Model.Id })" id="funding-section-link">
+                        <a href="@Url.OrganisationAction("StartFunding", "FundingV2", new { id = Model.Id })" id="funding-section-link">
                             Provide details about funding
                         </a>
                     </span>
@@ -68,7 +70,7 @@
                 </li>
                 <li class="app-task-list__item">
                     <span class="app-task-list__task-name">
-                        <a href="@Url.Action("StartSecurity", "Security", new { id = Model.Id })" id="security-section-link">
+                        <a href="@Url.OrganisationAction("StartSecurity", "Security", new { id = Model.Id })" id="security-section-link">
                             Provide details about security
                         </a>
                     </span>
@@ -87,7 +89,7 @@
                     <li class="app-task-list__item">
                         <div class="task-list-grid-container">
                             <span class="app-task-list__task-name task-list-project-name">
-                                <a href="@Url.RouteUrl("StartExistingProject", new { id = Model.Id, projectId = project.Id })">
+                                <a href="@Url.OrganisationRouteUrl("StartExistingProject", new { id = Model.Id, projectId = project.Id })">
                                     @if (project.Name.IsNotProvided())
                                     {
                                         @ProjectName.Default.Value
@@ -102,7 +104,7 @@
                             <div class="task-list-remove-link">
                                 @if (!Model.IsReadOnly)
                                 {
-                                    <a href="@Url.Action("Delete", "Project", new { id = Model.Id, projectId = project.Id })">
+                                    <a href="@Url.OrganisationAction("Delete", "Project", new { id = Model.Id, projectId = project.Id })">
                                         Remove
                                     </a>
                                 }
@@ -118,7 +120,7 @@
                     <li class="app-task-list__item">
                         <span class="app-task-list__task-name">
                             <span class="app-task-list__task-name">
-                                <a id="add-project-link" href="@Url.RouteUrl("StartNewProject",  new { id = Model.Id })">
+                                <a id="add-project-link" href="@Url.OrganisationRouteUrl("StartNewProject",  new { id = Model.Id })">
                                     Add another
                                 </a>
                             </span>

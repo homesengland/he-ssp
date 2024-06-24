@@ -18,7 +18,7 @@ public class HomeController : Controller
     {
         if (_userContext.IsAuthenticated)
         {
-            return RedirectToAction("Index", "UserOrganisation");
+            return RedirectToAction("List", "UserOrganisations");
         }
 
         return RedirectToAction("InformationAboutYourAccount", "User");

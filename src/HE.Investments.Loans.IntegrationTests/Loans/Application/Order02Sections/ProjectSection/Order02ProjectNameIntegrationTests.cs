@@ -1,12 +1,10 @@
 using System.Diagnostics.CodeAnalysis;
 using HE.Investments.Common.Messages;
-using HE.Investments.IntegrationTestsFramework;
 using HE.Investments.Loans.Common.Tests.TestData;
 using HE.Investments.Loans.Common.Utils.Constants.FormOption;
 using HE.Investments.Loans.IntegrationTests.IntegrationFramework;
 using HE.Investments.Loans.IntegrationTests.Loans.LoansHelpers.Extensions;
 using HE.Investments.Loans.IntegrationTests.Loans.LoansHelpers.Pages;
-using HE.Investments.Loans.WWW;
 using HE.Investments.Loans.WWW.Views.Project.Consts;
 using HE.Investments.TestsUtils.Extensions;
 using Xunit;
@@ -34,12 +32,13 @@ public class Order02ProjectNameIntegrationTests : IntegrationTest
     public async Task Order01_ShouldDisplayValidationError_WhenNameIsTooLong()
     {
         // given
-        var projectNamePage = await TestClient.NavigateTo(ProjectPagesUrls.Name(_applicationLoanId, _projectId));
+        var projectNamePage = await TestClient.NavigateTo(ProjectPagesUrls.Name(UserOrganisationData.OrganisationId, _applicationLoanId, _projectId));
         var continueButton = projectNamePage.GetGdsSubmitButtonById("continue-button");
 
         // when
         projectNamePage = await TestClient.SubmitButton(
-            continueButton, new Dictionary<string, string> { { "ProjectName", TextTestData.TextThatExceedsShortInputLimit } });
+            continueButton,
+            new Dictionary<string, string> { { "ProjectName", TextTestData.TextThatExceedsShortInputLimit } });
 
         // then
         projectNamePage
@@ -55,13 +54,15 @@ public class Order02ProjectNameIntegrationTests : IntegrationTest
     public async Task Order02_ShouldRedirectToStartDatePage_WhenProvidedNameIsCorrect()
     {
         // given
-        var projectNamePage = await GetCurrentPage(() => TestClient.NavigateTo(ProjectPagesUrls.Name(_applicationLoanId, _projectId)));
+        var projectNamePage = await GetCurrentPage(() =>
+            TestClient.NavigateTo(ProjectPagesUrls.Name(UserOrganisationData.OrganisationId, _applicationLoanId, _projectId)));
 
         var continueButton = projectNamePage.GetGdsSubmitButtonById("continue-button");
 
         // when
         var startDatePage = await TestClient.SubmitButton(
-            continueButton, new Dictionary<string, string> { { "ProjectName", TextTestData.TextThatNotExceedsShortInputLimit } });
+            continueButton,
+            new Dictionary<string, string> { { "ProjectName", TextTestData.TextThatNotExceedsShortInputLimit } });
 
         // then
         startDatePage

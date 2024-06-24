@@ -1,12 +1,9 @@
 using System.Diagnostics.CodeAnalysis;
 using HE.Investments.Common.Contract.Constants;
-using HE.Investments.IntegrationTestsFramework;
-using HE.Investments.Loans.Common.Utils.Constants.FormOption;
 using HE.Investments.Loans.Contract.Projects.ViewModels;
 using HE.Investments.Loans.IntegrationTests.IntegrationFramework;
 using HE.Investments.Loans.IntegrationTests.Loans.LoansHelpers.Extensions;
 using HE.Investments.Loans.IntegrationTests.Loans.LoansHelpers.Pages;
-using HE.Investments.Loans.WWW;
 using HE.Investments.Loans.WWW.Views.Project.Consts;
 using HE.Investments.TestsUtils.Extensions;
 using Xunit;
@@ -34,7 +31,8 @@ public class Order17AffordableHomesIntegrationTests : IntegrationTest
     public async Task Order01_ShouldRedirectToCheckAnswers_WhenAnyOptionIsSelected()
     {
         // given
-        var affordableHomesPage = await TestClient.NavigateTo(ProjectPagesUrls.AffordableHomes(_applicationLoanId, _projectId));
+        var affordableHomesPage =
+            await TestClient.NavigateTo(ProjectPagesUrls.AffordableHomes(UserOrganisationData.OrganisationId, _applicationLoanId, _projectId));
         var continueButton = affordableHomesPage.GetGdsSubmitButtonById("continue-button");
 
         // when

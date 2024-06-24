@@ -15,9 +15,9 @@
 }
 
 <gds-div-grid-column-two-thirds>
-    <form asp-controller="FundingV2" asp-action="GrossDevelopmentValuePost" asp-route-id="@Model.LoanApplicationId" asp-route-redirect="@Context.Request.Query["redirect"]" asp-method="post" novalidate>
-        <gds-back-link href="@Url.Action("Back","FundingV2", new {id = Model.LoanApplicationId, currentPage = FundingState.GDV})" text="Back" class="govuk-!-margin-bottom-8">
-        </gds-back-link>
+    <he-organisation-form asp-controller="FundingV2" asp-action="GrossDevelopmentValuePost" asp-route-id="@Model.LoanApplicationId" asp-route-redirect="@Context.Request.Query["redirect"]" asp-method="post" novalidate>
+        <vc:loans-workflow-back-button current-page="@FundingState.GDV"/>
+
         <partial name="_ErrorSummaryPartial" model="null" />
             <gds-div-form-group invalid="inputInvalid">
                 <vc:page-header title="@FundingPageTitles.GrossDevelopmentValue"/>
@@ -37,7 +37,7 @@
             <button class="govuk-button" data-module="govuk-button" name="action" type="submit" value="@(Model.StateChanged?"Change":"Continue")" id="continue-button">
                 Continue
             </button>
-    </form>
+    </he-organisation-form>
 
     <partial name="_HomeAndCheckAnswersLinks" />
 </gds-div-grid-column-two-thirds>

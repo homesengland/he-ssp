@@ -1,11 +1,8 @@
 using System.Diagnostics.CodeAnalysis;
 using HE.Investments.Common.Contract.Constants;
-using HE.Investments.IntegrationTestsFramework;
-using HE.Investments.Loans.Common.Utils.Constants.FormOption;
 using HE.Investments.Loans.IntegrationTests.IntegrationFramework;
 using HE.Investments.Loans.IntegrationTests.Loans.LoansHelpers.Extensions;
 using HE.Investments.Loans.IntegrationTests.Loans.LoansHelpers.Pages;
-using HE.Investments.Loans.WWW;
 using HE.Investments.Loans.WWW.Views.Project.Consts;
 using HE.Investments.TestsUtils.Extensions;
 using Xunit;
@@ -33,12 +30,14 @@ public class Order07PlanningReferenceNumberExistsIntegrationTests : IntegrationT
     public async Task Order01_ShouldRedirectToLocation_WhenNoIsSelected()
     {
         // given
-        var planningReferenceNumberExistsPage = await TestClient.NavigateTo(ProjectPagesUrls.PlanningReferenceNumberExists(_applicationLoanId, _projectId));
+        var planningReferenceNumberExistsPage =
+            await TestClient.NavigateTo(ProjectPagesUrls.PlanningReferenceNumberExists(UserOrganisationData.OrganisationId, _applicationLoanId, _projectId));
         var continueButton = planningReferenceNumberExistsPage.GetGdsSubmitButtonById("continue-button");
 
         // when
         var planningReferenceNumber = await TestClient.SubmitButton(
-            continueButton, new Dictionary<string, string> { { "PlanningReferenceNumberExists", CommonResponse.No } });
+            continueButton,
+            new Dictionary<string, string> { { "PlanningReferenceNumberExists", CommonResponse.No } });
 
         // then
         planningReferenceNumber
@@ -53,12 +52,14 @@ public class Order07PlanningReferenceNumberExistsIntegrationTests : IntegrationT
     public async Task Order02_ShouldRedirectToPlanningReferenceNumber_WhenYesIsSelected()
     {
         // given
-        var planningReferenceNumberExistsPage = await GetCurrentPage(() => TestClient.NavigateTo(ProjectPagesUrls.PlanningReferenceNumberExists(_applicationLoanId, _projectId)));
+        var planningReferenceNumberExistsPage = await GetCurrentPage(() =>
+            TestClient.NavigateTo(ProjectPagesUrls.PlanningReferenceNumberExists(UserOrganisationData.OrganisationId, _applicationLoanId, _projectId)));
         var continueButton = planningReferenceNumberExistsPage.GetGdsSubmitButtonById("continue-button");
 
         // when
         var locationPage = await TestClient.SubmitButton(
-            continueButton, new Dictionary<string, string> { { "PlanningReferenceNumberExists", CommonResponse.Yes } });
+            continueButton,
+            new Dictionary<string, string> { { "PlanningReferenceNumberExists", CommonResponse.Yes } });
 
         // then
         locationPage

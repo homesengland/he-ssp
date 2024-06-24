@@ -1,5 +1,7 @@
 @using HE.Investments.Account.WWW.Views.Shared.Components.OrganisationListCard
 @using HE.Investments.Account.WWW.Views.UserOrganisations.Const
+@using HE.Investments.Common.WWW.Extensions
+@using HE.Investments.Common.WWW.TagHelpers
 @model HE.Investments.Account.WWW.Models.UserOrganisations.UserOrganisationsListModel;
 @{
     ViewData["Title"] = UserOrganisationsPageTitles.List;
@@ -25,7 +27,7 @@
             {
                 var items = new OrganisationListCardModel(
                     organisation.Name,
-                    Url.Action("Index", "UserOrganisation", new { organisationId = organisation.OrganisationId })!,
+                    Url.OrganisationAction("Index", "UserOrganisation", new { organisationId = organisation.OrganisationId })!,
                     organisation.Street,
                     organisation.City,
                     organisation.PostalCode,

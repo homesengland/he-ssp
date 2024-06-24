@@ -6,6 +6,7 @@ using HE.Investments.AHP.Consortium.Contract.Commands;
 using HE.Investments.AHP.Consortium.Contract.Queries;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Validators;
+using HE.Investments.Common.WWW.Controllers;
 using HE.Investments.Common.WWW.Routing;
 using HE.Investments.Consortium.Shared.UserContext;
 using HE.Investments.Programme.Contract;
@@ -16,7 +17,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HE.Investment.AHP.WWW.Controllers;
 
-[Route("consortium")]
+[Route("{organisationId}/consortium")]
 [AuthorizeWithCompletedProfile(ConsortiumAccessContext.ViewConsortium)]
 public class ConsortiumController : WorkflowController<ConsortiumWorkflowState>
 {
@@ -68,7 +69,7 @@ public class ConsortiumController : WorkflowController<ConsortiumWorkflowState>
             return View("Programme", model with { AvailableProgrammes = await GetOpenAhpProgrammes(cancellationToken) });
         }
 
-        return RedirectToAction("SearchOrganisation", "ConsortiumMember", new { consortiumId = result.ReturnedData.Value });
+        return this.OrganisationRedirectToAction("SearchOrganisation", "ConsortiumMember", new { consortiumId = result.ReturnedData.Value });
     }
 
     protected override async Task<IStateRouting<ConsortiumWorkflowState>> Routing(ConsortiumWorkflowState currentState, object? routeData = null)

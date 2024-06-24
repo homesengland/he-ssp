@@ -1,3 +1,4 @@
+@using HE.Investments.Common.WWW.Extensions
 @model HE.Investments.Loans.Contract.CompanyStructure.CompanyStructureViewModel
 @{
     var id = ViewContext.RouteData.Values["id"];
@@ -7,19 +8,19 @@
            {
                { "Title", "Organisation established specifically for this development" },
                { "Value", Model.Purpose },
-               { "Link", Url.Action("Purpose", "CompanyStructureV2", new { id, state = "Purpose", redirect = "CheckAnswers" }) },
+               { "Link", Url.OrganisationAction("Purpose", "CompanyStructureV2", new { id, state = "Purpose", redirect = "CheckAnswers" }) },
                { "IsEditable", Model.IsEditable() }
            })
     @{
         var files = Model.OrganisationMoreInformationFiles?.ToDictionary(
             key => key.FileName,
-            value => Url.Action("MoreInformationAboutOrganizationDownloadFile", "CompanyStructureV2", new { id = Model.LoanApplicationId, fileId = value.FileId })
+            value => Url.OrganisationAction("MoreInformationAboutOrganizationDownloadFile", "CompanyStructureV2", new { id = Model.LoanApplicationId, fileId = value.FileId })
         );
         @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
                {
                    { "Title", "Organisation structure" },
                    { "Value", Model.OrganisationMoreInformation },
-                   { "Link", Url.Action("MoreInformationAboutOrganization", "CompanyStructureV2", new { id, state = "ExistingCompany", redirect = "CheckAnswers" }) },
+                   { "Link", Url.OrganisationAction("MoreInformationAboutOrganization", "CompanyStructureV2", new { id, state = "ExistingCompany", redirect = "CheckAnswers" }) },
                    { "IsEditable", Model.IsEditable() },
                    { "Files", files }
                })
@@ -30,7 +31,7 @@
            {
                { "Title", "Homes in the last three years" },
                { "Value", Model.HomesBuilt },
-               { "Link", Url.Action("HowManyHomesBuilt", "CompanyStructureV2", new { id, state = "HomesBuilt", redirect = "CheckAnswers" }) },
+               { "Link", Url.OrganisationAction("HowManyHomesBuilt", "CompanyStructureV2", new { id, state = "HomesBuilt", redirect = "CheckAnswers" }) },
                { "IsEditable", Model.IsEditable() }
            })
 </gds-summary-list>

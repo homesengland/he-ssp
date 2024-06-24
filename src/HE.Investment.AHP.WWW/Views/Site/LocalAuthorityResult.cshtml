@@ -2,6 +2,7 @@
 @using HE.Investment.AHP.WWW.Views.Site.Const
 @using HE.Investments.Common.Contract.Pagination
 @using HE.Investments.Common.WWW.Components.SelectList
+@using HE.Investments.Common.WWW.Extensions
 @using SelectList = Microsoft.AspNetCore.Mvc.Rendering.SelectList
 @model HE.Investment.AHP.Contract.Site.LocalAuthorities;
 @{
@@ -10,7 +11,7 @@
 
     var items = new PaginationResult<SelectListItemViewModel>(
         Model.Page!.Items.Select(i => new SelectListItemViewModel(
-            Url.Action("LocalAuthorityConfirm", "Site", new { siteId = Model.SiteId, localAuthorityCode = i.Code, phrase = Model.Phrase, workflow }) ?? string.Empty,
+            Url.OrganisationAction("LocalAuthorityConfirm", "Site", new { siteId = Model.SiteId, localAuthorityCode = i.Code, phrase = Model.Phrase, workflow }) ?? string.Empty,
             i.Name,
             null)).ToList(),
         Model.Page.CurrentPage,
@@ -21,18 +22,18 @@
         nameof(LocalAuthorityNotListedParagraph),
         new
         {
-            searchOrganisationUrl = @Url.Action("LocalAuthorityReset", "Site", new { siteId = Model.SiteId, workflow })
+            searchOrganisationUrl = Url.OrganisationAction("LocalAuthorityReset", "Site", new { siteId = Model.SiteId, workflow })
         });
 }
 
 <gds-div-grid-column-two-thirds>
-    <gds-back-link class="govuk-!-margin-bottom-8" href="@Url.Action("LocalAuthoritySearch", "Site", new { siteId = Model.SiteId, workflow })"></gds-back-link>
+    <gds-back-link class="govuk-!-margin-bottom-8" href="@Url.OrganisationAction("LocalAuthoritySearch", "Site", new { siteId = Model.SiteId, workflow })"></gds-back-link>
 
     <vc:page-header title="@SitePageTitles.LocalAuthorityResult" caption="@ViewBag.SiteName"/>
 
     <vc:select-list
         items="@items"
-        paging-navigation-url="@Url.Action("LocalAuthorityResult", "Site", new { siteId = Model.SiteId, localAuthorityCode = Model.LocalAuthorityCode, phrase = Model.Phrase, workflow })"
+        paging-navigation-url="@Url.OrganisationAction("LocalAuthorityResult", "Site", new { siteId = Model.SiteId, localAuthorityCode = Model.LocalAuthorityCode, phrase = Model.Phrase, workflow })"
         additional-content="@paragraph"/>
 
     <vc:return-to-sites-link is-link-inside-form="false" project-id="@ViewBag.ProjectId" />

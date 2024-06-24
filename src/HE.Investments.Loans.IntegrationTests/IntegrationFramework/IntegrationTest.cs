@@ -24,6 +24,7 @@ public class IntegrationTest : IntegrationTestBase<Program>
         LoginData = fixture.LoginData;
         fixture.MockUserAccount();
         _fixture = fixture;
+        SetUserOrganisationData();
         InFrontDoor = fixture.ServiceProvider.GetRequiredService<FrontDoorDataManipulator>();
     }
 
@@ -34,6 +35,8 @@ public class IntegrationTest : IntegrationTestBase<Program>
     protected IntegrationUserData UserData { get; private set; }
 
     protected ILoginData LoginData { get; private set; }
+
+    protected UserOrganisationData UserOrganisationData { get; private set; }
 
     protected async Task<IHtmlDocument> GetCurrentPage(Func<Task<IHtmlDocument>> alternativeNavigate)
     {
@@ -62,5 +65,18 @@ public class IntegrationTest : IntegrationTestBase<Program>
         }
 
         UserData = userData;
+    }
+
+    private void SetUserOrganisationData()
+    {
+        var userOrganisationData = GetSharedDataOrNull<UserOrganisationData>(nameof(UserOrganisationData));
+        if (userOrganisationData is null)
+        {
+            userOrganisationData = new UserOrganisationData();
+            userOrganisationData.SetOrganisationId(LoginData.OrganisationId);
+            SetSharedData(nameof(UserOrganisationData), userOrganisationData);
+        }
+
+        UserOrganisationData = userOrganisationData;
     }
 }

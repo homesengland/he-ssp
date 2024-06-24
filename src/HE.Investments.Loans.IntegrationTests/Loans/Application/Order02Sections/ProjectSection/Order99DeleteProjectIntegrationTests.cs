@@ -1,13 +1,10 @@
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using HE.Investments.Common.Contract.Constants;
-using HE.Investments.IntegrationTestsFramework;
-using HE.Investments.Loans.Common.Utils.Constants.FormOption;
 using HE.Investments.Loans.Contract.Projects.ViewModels;
 using HE.Investments.Loans.IntegrationTests.IntegrationFramework;
 using HE.Investments.Loans.IntegrationTests.Loans.LoansHelpers.Extensions;
 using HE.Investments.Loans.IntegrationTests.Loans.LoansHelpers.Pages;
-using HE.Investments.Loans.WWW;
 using HE.Investments.Loans.WWW.Views.Project.Consts;
 using HE.Investments.TestsUtils.Extensions;
 using Xunit;
@@ -34,13 +31,13 @@ public class Order99DeleteProjectIntegrationTests : IntegrationTest
     public async Task Order01_RemoveLinkFromTaskListShouldRedirectToDeleteProjectPage()
     {
         // given
-        var startProjectPage = await TestClient.NavigateTo(ProjectPagesUrls.Start(_applicationLoanId));
+        var startProjectPage = await TestClient.NavigateTo(ProjectPagesUrls.Start(UserOrganisationData.OrganisationId, _applicationLoanId));
 
         var startButton = startProjectPage.GetGdsSubmitButtonById("start-now-button");
         var projectNamePage = await TestClient.SubmitButton(startButton);
 
         var projectId = projectNamePage.Url.GetProjectGuidFromUrl();
-        var taskList = await TestClient.NavigateTo(ApplicationPagesUrls.TaskList(_applicationLoanId));
+        var taskList = await TestClient.NavigateTo(ApplicationPagesUrls.TaskList(UserOrganisationData.OrganisationId, _applicationLoanId));
         var (name, _, removeUrl) = taskList.GetProjectFromTaskList(projectId);
 
         // when
@@ -61,7 +58,7 @@ public class Order99DeleteProjectIntegrationTests : IntegrationTest
     public async Task Order02_ShouldRedirectToTaskListAndDoNotDeleteProject_WhenNoAnswerWasSelected()
     {
         // given
-        var deleteProjectPage = await GetCurrentPage(ProjectPagesUrls.Delete(_applicationLoanId, _projectId!));
+        var deleteProjectPage = await GetCurrentPage(ProjectPagesUrls.Delete(UserOrganisationData.OrganisationId, _applicationLoanId, _projectId!));
 
         var continueButton = deleteProjectPage.GetGdsSubmitButtonById("continue-button");
 
@@ -81,7 +78,7 @@ public class Order99DeleteProjectIntegrationTests : IntegrationTest
     public async Task Order03_ShouldRedirectToTaskListAndDoNotDeleteProject_WhenNoWasSelected()
     {
         // given
-        var deleteProjectPage = await GetCurrentPage(ProjectPagesUrls.Delete(_applicationLoanId, _projectId!));
+        var deleteProjectPage = await GetCurrentPage(ProjectPagesUrls.Delete(UserOrganisationData.OrganisationId, _applicationLoanId, _projectId!));
 
         var continueButton = deleteProjectPage.GetGdsSubmitButtonById("continue-button");
 
@@ -101,7 +98,7 @@ public class Order99DeleteProjectIntegrationTests : IntegrationTest
     public async Task Order04_ShouldRedirectToTaskListAndDoDeleteProjectAndShowNotification_WhenYesWasSelected()
     {
         // given
-        var deleteProjectPage = await GetCurrentPage(ProjectPagesUrls.Delete(_applicationLoanId, _projectId!));
+        var deleteProjectPage = await GetCurrentPage(ProjectPagesUrls.Delete(UserOrganisationData.OrganisationId, _applicationLoanId, _projectId!));
 
         var continueButton = deleteProjectPage.GetGdsSubmitButtonById("continue-button");
 

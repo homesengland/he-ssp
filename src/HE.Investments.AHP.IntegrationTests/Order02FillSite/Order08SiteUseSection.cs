@@ -1,14 +1,9 @@
 using System.Diagnostics.CodeAnalysis;
-using FluentAssertions;
-using HE.Investment.AHP.Contract.Common.Enums;
 using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.WWW.Views.Site.Const;
 using HE.Investments.AHP.IntegrationTests.Extensions;
 using HE.Investments.AHP.IntegrationTests.Framework;
 using HE.Investments.AHP.IntegrationTests.Pages;
-using HE.Investments.Common.Contract;
-using HE.Investments.IntegrationTestsFramework.Assertions;
-using HE.Investments.TestsUtils.Extensions;
 using Xunit;
 using Xunit.Abstractions;
 using Xunit.Extensions.Ordering;
@@ -29,9 +24,9 @@ public class Order08SiteUseSection : AhpSiteIntegrationTest
     public async Task Order01_ShouldProvideSiteUse()
     {
         await TestSiteQuestionPage(
-            SitePagesUrl.SiteUse(SiteData.SiteId),
+            SitePagesUrl.SiteUse(UserOrganisationData.OrganisationId, SiteData.SiteId),
             SitePageTitles.SiteUse,
-            SitePagesUrl.SiteTravellerPitchType(SiteData.SiteId),
+            SitePagesUrl.SiteTravellerPitchType(UserOrganisationData.OrganisationId, SiteData.SiteId),
             (nameof(SiteUseDetails.IsPartOfStreetFrontInfill), SiteData.IsPartOfStreetFrontInfill.ToBoolAnswer()),
             (nameof(SiteUseDetails.IsForTravellerPitchSite), SiteData.IsForTravellerPitchSite.ToBoolAnswer()));
     }
@@ -41,9 +36,9 @@ public class Order08SiteUseSection : AhpSiteIntegrationTest
     public async Task Order02_ShouldProvideTravellerPitchType()
     {
         await TestSiteQuestionPage(
-            SitePagesUrl.SiteTravellerPitchType(SiteData.SiteId),
+            SitePagesUrl.SiteTravellerPitchType(UserOrganisationData.OrganisationId, SiteData.SiteId),
             SitePageTitles.TravellerPitchType,
-            SitePagesUrl.SiteRuralClassification(SiteData.SiteId),
+            SitePagesUrl.SiteRuralClassification(UserOrganisationData.OrganisationId, SiteData.SiteId),
             (nameof(SiteUseDetails.TravellerPitchSiteType), SiteData.TravellerPitchSiteType.ToString()));
     }
 
@@ -52,9 +47,9 @@ public class Order08SiteUseSection : AhpSiteIntegrationTest
     public async Task Order03_ShouldProvideRuralClassification()
     {
         await TestSiteQuestionPage(
-            SitePagesUrl.SiteRuralClassification(SiteData.SiteId),
+            SitePagesUrl.SiteRuralClassification(UserOrganisationData.OrganisationId, SiteData.SiteId),
             SitePageTitles.RuralClassification,
-            SitePagesUrl.SiteEnvironmentalImpact(SiteData.SiteId),
+            SitePagesUrl.SiteEnvironmentalImpact(UserOrganisationData.OrganisationId, SiteData.SiteId),
             (nameof(SiteRuralClassification.IsWithinRuralSettlement), SiteData.IsWithinRuralSettlement.ToBoolAnswer()),
             (nameof(SiteRuralClassification.IsRuralExceptionSite), SiteData.IsRuralExceptionSite.ToBoolAnswer()));
     }
@@ -64,9 +59,9 @@ public class Order08SiteUseSection : AhpSiteIntegrationTest
     public async Task Order04_ShouldProvideEnvironmentalImpact()
     {
         await TestSiteQuestionPage(
-            SitePagesUrl.SiteEnvironmentalImpact(SiteData.SiteId),
+            SitePagesUrl.SiteEnvironmentalImpact(UserOrganisationData.OrganisationId, SiteData.SiteId),
             SitePageTitles.EnvironmentalImpact,
-            SitePagesUrl.SiteMmcUsing(SiteData.SiteId),
+            SitePagesUrl.SiteMmcUsing(UserOrganisationData.OrganisationId, SiteData.SiteId),
             ("EnvironmentalImpact", SiteData.GenerateEnvironmentalImpact()));
     }
 }

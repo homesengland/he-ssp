@@ -1,3 +1,4 @@
+using HE.Investments.Common.Contract;
 using HE.Investments.Common.Messages;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.WebUtilities;
@@ -9,6 +10,12 @@ public static class HttpRequestExtensions
     public static string? GetRouteValue(this HttpRequest request, string name)
     {
         return request.RouteValues.FirstOrDefault(x => x.Key == name).Value as string;
+    }
+
+    public static OrganisationId? GetOrganisationIdFromRoute(this HttpRequest request)
+    {
+        var organisationId = GetRouteValue(request, "organisationId");
+        return organisationId != null ? OrganisationId.From(organisationId) : null;
     }
 
     public static bool IsSaveAndReturnAction(this HttpRequest request)

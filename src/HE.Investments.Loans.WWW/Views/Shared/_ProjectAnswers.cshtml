@@ -1,4 +1,5 @@
 @using HE.Investments.Common.Contract.Constants;
+@using HE.Investments.Common.WWW.Extensions
 @using HE.Investments.Common.WWW.Helpers
 @using HE.Investments.Loans.WWW.Extensions
 @using HE.Investments.Loans.WWW.Models
@@ -51,7 +52,7 @@
            {
                { "Title", ProjectFieldNames.Name },
                { "Value", Model?.ProjectName },
-               { "Link", Url.Action("ProjectName", "Project", new { id = id, projectId = Model.ProjectId, redirect = "CheckAnswers" }) },
+               { "Link", Url.OrganisationAction("ProjectName", "Project", new { id, projectId = Model.ProjectId, redirect = "CheckAnswers" }) },
                { "LinkId", "name" },
                { "IsEditable", Model?.IsEditable() }
            })
@@ -62,7 +63,7 @@
                {
                    "Value", DateHelper.DisplayAsUkFormatDateWithCondition(Model?.StartDate, Model?.HasEstimatedStartDate)
                },
-               { "Link", Url.Action("StartDate", "Project", new { id = id, projectId = Model.ProjectId, redirect = "CheckAnswers" }) },
+               { "Link", Url.OrganisationAction("StartDate", "Project", new { id, projectId = Model.ProjectId, redirect = "CheckAnswers" }) },
                { "LinkId", "start-date" },
                { "IsEditable", Model?.IsEditable() }
            })
@@ -71,7 +72,7 @@
            {
                { "Title", ProjectFieldNames.ManyHomes },
                { "Value", Model?.HomesCount },
-               { "Link", Url.Action("ManyHomes", "Project", new { id = id, projectId = Model.ProjectId, redirect = "CheckAnswers" }) },
+               { "Link", Url.OrganisationAction("ManyHomes", "Project", new { id, projectId = Model.ProjectId, redirect = "CheckAnswers" }) },
                { "LinkId", "number-of-homes" },
                { "IsEditable", Model?.IsEditable() }
            })
@@ -80,7 +81,7 @@
            {
                { "Title", ProjectFieldNames.TypeHomes },
                { "Value", FormOption.SiteTypeHomesCheckbox.GetSummaryLabel(typeHomesList) },
-               { "Link", Url.Action("TypeHomes", "Project", new { id = id, projectId = Model.ProjectId, redirect = "CheckAnswers" }) },
+               { "Link", Url.OrganisationAction("TypeHomes", "Project", new { id, projectId = Model.ProjectId, redirect = "CheckAnswers" }) },
                { "LinkId", "homes-type" },
                { "IsEditable", Model?.IsEditable() }
            })
@@ -89,7 +90,7 @@
            {
                { "Title", ProjectFieldNames.ProjectType },
                { "Value", FormOption.SiteType.GetSummaryLabel(Model?.ProjectType) },
-               { "Link", Url.Action("Type", "Project", new { id = id, projectId = Model.ProjectId, redirect = "CheckAnswers" }) },
+               { "Link", Url.OrganisationAction("Type", "Project", new { id, projectId = Model.ProjectId, redirect = "CheckAnswers" }) },
                { "LinkId", "project-type" },
                { "IsEditable", Model?.IsEditable() }
            })
@@ -98,7 +99,7 @@
            {
                { "Title", ProjectFieldNames.PlanningReferenceNumberExists },
                { "Value", Model?.PlanningReferenceNumberExists },
-               { "Link", Url.Action("PlanningReferenceNumberExists", "Project", new { id = id, projectId = Model.ProjectId, redirect = "CheckAnswers" }) },
+               { "Link", Url.OrganisationAction("PlanningReferenceNumberExists", "Project", new { id, projectId = Model.ProjectId, redirect = "CheckAnswers" }) },
                { "LinkId", "reference-number-exists" },
                { "IsEditable", Model?.IsEditable() }
            })
@@ -109,7 +110,7 @@
                {
                    { "Title", ProjectFieldNames.PlanningReferenceNumber },
                    { "Value", Model?.PlanningReferenceNumber },
-                   { "Link", Url.Action("PlanningReferenceNumber", "Project", new { id = id, projectId = Model.ProjectId, redirect = "CheckAnswers" }) },
+                   { "Link", Url.OrganisationAction("PlanningReferenceNumber", "Project", new { id, projectId = Model.ProjectId, redirect = "CheckAnswers" }) },
                    { "LinkId", "reference-number" },
                    { "IsEditable", Model?.IsEditable() }
                })
@@ -118,7 +119,7 @@
                {
                    { "Title", ProjectFieldNames.PlanningPermissionStatus },
                    { "Value", FormOption.PermissionStatus.GetSummaryLabel(Model?.PlanningPermissionStatus) },
-                   { "Link", Url.Action("PlanningPermissionStatus", "Project", new { id = id, projectId = Model.ProjectId, redirect = "CheckAnswers" }) },
+                   { "Link", Url.OrganisationAction("PlanningPermissionStatus", "Project", new { id, projectId = Model.ProjectId, redirect = "CheckAnswers" }) },
                    { "LinkId", "planning-permission-status" },
                    { "IsEditable", Model?.IsEditable() }
                })
@@ -130,7 +131,7 @@
                {
                    { "Title", ProjectFieldNames.Coordinates },
                    { "Value", Model?.LocationCoordinates },
-                   { "Link", Url.Action("Location", "Project", new { id = id, projectId = Model.ProjectId, redirect = "CheckAnswers" }) },
+                   { "Link", Url.OrganisationAction("Location", "Project", new { id, projectId = Model.ProjectId, redirect = "CheckAnswers" }) },
                    { "LinkId", "coordinates" },
                    { "IsEditable", Model?.IsEditable() }
                })
@@ -142,7 +143,7 @@
                {
                    { "Title", ProjectFieldNames.LandRegistryTitleNumber },
                    { "Value", Model?.LocationLandRegistry },
-                   { "Link", Url.Action("Location", "Project", new { id = id, projectId = Model.ProjectId, redirect = "CheckAnswers" }) },
+                   { "Link", Url.OrganisationAction("Location", "Project", new { id, projectId = Model.ProjectId, redirect = "CheckAnswers" }) },
                    { "LinkId", "land-registry-title-number" },
                    { "IsEditable", Model?.IsEditable() }
                })
@@ -153,7 +154,7 @@
            {
                { "Title", ProjectFieldNames.LocalAuthority },
                { "Value", Model?.LocalAuthorityName },
-               { "Link", Url.Action("LocalAuthoritySearch", "Project", new { id = id, projectId = Model.ProjectId, redirect = "CheckAnswers" }) },
+               { "Link", Url.OrganisationAction("LocalAuthoritySearch", "Project", new { id, projectId = Model.ProjectId, redirect = "CheckAnswers" }) },
                { "LinkId", "local-authority" },
                { "IsEditable", Model?.IsEditable() }
            })
@@ -162,7 +163,7 @@
            {
                { "Title", ProjectFieldNames.LandOwnership },
                { "Value", Model?.Ownership },
-               { "Link", Url.Action("Ownership", "Project", new { id = id, projectId = Model.ProjectId, redirect = "CheckAnswers" }) },
+               { "Link", Url.OrganisationAction("Ownership", "Project", new { id, projectId = Model.ProjectId, redirect = "CheckAnswers" }) },
                { "LinkId", "ownership" },
                { "IsEditable", Model?.IsEditable() }
            })
@@ -173,7 +174,7 @@
                {
                    { "Title", ProjectFieldNames.AdditionalDetails },
                    { "Value", additionalProjectDetails },
-                   { "Link", Url.Action("AdditionalDetails", "Project", new { id = id, projectId = Model.ProjectId, redirect = "CheckAnswers" }) },
+                   { "Link", Url.OrganisationAction("AdditionalDetails", "Project", new { id, projectId = Model.ProjectId, redirect = "CheckAnswers" }) },
                    { "LinkId", "additional-details" },
                    { "IsEditable", Model?.IsEditable() }
                })
@@ -184,7 +185,7 @@
            {
                { "Title", ProjectFieldNames.GrantFundingExists },
                { "Value", FormOption.GrantFunding.GetSummaryLabel(Model?.GrantFundingStatus) },
-               { "Link", Url.Action("GrantFundingExists", "Project", new { id = id, projectId = Model.ProjectId, redirect = "CheckAnswers" }) },
+               { "Link", Url.OrganisationAction("GrantFundingExists", "Project", new { id, projectId = Model.ProjectId, redirect = "CheckAnswers" }) },
                { "LinkId", "grant-funding-exists" },
                { "IsEditable", Model?.IsEditable() }
            })
@@ -195,7 +196,7 @@
                {
                    { "Title", ProjectFieldNames.GrantFunding },
                    { "Value", grantFundingMore },
-                   { "Link", Url.Action("GrantFunding", "Project", new { id = id, projectId = Model.ProjectId, redirect = "CheckAnswers" }) },
+                   { "Link", Url.OrganisationAction("GrantFunding", "Project", new { id, projectId = Model.ProjectId, redirect = "CheckAnswers" }) },
                    { "LinkId", "grant-funding" },
                    { "IsEditable", Model?.IsEditable() }
                })
@@ -206,7 +207,7 @@
            {
                { "Title", ProjectFieldNames.ChargesDebt },
                { "Value", !string.IsNullOrEmpty(Model?.ChargesDebtInfo) ? $"{ Model.ChargesDebt }, { Model.ChargesDebtInfo }" :  Model?.ChargesDebt },
-               { "Link", Url.Action("ChargesDebt", "Project", new { id = id, projectId = Model.ProjectId, redirect = "CheckAnswers" }) },
+               { "Link", Url.OrganisationAction("ChargesDebt", "Project", new { id, projectId = Model.ProjectId, redirect = "CheckAnswers" }) },
                { "LinkId", "charges-debt" },
                { "IsEditable", Model?.IsEditable() }
            })
@@ -215,7 +216,7 @@
            {
                { "Title", ProjectFieldNames.AffordableHomes },
                { "Value", Model?.AffordableHomes },
-               { "Link", Url.Action("AffordableHomes", "Project", new { id = id, projectId = Model.ProjectId, redirect = "CheckAnswers" }) },
+               { "Link", Url.OrganisationAction("AffordableHomes", "Project", new { id, projectId = Model.ProjectId, redirect = "CheckAnswers" }) },
                { "LinkId", "affordable-homes" },
                { "IsEditable", Model?.IsEditable() }
            })

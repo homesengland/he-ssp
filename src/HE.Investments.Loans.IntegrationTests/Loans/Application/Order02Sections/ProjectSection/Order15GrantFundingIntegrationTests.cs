@@ -33,7 +33,7 @@ public class Order15GrantFundingIntegrationTests : IntegrationTest
     public async Task Order01_RedirectToChargesDebt_WhenNoDataIsProvided()
     {
         // given
-        var grantFundingPage = await TestClient.NavigateTo(ProjectPagesUrls.GrantFunding(_applicationLoanId, _projectId));
+        var grantFundingPage = await TestClient.NavigateTo(ProjectPagesUrls.GrantFunding(UserOrganisationData.OrganisationId, _applicationLoanId, _projectId));
 
         var continueButton = grantFundingPage.GetGdsSubmitButtonById("continue-button");
 
@@ -58,12 +58,14 @@ public class Order15GrantFundingIntegrationTests : IntegrationTest
     public async Task Order02_ShowValidationError_WhenProviderNameIsLongerThanShortInputLimit()
     {
         // given
-        var grantFundingPage = await GetCurrentPage(ProjectPagesUrls.GrantFunding(_applicationLoanId, _projectId));
+        var grantFundingPage = await GetCurrentPage(ProjectPagesUrls.GrantFunding(UserOrganisationData.OrganisationId, _applicationLoanId, _projectId));
 
         var continueButton = grantFundingPage.GetGdsSubmitButtonById("continue-button");
 
         // when
-        grantFundingPage = await TestClient.SubmitButton(continueButton, (nameof(ProjectViewModel.GrantFundingProviderName), TextTestData.TextThatExceedsShortInputLimit));
+        grantFundingPage = await TestClient.SubmitButton(
+            continueButton,
+            (nameof(ProjectViewModel.GrantFundingProviderName), TextTestData.TextThatExceedsShortInputLimit));
 
         // then
         grantFundingPage
@@ -77,12 +79,15 @@ public class Order15GrantFundingIntegrationTests : IntegrationTest
     public async Task Order03_ShowValidationError_WhenIncorrectAmountIsProvided()
     {
         // given
-        var grantFundingPage = await GetCurrentPage(ProjectPagesUrls.GrantFunding(_applicationLoanId, _projectId));
+        var grantFundingPage = await GetCurrentPage(ProjectPagesUrls.GrantFunding(UserOrganisationData.OrganisationId, _applicationLoanId, _projectId));
 
         var continueButton = grantFundingPage.GetGdsSubmitButtonById("continue-button");
 
         // when
-        grantFundingPage = await TestClient.SubmitButton(continueButton, (nameof(ProjectViewModel.GrantFundingAmount), PoundsTestData.IncorrectAmountAsString), (nameof(ProjectViewModel.GrantFundingProviderName), string.Empty));
+        grantFundingPage = await TestClient.SubmitButton(
+            continueButton,
+            (nameof(ProjectViewModel.GrantFundingAmount), PoundsTestData.IncorrectAmountAsString),
+            (nameof(ProjectViewModel.GrantFundingProviderName), string.Empty));
 
         // then
         grantFundingPage
@@ -96,12 +101,16 @@ public class Order15GrantFundingIntegrationTests : IntegrationTest
     public async Task Order04_ShowValidationError_WhenNameOfGrantExceedsShortInputLimit()
     {
         // given
-        var grantFundingPage = await GetCurrentPage(ProjectPagesUrls.GrantFunding(_applicationLoanId, _projectId));
+        var grantFundingPage = await GetCurrentPage(ProjectPagesUrls.GrantFunding(UserOrganisationData.OrganisationId, _applicationLoanId, _projectId));
 
         var continueButton = grantFundingPage.GetGdsSubmitButtonById("continue-button");
 
         // when
-        grantFundingPage = await TestClient.SubmitButton(continueButton, (nameof(ProjectViewModel.GrantFundingName), TextTestData.TextThatExceedsShortInputLimit), (nameof(ProjectViewModel.GrantFundingAmount), string.Empty), (nameof(ProjectViewModel.GrantFundingProviderName), string.Empty));
+        grantFundingPage = await TestClient.SubmitButton(
+            continueButton,
+            (nameof(ProjectViewModel.GrantFundingName), TextTestData.TextThatExceedsShortInputLimit),
+            (nameof(ProjectViewModel.GrantFundingAmount), string.Empty),
+            (nameof(ProjectViewModel.GrantFundingProviderName), string.Empty));
 
         // then
         grantFundingPage
@@ -115,7 +124,7 @@ public class Order15GrantFundingIntegrationTests : IntegrationTest
     public async Task Order05_ShowValidationError_WhenGrantPurposeExceedsLongInputLimit()
     {
         // given
-        var grantFundingPage = await GetCurrentPage(ProjectPagesUrls.GrantFunding(_applicationLoanId, _projectId));
+        var grantFundingPage = await GetCurrentPage(ProjectPagesUrls.GrantFunding(UserOrganisationData.OrganisationId, _applicationLoanId, _projectId));
 
         var continueButton = grantFundingPage.GetGdsSubmitButtonById("continue-button");
 
@@ -139,7 +148,7 @@ public class Order15GrantFundingIntegrationTests : IntegrationTest
     public async Task Order06_ShowAllValidationErrors_WhenAllDataIsIncorrect()
     {
         // given
-        var grantFundingPage = await GetCurrentPage(ProjectPagesUrls.GrantFunding(_applicationLoanId, _projectId));
+        var grantFundingPage = await GetCurrentPage(ProjectPagesUrls.GrantFunding(UserOrganisationData.OrganisationId, _applicationLoanId, _projectId));
 
         var continueButton = grantFundingPage.GetGdsSubmitButtonById("continue-button");
 
@@ -166,7 +175,7 @@ public class Order15GrantFundingIntegrationTests : IntegrationTest
     public async Task Order07_RedirectToChargesDebt_WhenAllDataIsCorrect()
     {
         // given
-        var grantFundingPage = await GetCurrentPage(ProjectPagesUrls.GrantFunding(_applicationLoanId, _projectId));
+        var grantFundingPage = await GetCurrentPage(ProjectPagesUrls.GrantFunding(UserOrganisationData.OrganisationId, _applicationLoanId, _projectId));
 
         var continueButton = grantFundingPage.GetGdsSubmitButtonById("continue-button");
 

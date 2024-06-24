@@ -1,11 +1,9 @@
 using System.Diagnostics.CodeAnalysis;
 using AngleSharp.Html.Dom;
 using HE.Investments.Common.Messages;
-using HE.Investments.IntegrationTestsFramework;
 using HE.Investments.Loans.IntegrationTests.IntegrationFramework;
 using HE.Investments.Loans.IntegrationTests.Loans.LoansHelpers.Extensions;
 using HE.Investments.Loans.IntegrationTests.Loans.LoansHelpers.Pages;
-using HE.Investments.Loans.WWW;
 using HE.Investments.Loans.WWW.Views.FundingV2.Consts;
 using HE.Investments.TestsUtils.Extensions;
 using Xunit;
@@ -27,12 +25,14 @@ public class Order03EstimatedTotalCostsIntegrationTests : IntegrationTest
     public async Task Order01_ShouldDisplayValidationError_WhenProvidedValueIsNotADecimalNumber()
     {
         // given
-        var estimatedTotalCostsPage = await TestClient.NavigateTo(FundingPageUrls.EstimatedTotalCosts(UserData.LoanApplicationIdInDraftState));
+        var estimatedTotalCostsPage =
+            await TestClient.NavigateTo(FundingPageUrls.EstimatedTotalCosts(UserOrganisationData.OrganisationId, UserData.LoanApplicationIdInDraftState));
         var continueButton = estimatedTotalCostsPage.GetGdsSubmitButtonById("continue-button");
 
         // when
         estimatedTotalCostsPage = await TestClient.SubmitButton(
-            continueButton, new Dictionary<string, string> { { "TotalCosts", "random string" } });
+            continueButton,
+            new Dictionary<string, string> { { "TotalCosts", "random string" } });
 
         // then
         estimatedTotalCostsPage
@@ -53,7 +53,8 @@ public class Order03EstimatedTotalCostsIntegrationTests : IntegrationTest
 
         // when
         var abnormalCostsPage = await TestClient.SubmitButton(
-            continueButton, new Dictionary<string, string> { { "TotalCosts", "999" } });
+            continueButton,
+            new Dictionary<string, string> { { "TotalCosts", "999" } });
 
         // then
         abnormalCostsPage

@@ -1,10 +1,8 @@
 using System.Diagnostics.CodeAnalysis;
 using AngleSharp.Html.Dom;
-using HE.Investments.IntegrationTestsFramework;
 using HE.Investments.Loans.IntegrationTests.IntegrationFramework;
 using HE.Investments.Loans.IntegrationTests.Loans.LoansHelpers.Extensions;
 using HE.Investments.Loans.IntegrationTests.Loans.LoansHelpers.Pages;
-using HE.Investments.Loans.WWW;
 using HE.Investments.Loans.WWW.Views.FundingV2.Consts;
 using HE.Investments.TestsUtils.Extensions;
 using Xunit;
@@ -29,7 +27,7 @@ public class Order01StartFundingIntegrationTests : IntegrationTest
     public async Task Order01_ShouldOpenFundingStartingPage_WhenFundingLinkIsClickedOnTaskListPage()
     {
         // given
-        var taskList = await TestClient.NavigateTo(ApplicationPagesUrls.TaskList(_applicationLoanId));
+        var taskList = await TestClient.NavigateTo(ApplicationPagesUrls.TaskList(UserOrganisationData.OrganisationId, _applicationLoanId));
 
         // when
         var linkToFundingSection = taskList.GetAnchorElementById("funding-section-link");

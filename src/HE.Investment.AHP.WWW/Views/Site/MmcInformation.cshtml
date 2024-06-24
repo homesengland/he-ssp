@@ -14,7 +14,7 @@
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
     <vc:page-header caption="@ViewBag.SiteName" title="@SitePageTitles.MmcInformation"/>
 
-    <form asp-controller="Site" asp-action="MmcInformation" asp-route-workflow="@Context.Request.Query["workflow"]" asp-method="post" novalidate>
+    <he-organisation-form asp-controller="Site" asp-action="MmcInformation" asp-route-workflow="@Context.Request.Query["workflow"]" asp-method="post" novalidate>
 
         <vc:text-area-input-with-counter
             title="What barriers have you experienced or expect in introducing greater levels of MMC into your development programme? How could Homes England help?"
@@ -29,6 +29,6 @@
 
         <vc:form-button/>
         <vc:return-to-sites-link project-id="@ViewBag.ProjectId" />
-    </form>
+    </he-organisation-form>
 
 </gds-div-grid-column-two-thirds>

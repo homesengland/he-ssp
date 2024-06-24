@@ -1,24 +1,22 @@
 @using HE.Investments.Common.Gds
 @using HE.Investments.Loans.BusinessLogic.LoanApplication
-@using Microsoft.AspNetCore.Mvc.TagHelpers
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Headings
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Links
+@using HE.Investments.Common.WWW.Extensions
 @model HE.Investments.Loans.BusinessLogic.ViewModel.LoanApplicationViewModel;
 
 @{
     var loanApplicationWorkflow = new LoanApplicationWorkflow(Model);
-
     var submitAction = Model.WasSubmittedPreviously ? "Resubmit" : "Submit";
 }
 
 <he-div-grid-column-full>
-    <form asp-controller="LoanApplicationV2" asp-action="@submitAction" asp-route-id="@Model.ID" asp-route-ending="CheckAnswers" asp-method="post" novalidate>
-        <gds-back-link href="@Url.Action("Back","LoanApplicationV2", new { currentPage = LoanApplicationWorkflow.State.CheckApplication, ApplicationId = Model.ID})" text="Back" class="govuk-!-margin-bottom-8"></gds-back-link>
+    <he-organisation-form asp-controller="LoanApplicationV2" asp-action="@submitAction" asp-route-id="@Model.ID" asp-route-ending="CheckAnswers" asp-method="post" novalidate>
+        <vc:loans-workflow-back-button current-page="@LoanApplicationWorkflow.State.CheckApplication"/>
 
         <gds-h1 size="ControlSize.Xl">
             Check your answers before submitting your application
         </gds-h1>
-
 
         <gds-h2>Organisation structure and residential building experience </gds-h2>
         @await Html.PartialAsync("_CompanyStructureAnswers", Model.Company)
@@ -51,7 +49,7 @@
                 Accept and submit
             </button>
         }
-    </form>
+    </he-organisation-form>
 
-    <gds-back-link href="@Url.Action("Back","LoanApplicationV2", new { currentPage = LoanApplicationWorkflow.State.CheckApplication, ApplicationId = Model.ID})" text="Return to application" class="govuk-!-margin-bottom-8"></gds-back-link>
+    <gds-back-link href="@Url.OrganisationAction("Back","LoanApplicationV2", new { currentPage = LoanApplicationWorkflow.State.CheckApplication, ApplicationId = Model.ID})" text="Return to application" class="govuk-!-margin-bottom-8"></gds-back-link>
 </he-div-grid-column-full>

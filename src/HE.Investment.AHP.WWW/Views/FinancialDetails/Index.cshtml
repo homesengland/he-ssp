@@ -1,6 +1,7 @@
 @using HE.Investment.AHP.WWW.Models.FinancialDetails;
 @using HE.Investment.AHP.WWW.Views.FinancialDetails.Consts;
 @using HE.Investment.AHP.WWW.Extensions
+@using HE.Investments.Common.WWW.Extensions
 @model FinancialDetailsBaseModel
 @{
     var title = FinancialDetailsPageTitles.StartPage;
@@ -8,7 +9,7 @@
     var applicationId = this.GetApplicationIdFromRoute();
 }
 <gds-div-grid-column-two-thirds>
-    <gds-back-link href="@Url.Action("TaskList", "Application", new { applicationId })" text="Back" class="govuk-!-margin-bottom-8">
+    <gds-back-link href="@Url.OrganisationAction("TaskList", "Application", new { applicationId })" text="Back" class="govuk-!-margin-bottom-8">
     </gds-back-link>
     <vc:page-header title="@title" caption="@Model.ApplicationName"/>
 
@@ -23,7 +24,7 @@
         <gds-p>For multi-tenure sites, ensure the costs and contributions are apportioned across the development and only those applicable to the homes on this application are recorded here.</gds-p>
         <gds-p>If your application concerns existing properties rather than land-led development, this section is still relevant to you. Where we say 'site' or 'land', read 'properties'.</gds-p>
     </div>
-    <link-button action-url="@Url.Action("LandStatus", "FinancialDetails", new { applicationId = Model.ApplicationId })">
+    <link-button action-url="@Url.OrganisationAction("LandStatus", "FinancialDetails", new { applicationId = Model.ApplicationId })">
         Continue
     </link-button>
 </gds-div-grid-column-two-thirds>

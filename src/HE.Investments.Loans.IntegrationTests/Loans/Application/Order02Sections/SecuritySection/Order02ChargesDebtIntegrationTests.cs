@@ -1,12 +1,10 @@
 using System.Diagnostics.CodeAnalysis;
 using AngleSharp.Html.Dom;
 using HE.Investments.Common.Messages;
-using HE.Investments.IntegrationTestsFramework;
 using HE.Investments.Loans.Common.Tests.TestData;
 using HE.Investments.Loans.Common.Utils.Constants.FormOption;
 using HE.Investments.Loans.IntegrationTests.IntegrationFramework;
 using HE.Investments.Loans.IntegrationTests.Loans.LoansHelpers.Pages;
-using HE.Investments.Loans.WWW;
 using HE.Investments.Loans.WWW.Views.Security.Consts;
 using HE.Investments.TestsUtils.Extensions;
 using Xunit;
@@ -29,12 +27,14 @@ public class Order02ChargesDebtIntegrationTests : IntegrationTest
     public async Task Order01_ShouldDisplayValidationError_WhenYesIsSelectedAndAdditionalInformationIsNotProvided()
     {
         // given
-        var chargesDebtPage = await TestClient.NavigateTo(SecurityPageUrls.ChargesDebt(UserData.LoanApplicationIdInDraftState));
+        var chargesDebtPage =
+            await TestClient.NavigateTo(SecurityPageUrls.ChargesDebt(UserOrganisationData.OrganisationId, UserData.LoanApplicationIdInDraftState));
         var continueButton = chargesDebtPage.GetContinueButton();
 
         // when
         chargesDebtPage = await TestClient.SubmitButton(
-            continueButton, new Dictionary<string, string> { { "ChargesDebtCompany", CommonResponse.Yes }, { "ChargesDebtCompanyInfo", string.Empty } });
+            continueButton,
+            new Dictionary<string, string> { { "ChargesDebtCompany", CommonResponse.Yes }, { "ChargesDebtCompanyInfo", string.Empty } });
 
         // then
         chargesDebtPage
@@ -54,7 +54,11 @@ public class Order02ChargesDebtIntegrationTests : IntegrationTest
 
         // when
         var directorLoansPage = await TestClient.SubmitButton(
-            continueButton, new Dictionary<string, string> { { "ChargesDebtCompany", CommonResponse.Yes }, { "ChargesDebtCompanyInfo", TextTestData.TextThatExceedsLongInputLimit } });
+            continueButton,
+            new Dictionary<string, string>
+            {
+                { "ChargesDebtCompany", CommonResponse.Yes }, { "ChargesDebtCompanyInfo", TextTestData.TextThatExceedsLongInputLimit },
+            });
 
         // then
         directorLoansPage
@@ -72,7 +76,8 @@ public class Order02ChargesDebtIntegrationTests : IntegrationTest
 
         // when
         var directorLoansPage = await TestClient.SubmitButton(
-            continueButton, new Dictionary<string, string> { { "ChargesDebtCompany", CommonResponse.No }, { "ChargesDebtCompanyInfo", string.Empty } });
+            continueButton,
+            new Dictionary<string, string> { { "ChargesDebtCompany", CommonResponse.No }, { "ChargesDebtCompanyInfo", string.Empty } });
 
         // then
         directorLoansPage
@@ -89,7 +94,11 @@ public class Order02ChargesDebtIntegrationTests : IntegrationTest
 
         // when
         var directorLoansPage = await TestClient.SubmitButton(
-            continueButton, new Dictionary<string, string> { { "ChargesDebtCompany", CommonResponse.Yes }, { "ChargesDebtCompanyInfo", TextTestData.TextThatNotExceedsLongInputLimit } });
+            continueButton,
+            new Dictionary<string, string>
+            {
+                { "ChargesDebtCompany", CommonResponse.Yes }, { "ChargesDebtCompanyInfo", TextTestData.TextThatNotExceedsLongInputLimit },
+            });
 
         // then
         directorLoansPage

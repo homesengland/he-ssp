@@ -4,14 +4,16 @@
 @using HE.Investments.Common.WWW.Components.BackLinkWithCallback
 @using HE.Investments.Common.WWW.Components.PageHeader
 @using HE.Investments.Common.WWW.Components.SelectList
+@using HE.Investments.Common.WWW.Extensions
 @using SelectList = Microsoft.AspNetCore.Mvc.Rendering.SelectList
 @inject IFrontDoorLinks FrontDoorLinks
 @model HE.Investment.AHP.Contract.Project.SelectProjectSitesModel
 @{
     ViewData["Title"] = SitePageTitles.SiteSelect;
+    var organisationId = Context.Request.GetOrganisationIdFromRoute();
     var items = new PaginationResult<SelectListItemViewModel>(
         Model.ProjectSites.Sites.Items.Select(i => new SelectListItemViewModel(
-            Url.Action("ConfirmSelect", "Site", new { siteId = i.Id }) ?? string.Empty,
+            Url.OrganisationAction("ConfirmSelect", "Site", new { siteId = i.Id }) ?? string.Empty,
             i.Name,
             i.LocalAuthorityName)).ToList(),
         Model.ProjectSites.Sites.CurrentPage,
@@ -28,11 +30,11 @@
 
     <gds-p>Select a site to start your application.</gds-p>
      <gds-p>
-         To add a new site, <a href="@FrontDoorLinks.StartNewProject">start a new project</a>.
+         To add a new site, <a href="@FrontDoorLinks.StartNewProject.Replace("{organisationId}", organisationId?.ToString())">start a new project</a>.
      </gds-p>
 
     <vc:select-list
         items="@items"
-        paging-navigation-url="@Url.Action("Select", new { projectId = Model.ProjectSites.ProjectId })" />
+        paging-navigation-url="@Url.OrganisationAction("Select", "Site", new { projectId = Model.ProjectSites.ProjectId })" />
 
 </div>

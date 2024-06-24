@@ -3,20 +3,22 @@
 @using HE.Investment.AHP.WWW.Views.Shared.Components.SitesTable
 @using HE.Investment.AHP.WWW.Views.Site.Const
 @using HE.Investments.Common.WWW.Components.PageHeader
+@using HE.Investments.Common.WWW.Extensions
 @inject IFrontDoorLinks FrontDoorLinks
 @model HE.Investment.AHP.Contract.Project.ProjectSitesModel
 @{
     ViewData["Title"] = SitePageTitles.SiteList;
+    var organisationId = Context.Request.GetOrganisationIdFromRoute();
 }
 
 <div class="govuk-grid-column-full">
-    <gds-back-link href="@Url.Action("Details", "Project", new { projectId = @Model.ProjectId.Value })" class="govuk-!-margin-bottom-8"></gds-back-link>
+    <gds-back-link href="@Url.OrganisationAction("Details", "Project", new { projectId = @Model.ProjectId.Value })" class="govuk-!-margin-bottom-8"></gds-back-link>
     <vc:page-header title="@SitePageTitles.SiteList"
                     caption="@Model.OrganisationName"
                     hint="Select a site to view site details or applications within the site."/>
 
     <gds-p>
-        To add a new site, <a href="@FrontDoorLinks.StartNewProject">start a new project</a>.
+        To add a new site, <a href="@FrontDoorLinks.StartNewProject.Replace("{organisationId}", organisationId?.ToString())">start a new project</a>.
     </gds-p>
     <gds-h2 class="govuk-!-margin-top-6">Your sites</gds-h2>
     <vc:sites-table sites="@Model.Sites" project-id="@Model.ProjectId.Value"/>

@@ -5,6 +5,7 @@
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Panels
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Paragraphs
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Buttons
+@using HE.Investments.Common.WWW.Extensions
 @using HE.Investments.Loans.BusinessLogic.Config
 @model HE.Investments.Loans.Contract.Application.ValueObjects.SubmitLoanApplication
 @inject ILoanAppConfig LoanAppConfig
@@ -31,7 +32,7 @@
         <gds-p><gds-link href="#">What did you think of this service?</gds-link> (takes 30 seconds)</gds-p>
     </div>
 
-    <a href="@Url.Action("OrganisationDashboard", "Accounts")">
+    <a href="@Url.OrganisationAction("OrganisationDashboard", "Accounts")">
         <gds-button id="application-submitted-to-dashboard">Save and come back later</gds-button>
     </a>
 </gds-div-grid-column-two-thirds>

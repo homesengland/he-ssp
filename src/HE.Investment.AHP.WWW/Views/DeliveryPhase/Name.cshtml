@@ -1,7 +1,9 @@
 @using HE.Investment.AHP.WWW.Models.Delivery
 @using HE.Investment.AHP.WWW.Views.Delivery.Const
 @using HE.Investment.AHP.WWW.Views.Shared.Components.ReturnToApplicationLink
+@using HE.Investments.Common.WWW.Components.BackLinkWithCallback
 @using HE.Investments.Common.WWW.Components.FormButton
+@using HE.Investments.Common.WWW.Extensions
 @model DeliveryPhaseNameViewModel;
 @{
     var title = DeliveryPageTitles.Name;
@@ -9,11 +11,11 @@
 }
 
 <gds-div-grid-column-two-thirds>
-    <vc:back-link-with-callback url="@Url.Action("List", "Delivery", new { applicationId = Model.ApplicationId })"/>
+    <vc:back-link-with-callback url="@Url.OrganisationAction("List", "Delivery", new { applicationId = Model.ApplicationId })"/>
 
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
 
-    <form asp-controller="DeliveryPhase" asp-action="@Model.PostbackActionName" asp-method="post" asp-route-workflow="@Context.Request.Query["workflow"]" novalidate>
+    <he-organisation-form asp-controller="DeliveryPhase" asp-action="@Model.PostbackActionName" asp-method="post" asp-route-workflow="@Context.Request.Query["workflow"]" novalidate>
         @Html.HiddenFor(x => x.DeliveryPhaseId)
         @Html.HiddenFor(x => x.PostbackActionName)
         <vc:text-input title="@title"
@@ -26,5 +28,5 @@
         <vc:form-button text="Continue"/>
 
         <vc:return-to-application-link application-id="@Model.ApplicationId"/>
-    </form>
+    </he-organisation-form>
 </gds-div-grid-column-two-thirds>

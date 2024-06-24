@@ -1,8 +1,8 @@
 using HE.Investments.Account.Shared.Authorization.Attributes;
 using HE.Investments.Common.Contract.Pagination;
-using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Messages;
-using HE.Investments.Common.Validators;
+using HE.Investments.Common.WWW.Controllers;
+using HE.Investments.Common.WWW.Extensions;
 using HE.Investments.Common.WWW.Routing;
 using HE.Investments.FrontDoor.Contract.LocalAuthority;
 using HE.Investments.FrontDoor.Contract.LocalAuthority.Queries;
@@ -17,7 +17,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace HE.Investments.FrontDoor.WWW.Controllers;
 
 [AuthorizeWithCompletedProfile]
-[Route("local-authority")]
+[Route("{organisationId}/local-authority")]
 public class LocalAuthorityController : WorkflowController<LocalAuthorityWorkflowState>
 {
     private readonly IMediator _mediator;
@@ -32,15 +32,15 @@ public class LocalAuthorityController : WorkflowController<LocalAuthorityWorkflo
     {
         if (currentPage == LocalAuthorityWorkflowState.Search && !string.IsNullOrWhiteSpace(siteId))
         {
-            return RedirectToAction("HomesNumber", "Site", new { projectId, siteId });
+            return this.OrganisationRedirectToAction("HomesNumber", "Site", new { projectId, siteId });
         }
 
         if (currentPage == LocalAuthorityWorkflowState.Search && string.IsNullOrWhiteSpace(siteId))
         {
-            return RedirectToAction("GeographicFocus", "Project", new { projectId });
+            return this.OrganisationRedirectToAction("GeographicFocus", "Project", new { projectId });
         }
 
-        return await Back(currentPage, new { projectId, siteId });
+        return await Back(currentPage, new { projectId, siteId, organisationId = Request.GetOrganisationIdFromRoute() });
     }
 
     [HttpGet("search")]
@@ -75,7 +75,7 @@ public class LocalAuthorityController : WorkflowController<LocalAuthorityWorkflo
 
         if (!projectLocalAuthorities.Items.Any())
         {
-            return RedirectToAction("NotFound", "LocalAuthority", new { projectId, siteId });
+            return this.OrganisationRedirectToAction("NotFound", "LocalAuthority", new { projectId, siteId });
         }
 
         return View(nameof(SearchResult), (projectLocalAuthorities, projectId, siteId, phrase));

@@ -24,10 +24,10 @@ public class Order02ProjectDashboards : AhpIntegrationTest
     public async Task Order01_ShouldDisplayNewProjectOnTheTopOfProjectListPage()
     {
         // given
-        var currentPage = await TestClient.NavigateTo(MainPagesUrl.MainPage);
+        var currentPage = await TestClient.NavigateTo(ProjectPagesUrl.ProjectList(UserOrganisationData.OrganisationId));
         currentPage
             .HasTitle("Affordable Homes Programme 2021-2026 Continuous Market Engagement projects")
-            .UrlEndWith(ProjectPagesUrl.ProjectList);
+            .UrlEndWith(ProjectPagesUrl.ProjectList(UserOrganisationData.OrganisationId));
 
         // when
         var projectListPage = currentPage.GetFirstListCard();
@@ -36,7 +36,8 @@ public class Order02ProjectDashboards : AhpIntegrationTest
         projectListPage.Title.Should().Be(ProjectData.ProjectName, "New project should be displayed on the top of the list");
         projectListPage.Action.Should().NotBeNull();
         projectListPage.Action!.Title.Should().Be("View project");
-        projectListPage.Action!.Url.Should().EndWith(ProjectPagesUrl.ProjectDetails(ShortGuid.FromString(ProjectData.ProjectId).Value));
+        projectListPage.Action!.Url.Should()
+            .EndWith(ProjectPagesUrl.ProjectDetails(UserOrganisationData.OrganisationId, ShortGuid.FromString(ProjectData.ProjectId).Value));
 
         SaveCurrentPage();
     }

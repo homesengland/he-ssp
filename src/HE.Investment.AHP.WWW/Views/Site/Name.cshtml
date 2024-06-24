@@ -2,14 +2,15 @@
 @using HE.Investment.AHP.Contract.Site
 @using HE.Investment.AHP.WWW.Views.Site.Const
 @using HE.Investments.Common.WWW.Components.TextInput
+@using HE.Investments.Common.WWW.Extensions
 @model SiteModel
 @{
     ViewData["Title"] = SitePageTitles.SiteName;
 }
 <gds-div-grid-column-two-thirds>
-    <gds-back-link href="@Url.Action("Index", "Application")" text="Back" class="govuk-!-margin-bottom-8"></gds-back-link>
+    <gds-back-link href="@Url.OrganisationAction("Index", "Application")" text="Back" class="govuk-!-margin-bottom-8"></gds-back-link>
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
-    <form asp-controller="Site" asp-action="Name" asp-route-fdProjectId="@Context.Request.Query["fdProjectId"]" asp-route-fdSiteId="@Context.Request.Query["fdSiteId"]" asp-route-workflow="@Context.Request.Query["workflow"]" asp-method="post" novalidate>
+    <he-organisation-form asp-controller="Site" asp-action="Name" asp-route-fdProjectId="@Context.Request.Query["fdProjectId"]" asp-route-fdSiteId="@Context.Request.Query["fdSiteId"]" asp-route-workflow="@Context.Request.Query["workflow"]" asp-method="post" novalidate>
 
         <vc:text-input
             title="@SitePageTitles.SiteName"
@@ -23,6 +24,6 @@
 
         <vc:form-button/>
         <vc:return-to-sites-link project-id="@ViewBag.ProjectId" is-editable="false"/>
-    </form>
+    </he-organisation-form>
 
 </gds-div-grid-column-two-thirds>

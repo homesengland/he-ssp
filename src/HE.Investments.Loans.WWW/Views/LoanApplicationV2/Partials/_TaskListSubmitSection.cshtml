@@ -15,7 +15,7 @@
     {
         <gds-h2 size="ControlSize.M">Submit application</gds-h2>
         <p>Your updated application will be sent to your Transaction Manager.</p>
-        <form asp-controller="LoanApplicationV2" asp-action="Resubmit" asp-route-id="@Model.Id" asp-method="post" novalidate>
+        <he-organisation-form asp-controller="LoanApplicationV2" asp-action="Resubmit" asp-route-id="@Model.Id" asp-method="post" novalidate>
             @if (Model.CanBeSubmitted)
             {
                 <gds-button data-module="govuk-button" name="action" value="Continue" id="submit-application">
@@ -28,13 +28,13 @@
                     Submit
                 </button>
             }
-        </form>
+        </he-organisation-form>
     }
     else
     {
         <gds-h2 size="ControlSize.M">Check and submit</gds-h2>
         <p>You must complete all sections before you can submit your application.</p>
-        <form asp-controller="LoanApplicationV2" asp-action="TaskListPost" asp-route-id="@Model.Id" asp-method="post" novalidate>
+        <he-organisation-form asp-controller="LoanApplicationV2" asp-action="TaskListPost" asp-route-id="@Model.Id" asp-method="post" novalidate>
             @if (Model.CanBeSubmitted)
             {
                 <gds-button data-module="govuk-button" name="action" value="Continue" id="submit-application">
@@ -47,16 +47,16 @@
                     Check and submit application
                 </button>
             }
-        </form>
+        </he-organisation-form>
     }
 }
 else
 {
     <gds-h2 size="ControlSize.M">Application submitted</gds-h2>
     <p>If you want to update your application, select the section you want to change.</p>
-    <form asp-controller="LoanApplicationV2" asp-action="TaskListPost" asp-route-id="@Model.Id" asp-method="post" novalidate>
+    <he-organisation-form asp-controller="LoanApplicationV2" asp-action="TaskListPost" asp-route-id="@Model.Id" asp-method="post" novalidate>
         <button class="govuk-button govuk-button--secondary" data-module="govuk-button" type="button" id="submit-application">
             Submit
         </button>
-    </form>
+    </he-organisation-form>
 }
