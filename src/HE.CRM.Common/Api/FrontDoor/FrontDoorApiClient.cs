@@ -4,20 +4,27 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
+using HE.Base.Services;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
+using HE.CRM.Common.Api.Auth;
+using HE.CRM.Common.Api.Auth.AzureAd;
 using HE.CRM.Common.Api.FrontDoor.Contract.Requests;
 using HE.CRM.Common.Api.FrontDoor.Contract.Responses;
 using HE.CRM.Common.Api.FrontDoor.Mappers;
+using HE.CRM.Common.Repositories.Interfaces;
 
 namespace HE.CRM.Common.Api.FrontDoor
 {
-    public sealed class FrontDoorApiClient : IFrontDoorApiClient
+    public sealed class FrontDoorApiClient : CrmService, IFrontDoorApiClient
     {
-        private readonly IApiHttpClient _httpClient;
+        private readonly ApiHttpClient _httpClient;
 
-        public FrontDoorApiClient(IApiHttpClient httpClient)
+        public FrontDoorApiClient(CrmServiceArgs args)
+            : base(args)
         {
-            _httpClient = httpClient;
+            _httpClient = CreateHttpClient(
+                CrmRepositoriesFactory.GetSystem<IEnvironmentVariableRepository>(),
+                CrmServicesFactory.Get<IAzureAdTokenProviderFactory>());
         }
 
         public async Task<bool> CheckProjectExists(Guid organisationId, string projectName, CancellationToken cancellationToken)
@@ -121,6 +128,32 @@ namespace HE.CRM.Common.Api.FrontDoor
                 cancellationToken);
 
             return Guid.Parse(response.Result);
+        }
+
+        public void Dispose()
+        {
+            _httpClient?.Dispose();
+        }
+
+        private static ApiHttpClient CreateHttpClient(
+            IEnvironmentVariableRepository environmentVariables,
+            IAzureAdTokenProviderFactory tokenProviderFactory)
+        {
+            var azureAdAuthConfig = new AzureAdAuthConfig
+            {
+                TenantId = environmentVariables.GetEnvironmentVariableValue(EnvironmentVariables.AzureAd.TenantId),
+                ClientId = environmentVariables.GetEnvironmentVariableValue(EnvironmentVariables.AzureAd.ClientId),
+                ClientSecret = environmentVariables.GetEnvironmentVariableValue(EnvironmentVariables.AzureAd.ClientSecret),
+                Scope = environmentVariables.GetEnvironmentVariableValue(EnvironmentVariables.AzureAd.Scope),
+            };
+            var tokenProvider = tokenProviderFactory.Create(azureAdAuthConfig);
+            var frontDoorApiUrl = environmentVariables.GetEnvironmentVariableValue(EnvironmentVariables.FrontDoorApiBaseUrl);
+            var httpClient = new HttpClient(new BearerTokenAuthorizationHandler(tokenProvider))
+            {
+                BaseAddress = new Uri(frontDoorApiUrl)
+            };
+
+            return new ApiHttpClient(httpClient);
         }
     }
 }

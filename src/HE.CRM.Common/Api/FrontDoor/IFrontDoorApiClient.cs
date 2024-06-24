@@ -2,11 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using HE.Base.Services;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 
 namespace HE.CRM.Common.Api.FrontDoor
 {
-    public interface IFrontDoorApiClient
+    public interface IFrontDoorApiClient : ICrmService, IDisposable
     {
         Task<bool> CheckProjectExists(Guid organisationId, string projectName, CancellationToken cancellationToken);
 

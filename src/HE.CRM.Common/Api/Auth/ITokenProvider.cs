@@ -2,7 +2,7 @@ using System.Threading.Tasks;
 
 namespace HE.CRM.Common.Api.Auth
 {
-    public interface IApiTokenProvider
+    public interface ITokenProvider
     {
         Task<string> GetToken();
     }
