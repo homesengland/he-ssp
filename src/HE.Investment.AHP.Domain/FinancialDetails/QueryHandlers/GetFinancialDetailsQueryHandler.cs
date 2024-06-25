@@ -22,6 +22,7 @@ public class GetFinancialDetailsQueryHandler : IRequestHandler<GetFinancialDetai
     public async Task<Contract.FinancialDetails.FinancialDetails> Handle(GetFinancialDetailsQuery request, CancellationToken cancellationToken)
     {
         var account = await _accountUserContext.GetSelectedAccount();
+
         var financialDetails = await _financialDetailsRepository.GetById(request.ApplicationId, account, cancellationToken);
 
         var financialDetailsDto = new Contract.FinancialDetails.FinancialDetails
@@ -36,6 +37,7 @@ public class GetFinancialDetailsQueryHandler : IRequestHandler<GetFinancialDetai
             SectionStatus = financialDetails.SectionStatus,
             LandAcquisitionStatus = financialDetails.SiteBasicInfo.LandAcquisitionStatus.Value,
             HasFullLandOwnership = financialDetails.SiteBasicInfo.LandAcquisitionStatus.HasFullLandOwnership,
+            IsUnregisteredBody = account.Organisation?.IsUnregisteredBody ?? false,
         };
 
         MapPublicGrants(financialDetailsDto, financialDetails.PublicGrants);
