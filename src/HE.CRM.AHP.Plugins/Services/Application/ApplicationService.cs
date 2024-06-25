@@ -29,6 +29,7 @@ namespace HE.CRM.AHP.Plugins.Services.Application
         private readonly IGovNotifyEmailService _govNotifyEmailService;
         private readonly IAhpProjectRepository _projectRepository;
         private readonly IConsortiumService _consortiumService;
+        private readonly IAccountRepository _accountRepository;
 
         public ApplicationService(CrmServiceArgs args) : base(args)
         {
@@ -43,6 +44,7 @@ namespace HE.CRM.AHP.Plugins.Services.Application
             _govNotifyEmailService = CrmServicesFactory.Get<IGovNotifyEmailService>();
             _projectRepository = CrmRepositoriesFactory.Get<IAhpProjectRepository>();
             _consortiumService = CrmServicesFactory.Get<IConsortiumService>();
+            _accountRepository = CrmRepositoriesFactory.Get<IAccountRepository>();
         }
 
         public void ChangeApplicationStatus(string organisationId, string contactId, string applicationId, int newStatus, string changeReason, bool representationsandwarranties)
@@ -222,9 +224,12 @@ namespace HE.CRM.AHP.Plugins.Services.Application
         public List<AhpApplicationDto> GetApplication(string organisationId, string contactId = null, string FieldsToRetrieve = null, string applicationId = null)
         {
             TracingService.Trace("GetApplication");
+
+            TracingService.Trace(contactId);
             var listOfApplications = new List<AhpApplicationDto>();
             if (string.IsNullOrEmpty(applicationId))
             {
+                TracingService.Trace("1");
                 var additionalFilters = GetFetchXmlConditionForGivenField(applicationId, nameof(invln_scheme.invln_schemeId).ToLower());
                 var contactExternalIdFilter = GetFetchXmlConditionForGivenField(contactId, nameof(Contact.invln_externalid).ToLower());
                 contactExternalIdFilter = GenerateFilterMarksForCondition(contactExternalIdFilter);
@@ -233,15 +238,17 @@ namespace HE.CRM.AHP.Plugins.Services.Application
                 {
                     attributes = GenerateFetchXmlAttributes(FieldsToRetrieve);
                 }
+                TracingService.Trace("2");
                 var applications = _applicationRepository.GetApplicationsForOrganisationAndContact(organisationId, contactExternalIdFilter, attributes, additionalFilters);
                 if (applications.Any())
                 {
+                    TracingService.Trace("3");
                     foreach (var application in applications)
                     {
                         TracingService.Trace($"Status {application.invln_ExternalStatus.Value}");
                         if (application.invln_ExternalStatus.Value == (int)invln_ExternalStatusAHP.Deleted)
                             continue;
-
+                        TracingService.Trace("4");
                         var contact = _contactRepository.GetById(application.invln_contactid.Id, new string[] { Contact.Fields.FirstName, Contact.Fields.LastName, nameof(Contact.invln_externalid).ToLower() });
                         var applicationDto = FillApplicationData(application);
                         string consortiumId = null;
@@ -269,29 +276,38 @@ namespace HE.CRM.AHP.Plugins.Services.Application
             }
             else
             {
+                TracingService.Trace("1a");
                 FieldsToRetrieve += ",invln_contactid";
                 string[] columns = FieldsToRetrieve == null ? null : FieldsToRetrieve.Split(',');
+                TracingService.Trace("1a1");
                 var app = _applicationRepository.GetById(new Guid(applicationId), columns);
+                TracingService.Trace("1a2");
+                // var partner = _accountRepository.GetById(app.invln_organisationid.Id);
+                // var con
                 var contact = _contactRepository.GetById(app.invln_contactid.Id, new string[] { Contact.Fields.FirstName, Contact.Fields.LastName, nameof(Contact.invln_externalid).ToLower() });
-
+                TracingService.Trace("2a");
                 var applicationDto = FillApplicationData(app);
                 string consortiumId = null;
                 if (app.invln_Site != null)
                 {
+                    TracingService.Trace("3a");
                     var site = _siteRepository.GetById(app.invln_Site.Id, invln_Sites.Fields.invln_AHPProjectId);
                     if (site.invln_AHPProjectId != null)
                     {
+                        TracingService.Trace("4a");
                         var ahpProject = _projectRepository.GetById(site.invln_AHPProjectId.Id, invln_ahpproject.Fields.invln_ConsortiumId);
                         if (ahpProject != null && ahpProject.invln_ConsortiumId != null)
                         {
+                            TracingService.Trace("4a");
                             consortiumId = ahpProject.invln_ConsortiumId.Id.ToString();
                         }
                     }
                 }
-
+                TracingService.Trace("5a");
                 if (_consortiumService.CheckAccess(ConsortiumService.Operation.Get, ConsortiumService.RecordType.AHPProject,
                     contact.invln_externalid, null, applicationId, consortiumId, organisationId, null))
                 {
+                    TracingService.Trace("6a");
                     listOfApplications.Add(applicationDto);
                 }
             }
