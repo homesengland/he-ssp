@@ -4,5 +4,5 @@ public static class PagesUrls
 {
     public const string MainPage = "/";
 
-    public const string DashboardPage = "/dashboard";
+    public static string DashboardPage(string organisationId) => $"/{organisationId}/dashboard";
 }

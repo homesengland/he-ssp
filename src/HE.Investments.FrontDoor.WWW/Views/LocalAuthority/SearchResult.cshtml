@@ -3,6 +3,7 @@
 @using SelectList = Microsoft.AspNetCore.Mvc.Rendering.SelectList
 @using HE.Investments.Common.Contract.Pagination
 @using HE.Investments.Common.WWW.Components.PageHeader
+@using HE.Investments.Common.WWW.Extensions
 @using HE.Investments.FrontDoor.Contract.LocalAuthority
 @using HE.Investments.FrontDoor.WWW.Config
 @using HE.Investments.FrontDoor.WWW.Views.LocalAuthority.Const
@@ -19,8 +20,8 @@
     var optional = Context.Request.Query["optional"];
 
     var items = new PaginationResult<SelectListItemViewModel>(
-        Model!.Items.Items.Select(i => new SelectListItemViewModel(
-            Url.Action("LocalAuthorityConfirm", controller, new { projectId = Model.ProjectId, siteId = Model.SiteId, localAuthorityCode = i.Code, redirect, optional }) ?? string.Empty,
+        Model.Items.Items.Select(i => new SelectListItemViewModel(
+            Url.OrganisationAction("LocalAuthorityConfirm", controller, new { projectId = Model.ProjectId, siteId = Model.SiteId, localAuthorityCode = i.Code, redirect, optional }) ?? string.Empty,
             i.Name,
             null)).ToList(),
         Model.Items.CurrentPage,
@@ -41,7 +42,7 @@
         <gds-p>We could not find the details you entered in our records.</gds-p>
         <gds-p>
             If you think you have entered the wrong details, you can
-            <gds-link href="@Url.Action("LocalAuthoritySearch", controller, new { projectId = Model.ProjectId, siteId = Model.SiteId, redirect, optional })">
+            <gds-link href="@Url.OrganisationAction("LocalAuthoritySearch", controller, new { projectId = Model.ProjectId, siteId = Model.SiteId, redirect, optional })">
                 try again using a different name.
             </gds-link>.
         </gds-p>
@@ -50,7 +51,7 @@
     {
         <vc:select-list
             items="@items"
-            paging-navigation-url="@Url.Action("SearchResult", "LocalAuthority", new { siteId = Model.SiteId, projectId = Model.ProjectId, phrase = Model.Phrase, redirect, optional })"
+            paging-navigation-url="@Url.OrganisationAction("SearchResult", "LocalAuthority", new { siteId = Model.SiteId, projectId = Model.ProjectId, phrase = Model.Phrase, redirect, optional })"
             additional-content="@paragraph" />
     }
 

@@ -17,7 +17,7 @@
     <vc:page-header caption="@Model.SiteName" title="@ApplicationPageTitles.Submit"/>
 
     <vc:application-submit-table model="@Model"/>
-    <form asp-controller="Application" asp-action="Submit" asp-method="post" novalidate>
+    <he-organisation-form asp-controller="Application" asp-action="Submit" asp-method="post" novalidate>
         <vc:confirmation-checkbox
             content-component="@(new DynamicComponentViewModel(nameof(RepresentationsAndWarrantiesText)))"
             field-name="@nameof(Model.RepresentationsAndWarranties)"
@@ -26,6 +26,6 @@
 
         <vc:form-button text="Accept and submit"/>
         <vc:return-to-applications-list-link project-id="@Model.ProjectId" />
-    </form>
+    </he-organisation-form>
 
 </div>

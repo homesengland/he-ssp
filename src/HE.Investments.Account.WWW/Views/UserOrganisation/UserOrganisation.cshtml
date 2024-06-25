@@ -3,21 +3,15 @@
 @using HE.Investments.Account.WWW.Views.Shared.Components.ProjectStatusTagComponent
 @using HE.Investments.Common.WWW.Components.ApplicationStatusTagComponent
 @using HE.Investments.Common.WWW.Components.ListCard
-@using Microsoft.FeatureManagement
-@using System.Threading
-@using HE.Investments.Common
-@inject IFeatureManager FeatureManager
 @model HE.Investments.Account.WWW.Models.UserOrganisation.UserOrganisationModel;
 @{
     ViewData["Title"] = OrganisationPageTitles.OrganisationDashboard(Model.OrganisationName);
-    if (await FeatureManager.IsEnabledAsync(FeatureFlags.OrganisationsListImplemented, CancellationToken.None))
-    {
-        ViewBag.Breadcrumbs = BreadcrumbsBuilder
-            .New()
-            .WithOrganisations()
-            .WithOrganisation(Model.OrganisationName)
-            .Build();
-    }
+    var organisationId = Context.Request.RouteValues["organisationId"]?.ToString();
+    ViewBag.Breadcrumbs = BreadcrumbsBuilder
+        .New()
+        .WithOrganisations()
+        .WithOrganisation(Model.OrganisationName, organisationId)
+        .Build();
 }
 
 <div class="govuk-grid-column-full">
@@ -74,7 +68,7 @@
                         programmeToAccess.Appliances.Select(x =>
                             new ListCardItemModel(
                                 x.Name,
-                                x.Status != null ? new DynamicComponentViewModel(nameof(ApplicationStatusTagComponent), new { ApplicationStatus = x.Status }) : null,
+                    x.Status != null ? new DynamicComponentViewModel(nameof(ApplicationStatusTagComponent), new { applicationStatus = x.Status }) : null,
                                 x.Url)).ToList(),
                         Title: programmeToAccess.Programme.Title,
                         ViewAllLabel: programmeToAccess.Programme.ViewAllAppliancesLabel,

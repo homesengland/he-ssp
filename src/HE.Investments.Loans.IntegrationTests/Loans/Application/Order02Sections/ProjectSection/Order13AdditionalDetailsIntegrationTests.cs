@@ -32,7 +32,8 @@ public class Order13AdditionalDetailsIntegrationTests : IntegrationTest
     public async Task Order01_ShouldShowValidationError_WhenNoPurchaseDateWasProvided()
     {
         // given
-        var ownershipPage = await TestClient.NavigateTo(ProjectPagesUrls.AdditionalDetails(_applicationLoanId, _projectId));
+        var ownershipPage =
+            await TestClient.NavigateTo(ProjectPagesUrls.AdditionalDetails(UserOrganisationData.OrganisationId, _applicationLoanId, _projectId));
 
         var continueButton = ownershipPage.GetGdsSubmitButtonById("continue-button");
 
@@ -57,7 +58,8 @@ public class Order13AdditionalDetailsIntegrationTests : IntegrationTest
     public async Task Order02_ShouldShowValidationError_WhenInvalidPurchaseDateWasProvided()
     {
         // given
-        var ownershipPage = await TestClient.NavigateTo(ProjectPagesUrls.AdditionalDetails(_applicationLoanId, _projectId));
+        var ownershipPage =
+            await TestClient.NavigateTo(ProjectPagesUrls.AdditionalDetails(UserOrganisationData.OrganisationId, _applicationLoanId, _projectId));
 
         var continueButton = ownershipPage.GetGdsSubmitButtonById("continue-button");
 
@@ -84,7 +86,8 @@ public class Order13AdditionalDetailsIntegrationTests : IntegrationTest
     public async Task Order03_ShouldShowValidationError_WhenCostWasNotProvided()
     {
         // given
-        var ownershipPage = await TestClient.NavigateTo(ProjectPagesUrls.AdditionalDetails(_applicationLoanId, _projectId));
+        var ownershipPage =
+            await TestClient.NavigateTo(ProjectPagesUrls.AdditionalDetails(UserOrganisationData.OrganisationId, _applicationLoanId, _projectId));
 
         var continueButton = ownershipPage.GetGdsSubmitButtonById("continue-button");
 
@@ -112,7 +115,8 @@ public class Order13AdditionalDetailsIntegrationTests : IntegrationTest
     public async Task Order04_ShouldShowValidationError_WhenCurrentValueWasNotProvided()
     {
         // given
-        var ownershipPage = await TestClient.NavigateTo(ProjectPagesUrls.AdditionalDetails(_applicationLoanId, _projectId));
+        var ownershipPage =
+            await TestClient.NavigateTo(ProjectPagesUrls.AdditionalDetails(UserOrganisationData.OrganisationId, _applicationLoanId, _projectId));
 
         var continueButton = ownershipPage.GetGdsSubmitButtonById("continue-button");
 
@@ -141,7 +145,8 @@ public class Order13AdditionalDetailsIntegrationTests : IntegrationTest
     public async Task Order05_ShouldShowValidationError_WhenNoSourceOfValuationWasSelected()
     {
         // given
-        var ownershipPage = await TestClient.NavigateTo(ProjectPagesUrls.AdditionalDetails(_applicationLoanId, _projectId));
+        var ownershipPage =
+            await TestClient.NavigateTo(ProjectPagesUrls.AdditionalDetails(UserOrganisationData.OrganisationId, _applicationLoanId, _projectId));
 
         var continueButton = ownershipPage.GetGdsSubmitButtonById("continue-button");
 
@@ -149,13 +154,13 @@ public class Order13AdditionalDetailsIntegrationTests : IntegrationTest
 
         // when
         var grantFunding = await TestClient.SubmitButton(
-                continueButton,
-                ($"{nameof(ProjectViewModel.PurchaseDate)}.Day", day),
-                ($"{nameof(ProjectViewModel.PurchaseDate)}.Month", month),
-                ($"{nameof(ProjectViewModel.PurchaseDate)}.Year", year),
-                (nameof(ProjectViewModel.Cost), PoundsTestData.CorrectAmountAsString),
-                (nameof(ProjectViewModel.Value), PoundsTestData.CorrectAmountAsString),
-                (nameof(ProjectViewModel.Source), string.Empty));
+            continueButton,
+            ($"{nameof(ProjectViewModel.PurchaseDate)}.Day", day),
+            ($"{nameof(ProjectViewModel.PurchaseDate)}.Month", month),
+            ($"{nameof(ProjectViewModel.PurchaseDate)}.Year", year),
+            (nameof(ProjectViewModel.Cost), PoundsTestData.CorrectAmountAsString),
+            (nameof(ProjectViewModel.Value), PoundsTestData.CorrectAmountAsString),
+            (nameof(ProjectViewModel.Source), string.Empty));
 
         // then
         grantFunding
@@ -171,7 +176,8 @@ public class Order13AdditionalDetailsIntegrationTests : IntegrationTest
     public async Task Order06_ShouldShowAllValidationErrors_WhenNoData()
     {
         // given
-        var ownershipPage = await TestClient.NavigateTo(ProjectPagesUrls.AdditionalDetails(_applicationLoanId, _projectId));
+        var ownershipPage =
+            await TestClient.NavigateTo(ProjectPagesUrls.AdditionalDetails(UserOrganisationData.OrganisationId, _applicationLoanId, _projectId));
 
         var continueButton = ownershipPage.GetGdsSubmitButtonById("continue-button");
 
@@ -203,7 +209,8 @@ public class Order13AdditionalDetailsIntegrationTests : IntegrationTest
     public async Task Order07_ShouldRedirectToGrantFundingExists_WhenAllDataIsCorrect()
     {
         // given
-        var ownershipPage = await TestClient.NavigateTo(ProjectPagesUrls.AdditionalDetails(_applicationLoanId, _projectId));
+        var ownershipPage =
+            await TestClient.NavigateTo(ProjectPagesUrls.AdditionalDetails(UserOrganisationData.OrganisationId, _applicationLoanId, _projectId));
 
         var continueButton = ownershipPage.GetGdsSubmitButtonById("continue-button");
 

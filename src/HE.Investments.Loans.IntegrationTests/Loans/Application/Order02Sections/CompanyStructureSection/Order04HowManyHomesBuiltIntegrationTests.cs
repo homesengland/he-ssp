@@ -1,11 +1,9 @@
 using System.Diagnostics.CodeAnalysis;
 using AngleSharp.Html.Dom;
 using FluentAssertions;
-using HE.Investments.IntegrationTestsFramework;
 using HE.Investments.Loans.IntegrationTests.IntegrationFramework;
 using HE.Investments.Loans.IntegrationTests.Loans.LoansHelpers.Extensions;
 using HE.Investments.Loans.IntegrationTests.Loans.LoansHelpers.Pages;
-using HE.Investments.Loans.WWW;
 using HE.Investments.TestsUtils.Extensions;
 using Xunit;
 using Xunit.Extensions.Ordering;
@@ -29,12 +27,14 @@ public class Order04HowManyHomesBuiltIntegrationTests : IntegrationTest
     public async Task Order01_ShouldDisplayValidationError_WhenNotNumberIsProvided()
     {
         // given
-        var howManyHomesBuiltPage = await TestClient.NavigateTo(CompanyStructurePagesUrls.HowManyHomesBuilt(_applicationLoanId));
+        var howManyHomesBuiltPage =
+            await TestClient.NavigateTo(CompanyStructurePagesUrls.HowManyHomesBuilt(UserOrganisationData.OrganisationId, _applicationLoanId));
         var continueButton = howManyHomesBuiltPage.GetGdsSubmitButtonById("continue-button");
 
         // when
         howManyHomesBuiltPage = await TestClient.SubmitButton(
-            continueButton, new Dictionary<string, string> { { "HomesBuilt", "NotNumber" } });
+            continueButton,
+            new Dictionary<string, string> { { "HomesBuilt", "NotNumber" } });
 
         // then
         howManyHomesBuiltPage
@@ -54,11 +54,14 @@ public class Order04HowManyHomesBuiltIntegrationTests : IntegrationTest
 
         // when
         var checkYourAnswersPage = await TestClient.SubmitButton(
-            continueButton, new Dictionary<string, string> { { "HomesBuilt", "13" } });
+            continueButton,
+            new Dictionary<string, string> { { "HomesBuilt", "13" } });
 
         // then
         checkYourAnswersPage
             .UrlEndWith(CompanyStructurePagesUrls.CheckYourAnswersSuffix)
-            .GetPageTitle().Should().EndWith("Check your answers");
+            .GetPageTitle()
+            .Should()
+            .EndWith("Check your answers");
     }
 }

@@ -4,11 +4,12 @@
 @using HE.Investments.Common.WWW.Components.FormButton
 @using HE.Investments.Common.WWW.Components.PageHeader
 @using HE.Investments.Common.WWW.Components.RadioList
+@using HE.Investments.Common.WWW.Extensions
 @using HE.Investments.Common.WWW.Helpers
 @model HE.Investments.AHP.Consortium.Contract.ConsortiumDetails
 
 <gds-div-grid-column-two-thirds>
-    <vc:back-link-with-callback url="@Url.Action("Index", "Consortium")"/>
+    <vc:back-link-with-callback url="@Url.OrganisationAction("Index", "Consortium")"/>
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
     <vc:page-header title="@ConsortiumMemberPageTitles.AddMembers" caption="@Model.Programme.Name"/>
 </gds-div-grid-column-two-thirds>
@@ -28,7 +29,7 @@
                         <vc:organisation-details-component street="@organisation.Details.Street" city="@organisation.Details.City" postal-code="@organisation.Details.PostalCode"/>
                     </dt>
                     <dd class="govuk-summary-list__actions">
-                        <gds-link href="@Url.Action("RemoveMember", "ConsortiumMember", new { consortiumId = Model.ConsortiumId.Value, memberId = organisation.OrganisationId.ToString() })">
+                        <gds-link href="@Url.OrganisationAction("RemoveMember", "ConsortiumMember", new { consortiumId = Model.ConsortiumId.Value, memberId = organisation.OrganisationId.ToString() })">
                             Remove
                         </gds-link>
                     </dd>
@@ -39,7 +40,7 @@
 }
 
 <gds-div-grid-column-two-thirds>
-    <form asp-controller="ConsortiumMember" asp-action="AddMembers" asp-method="post" novalidate>
+    <he-organisation-form asp-controller="ConsortiumMember" asp-action="AddMembers" asp-method="post" novalidate>
         <vc:radio-list
             field-name="@(nameof(AreAllMembersAdded))"
             title="Have you added all members to this consortium?"
@@ -48,5 +49,5 @@
 
         <vc:form-button text="Continue"/>
         <vc:return-to-account-link />
-    </form>
+    </he-organisation-form>
 </gds-div-grid-column-two-thirds>

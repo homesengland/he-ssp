@@ -35,9 +35,9 @@ public class Order03FrontDoorProjectSiteQuestions : FrontDoorIntegrationTest
         ProjectData.SwitchIsSiteIdentified();
 
         await TestQuestionPage(
-            ProjectPagesUrl.IdentifiedSite(ProjectData.Id),
+            ProjectPagesUrl.IdentifiedSite(UserOrganisationData.OrganisationId, ProjectData.Id),
             ProjectPageTitles.IdentifiedSite,
-            SitePagesUrl.Name(ProjectData.Id),
+            SitePagesUrl.Name(UserOrganisationData.OrganisationId, ProjectData.Id),
             (nameof(ProjectDetails.IsSiteIdentified), ProjectData.IsSiteIdentified.MapToTrueFalse()));
     }
 
@@ -46,9 +46,9 @@ public class Order03FrontDoorProjectSiteQuestions : FrontDoorIntegrationTest
     public async Task Order02_ProvideSiteName()
     {
         // given
-        var currentPage = await GetCurrentPage(SitePagesUrl.Name(ProjectData.Id));
+        var currentPage = await GetCurrentPage(SitePagesUrl.Name(UserOrganisationData.OrganisationId, ProjectData.Id));
         currentPage
-            .UrlEndWith(SitePagesUrl.Name(ProjectData.Id))
+            .UrlEndWith(SitePagesUrl.Name(UserOrganisationData.OrganisationId, ProjectData.Id))
             .HasTitle(SitePageTitles.Name)
             .HasBackLink(out _)
             .HasSaveAndContinueButton(out var continueButton);
@@ -60,7 +60,7 @@ public class Order03FrontDoorProjectSiteQuestions : FrontDoorIntegrationTest
 
         // then
         SiteData.SetId(nextPage.Url.GetSiteGuidFromUrl());
-        nextPage.UrlEndWith(SitePagesUrl.HomesNumber(ProjectData.Id, SiteData.Id));
+        nextPage.UrlEndWith(SitePagesUrl.HomesNumber(UserOrganisationData.OrganisationId, ProjectData.Id, SiteData.Id));
 
         SaveCurrentPage();
     }
@@ -70,9 +70,9 @@ public class Order03FrontDoorProjectSiteQuestions : FrontDoorIntegrationTest
     public async Task Order03_ProvideHomesNumber()
     {
         await TestQuestionPage(
-            SitePagesUrl.HomesNumber(ProjectData.Id, SiteData.Id),
+            SitePagesUrl.HomesNumber(UserOrganisationData.OrganisationId, ProjectData.Id, SiteData.Id),
             SitePageTitles.HomesNumber,
-            SitePagesUrl.LocalAuthoritySearch(),
+            SitePagesUrl.LocalAuthoritySearch(UserOrganisationData.OrganisationId),
             (nameof(SiteDetails.HomesNumber), SiteData.HomesNumber.ToString(CultureInfo.InvariantCulture)));
     }
 
@@ -81,9 +81,9 @@ public class Order03FrontDoorProjectSiteQuestions : FrontDoorIntegrationTest
     public async Task Order04_SearchLocalAuthority()
     {
         // given
-        var currentPage = await GetCurrentPage(SitePagesUrl.LocalAuthoritySearch());
+        var currentPage = await GetCurrentPage(SitePagesUrl.LocalAuthoritySearch(UserOrganisationData.OrganisationId));
         currentPage
-            .UrlWithoutQueryEndsWith(SitePagesUrl.LocalAuthoritySearch())
+            .UrlWithoutQueryEndsWith(SitePagesUrl.LocalAuthoritySearch(UserOrganisationData.OrganisationId))
             .HasTitle(LocalAuthorityPageTitles.SearchForSite)
             .HasBackLink(out _)
             .HasSubmitButton(out var continueButton, "Search");
@@ -95,7 +95,7 @@ public class Order03FrontDoorProjectSiteQuestions : FrontDoorIntegrationTest
 
         // then
         nextPage
-            .UrlWithoutQueryEndsWith(SitePagesUrl.LocalAuthorityResult())
+            .UrlWithoutQueryEndsWith(SitePagesUrl.LocalAuthorityResult(UserOrganisationData.OrganisationId))
             .HasTitle(LocalAuthorityPageTitles.SearchResult)
             .HasBackLink(out _);
 
@@ -107,9 +107,9 @@ public class Order03FrontDoorProjectSiteQuestions : FrontDoorIntegrationTest
     public async Task Order05_SelectLocalAuthority()
     {
         // given
-        var currentPage = await GetCurrentPage(SitePagesUrl.LocalAuthorityResult());
+        var currentPage = await GetCurrentPage(SitePagesUrl.LocalAuthorityResult(UserOrganisationData.OrganisationId));
         var confirmLocalAuthorityLink = currentPage
-            .UrlWithoutQueryEndsWith(SitePagesUrl.LocalAuthorityResult())
+            .UrlWithoutQueryEndsWith(SitePagesUrl.LocalAuthorityResult(UserOrganisationData.OrganisationId))
             .HasTitle(LocalAuthorityPageTitles.SearchResult)
             .HasBackLink(out _)
             .GetLinkByTestId(SiteData.LocalAuthorityName.ToIdTag());
@@ -119,7 +119,7 @@ public class Order03FrontDoorProjectSiteQuestions : FrontDoorIntegrationTest
 
         // then
         nextPage
-            .UrlEndWith(SitePagesUrl.LocalAuthorityConfirm(ProjectData.Id, SiteData.Id, SiteData.LocalAuthorityCode))
+            .UrlEndWith(SitePagesUrl.LocalAuthorityConfirm(UserOrganisationData.OrganisationId, ProjectData.Id, SiteData.Id, SiteData.LocalAuthorityCode))
             .HasTitle(SitePageTitles.LocalAuthorityConfirm)
             .HasBackLink(out _)
             .HasSaveAndContinueButton();
@@ -132,9 +132,9 @@ public class Order03FrontDoorProjectSiteQuestions : FrontDoorIntegrationTest
     public async Task Order06_ConfirmLocalAuthority()
     {
         await TestQuestionPage(
-            SitePagesUrl.LocalAuthorityConfirmSuffix(ProjectData.Id, SiteData.Id),
+            SitePagesUrl.LocalAuthorityConfirmSuffix(UserOrganisationData.OrganisationId, ProjectData.Id, SiteData.Id),
             SitePageTitles.LocalAuthorityConfirm,
-            SitePagesUrl.PlanningStatus(ProjectData.Id, SiteData.Id),
+            SitePagesUrl.PlanningStatus(UserOrganisationData.OrganisationId, ProjectData.Id, SiteData.Id),
             ("IsConfirmed", "True"));
     }
 
@@ -143,9 +143,9 @@ public class Order03FrontDoorProjectSiteQuestions : FrontDoorIntegrationTest
     public async Task Order06_ProvidePlanningStatus()
     {
         await TestQuestionPage(
-            SitePagesUrl.PlanningStatus(ProjectData.Id, SiteData.Id),
+            SitePagesUrl.PlanningStatus(UserOrganisationData.OrganisationId, ProjectData.Id, SiteData.Id),
             SitePageTitles.PlanningStatus,
-            SitePagesUrl.AddAnotherSite(ProjectData.Id, SiteData.Id),
+            SitePagesUrl.AddAnotherSite(UserOrganisationData.OrganisationId, ProjectData.Id, SiteData.Id),
             (nameof(SiteDetails.PlanningStatus), SiteData.PlanningStatus.ToString()));
     }
 
@@ -154,9 +154,9 @@ public class Order03FrontDoorProjectSiteQuestions : FrontDoorIntegrationTest
     public async Task Order07_ProvideAnotherSite()
     {
         await TestQuestionPage(
-            SitePagesUrl.AddAnotherSite(ProjectData.Id, SiteData.Id),
+            SitePagesUrl.AddAnotherSite(UserOrganisationData.OrganisationId, ProjectData.Id, SiteData.Id),
             SitePageTitles.AddAnotherSite,
-            ProjectPagesUrl.Progress(ProjectData.Id),
+            ProjectPagesUrl.Progress(UserOrganisationData.OrganisationId, ProjectData.Id),
             (nameof(SiteDetails.AddAnotherSite), SiteData.AddAnotherSite.MapToCommonResponse()));
     }
 
@@ -165,9 +165,9 @@ public class Order03FrontDoorProjectSiteQuestions : FrontDoorIntegrationTest
     public async Task Order08_ProvideProgress()
     {
         await TestQuestionPage(
-            ProjectPagesUrl.Progress(ProjectData.Id),
+            ProjectPagesUrl.Progress(UserOrganisationData.OrganisationId, ProjectData.Id),
             ProjectPageTitles.Progress,
-            ProjectPagesUrl.RequiresFunding(ProjectData.Id),
+            ProjectPagesUrl.RequiresFunding(UserOrganisationData.OrganisationId, ProjectData.Id),
             (nameof(ProjectDetails.IsSupportRequired), ProjectData.IsSupportRequired.MapToTrueFalse()));
     }
 
@@ -176,9 +176,9 @@ public class Order03FrontDoorProjectSiteQuestions : FrontDoorIntegrationTest
     public async Task Order09_ProvideRequiresFunding()
     {
         await TestQuestionPage(
-            ProjectPagesUrl.RequiresFunding(ProjectData.Id),
+            ProjectPagesUrl.RequiresFunding(UserOrganisationData.OrganisationId, ProjectData.Id),
             ProjectPageTitles.RequiresFunding,
-            ProjectPagesUrl.FundingAmount(ProjectData.Id),
+            ProjectPagesUrl.FundingAmount(UserOrganisationData.OrganisationId, ProjectData.Id),
             (nameof(ProjectDetails.IsFundingRequired), ProjectData.IsFundingRequired.MapToTrueFalse()));
     }
 
@@ -187,9 +187,9 @@ public class Order03FrontDoorProjectSiteQuestions : FrontDoorIntegrationTest
     public async Task Order10_ProvideFundingAmount()
     {
         await TestQuestionPage(
-            ProjectPagesUrl.FundingAmount(ProjectData.Id),
+            ProjectPagesUrl.FundingAmount(UserOrganisationData.OrganisationId, ProjectData.Id),
             ProjectPageTitles.FundingAmount,
-            ProjectPagesUrl.Profit(ProjectData.Id),
+            ProjectPagesUrl.Profit(UserOrganisationData.OrganisationId, ProjectData.Id),
             (nameof(ProjectDetails.RequiredFunding), ProjectData.RequiredFunding.ToString()));
     }
 
@@ -198,9 +198,9 @@ public class Order03FrontDoorProjectSiteQuestions : FrontDoorIntegrationTest
     public async Task Order11_ProvideProfit()
     {
         await TestQuestionPage(
-            ProjectPagesUrl.Profit(ProjectData.Id),
+            ProjectPagesUrl.Profit(UserOrganisationData.OrganisationId, ProjectData.Id),
             ProjectPageTitles.Profit,
-            ProjectPagesUrl.ExpectedStart(ProjectData.Id),
+            ProjectPagesUrl.ExpectedStart(UserOrganisationData.OrganisationId, ProjectData.Id),
             (nameof(ProjectDetails.IsProfit), ProjectData.IsProfit.MapToTrueFalse()));
     }
 
@@ -209,9 +209,9 @@ public class Order03FrontDoorProjectSiteQuestions : FrontDoorIntegrationTest
     public async Task Order12_ProvideExpectedStart()
     {
         await TestQuestionPage(
-            ProjectPagesUrl.ExpectedStart(ProjectData.Id),
+            ProjectPagesUrl.ExpectedStart(UserOrganisationData.OrganisationId, ProjectData.Id),
             ProjectPageTitles.ExpectedStart,
-            ProjectPagesUrl.CheckAnswers(ProjectData.Id),
+            ProjectPagesUrl.CheckAnswers(UserOrganisationData.OrganisationId, ProjectData.Id),
             ("ExpectedStartDate.Month", ProjectData.ExpectedStartDate.Month.ToString(CultureInfo.InvariantCulture)),
             ("ExpectedStartDate.Year", ProjectData.ExpectedStartDate.Year.ToString(CultureInfo.InvariantCulture)));
     }
@@ -221,9 +221,9 @@ public class Order03FrontDoorProjectSiteQuestions : FrontDoorIntegrationTest
     public async Task Order13_CheckAnswers()
     {
         // given
-        var checkAnswersPage = await GetCurrentPage(ProjectPagesUrl.CheckAnswers(ProjectData.Id));
+        var checkAnswersPage = await GetCurrentPage(ProjectPagesUrl.CheckAnswers(UserOrganisationData.OrganisationId, ProjectData.Id));
         checkAnswersPage
-            .UrlEndWith(ProjectPagesUrl.CheckAnswers(ProjectData.Id))
+            .UrlEndWith(ProjectPagesUrl.CheckAnswers(UserOrganisationData.OrganisationId, ProjectData.Id))
             .HasTitle(ProjectPageTitles.CheckAnswers)
             .HasBackLink(out _);
 
@@ -255,9 +255,9 @@ public class Order03FrontDoorProjectSiteQuestions : FrontDoorIntegrationTest
     public async Task Order14_CheckAnswersChangeSitePlanningStatusAnswer()
     {
         // given
-        var checkAnswersPage = await GetCurrentPage(ProjectPagesUrl.CheckAnswers(ProjectData.Id));
+        var checkAnswersPage = await GetCurrentPage(ProjectPagesUrl.CheckAnswers(UserOrganisationData.OrganisationId, ProjectData.Id));
         var summary = checkAnswersPage
-            .UrlEndWith(ProjectPagesUrl.CheckAnswers(ProjectData.Id))
+            .UrlEndWith(ProjectPagesUrl.CheckAnswers(UserOrganisationData.OrganisationId, ProjectData.Id))
             .HasTitle(ProjectPageTitles.CheckAnswers)
             .GetSummaryListItems();
 
@@ -268,7 +268,7 @@ public class Order03FrontDoorProjectSiteQuestions : FrontDoorIntegrationTest
         var planningStatusPage = await TestClient.NavigateTo(summary["Planning status"].ChangeAnswerLink!);
 
         // then
-        planningStatusPage.UrlWithoutQueryEndsWith(SitePagesUrl.PlanningStatus(ProjectData.Id, SiteData.Id))
+        planningStatusPage.UrlWithoutQueryEndsWith(SitePagesUrl.PlanningStatus(UserOrganisationData.OrganisationId, ProjectData.Id, SiteData.Id))
             .HasTitle(SitePageTitles.PlanningStatus);
         SaveCurrentPage();
     }
@@ -279,9 +279,9 @@ public class Order03FrontDoorProjectSiteQuestions : FrontDoorIntegrationTest
     {
         var newPlanningStatus = SiteData.NewPlanningStatus;
         await TestQuestionPage(
-            SitePagesUrl.PlanningStatus(ProjectData.Id, SiteData.Id),
+            SitePagesUrl.PlanningStatus(UserOrganisationData.OrganisationId, ProjectData.Id, SiteData.Id),
             SitePageTitles.PlanningStatus,
-            ProjectPagesUrl.CheckAnswers(ProjectData.Id),
+            ProjectPagesUrl.CheckAnswers(UserOrganisationData.OrganisationId, ProjectData.Id),
             (nameof(SiteDetails.PlanningStatus), newPlanningStatus.ToString()));
     }
 
@@ -290,9 +290,9 @@ public class Order03FrontDoorProjectSiteQuestions : FrontDoorIntegrationTest
     public async Task Order16_CheckAnswersHasValidSummaryAfterChangingPlanningStatus()
     {
         // given
-        var checkAnswersPage = await GetCurrentPage(ProjectPagesUrl.CheckAnswers(ProjectData.Id));
+        var checkAnswersPage = await GetCurrentPage(ProjectPagesUrl.CheckAnswers(UserOrganisationData.OrganisationId, ProjectData.Id));
         checkAnswersPage
-            .UrlWithoutQueryEndsWith(ProjectPagesUrl.CheckAnswers(ProjectData.Id))
+            .UrlWithoutQueryEndsWith(ProjectPagesUrl.CheckAnswers(UserOrganisationData.OrganisationId, ProjectData.Id))
             .HasTitle(ProjectPageTitles.CheckAnswers);
 
         // when
@@ -305,9 +305,9 @@ public class Order03FrontDoorProjectSiteQuestions : FrontDoorIntegrationTest
     public async Task Order17_RedirectToAddAnotherSite()
     {
         // given
-        var checkAnswersPage = await GetCurrentPage(ProjectPagesUrl.CheckAnswers(ProjectData.Id));
+        var checkAnswersPage = await GetCurrentPage(ProjectPagesUrl.CheckAnswers(UserOrganisationData.OrganisationId, ProjectData.Id));
         var addAnotherSiteLink = checkAnswersPage
-            .UrlWithoutQueryEndsWith(ProjectPagesUrl.CheckAnswers(ProjectData.Id))
+            .UrlWithoutQueryEndsWith(ProjectPagesUrl.CheckAnswers(UserOrganisationData.OrganisationId, ProjectData.Id))
             .HasTitle(ProjectPageTitles.CheckAnswers)
             .GetLinkByTestId("add-another-site");
 
@@ -316,7 +316,7 @@ public class Order03FrontDoorProjectSiteQuestions : FrontDoorIntegrationTest
 
         // then
         nextPage
-            .UrlWithoutQueryEndsWith(SitePagesUrl.Name(ProjectData.Id))
+            .UrlWithoutQueryEndsWith(SitePagesUrl.Name(UserOrganisationData.OrganisationId, ProjectData.Id))
             .HasTitle(SitePageTitles.Name)
             .HasBackLink(out _)
             .HasSaveAndContinueButton();
@@ -329,9 +329,9 @@ public class Order03FrontDoorProjectSiteQuestions : FrontDoorIntegrationTest
     public async Task Order18_ProvideSecondSiteName()
     {
         // given
-        var currentPage = await GetCurrentPage(SitePagesUrl.Name(ProjectData.Id));
+        var currentPage = await GetCurrentPage(SitePagesUrl.Name(UserOrganisationData.OrganisationId, ProjectData.Id));
         currentPage
-            .UrlWithoutQueryEndsWith(SitePagesUrl.Name(ProjectData.Id))
+            .UrlWithoutQueryEndsWith(SitePagesUrl.Name(UserOrganisationData.OrganisationId, ProjectData.Id))
             .HasTitle(SitePageTitles.Name)
             .HasBackLink(out _)
             .HasSaveAndContinueButton(out var continueButton);
@@ -343,7 +343,7 @@ public class Order03FrontDoorProjectSiteQuestions : FrontDoorIntegrationTest
 
         // then
         SecondSiteData.SetId(nextPage.Url.GetSiteGuidFromUrl());
-        nextPage.UrlWithoutQueryEndsWith(SitePagesUrl.HomesNumber(ProjectData.Id, SecondSiteData.Id));
+        nextPage.UrlWithoutQueryEndsWith(SitePagesUrl.HomesNumber(UserOrganisationData.OrganisationId, ProjectData.Id, SecondSiteData.Id));
 
         SaveCurrentPage();
     }
@@ -353,9 +353,9 @@ public class Order03FrontDoorProjectSiteQuestions : FrontDoorIntegrationTest
     public async Task Order19_ProvideSecondSiteHomesNumber()
     {
         await TestQuestionPage(
-            SitePagesUrl.HomesNumber(ProjectData.Id, SecondSiteData.Id),
+            SitePagesUrl.HomesNumber(UserOrganisationData.OrganisationId, ProjectData.Id, SecondSiteData.Id),
             SitePageTitles.HomesNumber,
-            SitePagesUrl.LocalAuthoritySearch(),
+            SitePagesUrl.LocalAuthoritySearch(UserOrganisationData.OrganisationId),
             (nameof(SiteDetails.HomesNumber), SecondSiteData.HomesNumber.ToString(CultureInfo.InvariantCulture)));
     }
 
@@ -365,9 +365,9 @@ public class Order03FrontDoorProjectSiteQuestions : FrontDoorIntegrationTest
     public async Task Order20_SecondSiteSearchLocalAuthority()
     {
         // given
-        var currentPage = await GetCurrentPage(SitePagesUrl.LocalAuthoritySearch());
+        var currentPage = await GetCurrentPage(SitePagesUrl.LocalAuthoritySearch(UserOrganisationData.OrganisationId));
         currentPage
-            .UrlWithoutQueryEndsWith(SitePagesUrl.LocalAuthoritySearch())
+            .UrlWithoutQueryEndsWith(SitePagesUrl.LocalAuthoritySearch(UserOrganisationData.OrganisationId))
             .HasTitle(LocalAuthorityPageTitles.SearchForSite)
             .HasBackLink(out _)
             .HasSubmitButton(out var continueButton, "Search");
@@ -379,7 +379,7 @@ public class Order03FrontDoorProjectSiteQuestions : FrontDoorIntegrationTest
 
         // then
         nextPage
-            .UrlWithoutQueryEndsWith(SitePagesUrl.LocalAuthorityResult())
+            .UrlWithoutQueryEndsWith(SitePagesUrl.LocalAuthorityResult(UserOrganisationData.OrganisationId))
             .HasTitle(LocalAuthorityPageTitles.SearchResult)
             .HasBackLink(out _);
 
@@ -391,9 +391,9 @@ public class Order03FrontDoorProjectSiteQuestions : FrontDoorIntegrationTest
     public async Task Order21_SecondSiteSelectLocalAuthority()
     {
         // given
-        var currentPage = await GetCurrentPage(SitePagesUrl.LocalAuthorityResult());
+        var currentPage = await GetCurrentPage(SitePagesUrl.LocalAuthorityResult(UserOrganisationData.OrganisationId));
         var confirmLocalAuthorityLink = currentPage
-            .UrlWithoutQueryEndsWith(SitePagesUrl.LocalAuthorityResult())
+            .UrlWithoutQueryEndsWith(SitePagesUrl.LocalAuthorityResult(UserOrganisationData.OrganisationId))
             .HasTitle(LocalAuthorityPageTitles.SearchResult)
             .HasBackLink(out _)
             .GetLinkByTestId(SecondSiteData.LocalAuthorityName.ToIdTag());
@@ -403,7 +403,7 @@ public class Order03FrontDoorProjectSiteQuestions : FrontDoorIntegrationTest
 
         // then
         nextPage
-            .UrlWithoutQueryEndsWith(SitePagesUrl.LocalAuthorityConfirmSuffix(ProjectData.Id, SecondSiteData.Id))
+            .UrlWithoutQueryEndsWith(SitePagesUrl.LocalAuthorityConfirmSuffix(UserOrganisationData.OrganisationId, ProjectData.Id, SecondSiteData.Id))
             .HasTitle(SitePageTitles.LocalAuthorityConfirm)
             .HasBackLink(out _)
             .HasSaveAndContinueButton();
@@ -416,9 +416,9 @@ public class Order03FrontDoorProjectSiteQuestions : FrontDoorIntegrationTest
     public async Task Order22_SecondSiteConfirmLocalAuthority()
     {
         await TestQuestionPage(
-            SitePagesUrl.LocalAuthorityConfirmSuffix(ProjectData.Id, SecondSiteData.Id),
+            SitePagesUrl.LocalAuthorityConfirmSuffix(UserOrganisationData.OrganisationId, ProjectData.Id, SecondSiteData.Id),
             SitePageTitles.LocalAuthorityConfirm,
-            SitePagesUrl.PlanningStatus(ProjectData.Id, SecondSiteData.Id),
+            SitePagesUrl.PlanningStatus(UserOrganisationData.OrganisationId, ProjectData.Id, SecondSiteData.Id),
             ("IsConfirmed", "True"));
     }
 
@@ -427,9 +427,9 @@ public class Order03FrontDoorProjectSiteQuestions : FrontDoorIntegrationTest
     public async Task Order23_SecondSiteProvidePlanningStatus()
     {
         await TestQuestionPage(
-            SitePagesUrl.PlanningStatus(ProjectData.Id, SecondSiteData.Id),
+            SitePagesUrl.PlanningStatus(UserOrganisationData.OrganisationId, ProjectData.Id, SecondSiteData.Id),
             SitePageTitles.PlanningStatus,
-            ProjectPagesUrl.CheckAnswers(ProjectData.Id),
+            ProjectPagesUrl.CheckAnswers(UserOrganisationData.OrganisationId, ProjectData.Id),
             (nameof(SiteDetails.PlanningStatus), SiteData.PlanningStatus.ToString()));
     }
 
@@ -438,9 +438,9 @@ public class Order03FrontDoorProjectSiteQuestions : FrontDoorIntegrationTest
     public async Task Order24_CheckAnswersWithSecondSite()
     {
         // given
-        var checkAnswersPage = await GetCurrentPage(ProjectPagesUrl.CheckAnswers(ProjectData.Id));
+        var checkAnswersPage = await GetCurrentPage(ProjectPagesUrl.CheckAnswers(UserOrganisationData.OrganisationId, ProjectData.Id));
         checkAnswersPage
-            .UrlWithoutQueryEndsWith(ProjectPagesUrl.CheckAnswers(ProjectData.Id))
+            .UrlWithoutQueryEndsWith(ProjectPagesUrl.CheckAnswers(UserOrganisationData.OrganisationId, ProjectData.Id))
             .HasTitle(ProjectPageTitles.CheckAnswers)
             .HasBackLink(out _);
 
@@ -455,9 +455,9 @@ public class Order03FrontDoorProjectSiteQuestions : FrontDoorIntegrationTest
     public async Task Order25_RedirectToRemoveSite()
     {
         // given
-        var checkAnswersPage = await GetCurrentPage(ProjectPagesUrl.CheckAnswers(ProjectData.Id));
+        var checkAnswersPage = await GetCurrentPage(ProjectPagesUrl.CheckAnswers(UserOrganisationData.OrganisationId, ProjectData.Id));
         var removeSiteLink = checkAnswersPage
-            .UrlWithoutQueryEndsWith(ProjectPagesUrl.CheckAnswers(ProjectData.Id))
+            .UrlWithoutQueryEndsWith(ProjectPagesUrl.CheckAnswers(UserOrganisationData.OrganisationId, ProjectData.Id))
             .HasTitle(ProjectPageTitles.CheckAnswers)
             .GetLinkByTestId($"{SecondSiteData.Name}-remove-site");
 
@@ -466,7 +466,7 @@ public class Order03FrontDoorProjectSiteQuestions : FrontDoorIntegrationTest
 
         // then
         nextPage
-            .UrlWithoutQueryEndsWith(SitePagesUrl.Remove(ProjectData.Id, SecondSiteData.Id))
+            .UrlWithoutQueryEndsWith(SitePagesUrl.Remove(UserOrganisationData.OrganisationId, ProjectData.Id, SecondSiteData.Id))
             .HasTitle(SitePageTitles.Remove)
             .HasBackLink(out _)
             .HasSaveAndContinueButton();
@@ -479,9 +479,9 @@ public class Order03FrontDoorProjectSiteQuestions : FrontDoorIntegrationTest
     public async Task Order26_RemoveSite()
     {
         await TestQuestionPage(
-            SitePagesUrl.Remove(ProjectData.Id, SecondSiteData.Id),
+            SitePagesUrl.Remove(UserOrganisationData.OrganisationId, ProjectData.Id, SecondSiteData.Id),
             SitePageTitles.Remove,
-            ProjectPagesUrl.CheckAnswers(ProjectData.Id),
+            ProjectPagesUrl.CheckAnswers(UserOrganisationData.OrganisationId, ProjectData.Id),
             (nameof(SiteDetails.RemoveSiteAnswer), RemoveSiteAnswer.Yes.ToString()));
     }
 
@@ -490,9 +490,9 @@ public class Order03FrontDoorProjectSiteQuestions : FrontDoorIntegrationTest
     public async Task Order27_CheckAnswersWithoutSite()
     {
         // given
-        var checkAnswersPage = await GetCurrentPage(ProjectPagesUrl.CheckAnswers(ProjectData.Id));
+        var checkAnswersPage = await GetCurrentPage(ProjectPagesUrl.CheckAnswers(UserOrganisationData.OrganisationId, ProjectData.Id));
         checkAnswersPage
-            .UrlWithoutQueryEndsWith(ProjectPagesUrl.CheckAnswers(ProjectData.Id))
+            .UrlWithoutQueryEndsWith(ProjectPagesUrl.CheckAnswers(UserOrganisationData.OrganisationId, ProjectData.Id))
             .HasTitle(ProjectPageTitles.CheckAnswers)
             .HasBackLink(out _);
 
@@ -507,9 +507,9 @@ public class Order03FrontDoorProjectSiteQuestions : FrontDoorIntegrationTest
     public async Task Order28_CheckAnswersCompleteProject()
     {
         // given
-        var currentPage = await TestClient.NavigateTo(ProjectPagesUrl.CheckAnswers(ProjectData.Id));
+        var currentPage = await TestClient.NavigateTo(ProjectPagesUrl.CheckAnswers(UserOrganisationData.OrganisationId, ProjectData.Id));
         var continueButton = currentPage
-            .UrlEndWith(ProjectPagesUrl.CheckAnswers(ProjectData.Id))
+            .UrlEndWith(ProjectPagesUrl.CheckAnswers(UserOrganisationData.OrganisationId, ProjectData.Id))
             .HasTitle(ProjectPageTitles.CheckAnswers)
             .GetSubmitButton("Accept and submit");
 

@@ -1,3 +1,4 @@
+@using HE.Investments.Common.WWW.Extensions
 @using HE.Investments.Loans.WWW.Helpers
 @using HE.Investments.Loans.WWW.Models
 @using HE.Investments.Loans.WWW.Extensions
@@ -12,7 +13,7 @@
            {
                { "Title", "Gross Development Value" },
                { "Value", CurrencyHelper.DisplayPoundsPences(Model.GrossDevelopmentValue) },
-               { "Link", Url.Action("GrossDevelopmentValue", "FundingV2", new { id,  redirect = "CheckAnswers" }) },
+               { "Link", Url.OrganisationAction("GrossDevelopmentValue", "FundingV2", new { id,  redirect = "CheckAnswers" }) },
                { "LinkId", "gross-development-value-change"},
                { "IsEditable", Model.IsEditable() }
            })
@@ -21,7 +22,7 @@
            {
                { "Title", "Total project costs" },
                { "Value", CurrencyHelper.DisplayPoundsPences(Model.TotalCosts) },
-               { "Link", Url.Action("EstimatedTotalCosts", "FundingV2", new { id,  redirect = "CheckAnswers" }) },
+               { "Link", Url.OrganisationAction("EstimatedTotalCosts", "FundingV2", new { id,  redirect = "CheckAnswers" }) },
                { "LinkId", "estimated-total-costs-change"},
                { "IsEditable", Model.IsEditable() }
 
@@ -31,7 +32,7 @@
            {
                { "Title", "Abnormal costs" },
                { "Value", LabelHelper.GetSummaryLabel(Model.AbnormalCosts, Model.AbnormalCostsInfo) },
-               { "Link", Url.Action("AbnormalCosts", "FundingV2", new { id,  redirect = "CheckAnswers" }) },
+               { "Link", Url.OrganisationAction("AbnormalCosts", "FundingV2", new { id,  redirect = "CheckAnswers" }) },
                { "LinkId", "abnormal-costs-change"},
                { "IsEditable", Model.IsEditable() }
            })
@@ -40,7 +41,7 @@
            {
                { "Title", "Private sector funding" },
                { "Value", LabelHelper.GetSummaryLabel(Model.PrivateSectorFunding, Model.PrivateSectorFunding == "Yes" ? Model.PrivateSectorFundingResult : Model.PrivateSectorFundingReason) },
-               { "Link", Url.Action("PrivateSectorFunding", "FundingV2", new { id,  redirect = "CheckAnswers" }) },
+               { "Link", Url.OrganisationAction("PrivateSectorFunding", "FundingV2", new { id,  redirect = "CheckAnswers" }) },
                { "LinkId", "private-sector-funding-change"},
                { "IsEditable", Model.IsEditable() }
            })
@@ -49,7 +50,7 @@
            {
                { "Title", "Refinance or repay" },
                { "Value", FormOption.LoanResolution.GetSummaryLabel(Model.Refinance, Model.RefinanceInfo) },
-               { "Link", Url.Action("RepaymentSystem", "FundingV2", new { id,  redirect = "CheckAnswers" }) },
+               { "Link", Url.OrganisationAction("RepaymentSystem", "FundingV2", new { id,  redirect = "CheckAnswers" }) },
                { "LinkId", "repayment-system-change"},
                { "IsEditable", Model.IsEditable() }
            })
@@ -58,7 +59,7 @@
            {
                { "Title", "Additional projects" },
                { "Value", Model.AdditionalProjects },
-               { "Link", Url.Action("AdditionalProjects", "FundingV2", new { id,  redirect = "CheckAnswers" }) },
+               { "Link", Url.OrganisationAction("AdditionalProjects", "FundingV2", new { id,  redirect = "CheckAnswers" }) },
                { "LinkId", "additional-projects-change"},
                { "IsEditable", Model.IsEditable() }
            })

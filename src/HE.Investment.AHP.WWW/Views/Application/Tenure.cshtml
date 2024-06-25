@@ -5,6 +5,7 @@
 @using HE.Investments.Common.WWW.Components.RadioList
 @using HE.Investment.AHP.WWW.Extensions
 @using HE.Investment.AHP.WWW.Config
+@using HE.Investments.Common.WWW.Extensions
 @inject IAhpExternalLinks ExternalLinks
 @model HE.Investment.AHP.WWW.Models.Application.ApplicationBasicModel
 
@@ -12,9 +13,9 @@
     ViewData["Title"] = "Application tenure";
 }
 <gds-div-grid-column-two-thirds>
-    <vc:back-link-with-callback url="@Url.Action("Name", "Application", new { applicationName = Model.Name, siteId = this.GetSiteIdFromRoute() })"/>
+    <vc:back-link-with-callback url="@Url.OrganisationAction("Name", "Application", new { applicationName = Model.Name, siteId = this.GetSiteIdFromRoute() })"/>
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
-    <form asp-controller="Application" asp-action="Tenure" asp-method="post" asp-route-applicationName="@Model.Name" novalidate>
+    <he-organisation-form asp-controller="Application" asp-action="Tenure" asp-method="post" asp-route-applicationName="@Model.Name" novalidate>
         <vc:page-header caption="@Model.Name" title="@ApplicationPageTitles.Tenure"/>
 
         @Html.HiddenFor(m => m.Name)
@@ -34,6 +35,6 @@
 
         <vc:form-button/>
         <vc:return-to-project-link project-id="@Model.ProjectId"/>
-    </form>
+    </he-organisation-form>
 
 </gds-div-grid-column-two-thirds>

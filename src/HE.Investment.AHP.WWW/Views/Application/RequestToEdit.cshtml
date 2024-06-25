@@ -14,7 +14,7 @@
     <vc:ahp-workflow-back-button current-page="@ApplicationWorkflowState.RequestToEdit"/>
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
 
-    <form asp-controller="Application" asp-action="RequestToEdit" asp-method="post" asp-route-applicationName="@Model.ApplicationName" novalidate>
+    <he-organisation-form asp-controller="Application" asp-action="RequestToEdit" asp-method="post" asp-route-applicationName="@Model.ApplicationName" novalidate>
         <vc:page-header caption="@Model.ApplicationName"/>
         @Html.HiddenFor(m => Model.ApplicationName)
 
@@ -26,5 +26,5 @@
             hint="You’ll be notified once your Growth Manager has referred your application back to you."/>
 
         <vc:form-button text="Request to edit"/>
-    </form>
+    </he-organisation-form>
 </gds-div-grid-column-two-thirds>

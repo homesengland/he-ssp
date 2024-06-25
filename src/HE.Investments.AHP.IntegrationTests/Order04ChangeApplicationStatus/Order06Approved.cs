@@ -27,7 +27,7 @@ public class Order06Approved : AhpIntegrationTest
         await ChangeApplicationStatus(ApplicationData.ApplicationId, ApplicationStatus.Approved);
 
         // when
-        var taskListPage = await TestClient.NavigateTo(ApplicationPagesUrl.TaskList(ApplicationData.ApplicationId));
+        var taskListPage = await TestClient.NavigateTo(ApplicationPagesUrl.TaskList(UserOrganisationData.OrganisationId, ApplicationData.ApplicationId));
 
         // then
         taskListPage

@@ -1,8 +1,9 @@
+@using HE.Investments.Common.WWW.Extensions
 @model string;
 
 <div>
     <gds-link class="govuk-link--no-visited-state"
-              href="@Url.Action("Details", "Project", new { projectId = Model })">
+              href="@Url.OrganisationAction("Details", "Project", new { projectId = Model })">
         Return to your project
     </gds-link>
 </div>

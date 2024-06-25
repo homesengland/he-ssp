@@ -1,12 +1,10 @@
 using System.Diagnostics.CodeAnalysis;
 using HE.Investments.Common.Messages;
-using HE.Investments.IntegrationTestsFramework;
 using HE.Investments.Loans.Common.Tests.TestData;
 using HE.Investments.Loans.Common.Utils.Constants.FormOption;
 using HE.Investments.Loans.IntegrationTests.IntegrationFramework;
 using HE.Investments.Loans.IntegrationTests.Loans.LoansHelpers.Extensions;
 using HE.Investments.Loans.IntegrationTests.Loans.LoansHelpers.Pages;
-using HE.Investments.Loans.WWW;
 using HE.Investments.Loans.WWW.Views.Project.Consts;
 using HE.Investments.TestsUtils.Extensions;
 using Xunit;
@@ -34,7 +32,7 @@ public class Order05TypeHomesIntegrationTests : IntegrationTest
     public async Task Order01_ShouldDisplayValidationMessage_WhenOtherTypeIsSelectedButNoNameIsProvided()
     {
         // given
-        var typeHomesPage = await TestClient.NavigateTo(ProjectPagesUrls.TypeHomes(_applicationLoanId, _projectId));
+        var typeHomesPage = await TestClient.NavigateTo(ProjectPagesUrls.TypeHomes(UserOrganisationData.OrganisationId, _applicationLoanId, _projectId));
         var continueButton = typeHomesPage.GetGdsSubmitButtonById("continue-button");
 
         // when
@@ -57,7 +55,7 @@ public class Order05TypeHomesIntegrationTests : IntegrationTest
     public async Task Order02_ShouldDisplayValidationMessage_WhenOtherTypeIsSelectedButProvidedNameIsTooLong()
     {
         // given
-        var typeHomesPage = await GetCurrentPage(ProjectPagesUrls.TypeHomes(_applicationLoanId, _projectId));
+        var typeHomesPage = await GetCurrentPage(ProjectPagesUrls.TypeHomes(UserOrganisationData.OrganisationId, _applicationLoanId, _projectId));
         var continueButton = typeHomesPage.GetGdsSubmitButtonById("continue-button");
 
         // when
@@ -78,7 +76,7 @@ public class Order05TypeHomesIntegrationTests : IntegrationTest
     public async Task Order03_ShouldRedirectToProjectType_WhenOtherTypeIsSelectedAndCorrectNameIsProvided()
     {
         // given
-        var typeHomesPage = await GetCurrentPage(ProjectPagesUrls.TypeHomes(_applicationLoanId, _projectId));
+        var typeHomesPage = await GetCurrentPage(ProjectPagesUrls.TypeHomes(UserOrganisationData.OrganisationId, _applicationLoanId, _projectId));
         var continueButton = typeHomesPage.GetGdsSubmitButtonById("continue-button");
 
         // when

@@ -1,12 +1,10 @@
 using System.Diagnostics.CodeAnalysis;
 using HE.Investments.Common.Messages;
-using HE.Investments.IntegrationTestsFramework;
 using HE.Investments.Loans.Common.Tests.TestData;
 using HE.Investments.Loans.Common.Utils.Constants.FormOption;
 using HE.Investments.Loans.IntegrationTests.IntegrationFramework;
 using HE.Investments.Loans.IntegrationTests.Loans.LoansHelpers.Extensions;
 using HE.Investments.Loans.IntegrationTests.Loans.LoansHelpers.Pages;
-using HE.Investments.Loans.WWW;
 using HE.Investments.Loans.WWW.Views.Project.Consts;
 using HE.Investments.TestsUtils.Extensions;
 using Xunit;
@@ -34,12 +32,14 @@ public class Order08PlanningReferenceNumberIntegrationTests : IntegrationTest
     public async Task Order01_ShouldDisplayValidationError_WhenReferenceNumberExceedsShortInputLimit()
     {
         // given
-        var planningReferenceNumberPage = await TestClient.NavigateTo(ProjectPagesUrls.PlanningReferenceNumber(_applicationLoanId, _projectId));
+        var planningReferenceNumberPage =
+            await TestClient.NavigateTo(ProjectPagesUrls.PlanningReferenceNumber(UserOrganisationData.OrganisationId, _applicationLoanId, _projectId));
         var continueButton = planningReferenceNumberPage.GetGdsSubmitButtonById("continue-button");
 
         // when
         planningReferenceNumberPage = await TestClient.SubmitButton(
-            continueButton, new Dictionary<string, string> { { "PlanningReferenceNumber", TextTestData.TextThatExceedsShortInputLimit } });
+            continueButton,
+            new Dictionary<string, string> { { "PlanningReferenceNumber", TextTestData.TextThatExceedsShortInputLimit } });
 
         // then
         planningReferenceNumberPage
@@ -55,12 +55,14 @@ public class Order08PlanningReferenceNumberIntegrationTests : IntegrationTest
     public async Task Order02_ShouldRedirectToPlanningStatus_WhenReferenceNumberWasNotProvided()
     {
         // given
-        var planningReferenceNumberPage = await GetCurrentPage(() => TestClient.NavigateTo(ProjectPagesUrls.PlanningReferenceNumber(_applicationLoanId, _projectId)));
+        var planningReferenceNumberPage = await GetCurrentPage(() =>
+            TestClient.NavigateTo(ProjectPagesUrls.PlanningReferenceNumber(UserOrganisationData.OrganisationId, _applicationLoanId, _projectId)));
         var continueButton = planningReferenceNumberPage.GetGdsSubmitButtonById("continue-button");
 
         // when
         var planningStatus = await TestClient.SubmitButton(
-            continueButton, new Dictionary<string, string> { { "PlanningReferenceNumber", string.Empty } });
+            continueButton,
+            new Dictionary<string, string> { { "PlanningReferenceNumber", string.Empty } });
 
         // then
         planningStatus
@@ -73,12 +75,14 @@ public class Order08PlanningReferenceNumberIntegrationTests : IntegrationTest
     public async Task Order03_ShouldRedirectToPlanningStatus_WhenReferenceNumberDoesNotExceedsShortInputLimit()
     {
         // given
-        var planningReferenceNumberPage = await GetCurrentPage(() => TestClient.NavigateTo(ProjectPagesUrls.PlanningReferenceNumber(_applicationLoanId, _projectId)));
+        var planningReferenceNumberPage = await GetCurrentPage(() =>
+            TestClient.NavigateTo(ProjectPagesUrls.PlanningReferenceNumber(UserOrganisationData.OrganisationId, _applicationLoanId, _projectId)));
         var continueButton = planningReferenceNumberPage.GetGdsSubmitButtonById("continue-button");
 
         // when
         var planningStatus = await TestClient.SubmitButton(
-            continueButton, new Dictionary<string, string> { { "PlanningReferenceNumber", TextTestData.TextThatNotExceedsShortInputLimit } });
+            continueButton,
+            new Dictionary<string, string> { { "PlanningReferenceNumber", TextTestData.TextThatNotExceedsShortInputLimit } });
 
         // then
         planningStatus

@@ -1,12 +1,13 @@
 @using HE.Investment.AHP.WWW.Extensions
 @using HE.Investment.AHP.WWW.Views.Scheme.Const
+@using HE.Investments.Common.WWW.Extensions
 @model string
 @{
     ViewData["Title"] = SchemeInformationPageTitles.SchemeDetails;
     var applicationId = this.GetApplicationIdFromRoute();
 }
 <gds-div-grid-column-two-thirds>
-    <gds-back-link href="@Url.Action("TaskList", "Application", new { applicationId })" text="Back" class="govuk-!-margin-bottom-8">
+    <gds-back-link href="@Url.OrganisationAction("TaskList", "Application", new { applicationId })" text="Back" class="govuk-!-margin-bottom-8">
     </gds-back-link>
     <vc:page-header caption="@Model" title="@SchemeInformationPageTitles.SchemeDetails"/>
     <div class="govuk-!-padding-bottom-8">
@@ -17,7 +18,7 @@
         <gds-p>Funding decisions are made on each application separately. Although we will look at the deliverability of proposals across a whole development, each application must be able to stand alone.</gds-p>
     </div>
 
-    <link-button action-url="@Url.Action("Funding", "Scheme", new { applicationId })">
+    <link-button action-url="@Url.OrganisationAction("Funding", "Scheme", new { applicationId })">
         Continue
     </link-button>
 </gds-div-grid-column-two-thirds>

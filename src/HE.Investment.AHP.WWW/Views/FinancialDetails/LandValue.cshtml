@@ -1,4 +1,3 @@
-@using HE.Investment.AHP.WWW.Models.Common;
 @using HE.Investment.AHP.WWW.Models.FinancialDetails;
 @using HE.Investment.AHP.WWW.Views.FinancialDetails.Consts;
 @using HE.Investment.AHP.WWW.Views.Shared.Components.FinancialDetailsFormHeader
@@ -10,17 +9,16 @@
     ViewData["Title"] = "Land value";
 }
 <gds-div-grid-column-two-thirds>
-    <form asp-controller="FinancialDetails" asp-action="LandValue" asp-route-applicationId="@Model.ApplicationId" asp-route-redirect="@Context.Request.Query["redirect"]" asp-method="post" novalidate>
+    <he-organisation-form asp-controller="FinancialDetails" asp-action="LandValue" asp-route-applicationId="@Model.ApplicationId" asp-route-redirect="@Context.Request.Query["redirect"]" asp-method="post" novalidate>
         <vc:financial-details-form-header title="@FinancialDetailsPageTitles.LandValuePage"
                                           current-page="@FinancialDetailsWorkflowState.LandValue"
-                                          application-id="@Model.ApplicationId.ToString()"
+                                          application-id="@Model.ApplicationId"
                                           caption="@Model.ApplicationName - Finance details"/>
         <div class="govuk-body-m govuk-!-margin-bottom-6">
             If your application concerns existing properties rather than land-led development, this section is still relevant to you. Where we say 'site' or 'land', read 'properties'.
         </div>
 
         <gds-field-set>
-
             <vc:radio-yes-no
                 title="Is your scheme on public land?"
                 hint="Public land is land owned by the government."
@@ -47,6 +45,6 @@
             @Html.HiddenFor(c => c.ApplicationId)
             @Html.HiddenFor(c => c.ApplicationName)
         </gds-field-set>
-        <vc:return-to-application-link application-id="@Model.ApplicationId.ToString()"/>
-    </form>
+        <vc:return-to-application-link application-id="@Model.ApplicationId"/>
+    </he-organisation-form>
 </gds-div-grid-column-two-thirds>

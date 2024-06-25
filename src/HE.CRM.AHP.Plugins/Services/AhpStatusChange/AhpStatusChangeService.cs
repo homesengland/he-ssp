@@ -85,6 +85,7 @@ namespace HE.CRM.AHP.Plugins.Services.AhpStatusChange
                     {
                         TracingService.Trace("Changefrom is not Draft");
                     }
+                    _govNotifyEmailService.SendNotifications_AHP_INTERNAL_EXTERNAL_WANTS_ADDITIONAL_PAYMENTS_FOR_PHASE(ahpStatusChange, ahpApplication);
                     break;
                 case (int)invln_AHPInternalStatus.Approved:
                     statusLabel = "Approved";

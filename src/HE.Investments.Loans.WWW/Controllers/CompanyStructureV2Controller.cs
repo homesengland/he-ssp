@@ -2,6 +2,8 @@ using HE.Investments.Account.Shared.Authorization.Attributes;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Validators;
+using HE.Investments.Common.WWW.Controllers;
+using HE.Investments.Common.WWW.Extensions;
 using HE.Investments.Common.WWW.Helpers;
 using HE.Investments.Common.WWW.Routing;
 using HE.Investments.Loans.Common.Utils.Enums;
@@ -16,7 +18,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HE.Investments.Loans.WWW.Controllers;
 
-[Route("application/{id}/company")]
+[Route("{organisationId}/application/{id}/company")]
 [AuthorizeWithCompletedProfile]
 public class CompanyStructureV2Controller : WorkflowController<CompanyStructureState>
 {
@@ -34,7 +36,7 @@ public class CompanyStructureV2Controller : WorkflowController<CompanyStructureS
         var response = await _mediator.Send(new GetCompanyStructureQuery(LoanApplicationId.From(id), CompanyStructureFieldsSet.GetEmpty));
         if (response.ViewModel.IsReadOnly())
         {
-            return RedirectToAction("CheckAnswers", new { Id = id });
+            return this.OrganisationRedirectToAction("CheckAnswers", routeValues: new { Id = id });
         }
 
         return View("StartCompanyStructure", LoanApplicationId.From(id));
@@ -73,8 +75,10 @@ public class CompanyStructureV2Controller : WorkflowController<CompanyStructureS
         response.ViewModel.OrganisationMoreInformationFiles = files.Select(
                 x => x with
                 {
-                    RemoveAction = Url.Action("MoreInformationAboutOrganizationRemoveFile", "CompanyStructureV2", new { id, fileId = x.FileId }) ?? string.Empty,
-                    DownloadAction = Url.Action("MoreInformationAboutOrganizationDownloadFile", "CompanyStructureV2", new { id, fileId = x.FileId }) ?? string.Empty,
+                    RemoveAction =
+                    Url.OrganisationAction("MoreInformationAboutOrganizationRemoveFile", "CompanyStructureV2", new { id, fileId = x.FileId }) ?? string.Empty,
+                    DownloadAction = Url.OrganisationAction("MoreInformationAboutOrganizationDownloadFile", "CompanyStructureV2", new { id, fileId = x.FileId }) ??
+                                     string.Empty,
                 })
             .ToList();
 
@@ -94,7 +98,7 @@ public class CompanyStructureV2Controller : WorkflowController<CompanyStructureS
             ModelState.AddValidationErrors(result);
         }
 
-        return RedirectToAction("MoreInformationAboutOrganization", new { Id = id });
+        return this.OrganisationRedirectToAction("MoreInformationAboutOrganization", routeValues: new { Id = id });
     }
 
     [HttpGet("more-information-about-organization-download-file")]
@@ -108,7 +112,10 @@ public class CompanyStructureV2Controller : WorkflowController<CompanyStructureS
 
     [HttpPost("more-information-about-organization-upload-file")]
     [WorkflowState(CompanyStructureState.ExistingCompany)]
-    public async Task<IActionResult> MoreInformationAboutOrganizationUploadFile(Guid id, [FromForm(Name = "file")] IFormFile file, CancellationToken cancellationToken)
+    public async Task<IActionResult> MoreInformationAboutOrganizationUploadFile(
+        Guid id,
+        [FromForm(Name = "file")] IFormFile file,
+        CancellationToken cancellationToken)
     {
         var documentToUpload = new FileToUpload(file.FileName, file.Length, file.OpenReadStream());
         try
@@ -131,7 +138,12 @@ public class CompanyStructureV2Controller : WorkflowController<CompanyStructureS
 
     [HttpPost("more-information-about-organization")]
     [WorkflowState(CompanyStructureState.ExistingCompany)]
-    public async Task<IActionResult> MoreInformationAboutOrganizationPost(Guid id, CompanyStructureViewModel viewModel, [FromQuery] string redirect, [FromForm(Name = "OrganisationMoreInformationFile")] List<IFormFile> formFiles, CancellationToken cancellationToken)
+    public async Task<IActionResult> MoreInformationAboutOrganizationPost(
+        Guid id,
+        CompanyStructureViewModel viewModel,
+        [FromQuery] string redirect,
+        [FromForm(Name = "OrganisationMoreInformationFile")] List<IFormFile> formFiles,
+        CancellationToken cancellationToken)
     {
         var result = await _mediator.Send(
             new ProvideMoreInformationAboutOrganizationCommand(LoanApplicationId.From(id), viewModel.OrganisationMoreInformation, formFiles),
@@ -156,7 +168,11 @@ public class CompanyStructureV2Controller : WorkflowController<CompanyStructureS
 
     [HttpPost("how-many-homes-built")]
     [WorkflowState(CompanyStructureState.HomesBuilt)]
-    public async Task<IActionResult> HowManyHomesBuiltPost(Guid id, CompanyStructureViewModel viewModel, [FromQuery] string redirect, CancellationToken cancellationToken)
+    public async Task<IActionResult> HowManyHomesBuiltPost(
+        Guid id,
+        CompanyStructureViewModel viewModel,
+        [FromQuery] string redirect,
+        CancellationToken cancellationToken)
     {
         var result = await _mediator.Send(
             new ProvideHowManyHomesBuiltCommand(
@@ -185,14 +201,22 @@ public class CompanyStructureV2Controller : WorkflowController<CompanyStructureS
 
     [HttpPost("check-answers")]
     [WorkflowState(CompanyStructureState.CheckAnswers)]
-    public async Task<IActionResult> CheckAnswersPost(Guid id, CompanyStructureViewModel viewModel, [FromQuery] string redirect, CancellationToken cancellationToken)
+    public async Task<IActionResult> CheckAnswersPost(
+        Guid id,
+        CompanyStructureViewModel viewModel,
+        [FromQuery] string redirect,
+        CancellationToken cancellationToken)
     {
-        var result = await _mediator.Send(new CheckAnswersCompanyStructureSectionCommand(LoanApplicationId.From(id), viewModel.CheckAnswers), cancellationToken);
+        var result = await _mediator.Send(
+            new CheckAnswersCompanyStructureSectionCommand(LoanApplicationId.From(id), viewModel.CheckAnswers),
+            cancellationToken);
         if (result.HasValidationErrors)
         {
             ModelState.Clear();
             ModelState.AddValidationErrors(result);
-            var response = await _mediator.Send(new GetCompanyStructureQuery(LoanApplicationId.From(id), CompanyStructureFieldsSet.GetAllFields), cancellationToken);
+            var response = await _mediator.Send(
+                new GetCompanyStructureQuery(LoanApplicationId.From(id), CompanyStructureFieldsSet.GetAllFields),
+                cancellationToken);
             return View("CheckAnswers", response.ViewModel);
         }
 

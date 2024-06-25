@@ -2,16 +2,18 @@ namespace HE.Investments.AHP.IntegrationTests.Pages;
 
 internal static class DeliveryPhasesPagesUrl
 {
-    public static string LandingPage(string applicationId) => BuildDeliveryPhasesPage(applicationId, "delivery/start");
+    public static string LandingPage(string organisationId, string applicationId) => BuildDeliveryPhasesPage(organisationId, applicationId, "delivery/start");
 
-    public static string List(string applicationId) => BuildDeliveryPhasesPage(applicationId, "delivery");
+    public static string List(string organisationId, string applicationId) => BuildDeliveryPhasesPage(organisationId, applicationId, "delivery");
 
-    public static string NewDeliveryPhase(string applicationId) => BuildDeliveryPhasesPage(applicationId, "delivery-phase/create");
+    public static string NewDeliveryPhase(string organisationId, string applicationId) =>
+        BuildDeliveryPhasesPage(organisationId, applicationId, "delivery-phase/create");
 
-    public static string CompleteDeliveryPhases(string applicationId) => BuildDeliveryPhasesPage(applicationId, "delivery/complete");
+    public static string CompleteDeliveryPhases(string organisationId, string applicationId) =>
+        BuildDeliveryPhasesPage(organisationId, applicationId, "delivery/complete");
 
-    private static string BuildDeliveryPhasesPage(string applicationId, string pageSuffix)
+    private static string BuildDeliveryPhasesPage(string organisationId, string applicationId, string pageSuffix)
     {
-        return $"ahp/application/{applicationId}/{pageSuffix}";
+        return $"ahp/{organisationId}/application/{applicationId}/{pageSuffix}";
     }
 }

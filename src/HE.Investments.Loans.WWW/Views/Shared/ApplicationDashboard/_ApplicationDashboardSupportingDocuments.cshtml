@@ -1,4 +1,5 @@
 @using HE.Investments.Common.Messages
+@using HE.Investments.Common.WWW.Extensions
 @using HE.Investments.Loans.BusinessLogic.Config
 @using HE.Investments.Loans.WWW.Views.LoanApplicationV2.Consts
 @model HE.Investments.Loans.Contract.Application.SupportingDocumentsViewModel
@@ -30,7 +31,7 @@
     }
     else
     {
-        <form id="formWithFile" asp-controller="LoanApplicationV2" asp-action="ApplicationDashboardSupportingDocumentsPost" asp-route-id="@Model.LoanApplicationId" enctype="multipart/form-data" asp-method="post" novalidate>
+        <he-organisation-form id="formWithFile" asp-controller="LoanApplicationV2" asp-action="ApplicationDashboardSupportingDocumentsPost" asp-route-id="@Model.LoanApplicationId" enctype="multipart/form-data" asp-method="post" novalidate>
             <partial name="_ErrorSummaryPartial" model="null"/>
             @Html.HiddenFor(x => x.LoanApplicationId)
             @Html.HiddenFor(x => x.AllowedExtensions)
@@ -50,9 +51,9 @@
                                 is-multiple="true"
                                 custom-header="Upload a file"
                                 max-file-size-in-mb="@Settings.MaxFileSizeInMegabytes"
-                                upload-one-file-url="@Url.Action("ApplicationDashboardSupportingDocumentsUploadFile", "LoanApplicationV2", new { id = Model.LoanApplicationId })"
-                                remove-file-url-template="@Url.Action("ApplicationDashboardSupportingDocumentsRemoveFile", "LoanApplicationV2", new { id = Model.LoanApplicationId, fileId = ":fileId" })"
-                                download-file-url-template="@Url.Action("ApplicationDashboardSupportingDocumentsDownloadFile", "LoanApplicationV2", new { id = Model.LoanApplicationId, fileId = ":fileId" })"/>
+                                upload-one-file-url="@Url.OrganisationAction("ApplicationDashboardSupportingDocumentsUploadFile", "LoanApplicationV2", new { id = Model.LoanApplicationId })"
+                                remove-file-url-template="@Url.OrganisationAction("ApplicationDashboardSupportingDocumentsRemoveFile", "LoanApplicationV2", new { id = Model.LoanApplicationId, fileId = ":fileId" })"
+                                download-file-url-template="@Url.OrganisationAction("ApplicationDashboardSupportingDocumentsDownloadFile", "LoanApplicationV2", new { id = Model.LoanApplicationId, fileId = ":fileId" })"/>
 
             </gds-error-form-group>
 
@@ -60,7 +61,7 @@
             <button class="govuk-button files-submit-button" data-module="govuk-button" name="action" type="submit" data-testid="submit-button" value="@GenericMessages.Continue">
                 Submit
             </button>
-        </form>
+        </he-organisation-form>
     }
 </gds-summary-list>
 

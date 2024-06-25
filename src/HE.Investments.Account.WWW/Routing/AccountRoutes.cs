@@ -34,8 +34,8 @@ public class AccountRoutes : IAccountRoutes
     public IActionResult LandingPageForLoggedUser()
     {
         return new RedirectToActionResult(
-            nameof(UserOrganisationController.Index),
-            new ControllerName(nameof(UserOrganisationController)).WithoutPrefix(),
+            nameof(UserOrganisationsController.List),
+            new ControllerName(nameof(UserOrganisationsController)).WithoutPrefix(),
             null);
     }
 }

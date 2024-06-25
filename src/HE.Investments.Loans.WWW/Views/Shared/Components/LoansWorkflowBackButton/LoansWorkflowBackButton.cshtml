@@ -1,0 +1,3 @@
+@model (Enum CurrentPage, Func<Enum, object> RedirectParametersFactory);
+
+<vc:workflow-back-button current-page="@Model.CurrentPage" redirect-parameters-factory="@Model.RedirectParametersFactory"/>

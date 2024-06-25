@@ -22,6 +22,7 @@ namespace HE.CRM.AHP.Plugins.Handlers.DeliveryPhase
         #region Base Methods Overrides
         public override bool CanWork()
         {
+            return false;
             return postImage.invln_urbrequestingearlymilestonepayments != preImage.invln_urbrequestingearlymilestonepayments && postImage.invln_urbrequestingearlymilestonepayments == true;
         }
 

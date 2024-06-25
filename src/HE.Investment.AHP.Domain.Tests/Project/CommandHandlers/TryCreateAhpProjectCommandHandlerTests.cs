@@ -11,7 +11,7 @@ using Moq;
 
 namespace HE.Investment.AHP.Domain.Tests.Project.CommandHandlers;
 
-public class CreateAhpProjectCommandHandlerTests : TestBase<CreateAhpProjectCommandHandler>
+public class TryCreateAhpProjectCommandHandlerTests : TestBase<TryCreateAhpProjectCommandHandler>
 {
     [Fact]
     public async Task ShouldCreateAhpProject()
@@ -50,7 +50,7 @@ public class CreateAhpProjectCommandHandlerTests : TestBase<CreateAhpProjectComm
             .BuildMockAndRegister(this);
 
         // when
-        var result = await TestCandidate.Handle(new CreateAhpProjectCommand(prefillProject.Id), CancellationToken.None);
+        var result = await TestCandidate.Handle(new TryCreateAhpProjectCommand(prefillProject.Id), CancellationToken.None);
 
         // then
         result.Should().Be(projectId);

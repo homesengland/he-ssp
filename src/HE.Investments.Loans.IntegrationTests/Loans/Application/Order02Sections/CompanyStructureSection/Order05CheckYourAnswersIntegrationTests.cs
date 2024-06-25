@@ -2,14 +2,11 @@ using System.Diagnostics.CodeAnalysis;
 using AngleSharp.Html.Dom;
 using FluentAssertions;
 using HE.Investments.Common.Contract.Constants;
-using HE.Investments.IntegrationTestsFramework;
 using HE.Investments.Loans.Common.Tests.TestData;
-using HE.Investments.Loans.Common.Utils.Constants.FormOption;
 using HE.Investments.Loans.IntegrationTests.IntegrationFramework;
 using HE.Investments.Loans.IntegrationTests.Loans.LoansHelpers;
 using HE.Investments.Loans.IntegrationTests.Loans.LoansHelpers.Extensions;
 using HE.Investments.Loans.IntegrationTests.Loans.LoansHelpers.Pages;
-using HE.Investments.Loans.WWW;
 using HE.Investments.TestsUtils.Extensions;
 using Xunit;
 using Xunit.Extensions.Ordering;
@@ -33,7 +30,8 @@ public class Order05CheckYourAnswersIntegrationTests : IntegrationTest
     public async Task Order01_ShouldDisplayDataSummary()
     {
         // given
-        var checkYourAnswersPage = await TestClient.NavigateTo(CompanyStructurePagesUrls.CheckYourAnswers(_applicationLoanId));
+        var checkYourAnswersPage =
+            await TestClient.NavigateTo(CompanyStructurePagesUrls.CheckYourAnswers(UserOrganisationData.OrganisationId, _applicationLoanId));
 
         // when
         var companyStructureSummary = checkYourAnswersPage.GetSummaryListItems();
@@ -55,7 +53,8 @@ public class Order05CheckYourAnswersIntegrationTests : IntegrationTest
 
         // when
         checkYourAnswersPage = await TestClient.SubmitButton(
-            continueButton, new Dictionary<string, string> { { "CheckAnswers", string.Empty } });
+            continueButton,
+            new Dictionary<string, string> { { "CheckAnswers", string.Empty } });
 
         // then
         checkYourAnswersPage
@@ -75,11 +74,14 @@ public class Order05CheckYourAnswersIntegrationTests : IntegrationTest
 
         // when
         var taskListPage = await TestClient.SubmitButton(
-            continueButton, new Dictionary<string, string> { { "CheckAnswers", CommonResponse.Yes } });
+            continueButton,
+            new Dictionary<string, string> { { "CheckAnswers", CommonResponse.Yes } });
 
         // then
         taskListPage
-            .UrlEndWith(ApplicationPagesUrls.TaskList(_applicationLoanId))
-            .GetTaskListItems()[TaskListFields.CompleteCompanyInformation].Should().Be("Completed");
+            .UrlEndWith(ApplicationPagesUrls.TaskList(UserOrganisationData.OrganisationId, _applicationLoanId))
+            .GetTaskListItems()[TaskListFields.CompleteCompanyInformation]
+            .Should()
+            .Be("Completed");
     }
 }

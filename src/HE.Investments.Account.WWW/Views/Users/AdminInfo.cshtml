@@ -1,11 +1,15 @@
+@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Links
 @using HE.Investments.Account.WWW.Controllers
+@using HE.Investments.Common.WWW.Components.PageHeader
+@using HE.Investments.Common.WWW.Extensions
+@using HE.Investments.Common.WWW.TagHelpers
 @using HE.Investments.Common.WWW.Utils
 
 @model (string OrganisationName, string UserId);
 @{
     var title = "How to confirm a user as an admin";
     ViewData["Title"] = title;
-    var action = Url.Action(nameof(UsersController.Manage), new ControllerName(nameof(UsersController)).WithoutPrefix(), new { id = Model.UserId });
+    var action = Url.OrganisationAction(nameof(UsersController.Manage), new ControllerName(nameof(UsersController)).WithoutPrefix(), new { id = Model.UserId });
 
     var items = new List<string>
     {
