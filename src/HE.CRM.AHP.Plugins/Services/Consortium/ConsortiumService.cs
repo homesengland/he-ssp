@@ -142,6 +142,9 @@ namespace HE.CRM.AHP.Plugins.Services.Consortium
 
         private bool IsApplicationPartner(invln_scheme application, string organizationId)
         {
+            if (application.invln_ExternalStatus.Value == (int)invln_ExternalStatusAHP.Deleted)
+                return false;
+
             if (application.invln_DevelopingPartner != null &&
                 application.invln_DevelopingPartner.Id == new Guid(organizationId))
             {

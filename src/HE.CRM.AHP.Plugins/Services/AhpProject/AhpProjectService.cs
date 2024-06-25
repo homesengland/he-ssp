@@ -421,6 +421,7 @@ namespace HE.CRM.AHP.Plugins.Services.AhpProject
                     }
                 }
             }
+            TracingService.Trace($"verified sites: {result.Count}");
             TracingService.Trace("Sites Fors Consortium Checked");
             return result;
         }

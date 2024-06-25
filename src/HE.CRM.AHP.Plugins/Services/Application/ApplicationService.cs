@@ -238,27 +238,31 @@ namespace HE.CRM.AHP.Plugins.Services.Application
                 {
                     foreach (var application in applications)
                     {
+                        TracingService.Trace($"Status {application.invln_ExternalStatus.Value}");
+                        if (application.invln_ExternalStatus.Value == (int)invln_ExternalStatusAHP.Deleted)
+                            continue;
+
                         var contact = _contactRepository.GetById(application.invln_contactid.Id, new string[] { Contact.Fields.FirstName, Contact.Fields.LastName, nameof(Contact.invln_externalid).ToLower() });
                         var applicationDto = FillApplicationData(application);
-                        //string consortiumId = null;
-                        //if (application.invln_Site != null)
-                        //{
-                        //    var site = _siteRepository.GetById(application.invln_Site.Id, invln_Sites.Fields.invln_AHPProjectId);
-                        //    if (site.invln_AHPProjectId != null)
-                        //    {
-                        //        var ahpProject = _projectRepository.GetById(site.invln_AHPProjectId.Id, invln_ahpproject.Fields.invln_ConsortiumId);
-                        //        if (ahpProject != null && ahpProject.invln_ConsortiumId != null)
-                        //        {
-                        //            consortiumId = ahpProject.invln_ConsortiumId.Id.ToString();
-                        //        }
-                        //    }
-                        //}
+                        string consortiumId = null;
+                        if (application.invln_Site != null)
+                        {
+                            var site = _siteRepository.GetById(application.invln_Site.Id, invln_Sites.Fields.invln_AHPProjectId);
+                            if (site.invln_AHPProjectId != null)
+                            {
+                                var ahpProject = _projectRepository.GetById(site.invln_AHPProjectId.Id, invln_ahpproject.Fields.invln_ConsortiumId);
+                                if (ahpProject != null && ahpProject.invln_ConsortiumId != null)
+                                {
+                                    consortiumId = ahpProject.invln_ConsortiumId.Id.ToString();
+                                }
+                            }
+                        }
 
-                        //if (_consortiumService.CheckAccess(ConsortiumService.Operation.Get, ConsortiumService.RecordType.AHPProject,
-                        //    contact.invln_externalid, null, applicationId, consortiumId, organisationId, null))
-                        //{
-                        //    listOfApplications.Add(applicationDto);
-                        //}
+                        if (_consortiumService.CheckAccess(ConsortiumService.Operation.Get, ConsortiumService.RecordType.AHPProject,
+                            contact.invln_externalid, null, applicationId, consortiumId, organisationId, null))
+                        {
+                            listOfApplications.Add(applicationDto);
+                        }
                         listOfApplications.Add(applicationDto);
                     }
                 }

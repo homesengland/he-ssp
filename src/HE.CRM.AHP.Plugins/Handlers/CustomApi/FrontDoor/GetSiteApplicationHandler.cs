@@ -64,6 +64,7 @@ namespace HE.CRM.AHP.Plugins.Handlers.CustomApi.FrontDoor
 
             var site = _siteRepository.GetById(new Guid(SiteId));
             var applications = _ahpApplicationRepository.GetByAttribute(invln_scheme.Fields.invln_Site, site.Id)
+                .Where(x => x.invln_ExternalStatus.Value != (int)invln_ExternalStatusAHP.Deleted).ToList()
                 .OrderByDescending(x => x.invln_lastexternalmodificationon);
             var filteredApplication = new List<invln_scheme>();
             foreach (var application in applications)
