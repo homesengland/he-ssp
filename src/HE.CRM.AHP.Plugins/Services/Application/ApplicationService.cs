@@ -680,7 +680,7 @@ namespace HE.CRM.AHP.Plugins.Services.Application
             }
 
             var isSupportedGpuAsPercentageOfAreaAverage = false;
-            if ((application.invln_Tenure.Value == (int)invln_Tenure.Affordablerent || application.invln_Tenure.Value == (int)invln_Tenure.Socialrent) &&
+            if ((application.invln_Tenure.Value == (int)invln_Tenure.AffordableRent || application.invln_Tenure.Value == (int)invln_Tenure.SocialRent) &&
                 areHousingForDisabledVulnerableOrOlderPeople &&
                 (areHousingForOlderPeoplesWithAllFeaturesHousing || arePurposeDesignedForDisabledTypeOfHousing))
             {
@@ -745,19 +745,19 @@ namespace HE.CRM.AHP.Plugins.Services.Application
 
         private invln_Tenurechoice MapApplicationTenureToRegionalBenchmarkTenure(invln_Tenure ahpApplicationTenure, bool areHousingForDisabledVulnerableOlderPeople)
         {
-            if (ahpApplicationTenure == invln_Tenure.Sharedownership ||
+            if (ahpApplicationTenure == invln_Tenure.SharedOwnership ||
                 ahpApplicationTenure == invln_Tenure.OPSO ||
                 ahpApplicationTenure == invln_Tenure.HOLD)
             {
                 return invln_Tenurechoice.Sharedownership;
             }
 
-            if (ahpApplicationTenure == invln_Tenure.Renttobuy)
+            if (ahpApplicationTenure == invln_Tenure.RenttoBuy)
             {
                 return invln_Tenurechoice.Renttobuy;
             }
 
-            if (ahpApplicationTenure == invln_Tenure.Affordablerent)
+            if (ahpApplicationTenure == invln_Tenure.AffordableRent)
             {
                 if (areHousingForDisabledVulnerableOlderPeople)
                 {
@@ -767,7 +767,7 @@ namespace HE.CRM.AHP.Plugins.Services.Application
                 return invln_Tenurechoice.Affordablerent;
             }
 
-            if (ahpApplicationTenure == invln_Tenure.Socialrent)
+            if (ahpApplicationTenure == invln_Tenure.SocialRent)
             {
                 if (areHousingForDisabledVulnerableOlderPeople)
                 {

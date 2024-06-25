@@ -11,13 +11,13 @@ namespace HE.CRM.Common.OptionSetsMapping
         {
             switch (value)
             {
-                case (int)invln_Tenure.Affordablerent:
+                case (int)invln_Tenure.AffordableRent:
                     return "Affordable rent";
-                case (int)invln_Tenure.Socialrent:
+                case (int)invln_Tenure.SocialRent:
                     return "Social rent";
-                case (int)invln_Tenure.Sharedownership:
+                case (int)invln_Tenure.SharedOwnership:
                     return "Shared ownership";
-                case (int)invln_Tenure.Renttobuy:
+                case (int)invln_Tenure.RenttoBuy:
                     return "Rent to buy";
                 case (int)invln_Tenure.HOLD:
                     return "HOLD";

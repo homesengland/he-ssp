@@ -195,7 +195,7 @@ namespace HE.CRM.AHP.Plugins.Tests.Handlers.AhpApplication
                 invln_expectedacquisitioncost = new Money(150000),
                 invln_expectedoncosts = new Money(120_000),
                 invln_expectedonworks = new Money(100_000),
-                invln_Tenure = new OptionSetValue((int)invln_Tenure.Sharedownership),
+                invln_Tenure = new OptionSetValue((int)invln_Tenure.SharedOwnership),
                 StatusCode = new OptionSetValue((int)invln_scheme_StatusCode.Draft)
             };
 
@@ -296,7 +296,7 @@ namespace HE.CRM.AHP.Plugins.Tests.Handlers.AhpApplication
                 invln_expectedacquisitioncost = new Money(150000),
                 invln_expectedoncosts = new Money(120_000),
                 invln_expectedonworks = new Money(100_000),
-                invln_Tenure = new OptionSetValue((int)invln_Tenure.Affordablerent),
+                invln_Tenure = new OptionSetValue((int)invln_Tenure.AffordableRent),
                 StatusCode = new OptionSetValue((int)invln_scheme_StatusCode.Draft)
             };
 
@@ -401,7 +401,7 @@ namespace HE.CRM.AHP.Plugins.Tests.Handlers.AhpApplication
                 invln_expectedacquisitioncost = new Money(150000),
                 invln_expectedoncosts = new Money(120_000),
                 invln_expectedonworks = new Money(100_000),
-                invln_Tenure = new OptionSetValue((int)invln_Tenure.Sharedownership),
+                invln_Tenure = new OptionSetValue((int)invln_Tenure.SharedOwnership),
                 StatusCode = new OptionSetValue((int)invln_scheme_StatusCode.Draft)
             };
 
