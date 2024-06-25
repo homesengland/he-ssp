@@ -144,5 +144,25 @@ namespace HE.CRM.Common.Repositories.Implementations
 
             return service.RetrieveMultiple(query).Entities.Select(x => x.ToEntity<invln_scheme>()).ToList();
         }
+
+
+        public List<invln_scheme> GetListOfApplicationToSendReminder(string calculatedDate)
+        {
+            var query_invln_lastexternalmodificationon = calculatedDate;
+            var query_invln_stopreminderemail = false;
+            var query_Or_invln_lastemailsenton = calculatedDate;
+
+            var query = new QueryExpression(invln_scheme.EntityLogicalName);
+            query.ColumnSet.AddColumns(invln_scheme.Fields.invln_schemeId);
+            query.Criteria.AddCondition(invln_scheme.Fields.invln_lastexternalmodificationon, ConditionOperator.OnOrBefore, query_invln_lastexternalmodificationon);
+            query.Criteria.AddCondition(invln_scheme.Fields.StatusCode, ConditionOperator.Equal, (int)invln_scheme_StatusCode.ReferredBackToApplicant);
+            query.Criteria.AddCondition(invln_scheme.Fields.invln_stopreminderemail, ConditionOperator.Equal, query_invln_stopreminderemail);
+            var query_Or = new FilterExpression(LogicalOperator.Or);
+            query.Criteria.AddFilter(query_Or);
+            query_Or.AddCondition(invln_scheme.Fields.invln_lastemailsenton, ConditionOperator.Null);
+            query_Or.AddCondition(invln_scheme.Fields.invln_lastemailsenton, ConditionOperator.OnOrBefore, query_Or_invln_lastemailsenton);
+
+            return service.RetrieveMultiple(query).Entities.Select(x => x.ToEntity<invln_scheme>()).ToList();
+        }
     }
 }
