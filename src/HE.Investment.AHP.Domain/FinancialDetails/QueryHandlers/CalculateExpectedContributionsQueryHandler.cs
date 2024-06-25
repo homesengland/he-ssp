@@ -14,18 +14,24 @@ namespace HE.Investment.AHP.Domain.FinancialDetails.QueryHandlers;
 internal sealed class CalculateExpectedContributionsQueryHandler : CalculateQueryHandlerBase,
     IRequestHandler<CalculateExpectedContributionsQuery, (OperationResult OperationResult, CalculationResult CalculationResult)>
 {
+    private readonly IConsortiumUserContext _accountUserContext;
+
     public CalculateExpectedContributionsQueryHandler(
         IFinancialDetailsRepository financialDetailsRepository,
         IConsortiumUserContext accountUserContext,
         ILogger<CalculateExpectedContributionsQueryHandler> logger)
         : base(financialDetailsRepository, accountUserContext, logger)
     {
+        _accountUserContext = accountUserContext;
     }
 
     public async Task<(OperationResult OperationResult, CalculationResult CalculationResult)> Handle(
         CalculateExpectedContributionsQuery request,
         CancellationToken cancellationToken)
     {
+        var account = await _accountUserContext.GetSelectedAccount();
+        var isUnregisteredBody = account.Organisation?.IsUnregisteredBody == true;
+
         return await Perform(
             financialDetails =>
             {
@@ -43,8 +49,9 @@ internal sealed class CalculateExpectedContributionsQueryHandler : CalculateQuer
                     MapProvidedValues(request.RcgfContribution, ExpectedContributionFields.RcgfContribution),
                     MapProvidedValues(request.OtherCapitalSources, ExpectedContributionFields.OtherCapitalSources),
                     MapProvidedValues(request.SharedOwnershipSales, ExpectedContributionFields.SharedOwnershipSales),
-                    MapProvidedValues(request.HomesTransferValue, ExpectedContributionFields.HomesTransferValue),
-                    financialDetails.ApplicationBasicInfo.Tenure);
+                    isUnregisteredBody ? MapProvidedValues(request.HomesTransferValue, ExpectedContributionFields.HomesTransferValue) : null,
+                    financialDetails.ApplicationBasicInfo.Tenure,
+                    isUnregisteredBody);
 
                 result.CheckErrors();
 

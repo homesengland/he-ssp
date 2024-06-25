@@ -59,4 +59,6 @@ public class FinancialDetails
     public decimal? TotalReceivedGrants { get; set; }
 
     public SectionStatus SectionStatus { get; set; }
+
+    public bool IsUnregisteredBody { get; set; }
 }
