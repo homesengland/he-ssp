@@ -69,6 +69,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Implementations\HeProjectLocalAuthorityRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Implementations\ProjectSpecificConditionRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Implementations\ReviewApprovalRepository.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Repositories\Implementations\SecretVariableRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Implementations\SharepointDocumentLocationRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Implementations\LoanApplicationRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Implementations\LoanStatusChangeRepository.cs" />
@@ -114,6 +115,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\IHeProjectLocalAuthorityRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\IProjectSpecificConditionsRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\IReviewApprovalRepository.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\ISecretVariableRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\ISharepointDocumentLocationRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)repositories\interfaces\ISharepointSiteRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\ISiteDetailsRepository.cs" />

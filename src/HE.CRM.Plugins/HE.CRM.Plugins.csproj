@@ -120,6 +120,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FeatureFlags.cs" />
     <Compile Include="CrmPluginRegistrationAttribute.cs" />
     <Compile Include="Exceptions\IntegrationApiException.cs" />
     <Compile Include="Handlers\Accounts\GenerateRandomAccountNameSampleHandler.cs" />

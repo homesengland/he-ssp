@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Text.Json;
 using DataverseModel;
+using HE.Base.Log;
 using HE.Base.Services;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.CRM.Common.Api;
@@ -43,7 +44,7 @@ namespace HE.CRM.Plugins.Services.FrontDoorProject.V2
             IGetProjectsResponseMapperService getProjectsResponseMapperService) : base(args)
         {
             _httpClient = CreateHttpClient(
-                CrmServicesFactory.Get<IEnvironmentVariableSecretValueService>(),
+                CrmRepositoriesFactory.Get<ISecretVariableRepository>(),
                 CrmServicesFactory.Get<IAzureAdTokenProviderFactory>());
 
             _frontDoorProjectRepository = CrmRepositoriesFactory.Get<IFrontDoorProjectRepository>();
@@ -343,19 +344,27 @@ namespace HE.CRM.Plugins.Services.FrontDoorProject.V2
         }
 
         private static ApiHttpClient CreateHttpClient(
-            IEnvironmentVariableSecretValueService environmentSecretVariables,
+            ISecretVariableRepository secretVariableRepository,
             IAzureAdTokenProviderFactory tokenProviderFactory)
         {
+            var secrets = secretVariableRepository.GetMultiple(
+                EnvironmentVariables.FrontDoorApiBaseUrl,
+                EnvironmentVariables.AzureAd.TenantId,
+                EnvironmentVariables.AzureAd.ClientId,
+                EnvironmentVariables.AzureAd.ClientSecret,
+                EnvironmentVariables.AzureAd.Scope
+            );
+
             var azureAdAuthConfig = new AzureAdAuthConfig
             {
-                TenantId = environmentSecretVariables.GetEnvironmentVariableValue(EnvironmentVariables.AzureAd.TenantId),
-                ClientId = environmentSecretVariables.GetEnvironmentVariableValue(EnvironmentVariables.AzureAd.ClientId),
-                ClientSecret = environmentSecretVariables.GetEnvironmentVariableValue(EnvironmentVariables.AzureAd.ClientSecret),
-                Scope = environmentSecretVariables.GetEnvironmentVariableValue(EnvironmentVariables.AzureAd.Scope),
+                TenantId = secrets.First(x => x.invln_Name == EnvironmentVariables.AzureAd.TenantId).invln_Value,
+                ClientId = secrets.First(x => x.invln_Name == EnvironmentVariables.AzureAd.ClientId).invln_Value,
+                ClientSecret = secrets.First(x => x.invln_Name == EnvironmentVariables.AzureAd.ClientSecret).invln_Value,
+                Scope = secrets.First(x => x.invln_Name == EnvironmentVariables.AzureAd.Scope).invln_Value,
             };
 
             var tokenProvider = tokenProviderFactory.Create(azureAdAuthConfig);
-            var frontDoorApiUrl = environmentSecretVariables.GetEnvironmentVariableValue(EnvironmentVariables.FrontDoorApiBaseUrl);
+            var frontDoorApiUrl = secrets.First(x => x.invln_Name == EnvironmentVariables.FrontDoorApiBaseUrl).invln_Value;
             var httpClient = new HttpClient(new BearerTokenAuthorizationHandler(tokenProvider))
             {
                 BaseAddress = new Uri(frontDoorApiUrl)

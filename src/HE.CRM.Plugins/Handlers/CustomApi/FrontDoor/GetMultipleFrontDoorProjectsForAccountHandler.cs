@@ -38,30 +38,23 @@ namespace HE.CRM.Plugins.Handlers.CustomApi.FrontDoor
 
             var organisationIdGuid = Guid.Parse(OrganisationId);
 
-            var useFrontDoorProjectV2 = true;
-            // temporary
-            try
+            var useFrontDoorProjectV2 = false;
+            // temporary workaround
+            if (Guid.Parse(OrganisationId) == Guid.Parse("0eb56594-a60b-ef11-9f89-0022481adce0"))
             {
-                if (Guid.Parse(OrganisationId) == Guid.Parse("0eb56594-a60b-ef11-9f89-0022481adce0"))
-                {
-                    Logger.Trace("use FrontDoorProjectV2");
-                    useFrontDoorProjectV2 = true;
-                }
-            }
-            catch (Exception ex)
-            {
-                Logger.Error(ex.ToString());
+                Logger.Trace("use FrontDoorProjectV2");
+                useFrontDoorProjectV2 = true;
             }
 
             var frontDoorProjectsDtoList = new List<FrontDoorProjectDto>();
-            if (useFrontDoorProjectV2)
-            {
+            if (FeatureFlags.UseNewFrontDoorApiManagement && useFrontDoorProjectV2)
+            { // New frontdoor apim
                 var service = CrmServicesFactory.Get<FrontDoorProjectV2.IFrontDoorProjectService>();
                 frontDoorProjectsDtoList = service.GetFrontDoorProjects(organisationIdGuid);
                 Logger.Trace($"FronDoor projects contains {frontDoorProjectsDtoList.Count} records.");
             }
             else
-            {
+            { // old version
                 var service = CrmServicesFactory.Get<FrontDoorProjectV1.IFrontDoorProjectService>();
                 frontDoorProjectsDtoList = service.GetFrontDoorProjects(OrganisationId, useHeTables, ExternalContactId, FieldsToRetrieve);
             }
