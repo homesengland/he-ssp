@@ -83,7 +83,7 @@ namespace HE.CRM.AHP.Plugins.Services.Consortium
                         TracingService.Trace("Check Access to Application");
                         var application = _ahpApplicationRepository.GetById(new Guid(applicationId),
                             new string[] {invln_scheme.Fields.invln_DevelopingPartner, invln_scheme.Fields.invln_OwneroftheHomes,
-                                            invln_scheme.Fields.invln_OwneroftheLand, invln_scheme.Fields.invln_Site});
+                                            invln_scheme.Fields.invln_OwneroftheLand, invln_scheme.Fields.invln_Site, invln_scheme.Fields.invln_ExternalStatus});
 
                         isSitePartner = IsOrganizationSitePartner(application.invln_Site.Id.ToString(), organizationId);
                         if (isSitePartner)
