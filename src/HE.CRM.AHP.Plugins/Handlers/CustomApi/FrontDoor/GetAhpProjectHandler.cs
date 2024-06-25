@@ -53,30 +53,11 @@ namespace HE.CRM.AHP.Plugins.Handlers.CustomApi.FrontDoor
         public override void DoWork()
         {
             TracingService.Trace("GetAhpProjectHandler");
-            if (externalContactId != null)
-            {
-                TracingService.Trace($"* externalContactId : {externalContactId}");
-            };
-            if (organisationId != null)
-            {
-                TracingService.Trace($"* organisationId : {organisationId}");
-            };
-            if (ahpProjectId != null)
-            {
-                TracingService.Trace($"* ahpProjectId : {ahpProjectId}");
-            };
-            if (heProjectId != null)
-            {
-                TracingService.Trace($"* heProjectId : {heProjectId}");
-            };
-            if (consortiumId != null)
-            {
-                TracingService.Trace($"* consortiumId: {consortiumId}");
-            };
 
             AhpProjectDto ahpProjectDto = CrmServicesFactory.Get<IAhpProjectService>().GetAhpProjectWithApplicationsAndSites(externalContactId, organisationId, ahpProjectId, heProjectId, consortiumId);
 
             this.TracingService.Trace("Send Response");
+            TracingService.Trace(JsonSerializer.Serialize(ahpProjectDto));
             ExecutionData.SetOutputParameter(invln_getahpprojectResponse.Fields.invln_ahpProjectApplications, JsonSerializer.Serialize(ahpProjectDto));
         }
     }
