@@ -1,6 +1,6 @@
 using System;
 
-namespace HE.CRM.Common.Api.FrontDoor.Contract.Responses
+namespace HE.CRM.Plugins.Models.FrontDoor.Contract.Responses
 {
     public sealed class GetSiteResponse
     {

@@ -1,20 +1,32 @@
 using System;
 
-namespace HE.CRM.Common.Api.FrontDoor.Contract.Requests
+namespace HE.CRM.Plugins.Models.FrontDoor.Contract.Responses
 {
-    internal sealed class SaveProjectRequest
+    public sealed class GetProjectResponse
     {
-        public Guid? ProjectRecordId { get; set; }
+        public Guid? ProjectId { get; set; }
 
-        public string ProjectName { get; set; }
+        public string LocalAuthorityName { get; set; }
+
+        public string LocalAuthorityCode { get; set; }
+
+        public DateTimeOffset? CreatedOn { get; set; }
+
+        public FrontDoorProjectContact FrontDoorProjectContact { get; set; }
+
+        public Guid ProjectRecordId { get; set; }
+
+        public int? RecordStatus { get; set; }
 
         public Guid OrganisationId { get; set; }
 
-        public Guid? PortalOwnerId { get; set; }
+        public Guid PortalOwnerId { get; set; }
 
-        public int? ProjectType => 134370001; // Site
+        public string ProjectName { get; set; }
 
-        public bool? ProjectSupportsHousingDeliveryInEngland { get; set; }
+        public int? ProjectType { get; set; }
+
+        public bool ProjectSupportsHousingDeliveryInEngland { get; set; }
 
         public int[] ActivitiesInThisProject { get; set; }
 
@@ -45,8 +57,6 @@ namespace HE.CRM.Common.Api.FrontDoor.Contract.Requests
         public int? StartOfProjectMonth { get; set; }
 
         public int? StartOfProjectYear { get; set; }
-
-        public int[] FrontDoorDecision { get; set; }
 
         public int[] ProposedInterventions { get; set; }
 

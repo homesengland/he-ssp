@@ -6,9 +6,8 @@ using System.Net.Http.Headers;
 using System.Runtime.Serialization.Json;
 using System.Text;
 using System.Threading.Tasks;
-using HE.CRM.Common.Repositories;
-using HE.CRM.Plugins.Models;
 using HE.Base.Services;
+using HE.CRM.Plugins.Models;
 
 namespace HE.CRM.Plugins.Services.HttpService
 {
@@ -21,6 +20,7 @@ namespace HE.CRM.Plugins.Services.HttpService
         public const string AzureAdClientSecret = "_HE/AzureAdClientSecret";
     }
 
+    [Obsolete]
     public abstract class AzureAdHttpClientService : CrmService
     {
         private readonly HttpClient azureAdHttpClient;

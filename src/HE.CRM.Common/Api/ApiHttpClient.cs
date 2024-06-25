@@ -4,7 +4,6 @@ using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading;
-using System.Threading.Tasks;
 using HE.CRM.Common.Api.Exceptions;
 
 namespace HE.CRM.Common.Api
@@ -25,26 +24,26 @@ namespace HE.CRM.Common.Api
             _httpClient = httpClient;
         }
 
-        public async Task<TResponse> SendAsync<TResponse>(string relativeUrl, HttpMethod method, CancellationToken cancellationToken)
+        public TResponse Send<TResponse>(string relativeUrl, HttpMethod method, CancellationToken cancellationToken = default)
             where TResponse : class
         {
             using (var httpRequest = CreateHttpRequest(null, relativeUrl, method))
             {
-                return await SendAsync<TResponse>(httpRequest, cancellationToken);
+                return Send<TResponse>(httpRequest, cancellationToken);
             }
         }
 
-        public async Task<TResponse> SendAsync<TRequest, TResponse>(
+        public TResponse Send<TRequest, TResponse>(
             TRequest request,
             string relativeUrl,
             HttpMethod method,
-            CancellationToken cancellationToken)
+            CancellationToken cancellationToken = default)
             where TResponse : class
         {
             var requestBody = JsonSerializer.Serialize(request, _jsonSerializerOptions);
             using (var httpRequest = CreateHttpRequest(requestBody, relativeUrl, method))
             {
-                return await SendAsync<TResponse>(httpRequest, cancellationToken);
+                return Send<TResponse>(httpRequest, cancellationToken);
             }
         }
 
@@ -59,18 +58,18 @@ namespace HE.CRM.Common.Api
             return request;
         }
 
-        private async Task<TResponse> SendAsync<TResponse>(HttpRequestMessage httpRequest, CancellationToken cancellationToken)
+        private TResponse Send<TResponse>(HttpRequestMessage httpRequest, CancellationToken cancellationToken = default)
             where TResponse : class
         {
-            using (var httpResponse = await _httpClient.SendAsync(httpRequest, cancellationToken))
+            using (var httpResponse = _httpClient.SendAsync(httpRequest, cancellationToken).GetAwaiter().GetResult())
             {
                 if (!httpResponse.IsSuccessStatusCode)
                 {
-                    var errorContent = await httpResponse.Content.ReadAsStringAsync();
+                    var errorContent = httpResponse.Content.ReadAsStringAsync().GetAwaiter().GetResult();
                     throw new ApiCommunicationException(httpResponse.StatusCode, errorContent: errorContent);
                 }
 
-                var responseContent = await httpResponse.Content.ReadAsStringAsync();
+                var responseContent = httpResponse.Content.ReadAsStringAsync().GetAwaiter().GetResult();
                 if (string.IsNullOrEmpty(responseContent))
                 {
                     throw new ApiSerializationException(responseContent: responseContent);

@@ -1,4 +1,4 @@
-namespace HE.CRM.Common.Api.FrontDoor.Contract.Responses
+namespace HE.CRM.Plugins.Models.FrontDoor.Contract.Responses
 {
     internal sealed class SaveProjectResponse
     {

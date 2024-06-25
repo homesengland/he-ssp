@@ -1,7 +1,7 @@
 using HE.Common.IntegrationModel.PortalIntegrationModel;
-using HE.CRM.Common.Api.FrontDoor.Contract;
+using HE.CRM.Plugins.Models.FrontDoor.Contract;
 
-namespace HE.CRM.Common.Api.FrontDoor.Mappers
+namespace HE.CRM.Plugins.Models.Frontdoor.Mappers
 {
     public static class FrontDoorProjectContactMapper
     {

@@ -1,6 +1,6 @@
 using System;
 
-namespace HE.CRM.Common.Api.FrontDoor.Contract
+namespace HE.CRM.Plugins.Models.FrontDoor.Contract
 {
     public sealed class FrontDoorProjectContact
     {
