@@ -17,36 +17,11 @@ namespace DataverseModel
 	public partial class invln_sendreminderemailforrefferedbacktoapplicantRequest : Microsoft.Xrm.Sdk.OrganizationRequest
 	{
 		
-		public static class Fields
-		{
-			public const string invln_applicationid = "invln_applicationid";
-		}
-		
 		public const string ActionLogicalName = "invln_sendreminderemailforrefferedbacktoapplicant";
-		
-		public string invln_applicationid
-		{
-			get
-			{
-				if (this.Parameters.Contains("invln_applicationid"))
-				{
-					return ((string)(this.Parameters["invln_applicationid"]));
-				}
-				else
-				{
-					return default(string);
-				}
-			}
-			set
-			{
-				this.Parameters["invln_applicationid"] = value;
-			}
-		}
 		
 		public invln_sendreminderemailforrefferedbacktoapplicantRequest()
 		{
 			this.RequestName = "invln_sendreminderemailforrefferedbacktoapplicant";
-			this.invln_applicationid = default(string);
 		}
 	}
 	
