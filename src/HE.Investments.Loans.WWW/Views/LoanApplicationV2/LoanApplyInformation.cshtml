@@ -6,8 +6,8 @@
 }
 
 <gds-div-grid-column-two-thirds>
-    <form asp-controller="LoanApplicationV2" asp-action="LoanApplyInformationPost" asp-method="post" asp-route-fdProjectId="@fdProjectId" novalidate>
-        <gds-back-link href="@Url.Action("Back", "LoanApplicationV2", new { currentPage = LoanApplicationWorkflow.State.LoanApplyInformation, fdProjectId })" text="Back" class="govuk-!-margin-bottom-8"></gds-back-link>
+    <he-organisation-form asp-controller="LoanApplicationV2" asp-action="LoanApplyInformationPost" asp-method="post" asp-route-fdProjectId="@fdProjectId" novalidate>
+        <vc:loans-workflow-back-button current-page="@LoanApplicationWorkflow.State.LoanApplyInformation"/>
 
         <vc:page-header title="@LoanApplicationPageTitles.LoanApplyInformation"/>
 
@@ -29,5 +29,5 @@
         <button class="govuk-button" data-module="govuk-button" name="action" type="submit" value="Continue" id="continue-button">
             Continue
         </button>
-    </form>
+    </he-organisation-form>
 </gds-div-grid-column-two-thirds>

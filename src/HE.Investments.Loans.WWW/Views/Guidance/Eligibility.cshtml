@@ -4,11 +4,12 @@
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Headings
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Lists
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Paragraphs
+@using HE.Investments.Common.WWW.Extensions
 @{
     ViewData["Title"] = "Guidance";
-    ViewData["PreviousLink"] = Url.Action("WhatTheHomeBuildingFundIs", "Guidance");
+    ViewData["PreviousLink"] = Url.OrganisationAction("WhatTheHomeBuildingFundIs", "Guidance");
     ViewData["PreviousLinkName"] = "What the Home Building Fund is";
-    ViewData["NextLink"] = Url.Action("Apply", "Guidance");
+    ViewData["NextLink"] = Url.OrganisationAction("Apply", "Guidance");
     ViewData["NextLinkName"] = "Apply";
 }
 

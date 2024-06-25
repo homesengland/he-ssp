@@ -12,7 +12,7 @@
 }
 
 <gds-div-grid-column-two-thirds>
-    <form asp-controller="FinancialDetails" asp-action="LandStatus" asp-route-applicationId="@Model.ApplicationId" asp-route-redirect="@Context.Request.Query["redirect"]" asp-method="post" novalidate>
+    <he-organisation-form asp-controller="FinancialDetails" asp-action="LandStatus" asp-route-applicationId="@Model.ApplicationId" asp-route-redirect="@Context.Request.Query["redirect"]" asp-method="post" novalidate>
         <vc:financial-details-form-header title="@FinancialDetailsPageTitles.LandStatusPage"
                                           current-page="@FinancialDetailsWorkflowState.LandStatus"
                                           application-id="@Model.ApplicationId"
@@ -50,6 +50,6 @@
             @Html.HiddenFor(c => c.ApplicationName)
         </gds-field-set>
         <vc:return-to-application-link application-id="@Model.ApplicationId"/>
-    </form>
+    </he-organisation-form>
 </gds-div-grid-column-two-thirds>
 

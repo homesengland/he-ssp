@@ -26,9 +26,9 @@ public class Order03LocalAuthoritySection : AhpIntegrationTest
     public async Task Order01_ShouldProvideLocalAuthoritySearchPhraseAndNavigateToLocalAuthorityResult()
     {
         // given
-        var currentPage = await GetCurrentPage(SitePagesUrl.SiteLocalAuthoritySearch(SiteData.SiteId));
+        var currentPage = await GetCurrentPage(SitePagesUrl.SiteLocalAuthoritySearch(UserOrganisationData.OrganisationId, SiteData.SiteId));
         currentPage
-            .UrlWithoutQueryEndsWith(SitePagesUrl.SiteLocalAuthoritySearch(SiteData.SiteId))
+            .UrlWithoutQueryEndsWith(SitePagesUrl.SiteLocalAuthoritySearch(UserOrganisationData.OrganisationId, SiteData.SiteId))
             .HasTitle(SitePageTitles.LocalAuthoritySearch)
             .HasInputValue(nameof(LocalAuthorities.Phrase), "Oxford")
             .HasBackLink(out _)
@@ -38,7 +38,7 @@ public class Order03LocalAuthoritySection : AhpIntegrationTest
         var searchResultPage = await TestClient.SubmitButton(searchButton, (nameof(LocalAuthorities.Phrase), SiteData.LocalAuthorityName));
 
         // then
-        searchResultPage.UrlWithoutQueryEndsWith(SitePagesUrl.SiteLocalAuthorityResult(SiteData.SiteId))
+        searchResultPage.UrlWithoutQueryEndsWith(SitePagesUrl.SiteLocalAuthorityResult(UserOrganisationData.OrganisationId, SiteData.SiteId))
             .HasTitle(SitePageTitles.LocalAuthorityResult);
         SaveCurrentPage();
     }
@@ -48,7 +48,8 @@ public class Order03LocalAuthoritySection : AhpIntegrationTest
     public async Task Order02_ShouldSelectLocalAuthorityAndNavigateToLocalAuthorityConfirm()
     {
         // given
-        var localAuthorityResultPage = await GetCurrentPage(SitePagesUrl.SiteLocalAuthorityResult(SiteData.SiteId, SiteData.LocalAuthorityName));
+        var localAuthorityResultPage =
+            await GetCurrentPage(SitePagesUrl.SiteLocalAuthorityResult(UserOrganisationData.OrganisationId, SiteData.SiteId, SiteData.LocalAuthorityName));
         localAuthorityResultPage.HasNavigationListItem("select-list", out var selectLocalAuthorityLink);
 
         // when
@@ -56,7 +57,11 @@ public class Order03LocalAuthoritySection : AhpIntegrationTest
 
         // then
         localAuthorityConfirmPage
-            .UrlEndWith(SitePagesUrl.SiteLocalAuthorityConfirm(SiteData.SiteId, SiteData.LocalAuthorityCode, SiteData.LocalAuthorityName))
+            .UrlEndWith(SitePagesUrl.SiteLocalAuthorityConfirm(
+                UserOrganisationData.OrganisationId,
+                SiteData.SiteId,
+                SiteData.LocalAuthorityCode,
+                SiteData.LocalAuthorityName))
             .HasTitle(SitePageTitles.LocalAuthorityConfirm);
         SaveCurrentPage();
     }
@@ -66,9 +71,14 @@ public class Order03LocalAuthoritySection : AhpIntegrationTest
     public async Task Order03_ShouldConfirmLocalAuthorityAndNavigateToPlanningStatus()
     {
         // given
-        var currentPage = await GetCurrentPage(SitePagesUrl.SiteLocalAuthorityConfirm(SiteData.SiteId, SiteData.LocalAuthorityCode, SiteData.LocalAuthorityName));
+        var currentPage = await GetCurrentPage(SitePagesUrl.SiteLocalAuthorityConfirm(
+            UserOrganisationData.OrganisationId,
+            SiteData.SiteId,
+            SiteData.LocalAuthorityCode,
+            SiteData.LocalAuthorityName));
         currentPage
-            .UrlWithoutQueryEndsWith(SitePagesUrl.SiteLocalAuthorityConfirmWithoutQuery(SiteData.SiteId, SiteData.LocalAuthorityCode))
+            .UrlWithoutQueryEndsWith(
+                SitePagesUrl.SiteLocalAuthorityConfirmWithoutQuery(UserOrganisationData.OrganisationId, SiteData.SiteId, SiteData.LocalAuthorityCode))
             .HasTitle(SitePageTitles.LocalAuthorityConfirm)
             .HasBackLink(out _)
             .HasSubmitButton(out var confirmButton, "Continue");
@@ -79,7 +89,7 @@ public class Order03LocalAuthoritySection : AhpIntegrationTest
             ("Response", CommonResponse.Yes));
 
         // then
-        planningStatusPage.UrlWithoutQueryEndsWith(SitePagesUrl.SitePlanningStatus(SiteData.SiteId))
+        planningStatusPage.UrlWithoutQueryEndsWith(SitePagesUrl.SitePlanningStatus(UserOrganisationData.OrganisationId, SiteData.SiteId))
             .HasTitle(SitePageTitles.PlanningStatus);
         SaveCurrentPage();
     }

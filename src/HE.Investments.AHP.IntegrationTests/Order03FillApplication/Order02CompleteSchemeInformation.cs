@@ -41,7 +41,7 @@ public class Order02CompleteSchemeInformation : AhpApplicationIntegrationTest
     public async Task Order01_StartSchemeInformation()
     {
         // given
-        var taskListPage = await TestClient.NavigateTo(ApplicationPagesUrl.TaskList(ApplicationData.ApplicationId));
+        var taskListPage = await TestClient.NavigateTo(ApplicationPagesUrl.TaskList(UserOrganisationData.OrganisationId, ApplicationData.ApplicationId));
         taskListPage.HasLinkWithTestId("enter-scheme-information", out var enterSchemeInformationLink);
 
         // when
@@ -49,7 +49,7 @@ public class Order02CompleteSchemeInformation : AhpApplicationIntegrationTest
 
         // then
         var continueButton = schemaDetailsPage
-            .UrlEndWith(SchemeInformationPagesUrl.SchemeDetails(ApplicationData.ApplicationId))
+            .UrlEndWith(SchemeInformationPagesUrl.SchemeDetails(UserOrganisationData.OrganisationId, ApplicationData.ApplicationId))
             .HasTitle(SchemeInformationPageTitles.SchemeDetails)
             .GetLinkButton();
 
@@ -66,9 +66,9 @@ public class Order02CompleteSchemeInformation : AhpApplicationIntegrationTest
 
         // when & then
         await TestApplicationQuestionPage(
-            SchemeInformationPagesUrl.FundingDetails(ApplicationData.ApplicationId),
+            SchemeInformationPagesUrl.FundingDetails(UserOrganisationData.OrganisationId, ApplicationData.ApplicationId),
             SchemeInformationPageTitles.FundingDetails,
-            SchemeInformationPagesUrl.PartnerDetails(ApplicationData.ApplicationId),
+            SchemeInformationPagesUrl.PartnerDetails(UserOrganisationData.OrganisationId, ApplicationData.ApplicationId),
             ("RequiredFunding", SchemeInformationData.RequiredFunding.ToString(CultureInfo.InvariantCulture)),
             ("HousesToDeliver", SchemeInformationData.HousesToDeliver.ToString(CultureInfo.InvariantCulture)));
     }
@@ -78,9 +78,10 @@ public class Order02CompleteSchemeInformation : AhpApplicationIntegrationTest
     public async Task Order03_CheckPrefilledPartnerDetails()
     {
         // given
-        var partnerDetailsPage = await GetCurrentPage(SchemeInformationPagesUrl.PartnerDetails(ApplicationData.ApplicationId));
+        var partnerDetailsPage =
+            await GetCurrentPage(SchemeInformationPagesUrl.PartnerDetails(UserOrganisationData.OrganisationId, ApplicationData.ApplicationId));
         partnerDetailsPage
-            .UrlEndWith(SchemeInformationPagesUrl.PartnerDetails(ApplicationData.ApplicationId))
+            .UrlEndWith(SchemeInformationPagesUrl.PartnerDetails(UserOrganisationData.OrganisationId, ApplicationData.ApplicationId))
             .HasTitle(SchemeInformationPageTitles.PartnerDetails)
             .HasBackLink(out _)
             .HasSaveAndContinueButton(out _);
@@ -99,10 +100,11 @@ public class Order02CompleteSchemeInformation : AhpApplicationIntegrationTest
     public async Task Order04_ChangeDevelopingPartner()
     {
         // given
-        var partnerDetailsPage = await GetCurrentPage(SchemeInformationPagesUrl.PartnerDetails(ApplicationData.ApplicationId));
+        var partnerDetailsPage =
+            await GetCurrentPage(SchemeInformationPagesUrl.PartnerDetails(UserOrganisationData.OrganisationId, ApplicationData.ApplicationId));
         var currentPage = await TestClient.NavigateTo(partnerDetailsPage.GetSummaryListItems()["Developing partner"].ChangeAnswerLink!);
         currentPage
-            .UrlEndWith(SchemeInformationPagesUrl.DevelopingPartner(ApplicationData.ApplicationId))
+            .UrlEndWith(SchemeInformationPagesUrl.DevelopingPartner(UserOrganisationData.OrganisationId, ApplicationData.ApplicationId))
             .HasTitle(SharedPageTitles.DevelopingPartner)
             .HasBackLink(out _)
             .HasPartnerSelectItems(out var partners);
@@ -113,7 +115,10 @@ public class Order02CompleteSchemeInformation : AhpApplicationIntegrationTest
         var nextPage = await TestClient.NavigateTo(confirmLink);
 
         // then
-        nextPage.UrlEndWith(SchemeInformationPagesUrl.DevelopingPartnerConfirmation(ApplicationData.ApplicationId, developingPartner.Id.Value));
+        nextPage.UrlEndWith(SchemeInformationPagesUrl.DevelopingPartnerConfirmation(
+            UserOrganisationData.OrganisationId,
+            ApplicationData.ApplicationId,
+            developingPartner.Id.Value));
         SchemeInformationData.DevelopingPartner = developingPartner;
 
         SaveCurrentPage();
@@ -124,9 +129,12 @@ public class Order02CompleteSchemeInformation : AhpApplicationIntegrationTest
     public async Task Order05_ConfirmDevelopingPartner()
     {
         await TestApplicationQuestionPage(
-            SchemeInformationPagesUrl.DevelopingPartnerConfirmation(ApplicationData.ApplicationId, SchemeInformationData.DevelopingPartner.Id.Value),
+            SchemeInformationPagesUrl.DevelopingPartnerConfirmation(
+                UserOrganisationData.OrganisationId,
+                ApplicationData.ApplicationId,
+                SchemeInformationData.DevelopingPartner.Id.Value),
             SharedPageTitles.DevelopingPartnerConfirm,
-            SchemeInformationPagesUrl.PartnerDetails(ApplicationData.ApplicationId),
+            SchemeInformationPagesUrl.PartnerDetails(UserOrganisationData.OrganisationId, ApplicationData.ApplicationId),
             ("isPartnerConfirmed", YesNoType.Yes.ToBoolAnswer()));
     }
 
@@ -135,10 +143,11 @@ public class Order02CompleteSchemeInformation : AhpApplicationIntegrationTest
     public async Task Order06_ChangeOwnerOfTheLand()
     {
         // given
-        var partnerDetailsPage = await GetCurrentPage(SchemeInformationPagesUrl.PartnerDetails(ApplicationData.ApplicationId));
+        var partnerDetailsPage =
+            await GetCurrentPage(SchemeInformationPagesUrl.PartnerDetails(UserOrganisationData.OrganisationId, ApplicationData.ApplicationId));
         var currentPage = await TestClient.NavigateTo(partnerDetailsPage.GetSummaryListItems()["Owner of the land during development"].ChangeAnswerLink!);
         currentPage
-            .UrlEndWith(SchemeInformationPagesUrl.OwnerOfTheLand(ApplicationData.ApplicationId))
+            .UrlEndWith(SchemeInformationPagesUrl.OwnerOfTheLand(UserOrganisationData.OrganisationId, ApplicationData.ApplicationId))
             .HasTitle(SharedPageTitles.OwnerOfTheLand)
             .HasBackLink(out _)
             .HasPartnerSelectItems(out var partners);
@@ -149,7 +158,10 @@ public class Order02CompleteSchemeInformation : AhpApplicationIntegrationTest
         var nextPage = await TestClient.NavigateTo(confirmLink);
 
         // then
-        nextPage.UrlEndWith(SchemeInformationPagesUrl.OwnerOfTheLandConfirmation(ApplicationData.ApplicationId, ownerOfTheLand.Id.Value));
+        nextPage.UrlEndWith(SchemeInformationPagesUrl.OwnerOfTheLandConfirmation(
+            UserOrganisationData.OrganisationId,
+            ApplicationData.ApplicationId,
+            ownerOfTheLand.Id.Value));
         SchemeInformationData.OwnerOfTheLand = ownerOfTheLand;
 
         SaveCurrentPage();
@@ -160,9 +172,12 @@ public class Order02CompleteSchemeInformation : AhpApplicationIntegrationTest
     public async Task Order07_ConfirmOwnerOfTheLand()
     {
         await TestApplicationQuestionPage(
-            SchemeInformationPagesUrl.OwnerOfTheLandConfirmation(ApplicationData.ApplicationId, SchemeInformationData.OwnerOfTheLand.Id.Value),
+            SchemeInformationPagesUrl.OwnerOfTheLandConfirmation(
+                UserOrganisationData.OrganisationId,
+                ApplicationData.ApplicationId,
+                SchemeInformationData.OwnerOfTheLand.Id.Value),
             SharedPageTitles.OwnerOfTheLandConfirm,
-            SchemeInformationPagesUrl.PartnerDetails(ApplicationData.ApplicationId),
+            SchemeInformationPagesUrl.PartnerDetails(UserOrganisationData.OrganisationId, ApplicationData.ApplicationId),
             ("isPartnerConfirmed", YesNoType.Yes.ToBoolAnswer()));
     }
 
@@ -171,10 +186,11 @@ public class Order02CompleteSchemeInformation : AhpApplicationIntegrationTest
     public async Task Order08_ChangeOwnerOfTheHomes()
     {
         // given
-        var partnerDetailsPage = await GetCurrentPage(SchemeInformationPagesUrl.PartnerDetails(ApplicationData.ApplicationId));
+        var partnerDetailsPage =
+            await GetCurrentPage(SchemeInformationPagesUrl.PartnerDetails(UserOrganisationData.OrganisationId, ApplicationData.ApplicationId));
         var currentPage = await TestClient.NavigateTo(partnerDetailsPage.GetSummaryListItems()["Owner of the homes after completion"].ChangeAnswerLink!);
         currentPage
-            .UrlEndWith(SchemeInformationPagesUrl.OwnerOfTheHomes(ApplicationData.ApplicationId))
+            .UrlEndWith(SchemeInformationPagesUrl.OwnerOfTheHomes(UserOrganisationData.OrganisationId, ApplicationData.ApplicationId))
             .HasTitle(SharedPageTitles.OwnerOfTheHomes)
             .HasBackLink(out _)
             .HasPartnerSelectItems(out var partners);
@@ -185,7 +201,10 @@ public class Order02CompleteSchemeInformation : AhpApplicationIntegrationTest
         var nextPage = await TestClient.NavigateTo(confirmLink);
 
         // then
-        nextPage.UrlEndWith(SchemeInformationPagesUrl.OwnerOfTheHomesConfirmation(ApplicationData.ApplicationId, ownerOfTheHomes.Id.Value));
+        nextPage.UrlEndWith(SchemeInformationPagesUrl.OwnerOfTheHomesConfirmation(
+            UserOrganisationData.OrganisationId,
+            ApplicationData.ApplicationId,
+            ownerOfTheHomes.Id.Value));
         SchemeInformationData.OwnerOfTheHomes = ownerOfTheHomes;
 
         SaveCurrentPage();
@@ -196,9 +215,12 @@ public class Order02CompleteSchemeInformation : AhpApplicationIntegrationTest
     public async Task Order09_ConfirmOwnerOfTheHomes()
     {
         await TestApplicationQuestionPage(
-            SchemeInformationPagesUrl.OwnerOfTheHomesConfirmation(ApplicationData.ApplicationId, SchemeInformationData.OwnerOfTheHomes.Id.Value),
+            SchemeInformationPagesUrl.OwnerOfTheHomesConfirmation(
+                UserOrganisationData.OrganisationId,
+                ApplicationData.ApplicationId,
+                SchemeInformationData.OwnerOfTheHomes.Id.Value),
             SharedPageTitles.OwnerOfTheHomesConfirm,
-            SchemeInformationPagesUrl.PartnerDetails(ApplicationData.ApplicationId),
+            SchemeInformationPagesUrl.PartnerDetails(UserOrganisationData.OrganisationId, ApplicationData.ApplicationId),
             ("isPartnerConfirmed", YesNoType.Yes.ToBoolAnswer()));
     }
 
@@ -207,9 +229,10 @@ public class Order02CompleteSchemeInformation : AhpApplicationIntegrationTest
     public async Task Order10_CheckChangedPartnerDetails()
     {
         // given
-        var partnerDetailsPage = await GetCurrentPage(SchemeInformationPagesUrl.PartnerDetails(ApplicationData.ApplicationId));
+        var partnerDetailsPage =
+            await GetCurrentPage(SchemeInformationPagesUrl.PartnerDetails(UserOrganisationData.OrganisationId, ApplicationData.ApplicationId));
         partnerDetailsPage
-            .UrlEndWith(SchemeInformationPagesUrl.PartnerDetails(ApplicationData.ApplicationId))
+            .UrlEndWith(SchemeInformationPagesUrl.PartnerDetails(UserOrganisationData.OrganisationId, ApplicationData.ApplicationId))
             .HasTitle(SchemeInformationPageTitles.PartnerDetails)
             .HasBackLink(out _)
             .HasSaveAndContinueButton(out _);
@@ -228,9 +251,9 @@ public class Order02CompleteSchemeInformation : AhpApplicationIntegrationTest
     public async Task Order11_ConfirmPartnerDetails()
     {
         await TestApplicationQuestionPage(
-            SchemeInformationPagesUrl.PartnerDetails(ApplicationData.ApplicationId),
+            SchemeInformationPagesUrl.PartnerDetails(UserOrganisationData.OrganisationId, ApplicationData.ApplicationId),
             SchemeInformationPageTitles.PartnerDetails,
-            SchemeInformationPagesUrl.HousingNeeds(ApplicationData.ApplicationId),
+            SchemeInformationPagesUrl.HousingNeeds(UserOrganisationData.OrganisationId, ApplicationData.ApplicationId),
             ("ArePartnersConfirmed", YesNoType.Yes.ToBoolAnswer()));
     }
 
@@ -243,9 +266,9 @@ public class Order02CompleteSchemeInformation : AhpApplicationIntegrationTest
 
         // when & then
         await TestApplicationQuestionPage(
-            SchemeInformationPagesUrl.HousingNeeds(ApplicationData.ApplicationId),
+            SchemeInformationPagesUrl.HousingNeeds(UserOrganisationData.OrganisationId, ApplicationData.ApplicationId),
             SchemeInformationPageTitles.HousingNeeds,
-            SchemeInformationPagesUrl.StakeholderDiscussions(ApplicationData.ApplicationId),
+            SchemeInformationPagesUrl.StakeholderDiscussions(UserOrganisationData.OrganisationId, ApplicationData.ApplicationId),
             ("MeetingLocalPriorities", SchemeInformationData.HousingNeedsMeetingLocalPriorities),
             ("MeetingLocalHousingNeed", SchemeInformationData.HousingNeedsMeetingLocalHousingNeed));
     }
@@ -259,9 +282,9 @@ public class Order02CompleteSchemeInformation : AhpApplicationIntegrationTest
 
         // when & then
         await TestApplicationQuestionPage(
-            SchemeInformationPagesUrl.StakeholderDiscussions(ApplicationData.ApplicationId),
+            SchemeInformationPagesUrl.StakeholderDiscussions(UserOrganisationData.OrganisationId, ApplicationData.ApplicationId),
             SchemeInformationPageTitles.StakeholderDiscussions,
-            SchemeInformationPagesUrl.CheckAnswers(ApplicationData.ApplicationId),
+            SchemeInformationPagesUrl.CheckAnswers(UserOrganisationData.OrganisationId, ApplicationData.ApplicationId),
             ("StakeholderDiscussionsReport", SchemeInformationData.StakeholderDiscussions));
     }
 
@@ -270,9 +293,9 @@ public class Order02CompleteSchemeInformation : AhpApplicationIntegrationTest
     public async Task Order14_CheckAnswersAndCompleteSection()
     {
         // given
-        var checkAnswersPage = await GetCurrentPage(SchemeInformationPagesUrl.CheckAnswers(ApplicationData.ApplicationId));
+        var checkAnswersPage = await GetCurrentPage(SchemeInformationPagesUrl.CheckAnswers(UserOrganisationData.OrganisationId, ApplicationData.ApplicationId));
         checkAnswersPage
-            .UrlEndWith(SchemeInformationPagesUrl.CheckAnswers(ApplicationData.ApplicationId))
+            .UrlEndWith(SchemeInformationPagesUrl.CheckAnswers(UserOrganisationData.OrganisationId, ApplicationData.ApplicationId))
             .HasTitle(SchemeInformationPageTitles.CheckAnswers)
             .HasSaveAndContinueButton(out var continueButton);
 
@@ -296,7 +319,7 @@ public class Order02CompleteSchemeInformation : AhpApplicationIntegrationTest
             ("IsCompleted", true.MapToCommonResponse()));
 
         // then
-        taskListPage.UrlEndWith(ApplicationPagesUrl.TaskList(ApplicationData.ApplicationId))
+        taskListPage.UrlEndWith(ApplicationPagesUrl.TaskList(UserOrganisationData.OrganisationId, ApplicationData.ApplicationId))
             .HasSectionWithStatus("enter-scheme-information-status", "Completed");
         SaveCurrentPage();
     }

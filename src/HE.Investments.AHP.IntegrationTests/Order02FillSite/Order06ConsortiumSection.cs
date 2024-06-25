@@ -25,9 +25,9 @@ public class Order06ConsortiumSection : AhpIntegrationTest
     public async Task Order01_ShouldSelectDevelopingPartner()
     {
         // given
-        var currentPage = await GetCurrentPage(SitePagesUrl.SiteDevelopingPartner(SiteData.SiteId));
+        var currentPage = await GetCurrentPage(SitePagesUrl.SiteDevelopingPartner(UserOrganisationData.OrganisationId, SiteData.SiteId));
         currentPage
-            .UrlEndWith(SitePagesUrl.SiteDevelopingPartner(SiteData.SiteId))
+            .UrlEndWith(SitePagesUrl.SiteDevelopingPartner(UserOrganisationData.OrganisationId, SiteData.SiteId))
             .HasTitle(SharedPageTitles.DevelopingPartner)
             .HasBackLink(out _)
             .HasPartnerSelectItems(out var partners);
@@ -38,7 +38,7 @@ public class Order06ConsortiumSection : AhpIntegrationTest
         var nextPage = await TestClient.NavigateTo(confirmLink);
 
         // then
-        nextPage.UrlEndWith(SitePagesUrl.SiteDevelopingPartnerConfirmation(SiteData.SiteId, developingPartner.Id.Value));
+        nextPage.UrlEndWith(SitePagesUrl.SiteDevelopingPartnerConfirmation(UserOrganisationData.OrganisationId, SiteData.SiteId, developingPartner.Id.Value));
         SiteData.DevelopingPartner = developingPartner;
 
         SaveCurrentPage();
@@ -49,9 +49,9 @@ public class Order06ConsortiumSection : AhpIntegrationTest
     public async Task Order02_ShouldConfirmDevelopingPartner()
     {
         await TestQuestionPage(
-            SitePagesUrl.SiteDevelopingPartnerConfirmation(SiteData.SiteId, SiteData.DevelopingPartner.Id.Value),
+            SitePagesUrl.SiteDevelopingPartnerConfirmation(UserOrganisationData.OrganisationId, SiteData.SiteId, SiteData.DevelopingPartner.Id.Value),
             SharedPageTitles.DevelopingPartnerConfirm,
-            SitePagesUrl.SiteOwnerOfTheLand(SiteData.SiteId),
+            SitePagesUrl.SiteOwnerOfTheLand(UserOrganisationData.OrganisationId, SiteData.SiteId),
             ("isConfirmed", YesNoType.Yes.ToBoolAnswer()));
     }
 
@@ -60,9 +60,9 @@ public class Order06ConsortiumSection : AhpIntegrationTest
     public async Task Order03_ShouldSelectOwnerOfTheLand()
     {
         // given
-        var currentPage = await GetCurrentPage(SitePagesUrl.SiteOwnerOfTheLand(SiteData.SiteId));
+        var currentPage = await GetCurrentPage(SitePagesUrl.SiteOwnerOfTheLand(UserOrganisationData.OrganisationId, SiteData.SiteId));
         currentPage
-            .UrlEndWith(SitePagesUrl.SiteOwnerOfTheLand(SiteData.SiteId))
+            .UrlEndWith(SitePagesUrl.SiteOwnerOfTheLand(UserOrganisationData.OrganisationId, SiteData.SiteId))
             .HasTitle(SharedPageTitles.OwnerOfTheLand)
             .HasBackLink(out _)
             .HasPartnerSelectItems(out var partners);
@@ -73,7 +73,7 @@ public class Order06ConsortiumSection : AhpIntegrationTest
         var nextPage = await TestClient.NavigateTo(confirmLink);
 
         // then
-        nextPage.UrlEndWith(SitePagesUrl.SiteOwnerOfTheLandConfirmation(SiteData.SiteId, ownerOfTheLand.Id.Value));
+        nextPage.UrlEndWith(SitePagesUrl.SiteOwnerOfTheLandConfirmation(UserOrganisationData.OrganisationId, SiteData.SiteId, ownerOfTheLand.Id.Value));
         SiteData.OwnerOfTheLand = ownerOfTheLand;
 
         SaveCurrentPage();
@@ -84,9 +84,9 @@ public class Order06ConsortiumSection : AhpIntegrationTest
     public async Task Order04_ShouldConfirmOwnerOfTheLand()
     {
         await TestQuestionPage(
-            SitePagesUrl.SiteOwnerOfTheLandConfirmation(SiteData.SiteId, SiteData.OwnerOfTheLand.Id.Value),
+            SitePagesUrl.SiteOwnerOfTheLandConfirmation(UserOrganisationData.OrganisationId, SiteData.SiteId, SiteData.OwnerOfTheLand.Id.Value),
             SharedPageTitles.OwnerOfTheLandConfirm,
-            SitePagesUrl.SiteOwnerOfTheHomes(SiteData.SiteId),
+            SitePagesUrl.SiteOwnerOfTheHomes(UserOrganisationData.OrganisationId, SiteData.SiteId),
             ("isConfirmed", YesNoType.Yes.ToBoolAnswer()));
     }
 
@@ -95,9 +95,9 @@ public class Order06ConsortiumSection : AhpIntegrationTest
     public async Task Order05_ShouldSelectOwnerOfTheHomes()
     {
         // given
-        var currentPage = await GetCurrentPage(SitePagesUrl.SiteOwnerOfTheHomes(SiteData.SiteId));
+        var currentPage = await GetCurrentPage(SitePagesUrl.SiteOwnerOfTheHomes(UserOrganisationData.OrganisationId, SiteData.SiteId));
         currentPage
-            .UrlEndWith(SitePagesUrl.SiteOwnerOfTheHomes(SiteData.SiteId))
+            .UrlEndWith(SitePagesUrl.SiteOwnerOfTheHomes(UserOrganisationData.OrganisationId, SiteData.SiteId))
             .HasTitle(SharedPageTitles.OwnerOfTheHomes)
             .HasBackLink(out _)
             .HasPartnerSelectItems(out var partners);
@@ -108,7 +108,7 @@ public class Order06ConsortiumSection : AhpIntegrationTest
         var nextPage = await TestClient.NavigateTo(confirmLink);
 
         // then
-        nextPage.UrlEndWith(SitePagesUrl.SiteOwnerOfTheHomesConfirmation(SiteData.SiteId, ownerOfTheHomes.Id.Value));
+        nextPage.UrlEndWith(SitePagesUrl.SiteOwnerOfTheHomesConfirmation(UserOrganisationData.OrganisationId, SiteData.SiteId, ownerOfTheHomes.Id.Value));
         SiteData.OwnerOfTheHomes = ownerOfTheHomes;
 
         SaveCurrentPage();
@@ -119,9 +119,9 @@ public class Order06ConsortiumSection : AhpIntegrationTest
     public async Task Order06_ShouldConfirmOwnerOfTheHomes()
     {
         await TestQuestionPage(
-            SitePagesUrl.SiteOwnerOfTheHomesConfirmation(SiteData.SiteId, SiteData.OwnerOfTheHomes.Id.Value),
+            SitePagesUrl.SiteOwnerOfTheHomesConfirmation(UserOrganisationData.OrganisationId, SiteData.SiteId, SiteData.OwnerOfTheHomes.Id.Value),
             SharedPageTitles.OwnerOfTheHomesConfirm,
-            SitePagesUrl.SiteLandAcquisitionStatus(SiteData.SiteId),
+            SitePagesUrl.SiteLandAcquisitionStatus(UserOrganisationData.OrganisationId, SiteData.SiteId),
             ("isConfirmed", YesNoType.Yes.ToBoolAnswer()));
     }
 }

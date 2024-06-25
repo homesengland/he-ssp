@@ -18,8 +18,9 @@
 }
 
 <gds-div-grid-column-two-thirds>
-    <form asp-controller="LoanApplicationV2" asp-action="WithdrawPost" asp-route-id="@Model.LoanApplicationId" asp-method="post" novalidate>
-        <gds-back-link href="@Url.Action("Back","LoanApplicationV2", new { currentPage = LoanApplicationWorkflow.State.Withdraw, ApplicationId = Model.LoanApplicationId })" text="Back" class="govuk-!-margin-bottom-8"></gds-back-link>
+    <he-organisation-form asp-controller="LoanApplicationV2" asp-action="WithdrawPost" asp-route-id="@Model.LoanApplicationId" asp-method="post" novalidate>
+        <vc:loans-workflow-back-button current-page="@LoanApplicationWorkflow.State.Withdraw"/>
+
         <partial name="_ErrorSummaryPartial" model="null" />
 
         <gds-field-set>
@@ -45,5 +46,5 @@
                 Withdraw application
             </button>
         </gds-field-set>
-    </form>
+    </he-organisation-form>
 </gds-div-grid-column-two-thirds>

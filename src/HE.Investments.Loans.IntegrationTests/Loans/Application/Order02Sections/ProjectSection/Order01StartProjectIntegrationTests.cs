@@ -1,10 +1,8 @@
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
-using HE.Investments.IntegrationTestsFramework;
 using HE.Investments.Loans.IntegrationTests.IntegrationFramework;
 using HE.Investments.Loans.IntegrationTests.Loans.LoansHelpers.Extensions;
 using HE.Investments.Loans.IntegrationTests.Loans.LoansHelpers.Pages;
-using HE.Investments.Loans.WWW;
 using HE.Investments.Loans.WWW.Views.Project.Consts;
 using HE.Investments.TestsUtils.Extensions;
 using Xunit;
@@ -29,7 +27,7 @@ public class Order01StartProjectIntegrationTests : IntegrationTest
     public async Task Order01_ShouldOpenProjectStartingPage_WhenCompanyStructureLinkIsClickedOnTaskListPage()
     {
         // given
-        var taskList = await TestClient.NavigateTo(ApplicationPagesUrls.TaskList(_applicationLoanId));
+        var taskList = await TestClient.NavigateTo(ApplicationPagesUrls.TaskList(UserOrganisationData.OrganisationId, _applicationLoanId));
 
         // when
         var linkToAddProject = taskList.GetAnchorElementById("add-project-link");
@@ -49,7 +47,8 @@ public class Order01StartProjectIntegrationTests : IntegrationTest
     public async Task Order02_ShouldRedirectToProjectNameAndAddNewProjectToTaskList_WhenStartButtonIsClicked()
     {
         // given
-        var startProjectPage = await GetCurrentPage(() => TestClient.NavigateTo(ProjectPagesUrls.Start(_applicationLoanId)));
+        var startProjectPage =
+            await GetCurrentPage(() => TestClient.NavigateTo(ProjectPagesUrls.Start(UserOrganisationData.OrganisationId, _applicationLoanId)));
 
         var startButton = startProjectPage.GetGdsSubmitButtonById("start-now-button");
 
@@ -63,7 +62,7 @@ public class Order01StartProjectIntegrationTests : IntegrationTest
 
         var projectId = projectNamePage.Url.GetProjectGuidFromUrl();
 
-        var taskList = await TestClient.NavigateTo(ApplicationPagesUrls.TaskList(_applicationLoanId));
+        var taskList = await TestClient.NavigateTo(ApplicationPagesUrls.TaskList(UserOrganisationData.OrganisationId, _applicationLoanId));
 
         var (name, status, _) = taskList.GetProjectFromTaskList(projectId);
 

@@ -5,11 +5,12 @@
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Lists
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Paragraphs
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Buttons
+@using HE.Investments.Common.WWW.Extensions
 @{
     ViewData["Title"] = "Guidance";
-    ViewData["PreviousLink"] = Url.Action("Eligibility", "Guidance");
+    ViewData["PreviousLink"] = Url.OrganisationAction("Eligibility", "Guidance");
     ViewData["PreviousLinkName"] = "Eligibility";
-    ViewData["NextLink"] = Url.Action("AfterApply", "Guidance");
+    ViewData["NextLink"] = Url.OrganisationAction("AfterApply", "Guidance");
     ViewData["NextLinkName"] = "What happens after you apply";
 }
 
@@ -41,7 +42,7 @@
     <gds-p>It may take us up to 10 working days to review your application and contact you regarding our decision. </gds-p>
 
     <div class="govuk-!-margin-top-8">
-        <a href="@Url.Action("AcceptHeTermsAndConditions", "Home")" id="apply-link" >
+        <a href="@Url.OrganisationAction("AcceptHeTermsAndConditions", "Home")" id="apply-link" >
             <gds-button-start type="button">
                 Apply Online
             </gds-button-start>

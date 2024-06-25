@@ -14,7 +14,7 @@
 }
 
 <gds-div-grid-column-two-thirds>
-    <form asp-controller="HomeTypes" asp-action="TypeOfFacilities" asp-method="post" asp-route-workflow="@workflow" novalidate>
+    <he-organisation-form asp-controller="HomeTypes" asp-action="TypeOfFacilities" asp-method="post" asp-route-workflow="@workflow" novalidate>
         <vc:home-type-form-header
             current-page="@HomeTypesWorkflowState.TypeOfFacilities"
             caption="@Model.Header"/>
@@ -29,5 +29,5 @@
         <vc:form-button/>
 
         <vc:return-to-application-link application-id="@applicationId"/>
-    </form>
+    </he-organisation-form>
 </gds-div-grid-column-two-thirds>

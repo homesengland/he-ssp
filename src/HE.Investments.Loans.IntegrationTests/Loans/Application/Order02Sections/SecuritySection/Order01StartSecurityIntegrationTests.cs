@@ -1,10 +1,8 @@
 using System.Diagnostics.CodeAnalysis;
 using AngleSharp.Html.Dom;
-using HE.Investments.IntegrationTestsFramework;
 using HE.Investments.Loans.IntegrationTests.IntegrationFramework;
 using HE.Investments.Loans.IntegrationTests.Loans.LoansHelpers.Extensions;
 using HE.Investments.Loans.IntegrationTests.Loans.LoansHelpers.Pages;
-using HE.Investments.Loans.WWW;
 using HE.Investments.Loans.WWW.Views.Security.Consts;
 using HE.Investments.TestsUtils.Extensions;
 using Xunit;
@@ -29,7 +27,7 @@ public class Order01StartSecurityIntegrationTests : IntegrationTest
     public async Task Order01_ShouldOpenCompanyStructureStartingPage_WhenCompanyStructureLinkIsClickedOnTaskListPage()
     {
         // given
-        var taskList = await TestClient.NavigateTo(ApplicationPagesUrls.TaskList(_applicationLoanId));
+        var taskList = await TestClient.NavigateTo(ApplicationPagesUrls.TaskList(UserOrganisationData.OrganisationId, _applicationLoanId));
 
         // when
         var linkToSecuritySection = taskList.GetAnchorElementById("security-section-link");

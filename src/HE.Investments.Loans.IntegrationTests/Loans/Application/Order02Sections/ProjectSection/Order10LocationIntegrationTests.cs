@@ -1,14 +1,12 @@
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using HE.Investments.Common.Messages;
-using HE.Investments.IntegrationTestsFramework;
 using HE.Investments.Loans.Common.Tests.TestData;
 using HE.Investments.Loans.Common.Utils.Constants.FormOption;
 using HE.Investments.Loans.Contract.Projects.ViewModels;
 using HE.Investments.Loans.IntegrationTests.IntegrationFramework;
 using HE.Investments.Loans.IntegrationTests.Loans.LoansHelpers.Extensions;
 using HE.Investments.Loans.IntegrationTests.Loans.LoansHelpers.Pages;
-using HE.Investments.Loans.WWW;
 using HE.Investments.Loans.WWW.Views.Project.Consts;
 using HE.Investments.TestsUtils.Extensions;
 using Xunit;
@@ -36,7 +34,7 @@ public class Order10LocationIntegrationTests : IntegrationTest
     public async Task Order01_ShouldRedirectToLocalAuthoritySearch_WhenNoLocationTypeWasSelected()
     {
         // given
-        var locationPage = await TestClient.NavigateTo(ProjectPagesUrls.Location(_applicationLoanId, _projectId));
+        var locationPage = await TestClient.NavigateTo(ProjectPagesUrls.Location(UserOrganisationData.OrganisationId, _applicationLoanId, _projectId));
         var continueButton = locationPage.GetGdsSubmitButtonById("continue-button");
 
         // when
@@ -55,7 +53,8 @@ public class Order10LocationIntegrationTests : IntegrationTest
     public async Task Order02_ShouldShowValidationMessage_WhenCoordinatesWasSelectedAndNoValueWasProvided()
     {
         // given
-        var locationPage = await GetCurrentPage(() => TestClient.NavigateTo(ProjectPagesUrls.Location(_applicationLoanId, _projectId)));
+        var locationPage = await GetCurrentPage(() =>
+            TestClient.NavigateTo(ProjectPagesUrls.Location(UserOrganisationData.OrganisationId, _applicationLoanId, _projectId)));
         var continueButton = locationPage.GetGdsSubmitButtonById("continue-button");
 
         // when
@@ -76,7 +75,8 @@ public class Order10LocationIntegrationTests : IntegrationTest
     public async Task Order03_ShouldShowValidationMessage_WhenCoordinatesExceedsLongInputLength()
     {
         // given
-        var locationPage = await GetCurrentPage(() => TestClient.NavigateTo(ProjectPagesUrls.Location(_applicationLoanId, _projectId)));
+        var locationPage = await GetCurrentPage(() =>
+            TestClient.NavigateTo(ProjectPagesUrls.Location(UserOrganisationData.OrganisationId, _applicationLoanId, _projectId)));
         var continueButton = locationPage.GetGdsSubmitButtonById("continue-button");
 
         // when
@@ -97,7 +97,8 @@ public class Order10LocationIntegrationTests : IntegrationTest
     public async Task Order04_ShouldShowValidationMessage_WhenTitleNumberWasSelectedAndNoValueWasProvided()
     {
         // given
-        var locationPage = await GetCurrentPage(() => TestClient.NavigateTo(ProjectPagesUrls.Location(_applicationLoanId, _projectId)));
+        var locationPage = await GetCurrentPage(() =>
+            TestClient.NavigateTo(ProjectPagesUrls.Location(UserOrganisationData.OrganisationId, _applicationLoanId, _projectId)));
         var continueButton = locationPage.GetGdsSubmitButtonById("continue-button");
 
         // when
@@ -118,7 +119,8 @@ public class Order10LocationIntegrationTests : IntegrationTest
     public async Task Order05_ShouldShowValidationMessage_WhenTitleNumberExceedsLongInputLength()
     {
         // given
-        var locationPage = await GetCurrentPage(() => TestClient.NavigateTo(ProjectPagesUrls.Location(_applicationLoanId, _projectId)));
+        var locationPage = await GetCurrentPage(() =>
+            TestClient.NavigateTo(ProjectPagesUrls.Location(UserOrganisationData.OrganisationId, _applicationLoanId, _projectId)));
         var continueButton = locationPage.GetGdsSubmitButtonById("continue-button");
 
         // when
@@ -139,7 +141,8 @@ public class Order10LocationIntegrationTests : IntegrationTest
     public async Task Order06_RedirectTolocalAuthoritySearchPage_WhenCoordinatesWasSelected()
     {
         // given
-        var locationPage = await GetCurrentPage(() => TestClient.NavigateTo(ProjectPagesUrls.Location(_applicationLoanId, _projectId)));
+        var locationPage = await GetCurrentPage(() =>
+            TestClient.NavigateTo(ProjectPagesUrls.Location(UserOrganisationData.OrganisationId, _applicationLoanId, _projectId)));
         var continueButton = locationPage.GetGdsSubmitButtonById("continue-button");
 
         // when
@@ -159,7 +162,7 @@ public class Order10LocationIntegrationTests : IntegrationTest
     public async Task Order07_ShowCoordinatesAtCheckAnswersPage()
     {
         // given
-        var checkAnswersPage = await TestClient.NavigateTo(ProjectPagesUrls.CheckAnswers(_applicationLoanId, _projectId));
+        var checkAnswersPage = await TestClient.NavigateTo(ProjectPagesUrls.CheckAnswers(UserOrganisationData.OrganisationId, _applicationLoanId, _projectId));
 
         // when
         var projectSummary = checkAnswersPage.GetSummaryListItems();
@@ -173,7 +176,8 @@ public class Order10LocationIntegrationTests : IntegrationTest
     public async Task Order08_RedirectToLocalAuthoritySearchPage_WhenTitleNumberWasSelected()
     {
         // given
-        var locationPage = await GetCurrentPage(() => TestClient.NavigateTo(ProjectPagesUrls.Location(_applicationLoanId, _projectId)));
+        var locationPage = await GetCurrentPage(() =>
+            TestClient.NavigateTo(ProjectPagesUrls.Location(UserOrganisationData.OrganisationId, _applicationLoanId, _projectId)));
         var continueButton = locationPage.GetGdsSubmitButtonById("continue-button");
 
         // when

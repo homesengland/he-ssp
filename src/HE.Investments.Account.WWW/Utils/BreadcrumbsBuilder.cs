@@ -13,10 +13,9 @@ public class BreadcrumbsBuilder : BreadcrumbsBuilderBase
         return this;
     }
 
-    public BreadcrumbsBuilder WithOrganisation(string name)
+    public BreadcrumbsBuilder WithOrganisation(string name, string? organisationId)
     {
-        // TODO: Fix link - for AHP should point to organisation with specific Id
-        AddBreadcrumb(name, nameof(UserOrganisationController.Index), GetControllerName(nameof(UserOrganisationController)));
+        AddBreadcrumb(name, nameof(UserOrganisationController.Index), GetControllerName(nameof(UserOrganisationController)), new { organisationId });
 
         return this;
     }

@@ -6,7 +6,6 @@
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Divs
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Fieldset
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Legend
-@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Links
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Radios
 @model HE.Investments.Loans.Contract.Security.SecurityViewModel;
 
@@ -16,10 +15,8 @@
 }
 
 <gds-div-grid-column-two-thirds>
-    <form asp-controller="Security" asp-action="DirLoansPost" asp-route-id="@Model.LoanApplicationId" asp-route-redirect="@Context.Request.Query["redirect"]" asp-method="post" novalidate>
-
-        <gds-back-link href="@Url.Action("Back","Security", new {id = Model.LoanApplicationId, currentPage = SecurityState.DirLoans})" text="Back" class="govuk-!-margin-bottom-8">
-        </gds-back-link>
+    <he-organisation-form asp-controller="Security" asp-action="DirLoansPost" asp-route-id="@Model.LoanApplicationId" asp-route-redirect="@Context.Request.Query["redirect"]" asp-method="post" novalidate>
+        <vc:loans-workflow-back-button current-page="@SecurityState.DirLoans"/>
 
         <partial name="_ErrorSummaryPartial" model="null" />
         @Html.HiddenFor(x => x.LoanApplicationId)
@@ -46,7 +43,7 @@
             </button>
         </gds-field-set>
 
-    </form>
+    </he-organisation-form>
 
     <partial name="_HomeAndCheckAnswersLinks" />
 </gds-div-grid-column-two-thirds>

@@ -9,10 +9,10 @@
     ViewData["Title"] = FinancialDetailsPageTitles.ExpectedContributions;
 }
 <gds-div-grid-column-two-thirds>
-    <form asp-controller="FinancialDetails" asp-action="Contributions" asp-route-applicationId="@Model.ApplicationId" asp-route-redirect="@Context.Request.Query["redirect"]" asp-method="post" novalidate>
+    <he-organisation-form asp-controller="FinancialDetails" asp-action="Contributions" asp-route-applicationId="@Model.ApplicationId" asp-route-redirect="@Context.Request.Query["redirect"]" asp-method="post" novalidate>
         <vc:financial-details-form-header title="@FinancialDetailsPageTitles.ExpectedContributions"
                                           current-page="@FinancialDetailsWorkflowState.Contributions"
-                                          application-id="@Model.ApplicationId.ToString()"
+                                          application-id="@Model.ApplicationId"
                                           caption="@Model.ApplicationName - Finance details" />
 
 
@@ -147,6 +147,6 @@
             @Html.HiddenFor(c => c.IsSharedOwnership)
             @Html.HiddenFor(c => c.IsUnregisteredBodyAccount)
         </gds-field-set>
-        <vc:return-to-application-link application-id="@Model.ApplicationId.ToString()" />
-    </form>
+        <vc:return-to-application-link application-id="@Model.ApplicationId" />
+    </he-organisation-form>
 </gds-div-grid-column-two-thirds>

@@ -49,7 +49,7 @@ public class Order03CompleteHomeTypes : AhpApplicationIntegrationTest
     public async Task Order01_HomeTypesLandingPage()
     {
         // given
-        var taskListPage = await TestClient.NavigateTo(ApplicationPagesUrl.TaskList(ApplicationData.ApplicationId));
+        var taskListPage = await TestClient.NavigateTo(ApplicationPagesUrl.TaskList(UserOrganisationData.OrganisationId, ApplicationData.ApplicationId));
         taskListPage.HasLinkWithTestId("add-home-type", out var enterHomeTypesSection);
 
         // when
@@ -70,8 +70,8 @@ public class Order03CompleteHomeTypes : AhpApplicationIntegrationTest
     public async Task Order02_AddGeneralHomeType()
     {
         // given
-        var homeTypeListPage = await TestClient.NavigateTo(HomeTypesPagesUrl.List(ApplicationData.ApplicationId));
-        homeTypeListPage.UrlEndWith(HomeTypesPagesUrl.List(ApplicationData.ApplicationId))
+        var homeTypeListPage = await TestClient.NavigateTo(HomeTypesPagesUrl.List(UserOrganisationData.OrganisationId, ApplicationData.ApplicationId));
+        homeTypeListPage.UrlEndWith(HomeTypesPagesUrl.List(UserOrganisationData.OrganisationId, ApplicationData.ApplicationId))
             .HasTitle(HomeTypesPageTitles.HomeTypes)
             .HasLinkButtonForTestId("add-home-type", out var enterNewHomeTypePage);
 
@@ -397,7 +397,7 @@ public class Order03CompleteHomeTypes : AhpApplicationIntegrationTest
             ("IsSectionCompleted", YesNoType.Yes.ToString()));
 
         // then
-        homeTypeListPage.UrlEndWith(HomeTypesPagesUrl.List(ApplicationData.ApplicationId))
+        homeTypeListPage.UrlEndWith(HomeTypesPagesUrl.List(UserOrganisationData.OrganisationId, ApplicationData.ApplicationId))
             .HasTitle(HomeTypesPageTitles.HomeTypes)
             .HasLinkButtonForTestId("add-home-type", out _)
             .HasHomeTypeItem(GeneralHomeType.Id, GeneralHomeType.Name, out _);
@@ -707,7 +707,7 @@ public class Order03CompleteHomeTypes : AhpApplicationIntegrationTest
             ("IsSectionCompleted", YesNoType.Yes.ToString()));
 
         // then
-        homeTypeListPage.UrlEndWith(HomeTypesPagesUrl.List(ApplicationData.ApplicationId))
+        homeTypeListPage.UrlEndWith(HomeTypesPagesUrl.List(UserOrganisationData.OrganisationId, ApplicationData.ApplicationId))
             .HasTitle(HomeTypesPageTitles.HomeTypes)
             .HasLinkButtonForTestId("add-home-type", out _)
             .HasHomeTypeItem(DisabledHomeType.Id, DisabledHomeType.Name, out _)
@@ -730,7 +730,7 @@ public class Order03CompleteHomeTypes : AhpApplicationIntegrationTest
         var finishHomeTypesPage = await TestClient.SubmitButton(continueButton);
 
         // then
-        finishHomeTypesPage.UrlEndWith(HomeTypesPagesUrl.FinishHomeTypes(ApplicationData.ApplicationId))
+        finishHomeTypesPage.UrlEndWith(HomeTypesPagesUrl.FinishHomeTypes(UserOrganisationData.OrganisationId, ApplicationData.ApplicationId))
             .HasTitle(HomeTypesPageTitles.FinishHomeTypes);
         SaveCurrentPage();
     }
@@ -750,18 +750,18 @@ public class Order03CompleteHomeTypes : AhpApplicationIntegrationTest
         var taskListPage = await TestClient.SubmitButton(continueButton, ("FinishAnswer", "Yes"));
 
         // then
-        taskListPage.UrlEndWith(ApplicationPagesUrl.TaskList(ApplicationData.ApplicationId))
+        taskListPage.UrlEndWith(ApplicationPagesUrl.TaskList(UserOrganisationData.OrganisationId, ApplicationData.ApplicationId))
             .HasSectionWithStatus("add-home-type-status", "Completed");
         SaveCurrentPage();
     }
 
-    private string BuildHomeTypesPage(Func<string, string> homeTypesPageUrlFactory)
+    private string BuildHomeTypesPage(Func<string, string, string> homeTypesPageUrlFactory)
     {
-        return homeTypesPageUrlFactory(ApplicationData.ApplicationId);
+        return homeTypesPageUrlFactory(UserOrganisationData.OrganisationId, ApplicationData.ApplicationId);
     }
 
-    private string BuildHomeTypePage(Func<string, string, string> homeTypePageUrlFactory, INestedItemData nestedItemData)
+    private string BuildHomeTypePage(Func<string, string, string, string> homeTypePageUrlFactory, INestedItemData nestedItemData)
     {
-        return homeTypePageUrlFactory(ApplicationData.ApplicationId, nestedItemData.Id);
+        return homeTypePageUrlFactory(UserOrganisationData.OrganisationId, ApplicationData.ApplicationId, nestedItemData.Id);
     }
 }

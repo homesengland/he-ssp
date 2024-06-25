@@ -1,7 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
-using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.WWW.Views.Site.Const;
-using HE.Investments.AHP.IntegrationTests.Extensions;
 using HE.Investments.AHP.IntegrationTests.Framework;
 using HE.Investments.AHP.IntegrationTests.Pages;
 using HE.Investments.TestsUtils.Extensions;
@@ -25,7 +23,7 @@ public class Order11SaveAndReturnToSites : AhpSiteIntegrationTest
     public async Task Order01_SaveAndReturnToSitesList()
     {
         // given
-        var currentPage = await GetCurrentPage(SitePagesUrl.SiteProcurements(SiteData.SiteId));
+        var currentPage = await GetCurrentPage(SitePagesUrl.SiteProcurements(UserOrganisationData.OrganisationId, SiteData.SiteId));
         currentPage.HasSaveAndReturnToSiteListButton(out var saveAndReturnButton);
 
         // when

@@ -2,6 +2,7 @@
 @using HE.Investment.AHP.WWW.Models.Consortium
 @using HE.Investments.Common.Gds
 @using HE.Investments.Common.WWW.Components.PageHeader
+@using HE.Investments.Common.WWW.Extensions
 @using HE.Investments.Common.WWW.TagHelpers
 @model ConsortiumSelectedProgrammeModel
 
@@ -15,7 +16,7 @@
     </gds-p>
 
     <gds-p>
-        Our records show that you are a member, not a lead partner, of a consortium. <a href="@Url.Action("Index", "ConsortiumMember", new { consortiumId = Model.ConsortiumId })">View the details of your consortium.</a>
+        Our records show that you are a member, not a lead partner, of a consortium. <a href="@Url.OrganisationAction("Index", "ConsortiumMember", new { consortiumId = Model.ConsortiumId })">View the details of your consortium.</a>
     </gds-p>
 
     <gds-p>
@@ -33,7 +34,7 @@
     </gds-p>
 
     <link-button button-type="@ButtonType.Standard"
-                 href="@Url.Action("Index", "Account")">
+                 href="@Url.OrganisationAction("Index", "Account")">
         Return to your account
     </link-button>
 </gds-div-grid-column-two-thirds>

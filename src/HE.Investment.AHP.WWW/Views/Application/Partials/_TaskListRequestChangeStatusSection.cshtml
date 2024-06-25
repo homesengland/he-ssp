@@ -1,6 +1,7 @@
 @using HE.Investments.Common.Contract
 @using HE.Investments.Common.Gds
 @using HE.Investment.AHP.Contract.Application
+@using HE.Investments.Common.WWW.Extensions
 @model HE.Investment.AHP.WWW.Models.Application.ApplicationSectionsModel
 
 @{
@@ -12,7 +13,7 @@
     <vc:change-status-section
         title="Check and submit"
         paragraph="@(incompleteSectionsCount > 0 ? "You must complete all sections before you can submit your application." : string.Empty)"
-        action-url="@Url.Action("CheckAnswers", "Application", new { applicationId = Model.ApplicationId })"
+        action-url="@Url.OrganisationAction("CheckAnswers", "Application", new { applicationId = Model.ApplicationId })"
         link-button-name="Check and submit application"
         button-type="@ButtonType.Standard"
         is-disabled="@(incompleteSectionsCount > 0)"
@@ -24,7 +25,7 @@
     <vc:change-status-section
         title="Put on hold"
         paragraph="This will notify Homes England that you no longer wish to proceed with this application at this time. You can revisit this later on and submit once you’re ready."
-        action-url="@Url.Action("OnHold", "Application", new { applicationId = Model.ApplicationId })"
+        action-url="@Url.OrganisationAction("OnHold", "Application", new { applicationId = Model.ApplicationId })"
         link-button-name="Hold"
         button-type="@ButtonType.Secondary"
         test-id="put-application-on-hold"/>
@@ -35,7 +36,7 @@
     <vc:change-status-section
         title="Reactivate application"
         paragraph="Your application is currently on hold. Reactivating means you will be able to work on or submit this application."
-        action-url="@Url.Action("Reactivate", "Application", new { applicationId = Model.ApplicationId })"
+        action-url="@Url.OrganisationAction("Reactivate", "Application", new { applicationId = Model.ApplicationId })"
         link-button-name="Reactivate"
         button-type="@ButtonType.Secondary"
         test-id="reactivate-application"/>
@@ -46,7 +47,7 @@
     <vc:change-status-section
         title="Withdraw"
         paragraph="This will notify Homes England that you no longer wish to proceed. Your application will be permanently deleted."
-        action-url="@Url.Action("Withdraw", "Application", new { applicationId = Model.ApplicationId })"
+        action-url="@Url.OrganisationAction("Withdraw", "Application", new { applicationId = Model.ApplicationId })"
         link-button-name="Withdraw"
         button-type="@ButtonType.Warning"
         test-id="withdraw-application"/>

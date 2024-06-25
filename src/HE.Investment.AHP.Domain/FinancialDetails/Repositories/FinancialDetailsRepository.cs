@@ -41,6 +41,7 @@ public class FinancialDetailsRepository : IFinancialDetailsRepository
     public async Task<FinancialDetailsEntity> GetById(AhpApplicationId id, ConsortiumUserAccount userAccount, CancellationToken cancellationToken)
     {
         var organisationId = userAccount.SelectedOrganisationId().Value;
+        var isUnregisteredBody = userAccount.Organisation?.IsUnregisteredBody == true;
         var application = userAccount.CanViewAllApplications()
             ? await _crmContext.GetOrganisationApplicationById(
                 id.Value,
@@ -51,7 +52,7 @@ public class FinancialDetailsRepository : IFinancialDetailsRepository
         var schemeFunding = (await _schemeRepository.GetByApplicationId(id, userAccount, false, cancellationToken)).Funding;
         var siteBasicInfo = await _siteRepository.GetSiteBasicInfo(SiteId.From(application.siteId), userAccount, cancellationToken);
 
-        return CreateEntity(application, applicationBasicInfo, siteBasicInfo, schemeFunding);
+        return CreateEntity(application, applicationBasicInfo, siteBasicInfo, schemeFunding, isUnregisteredBody);
     }
 
     public async Task<FinancialDetailsEntity> Save(FinancialDetailsEntity financialDetails, UserAccount userAccount, CancellationToken cancellationToken)
@@ -83,7 +84,8 @@ public class FinancialDetailsRepository : IFinancialDetailsRepository
         AhpApplicationDto application,
         ApplicationBasicInfo applicationBasicInfo,
         SiteBasicInfo siteBasicInfo,
-        SchemeFunding schemeFunding)
+        SchemeFunding schemeFunding,
+        bool isUnregisteredBody)
     {
         return new FinancialDetailsEntity(
             applicationBasicInfo,
@@ -96,7 +98,7 @@ public class FinancialDetailsRepository : IFinancialDetailsRepository
                 application.currentLandValue.IsProvided() ? new CurrentLandValue(application.currentLandValue!.Value) : null,
                 application.isPublicLand),
             OtherApplicationCostsMapper.MapToOtherApplicationCosts(application),
-            ExpectedContributionsToSchemeMapper.MapToExpectedContributionsToScheme(application, applicationBasicInfo.Tenure),
+            ExpectedContributionsToSchemeMapper.MapToExpectedContributionsToScheme(application, applicationBasicInfo.Tenure, isUnregisteredBody),
             PublicGrantsMapper.MapToPublicGrants(application),
             SectionStatusMapper.ToDomain(application.financialDetailsSectionCompletionStatus, applicationBasicInfo.Status));
     }

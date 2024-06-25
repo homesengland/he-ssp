@@ -10,7 +10,7 @@
     <vc:ahp-workflow-back-button current-page="@SiteWorkflowState.Section106GeneralAgreement" />
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
 
-    <form asp-controller="Site" asp-action="Section106GeneralAgreement" asp-route-workflow="@Context.Request.Query["workflow"]" asp-method="post" novalidate>
+    <he-organisation-form asp-controller="Site" asp-action="Section106GeneralAgreement" asp-route-workflow="@Context.Request.Query["workflow"]" asp-method="post" novalidate>
         <vc:page-header title="@SitePageTitles.SiteSection106Agreement" caption="@Model.SiteName"/>
         <gds-p>
             You'll need to provide details of any section 106 agreements (or planning conditions
@@ -38,6 +38,6 @@
 
         <vc:form-button />
         <vc:return-to-sites-link project-id="@ViewBag.ProjectId" />
-    </form>
+    </he-organisation-form>
 
 </gds-div-grid-column-two-thirds>

@@ -20,7 +20,7 @@ public static class ExpectedContributionsToSchemeMapper
         dto.transferValue = expectedContributionsToScheme.HomesTransferValue?.Value;
     }
 
-    public static ExpectedContributionsToScheme MapToExpectedContributionsToScheme(AhpApplicationDto application, Tenure tenure)
+    public static ExpectedContributionsToScheme MapToExpectedContributionsToScheme(AhpApplicationDto application, Tenure tenure, bool isUnregisteredBody)
     {
         static ExpectedContributionValue? MapProvidedValues(decimal? value, ExpectedContributionFields field) => value.IsProvided()
             ? new ExpectedContributionValue(field, value!.Value)
@@ -35,6 +35,7 @@ public static class ExpectedContributionsToSchemeMapper
             MapProvidedValues(application.otherCapitalSources, ExpectedContributionFields.OtherCapitalSources),
             MapProvidedValues(application.totalInitialSalesIncome, ExpectedContributionFields.SharedOwnershipSales),
             MapProvidedValues(application.transferValue, ExpectedContributionFields.HomesTransferValue),
-            tenure);
+            tenure,
+            isUnregisteredBody);
     }
 }

@@ -18,7 +18,7 @@
 
     <vc:project-summary sections="@Model.Sections" is-site-identified="@(Model.IsSiteIdentified ?? false)" is-read-only="@Model.IsReadOnly"/>
 
-    <form asp-controller="Project" asp-action="Complete" asp-route-projectId="@projectId" asp-route-workflow="@Context.Request.Query["workflow"]" asp-method="post" novalidate>
+    <he-organisation-form asp-controller="Project" asp-action="Complete" asp-route-projectId="@projectId" asp-route-workflow="@Context.Request.Query["workflow"]" asp-method="post" novalidate>
 
         @if (!Model.IsReadOnly)
         {
@@ -29,5 +29,5 @@
         }
 
         <vc:return-to-account-link is-editable="false"/>
-    </form>
+    </he-organisation-form>
 </div>

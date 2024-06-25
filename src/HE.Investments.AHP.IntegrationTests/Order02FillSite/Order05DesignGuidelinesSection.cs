@@ -25,9 +25,9 @@ public class Order05DesignGuidelinesSection : AhpSiteIntegrationTest
     public async Task Order01_ShouldProvideNationalDesignGuidePriorities()
     {
         await TestSiteQuestionPage(
-            SitePagesUrl.SiteNationalDesignGuide(SiteData.SiteId),
+            SitePagesUrl.SiteNationalDesignGuide(UserOrganisationData.OrganisationId, SiteData.SiteId),
             SitePageTitles.NationalDesignGuide,
-            SitePagesUrl.SiteBuildingForHealthyLife(SiteData.SiteId),
+            SitePagesUrl.SiteBuildingForHealthyLife(UserOrganisationData.OrganisationId, SiteData.SiteId),
             SiteData.NationalDesignGuidePriorities.ToFormInputs(nameof(NationalDesignGuidePrioritiesModel.DesignPriorities)));
     }
 
@@ -36,9 +36,9 @@ public class Order05DesignGuidelinesSection : AhpSiteIntegrationTest
     public async Task Order02_ShouldProvideBuildingForHealthyLife()
     {
         await TestSiteQuestionPage(
-            SitePagesUrl.SiteBuildingForHealthyLife(SiteData.SiteId),
+            SitePagesUrl.SiteBuildingForHealthyLife(UserOrganisationData.OrganisationId, SiteData.SiteId),
             SitePageTitles.BuildingForHealthyLife,
-            SitePagesUrl.SiteProvideNumberOfGreenLights(SiteData.SiteId),
+            SitePagesUrl.SiteProvideNumberOfGreenLights(UserOrganisationData.OrganisationId, SiteData.SiteId),
             (nameof(SiteModel.BuildingForHealthyLife), SiteData.BuildingForHealthyLife.ToString()));
     }
 
@@ -47,9 +47,9 @@ public class Order05DesignGuidelinesSection : AhpSiteIntegrationTest
     public async Task Order03_ShouldProvideNumberOfGreenLights()
     {
         await TestSiteQuestionPage(
-            SitePagesUrl.SiteProvideNumberOfGreenLights(SiteData.SiteId),
+            SitePagesUrl.SiteProvideNumberOfGreenLights(UserOrganisationData.OrganisationId, SiteData.SiteId),
             SitePageTitles.NumberOfGreenLights,
-            SitePagesUrl.SiteDevelopingPartner(SiteData.SiteId),
+            SitePagesUrl.SiteDevelopingPartner(UserOrganisationData.OrganisationId, SiteData.SiteId),
             (nameof(SiteModel.NumberOfGreenLights), SiteData.NumberOfGreenLights));
     }
 }

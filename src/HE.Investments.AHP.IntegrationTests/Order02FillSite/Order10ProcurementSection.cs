@@ -24,9 +24,9 @@ public class Order10ProcurementSection : AhpSiteIntegrationTest
     public async Task Order01_ShouldProvideProcurements()
     {
         await TestSiteQuestionPage(
-            SitePagesUrl.SiteProcurements(SiteData.SiteId),
+            SitePagesUrl.SiteProcurements(UserOrganisationData.OrganisationId, SiteData.SiteId),
             SitePageTitles.Procurements,
-            SitePagesUrl.SiteCheckAnswers(SiteData.SiteId),
+            SitePagesUrl.SiteCheckAnswers(UserOrganisationData.OrganisationId, SiteData.SiteId),
             SiteData.Procurements.ToFormInputs(nameof(SiteModel.SiteProcurements)));
     }
 }

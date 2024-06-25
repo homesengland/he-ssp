@@ -29,9 +29,9 @@ public class Order02FrontDoorProjectNonSiteQuestions : FrontDoorIntegrationTest
     public async Task Order01_ProvideIdentifiedSite()
     {
         await TestQuestionPage(
-            ProjectPagesUrl.IdentifiedSite(ProjectData.Id),
+            ProjectPagesUrl.IdentifiedSite(UserOrganisationData.OrganisationId, ProjectData.Id),
             ProjectPageTitles.IdentifiedSite,
-            ProjectPagesUrl.GeographicFocus(ProjectData.Id),
+            ProjectPagesUrl.GeographicFocus(UserOrganisationData.OrganisationId, ProjectData.Id),
             (nameof(ProjectDetails.IsSiteIdentified), ProjectData.IsSiteIdentified.MapToTrueFalse()));
     }
 
@@ -40,9 +40,9 @@ public class Order02FrontDoorProjectNonSiteQuestions : FrontDoorIntegrationTest
     public async Task Order02_ProvideGeographicFocus()
     {
         await TestQuestionPage(
-            ProjectPagesUrl.GeographicFocus(ProjectData.Id),
+            ProjectPagesUrl.GeographicFocus(UserOrganisationData.OrganisationId, ProjectData.Id),
             ProjectPageTitles.GeographicFocus,
-            ProjectPagesUrl.Region(ProjectData.Id),
+            ProjectPagesUrl.Region(UserOrganisationData.OrganisationId, ProjectData.Id),
             (nameof(ProjectDetails.GeographicFocus), ProjectData.GeographicFocus.ToString()));
     }
 
@@ -51,9 +51,9 @@ public class Order02FrontDoorProjectNonSiteQuestions : FrontDoorIntegrationTest
     public async Task Order03_ProvideRegion()
     {
         await TestQuestionPage(
-            ProjectPagesUrl.Region(ProjectData.Id),
+            ProjectPagesUrl.Region(UserOrganisationData.OrganisationId, ProjectData.Id),
             ProjectPageTitles.Region,
-            ProjectPagesUrl.HomesNumber(ProjectData.Id),
+            ProjectPagesUrl.HomesNumber(UserOrganisationData.OrganisationId, ProjectData.Id),
             ProjectData.RegionTypes.Select(x => (nameof(ProjectDetails.Regions), x.ToString())).ToArray());
     }
 
@@ -62,9 +62,9 @@ public class Order02FrontDoorProjectNonSiteQuestions : FrontDoorIntegrationTest
     public async Task Order04_ProvideHomesNumber()
     {
         await TestQuestionPage(
-            ProjectPagesUrl.HomesNumber(ProjectData.Id),
+            ProjectPagesUrl.HomesNumber(UserOrganisationData.OrganisationId, ProjectData.Id),
             ProjectPageTitles.HomesNumber,
-            ProjectPagesUrl.Progress(ProjectData.Id),
+            ProjectPagesUrl.Progress(UserOrganisationData.OrganisationId, ProjectData.Id),
             (nameof(ProjectDetails.HomesNumber), ProjectData.HomesNumber.ToString(CultureInfo.InvariantCulture)));
     }
 
@@ -73,9 +73,9 @@ public class Order02FrontDoorProjectNonSiteQuestions : FrontDoorIntegrationTest
     public async Task Order05_ProvideProgress()
     {
         await TestQuestionPage(
-            ProjectPagesUrl.Progress(ProjectData.Id),
+            ProjectPagesUrl.Progress(UserOrganisationData.OrganisationId, ProjectData.Id),
             ProjectPageTitles.Progress,
-            ProjectPagesUrl.RequiresFunding(ProjectData.Id),
+            ProjectPagesUrl.RequiresFunding(UserOrganisationData.OrganisationId, ProjectData.Id),
             (nameof(ProjectDetails.IsSupportRequired), ProjectData.IsSupportRequired.MapToTrueFalse()));
     }
 
@@ -84,9 +84,9 @@ public class Order02FrontDoorProjectNonSiteQuestions : FrontDoorIntegrationTest
     public async Task Order06_ProvideRequiresFunding()
     {
         await TestQuestionPage(
-            ProjectPagesUrl.RequiresFunding(ProjectData.Id),
+            ProjectPagesUrl.RequiresFunding(UserOrganisationData.OrganisationId, ProjectData.Id),
             ProjectPageTitles.RequiresFunding,
-            ProjectPagesUrl.ExpectedStart(ProjectData.Id),
+            ProjectPagesUrl.ExpectedStart(UserOrganisationData.OrganisationId, ProjectData.Id),
             (nameof(ProjectDetails.IsFundingRequired), ProjectData.IsFundingRequired.MapToTrueFalse()));
     }
 
@@ -95,9 +95,9 @@ public class Order02FrontDoorProjectNonSiteQuestions : FrontDoorIntegrationTest
     public async Task Order07_ProvideExpectedStart()
     {
         await TestQuestionPage(
-            ProjectPagesUrl.ExpectedStart(ProjectData.Id),
+            ProjectPagesUrl.ExpectedStart(UserOrganisationData.OrganisationId, ProjectData.Id),
             ProjectPageTitles.ExpectedStart,
-            ProjectPagesUrl.CheckAnswers(ProjectData.Id),
+            ProjectPagesUrl.CheckAnswers(UserOrganisationData.OrganisationId, ProjectData.Id),
             ("ExpectedStartDate.Month", ProjectData.ExpectedStartDate.Month.ToString(CultureInfo.InvariantCulture)),
             ("ExpectedStartDate.Year", ProjectData.ExpectedStartDate.Year.ToString(CultureInfo.InvariantCulture)));
     }
@@ -107,9 +107,9 @@ public class Order02FrontDoorProjectNonSiteQuestions : FrontDoorIntegrationTest
     public async Task Order08_CheckAnswers()
     {
         // given
-        var checkAnswersPage = await GetCurrentPage(ProjectPagesUrl.CheckAnswers(ProjectData.Id));
+        var checkAnswersPage = await GetCurrentPage(ProjectPagesUrl.CheckAnswers(UserOrganisationData.OrganisationId, ProjectData.Id));
         checkAnswersPage
-            .UrlEndWith(ProjectPagesUrl.CheckAnswers(ProjectData.Id))
+            .UrlEndWith(ProjectPagesUrl.CheckAnswers(UserOrganisationData.OrganisationId, ProjectData.Id))
             .HasTitle(ProjectPageTitles.CheckAnswers)
             .HasBackLink(out _);
 

@@ -5,13 +5,14 @@
 @using HE.Investment.AHP.WWW.Views.Shared.Components.ReturnToSitesLink
 @using HE.Investments.Common.WWW.Components.PageHeader
 @using HE.Investments.Common.WWW.Components.SelectList
+@using HE.Investments.Common.WWW.Extensions
 @model HE.Investment.AHP.WWW.Models.SitePartners.SelectPartnerModel;
 @{
     ViewData["Title"] = SharedPageTitles.DevelopingPartner;
     var workflow = Context.Request.Query["workflow"];
 
     var items = Model.ConsortiumMembers.ToSelectListViewModel(
-        x => Url.Action("DevelopingPartnerConfirm", "SitePartners", new { Model.SiteId, organisationId = x.Value, workflow }));
+        x => Url.OrganisationAction("DevelopingPartnerConfirm", "SitePartners", new { Model.SiteId, partnerId = x.Value, workflow }));
 }
 
 <gds-div-grid-column-two-thirds>
@@ -25,7 +26,7 @@
 
     <vc:select-list
         items="@items"
-        paging-navigation-url="@Url.Action("DevelopingPartner", "SitePartners", new { siteId = Model.SiteId, workflow })"/>
+        paging-navigation-url="@Url.OrganisationAction("DevelopingPartner", "SitePartners", new { siteId = Model.SiteId, workflow })"/>
 
     <vc:return-to-sites-link is-link-inside-form="false" is-editable="false" project-id="@ViewBag.ProjectId"/>
 </gds-div-grid-column-two-thirds>

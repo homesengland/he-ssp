@@ -32,7 +32,7 @@ public class Order03StartDateIntegrationTests : IntegrationTest
     public async Task Order01_ShouldDisplayValidationError_WhenYesIsSelectedButStartDateIsNotProvided()
     {
         // given
-        var startDatePage = await TestClient.NavigateTo(ProjectPagesUrls.StartDate(_applicationLoanId, _projectId));
+        var startDatePage = await TestClient.NavigateTo(ProjectPagesUrls.StartDate(UserOrganisationData.OrganisationId, _applicationLoanId, _projectId));
         var continueButton = startDatePage.GetGdsSubmitButtonById("continue-button");
 
         // when
@@ -60,12 +60,14 @@ public class Order03StartDateIntegrationTests : IntegrationTest
     public async Task Order02_ShouldDisplayValidationError_WhenYesIsSelectedButInvalidStartDateIsProvided()
     {
         // given
-        var startDate = await GetCurrentPage(() => TestClient.NavigateTo(ProjectPagesUrls.StartDate(_applicationLoanId, _projectId)));
+        var startDate = await GetCurrentPage(() =>
+            TestClient.NavigateTo(ProjectPagesUrls.StartDate(UserOrganisationData.OrganisationId, _applicationLoanId, _projectId)));
         var continueButton = startDate.GetGdsSubmitButtonById("continue-button");
 
         // when
         startDate = await TestClient.SubmitButton(
-            continueButton, new Dictionary<string, string>
+            continueButton,
+            new Dictionary<string, string>
             {
                 { "HasEstimatedStartDate", CommonResponse.Yes },
                 { $"{nameof(ProjectViewModel.StartDate)}.Day", "32" },
@@ -85,14 +87,16 @@ public class Order03StartDateIntegrationTests : IntegrationTest
     public async Task Order03_ShouldRedirectToManyHomes_WhenYesIsSelectedAndValidStartDateIsProvided()
     {
         // given
-        var startDate = await GetCurrentPage(() => TestClient.NavigateTo(ProjectPagesUrls.StartDate(_applicationLoanId, _projectId)));
+        var startDate = await GetCurrentPage(() =>
+            TestClient.NavigateTo(ProjectPagesUrls.StartDate(UserOrganisationData.OrganisationId, _applicationLoanId, _projectId)));
         var continueButton = startDate.GetGdsSubmitButtonById("continue-button");
 
         var (year, month, day) = DateTimeTestData.CorrectDateAsStrings;
 
         // when
         startDate = await TestClient.SubmitButton(
-            continueButton, new Dictionary<string, string>
+            continueButton,
+            new Dictionary<string, string>
             {
                 { "HasEstimatedStartDate", CommonResponse.Yes },
                 { $"{nameof(ProjectViewModel.StartDate)}.Day", day },

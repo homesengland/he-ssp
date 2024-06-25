@@ -2,13 +2,11 @@
 @using HE.Investments.Loans.WWW.Views.Security.Consts
 @using HE.Investments.Loans.Contract.Application.Helper
 @using Microsoft.AspNetCore.Mvc.TagHelpers
-@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Links
 @model HE.Investments.Loans.Contract.Security.SecurityViewModel;
 
 <he-div-grid-column-full>
-    <form asp-controller="Security" asp-action="CheckAnswersPost" asp-route-id="@Model.LoanApplicationId" asp-method="post" novalidate>
-        <gds-back-link href="@Url.Action("Back", "Security", new { id = Model.LoanApplicationId, currentPage = SecurityState.CheckAnswers })" text="Back" class="govuk-!-margin-bottom-8">
-        </gds-back-link>
+    <he-organisation-form asp-controller="Security" asp-action="CheckAnswersPost" asp-route-id="@Model.LoanApplicationId" asp-method="post" novalidate>
+        <vc:loans-workflow-back-button current-page="@SecurityState.CheckAnswers"/>
 
         <partial name="_ErrorSummaryPartial" model="null"/>
 
@@ -20,5 +18,5 @@
         @await Html.PartialAsync("_SecurityAnswers", Model)
 
         <partial name="Sections/_HaveYouCompletedThisSection" model="Model"/>
-    </form>
+    </he-organisation-form>
 </he-div-grid-column-full>

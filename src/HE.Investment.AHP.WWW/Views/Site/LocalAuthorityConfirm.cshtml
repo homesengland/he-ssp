@@ -1,6 +1,7 @@
 @using HE.Investment.AHP.WWW.Models.Common
 @using HE.Investment.AHP.WWW.Views.Site.Const
 @using HE.Investments.Common.WWW.Components.FormButton
+@using HE.Investments.Common.WWW.Extensions
 @model HE.Investments.Common.WWW.Models.ConfirmModel<HE.Investment.AHP.Contract.Site.LocalAuthorities>;
 
 @{
@@ -9,9 +10,9 @@
 }
 
 <gds-div-grid-column-two-thirds>
-    <gds-back-link class="govuk-!-margin-bottom-8" href="@Url.Action("LocalAuthorityResult", "Site", new { siteId = Model.ViewModel.SiteId, phrase = Model.ViewModel.Phrase, workflow })"></gds-back-link>
+    <gds-back-link class="govuk-!-margin-bottom-8" href="@Url.OrganisationAction("LocalAuthorityResult", "Site", new { siteId = Model.ViewModel.SiteId, phrase = Model.ViewModel.Phrase, workflow })"></gds-back-link>
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
-    <form asp-controller="Site" asp-action="LocalAuthorityConfirm" asp-route-localAuthorityCode=@(Model.ViewModel.LocalAuthorityCode) asp-route-phrase=@(Model.ViewModel.Phrase) asp-route-workflow=@workflow asp-method="post" novalidate>
+    <he-organisation-form asp-controller="Site" asp-action="LocalAuthorityConfirm" asp-route-localAuthorityCode=@(Model.ViewModel.LocalAuthorityCode) asp-route-phrase=@(Model.ViewModel.Phrase) asp-route-workflow=@workflow asp-method="post" novalidate>
         <gds-field-set>
             <vc:page-header title="@SitePageTitles.LocalAuthorityConfirm"  caption="@ViewBag.SiteName"/>
 
@@ -38,5 +39,5 @@
         @Html.HiddenFor(c => c.ViewModel.LocalAuthorityCode)
         @Html.HiddenFor(c => c.ViewModel.LocalAuthorityName)
         @Html.HiddenFor(c => c.ViewModel.Phrase)
-    </form>
+    </he-organisation-form>
 </gds-div-grid-column-two-thirds>

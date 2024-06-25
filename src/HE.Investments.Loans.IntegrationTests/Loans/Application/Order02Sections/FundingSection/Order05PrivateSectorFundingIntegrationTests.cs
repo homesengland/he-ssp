@@ -1,13 +1,11 @@
 using System.Diagnostics.CodeAnalysis;
 using AngleSharp.Html.Dom;
 using HE.Investments.Common.Messages;
-using HE.Investments.IntegrationTestsFramework;
 using HE.Investments.Loans.Common.Tests.TestData;
 using HE.Investments.Loans.Common.Utils.Constants.FormOption;
 using HE.Investments.Loans.IntegrationTests.IntegrationFramework;
 using HE.Investments.Loans.IntegrationTests.Loans.LoansHelpers.Extensions;
 using HE.Investments.Loans.IntegrationTests.Loans.LoansHelpers.Pages;
-using HE.Investments.Loans.WWW;
 using HE.Investments.Loans.WWW.Views.FundingV2.Consts;
 using HE.Investments.TestsUtils.Extensions;
 using Xunit;
@@ -30,12 +28,19 @@ public class Order05PrivateSectorFundingIntegrationTests : IntegrationTest
     public async Task Order01_ShouldDisplayValidationError_WhenYesIsSelectedAndApplyResultIsNotProvided()
     {
         // given
-        var privateSectorFundingPage = await TestClient.NavigateTo(FundingPageUrls.PrivateSectorFunding(UserData.LoanApplicationIdInDraftState));
+        var privateSectorFundingPage =
+            await TestClient.NavigateTo(FundingPageUrls.PrivateSectorFunding(UserOrganisationData.OrganisationId, UserData.LoanApplicationIdInDraftState));
         var continueButton = privateSectorFundingPage.GetGdsSubmitButtonById("continue-button");
 
         // when
         privateSectorFundingPage = await TestClient.SubmitButton(
-            continueButton, new Dictionary<string, string> { { "PrivateSectorFunding", CommonResponse.Yes }, { "PrivateSectorFundingResult", string.Empty }, { "PrivateSectorFundingReason", string.Empty } });
+            continueButton,
+            new Dictionary<string, string>
+            {
+                { "PrivateSectorFunding", CommonResponse.Yes },
+                { "PrivateSectorFundingResult", string.Empty },
+                { "PrivateSectorFundingReason", string.Empty },
+            });
 
         // then
         privateSectorFundingPage
@@ -57,7 +62,13 @@ public class Order05PrivateSectorFundingIntegrationTests : IntegrationTest
 
         // when
         privateSectorFundingPage = await TestClient.SubmitButton(
-            continueButton, new Dictionary<string, string> { { "PrivateSectorFunding", CommonResponse.Yes }, { "PrivateSectorFundingResult", TextTestData.TextThatExceedsLongInputLimit }, { "PrivateSectorFundingReason", string.Empty } });
+            continueButton,
+            new Dictionary<string, string>
+            {
+                { "PrivateSectorFunding", CommonResponse.Yes },
+                { "PrivateSectorFundingResult", TextTestData.TextThatExceedsLongInputLimit },
+                { "PrivateSectorFundingReason", string.Empty },
+            });
 
         // then
         privateSectorFundingPage
@@ -76,7 +87,13 @@ public class Order05PrivateSectorFundingIntegrationTests : IntegrationTest
 
         // when
         privateSectorFundingPage = await TestClient.SubmitButton(
-            continueButton, new Dictionary<string, string> { { "PrivateSectorFunding", CommonResponse.No }, { "PrivateSectorFundingResult", string.Empty }, { "PrivateSectorFundingReason", string.Empty } });
+            continueButton,
+            new Dictionary<string, string>
+            {
+                { "PrivateSectorFunding", CommonResponse.No },
+                { "PrivateSectorFundingResult", string.Empty },
+                { "PrivateSectorFundingReason", string.Empty },
+            });
 
         // then
         privateSectorFundingPage
@@ -96,7 +113,13 @@ public class Order05PrivateSectorFundingIntegrationTests : IntegrationTest
 
         // when
         privateSectorFundingPage = await TestClient.SubmitButton(
-            continueButton, new Dictionary<string, string> { { "PrivateSectorFunding", CommonResponse.No }, { "PrivateSectorFundingResult", string.Empty }, { "PrivateSectorFundingReason", TextTestData.TextThatExceedsLongInputLimit } });
+            continueButton,
+            new Dictionary<string, string>
+            {
+                { "PrivateSectorFunding", CommonResponse.No },
+                { "PrivateSectorFundingResult", string.Empty },
+                { "PrivateSectorFundingReason", TextTestData.TextThatExceedsLongInputLimit },
+            });
 
         // then
         privateSectorFundingPage
@@ -115,7 +138,13 @@ public class Order05PrivateSectorFundingIntegrationTests : IntegrationTest
 
         // when
         var repaymentSystemPage = await TestClient.SubmitButton(
-            continueButton, new Dictionary<string, string> { { "PrivateSectorFunding", CommonResponse.No }, { "PrivateSectorFundingResult", string.Empty }, { "PrivateSectorFundingReason", TextTestData.TextThatNotExceedsLongInputLimit } });
+            continueButton,
+            new Dictionary<string, string>
+            {
+                { "PrivateSectorFunding", CommonResponse.No },
+                { "PrivateSectorFundingResult", string.Empty },
+                { "PrivateSectorFundingReason", TextTestData.TextThatNotExceedsLongInputLimit },
+            });
 
         // then
         repaymentSystemPage
@@ -133,7 +162,13 @@ public class Order05PrivateSectorFundingIntegrationTests : IntegrationTest
 
         // when
         var repaymentSystemPage = await TestClient.SubmitButton(
-            continueButton, new Dictionary<string, string> { { "PrivateSectorFunding", CommonResponse.Yes }, { "PrivateSectorFundingResult", TextTestData.TextThatNotExceedsLongInputLimit }, { "PrivateSectorFundingReason", string.Empty } });
+            continueButton,
+            new Dictionary<string, string>
+            {
+                { "PrivateSectorFunding", CommonResponse.Yes },
+                { "PrivateSectorFundingResult", TextTestData.TextThatNotExceedsLongInputLimit },
+                { "PrivateSectorFundingReason", string.Empty },
+            });
 
         // then
         repaymentSystemPage

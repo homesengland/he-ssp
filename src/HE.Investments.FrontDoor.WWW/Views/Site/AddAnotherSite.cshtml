@@ -17,7 +17,7 @@
 
     <vc:page-header caption="@ViewBag.ProjectName"/>
 
-    <form asp-controller="Site" asp-action="AddAnotherSite" asp-route-workflow="@Context.Request.Query["workflow"]" asp-route-redirect="@Context.Request.Query["redirect"]" asp-method="post" novalidate>
+    <he-organisation-form asp-controller="Site" asp-action="AddAnotherSite" asp-route-workflow="@Context.Request.Query["workflow"]" asp-route-redirect="@Context.Request.Query["redirect"]" asp-method="post" novalidate>
 
         <vc:radio-list
             title="@SitePageTitles.AddAnotherSite"
@@ -28,5 +28,5 @@
 
         <vc:form-button/>
         <vc:return-to-account-link is-editable="false"/>
-    </form>
+    </he-organisation-form>
 </gds-div-grid-column-two-thirds>
