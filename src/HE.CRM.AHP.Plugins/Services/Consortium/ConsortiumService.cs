@@ -77,6 +77,17 @@ namespace HE.CRM.AHP.Plugins.Services.Consortium
                             return true;
                     }
 
+                    if (siteId != null)
+                    {
+                        TracingService.Trace("Check Access to Site");
+                        isLeadPartner = IsConsortiumLeadPartner(consortium, organizationId);
+                        isSitePartner = IsOrganizationSitePartner(siteId, organizationId);
+                        var applications = _ahpApplicationRepository.GetByAttribute(invln_scheme.Fields.invln_Site, new Guid(siteId));
+                        isAppPartner = applications.Any(x => IsApplicationPartner(x, organizationId));
+                        if (isAppPartner)
+                            isSitePartner = true;
+                    }
+
                     if (applicationId != null)
                     {
 
@@ -91,17 +102,6 @@ namespace HE.CRM.AHP.Plugins.Services.Consortium
                         isLeadPartner = IsConsortiumLeadPartner(consortium, organizationId);
                         isAppPartner = IsApplicationPartner(application, organizationId);
 
-                    }
-
-                    if (siteId != null)
-                    {
-                        TracingService.Trace("Check Access to Site");
-                        isLeadPartner = IsConsortiumLeadPartner(consortium, organizationId);
-                        isSitePartner = IsOrganizationSitePartner(siteId, organizationId);
-                        var applications = _ahpApplicationRepository.GetByAttribute(invln_scheme.Fields.invln_Site, new Guid(siteId));
-                        isAppPartner = applications.Any(x => IsApplicationPartner(x, organizationId));
-                        if (isAppPartner)
-                            isSitePartner = true;
                     }
 
                     TracingService.Trace($"isLeadPartner: {isLeadPartner}");
