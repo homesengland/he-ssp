@@ -11,7 +11,7 @@ public class CalculateTotalTests
     [InlineData(Tenure.SharedOwnership)]
     [InlineData(Tenure.HomeOwnershipLongTermDisabilities)]
     [InlineData(Tenure.OlderPersonsSharedOwnership)]
-    public void ShouldCalculateTotal_WhenAllValuesAreSetAndTenureIsOneOfTheSharedOwnership(Tenure tenure)
+    public void ShouldCalculateTotal_WhenAllValuesAreSetAndTenureIsOneOfTheSharedOwnershipAnd(Tenure tenure)
     {
         // given
         var expectedContributionsToScheme = new ExpectedContributionsToScheme(
@@ -23,7 +23,8 @@ public class CalculateTotalTests
             new ExpectedContributionValue(ExpectedContributionFields.OtherCapitalSources, "6"),
             new ExpectedContributionValue(ExpectedContributionFields.SharedOwnershipSales, "7"),
             new ExpectedContributionValue(ExpectedContributionFields.HomesTransferValue, "8"),
-            tenure);
+            tenure,
+            true);
 
         // when
         var total = expectedContributionsToScheme.CalculateTotal();
@@ -48,7 +49,8 @@ public class CalculateTotalTests
             new ExpectedContributionValue(ExpectedContributionFields.OtherCapitalSources, "6"),
             new ExpectedContributionValue(ExpectedContributionFields.SharedOwnershipSales, "7"),
             null,
-            tenure);
+            tenure,
+            true);
 
         // when
         var total = expectedContributionsToScheme.CalculateTotal();
@@ -73,7 +75,8 @@ public class CalculateTotalTests
             new ExpectedContributionValue(ExpectedContributionFields.OtherCapitalSources, "6"),
             new ExpectedContributionValue(ExpectedContributionFields.SharedOwnershipSales, "7"),
             new ExpectedContributionValue(ExpectedContributionFields.HomesTransferValue, "8"),
-            tenure);
+            tenure,
+            true);
 
         // when
         var total = expectedContributionsToScheme.CalculateTotal();
@@ -98,7 +101,8 @@ public class CalculateTotalTests
             new ExpectedContributionValue(ExpectedContributionFields.OtherCapitalSources, "6"),
             new ExpectedContributionValue(ExpectedContributionFields.SharedOwnershipSales, "7"),
             null,
-            tenure);
+            tenure,
+            true);
 
         // when
         var total = expectedContributionsToScheme.CalculateTotal();
@@ -126,12 +130,36 @@ public class CalculateTotalTests
             null,
             null,
             null,
-            tenure);
+            tenure,
+            true);
 
         // when
         var total = expectedContributionsToScheme.CalculateTotal();
 
         // then
         total.Should().BeNull();
+    }
+
+    [Fact]
+    public void ShouldNotCountHomesTransferValue_WhenUnregisteredBodyIsFalse()
+    {
+        // given
+        var expectedContributionsToScheme = new ExpectedContributionsToScheme(
+            new ExpectedContributionValue(ExpectedContributionFields.RentalIncomeBorrowing, "1"),
+            new ExpectedContributionValue(ExpectedContributionFields.SaleOfHomesOnThisScheme, "2"),
+            new ExpectedContributionValue(ExpectedContributionFields.SaleOfHomesOnOtherSchemes, "3"),
+            new ExpectedContributionValue(ExpectedContributionFields.OwnResources, "4"),
+            new ExpectedContributionValue(ExpectedContributionFields.RcgfContribution, "5"),
+            new ExpectedContributionValue(ExpectedContributionFields.OtherCapitalSources, "6"),
+            new ExpectedContributionValue(ExpectedContributionFields.SharedOwnershipSales, "7"),
+            new ExpectedContributionValue(ExpectedContributionFields.HomesTransferValue, "20"),
+            Tenure.SharedOwnership,
+            false);
+
+        // when
+        var total = expectedContributionsToScheme.CalculateTotal();
+
+        // then
+        total.Should().Be(28);
     }
 }

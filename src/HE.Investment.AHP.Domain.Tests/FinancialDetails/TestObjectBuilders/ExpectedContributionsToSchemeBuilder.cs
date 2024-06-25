@@ -32,7 +32,8 @@ public class ExpectedContributionsToSchemeBuilder
             new ExpectedContributionValue(ExpectedContributionFields.OtherCapitalSources, "50"),
             new ExpectedContributionValue(ExpectedContributionFields.SharedOwnershipSales, "50"),
             new ExpectedContributionValue(ExpectedContributionFields.HomesTransferValue, "50"),
-            Tenure.SharedOwnership);
+            Tenure.SharedOwnership,
+            true);
 
         return new ExpectedContributionsToSchemeBuilder(item);
     }
@@ -53,6 +54,16 @@ public class ExpectedContributionsToSchemeBuilder
             _item,
             nameof(_item.SharedOwnershipSales),
             new ExpectedContributionValue(ExpectedContributionFields.SharedOwnershipSales, sharedOwnershipSales));
+
+        return this;
+    }
+
+    public ExpectedContributionsToSchemeBuilder WithUnregisteredBody(bool isUnregisteredBody)
+    {
+        PrivatePropertySetter.SetPropertyWithNoSetter(
+            _item,
+            nameof(_item.IsUnregisteredBody),
+            isUnregisteredBody);
 
         return this;
     }

@@ -59,7 +59,9 @@ public class ExpectedContributionsToScheme : ValueObject, IQuestion
     public bool IsAnswered()
     {
         var isAnswered = RentalIncome.IsProvided() && SalesOfHomesOnThisScheme.IsProvided() && SalesOfHomesOnOtherSchemes.IsProvided() &&
-                         OwnResources.IsProvided() && RcgfContributions.IsProvided() && OtherCapitalSources.IsProvided() && IsAnsweredForUnregisteredBody();
+                         OwnResources.IsProvided() && RcgfContributions.IsProvided() && OtherCapitalSources.IsProvided();
+
+        isAnswered = CheckUnregisteredBody(isAnswered, true);
 
         return isAnswered && IsAnsweredForSharedOwnershipHomes();
     }
@@ -67,7 +69,9 @@ public class ExpectedContributionsToScheme : ValueObject, IQuestion
     public bool AreAllNotAnswered()
     {
         var isNotAnswered = RentalIncome.IsNotProvided() && SalesOfHomesOnThisScheme.IsNotProvided() && SalesOfHomesOnOtherSchemes.IsNotProvided() &&
-                         OwnResources.IsNotProvided() && RcgfContributions.IsNotProvided() && OtherCapitalSources.IsNotProvided() && !IsAnsweredForUnregisteredBody();
+                         OwnResources.IsNotProvided() && RcgfContributions.IsNotProvided() && OtherCapitalSources.IsNotProvided();
+
+        isNotAnswered = CheckUnregisteredBody(isNotAnswered, false);
 
         return isNotAnswered || !IsAnsweredForSharedOwnershipHomes();
     }
@@ -81,7 +85,12 @@ public class ExpectedContributionsToScheme : ValueObject, IQuestion
 
         var totalExpectedContributions = RentalIncome.GetValueOrZero() + SalesOfHomesOnThisScheme.GetValueOrZero() +
                                          SalesOfHomesOnOtherSchemes.GetValueOrZero() + OwnResources.GetValueOrZero() + RcgfContributions.GetValueOrZero() +
-                                         OtherCapitalSources.GetValueOrZero() + HomesTransferValue.GetValueOrZero();
+                                         OtherCapitalSources.GetValueOrZero();
+
+        if (IsUnregisteredBody)
+        {
+            totalExpectedContributions += HomesTransferValue.GetValueOrZero();
+        }
 
         if (SharedOwnershipHomes().Contains(ApplicationTenure))
         {
@@ -113,9 +122,14 @@ public class ExpectedContributionsToScheme : ValueObject, IQuestion
         return true;
     }
 
-    private bool IsAnsweredForUnregisteredBody()
+    private bool CheckUnregisteredBody(bool currentStatus, bool expectedStatus)
     {
-        return !IsUnregisteredBody || HomesTransferValue.IsProvided();
+        if (IsUnregisteredBody)
+        {
+            return currentStatus && HomesTransferValue.IsProvided() == expectedStatus;
+        }
+
+        return currentStatus;
     }
 
     private IEnumerable<Tenure> SharedOwnershipHomes()
