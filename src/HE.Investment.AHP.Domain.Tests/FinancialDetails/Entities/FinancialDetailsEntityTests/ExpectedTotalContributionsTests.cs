@@ -97,4 +97,31 @@ public class ExpectedTotalContributionsTests
         // then
         expectedTotalCosts.Should().Be(400);
     }
+
+    [Fact]
+    public void ShouldReturnExpectedTotalContributions_WhenUnregisteredBodyIsFalse()
+    {
+        // given
+        var expectedContributionsToScheme = ExpectedContributionsToSchemeBuilder
+            .New()
+            .WithUnregisteredBody(true)
+            .Build();
+
+        var publicGrants = PublicGrantsBuilder
+            .New()
+            .WithHealthRelatedGrants("200")
+            .Build();
+
+        var financialDetailsEntity = FinancialDetailsEntityBuilder
+            .New(ApplicationBasicInfoTestData.SharedOwnershipInDraftState)
+            .WithExpectedContributions(expectedContributionsToScheme)
+            .WithGrants(publicGrants)
+            .Build();
+
+        // when
+        var expectedTotalCosts = financialDetailsEntity.ExpectedTotalContributions();
+
+        // then
+        expectedTotalCosts.Should().Be(200);
+    }
 }

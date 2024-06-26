@@ -10,18 +10,25 @@ using Microsoft.Extensions.Logging;
 
 namespace HE.Investment.AHP.Domain.FinancialDetails.CommandHandlers;
 
-public class ProvideExpectedContributionsCommandHandler : FinancialDetailsCommandHandlerBase, IRequestHandler<ProvideExpectedContributionsCommand, OperationResult>
+public class ProvideExpectedContributionsCommandHandler : FinancialDetailsCommandHandlerBase,
+    IRequestHandler<ProvideExpectedContributionsCommand, OperationResult>
 {
+    private readonly IConsortiumUserContext _accountUserContext;
+
     public ProvideExpectedContributionsCommandHandler(
         IFinancialDetailsRepository repository,
         IConsortiumUserContext accountUserContext,
         ILogger<FinancialDetailsCommandHandlerBase> logger)
         : base(repository, accountUserContext, logger)
     {
+        _accountUserContext = accountUserContext;
     }
 
     public async Task<OperationResult> Handle(ProvideExpectedContributionsCommand request, CancellationToken cancellationToken)
     {
+        var account = await _accountUserContext.GetSelectedAccount();
+        var isUnregisteredBody = account.Organisation?.IsUnregisteredBody == true;
+
         return await Perform(
             financialDetails =>
             {
@@ -39,8 +46,9 @@ public class ProvideExpectedContributionsCommandHandler : FinancialDetailsComman
                     MapProvidedValues(request.RcgfContribution, ExpectedContributionFields.RcgfContribution),
                     MapProvidedValues(request.OtherCapitalSources, ExpectedContributionFields.OtherCapitalSources),
                     MapProvidedValues(request.SharedOwnershipSales, ExpectedContributionFields.SharedOwnershipSales),
-                    MapProvidedValues(request.HomesTransferValue, ExpectedContributionFields.HomesTransferValue),
-                    financialDetails.ApplicationBasicInfo.Tenure);
+                    isUnregisteredBody ? MapProvidedValues(request.HomesTransferValue, ExpectedContributionFields.HomesTransferValue) : null,
+                    financialDetails.ApplicationBasicInfo.Tenure,
+                    isUnregisteredBody);
 
                 result.CheckErrors();
 

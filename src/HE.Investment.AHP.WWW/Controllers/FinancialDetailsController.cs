@@ -141,7 +141,7 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
             CurrencyHelper.InputPounds(financialDetails.SharedOwnershipSalesContribution),
             CurrencyHelper.InputPounds(financialDetails.TransferValueOfHomes),
             isSharedOwnership,
-            true,
+            financialDetails.IsUnregisteredBody,
             financialDetails.TotalExpectedContributions.DisplayPounds()));
     }
 

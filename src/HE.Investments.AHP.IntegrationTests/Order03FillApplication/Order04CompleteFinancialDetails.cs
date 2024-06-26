@@ -122,8 +122,7 @@ public class Order04CompleteFinancialDetails : AhpApplicationIntegrationTest
             ("SaleOfHomesOnOtherSchemes", FinancialDetailsData.ExpectedContributionsSaleOfHomesOnOtherSchemes.ToString(CultureInfo.InvariantCulture)),
             ("OwnResources", FinancialDetailsData.ExpectedContributionsOwnResources.ToString(CultureInfo.InvariantCulture)),
             ("RcgfContribution", FinancialDetailsData.ExpectedContributionsRcgfContribution.ToString(CultureInfo.InvariantCulture)),
-            ("OtherCapitalSources", FinancialDetailsData.ExpectedContributionsOtherCapitalSources.ToString(CultureInfo.InvariantCulture)),
-            ("HomesTransferValue", FinancialDetailsData.ExpectedContributionsHomesTransferValue.ToString(CultureInfo.InvariantCulture)));
+            ("OtherCapitalSources", FinancialDetailsData.ExpectedContributionsOtherCapitalSources.ToString(CultureInfo.InvariantCulture)));
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]

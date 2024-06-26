@@ -11,5 +11,6 @@ namespace HE.CRM.Common.Repositories.Interfaces
         List<invln_contactwebrole> GetAdminContactWebrolesForOrganisation(Guid organisationId, Guid adminWebrole);
         bool IsContactHaveSelectedWebRoleForOrganisation(Guid contactGuid, Guid organisationGuid, invln_Permission permission);
         List<invln_contactwebrole> GetOrganizationIdAndContactId(Guid organizationId, Guid contactId);
+        List<invln_contactwebrole> GetListOfUsersWithoutLimitedRole(string organizationId);
     }
 }
