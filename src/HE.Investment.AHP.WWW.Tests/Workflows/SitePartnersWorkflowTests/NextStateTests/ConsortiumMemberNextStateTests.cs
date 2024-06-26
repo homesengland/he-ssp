@@ -27,11 +27,11 @@ public class ConsortiumMemberNextStateTests
     }
 
     [Theory]
-    [InlineData(SitePartnersWorkflowState.FlowFinished, SitePartnersWorkflowState.OwnerOfTheHomes)]
+    [InlineData(SitePartnersWorkflowState.FlowFinished, SitePartnersWorkflowState.OwnerOfTheHomesConfirm)]
     [InlineData(SitePartnersWorkflowState.OwnerOfTheHomesConfirm, SitePartnersWorkflowState.OwnerOfTheHomes)]
-    [InlineData(SitePartnersWorkflowState.OwnerOfTheHomes, SitePartnersWorkflowState.OwnerOfTheLand)]
+    [InlineData(SitePartnersWorkflowState.OwnerOfTheHomes, SitePartnersWorkflowState.OwnerOfTheLandConfirm)]
     [InlineData(SitePartnersWorkflowState.OwnerOfTheLandConfirm, SitePartnersWorkflowState.OwnerOfTheLand)]
-    [InlineData(SitePartnersWorkflowState.OwnerOfTheLand, SitePartnersWorkflowState.DevelopingPartner)]
+    [InlineData(SitePartnersWorkflowState.OwnerOfTheLand, SitePartnersWorkflowState.DevelopingPartnerConfirm)]
     [InlineData(SitePartnersWorkflowState.DevelopingPartnerConfirm, SitePartnersWorkflowState.DevelopingPartner)]
     [InlineData(SitePartnersWorkflowState.DevelopingPartner, SitePartnersWorkflowState.FlowStarted)]
     public async Task ShouldReturnNextState_WhenBackTriggerIsExecuted(SitePartnersWorkflowState currentState, SitePartnersWorkflowState expectedState)
