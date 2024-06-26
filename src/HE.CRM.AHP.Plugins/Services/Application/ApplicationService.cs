@@ -32,6 +32,7 @@ namespace HE.CRM.AHP.Plugins.Services.Application
         private readonly IAccountRepository _accountRepository;
         private readonly IContactWebroleRepository _contactWebroleRepository;
 
+
         public ApplicationService(CrmServiceArgs args) : base(args)
         {
             _applicationRepository = CrmRepositoriesFactory.Get<IAhpApplicationRepository>();
@@ -226,7 +227,6 @@ namespace HE.CRM.AHP.Plugins.Services.Application
         public List<AhpApplicationDto> GetApplication(string organisationId, string contactId = null, string FieldsToRetrieve = null, string applicationId = null)
         {
             TracingService.Trace("GetApplication");
-
             TracingService.Trace(contactId);
             var listOfApplications = new List<AhpApplicationDto>();
             if (string.IsNullOrEmpty(applicationId))
@@ -328,7 +328,7 @@ namespace HE.CRM.AHP.Plugins.Services.Application
                         return listOfApplications;
                     }
                 }
-
+                
                 // var partner = _accountRepository.GetById(app.invln_organisationid.Id);
                 // var con
                 var contact = _contactRepository.GetById(app.invln_contactid.Id, new string[] { Contact.Fields.FirstName, Contact.Fields.LastName, nameof(Contact.invln_externalid).ToLower() });

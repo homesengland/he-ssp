@@ -139,7 +139,6 @@
     <Compile Include="CustomAPI\GetTypeOfHomesListPluginTests.cs" />
     <Compile Include="CustomAPI\InviteContactToJoinExistingOrganisationPluginTests.cs" />
     <Compile Include="CustomAPI\SendReminderEmailForFinaliseDraftApplicationPluginTests.cs" />
-    <Compile Include="CustomAPI\SendReminderEmailForRefferedBackToApplicantPluginTests.cs" />
     <Compile Include="CustomAPI\SentInviteContactToJoinOrganisationPluginTests.cs" />
     <Compile Include="CustomAPI\SetApplicationPluginTests.cs" />
     <Compile Include="CustomAPI\SetDeliveryPhaseTests.cs" />

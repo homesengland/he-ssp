@@ -1,5 +1,6 @@
 using HE.Investments.Account.Contract.User.Commands;
 using HE.Investments.Account.Contract.User.Queries;
+using HE.Investments.Account.Shared;
 using HE.Investments.Account.Shared.Routing;
 using HE.Investments.Account.WWW.Models.User;
 using HE.Investments.Account.WWW.Routing;
@@ -26,11 +27,18 @@ public class UserController : Controller
 
     private readonly IUserContext _userContext;
 
-    public UserController(IUserContext userContext, IMediator mediator, ProgrammeUrlConfig programmeUrlConfig)
+    private readonly IAccountUserContext _accountUserContext;
+
+    public UserController(
+        IUserContext userContext,
+        IMediator mediator,
+        ProgrammeUrlConfig programmeUrlConfig,
+        IAccountUserContext accountUserContext)
     {
         _userContext = userContext;
         _mediator = mediator;
         _programmeUrlConfig = programmeUrlConfig;
+        _accountUserContext = accountUserContext;
     }
 
     [AllowAnonymous]
@@ -39,7 +47,7 @@ public class UserController : Controller
     {
         if (_userContext.IsAuthenticated)
         {
-            return RedirectToAction("Index", "UserOrganisation");
+            return RedirectToAction("List", "UserOrganisations");
         }
 
         return View("InformationAboutHomesEnglandAccount", new AcceptHeTermsAndConditionsModel());
@@ -88,17 +96,7 @@ public class UserController : Controller
                 viewModel.JobTitle,
                 viewModel.TelephoneNumber,
                 viewModel.SecondaryTelephoneNumber),
-            async () =>
-            {
-                if (viewModel.CallbackUrl.IsNotProvided())
-                {
-                    return await Task.FromResult(RedirectToAction(
-                        nameof(OrganisationController.SearchOrganisation),
-                        new ControllerName(nameof(OrganisationController)).WithoutPrefix()));
-                }
-
-                return await Task.FromResult(Redirect(viewModel.CallbackUrl!));
-            },
+            async () => await HandleProfileDetailsRedirect(viewModel),
             async () => await Task.FromResult<IActionResult>(View("ProfileDetails", viewModel)),
             cancellationToken);
     }
@@ -116,5 +114,22 @@ public class UserController : Controller
         }
 
         return callback;
+    }
+
+    private async Task<IActionResult> HandleProfileDetailsRedirect(UserProfileDetailsModel viewModel)
+    {
+        if (viewModel.CallbackUrl.IsProvided())
+        {
+            return Redirect(viewModel.CallbackUrl!);
+        }
+
+        if (await _accountUserContext.IsLinkedWithOrganisation())
+        {
+            return RedirectToAction("List", "UserOrganisations");
+        }
+
+        return RedirectToAction(
+            nameof(OrganisationController.SearchOrganisation),
+            new ControllerName(nameof(OrganisationController)).WithoutPrefix());
     }
 }
