@@ -581,7 +581,7 @@ public class ProjectController : WorkflowController<ProjectWorkflowState>
     {
         if (Request.IsSaveAndReturnAction())
         {
-            return RedirectToAction("Index", "Account");
+            return this.OrganisationRedirectToAction("Index", "Account");
         }
 
         return await onContinue();
