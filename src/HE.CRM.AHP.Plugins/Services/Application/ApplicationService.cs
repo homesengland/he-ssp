@@ -693,7 +693,8 @@ namespace HE.CRM.AHP.Plugins.Services.Application
             var grantasaoftotalschemecosts = fundingRequired / (acquisitionCost.Value + expectedOnCosts + expectedOnWorks) * 100;
 
             var site = sitesRepository.GetById(application.invln_Site.Id,
-                invln_Sites.Fields.invln_GovernmentOfficeRegion);
+                invln_Sites.Fields.invln_GovernmentOfficeRegion,
+                invln_Sites.Fields.invln_Ruralclassification);
 
             if (site.invln_GovernmentOfficeRegion == null)
             {
@@ -788,7 +789,7 @@ namespace HE.CRM.AHP.Plugins.Services.Application
                 invln_WorkssCostsm2 = workCostM2.HasValue ? new Money(workCostM2.Value) : null,
                 invln_grantasapercentageoftotalschemecosts = grantAsPercentageOfTotalSchemeCosts,
                 invln_worksm2asapercentageofareaavg = worksM2AsPercentageOfAreaAvg.HasValue ? worksM2AsPercentageOfAreaAvg : null,
-                invln_gpuaspercentageofareaaverage = application.invln_Rural == true ? grantPerUnit / grantBenchmarkTable3.invln_benchmarkgpu.Value : (decimal?)null,
+                invln_gpuaspercentageofareaaverage = site.invln_Ruralclassification == true ? grantPerUnit / grantBenchmarkTable3.invln_benchmarkgpu.Value : (decimal?)null,
                 invln_supportedgpuaspercentageofareaaverage = isSupportedGpuAsPercentageOfAreaAverage ? grantPerUnit / grantBenchmarkTable4.invln_benchmarkgpu.Value : (decimal?)null,
                 invln_SoSScore = sosScore,
                 invln_CompScore = compScore
