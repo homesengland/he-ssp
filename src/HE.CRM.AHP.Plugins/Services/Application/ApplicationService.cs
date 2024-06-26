@@ -27,6 +27,7 @@ namespace HE.CRM.AHP.Plugins.Services.Application
         private readonly IHeLocalAuthorityRepository _heLocalAuthorityRepository;
         private readonly IGovNotifyEmailService _govNotifyEmailService;
         private readonly IAhpProjectRepository _projectRepository;
+        private readonly IContactWebroleRepository _contactWebroleRepository;
 
         public ApplicationService(CrmServiceArgs args) : base(args)
         {
@@ -40,6 +41,7 @@ namespace HE.CRM.AHP.Plugins.Services.Application
             _heLocalAuthorityRepository = CrmRepositoriesFactory.Get<IHeLocalAuthorityRepository>();
             _govNotifyEmailService = CrmServicesFactory.Get<IGovNotifyEmailService>();
             _projectRepository = CrmRepositoriesFactory.Get<IAhpProjectRepository>();
+            _contactWebroleRepository = CrmRepositoriesFactory.Get<IContactWebroleRepository>();
         }
 
         public void ChangeApplicationStatus(string organisationId, string contactId, string applicationId, int newStatus, string changeReason, bool representationsandwarranties)
@@ -230,6 +232,20 @@ namespace HE.CRM.AHP.Plugins.Services.Application
                 attributes = GenerateFetchXmlAttributes(fieldsToRetrieve);
             }
             var applications = _applicationRepository.GetApplicationsForOrganisationAndContact(organisationId, contactExternalIdFilter, attributes, additionalFilters);
+
+            TracingService.Trace("Filtrowanie po webrolach");
+            if (contactId == null && applicationId == null)
+            {
+                var applicationsDict = applications.ToDictionary(k => k.invln_contactid);
+                var webroleList = _contactWebroleRepository.GetListOfUsersWithoutLimitedRole(organisationId);
+                var webroleDict = webroleList.ToDictionary(k => k.invln_Contactid);
+
+                var d1 = applicationsDict.Where(x => webroleDict.ContainsKey(x.Key)).ToDictionary(x => x.Key, x => x.Value);
+                applications = d1.Values.ToList();
+            }
+
+
+
             if (applications.Any())
             {
                 foreach (var application in applications)
