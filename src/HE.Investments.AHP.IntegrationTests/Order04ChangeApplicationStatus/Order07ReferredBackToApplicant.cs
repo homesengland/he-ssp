@@ -41,7 +41,7 @@ public class Order07ReferredBackToApplicant : AhpIntegrationTest
             .HasStatusTagByTestId(ApplicationStatus.ReferredBackToApplicant.GetDescription(), "application-status")
             .HasImportantNotificationBanner("You can now edit and resubmit your application.")
             .HasSectionWithStatus("enter-scheme-information-status", SectionStatus.InProgress.GetDescription())
-            .HasSectionWithStatus("add-home-type-status", SectionStatus.InProgress.GetDescription())
+            .HasSectionWithStatus("add-home-types-status", SectionStatus.InProgress.GetDescription())
             .HasSectionWithStatus("enter-financial-details-status", SectionStatus.InProgress.GetDescription())
             .HasSectionWithStatus("add-delivery-phases-status", SectionStatus.InProgress.GetDescription());
     }
@@ -84,7 +84,7 @@ public class Order07ReferredBackToApplicant : AhpIntegrationTest
 
         // then
         taskListPage.UrlEndWith(ApplicationPagesUrl.TaskList(UserOrganisationData.OrganisationId, ApplicationData.ApplicationId))
-            .HasSectionWithStatus("add-home-type-status", SectionStatus.Completed.GetDescription());
+            .HasSectionWithStatus("add-home-types-status", SectionStatus.Completed.GetDescription());
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
