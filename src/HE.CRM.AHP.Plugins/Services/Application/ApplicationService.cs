@@ -317,7 +317,7 @@ namespace HE.CRM.AHP.Plugins.Services.Application
 
                     if (applications.Count == 0)
                     {
-                        TracingService.Trace("Wlasciciel rekordu jest Limited User a odpytuje ktos z inna rola.");
+                        TracingService.Trace("The record owner is a Limited User and the query is being made by someone with a different role.");
                         return listOfApplications;
                     }
                 }
@@ -326,7 +326,7 @@ namespace HE.CRM.AHP.Plugins.Services.Application
                     var con = _contactRepository.GetContactViaExternalId(contactId);
                     if (app.invln_contactid.Id != con.Id)
                     {
-                        TracingService.Trace("Wlasciciel rekordu jest inny Limited User.");
+                        TracingService.Trace("The record owner is another Limited User");
                         return listOfApplications;
                     }
                 }
