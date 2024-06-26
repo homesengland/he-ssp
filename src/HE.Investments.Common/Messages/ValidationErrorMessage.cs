@@ -141,6 +141,8 @@ public static class ValidationErrorMessage
 
     public static string MustBeSelected(string displayName) => $"Select the {displayName}";
 
+    public static string MustBeSelectedYes(string displayName) => $"Select yes if {displayName}";
+
     private static string Example(string? example)
     {
         return example.IsProvided() ? $", like {example}" : string.Empty;
