@@ -760,8 +760,7 @@ namespace HE.CRM.AHP.Plugins.Services.Application
             }
 
             var isSupportedGpuAsPercentageOfAreaAverage = false;
-            if ((application.invln_Tenure.Value == (int)invln_Tenure.Affordablerent || application.invln_Tenure.Value == (int)invln_Tenure.Socialrent) &&
-                areHousingForDisabledVulnerableOrOlderPeople &&
+            if (areHousingForDisabledVulnerableOrOlderPeople &&
                 (areHousingForOlderPeoplesWithAllFeaturesHousing || arePurposeDesignedForDisabledTypeOfHousing))
             {
                 isSupportedGpuAsPercentageOfAreaAverage = true;
@@ -787,10 +786,10 @@ namespace HE.CRM.AHP.Plugins.Services.Application
                 invln_RegionalBenchmarkGrantPerUnit = regionalBenchmarkGrantPerUnit,
                 invln_regionalbenchmarkagainstthegrantperunit = regionalBenchmarkAgainstTheGrantPerUnit,
                 invln_WorkssCostsm2 = workCostM2.HasValue ? new Money(workCostM2.Value) : null,
-                invln_grantasapercentageoftotalschemecosts = grantAsPercentageOfTotalSchemeCosts,
-                invln_worksm2asapercentageofareaavg = worksM2AsPercentageOfAreaAvg.HasValue ? worksM2AsPercentageOfAreaAvg : null,
-                invln_gpuaspercentageofareaaverage = site.invln_Ruralclassification == true ? grantPerUnit / grantBenchmarkTable3.invln_benchmarkgpu.Value : (decimal?)null,
-                invln_supportedgpuaspercentageofareaaverage = isSupportedGpuAsPercentageOfAreaAverage ? grantPerUnit / grantBenchmarkTable4.invln_benchmarkgpu.Value : (decimal?)null,
+                invln_grantasapercentageoftotalschemecosts = grantAsPercentageOfTotalSchemeCosts * 100,
+                invln_worksm2asapercentageofareaavg = worksM2AsPercentageOfAreaAvg.HasValue ? worksM2AsPercentageOfAreaAvg * 100 : null,
+                invln_gpuaspercentageofareaaverage = site.invln_Ruralclassification == true ? grantPerUnit / grantBenchmarkTable3.invln_benchmarkgpu.Value * 100 : (decimal?)null,
+                invln_supportedgpuaspercentageofareaaverage = isSupportedGpuAsPercentageOfAreaAverage ? grantPerUnit / grantBenchmarkTable4.invln_benchmarkgpu.Value * 100 : (decimal?)null,
                 invln_SoSScore = sosScore,
                 invln_CompScore = compScore
             });
