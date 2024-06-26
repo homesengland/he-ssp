@@ -59,6 +59,7 @@ namespace HE.CRM.Common.Repositories.Implementations
                                             <attribute name=""he_activitiesinthisproject"" />
                                             <attribute name=""he_housingdeliveryinengland"" />
                                              <filter>
+                                              <condition attribute=""he_frontdoordecision"" operator=""ne"" value=""134370002"" />
                                               {recordStatusCondition}
                                               {organisationCondition}
                                               {frontDoorProjectFilters}
