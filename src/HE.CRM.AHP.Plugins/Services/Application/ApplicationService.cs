@@ -243,7 +243,6 @@ namespace HE.CRM.AHP.Plugins.Services.Application
                 TracingService.Trace("2");
                 var applications = _applicationRepository.GetApplicationsForOrganisationAndContact(organisationId, contactExternalIdFilter, attributes, additionalFilters);
 
-
                 TracingService.Trace("Excluding records from the list, which are for a Limited User.");
                 if (contactId == null)
                 {
@@ -255,7 +254,6 @@ namespace HE.CRM.AHP.Plugins.Services.Application
                     var d1 = applicationsDict.Where(x => webroleDict.ContainsKey(x.Key)).ToDictionary(x => x.Key, x => x.Value);
                     applications = d1.Values.ToList();
                 }
-
 
                 if (applications.Any())
                 {
@@ -742,7 +740,8 @@ namespace HE.CRM.AHP.Plugins.Services.Application
             var grantasaoftotalschemecosts = fundingRequired / (acquisitionCost.Value + expectedOnCosts + expectedOnWorks) * 100;
 
             var site = sitesRepository.GetById(application.invln_Site.Id,
-                invln_Sites.Fields.invln_GovernmentOfficeRegion);
+                invln_Sites.Fields.invln_GovernmentOfficeRegion,
+                invln_Sites.Fields.invln_Ruralclassification);
 
             if (site.invln_GovernmentOfficeRegion == null)
             {
@@ -808,8 +807,7 @@ namespace HE.CRM.AHP.Plugins.Services.Application
             }
 
             var isSupportedGpuAsPercentageOfAreaAverage = false;
-            if ((application.invln_Tenure.Value == (int)invln_Tenure.Affordablerent || application.invln_Tenure.Value == (int)invln_Tenure.Socialrent) &&
-                areHousingForDisabledVulnerableOrOlderPeople &&
+            if (areHousingForDisabledVulnerableOrOlderPeople &&
                 (areHousingForOlderPeoplesWithAllFeaturesHousing || arePurposeDesignedForDisabledTypeOfHousing))
             {
                 isSupportedGpuAsPercentageOfAreaAverage = true;
@@ -835,10 +833,10 @@ namespace HE.CRM.AHP.Plugins.Services.Application
                 invln_RegionalBenchmarkGrantPerUnit = regionalBenchmarkGrantPerUnit,
                 invln_regionalbenchmarkagainstthegrantperunit = regionalBenchmarkAgainstTheGrantPerUnit,
                 invln_WorkssCostsm2 = workCostM2.HasValue ? new Money(workCostM2.Value) : null,
-                invln_grantasapercentageoftotalschemecosts = grantAsPercentageOfTotalSchemeCosts,
-                invln_worksm2asapercentageofareaavg = worksM2AsPercentageOfAreaAvg.HasValue ? worksM2AsPercentageOfAreaAvg : null,
-                invln_gpuaspercentageofareaaverage = application.invln_Rural == true ? grantPerUnit / grantBenchmarkTable3.invln_benchmarkgpu.Value : (decimal?)null,
-                invln_supportedgpuaspercentageofareaaverage = isSupportedGpuAsPercentageOfAreaAverage ? grantPerUnit / grantBenchmarkTable4.invln_benchmarkgpu.Value : (decimal?)null,
+                invln_grantasapercentageoftotalschemecosts = grantAsPercentageOfTotalSchemeCosts * 100,
+                invln_worksm2asapercentageofareaavg = worksM2AsPercentageOfAreaAvg.HasValue ? worksM2AsPercentageOfAreaAvg * 100 : null,
+                invln_gpuaspercentageofareaaverage = site.invln_Ruralclassification == true ? grantPerUnit / grantBenchmarkTable3.invln_benchmarkgpu.Value * 100 : (decimal?)null,
+                invln_supportedgpuaspercentageofareaaverage = isSupportedGpuAsPercentageOfAreaAverage ? grantPerUnit / grantBenchmarkTable4.invln_benchmarkgpu.Value * 100 : (decimal?)null,
                 invln_SoSScore = sosScore,
                 invln_CompScore = compScore
             });
