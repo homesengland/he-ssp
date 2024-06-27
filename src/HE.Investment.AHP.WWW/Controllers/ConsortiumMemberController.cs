@@ -154,8 +154,8 @@ public class ConsortiumMemberController : WorkflowController<ConsortiumMemberWor
             _mediator,
             new AddMembersCommand(ConsortiumId.From(consortiumId), areAllMembersAdded),
             () => Task.FromResult<IActionResult>(areAllMembersAdded == AreAllMembersAdded.Yes
-                ? RedirectToAction("Index", new { consortiumId })
-                : RedirectToAction("SearchOrganisation", new { consortiumId })),
+                ? this.OrganisationRedirectToAction("Index", routeValues: new { consortiumId })
+                : this.OrganisationRedirectToAction("SearchOrganisation", routeValues: new { consortiumId })),
             async () => View(await _mediator.Send(new GetConsortiumDetailsQuery(ConsortiumId.From(consortiumId), FetchAddress: true), cancellationToken)),
             cancellationToken);
     }
