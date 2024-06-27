@@ -68,7 +68,6 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
 
     [ConsortiumAuthorize]
     [WorkflowState(HomeTypesWorkflowState.List)]
-    [ConsortiumAuthorize]
     [HttpGet("list")]
     public async Task<IActionResult> List([FromRoute] string applicationId, CancellationToken cancellationToken)
     {
