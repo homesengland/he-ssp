@@ -1,7 +1,10 @@
+@using HE.Investments.Common.Extensions
 @using HE.Investments.Common.WWW.Extensions
+@model string;
+
 <div>
         <gds-link class="govuk-link--no-visited-state"
                   href="@Url.OrganisationAction("Index", "Account")">
-            Return to your account
+            @(Model.IsProvided() ? Model : "Return to your account")
         </gds-link>
 </div>

@@ -101,10 +101,10 @@ public class SiteController : SiteControllerBase<SiteWorkflowState>
 
     [ConsortiumAuthorize]
     [HttpGet("{siteId}/continue-answering")]
-    public async Task<IActionResult> ContinueAnswering(string siteId, CancellationToken cancellationToken)
+    public async Task<IActionResult> ContinueAnswering(string siteId, CancellationToken cancellationToken, [FromQuery] string? callback = null)
     {
         var summary = await CreateSiteSummary(cancellationToken, useWorkflowRedirection: false);
-        return this.ContinueSectionAnswering(summary, () => this.OrganisationRedirectToAction("CheckAnswers", routeValues: new { siteId }));
+        return this.ContinueSectionAnswering(summary, () => this.OrganisationRedirectToAction("CheckAnswers", routeValues: new { siteId, callback }));
     }
 
     [HttpGet("{siteId}/start")]

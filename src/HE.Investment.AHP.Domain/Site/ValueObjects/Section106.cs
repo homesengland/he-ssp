@@ -19,7 +19,7 @@ public class Section106 : ValueObject, IQuestion
         if (agreement == null)
         {
             OperationResult.New()
-                .AddValidationError(nameof(Section106Dto.GeneralAgreement), ValidationErrorMessage.MustProvideRequiredField("General Agreement"))
+                .AddValidationError(nameof(Section106Dto.GeneralAgreement), ValidationErrorMessage.MustBeSelectedYes("there is a s106 agreement in place or in discussion"))
                 .CheckErrors();
         }
 
@@ -95,7 +95,7 @@ public class Section106 : ValueObject, IQuestion
 
     public Section106 WithGeneralAgreement(bool? generalAgreement)
     {
-        if (GeneralAgreement != generalAgreement)
+        if (GeneralAgreement != generalAgreement || generalAgreement == null)
         {
             return new Section106(generalAgreement);
         }

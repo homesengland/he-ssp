@@ -4,8 +4,8 @@ namespace HE.Investment.AHP.WWW.Views.Shared.Components.ReturnToAccountLink;
 
 public class ReturnToAccountLink : ViewComponent
 {
-    public IViewComponentResult Invoke()
+    public IViewComponentResult Invoke(string? linkText = null)
     {
-        return View("ReturnToAccountLink");
+        return View("ReturnToAccountLink", linkText);
     }
 }

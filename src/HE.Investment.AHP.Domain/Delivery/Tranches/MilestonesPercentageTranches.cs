@@ -12,6 +12,8 @@ public class MilestonesPercentageTranches : ValueObject
 
     private const decimal MaxTranche = 0.95m;
 
+    private const decimal MaxCompletionTranche = 1m;
+
     public MilestonesPercentageTranches(WholePercentage? acquisitionPercentage, WholePercentage? startOnSitePercentage, WholePercentage? completionPercentage)
     {
         Acquisition = acquisitionPercentage;
@@ -42,6 +44,11 @@ public class MilestonesPercentageTranches : ValueObject
         if (completion.Value < MinimalCompletionTranche)
         {
             OperationResult.ThrowValidationError(UiFieldName, "Completion tranche must be at least 5% or more of the grant apportioned");
+        }
+
+        if (completion.Value > MaxCompletionTranche)
+        {
+            OperationResult.ThrowValidationError(UiFieldName, "Completion tranche must be at max 100% or less of the grant apportioned");
         }
 
         return new MilestonesPercentageTranches(Acquisition, StartOnSite, completion);

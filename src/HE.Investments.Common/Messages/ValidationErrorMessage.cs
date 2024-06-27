@@ -67,8 +67,6 @@ public static class ValidationErrorMessage
 
     public const string CouldNotCalculate = "Could not calculate as all fields have not been entered";
 
-    public const string EnterDate = "Enter a date. The date must include a day, month and year";
-
     public const string FilesListEmpty = "Select at least one file to upload";
 
     public const string ProvideAllProjectAnswers = "To submit, you have to provide all answers";
@@ -99,15 +97,24 @@ public static class ValidationErrorMessage
 
     public static string MustProvideYourRequiredFieldInPounds(string displayName) => $"Enter the {displayName}, in pounds";
 
-    public static string MustProvideYourHigherNumber<TNumber>(string fieldName, TNumber minValue) => string.Format(CultureInfo.InvariantCulture, "Your {0} must be {1} or more", fieldName, minValue);
+    public static string MustProvideYourHigherNumber<TNumber>(string fieldName, TNumber minValue) =>
+        string.Format(CultureInfo.InvariantCulture, "Your {0} must be {1} or more", fieldName, minValue);
 
-    public static string MustProvideYourLowerNumber<TNumber>(string fieldName, TNumber maxValue) => string.Format(CultureInfo.InvariantCulture, "Your {0} must be {1} or fewer", fieldName, maxValue);
+    public static string MustProvideYourLowerNumber<TNumber>(string fieldName, TNumber maxValue) =>
+        string.Format(CultureInfo.InvariantCulture, "Your {0} must be {1} or fewer", fieldName, maxValue);
 
-    public static string MustProvideTheHigherNumber<TNumber>(string fieldName, TNumber minValue) => string.Format(CultureInfo.InvariantCulture, "The {0} must be {1} or more", fieldName, minValue);
+    public static string MustProvideTheHigherNumber<TNumber>(string fieldName, TNumber minValue) =>
+        string.Format(CultureInfo.InvariantCulture, "The {0} must be {1} or more", fieldName, minValue);
 
-    public static string MustProvideTheLowerNumber<TNumber>(string fieldName, TNumber maxValue) => string.Format(CultureInfo.InvariantCulture, "The {0} must be {1} or fewer", fieldName, maxValue);
+    public static string MustProvideTheLowerNumber<TNumber>(string fieldName, TNumber maxValue) =>
+        string.Format(CultureInfo.InvariantCulture, "The {0} must be {1} or fewer", fieldName, maxValue);
 
-    public static string MustProvideNumberBetween<TNumber>(string fieldName, TNumber minValue, TNumber maxValue) => string.Format(CultureInfo.InvariantCulture, "The {0} must be must be a number between {1} and {2}", fieldName, minValue, maxValue);
+    public static string MustProvideNumberBetween<TNumber>(string fieldName, TNumber minValue, TNumber maxValue) => string.Format(
+        CultureInfo.InvariantCulture,
+        "The {0} must be must be a number between {1} and {2}",
+        fieldName,
+        minValue,
+        maxValue);
 
     public static string MustBeYourWholeNumber(string fieldName, string? example) => $"Your {fieldName} must be a whole number{Example(example)}";
 
@@ -119,7 +126,11 @@ public static class ValidationErrorMessage
 
     public static string MustIncludeThePence(string displayName, string? example) => $"The {displayName} must include pence{Example(example)}";
 
-    public static string MustIncludeThePrecision(string displayName, int precision, string? example) => $"The {displayName} must include {precision} decimal places{Example(example)}";
+    public static string MustIncludeThePrecision(string displayName, int precision, string? example) =>
+        $"The {displayName} must include {precision} decimal places{Example(example)}";
+
+    public static string MustNotIncludeMoreThanThePrecision(string displayName, int precision, string? example) =>
+        $"The {displayName} must not include more than {precision} decimal places{Example(example)}";
 
     public static string MustBeTheNumber(string displayName, string? example) => $"The {displayName} must be a number{Example(example)}";
 
@@ -133,13 +144,17 @@ public static class ValidationErrorMessage
 
     public static string YourStringLengthExceeded(string displayName, int maxLength) => new($"Your {displayName} must be {maxLength} characters or less");
 
-    public static string StringLengthExceededUncommon(string displayName, int maxLength) => new($"{displayName.TitleCaseFirstLetterInString()} must be {maxLength} characters or less");
+    public static string StringLengthExceededUncommon(string displayName, int maxLength) =>
+        new($"{displayName.TitleCaseFirstLetterInString()} must be {maxLength} characters or less");
 
-    public static string ExclusiveOptionSelected(string displayName, string optionName) => $"The {optionName} {displayName} option is exclusive and cannot be selected with any other option";
+    public static string ExclusiveOptionSelected(string displayName, string optionName) =>
+        $"The {optionName} {displayName} option is exclusive and cannot be selected with any other option";
 
     public static string MustBeDate(string displayName) => $"The {displayName} must be a valid date";
 
     public static string MustBeSelected(string displayName) => $"Select the {displayName}";
+
+    public static string MustBeSelectedYes(string displayName) => $"Select yes if {displayName}";
 
     private static string Example(string? example)
     {

@@ -3,7 +3,6 @@ using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investment.AHP.Domain.Application.Crm;
 using HE.Investment.AHP.Domain.Project.Crm;
 using HE.Investment.AHP.Domain.Site.Crm;
-using HE.Investments.AHP.IntegrationTests.ApplicationManagement.Data;
 using HE.Investments.AHP.IntegrationTests.ApplicationManagement.Data.Model;
 using HE.Investments.AHP.IntegrationTests.Framework;
 using Microsoft.Extensions.DependencyInjection;
