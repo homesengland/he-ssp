@@ -257,7 +257,7 @@ public class SitePartnersController : SiteControllerBase<SitePartnersWorkflowSta
 
         return await this.ReturnToSitesListOrContinue(
             siteBasicDetails.ProjectId,
-            async () => await Continue(new { siteId, organisationId = result.ReturnedData.Id.Value, workflow }));
+            async () => await Continue(new { siteId, organisationIdentifier = result.ReturnedData.Id.Value, workflow }));
     }
 
     [HttpGet("{siteId}/unregistered-body-confirm/{partnerId}")]
