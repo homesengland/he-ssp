@@ -80,9 +80,7 @@ namespace HE.CRM.AHP.Plugins.Handlers.CustomApi.FrontDoor
             foreach (var app in applications)
             {
                 TracingService.Trace($"Excluding records from the list, which are for a Limited User.");
-                TracingService.Trace("a");
                 var contact = _contactRepository.GetById(app.invln_contactid.Id, new string[] { Contact.Fields.FirstName, Contact.Fields.LastName, nameof(Contact.invln_externalid).ToLower() });
-                TracingService.Trace("a1");
                 if (app.invln_Site != null)
                 {
                     TracingService.Trace($"Get Site");
@@ -97,20 +95,14 @@ namespace HE.CRM.AHP.Plugins.Handlers.CustomApi.FrontDoor
                         }
                     }
                 }
-                TracingService.Trace("a2");
                 var applicationn = new List<invln_scheme>
                     {
                         app
                     };
-                TracingService.Trace("a3");
                 var applicationsDict = applicationn.ToDictionary(k => k.invln_contactid);
-                TracingService.Trace("a4");
                 var webroleList = _contactWebroleRepository.GetListOfUsersWithoutLimitedRole(OrganizationId);
-                TracingService.Trace("a5");
                 TracingService.Trace($"WebroleList count : {webroleList.Count}");
-                TracingService.Trace("a6");
                 var webroleDict = webroleList.ToDictionary(k => k.invln_Contactid);
-                TracingService.Trace("a7");
                 var d1 = applicationsDict
                     .Where(x => webroleDict.ContainsKey(x.Key) ||
                     _consortiumService.CheckAccess(ConsortiumService.Operation.Get, ConsortiumService.RecordType.Application,
