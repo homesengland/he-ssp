@@ -6,7 +6,7 @@
 @if (Model.displayNotification.IsProvided())
 {
     <div
-        class="govuk-notification-banner@(Model.displayNotification.NotificationType == NotificationType.Success ? "govuk-notification-banner--success" : "") govuk-!-margin-bottom-7 @(Model.shouldAddTopMargin ? "govuk-!-margin-top-7" : "")"
+        class="govuk-notification-banner @(Model.displayNotification.NotificationType == NotificationType.Success ? "govuk-notification-banner--success" : "") govuk-!-margin-bottom-7 @(Model.shouldAddTopMargin ? "govuk-!-margin-top-7" : "")"
         role="alert"
         aria-labelledby="govuk-notification-banner-title"
         data-module="govuk-notification-banner">
