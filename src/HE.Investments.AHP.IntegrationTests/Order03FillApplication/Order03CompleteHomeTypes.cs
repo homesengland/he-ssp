@@ -50,7 +50,7 @@ public class Order03CompleteHomeTypes : AhpApplicationIntegrationTest
     {
         // given
         var taskListPage = await TestClient.NavigateTo(ApplicationPagesUrl.TaskList(UserOrganisationData.OrganisationId, ApplicationData.ApplicationId));
-        taskListPage.HasLinkWithTestId("add-home-type", out var enterHomeTypesSection);
+        taskListPage.HasLinkWithTestId("add-home-types", out var enterHomeTypesSection);
 
         // when
         var landingPage = await TestClient.NavigateTo(enterHomeTypesSection);
@@ -751,7 +751,7 @@ public class Order03CompleteHomeTypes : AhpApplicationIntegrationTest
 
         // then
         taskListPage.UrlEndWith(ApplicationPagesUrl.TaskList(UserOrganisationData.OrganisationId, ApplicationData.ApplicationId))
-            .HasSectionWithStatus("add-home-type-status", "Completed");
+            .HasSectionWithStatus("add-home-types-status", "Completed");
         SaveCurrentPage();
     }
 
