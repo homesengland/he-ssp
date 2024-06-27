@@ -10,13 +10,11 @@ using HE.Investments.Account.Shared.Routing;
 using HE.Investments.Account.WWW.Models.UserOrganisation;
 using HE.Investments.Account.WWW.Routing;
 using HE.Investments.Account.WWW.Utils;
-using HE.Investments.Common;
 using HE.Investments.Common.WWW.Controllers;
 using HE.Investments.Common.WWW.Extensions;
 using HE.Investments.Common.WWW.Models;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.FeatureManagement;
 
 namespace HE.Investments.Account.WWW.Controllers;
 
@@ -32,20 +30,16 @@ public class UserOrganisationController : Controller
 
     private readonly ProgrammeUrlConfig _programmeUrlConfig;
 
-    private readonly IFeatureManager _featureManager;
-
     public UserOrganisationController(
         IMediator mediator,
         IProgrammes programmes,
         IAccountAccessContext accountAccessContext,
-        ProgrammeUrlConfig programmeUrlConfig,
-        IFeatureManager featureManager)
+        ProgrammeUrlConfig programmeUrlConfig)
     {
         _mediator = mediator;
         _programmes = programmes;
         _accountAccessContext = accountAccessContext;
         _programmeUrlConfig = programmeUrlConfig;
-        _featureManager = featureManager;
     }
 
     [HttpGet(UserOrganisationAccountEndpoints.DashboardSuffix)]
@@ -183,7 +177,7 @@ public class UserOrganisationController : Controller
             HasAccess: true,
             DataTestId: "manage-profile-link"));
 
-        if (await _featureManager.IsEnabledAsync(FeatureFlags.AhpProgram) && canViewOrganisationDetails)
+        if (canViewOrganisationDetails)
         {
             userOrganisationActions.Add(new(
                 "Consortium management",
