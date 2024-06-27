@@ -36,7 +36,7 @@ namespace HE.CRM.Plugins.Services.FrontDoorProjectSite.V2
 
         public PagedResponseDto<FrontDoorProjectSiteDto> GetFrontDoorProjectSites(PagingRequestDto pagingRequestDto, Guid frontDoorProjectId, string fieldsToRetrieve = null)
         {
-            Logger.Trace($"{nameof(FrontDoorProjectSiteService)}.{nameof(GetFrontDoorProjectSites)}");
+            Logger.Trace($"FrontDoorProjectSite.V2.{nameof(GetFrontDoorProjectSites)}");
 
             var sites = _frontDoorApiClient.GetSites(frontDoorProjectId);
 
@@ -54,7 +54,7 @@ namespace HE.CRM.Plugins.Services.FrontDoorProjectSite.V2
 
         public FrontDoorProjectSiteDto GetFrontDoorProjectSite(Guid frontDoorProjectId, Guid frontDoorProjectSiteId)
         {
-            Logger.Trace($"{nameof(FrontDoorProjectSiteService)}.{nameof(GetFrontDoorProjectSite)}");
+            Logger.Trace($"FrontDoorProjectSite.V2.{nameof(GetFrontDoorProjectSite)}");
 
             var site = _frontDoorApiClient.GetSite(frontDoorProjectSiteId);
             //if (site.ProjectRecordId != frontDoorProjectId)
@@ -66,7 +66,7 @@ namespace HE.CRM.Plugins.Services.FrontDoorProjectSite.V2
 
         public string CreateRecordFromPortal(Guid frontDoorProjectId, string entityFieldsParameters, string frontDoorSiteId = null)
         {
-            Logger.Trace($"{nameof(FrontDoorProjectSiteService)}.{nameof(CreateRecordFromPortal)}");
+            Logger.Trace($"FrontDoorProjectSite.V2.{nameof(CreateRecordFromPortal)}");
 
             var frontDoorSiteGUID = Guid.NewGuid();
 
@@ -80,7 +80,7 @@ namespace HE.CRM.Plugins.Services.FrontDoorProjectSite.V2
 
         public bool DeactivateFrontDoorSite(Guid frontDoorSiteId)
         {
-            Logger.Trace($"{nameof(FrontDoorProjectSiteService)}.{nameof(DeactivateFrontDoorSite)}");
+            Logger.Trace($"FrontDoorProjectSite.V2.{nameof(DeactivateFrontDoorSite)}");
 
             _frontDoorApiClient.RemoveSite(frontDoorSiteId);
 

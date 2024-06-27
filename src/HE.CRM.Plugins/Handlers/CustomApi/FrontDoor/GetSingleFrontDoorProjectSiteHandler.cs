@@ -37,7 +37,7 @@ namespace HE.CRM.Plugins.Handlers.CustomApi.FrontDoor
 
             var frontDoorProjectSiteDto = new FrontDoorProjectSiteDto();
 
-            if (FeatureFlags.UseNewFrontDoorApiManagement && false)
+            if (FeatureFlags.UseNewFrontDoorApiManagement)
             { // New frontdoor apim
                 var service = CrmServicesFactory.Get<FrontDoorProjectSiteV2.IFrontDoorProjectSiteService>();
                 frontDoorProjectSiteDto = service.GetFrontDoorProjectSite(frontDoorProjectIdGuid, frontDoorProjectSiteIdGuid);

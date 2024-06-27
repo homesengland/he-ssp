@@ -33,7 +33,7 @@ namespace HE.CRM.Plugins.Handlers.CustomApi.FrontDoor
             var siteId = string.Empty;
             var frontDoorProjectIdGuid = Guid.Parse(FrontDoorProjectId);
 
-            if (FeatureFlags.UseNewFrontDoorApiManagement && false)
+            if (FeatureFlags.UseNewFrontDoorApiManagement)
             { // New frontdoor apim
                 var service = CrmServicesFactory.Get<FrontDoorProjectV2.IFrontDoorProjectSiteService>();
 

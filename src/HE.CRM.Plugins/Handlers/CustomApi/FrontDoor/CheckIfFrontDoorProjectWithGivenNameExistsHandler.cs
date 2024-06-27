@@ -35,6 +35,9 @@ namespace HE.CRM.Plugins.Handlers.CustomApi.FrontDoor
 
                 var organisationIdGuid = Guid.Parse(OrganisationId);
                 var frontDoorProjectExists = service.CheckIfFrontDoorProjectWithGivenNameExists(FrontDoorProjectName, organisationIdGuid);
+
+                this.TracingService.Trace("Send Response");
+                ExecutionData.SetOutputParameter(invln_checkiffrontdoorprojectwithgivennameexistsResponse.Fields.invln_frontdoorprojectexists, frontDoorProjectExists);
             }
             else
             { // old version
