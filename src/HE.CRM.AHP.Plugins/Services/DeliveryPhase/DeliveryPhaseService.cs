@@ -153,18 +153,18 @@ namespace HE.CRM.AHP.Plugins.Services.DeliveryPhase
             return Guid.Empty;
         }
 
-        public void CalculateFunding(invln_scheme application, invln_DeliveryPhase deliveryPhaseMapped, List<invln_milestoneframeworkitem> milestones, invln_DeliveryPhase deliveryPhaseToUpdateOrCreate = null)
+        public invln_DeliveryPhase CalculateFunding(invln_scheme application, invln_DeliveryPhase deliveryPhaseMapped, List<invln_milestoneframeworkitem> milestones, invln_DeliveryPhase deliveryPhaseToUpdateOrCreate = null)
         {
             TracingService.Trace($"Calculation");
             if (milestones.Count == 0)
             {
-                return;
+                return null;
             }
 
             if (application.invln_noofhomes == null || deliveryPhaseMapped.invln_NoofHomes == null ||
                 application.invln_fundingrequired == null)
             {
-                return;
+                return null;
             }
             var account = _accountRepository.GetById(application.invln_organisationid, Account.Fields.invln_UnregisteredBody);
             TracingService.Trace($"numberOfHouseApplication: {application.invln_noofhomes.Value}");
@@ -196,29 +196,35 @@ namespace HE.CRM.AHP.Plugins.Services.DeliveryPhase
             }
             else
             {
-                if (deliveryPhaseMapped.invln_AcquisitionPercentageValue != null)
+                if (!(deliveryPhaseMapped.invln_AcquisitionPercentageValue == 0m && deliveryPhaseMapped.invln_StartOnSitePercentageValue == 0m
+    && deliveryPhaseMapped.invln_CompletionPercentageValue == 1m))
                 {
-                    acquisitionPercentageValue = deliveryPhaseMapped.invln_AcquisitionPercentageValue == acquisitionPercentageValue ? acquisitionPercentageValue : deliveryPhaseMapped.invln_AcquisitionPercentageValue.Value;
-                }
-                if (deliveryPhaseMapped.invln_StartOnSitePercentageValue != null)
-                {
-                    startOnSitePercentageValue = deliveryPhaseMapped.invln_StartOnSitePercentageValue == startOnSitePercentageValue ? startOnSitePercentageValue : deliveryPhaseMapped.invln_StartOnSitePercentageValue.Value;
-                }
-                if (deliveryPhaseMapped.invln_CompletionPercentageValue != null)
-                {
-                    completionPercentageValue = deliveryPhaseMapped.invln_CompletionPercentageValue == completionPercentageValue ? completionPercentageValue : deliveryPhaseMapped.invln_CompletionPercentageValue.Value;
-                }
+                    if (deliveryPhaseMapped.invln_AcquisitionPercentageValue != null)
+                    {
+                        acquisitionPercentageValue = deliveryPhaseMapped.invln_AcquisitionPercentageValue == acquisitionPercentageValue ? acquisitionPercentageValue : deliveryPhaseMapped.invln_AcquisitionPercentageValue.Value;
+                    }
+                    if (deliveryPhaseMapped.invln_StartOnSitePercentageValue != null)
+                    {
+                        startOnSitePercentageValue = deliveryPhaseMapped.invln_StartOnSitePercentageValue == startOnSitePercentageValue ? startOnSitePercentageValue : deliveryPhaseMapped.invln_StartOnSitePercentageValue.Value;
+                    }
+                    if (deliveryPhaseMapped.invln_CompletionPercentageValue != null)
+                    {
+                        completionPercentageValue = deliveryPhaseMapped.invln_CompletionPercentageValue == completionPercentageValue ? completionPercentageValue : deliveryPhaseMapped.invln_CompletionPercentageValue.Value;
+                    }
 
+                }
             }
             if (deliveryPhaseToUpdateOrCreate == null)
             {
                 TracingService.Trace($"CalculateFundings deliveryPhaseToUpdateOrCreate == null");
                 CalculateFundings(deliveryPhaseMapped, acquisitionPercentageValue, startOnSitePercentageValue, completionPercentageValue, fundingForPhase);
+                return deliveryPhaseMapped;
             }
             else
             {
                 TracingService.Trace($"CalculateFundings");
                 CalculateFundings(deliveryPhaseToUpdateOrCreate, acquisitionPercentageValue, startOnSitePercentageValue, completionPercentageValue, fundingForPhase);
+                return deliveryPhaseToUpdateOrCreate;
             }
         }
 
