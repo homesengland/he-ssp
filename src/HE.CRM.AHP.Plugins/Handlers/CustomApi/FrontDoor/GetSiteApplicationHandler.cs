@@ -29,13 +29,19 @@ namespace HE.CRM.AHP.Plugins.Handlers.CustomApi.FrontDoor
         private readonly ISiteRepository _siteRepository;
         private readonly IConsortiumService _consortiumService;
         private readonly IAhpApplicationRepository _ahpApplicationRepository;
+        private readonly IContactRepository _contactRepository;
+        private readonly IAhpProjectRepository _projectRepository;
+        private readonly IContactWebroleRepository _contactWebroleRepository;
 
         public GetSiteApplicationHandler(ISiteRepository siteRepository,
-                IConsortiumService consortiumService, IAhpApplicationRepository ahpApplicationRepository)
+                IConsortiumService consortiumService, IAhpApplicationRepository ahpApplicationRepository, IContactRepository contactRepository, IAhpProjectRepository projectRepository, IContactWebroleRepository contactWebroleRepository)
         {
             _siteRepository = siteRepository;
             _consortiumService = consortiumService;
             _ahpApplicationRepository = ahpApplicationRepository;
+            _contactRepository = contactRepository;
+            _projectRepository = projectRepository;
+            _contactWebroleRepository = contactWebroleRepository;
         }
 
         public override bool CanWork()
@@ -63,17 +69,43 @@ namespace HE.CRM.AHP.Plugins.Handlers.CustomApi.FrontDoor
                 return;
 
             var site = _siteRepository.GetById(new Guid(SiteId));
+
             var applications = _ahpApplicationRepository.GetByAttribute(invln_scheme.Fields.invln_Site, site.Id)
                                 .Where(x => x.invln_ExternalStatus.Value != (int)invln_ExternalStatusAHP.Deleted).ToList()
                                 .OrderByDescending(x => x.invln_lastexternalmodificationon);
+
             var filteredApplication = new List<invln_scheme>();
-            foreach (var application in applications)
+            foreach (var app in applications)
             {
-                TracingService.Trace("Start loop for application");
-                if (_consortiumService.CheckAccess(Operation.Get, RecordType.Application, ExternalUserId, null, application.Id.ToString(), consortiumId, OrganizationId))
+                TracingService.Trace($"Excluding records from the list, which are for a Limited User.");
+                var contact = _contactRepository.GetById(app.invln_contactid.Id, new string[] { Contact.Fields.FirstName, Contact.Fields.LastName, nameof(Contact.invln_externalid).ToLower() });
+                if (app.invln_Site != null)
                 {
-                    filteredApplication.Add(application);
+                    if (site.invln_AHPProjectId != null)
+                    {
+                        var ahpProject = _projectRepository.GetById(site.invln_AHPProjectId.Id, invln_ahpproject.Fields.invln_ConsortiumId);
+                        if (ahpProject != null && ahpProject.invln_ConsortiumId != null)
+                        {
+                            consortiumId = ahpProject.invln_ConsortiumId.Id.ToString();
+                        }
+                    }
                 }
+
+                var applicationn = new List<invln_scheme>
+                    {
+                        app
+                    };
+                var applicationsDict = applicationn.ToDictionary(k => k.invln_contactid);
+                var webroleList = _contactWebroleRepository.GetListOfUsersWithoutLimitedRole(OrganizationId);
+                TracingService.Trace($"WebroleList count : {webroleList.Count}");
+                var webroleDict = webroleList.ToDictionary(k => k.invln_Contactid);
+
+                var d1 = applicationsDict
+                    .Where(x => webroleDict.ContainsKey(x.Key) ||
+                    _consortiumService.CheckAccess(ConsortiumService.Operation.Get, ConsortiumService.RecordType.Application,
+                    contact.invln_externalid, null, x.Value.Id.ToString(), consortiumId, OrganizationId, null))
+                    .ToDictionary(x => x.Key, x => x.Value);
+                filteredApplication.AddRange(d1.Values.ToList());
             }
             var siteApplicationDto = SiteApplicationMapper.MapRegularEntityToDto(site, filteredApplication);
             ExecutionData.SetOutputParameter(invln_getsiteapplicationsResponse.Fields.invln_siteapplication, JsonSerializer.Serialize(siteApplicationDto));

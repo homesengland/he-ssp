@@ -232,24 +232,33 @@ namespace HE.CRM.AHP.Plugins.Services.Consortium
 
         private bool HasUserHavePermissionToProvideOperation(Operation operation, int role, string siteId = null, string applicationId = null, EntityReference contactId = null, string ahpProject = null, string organizationId = null)
         {
+
             TracingService.Trace($"Role: {role}");
 
             if (role == (int)invln_Permission.Admin)
             {
                 TracingService.Trace("Admin Role");
-                var ahpProjects = _ahpProjectRepository.GetByAttribute(invln_ahpproject.Fields.invln_ContactId, contactId.Id).ToList();
+                var ahpProjects = _ahpProjectRepository.GetById(new Guid(ahpProject));
                 if (ahpProjects != null)
                 {
-                    return ahpProjects.Any(x => x.invln_ContactId != null && x.invln_ContactId.Id == contactId.Id);
+                    return ahpProjects.invln_ContactId.Equals(contactId);
+                }
+                else
+                {
+                    return false;
                 }
             }
             if (role == (int)invln_Permission.Enhanced)
             {
                 TracingService.Trace("Enhanced Role");
-                var ahpProjects = _ahpProjectRepository.GetByAttribute(invln_ahpproject.Fields.invln_ContactId, contactId.Id).ToList();
+                var ahpProjects = _ahpProjectRepository.GetById(new Guid(ahpProject));
                 if (ahpProjects != null)
                 {
-                    return ahpProjects.Any(x => x.invln_AccountId != null && x.invln_AccountId.Id == contactId.Id);
+                    return ahpProjects.invln_ContactId.Equals(contactId);
+                }
+                else
+                {
+                    return false;
                 }
             }
             if (role == (int)invln_Permission.Inputonly && operation != Operation.Submit)
