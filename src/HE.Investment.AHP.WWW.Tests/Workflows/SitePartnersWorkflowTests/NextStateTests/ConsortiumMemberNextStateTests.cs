@@ -27,17 +27,33 @@ public class ConsortiumMemberNextStateTests
     }
 
     [Theory]
-    [InlineData(SitePartnersWorkflowState.FlowFinished, SitePartnersWorkflowState.OwnerOfTheHomesConfirm)]
+    [InlineData(SitePartnersWorkflowState.FlowFinished, SitePartnersWorkflowState.OwnerOfTheHomes)]
     [InlineData(SitePartnersWorkflowState.OwnerOfTheHomesConfirm, SitePartnersWorkflowState.OwnerOfTheHomes)]
-    [InlineData(SitePartnersWorkflowState.OwnerOfTheHomes, SitePartnersWorkflowState.OwnerOfTheLandConfirm)]
+    [InlineData(SitePartnersWorkflowState.OwnerOfTheHomes, SitePartnersWorkflowState.OwnerOfTheLand)]
     [InlineData(SitePartnersWorkflowState.OwnerOfTheLandConfirm, SitePartnersWorkflowState.OwnerOfTheLand)]
-    [InlineData(SitePartnersWorkflowState.OwnerOfTheLand, SitePartnersWorkflowState.DevelopingPartnerConfirm)]
+    [InlineData(SitePartnersWorkflowState.OwnerOfTheLand, SitePartnersWorkflowState.DevelopingPartner)]
     [InlineData(SitePartnersWorkflowState.DevelopingPartnerConfirm, SitePartnersWorkflowState.DevelopingPartner)]
     [InlineData(SitePartnersWorkflowState.DevelopingPartner, SitePartnersWorkflowState.FlowStarted)]
     public async Task ShouldReturnNextState_WhenBackTriggerIsExecuted(SitePartnersWorkflowState currentState, SitePartnersWorkflowState expectedState)
     {
         // given
         var testCandidate = new SitePartnersWorkflowBuilder(currentState).WithIsConsortiumMember().Build();
+
+        // when
+        var result = await testCandidate.NextState(Trigger.Back);
+
+        // then
+        result.Should().Be(expectedState);
+    }
+
+    [Theory]
+    [InlineData(SitePartnersWorkflowState.FlowFinished, SitePartnersWorkflowState.OwnerOfTheHomesConfirm)]
+    [InlineData(SitePartnersWorkflowState.OwnerOfTheHomes, SitePartnersWorkflowState.OwnerOfTheLandConfirm)]
+    [InlineData(SitePartnersWorkflowState.OwnerOfTheLand, SitePartnersWorkflowState.DevelopingPartnerConfirm)]
+    public async Task ShouldReturnNextState_WhenBackTriggerIsExecutedAndSitePartnerDetailsAreProvided(SitePartnersWorkflowState currentState, SitePartnersWorkflowState expectedState)
+    {
+        // given
+        var testCandidate = new SitePartnersWorkflowBuilder(currentState).WithIsConsortiumMember().WithPartners().Build();
 
         // when
         var result = await testCandidate.NextState(Trigger.Back);
