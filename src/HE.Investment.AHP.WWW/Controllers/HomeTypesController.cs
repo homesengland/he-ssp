@@ -66,6 +66,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         return Back(currentPage, new { applicationId, homeTypeId });
     }
 
+    [ConsortiumAuthorize]
     [WorkflowState(HomeTypesWorkflowState.List)]
     [HttpGet("list")]
     public async Task<IActionResult> List([FromRoute] string applicationId, CancellationToken cancellationToken)
