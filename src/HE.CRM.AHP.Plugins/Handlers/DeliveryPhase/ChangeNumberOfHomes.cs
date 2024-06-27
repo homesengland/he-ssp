@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.ServiceModel.Channels;
 using System.Text;
 using System.Threading.Tasks;
 using DataverseModel;
@@ -32,6 +33,8 @@ namespace HE.CRM.AHP.Plugins.Handlers.DeliveryPhase
             var application = _applicationRepository.GetById(CurrentState.invln_Application.Id);
             var milestoneframeworks = _milestoneFrameworkRepository.GetMilestoneFrameworkItemByProgrammeId(application.invln_programmelookup.Id.ToString());
             var df = CrmServicesFactory.Get<IDeliveryPhaseService>().CalculateFunding(application, CurrentState, milestoneframeworks, ExecutionData.Target);
+            if (df == null)
+                return;
             ExecutionData.Target.invln_AcquisitionPercentageValue = df.invln_AcquisitionPercentageValue;
             ExecutionData.Target.invln_AcquisitionValue = df.invln_AcquisitionValue;
             ExecutionData.Target.invln_StartOnSitePercentageValue = df.invln_StartOnSitePercentageValue;

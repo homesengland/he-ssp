@@ -32,7 +32,6 @@ namespace HE.CRM.AHP.Plugins.Services.Application
         private readonly IAccountRepository _accountRepository;
         private readonly IContactWebroleRepository _contactWebroleRepository;
 
-
         public ApplicationService(CrmServiceArgs args) : base(args)
         {
             _applicationRepository = CrmRepositoriesFactory.Get<IAhpApplicationRepository>();
@@ -291,61 +290,51 @@ namespace HE.CRM.AHP.Plugins.Services.Application
             }
             else
             {
-                TracingService.Trace("1a");
                 FieldsToRetrieve += ",invln_contactid";
                 string[] columns = FieldsToRetrieve == null ? null : FieldsToRetrieve.Split(',');
-                TracingService.Trace("1a1");
                 var app = _applicationRepository.GetById(new Guid(applicationId), columns);
-                TracingService.Trace("1a2");
 
                 TracingService.Trace($"Excluding records from the list, which are for a Limited User.");
-                if (string.IsNullOrEmpty(contactId))
-                {
-                    List<invln_scheme> applications = new List<invln_scheme>
-                    {
-                        app
-                    };
-                    var applicationsDict = applications.ToDictionary(k => k.invln_contactid);
-                    var webroleList = _contactWebroleRepository.GetListOfUsersWithoutLimitedRole(organisationId);
-                    TracingService.Trace($"WebroleList count : {webroleList.Count}");
-                    var webroleDict = webroleList.ToDictionary(k => k.invln_Contactid);
+                //if (string.IsNullOrEmpty(contactId))
+                //{
+                //    List<invln_scheme> applications = new List<invln_scheme>
+                //    {
+                //        app
+                //    };
+                //    var applicationsDict = applications.ToDictionary(k => k.invln_contactid);
+                //    var webroleList = _contactWebroleRepository.GetListOfUsersWithoutLimitedRole(organisationId);
+                //    TracingService.Trace($"WebroleList count : {webroleList.Count}");
+                //    var webroleDict = webroleList.ToDictionary(k => k.invln_Contactid);
 
-                    var d1 = applicationsDict.Where(x => webroleDict.ContainsKey(x.Key)).ToDictionary(x => x.Key, x => x.Value);
-                    applications = d1.Values.ToList();
+                //    var d1 = applicationsDict.Where(x => webroleDict.ContainsKey(x.Key)).ToDictionary(x => x.Key, x => x.Value);
+                //    applications = d1.Values.ToList();
 
-                    if (applications.Count == 0)
-                    {
-                        TracingService.Trace("The record owner is a Limited User and the query is being made by someone with a different role.");
-                        return listOfApplications;
-                    }
-                }
-                else
-                {
-                    var con = _contactRepository.GetContactViaExternalId(contactId);
-                    if (app.invln_contactid.Id != con.Id)
-                    {
-                        TracingService.Trace("The record owner is another Limited User");
-                        return listOfApplications;
-                    }
-                }
-                
-                // var partner = _accountRepository.GetById(app.invln_organisationid.Id);
-                // var con
+                //    if (applications.Count == 0)
+                //    {
+                //        TracingService.Trace("The record owner is a Limited User and the query is being made by someone with a different role.");
+                //        return listOfApplications;
+                //    }
+                //}
+                //else
+                //{
+                //    var con = _contactRepository.GetContactViaExternalId(contactId);
+                //    if (app.invln_contactid.Id != con.Id)
+                //    {
+                //        TracingService.Trace("The record owner is another Limited User");
+                //        return listOfApplications;
+                //    }
+                //}
                 var contact = _contactRepository.GetById(app.invln_contactid.Id, new string[] { Contact.Fields.FirstName, Contact.Fields.LastName, nameof(Contact.invln_externalid).ToLower() });
-                TracingService.Trace("2a");
                 var applicationDto = FillApplicationData(app);
                 string consortiumId = null;
                 if (app.invln_Site != null)
                 {
-                    TracingService.Trace("3a");
                     var site = _siteRepository.GetById(app.invln_Site.Id, invln_Sites.Fields.invln_AHPProjectId);
                     if (site.invln_AHPProjectId != null)
                     {
-                        TracingService.Trace("4a");
                         var ahpProject = _projectRepository.GetById(site.invln_AHPProjectId.Id, invln_ahpproject.Fields.invln_ConsortiumId);
                         if (ahpProject != null && ahpProject.invln_ConsortiumId != null)
                         {
-                            TracingService.Trace("4a");
                             consortiumId = ahpProject.invln_ConsortiumId.Id.ToString();
                         }
                     }
