@@ -8,12 +8,12 @@
     var title = ProjectPageTitles.ApplicationList(Model.ProjectName);
     ViewData["Title"] = title;
 }
-<div class="govuk-grid-column-two-thirds govuk-!-padding-top-4">
-    <vc:notification/>
-</div>
 
 <div class="govuk-grid-column-full">
-    <gds-back-link href="@Url.OrganisationAction("Details", "Project", new { projectId = Model.ProjectId })" class="govuk-!-margin-bottom-8"></gds-back-link>
+    <gds-back-link href="@Url.OrganisationAction("Details", "Project", new { projectId = Model.ProjectId })" class="govuk-!-margin-bottom-7"></gds-back-link>
+
+    <vc:notification />
+
     <vc:page-header title="@title" caption="@Model.OrganisationName"/>
 
     @if (Model.Applications.TotalItems > 0)
