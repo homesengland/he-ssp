@@ -16,7 +16,7 @@
     var incompleteSectionsCount = Model.Sections.Count(s => s.SectionStatus == SectionStatus.NotStarted || s.SectionStatus == SectionStatus.InProgress);
     var completeSectionsCount = Model.Sections.Count(s => s.SectionStatus == SectionStatus.Completed);
 }
-<div class="govuk-grid-column-two-thirds">
+<div class="govuk-grid-column-full">
     <vc:ahp-workflow-back-button current-page="@ApplicationWorkflowState.TaskList" project-id="@Model.ProjectId"/>
 
     @if (Model.Status == ApplicationStatus.ReferredBackToApplicant)
@@ -24,8 +24,7 @@
         <vc:notification display-notification="@ApplicationHasStatusReferredBackToApplicant.Create()"/>
     }
     <vc:notification/>
-</div>
-<div class="govuk-grid-column-full">
+
     <vc:page-header caption="@Model.SiteName" title="@Model.Name"/>
 
     <vc:application-task-list-header

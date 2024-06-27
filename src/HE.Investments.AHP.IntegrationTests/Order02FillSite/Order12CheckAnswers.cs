@@ -147,7 +147,7 @@ public class Order12CheckAnswers : AhpIntegrationTest
 
     [Fact(Skip = AhpConfig.SkipTest)]
     [Order(6)]
-    public async Task Order06_SiteIsNotEditableAfterCompletion()
+    public async Task Order06_SiteEditableAfterCompletion()
     {
         var checkAnswersPage = await GetCurrentPage(SitePagesUrl.SiteCheckAnswers(UserOrganisationData.OrganisationId, SiteData.SiteId));
         checkAnswersPage.HasStatusTagByTestId("Submitted", "site-status-tag");
@@ -155,7 +155,13 @@ public class Order12CheckAnswers : AhpIntegrationTest
         var summaryItems = checkAnswersPage.GetSummaryListItems();
         foreach (var item in summaryItems)
         {
-            item.Value.ChangeAnswerLink.Should().BeNull();
+            if (item.Key == "Site name")
+            {
+                item.Value.ChangeAnswerLink.Should().BeNull();
+                continue;
+            }
+
+            item.Value.ChangeAnswerLink.Should().NotBeNull();
         }
     }
 }

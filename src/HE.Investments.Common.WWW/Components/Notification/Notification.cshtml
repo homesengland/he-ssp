@@ -1,32 +1,34 @@
 @using HE.Investments.Common.Extensions
 @using HE.Investments.Common.Services.Notifications;
 
-@model DisplayNotification;
+@model (DisplayNotification displayNotification, bool shouldAddTopMargin);
 
-@if (Model.IsProvided())
+@if (Model.displayNotification.IsProvided())
 {
-    <div class="govuk-notification-banner @(Model.NotificationType == NotificationType.Success ? "govuk-notification-banner--success" : "") govuk-!-margin-bottom-8 govuk-!-margin-top-6" role="alert"
-         aria-labelledby="govuk-notification-banner-title"
-         data-module="govuk-notification-banner">
+    <div
+        class="govuk-notification-banner @(Model.displayNotification.NotificationType == NotificationType.Success ? "govuk-notification-banner--success" : "") govuk-!-margin-bottom-7 @(Model.shouldAddTopMargin ? "govuk-!-margin-top-7" : "")"
+        role="alert"
+        aria-labelledby="govuk-notification-banner-title"
+        data-module="govuk-notification-banner">
         <div class="govuk-notification-banner__header">
             <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">
-                @Model.Title
+                @Model.displayNotification.Title
             </h2>
         </div>
         <div class="govuk-notification-banner__content">
-            <h3 class="govuk-notification-banner__heading">
-                @Model.Description
+            <h3 class="govuk-notification-banner__heading govuk-!-display-inline">
+                @Model.displayNotification.Description
 
-                @if (Model.LinkDescription != null)
+                @if (Model.displayNotification.LinkDescription != null)
                 {
-                    <br />
-                    <a href="@Model.LinkDescriptionUrl">@Model.LinkDescription</a>
+                    <br/>
+                    <a href="@Model.displayNotification.LinkDescriptionUrl">@Model.displayNotification.LinkDescription</a>
                 }
             </h3>
 
-            @if (Model.Body != null)
+            @if (Model.displayNotification.Body != null)
             {
-                <p class="govuk-body">@Model.Body</p>
+                <p class="govuk-body govuk-!-margin-top-4">@Model.displayNotification.Body</p>
             }
         </div>
     </div>

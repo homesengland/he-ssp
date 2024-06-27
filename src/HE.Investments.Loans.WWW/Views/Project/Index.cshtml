@@ -9,7 +9,7 @@
 
 <gds-div-grid-column-two-thirds>
     <he-organisation-form asp-controller="Project" asp-action="StartProjectPost" asp-route-id="@Model.LoanApplicationId" asp-route-projectId="@Model.ProjectId" asp-method="post" novalidate>
-        <gds-back-link href="@Url.OrganisationAction("TaskList", "LoanApplicationV2", new { id = Model.LoanApplicationId })" text="Back to application" class="govuk-!-margin-bottom-8">
+        <gds-back-link href="@Url.OrganisationAction("TaskList", "LoanApplicationV2", new { id = Model.LoanApplicationId })" text="Back to application" class="govuk-!-margin-bottom-7">
         </gds-back-link>
 
         <gds-h1 class="govuk-heading-xl">
