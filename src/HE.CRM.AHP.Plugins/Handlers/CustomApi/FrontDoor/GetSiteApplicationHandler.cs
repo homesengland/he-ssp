@@ -67,39 +67,50 @@ namespace HE.CRM.AHP.Plugins.Handlers.CustomApi.FrontDoor
             TracingService.Trace("GetSiteApplicationHandler Do Work");
             if (!_consortiumService.CheckAccess(Operation.Get, RecordType.Site, ExternalUserId, SiteId, null, consortiumId, OrganizationId))
                 return;
-
+            TracingService.Trace("Get Site");
             var site = _siteRepository.GetById(new Guid(SiteId));
-
+            TracingService.Trace("Filter Application");
             var applications = _ahpApplicationRepository.GetByAttribute(invln_scheme.Fields.invln_Site, site.Id)
-                                .Where(x => x.invln_ExternalStatus.Value != (int)invln_ExternalStatusAHP.Deleted).ToList()
-                                .OrderByDescending(x => x.invln_lastexternalmodificationon);
+                                .Where(x => x.invln_ExternalStatus.Value != (int)invln_ExternalStatusAHP.Deleted &&
+                                x.invln_contactid != null).ToList()
+                                .OrderByDescending(x => x.invln_lastexternalmodificationon).ToList();
 
             var filteredApplication = new List<invln_scheme>();
+            TracingService.Trace($"Iteration by application no: {applications.Count}");
             foreach (var app in applications)
             {
                 TracingService.Trace($"Excluding records from the list, which are for a Limited User.");
+                TracingService.Trace("a");
                 var contact = _contactRepository.GetById(app.invln_contactid.Id, new string[] { Contact.Fields.FirstName, Contact.Fields.LastName, nameof(Contact.invln_externalid).ToLower() });
+                TracingService.Trace("a1");
                 if (app.invln_Site != null)
                 {
+                    TracingService.Trace($"Get Site");
                     if (site.invln_AHPProjectId != null)
                     {
+                        TracingService.Trace($"Get Project");
                         var ahpProject = _projectRepository.GetById(site.invln_AHPProjectId.Id, invln_ahpproject.Fields.invln_ConsortiumId);
                         if (ahpProject != null && ahpProject.invln_ConsortiumId != null)
                         {
+                            TracingService.Trace($"Set value - consortium");
                             consortiumId = ahpProject.invln_ConsortiumId.Id.ToString();
                         }
                     }
                 }
-
+                TracingService.Trace("a2");
                 var applicationn = new List<invln_scheme>
                     {
                         app
                     };
+                TracingService.Trace("a3");
                 var applicationsDict = applicationn.ToDictionary(k => k.invln_contactid);
+                TracingService.Trace("a4");
                 var webroleList = _contactWebroleRepository.GetListOfUsersWithoutLimitedRole(OrganizationId);
+                TracingService.Trace("a5");
                 TracingService.Trace($"WebroleList count : {webroleList.Count}");
+                TracingService.Trace("a6");
                 var webroleDict = webroleList.ToDictionary(k => k.invln_Contactid);
-
+                TracingService.Trace("a7");
                 var d1 = applicationsDict
                     .Where(x => webroleDict.ContainsKey(x.Key) ||
                     _consortiumService.CheckAccess(ConsortiumService.Operation.Get, ConsortiumService.RecordType.Application,
