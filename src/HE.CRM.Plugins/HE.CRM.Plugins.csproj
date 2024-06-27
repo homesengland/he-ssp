@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>HE.CRM.Plugins</RootNamespace>
-    <AssemblyName>HE.CRM.Plugins.MB</AssemblyName>
+    <AssemblyName>HE.CRM.Plugins</AssemblyName>
     <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -194,6 +194,7 @@
     <Compile Include="Models\FrontDoor\Mappers\FrontDoorProjectContactMapper.cs" />
     <Compile Include="Models\FrontDoor\Mappers\GetProjectResponseMapperService.cs" />
     <Compile Include="Models\FrontDoor\Mappers\GetProjectsResponseMapperService.cs" />
+    <Compile Include="Models\FrontDoor\Mappers\GetSiteResponseMapperService.cs" />
     <Compile Include="Models\FrontDoor\Mappers\IGetProjectResponseMapperService.cs" />
     <Compile Include="Models\FrontDoor\Mappers\IGetProjectsResponseMapperService.cs" />
     <Compile Include="Plugins\Accounts\SendEmailOnRatingChangePlugin.cs" />
@@ -314,6 +315,8 @@
     <Compile Include="Services\Contract\IContractService.cs" />
     <Compile Include="Services\FrontDoorProjectSite\FrontDoorProjectSiteService.cs" />
     <Compile Include="Services\FrontDoorProjectSite\IFrontDoorProjectSiteService.cs" />
+    <Compile Include="Services\FrontDoorProjectSite\V2\FrontDoorProjectSiteService.cs" />
+    <Compile Include="Services\FrontDoorProjectSite\V2\IFrontDoorProjectSiteService.cs" />
     <Compile Include="Services\FrontDoorProject\FrontDoorProjectService.cs" />
     <Compile Include="Services\FrontDoorProject\IFrontDoorProjectService.cs" />
     <Compile Include="Services\FrontDoorProject\V2\FrontDoorProjectService.cs" />

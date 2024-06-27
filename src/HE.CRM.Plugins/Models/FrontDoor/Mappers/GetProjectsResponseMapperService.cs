@@ -2,8 +2,8 @@ using System.Collections.Generic;
 using System.Linq;
 using HE.Base.Services;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
+using HE.CRM.Common.Api.FrontDoor.Contract.Responses;
 using HE.CRM.Common.Repositories.Interfaces;
-using HE.CRM.Plugins.Models.FrontDoor.Contract.Responses;
 
 namespace HE.CRM.Plugins.Models.Frontdoor.Mappers
 {
@@ -23,8 +23,10 @@ namespace HE.CRM.Plugins.Models.Frontdoor.Mappers
 
         public IEnumerable<FrontDoorProjectDto> Map(GetProjectsResponse response)
         {
-            var portalOwnerIdList = response.Select(x => x.PortalOwnerId);
-            var contactsExternalIdMap = _contactRepository.GetContactsMapExternalIds(portalOwnerIdList);
+            // get all contacts ids to create a map ContactId, ContactExternalId
+            var contactIdList = response.Select(x => x.PortalOwnerId);
+            contactIdList = response.Select(x => x.FrontDoorProjectContact.ContactId);
+            var contactsExternalIdMap = _contactRepository.GetContactsMapExternalIds(contactIdList.Distinct());
 
             return response.Select(x => _getProjectResponseMapperService.Map(x, contactsExternalIdMap));
         }

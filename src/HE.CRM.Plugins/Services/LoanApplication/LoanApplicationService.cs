@@ -44,8 +44,6 @@ namespace HE.CRM.Plugins.Services.LoanApplication
 
         private readonly ILocalAuthorityRepository _LocalAuthorityRepository;
 
-        private readonly ILocalAuthorityRepository _ocalAuthorityRepository;
-
         private readonly ILoanApplicationRepository _loanApplicationRepositoryAdmin;
 
         private readonly INotificationSettingRepository _notificationSettingRepositoryAdmin;

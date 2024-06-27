@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using HE.Base.Services;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
-using HE.CRM.Plugins.Models.FrontDoor.Contract.Responses;
+using HE.CRM.Common.Api.FrontDoor.Contract.Responses;
 
 namespace HE.CRM.Plugins.Models.Frontdoor.Mappers
 {
@@ -17,10 +17,18 @@ namespace HE.CRM.Plugins.Models.Frontdoor.Mappers
 
         public FrontDoorProjectDto Map(GetProjectResponse response, Dictionary<Guid, string> contactsExternalIdMap)
         {
+            if (response == null)
+            {
+                return null;
+            }
+
+            Logger.Trace($"{nameof(GetProjectResponseMapperService)}.{nameof(Map)}");
+
             if (contactsExternalIdMap == null || !contactsExternalIdMap.Any())
             {
                 Logger.Warn("contactsExternalIdMap is empty");
             }
+
             if (!contactsExternalIdMap.TryGetValue(response.PortalOwnerId, out var portalOwnerExternalId))
             {
                 Logger.Warn($"Could not find externalId for contact with id '{response.PortalOwnerId}'");
@@ -51,7 +59,7 @@ namespace HE.CRM.Plugins.Models.Frontdoor.Mappers
                 IntentiontoMakeaProfit = response.IntentionToMakeAProfit,
                 StartofProjectMonth = response.StartOfProjectMonth,
                 StartofProjectYear = response.StartOfProjectYear,
-                FrontDoorProjectContact = FrontDoorProjectContactMapper.Map(response.FrontDoorProjectContact),
+                FrontDoorProjectContact = FrontDoorProjectContactMapper.Map(response.FrontDoorProjectContact, contactsExternalIdMap),
             };
         }
     }

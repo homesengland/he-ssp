@@ -1,17 +1,23 @@
+using System;
+using System.Collections.Generic;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
-using HE.CRM.Plugins.Models.FrontDoor.Contract;
+using HE.CRM.Common.Api.FrontDoor.Contract;
 
 namespace HE.CRM.Plugins.Models.Frontdoor.Mappers
 {
     public static class FrontDoorProjectContactMapper
     {
-        public static UserAccountDto Map(FrontDoorProjectContact response)
+        public static UserAccountDto Map(FrontDoorProjectContact response, Dictionary<Guid, string> contactsExternalIdMap)
         {
+            if (!contactsExternalIdMap.TryGetValue(response.ContactId, out var contactExternalId))
+            {
+            }
+
             return new UserAccountDto
             {
                 AccountId = response.AccountId,
                 ContactEmail = response.ContactEmail,
-                ContactExternalId = null,
+                ContactExternalId = contactExternalId,
                 ContactFirstName = response.ContactFirstName,
                 ContactLastName = response.ContactLastName,
                 ContactTelephoneNumber = response.ContactTelephoneNumber ?? string.Empty,

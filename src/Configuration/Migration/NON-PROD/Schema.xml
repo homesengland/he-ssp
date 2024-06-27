@@ -144,7 +144,7 @@
   <entity name="invln_secretvariable" displayname="Secret Variable" etc="10644" primaryidfield="invln_secretvariableid" primarynamefield="invln_name" disableplugins="false">
     <fields>
       <field displayname="Name" name="invln_name" type="string" customfield="true" />
-      <field displayname="Secret Variable" name="invln_secretvariableid" type="guid" primaryKey="true" />
+      <field updateCompare="true" displayname="Secret Variable" name="invln_secretvariableid" type="guid" primaryKey="true" />
       <field displayname="Description" name="invln_description" type="string" customfield="true" />
       <field displayname="Import Sequence Number" name="importsequencenumber" type="number" />
       <field displayname="Status" name="statecode" type="state" />
