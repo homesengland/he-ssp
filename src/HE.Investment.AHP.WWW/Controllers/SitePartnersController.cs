@@ -294,12 +294,12 @@ public class SitePartnersController : SiteControllerBase<SitePartnersWorkflowSta
 
     [HttpGet("{siteId}/finish")]
     [WorkflowState(SitePartnersWorkflowState.FlowFinished)]
-    public async Task<IActionResult> FinishSitePartnersFlow([FromRoute] string siteId, [FromQuery] string? workflow, [FromQuery] bool isBack)
+    public async Task<IActionResult> FinishSitePartnersFlow([FromRoute] string siteId, [FromQuery] string? workflow, [FromQuery] bool isBack, CancellationToken cancellationToken)
     {
         if (isBack)
         {
-            var sitePartnerDetails = await _mediator.Send(new GetSitePartnerDetailsQuery(siteId));
-            return await Back(new { siteId, isBack, partnerId = sitePartnerDetails.OwnerOfTheHomesPartnerId });
+            var site = await GetSiteDetails(siteId, cancellationToken);
+            return await Back(new { siteId, isBack, partnerId = site.OwnerOfTheHomes?.OrganisationId });
         }
 
         return this.OrganisationRedirectToAction("FinishSitePartnersFlow", "Site", new { siteId, workflow });
@@ -315,20 +315,20 @@ public class SitePartnersController : SiteControllerBase<SitePartnersWorkflowSta
 
     private async Task<SelectPartnerModel> GetSelectPartnerModel(string siteId, int? page, CancellationToken cancellationToken, SitePartnersWorkflowState? previousState = null)
     {
-        var sitePartnerDetails = await _mediator.Send(new GetSitePartnerDetailsQuery(siteId), cancellationToken);
-        var previousPagePartnerId = previousState != null ? GetPreviousPartnerId(previousState.Value, sitePartnerDetails) : null;
+        var site = await GetSiteDetails(siteId, cancellationToken);
+        var previousPagePartnerId = previousState != null ? GetPreviousPartnerId(previousState.Value, site) : null;
 
         var partners = await _mediator.Send(new GetConsortiumMembersQuery(new PaginationRequest(page ?? 1)), cancellationToken);
-        return new SelectPartnerModel(sitePartnerDetails.SiteId, sitePartnerDetails.SiteName, partners, previousPagePartnerId);
+        return new SelectPartnerModel(siteId, site.Name, partners, previousPagePartnerId);
     }
 
-    private string? GetPreviousPartnerId(SitePartnersWorkflowState state, SitePartnerDetailsModel model)
+    private string? GetPreviousPartnerId(SitePartnersWorkflowState state, SiteModel model)
     {
         return state switch
         {
-            SitePartnersWorkflowState.DevelopingPartnerConfirm => model.DevelopingPartnerId,
-            SitePartnersWorkflowState.OwnerOfTheLandConfirm => model.OwnerOfTheLandPartnerId,
-            SitePartnersWorkflowState.OwnerOfTheHomesConfirm => model.OwnerOfTheHomesPartnerId,
+            SitePartnersWorkflowState.DevelopingPartnerConfirm => model.DevelopingPartner?.OrganisationId,
+            SitePartnersWorkflowState.OwnerOfTheLandConfirm => model.OwnerOfTheLand?.OrganisationId,
+            SitePartnersWorkflowState.OwnerOfTheHomesConfirm => model.OwnerOfTheHomes?.OrganisationId,
             _ => throw new ArgumentOutOfRangeException($"Invalid {nameof(SitePartnersWorkflowState)} {state}"),
         };
     }
