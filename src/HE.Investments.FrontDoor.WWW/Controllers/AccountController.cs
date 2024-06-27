@@ -22,13 +22,13 @@ public class AccountController : Controller
     }
 
     [HttpGet]
-    public async Task<IActionResult> Index(CancellationToken cancellationToken)
+    public async Task<IActionResult> Index([FromRoute] string organisationId, CancellationToken cancellationToken)
     {
         if (await _featureManager.IsEnabledAsync(FeatureFlags.StayInCurrentApplication, cancellationToken))
         {
             return this.OrganisationRedirectToAction("Index", "Projects");
         }
 
-        return new RedirectResult(_accountConfig.Url);
+        return new RedirectResult($"{_accountConfig.Url}/{organisationId}/user-organisation");
     }
 }
