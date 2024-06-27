@@ -1014,7 +1014,7 @@ public class SiteController : SiteControllerBase<SiteWorkflowState>
     {
         var siteId = this.GetSiteIdFromRoute();
         var siteDetails = await GetSiteDetails(siteId.Value, cancellationToken);
-        var isEditable = (await _accountAccessContext.GetSelectedAccount()).CanEdit && siteDetails.Status != SiteStatus.Submitted;
+        var isEditable = (await _accountAccessContext.GetSelectedAccount()).CanEdit && !siteDetails.IsReadOnly;
         var sections = _siteSummaryViewModelFactory.CreateSiteSummary(siteDetails, Url, isEditable, useWorkflowRedirection);
 
         return new SiteSummaryViewModel(
