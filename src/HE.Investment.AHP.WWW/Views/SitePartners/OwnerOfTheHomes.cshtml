@@ -13,10 +13,14 @@
 
     var items = Model.ConsortiumMembers.ToSelectListViewModel(
         x => Url.OrganisationAction("OwnerOfTheHomesConfirm", "SitePartners", new { Model.SiteId, partnerId = x.Value, workflow }));
+
+    var backUrl = string.IsNullOrWhiteSpace(Model.PreviousPagePartnerId)
+        ? Url.OrganisationAction("OwnerOfTheLand", "SitePartners", new { siteId = this.GetSiteIdFromRoute() })
+        : Url.OrganisationAction("OwnerOfTheLandConfirm", "SitePartners", new { siteId = this.GetSiteIdFromRoute(), partnerId = Model.PreviousPagePartnerId });
 }
 
 <gds-div-grid-column-two-thirds>
-    <vc:ahp-workflow-back-button current-page="@SitePartnersWorkflowState.OwnerOfTheHomes"/>
+    <gds-back-link href="@backUrl" text="Back" class="govuk-!-margin-bottom-8"></gds-back-link>
     <vc:page-header title="@SharedPageTitles.OwnerOfTheHomes" caption="@Model.SiteName"/>
 
     @foreach (var paragraph in SharedParagraphs.OwnerOfTheHomes)
