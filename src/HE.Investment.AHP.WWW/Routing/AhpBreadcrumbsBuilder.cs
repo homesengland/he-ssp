@@ -67,7 +67,7 @@ public class AhpBreadcrumbsBuilder : BreadcrumbsBuilderBase
 
     private AhpBreadcrumbsBuilder WithHome()
     {
-        AddBreadcrumb("Home", nameof(HomeController.Index), GetControllerName(nameof(HomeController)), new { organisationId = _organisationId });
+        AddBreadcrumb("Home", nameof(HomeController.Index), GetControllerName(nameof(AccountController)), new { organisationId = _organisationId });
 
         return this;
     }
