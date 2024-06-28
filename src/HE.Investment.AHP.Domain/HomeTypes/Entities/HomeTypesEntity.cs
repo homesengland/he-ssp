@@ -112,7 +112,7 @@ public class HomeTypesEntity
 
             if (expectedNumberOfHomes.HasValue && _homeTypes.Sum(x => x.HomeInformation.NumberOfHomes?.Value ?? 0) > expectedNumberOfHomes)
             {
-                OperationResult.New().AddValidationError("HomeTypes", "You have added more homes than you told us about in your scheme. Remove home type types to match the numbers in your scheme").CheckErrors();
+                OperationResult.New().AddValidationError("HomeTypes", "Remove homes to match the numbers in your scheme").CheckErrors();
             }
 
             Status = _statusModificationTracker.Change(Status, SectionStatus.Completed);
