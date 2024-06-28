@@ -125,7 +125,7 @@ public class CompleteSectionTests
             .Throw<DomainValidationException>()
             .Which.OperationResult.GetAllErrors()
             .Should()
-            .Be("You have added more homes than you told us about in your scheme. Remove home type types to match the numbers in your scheme");
+            .Be("Remove homes to match the numbers in your scheme");
     }
 
     [Fact]
