@@ -26,14 +26,6 @@ namespace HE.CRM.Common.Repositories.implementations
                     <condition attribute=""invln_deliveryphaseid"" operator=""eq"" value=""" + deliveryPhaseId + @""" />
                       <condition attribute=""invln_application"" operator=""eq"" value=""" + applicationId + @""" />
                     </filter>
-                    <link-entity name=""invln_scheme"" from=""invln_schemeid"" to=""invln_application"">
-                          <filter>
-                            <condition attribute=""invln_organisationid"" operator=""eq"" value=""" + organisationId + @""" />
-                          </filter>
-                          <link-entity name=""contact"" from=""contactid"" to=""invln_contactid"">"
-                             + GenerateContactFilter(externaluserId) +
-                          @"</link-entity>
-                        </link-entity>
                   </entity>
                 </fetch>";
             EntityCollection result = service.RetrieveMultiple(new FetchExpression(fetchXml));
@@ -49,13 +41,7 @@ namespace HE.CRM.Common.Repositories.implementations
                       <condition attribute=""invln_application"" operator=""eq"" value=""" + applicationId + @""" />
                     </filter>
                     <link-entity name=""invln_scheme"" from=""invln_schemeid"" to=""invln_application"">
-                          <filter>
-                            <condition attribute=""invln_organisationid"" operator=""eq"" value=""" + organisationId + @""" />
-                          </filter>
-                          <link-entity name=""contact"" from=""contactid"" to=""invln_contactid"">"
-                             + GenerateContactFilter(externaluserId) +
-                          @"</link-entity>
-                        </link-entity>
+                    </link-entity>
                   </entity>
                 </fetch>";
             EntityCollection result = service.RetrieveMultiple(new FetchExpression(fetchXml));
@@ -75,7 +61,8 @@ namespace HE.CRM.Common.Repositories.implementations
             }
         }
 
-        public List<invln_DeliveryPhase> GetDeliveryPhasesRequiresAdditionalPaymentsForApplication(Guid applicationId) {
+        public List<invln_DeliveryPhase> GetDeliveryPhasesRequiresAdditionalPaymentsForApplication(Guid applicationId)
+        {
 
             var query_invln_urbrequestingearlymilestonepayments = true;
             var query_invln_application = applicationId.ToString();
@@ -90,9 +77,6 @@ namespace HE.CRM.Common.Repositories.implementations
 
             return service.RetrieveMultiple(query).Entities.Select(x => x.ToEntity<invln_DeliveryPhase>()).ToList();
         }
-
-
-
 
         private string GenerateContactFilter(string userId)
         {
