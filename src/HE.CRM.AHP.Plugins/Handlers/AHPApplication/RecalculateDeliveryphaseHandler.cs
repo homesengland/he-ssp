@@ -45,7 +45,7 @@ namespace HE.CRM.AHP.Plugins.Handlers.AHPApplication
 
             foreach (var deliveryphase in deliveryPhases)
             {
-                CrmServicesFactory.Get<IDeliveryPhaseService>().CalculateFunding(CurrentState, deliveryphase, milestones, deliveryphase);
+                CrmServicesFactory.Get<IDeliveryPhaseService>().CalculateFunding(CurrentState, deliveryphase, milestones, false, deliveryphase);
                 _deliveryPhaseRepository.Update(deliveryphase);
             }
             ExecutionData.Target.invln_lastexternalmodificationon = DateTime.UtcNow;
