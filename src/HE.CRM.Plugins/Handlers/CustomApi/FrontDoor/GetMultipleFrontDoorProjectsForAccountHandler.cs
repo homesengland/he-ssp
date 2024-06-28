@@ -42,7 +42,7 @@ namespace HE.CRM.Plugins.Handlers.CustomApi.FrontDoor
             if (FeatureFlags.UseNewFrontDoorApiManagement)
             { // New frontdoor apim
                 var service = CrmServicesFactory.Get<FrontDoorProjectV2.IFrontDoorProjectService>();
-                frontDoorProjectsDtoList = service.GetFrontDoorProjects(organisationIdGuid);
+                frontDoorProjectsDtoList = service.GetFrontDoorProjects(organisationIdGuid, ExternalContactId);
                 Logger.Trace($"FrontDoor projects contains {frontDoorProjectsDtoList.Count} records.");
             }
             else

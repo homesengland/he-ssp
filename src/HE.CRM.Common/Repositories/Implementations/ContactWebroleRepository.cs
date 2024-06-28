@@ -58,5 +58,29 @@ namespace HE.CRM.Common.Repositories.Implementations
 
             return service.RetrieveMultiple(query).Entities.Select(x => x.ToEntity<invln_contactwebrole>()).ToList();
         }
+
+        public List<invln_contactwebrole> GetListOfUsersWithoutLimitedRole(string organizationId)
+        {
+            var query_invln_accountid = organizationId;
+            var webroleid_invln_name = "Limited user";
+
+            var query = new QueryExpression(invln_contactwebrole.EntityLogicalName);
+            query.ColumnSet.AddColumns(invln_contactwebrole.Fields.invln_Accountid, invln_contactwebrole.Fields.invln_Contactid);
+            query.Criteria.AddCondition(invln_contactwebrole.Fields.invln_Accountid, ConditionOperator.Equal, query_invln_accountid);
+            var webroleid = query.AddLink(
+                invln_Webrole.EntityLogicalName,
+                invln_contactwebrole.Fields.invln_Webroleid,
+                invln_Webrole.Fields.invln_WebroleId);
+            webroleid.EntityAlias = "webroleid";
+            webroleid.Columns.AddColumn(invln_Webrole.Fields.invln_Name);
+            webroleid.LinkCriteria.AddCondition(invln_Webrole.Fields.invln_Name, ConditionOperator.NotEqual, webroleid_invln_name);
+            var contactid = query.AddLink(Contact.EntityLogicalName, invln_contactwebrole.Fields.invln_Contactid, Contact.Fields.ContactId);
+            contactid.EntityAlias = "contactid";
+            contactid.Columns.AddColumn(Contact.Fields.invln_externalid);
+
+            return service.RetrieveMultiple(query).Entities.Select(x => x.ToEntity<invln_contactwebrole>()).ToList();
+        }
+
+
     }
 }

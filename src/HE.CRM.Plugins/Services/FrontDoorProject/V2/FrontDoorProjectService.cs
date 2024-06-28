@@ -32,6 +32,8 @@ namespace HE.CRM.Plugins.Services.FrontDoorProject.V2
         private readonly IGetProjectsResponseMapperService _getProjectsResponseMapperService;
         private readonly IGetProjectResponseMapperService _getProjectResponseMapperService;
 
+        private readonly IContactWebroleRepository _contactWebroleRepository;
+
         #endregion
 
         #region Constructors
@@ -54,6 +56,8 @@ namespace HE.CRM.Plugins.Services.FrontDoorProject.V2
 
             _getProjectsResponseMapperService = getProjectsResponseMapperService;
             _getProjectResponseMapperService = getProjectResponseMapperService;
+
+            _contactWebroleRepository = CrmRepositoriesFactory.Get<IContactWebroleRepository>();
         }
         #endregion
 
@@ -165,6 +169,28 @@ namespace HE.CRM.Plugins.Services.FrontDoorProject.V2
             {
                 var currentUser = _contactRepository.GetContactViaExternalId(externalContactId, new string[] { Contact.Fields.Id });
                 projects = projects.Where(x => x.PortalOwnerId == currentUser.Id);
+                Logger.Trace($"Projects count : {projects.Count()}");
+            }
+
+            if (string.IsNullOrWhiteSpace(externalContactId))
+            {
+                Logger.Trace("Excluding records from the list, which are for a Limited User.");
+                Logger.Trace($"Projects count : {projects.Count()}");
+                var filteredProjects = new List<GetProjectResponse>();
+
+                var webroleList = _contactWebroleRepository.GetListOfUsersWithoutLimitedRole(organisationId.ToString());
+                Logger.Trace($"WebroleList count : {webroleList.Count}");
+                var webroleDict = webroleList.ToDictionary(k => k.invln_Contactid.Id);
+
+                foreach (var projectResponse in projects)
+                {
+                    if (webroleDict.ContainsKey(projectResponse.PortalOwnerId))
+                    {
+                        filteredProjects.Add(projectResponse);
+                    }
+                }
+                Logger.Trace($"Filtered Projects count : {filteredProjects.Count()}");
+                projects = filteredProjects;
             }
 
             var myProjects = new GetProjectsResponse();
