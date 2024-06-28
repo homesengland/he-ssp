@@ -248,7 +248,9 @@ public class SiteEntity : DomainEntity, IQuestion
 
     public bool CanBeEdited(IList<ApplicationBasicDetails> applications)
     {
-        return applications.All(application => application.Status is ApplicationStatus.Draft or ApplicationStatus.ReferredBackToApplicant);
+        return applications.All(application =>
+            application.Status is ApplicationStatus.Draft or ApplicationStatus.ReferredBackToApplicant or ApplicationStatus.Withdrawn
+                or ApplicationStatus.Deleted);
     }
 
     public void Complete(IsSectionCompleted isSectionCompleted)
