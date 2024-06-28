@@ -15,8 +15,10 @@ public class CanBeEditedTests
         // given
         var applications = new List<ApplicationBasicDetails>
         {
-            ApplicationBasicDetailsBuilder.New().WithName("First application").WithStatus(ApplicationStatus.Draft).Build(),
-            ApplicationBasicDetailsBuilder.New().WithName("Second application").WithStatus(ApplicationStatus.ReferredBackToApplicant).Build(),
+            ApplicationBasicDetailsBuilder.New().WithStatus(ApplicationStatus.Draft).Build(),
+            ApplicationBasicDetailsBuilder.New().WithStatus(ApplicationStatus.ReferredBackToApplicant).Build(),
+            ApplicationBasicDetailsBuilder.New().WithStatus(ApplicationStatus.Withdrawn).Build(),
+            ApplicationBasicDetailsBuilder.New().WithStatus(ApplicationStatus.Deleted).Build(),
         };
         var siteEntity = SiteEntityBuilder.New().WithStatus(SiteStatus.Submitted).Build();
 
@@ -33,8 +35,12 @@ public class CanBeEditedTests
         // given
         var applications = new List<ApplicationBasicDetails>
         {
-            ApplicationBasicDetailsBuilder.New().WithName("First application").WithStatus(ApplicationStatus.Draft).Build(),
-            ApplicationBasicDetailsBuilder.New().WithName("Second application").WithStatus(ApplicationStatus.ApplicationSubmitted).Build(),
+            ApplicationBasicDetailsBuilder.New().WithStatus(ApplicationStatus.Draft).Build(),
+            ApplicationBasicDetailsBuilder.New().WithStatus(ApplicationStatus.Draft).Build(),
+            ApplicationBasicDetailsBuilder.New().WithStatus(ApplicationStatus.ReferredBackToApplicant).Build(),
+            ApplicationBasicDetailsBuilder.New().WithStatus(ApplicationStatus.Withdrawn).Build(),
+            ApplicationBasicDetailsBuilder.New().WithStatus(ApplicationStatus.Deleted).Build(),
+            ApplicationBasicDetailsBuilder.New().WithStatus(ApplicationStatus.ApplicationSubmitted).Build(),
         };
         var siteEntity = SiteEntityBuilder.New().WithStatus(SiteStatus.Submitted).Build();
 
