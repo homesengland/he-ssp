@@ -19,10 +19,9 @@
                                   title="@HomeTypesPageTitles.RevenueFunding"/>
 
         <gds-field-set class="govuk-!-margin-bottom-6">
-            <span class="govuk-caption-m govuk-!-margin-bottom-6">Select all that apply.</span>
-            <vc:form-hidden-label
-                field-name="Sources"
-                title="Revenue funding sources"/>
+            <legend>
+                <span class="govuk-caption-m govuk-!-margin-bottom-6">Select all that apply.</span>
+            </legend>
             <gds-checkbox class="exclusive-checkbox-group"
                           govuk-formgroup-asp-for="@Model.Sources"
                           asp-selectlistitems="HomeTypesFormOptions.RevenueFundingSourceTypes"
