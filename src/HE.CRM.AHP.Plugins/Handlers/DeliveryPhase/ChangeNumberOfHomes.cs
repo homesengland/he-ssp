@@ -24,14 +24,16 @@ namespace HE.CRM.AHP.Plugins.Handlers.DeliveryPhase
         public override bool CanWork()
         {
             return ValueChanged(invln_DeliveryPhase.Fields.invln_NoofHomes) || ValueChanged(invln_DeliveryPhase.Fields.invln_buildactivitytype)
-                || ValueChanged(invln_DeliveryPhase.Fields.invln_rehabactivitytype) || ValueChanged(invln_DeliveryPhase.Fields.invln_nbrh);
+                || ValueChanged(invln_DeliveryPhase.Fields.invln_rehabactivitytype) || ValueChanged(invln_DeliveryPhase.Fields.invln_nbrh)
+                || ValueChanged(invln_DeliveryPhase.Fields.StatusCode);
         }
 
         public override void DoWork()
         {
+            var resetMilestone = CurrentState.StatusCode.Value == (int)invln_DeliveryPhase_StatusCode.RejectedAdjustment;
             var application = _applicationRepository.GetById(CurrentState.invln_Application.Id);
             var milestoneframeworks = _milestoneFrameworkRepository.GetMilestoneFrameworkItemByProgrammeId(application.invln_programmelookup.Id.ToString());
-            CrmServicesFactory.Get<IDeliveryPhaseService>().CalculateFunding(application, CurrentState, milestoneframeworks, ExecutionData.Target);
+            CrmServicesFactory.Get<IDeliveryPhaseService>().CalculateFunding(application, CurrentState, milestoneframeworks, resetMilestone, ExecutionData.Target);
         }
     }
 }

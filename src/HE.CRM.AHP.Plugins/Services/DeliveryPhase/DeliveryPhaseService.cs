@@ -153,7 +153,7 @@ namespace HE.CRM.AHP.Plugins.Services.DeliveryPhase
             return Guid.Empty;
         }
 
-        public void CalculateFunding(invln_scheme application, invln_DeliveryPhase deliveryPhaseMapped, List<invln_milestoneframeworkitem> milestones, invln_DeliveryPhase deliveryPhaseToUpdateOrCreate = null)
+        public void CalculateFunding(invln_scheme application, invln_DeliveryPhase deliveryPhaseMapped, List<invln_milestoneframeworkitem> milestones, bool resetMilestone, invln_DeliveryPhase deliveryPhaseToUpdateOrCreate = null)
         {
             TracingService.Trace($"Calculation");
             if (milestones.Count == 0)
@@ -196,19 +196,21 @@ namespace HE.CRM.AHP.Plugins.Services.DeliveryPhase
             }
             else
             {
-                if (deliveryPhaseMapped.invln_AcquisitionPercentageValue != null)
+                if (!resetMilestone)
                 {
-                    acquisitionPercentageValue = deliveryPhaseMapped.invln_AcquisitionPercentageValue == acquisitionPercentageValue ? acquisitionPercentageValue : deliveryPhaseMapped.invln_AcquisitionPercentageValue.Value;
+                    if (deliveryPhaseMapped.invln_AcquisitionPercentageValue != null)
+                    {
+                        acquisitionPercentageValue = deliveryPhaseMapped.invln_AcquisitionPercentageValue == acquisitionPercentageValue ? acquisitionPercentageValue : deliveryPhaseMapped.invln_AcquisitionPercentageValue.Value;
+                    }
+                    if (deliveryPhaseMapped.invln_StartOnSitePercentageValue != null)
+                    {
+                        startOnSitePercentageValue = deliveryPhaseMapped.invln_StartOnSitePercentageValue == startOnSitePercentageValue ? startOnSitePercentageValue : deliveryPhaseMapped.invln_StartOnSitePercentageValue.Value;
+                    }
+                    if (deliveryPhaseMapped.invln_CompletionPercentageValue != null)
+                    {
+                        completionPercentageValue = deliveryPhaseMapped.invln_CompletionPercentageValue == completionPercentageValue ? completionPercentageValue : deliveryPhaseMapped.invln_CompletionPercentageValue.Value;
+                    }
                 }
-                if (deliveryPhaseMapped.invln_StartOnSitePercentageValue != null)
-                {
-                    startOnSitePercentageValue = deliveryPhaseMapped.invln_StartOnSitePercentageValue == startOnSitePercentageValue ? startOnSitePercentageValue : deliveryPhaseMapped.invln_StartOnSitePercentageValue.Value;
-                }
-                if (deliveryPhaseMapped.invln_CompletionPercentageValue != null)
-                {
-                    completionPercentageValue = deliveryPhaseMapped.invln_CompletionPercentageValue == completionPercentageValue ? completionPercentageValue : deliveryPhaseMapped.invln_CompletionPercentageValue.Value;
-                }
-
             }
             if (deliveryPhaseToUpdateOrCreate == null)
             {
