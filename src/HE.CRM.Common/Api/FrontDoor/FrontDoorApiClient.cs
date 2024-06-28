@@ -1,8 +1,6 @@
 using System;
 using System.Linq;
 using System.Net.Http;
-using System.Security.Policy;
-using System.Threading;
 using HE.Base.Services;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.CRM.Common.Api.Auth;
@@ -38,12 +36,19 @@ namespace HE.CRM.Common.Api.FrontDoor
                 ProjectName = projectName,
             };
 
-            var response = _httpClient.Send<CheckProjectExistsRequest, CheckProjectExistsResponse>(
-                request,
-                FrontDoorApiUrls.CheckProjectExists,
-                HttpMethod.Post);
+            try
+            {
+                var response = _httpClient.Send<CheckProjectExistsRequest, CheckProjectExistsResponse>(
+                    request,
+                    FrontDoorApiUrls.CheckProjectExists,
+                    HttpMethod.Post);
 
-            return response.Result;
+                return response.Result;
+            }
+            catch (ApiException apiEx)
+            {
+                throw new InvalidPluginExecutionException(apiEx.Message);
+            }
         }
 
         public string DeactivateProject(Guid projectId)
@@ -52,12 +57,19 @@ namespace HE.CRM.Common.Api.FrontDoor
 
             var request = new DeactivateProjectRequest { ProjectRecordId = projectId };
 
-            var response = _httpClient.Send<DeactivateProjectRequest, DeactivateProjectResponse>(
-                request,
-                FrontDoorApiUrls.DeactivateProject,
-                HttpMethod.Post);
+            try
+            {
+                var response = _httpClient.Send<DeactivateProjectRequest, DeactivateProjectResponse>(
+                    request,
+                    FrontDoorApiUrls.DeactivateProject,
+                    HttpMethod.Post);
 
-            return response.Result;
+                return response.Result;
+            }
+            catch (ApiException apiEx)
+            {
+                throw new InvalidPluginExecutionException(apiEx.Message);
+            }
         }
 
         public void RemoveSite(Guid siteId)
@@ -66,10 +78,17 @@ namespace HE.CRM.Common.Api.FrontDoor
 
             var request = new RemoveSiteRequest { ProjectSiteRecordId = siteId };
 
-            _httpClient.Send<RemoveSiteRequest, RemoveSiteResponse>(
-                request,
-                FrontDoorApiUrls.RemoveSite,
-                HttpMethod.Post);
+            try
+            {
+                _httpClient.Send<RemoveSiteRequest, RemoveSiteResponse>(
+                    request,
+                    FrontDoorApiUrls.RemoveSite,
+                    HttpMethod.Post);
+            }
+            catch (ApiException apiEx)
+            {
+                throw new InvalidPluginExecutionException(apiEx.Message);
+            }
         }
 
         public GetProjectsResponse GetProjects(Guid organisationId)
@@ -147,6 +166,7 @@ namespace HE.CRM.Common.Api.FrontDoor
         public SaveProjectResponse SaveProject(FrontDoorProjectDto dto, Guid userId)
         {
             Logger.Trace("FrontDoorApiClient.SaveProject");
+
             try
             {
                 var request = SaveProjectRequestMapper.Map(dto, userId);
@@ -166,6 +186,7 @@ namespace HE.CRM.Common.Api.FrontDoor
         public SaveSiteResponse SaveSite(FrontDoorProjectSiteDto dto, Guid projectId)
         {
             Logger.Trace("FrontDoorApiClient.SaveSite");
+
             try
             {
                 var request = SaveSiteRequestMapper.Map(dto, projectId);
