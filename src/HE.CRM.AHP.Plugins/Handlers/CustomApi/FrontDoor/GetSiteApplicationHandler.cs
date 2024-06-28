@@ -105,27 +105,13 @@ namespace HE.CRM.AHP.Plugins.Handlers.CustomApi.FrontDoor
                 var webroleDict = webroleList.ToDictionary(k => k.invln_Contactid);
                 foreach (var ap in applicationn)
                 {
-                    if (webroleDict.ContainsKey(app.invln_contactid) ||
+                    if (webroleDict.ContainsKey(ap.invln_contactid) ||
                         _consortiumService.CheckAccess(ConsortiumService.Operation.Get, ConsortiumService.RecordType.Application,
                             contact.invln_externalid, null, ap.Id.ToString(), consortiumId, OrganizationId, null))
                     {
                         filteredApplication.Add(ap);
                     }
                 }
-                var applicationn = new List<invln_scheme>
-                    {
-                        app
-                    };
-                var applicationsDict = applicationn.ToDictionary(k => k.invln_contactid);
-                var webroleList = _contactWebroleRepository.GetListOfUsersWithoutLimitedRole(OrganizationId);
-                TracingService.Trace($"WebroleList count : {webroleList.Count}");
-                var webroleDict = webroleList.ToDictionary(k => k.invln_Contactid);
-                var d1 = applicationsDict
-                    .Where(x => webroleDict.ContainsKey(x.Key) ||
-                    _consortiumService.CheckAccess(ConsortiumService.Operation.Get, ConsortiumService.RecordType.Application,
-                    contact.invln_externalid, null, x.Value.Id.ToString(), consortiumId, OrganizationId, null))
-                    .ToDictionary(x => x.Key, x => x.Value);
-                filteredApplication.AddRange(d1.Values.ToList());
             }
             var siteApplicationDto = SiteApplicationMapper.MapRegularEntityToDto(site, filteredApplication);
             ExecutionData.SetOutputParameter(invln_getsiteapplicationsResponse.Fields.invln_siteapplication, JsonSerializer.Serialize(siteApplicationDto));
