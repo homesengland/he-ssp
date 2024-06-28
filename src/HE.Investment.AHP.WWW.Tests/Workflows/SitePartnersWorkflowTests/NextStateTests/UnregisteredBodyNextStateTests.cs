@@ -25,7 +25,7 @@ public class UnregisteredBodyNextStateTests
     }
 
     [Theory]
-    [InlineData(SitePartnersWorkflowState.FlowFinished, SitePartnersWorkflowState.UnregisteredBodySearch)]
+    [InlineData(SitePartnersWorkflowState.FlowFinished, SitePartnersWorkflowState.UnregisteredBodyConfirm)]
     [InlineData(SitePartnersWorkflowState.UnregisteredBodyConfirm, SitePartnersWorkflowState.UnregisteredBodySearch)]
     [InlineData(SitePartnersWorkflowState.UnregisteredBodyCreateManual, SitePartnersWorkflowState.UnregisteredBodySearch)]
     [InlineData(SitePartnersWorkflowState.UnregisteredBodySearchNoResults, SitePartnersWorkflowState.UnregisteredBodySearch)]

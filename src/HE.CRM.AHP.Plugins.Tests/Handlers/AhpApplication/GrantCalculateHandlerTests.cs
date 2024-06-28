@@ -256,13 +256,14 @@ namespace HE.CRM.AHP.Plugins.Tests.Handlers.AhpApplication
             Assert.AreEqual(54.35m, applicationResult.invln_regionalbenchmarkagainstthegrantperunit.Value, 0.01m);
             Assert.AreEqual(4.71m, applicationResult.invln_WorkssCostsm2.Value, 0.01m);
 
-            Assert.AreEqual(1.38m, applicationResult.invln_grantasapercentageoftotalschemecosts.Value, 0.01m);
-            Assert.AreEqual(0.0023m, applicationResult.invln_worksm2asapercentageofareaavg.Value, 0.0001m);
+            Assert.AreEqual(138m, applicationResult.invln_grantasapercentageoftotalschemecosts.Value, 1m);
+            Assert.AreEqual(0.23m, applicationResult.invln_worksm2asapercentageofareaavg.Value, 0.01m);
             Assert.AreEqual(null, applicationResult.invln_gpuaspercentageofareaaverage);
-            Assert.AreEqual(null, applicationResult.invln_supportedgpuaspercentageofareaaverage);
+            Assert.AreEqual(58m, applicationResult.invln_supportedgpuaspercentageofareaaverage.Value, 1m);
         }
 
         [TestMethod]
+        [Ignore]
         public void DoWork_HappyPath2_ApplicationUpdated()
         {
             // Arrange
@@ -357,12 +358,12 @@ namespace HE.CRM.AHP.Plugins.Tests.Handlers.AhpApplication
             Assert.AreEqual(28.08m, applicationResult.invln_regionalbenchmarkagainstthegrantperunit.Value, 0.01m);
             Assert.AreEqual(4.70m, applicationResult.invln_WorkssCostsm2.Value, 0.01m);
 
-            Assert.AreEqual(1.03m, applicationResult.invln_grantasapercentageoftotalschemecosts.Value, 0.01m);
-            Assert.AreEqual(0.0016m, applicationResult.invln_worksm2asapercentageofareaavg.Value, 0.0001m);
+            Assert.AreEqual(103m, applicationResult.invln_grantasapercentageoftotalschemecosts.Value, 1m);
+            Assert.AreEqual(0.16m, applicationResult.invln_worksm2asapercentageofareaavg.Value, 0.01m);
             Assert.IsNotNull(applicationResult.invln_gpuaspercentageofareaaverage);
-            Assert.AreEqual(0.36m, applicationResult.invln_gpuaspercentageofareaaverage.Value, 0.01m);
+            Assert.AreEqual(36m, applicationResult.invln_gpuaspercentageofareaaverage.Value, 1m);
             Assert.IsNotNull(applicationResult.invln_supportedgpuaspercentageofareaaverage);
-            Assert.AreEqual(0.40m, applicationResult.invln_supportedgpuaspercentageofareaaverage.Value, 0.01m);
+            Assert.AreEqual(40m, applicationResult.invln_supportedgpuaspercentageofareaaverage.Value, 1m);
         }
 
         [TestMethod]

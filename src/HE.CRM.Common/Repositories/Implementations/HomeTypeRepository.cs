@@ -39,14 +39,6 @@ namespace HE.CRM.Common.Repositories.Implementations
                     <condition attribute=""invln_hometypeid"" operator=""eq"" value=""" + homeTypeId + @""" />
                       <condition attribute=""invln_application"" operator=""eq"" value=""" + applicationId + @""" />
                     </filter>
-                    <link-entity name=""invln_scheme"" from=""invln_schemeid"" to=""invln_application"">
-                          <filter>
-                            <condition attribute=""invln_organisationid"" operator=""eq"" value=""" + organisationId + @""" />
-                          </filter>
-                          <link-entity name=""contact"" from=""contactid"" to=""invln_contactid"">"
-                             + GenerateContactFilter(userId) +
-                          @"</link-entity>
-                        </link-entity>
                   </entity>
                 </fetch>";
             EntityCollection result = service.RetrieveMultiple(new FetchExpression(fetchXml));
@@ -61,14 +53,6 @@ namespace HE.CRM.Common.Repositories.Implementations
                     @"<filter>
                       <condition attribute=""invln_application"" operator=""eq"" value=""" + applicationId + @""" />
                     </filter>
-                    <link-entity name=""invln_scheme"" from=""invln_schemeid"" to=""invln_application"">
-                          <filter>
-                            <condition attribute=""invln_organisationid"" operator=""eq"" value=""" + organisationId + @""" />
-                          </filter>
-                          <link-entity name=""contact"" from=""contactid"" to=""invln_contactid"">"
-                             + GenerateContactFilter(userId) +
-                          @"</link-entity>
-                        </link-entity>
                   </entity>
                 </fetch>";
             EntityCollection result = service.RetrieveMultiple(new FetchExpression(fetchXml));

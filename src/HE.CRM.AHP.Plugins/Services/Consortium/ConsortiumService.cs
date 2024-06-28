@@ -83,7 +83,7 @@ namespace HE.CRM.AHP.Plugins.Services.Consortium
                         TracingService.Trace("Check Access to Application");
                         var application = _ahpApplicationRepository.GetById(new Guid(applicationId),
                             new string[] {invln_scheme.Fields.invln_DevelopingPartner, invln_scheme.Fields.invln_OwneroftheHomes,
-                                            invln_scheme.Fields.invln_OwneroftheLand, invln_scheme.Fields.invln_Site});
+                                            invln_scheme.Fields.invln_OwneroftheLand, invln_scheme.Fields.invln_Site, invln_scheme.Fields.invln_ExternalStatus});
 
                         isSitePartner = IsOrganizationSitePartner(application.invln_Site.Id.ToString(), organizationId);
                         if (isSitePartner)
@@ -142,6 +142,9 @@ namespace HE.CRM.AHP.Plugins.Services.Consortium
 
         private bool IsApplicationPartner(invln_scheme application, string organizationId)
         {
+            if (application.invln_ExternalStatus.Value == (int)invln_ExternalStatusAHP.Deleted)
+                return false;
+
             if (application.invln_DevelopingPartner != null &&
                 application.invln_DevelopingPartner.Id == new Guid(organizationId))
             {
@@ -229,24 +232,62 @@ namespace HE.CRM.AHP.Plugins.Services.Consortium
 
         private bool HasUserHavePermissionToProvideOperation(Operation operation, int role, string siteId = null, string applicationId = null, EntityReference contactId = null, string ahpProject = null, string organizationId = null)
         {
+
             TracingService.Trace($"Role: {role}");
 
             if (role == (int)invln_Permission.Admin)
             {
                 TracingService.Trace("Admin Role");
-                var ahpProjects = _ahpProjectRepository.GetByAttribute(invln_ahpproject.Fields.invln_ContactId, contactId.Id).ToList();
-                if (ahpProjects != null)
+                if (!string.IsNullOrEmpty(ahpProject))
                 {
-                    return ahpProjects.Any(x => x.invln_ContactId != null && x.invln_ContactId.Id == contactId.Id);
+                    var ahpProjects = _ahpProjectRepository.GetById(new Guid(ahpProject));
+                    if (ahpProjects != null && ahpProjects.invln_ContactId != null)
+                    {
+                        TracingService.Trace($"{ahpProjects.invln_ContactId.ToString()}");
+                        return ahpProjects.invln_ContactId.Equals(contactId);
+                        return true;
+                    }
+                    else
+                    {
+                        TracingService.Trace("Admin Role");
+                        return false;
+                    }
                 }
+
+                if (!string.IsNullOrEmpty(applicationId))
+                {
+                    var application = _ahpApplicationRepository.GetById(new Guid(applicationId), invln_scheme.Fields.invln_contactid);
+                    if (application.invln_contactid.Equals(contactId))
+                        return true;
+                }
+
+                if (siteId != null)
+                {
+                    var site = _siteRepository.GetById(new Guid(siteId));
+                    if (site.invln_CreatedByContactId != null)
+                    {
+                        if (site.invln_CreatedByContactId.Equals(contactId))
+                        {
+                            return true;
+                        }
+                    }
+                }
+
             }
             if (role == (int)invln_Permission.Enhanced)
             {
                 TracingService.Trace("Enhanced Role");
-                var ahpProjects = _ahpProjectRepository.GetByAttribute(invln_ahpproject.Fields.invln_ContactId, contactId.Id).ToList();
-                if (ahpProjects != null)
+                if (!string.IsNullOrEmpty(ahpProject))
                 {
-                    return ahpProjects.Any(x => x.invln_AccountId != null && x.invln_AccountId.Id == contactId.Id);
+                    var ahpProjects = _ahpProjectRepository.GetById(new Guid(ahpProject));
+                    if (ahpProjects != null)
+                    {
+                        return ahpProjects.invln_ContactId.Equals(contactId);
+                    }
+                    else
+                    {
+                        return false;
+                    }
                 }
             }
             if (role == (int)invln_Permission.Inputonly && operation != Operation.Submit)

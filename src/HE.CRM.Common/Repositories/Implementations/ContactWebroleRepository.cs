@@ -80,7 +80,5 @@ namespace HE.CRM.Common.Repositories.Implementations
 
             return service.RetrieveMultiple(query).Entities.Select(x => x.ToEntity<invln_contactwebrole>()).ToList();
         }
-
-
     }
 }

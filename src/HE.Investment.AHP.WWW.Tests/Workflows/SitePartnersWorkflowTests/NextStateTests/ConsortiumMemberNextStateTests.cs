@@ -45,4 +45,20 @@ public class ConsortiumMemberNextStateTests
         // then
         result.Should().Be(expectedState);
     }
+
+    [Theory]
+    [InlineData(SitePartnersWorkflowState.FlowFinished, SitePartnersWorkflowState.OwnerOfTheHomesConfirm)]
+    [InlineData(SitePartnersWorkflowState.OwnerOfTheHomes, SitePartnersWorkflowState.OwnerOfTheLandConfirm)]
+    [InlineData(SitePartnersWorkflowState.OwnerOfTheLand, SitePartnersWorkflowState.DevelopingPartnerConfirm)]
+    public async Task ShouldReturnNextState_WhenBackTriggerIsExecutedAndSitePartnerDetailsAreProvided(SitePartnersWorkflowState currentState, SitePartnersWorkflowState expectedState)
+    {
+        // given
+        var testCandidate = new SitePartnersWorkflowBuilder(currentState).WithIsConsortiumMember().WithPartners().Build();
+
+        // when
+        var result = await testCandidate.NextState(Trigger.Back);
+
+        // then
+        result.Should().Be(expectedState);
+    }
 }

@@ -15,10 +15,14 @@ public abstract class TheRequiredDecimalValueObject : ValueObject
         decimal minValue = decimal.MinValue,
         decimal maxValue = decimal.MaxValue,
         int precision = 2,
-        MessageOptions options = MessageOptions.None)
+        MessageOptions options = MessageOptions.None,
+        bool defaultErrorMessage = true)
     {
         var isMoney = options.HasFlag(MessageOptions.Money);
         var example = BuildExample(options, precision);
+        var precisionErrorMessage = defaultErrorMessage
+            ? ValidationErrorMessage.MustIncludeThePrecision(displayName, precision, example)
+            : ValidationErrorMessage.MustNotIncludeMoreThanThePrecision(displayName, precision, example);
 
         Value = NumberParser.TryParseDecimal(value, minValue, maxValue, precision, out var parsedValue) switch
         {
@@ -26,7 +30,7 @@ public abstract class TheRequiredDecimalValueObject : ValueObject
             NumberParseResult.ValueNotANumber => ThrowValidationError(fieldName, ValidationErrorMessage.MustBeTheNumber(displayName, example)),
             NumberParseResult.ValueInvalidPrecision => ThrowValidationError(
                 fieldName,
-                isMoney ? ValidationErrorMessage.MustIncludeThePence(displayName, example) : ValidationErrorMessage.MustIncludeThePrecision(displayName, precision, example)),
+                isMoney ? ValidationErrorMessage.MustIncludeThePence(displayName, example) : precisionErrorMessage),
             NumberParseResult.ValueTooHigh => ThrowValidationError(fieldName, ValidationErrorMessage.MustProvideTheLowerNumber(displayName, maxValue)),
             NumberParseResult.ValueTooLow => ThrowValidationError(fieldName, ValidationErrorMessage.MustProvideTheHigherNumber(displayName, minValue)),
             NumberParseResult.SuccessfullyParsed => parsedValue!.Value,

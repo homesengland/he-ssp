@@ -37,6 +37,9 @@ namespace HE.CRM.Common.Repositories.Implementations
             var fetchXml =
             @"<fetch>
 	            <entity name=""invln_programme"">
+                    <filter>
+                      <condition attribute=""statecode"" operator=""eq"" value=""0"" />
+                    </filter>
 	            </entity>
             </fetch>";
 

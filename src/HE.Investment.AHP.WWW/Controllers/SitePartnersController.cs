@@ -1,6 +1,7 @@
 using HE.Investment.AHP.Contract.Common.Queries;
 using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Contract.Site.Commands;
+using HE.Investment.AHP.Contract.Site.Queries;
 using HE.Investment.AHP.Contract.SitePartners;
 using HE.Investment.AHP.WWW.Extensions;
 using HE.Investment.AHP.WWW.Models.Common;
@@ -36,9 +37,9 @@ public class SitePartnersController : SiteControllerBase<SitePartnersWorkflowSta
 
     [ConsortiumAuthorize]
     [HttpGet("{siteId}/back")]
-    public async Task<IActionResult> Back([FromRoute] string siteId, SitePartnersWorkflowState currentPage)
+    public async Task<IActionResult> Back([FromRoute] string siteId, SitePartnersWorkflowState currentPage, string partnerId)
     {
-        return await Back(currentPage, new { siteId, isBack = true });
+        return await Back(currentPage, new { siteId, partnerId, isBack = true });
     }
 
     [HttpGet("{siteId}/start")]
@@ -93,7 +94,7 @@ public class SitePartnersController : SiteControllerBase<SitePartnersWorkflowSta
     [WorkflowState(SitePartnersWorkflowState.OwnerOfTheLand)]
     public async Task<IActionResult> OwnerOfTheLand([FromRoute] string siteId, [FromQuery] int? page, CancellationToken cancellationToken)
     {
-        return View(await GetSelectPartnerModel(siteId, page, cancellationToken));
+        return View(await GetSelectPartnerModel(siteId, page, cancellationToken, SitePartnersWorkflowState.DevelopingPartnerConfirm));
     }
 
     [HttpGet("{siteId}/owner-of-the-land-confirm/{partnerId}")]
@@ -132,7 +133,7 @@ public class SitePartnersController : SiteControllerBase<SitePartnersWorkflowSta
     [WorkflowState(SitePartnersWorkflowState.OwnerOfTheHomes)]
     public async Task<IActionResult> OwnerOfTheHomes([FromRoute] string siteId, [FromQuery] int? page, CancellationToken cancellationToken)
     {
-        return View(await GetSelectPartnerModel(siteId, page, cancellationToken));
+        return View(await GetSelectPartnerModel(siteId, page, cancellationToken, SitePartnersWorkflowState.OwnerOfTheLandConfirm));
     }
 
     [HttpGet("{siteId}/owner-of-the-homes-confirm/{partnerId}")]
@@ -256,7 +257,7 @@ public class SitePartnersController : SiteControllerBase<SitePartnersWorkflowSta
 
         return await this.ReturnToSitesListOrContinue(
             siteBasicDetails.ProjectId,
-            async () => await Continue(new { siteId, organisationId = result.ReturnedData.Id.Value, workflow }));
+            async () => await Continue(new { siteId, organisationIdentifier = result.ReturnedData.Id.Value, workflow }));
     }
 
     [HttpGet("{siteId}/unregistered-body-confirm/{partnerId}")]
@@ -293,11 +294,15 @@ public class SitePartnersController : SiteControllerBase<SitePartnersWorkflowSta
 
     [HttpGet("{siteId}/finish")]
     [WorkflowState(SitePartnersWorkflowState.FlowFinished)]
-    public async Task<IActionResult> FinishSitePartnersFlow([FromRoute] string siteId, [FromQuery] string? workflow, [FromQuery] bool isBack)
+    public async Task<IActionResult> FinishSitePartnersFlow([FromRoute] string siteId, [FromQuery] string? workflow, [FromQuery] bool isBack, CancellationToken cancellationToken)
     {
-        return isBack
-            ? await Back(new { siteId, isBack })
-            : this.OrganisationRedirectToAction("FinishSitePartnersFlow", "Site", new { siteId, workflow });
+        if (isBack)
+        {
+            var site = await GetSiteDetails(siteId, cancellationToken);
+            return await Back(new { siteId, isBack, partnerId = site.OwnerOfTheHomes?.OrganisationId });
+        }
+
+        return this.OrganisationRedirectToAction("FinishSitePartnersFlow", "Site", new { siteId, workflow });
     }
 
     protected override async Task<IStateRouting<SitePartnersWorkflowState>> Routing(SitePartnersWorkflowState currentState, object? routeData = null)
@@ -308,12 +313,24 @@ public class SitePartnersController : SiteControllerBase<SitePartnersWorkflowSta
         return await Task.FromResult<IStateRouting<SitePartnersWorkflowState>>(new SitePartnersWorkflow(currentState, site));
     }
 
-    private async Task<SelectPartnerModel> GetSelectPartnerModel(string siteId, int? page, CancellationToken cancellationToken)
+    private async Task<SelectPartnerModel> GetSelectPartnerModel(string siteId, int? page, CancellationToken cancellationToken, SitePartnersWorkflowState? previousState = null)
     {
-        var site = await GetSiteBasicDetails(siteId, cancellationToken);
-        var partners = await _mediator.Send(new GetConsortiumMembersQuery(new PaginationRequest(page ?? 1)), cancellationToken);
+        var site = await GetSiteDetails(siteId, cancellationToken);
+        var previousPagePartnerId = previousState != null ? GetPreviousPartnerId(previousState.Value, site) : null;
 
-        return new SelectPartnerModel(site.Id, site.Name, partners);
+        var partners = await _mediator.Send(new GetConsortiumMembersQuery(new PaginationRequest(page ?? 1)), cancellationToken);
+        return new SelectPartnerModel(siteId, site.Name, partners, previousPagePartnerId);
+    }
+
+    private string? GetPreviousPartnerId(SitePartnersWorkflowState state, SiteModel model)
+    {
+        return state switch
+        {
+            SitePartnersWorkflowState.DevelopingPartnerConfirm => model.DevelopingPartner?.OrganisationId,
+            SitePartnersWorkflowState.OwnerOfTheLandConfirm => model.OwnerOfTheLand?.OrganisationId,
+            SitePartnersWorkflowState.OwnerOfTheHomesConfirm => model.OwnerOfTheHomes?.OrganisationId,
+            _ => throw new ArgumentOutOfRangeException($"Invalid {nameof(SitePartnersWorkflowState)} {state}"),
+        };
     }
 
     private async Task<(OrganisationDetails Organisation, bool? IsConfirmed)> GetConfirmPartnerModel(

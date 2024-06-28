@@ -8,7 +8,7 @@ internal static class AccountEntity
     public const string Name = "account";
 
     [SuppressMessage("Style", "IDE0305", Justification = "Not sure how to fix it")]
-    public static ColumnSet AllColumns(bool isAhpEnabled)
+    public static ColumnSet AllColumns()
     {
         var columns = new List<string>
         {
@@ -22,12 +22,8 @@ internal static class AccountEntity
             Properties.Country,
             Properties.PrimaryContactId,
             Properties.UnregisteredBody,
+            Properties.InvestmentPartnerStatus,
         };
-
-        if (isAhpEnabled)
-        {
-            columns.Add(Properties.InvestmentPartnerStatus);
-        }
 
         return new ColumnSet(columns.ToArray());
     }

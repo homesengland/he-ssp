@@ -9,7 +9,7 @@ namespace HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
 
 public class InitialSale : ValueObject
 {
-    private const string DisplayName = "assumed average first tranche sale";
+    private const string DisplayName = "assumed average first tranche sale percentage";
 
     private const decimal MinValue = 0.1m;
 

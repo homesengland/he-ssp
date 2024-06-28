@@ -24,7 +24,7 @@
       <field displayname="Currency" name="transactioncurrencyid" type="entityreference" lookupType="transactioncurrency" />
       <field displayname="Exchange Rate" name="exchangerate" type="decimal" />
       <field displayname="Government Office Region" name="invln_governmentofficeregion" type="optionsetvalue" customfield="true" />
-      <field displayname="Grant benchmark" name="invln_grantbenchmarkid" type="guid" primaryKey="true" />
+      <field updateCompare="true" displayname="Grant benchmark" name="invln_grantbenchmarkid" type="guid" primaryKey="true" />
       <field displayname="Grant benchmark ID" name="invln_grantbenchmarkname" type="string" customfield="true" />
       <field displayname="Import Sequence Number" name="importsequencenumber" type="number" />
       <field displayname="Status" name="statecode" type="state" />

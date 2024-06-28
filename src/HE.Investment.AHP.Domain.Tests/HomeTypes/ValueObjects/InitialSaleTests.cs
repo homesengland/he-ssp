@@ -18,7 +18,7 @@ public class InitialSaleTests
         create.Should()
             .Throw<DomainValidationException>()
             .Which.Message.Should()
-            .Be("The assumed average first tranche sale must be must be a number between 10 and 75");
+            .Be("The assumed average first tranche sale percentage must be must be a number between 10 and 75");
     }
 
     [Theory]
