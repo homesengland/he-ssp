@@ -105,7 +105,7 @@ namespace HE.CRM.AHP.Plugins.Handlers.CustomApi.FrontDoor
                 var webroleDict = webroleList.ToDictionary(k => k.invln_Contactid);
                 foreach (var ap in applicationn)
                 {
-                    if (webroleDict.ContainsKey(app.invln_contactid) ||
+                    if (webroleDict.ContainsKey(ap.invln_contactid) ||
                         _consortiumService.CheckAccess(ConsortiumService.Operation.Get, ConsortiumService.RecordType.Application,
                             contact.invln_externalid, null, ap.Id.ToString(), consortiumId, OrganizationId, null))
                     {

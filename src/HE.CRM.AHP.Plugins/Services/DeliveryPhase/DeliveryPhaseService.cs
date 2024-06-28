@@ -158,12 +158,14 @@ namespace HE.CRM.AHP.Plugins.Services.DeliveryPhase
             TracingService.Trace($"Calculation");
             if (milestones.Count == 0)
             {
+                TracingService.Trace($"Noe milestones");
                 return null;
             }
 
             if (application.invln_noofhomes == null || deliveryPhaseMapped.invln_NoofHomes == null ||
                 application.invln_fundingrequired == null)
             {
+                TracingService.Trace($"a");
                 return null;
             }
             var account = _accountRepository.GetById(application.invln_organisationid, Account.Fields.invln_UnregisteredBody);
@@ -180,11 +182,13 @@ namespace HE.CRM.AHP.Plugins.Services.DeliveryPhase
             var fundingForPhase = (fundingRequired / numberOfHouseApplication) * numberOfHousePhase;
 
             var acquisitionPercentageValue = milestones
-                    .FirstOrDefault(x => x.invln_milestone.Value == (int)invln_Milestone.Acquisition).invln_percentagepaidonmilestone.Value / 100;
+                    .FirstOrDefault(x => x.invln_milestone.Value == (int)invln_Milestone.Acquisition).invln_percentagepaidonmilestone.Value / 100m;
             var startOnSitePercentageValue = milestones
-                    .FirstOrDefault(x => x.invln_milestone.Value == (int)invln_Milestone.SoS).invln_percentagepaidonmilestone.Value / 100;
+                    .FirstOrDefault(x => x.invln_milestone.Value == (int)invln_Milestone.SoS).invln_percentagepaidonmilestone.Value / 100m;
             var completionPercentageValue = milestones
-                    .FirstOrDefault(x => x.invln_milestone.Value == (int)invln_Milestone.PC).invln_percentagepaidonmilestone.Value / 100;
+                    .FirstOrDefault(x => x.invln_milestone.Value == (int)invln_Milestone.PC).invln_percentagepaidonmilestone.Value / 100m;
+
+            TracingService.Trace($"milestone: {completionPercentageValue}");
 
             if ((account.invln_UnregisteredBody == true || account.invln_UnregisteredBody == null)
                 || (deliveryPhaseMapped.invln_buildactivitytype != null && deliveryPhaseMapped.invln_buildactivitytype.Value == (int)invln_NewBuildActivityType.OffTheShelf)
@@ -197,20 +201,23 @@ namespace HE.CRM.AHP.Plugins.Services.DeliveryPhase
             else
             {
                 if (!(deliveryPhaseMapped.invln_AcquisitionPercentageValue == 0m && deliveryPhaseMapped.invln_StartOnSitePercentageValue == 0m
-    && deliveryPhaseMapped.invln_CompletionPercentageValue == 1m))
+                        && deliveryPhaseMapped.invln_CompletionPercentageValue == 100m))
                 {
                     if (deliveryPhaseMapped.invln_AcquisitionPercentageValue != null)
                     {
-                        acquisitionPercentageValue = deliveryPhaseMapped.invln_AcquisitionPercentageValue == acquisitionPercentageValue ? acquisitionPercentageValue : deliveryPhaseMapped.invln_AcquisitionPercentageValue.Value;
+                        acquisitionPercentageValue = (int)deliveryPhaseMapped.invln_AcquisitionPercentageValue == (int)acquisitionPercentageValue * 100 ? acquisitionPercentageValue : deliveryPhaseMapped.invln_AcquisitionPercentageValue.Value / 100m;
                     }
+                    TracingService.Trace($"invln_AcquisitionPercentageValue:{deliveryPhaseMapped.invln_AcquisitionPercentageValue} {acquisitionPercentageValue}");
                     if (deliveryPhaseMapped.invln_StartOnSitePercentageValue != null)
                     {
-                        startOnSitePercentageValue = deliveryPhaseMapped.invln_StartOnSitePercentageValue == startOnSitePercentageValue ? startOnSitePercentageValue : deliveryPhaseMapped.invln_StartOnSitePercentageValue.Value;
+                        startOnSitePercentageValue = (int)deliveryPhaseMapped.invln_StartOnSitePercentageValue == (int)startOnSitePercentageValue * 100 ? startOnSitePercentageValue : deliveryPhaseMapped.invln_StartOnSitePercentageValue.Value / 100m;
                     }
+                    TracingService.Trace($"invln_StartOnSitePercentageValue:{deliveryPhaseMapped.invln_StartOnSitePercentageValue} {startOnSitePercentageValue}");
                     if (deliveryPhaseMapped.invln_CompletionPercentageValue != null)
                     {
-                        completionPercentageValue = deliveryPhaseMapped.invln_CompletionPercentageValue == completionPercentageValue ? completionPercentageValue : deliveryPhaseMapped.invln_CompletionPercentageValue.Value;
+                        completionPercentageValue = (int)deliveryPhaseMapped.invln_CompletionPercentageValue == (int)completionPercentageValue * 100 ? completionPercentageValue : deliveryPhaseMapped.invln_CompletionPercentageValue.Value / 100m;
                     }
+                    TracingService.Trace($"invln_CompletionPercentageValue:{deliveryPhaseMapped.invln_CompletionPercentageValue} {completionPercentageValue}");
 
                 }
             }
@@ -230,9 +237,13 @@ namespace HE.CRM.AHP.Plugins.Services.DeliveryPhase
 
         private void CalculateFundings(invln_DeliveryPhase deliveryPhase, decimal acquisitionPercentageValue, decimal startOnSitePercentageValue, decimal completionPercentageValue, decimal fundingForPhase)
         {
-            deliveryPhase.invln_AcquisitionPercentageValue = acquisitionPercentageValue;
-            deliveryPhase.invln_StartOnSitePercentageValue = startOnSitePercentageValue;
-            deliveryPhase.invln_CompletionPercentageValue = completionPercentageValue;
+            TracingService.Trace($"acquisitionPercentageValue:{acquisitionPercentageValue}");
+            TracingService.Trace($"startOnSitePercentageValue:{startOnSitePercentageValue}");
+            TracingService.Trace($"completionPercentageValue:{completionPercentageValue}");
+
+            deliveryPhase.invln_AcquisitionPercentageValue = acquisitionPercentageValue * 100;
+            deliveryPhase.invln_StartOnSitePercentageValue = startOnSitePercentageValue * 100;
+            deliveryPhase.invln_CompletionPercentageValue = completionPercentageValue * 100;
             deliveryPhase.invln_AcquisitionValue = new Money(fundingForPhase * acquisitionPercentageValue);
             deliveryPhase.invln_StartOnSiteValue = new Money(fundingForPhase * startOnSitePercentageValue);
             deliveryPhase.invln_CompletionValue = new Money(fundingForPhase * completionPercentageValue);
