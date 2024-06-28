@@ -10,7 +10,7 @@ namespace HE.CRM.Common.Api.FrontDoor
     {
         bool CheckProjectExists(Guid organisationId, string projectName);
 
-        void DeactivateProject(Guid projectId);
+        string DeactivateProject(Guid projectId);
 
         void RemoveSite(Guid siteId);
 

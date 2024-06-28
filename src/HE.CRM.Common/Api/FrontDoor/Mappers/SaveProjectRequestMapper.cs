@@ -22,7 +22,7 @@ namespace HE.CRM.Common.Api.FrontDoor.Mappers
                 IdentifiedSite = dto.IdentifiedSite,
                 GeographicFocus = dto.GeographicFocus,
                 Region = dto.Region?.ToArray(),
-                LocalAuthority = dto.LocalAuthority ?? "6000002", // TODO: AB#98936 remove hardcoded value when API will support it
+                LocalAuthority = dto.LocalAuthorityCode,
                 NumberOfHomesEnabledBuilt = dto.NumberofHomesEnabledBuilt,
                 WouldYourProjectFailWithoutHeSupport = dto.WouldyourprojectfailwithoutHEsupport,
                 FundingRequired = dto.FundingRequired,
@@ -30,6 +30,7 @@ namespace HE.CRM.Common.Api.FrontDoor.Mappers
                 IntentionToMakeAProfit = dto.IntentiontoMakeaProfit,
                 StartOfProjectMonth = dto.StartofProjectMonth,
                 StartOfProjectYear = dto.StartofProjectYear,
+                FrontDoorDecision = dto.EligibleApplication?.ToArray()
             };
         }
     }

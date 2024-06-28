@@ -9,7 +9,6 @@ using HE.CRM.Common.Api.FrontDoor;
 using HE.CRM.Common.Api.FrontDoor.Contract.Responses;
 using HE.CRM.Common.Repositories.Interfaces;
 using HE.CRM.Plugins.Models.Frontdoor.Mappers;
-using Microsoft.Xrm.Sdk;
 
 namespace HE.CRM.Plugins.Services.FrontDoorProject.V2
 {
@@ -20,9 +19,7 @@ namespace HE.CRM.Plugins.Services.FrontDoorProject.V2
 
         private readonly IFrontDoorApiClient _frontDoorApiClient;
 
-        private readonly IFrontDoorProjectRepository _frontDoorProjectRepository;
         private readonly IContactRepository _contactRepository;
-        private readonly ILocalAuthorityRepository _localAuthorityRepository;
 
         private readonly IHeProjectRepository _heProjectRepository;
         private readonly IHeLocalAuthorityRepository _heLocalAuthorityRepository;
@@ -48,9 +45,7 @@ namespace HE.CRM.Plugins.Services.FrontDoorProject.V2
         {
             _frontDoorApiClient = CrmServicesFactory.Get<IFrontDoorApiClient>();
 
-            _frontDoorProjectRepository = CrmRepositoriesFactory.Get<IFrontDoorProjectRepository>();
             _contactRepository = CrmRepositoriesFactory.Get<IContactRepository>();
-            _localAuthorityRepository = CrmRepositoriesFactory.Get<ILocalAuthorityRepository>();
 
             _heProjectRepository = CrmRepositoriesFactory.Get<IHeProjectRepository>();
             _heLocalAuthorityRepository = CrmRepositoriesFactory.Get<IHeLocalAuthorityRepository>();
@@ -68,6 +63,7 @@ namespace HE.CRM.Plugins.Services.FrontDoorProject.V2
             Logger.Trace($"FrontDoorProject.V2.{nameof(GetFrontDoorProjects)}");
 
             var frontDoorProjectFromPortal = JsonSerializer.Deserialize<FrontDoorProjectDto>(entityFieldsParameters, _jsonSerializerOptions);
+            Logger.Trace($"frontDoorProjectFromPortal.Local auth code = {frontDoorProjectFromPortal.LocalAuthorityCode}");
             var requestContact = _contactRepository.GetContactViaExternalId(externalContactId);
 
             var requestObj = HE.CRM.Common.Api.FrontDoor.Mappers.SaveProjectRequestMapper.Map(frontDoorProjectFromPortal, requestContact.Id);
@@ -75,48 +71,7 @@ namespace HE.CRM.Plugins.Services.FrontDoorProject.V2
             Logger.Trace($"request: {request}");
             var response = _frontDoorApiClient.SaveProject(frontDoorProjectFromPortal, requestContact.Id);
 
-            //if (frontDoorProjectFromPortal.LocalAuthorityCode != null)
-            //{
-            //    var localAuthorityGUID = _heLocalAuthorityRepository.GetLocalAuthorityWithGivenCode(frontDoorProjectFromPortal.LocalAuthorityCode)?.Id;
-            //    if (localAuthorityGUID != null)
-            //    {
-            //        frontDoorProjectFromPortal.LocalAuthority = localAuthorityGUID.ToString();
-            //    }
-            //    else
-            //    {
-            //        frontDoorProjectFromPortal.LocalAuthority = null;
-            //    }
-            //}
-            //else
-            //{
-            //    frontDoorProjectFromPortal.LocalAuthority = null;
-            //}
-
-
             return response.Result;
-
-            /*
-            var frontDoorProjecToCreate = FrontDoorProjectMapper.MapDtoToProjectEntity(frontDoorProjectFromPortal, requestContact, organisationId);
-
-            // Update Or Create a Project Record
-            if (!string.IsNullOrEmpty(frontDoorProjectId) && Guid.TryParse(frontDoorProjectId, out Guid projectId))
-            {
-                this.TracingService.Trace("Update Project");
-                frontdoorprojectGUID = projectId;
-                frontDoorProjecToCreate.Id = projectId;
-                _heProjectRepository.Update(frontDoorProjecToCreate);
-                this.TracingService.Trace("After update record");
-            }
-            else
-            {
-                this.TracingService.Trace("Create Project");
-                frontdoorprojectGUID = _heProjectRepository.Create(frontDoorProjecToCreate);
-                this.TracingService.Trace("After create record");
-            }
-            
-
-            return frontdoorprojectGUID.ToString();
-            */
         }
 
         public List<FrontDoorProjectDto> GetFrontDoorProjects(Guid organisationId, string externalContactId = null)
@@ -226,9 +181,9 @@ namespace HE.CRM.Plugins.Services.FrontDoorProject.V2
         {
             Logger.Trace($"FrontDoorProject.V2.{nameof(DeactivateFrontDoorProject)}");
 
-            _frontDoorApiClient.DeactivateProject(frontDoorProjectId);
-            var frontDoorProject = _heProjectRepository.GetById(frontDoorProjectId, new string[] { nameof(he_Pipeline.he_RecordStatus).ToLower() });
-            return frontDoorProject.he_RecordStatus.Value == (int)he_Pipeline_he_RecordStatus.Loancreated;
+            var result = _frontDoorApiClient.DeactivateProject(frontDoorProjectId);
+            Logger.Trace($"DeactivateProject result: {result}");
+            return true;
         }
     }
 }

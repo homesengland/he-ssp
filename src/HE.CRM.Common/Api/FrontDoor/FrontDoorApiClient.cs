@@ -41,22 +41,23 @@ namespace HE.CRM.Common.Api.FrontDoor
             var response = _httpClient.Send<CheckProjectExistsRequest, CheckProjectExistsResponse>(
                 request,
                 FrontDoorApiUrls.CheckProjectExists,
-                HttpMethod.Post,
-                CancellationToken.None);
+                HttpMethod.Post);
 
             return response.Result;
         }
 
-        public void DeactivateProject(Guid projectId)
+        public string DeactivateProject(Guid projectId)
         {
             Logger.Trace("FrontDoorApiClient.DeactivateProject");
 
             var request = new DeactivateProjectRequest { ProjectRecordId = projectId };
 
-            _httpClient.Send<DeactivateProjectRequest, DeactivateProjectResponse>(
+            var response = _httpClient.Send<DeactivateProjectRequest, DeactivateProjectResponse>(
                 request,
                 FrontDoorApiUrls.DeactivateProject,
                 HttpMethod.Post);
+
+            return response.Result;
         }
 
         public void RemoveSite(Guid siteId)

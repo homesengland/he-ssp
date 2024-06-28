@@ -30,12 +30,12 @@ namespace HE.CRM.Plugins.Handlers.CustomApi.FrontDoor
             Logger.Trace($"FrontDoorProjectId: {FrontDoorProjectId}");
             Logger.Trace($"EntityFieldsParameters: {EntityFieldsParameters}");
             Logger.Trace($"UseHeTablesFromPortal: {UseHeTablesFromPortal}");
-            // OrganisationId.Equals("0eb56594-a60b-ef11-9f89-0022481adce0", System.StringComparison.InvariantCultureIgnoreCase)
-            if (FeatureFlags.UseNewFrontDoorApiManagement && false)
+
+            if (FeatureFlags.UseNewFrontDoorApiManagement)
             { // New frontdoor apim
                 var service = CrmServicesFactory.Get<FrontDoorProjectV2.IFrontDoorProjectService>();
                 var frontdoorprojectid = service.CreateRecordFromPortal(ExternalContactId, OrganisationId, FrontDoorProjectId, EntityFieldsParameters);
-                this.TracingService.Trace("Send Response");
+                Logger.Trace("Send Response");
                 ExecutionData.SetOutputParameter(invln_setfrontdoorprojectResponse.Fields.invln_frontdoorprojectid, frontdoorprojectid);
             }
             else
@@ -43,7 +43,7 @@ namespace HE.CRM.Plugins.Handlers.CustomApi.FrontDoor
                 var service = CrmServicesFactory.Get<FrontDoorProjectV1.IFrontDoorProjectService>();
                 var useHeTables = !string.IsNullOrEmpty(UseHeTablesFromPortal);
                 var frontdoorprojectid = service.CreateRecordFromPortal(ExternalContactId, OrganisationId, FrontDoorProjectId, EntityFieldsParameters, useHeTables);
-                this.TracingService.Trace("Send Response");
+                Logger.Trace("Send Response");
                 ExecutionData.SetOutputParameter(invln_setfrontdoorprojectResponse.Fields.invln_frontdoorprojectid, frontdoorprojectid);
             }
         }
