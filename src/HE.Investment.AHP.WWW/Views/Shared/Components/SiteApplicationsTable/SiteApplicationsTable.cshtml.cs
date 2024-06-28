@@ -22,7 +22,7 @@ public class SiteApplicationsTable : ViewComponent
         var tableHeaders = new List<TableHeaderViewModel>
         {
             new("Application name", CellWidth.OneThird),
-            new("Application tenure"),
+            new("Tenure"),
             new("No of homes"),
             new("Status"),
         };

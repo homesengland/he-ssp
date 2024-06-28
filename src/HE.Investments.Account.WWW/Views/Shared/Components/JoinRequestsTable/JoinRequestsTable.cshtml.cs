@@ -5,6 +5,7 @@ using HE.Investments.Common.Extensions;
 using HE.Investments.Common.WWW.Components;
 using HE.Investments.Common.WWW.Components.Link;
 using HE.Investments.Common.WWW.Components.Table;
+using HE.Investments.Common.WWW.Extensions;
 using HE.Investments.Common.WWW.Utils;
 using Microsoft.AspNetCore.Mvc;
 
@@ -34,24 +35,30 @@ public class JoinRequestsTable : ViewComponent
         };
 
         var usersDetails = users.Select(u =>
-        {
-            var tableItems = new List<TableValueViewModel>
             {
-                new(u.FirstName),
-                new(u.LastName),
-                new(u.Email),
-                new(u.JobTitle),
-                new(u.Role?.GetDescription()),
-                new(Component: CreateUsersLinkComponent(u.Id.Value, "Remove", nameof(UsersController.ConfirmUnlink)), IsDisplayed: canManageUsers),
-                new(Component: CreateUsersLinkComponent(u.Id.Value, "Manage", nameof(UsersController.Manage)), IsDisplayed: canManageUsers),
-            };
+                var tableItems = new List<TableValueViewModel>
+                {
+                    new(u.FirstName),
+                    new(u.LastName),
+                    new(u.Email),
+                    new(u.JobTitle),
+                    new(u.Role?.GetDescription()),
+                    new(Component: CreateUsersLinkComponent(u.Id.Value, "Remove", nameof(UsersController.ConfirmUnlink)), IsDisplayed: canManageUsers),
+                    new(Component: CreateUsersLinkComponent(u.Id.Value, "Manage", nameof(UsersController.Manage)), IsDisplayed: canManageUsers),
+                };
 
-            return new TableRowViewModel(u.Id.Value, tableItems);
-        }).ToList();
+                return new TableRowViewModel(u.Id.Value, tableItems);
+            })
+            .ToList();
 
         return View("JoinRequestsTable", (tableHeaders, usersDetails));
     }
 
-    private DynamicComponentViewModel CreateUsersLinkComponent(string id, string text, string action) =>
-        new(nameof(Link), new { text, action, controller = new ControllerName(nameof(UsersController)).WithoutPrefix(), values = new { id } });
+    private DynamicComponentViewModel CreateUsersLinkComponent(string id, string text, string action)
+    {
+        var organisationId = Request.GetOrganisationIdFromRoute();
+        return new(
+            nameof(Link),
+            new { text, action, controller = new ControllerName(nameof(UsersController)).WithoutPrefix(), values = new { id, organisationId } });
+    }
 }

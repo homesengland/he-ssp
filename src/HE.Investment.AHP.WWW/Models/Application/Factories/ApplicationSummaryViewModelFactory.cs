@@ -37,7 +37,7 @@ public class ApplicationSummaryViewModelFactory : IApplicationSummaryViewModelFa
 
     public async Task<ApplicationSummaryViewModel> GetDataAndCreate(AhpApplicationId applicationId, IUrlHelper urlHelper, CancellationToken cancellationToken)
     {
-        var scheme = await _mediator.Send(new GetApplicationSchemeQuery(applicationId), cancellationToken);
+        var scheme = await _mediator.Send(new GetApplicationSchemeQuery(applicationId, true), cancellationToken);
         var schemeSummary = _schemeSummaryViewModelFactory.GetSchemeAndCreateSummary("Scheme information", scheme, urlHelper);
         var homeTypesSummaries = await GetHomeTypesAndCreateSummary(applicationId, urlHelper, cancellationToken);
         var financialDetailsSummary =

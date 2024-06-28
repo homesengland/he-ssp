@@ -2,6 +2,7 @@ using System.Diagnostics.CodeAnalysis;
 using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Contract.SitePartners;
 using HE.Investments.Common.WWW.Routing;
+using HE.Investments.Organisation.Contract;
 
 namespace HE.Investment.AHP.WWW.Workflows;
 
@@ -54,7 +55,8 @@ public class SitePartnersWorkflow : EncodedStateRouting<SitePartnersWorkflowStat
 
         Machine.Configure(SitePartnersWorkflowState.OwnerOfTheLand)
             .Permit(Trigger.Continue, SitePartnersWorkflowState.OwnerOfTheLandConfirm)
-            .Permit(Trigger.Back, SitePartnersWorkflowState.DevelopingPartner);
+            .PermitIf(Trigger.Back, SitePartnersWorkflowState.DevelopingPartner, () => !IsPartnerProvided(x => x.DevelopingPartner))
+            .PermitIf(Trigger.Back, SitePartnersWorkflowState.DevelopingPartnerConfirm, () => IsPartnerProvided(x => x.DevelopingPartner));
 
         Machine.Configure(SitePartnersWorkflowState.OwnerOfTheLandConfirm)
             .Permit(Trigger.Continue, SitePartnersWorkflowState.OwnerOfTheHomes)
@@ -62,7 +64,8 @@ public class SitePartnersWorkflow : EncodedStateRouting<SitePartnersWorkflowStat
 
         Machine.Configure(SitePartnersWorkflowState.OwnerOfTheHomes)
             .Permit(Trigger.Continue, SitePartnersWorkflowState.OwnerOfTheHomesConfirm)
-            .Permit(Trigger.Back, SitePartnersWorkflowState.OwnerOfTheLand);
+            .PermitIf(Trigger.Back, SitePartnersWorkflowState.OwnerOfTheLand, () => !IsPartnerProvided(x => x.OwnerOfTheLand))
+            .PermitIf(Trigger.Back, SitePartnersWorkflowState.OwnerOfTheLandConfirm, () => IsPartnerProvided(x => x.OwnerOfTheLand));
 
         Machine.Configure(SitePartnersWorkflowState.OwnerOfTheHomesConfirm)
             .Permit(Trigger.Continue, SitePartnersWorkflowState.FlowFinished)
@@ -89,9 +92,12 @@ public class SitePartnersWorkflow : EncodedStateRouting<SitePartnersWorkflowStat
 
         Machine.Configure(SitePartnersWorkflowState.FlowFinished)
             .PermitIf(Trigger.Back, SitePartnersWorkflowState.FlowStarted, () => !IsConsortiumMember() && !IsUnregisteredBody())
-            .PermitIf(Trigger.Back, SitePartnersWorkflowState.OwnerOfTheHomes, IsConsortiumMember)
-            .PermitIf(Trigger.Back, SitePartnersWorkflowState.UnregisteredBodySearch, IsUnregisteredBody);
+            .PermitIf(Trigger.Back, SitePartnersWorkflowState.OwnerOfTheHomes, () => IsConsortiumMember() && !IsPartnerProvided(x => x.OwnerOfTheHomes))
+            .PermitIf(Trigger.Back, SitePartnersWorkflowState.OwnerOfTheHomesConfirm, () => IsConsortiumMember() && IsPartnerProvided(x => x.OwnerOfTheHomes))
+            .PermitIf(Trigger.Back, SitePartnersWorkflowState.UnregisteredBodyConfirm, IsUnregisteredBody);
     }
+
+    private bool IsPartnerProvided(Func<SiteModel, OrganisationDetails?> getPartner) => _siteModel != null && getPartner(_siteModel) != null;
 
     private bool IsConsortiumMember() => _siteModel?.IsConsortiumMember == true;
 

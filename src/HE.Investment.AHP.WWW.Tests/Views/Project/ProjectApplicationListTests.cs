@@ -19,7 +19,7 @@ public class ProjectApplicationListTests : AhpViewTestBase
         // given
         var applicationListModel = new ProjectDetailsModel(
             new FrontDoorProjectId("project-id"),
-            "Carq",
+            "Carq's project",
             "Affordable Homes Programme Continuous Market Engagement 2021-2026",
             "Organisation Name",
             PaginationResult([]),
@@ -41,7 +41,7 @@ public class ProjectApplicationListTests : AhpViewTestBase
 
         var applicationListModel = new ProjectDetailsModel(
             new FrontDoorProjectId("project-id"),
-            "Carq",
+            "Carq's project",
             "Affordable Homes Programme Continuous Market Engagement 2021-2026",
             "Organisation Name",
             PaginationResult([application1, application2,]),

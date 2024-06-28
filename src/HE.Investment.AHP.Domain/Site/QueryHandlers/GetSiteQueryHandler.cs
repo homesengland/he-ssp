@@ -9,6 +9,7 @@ using HE.Investment.AHP.Domain.Site.ValueObjects.Planning;
 using HE.Investment.AHP.Domain.Site.ValueObjects.StrategicSite;
 using HE.Investment.AHP.Domain.Site.ValueObjects.TenderingStatus;
 using HE.Investments.Common.Contract;
+using HE.Investments.Common.Contract.Pagination;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Consortium.Shared.UserContext;
 using HE.Investments.Organisation.Contract;
@@ -36,11 +37,15 @@ public class GetSiteQueryHandler : IRequestHandler<GetSiteQuery, SiteModel>
     public async Task<SiteModel> Handle(GetSiteQuery request, CancellationToken cancellationToken)
     {
         var userAccount = await _accountUserContext.GetSelectedAccount();
-        var site = await _siteRepository.GetSite(SiteId.From(request.SiteId), userAccount, cancellationToken);
+        var siteId = SiteId.From(request.SiteId);
+        var site = await _siteRepository.GetSite(siteId, userAccount, cancellationToken);
         var prefillData = site.FrontDoorProjectId.IsProvided() && site.FrontDoorSiteId.IsProvided()
             ? await _prefillDataRepository.GetAhpSitePrefillData(site.FrontDoorProjectId, site.FrontDoorSiteId!, cancellationToken)
             : null;
         var localAuthority = LocalAuthorityMapper.Map(site.LocalAuthority);
+        var siteApplications = await _siteRepository.GetSiteApplications(
+            siteId, userAccount, new PaginationRequest(1, 1000), cancellationToken);
+        var canSiteBeEdited = site.CanBeEdited(siteApplications.Items);
 
         return new SiteModel
         {
@@ -68,7 +73,7 @@ public class GetSiteQueryHandler : IRequestHandler<GetSiteQuery, SiteModel>
             ModernMethodsOfConstruction = CreateSiteModernMethodsOfConstruction(site.ModernMethodsOfConstruction),
             IsConsortiumMember = !userAccount.Consortium.HasNoConsortium,
             IsUnregisteredBody = userAccount.SelectedOrganisation().IsUnregisteredBody,
-            IsReadOnly = site.Status == SiteStatus.Submitted || !userAccount.CanEdit,
+            IsReadOnly = !canSiteBeEdited || !userAccount.CanEdit,
         };
     }
 

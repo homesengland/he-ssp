@@ -66,6 +66,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         return Back(currentPage, new { applicationId, homeTypeId });
     }
 
+    [ConsortiumAuthorize]
     [WorkflowState(HomeTypesWorkflowState.List)]
     [HttpGet("list")]
     public async Task<IActionResult> List([FromRoute] string applicationId, CancellationToken cancellationToken)
@@ -159,6 +160,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         return this.OrganisationRedirectToAction("List", routeValues: new { applicationId });
     }
 
+    [ConsortiumAuthorize]
     [HttpGet("{homeTypeId}/start")]
     public async Task<IActionResult> Start([FromRoute] string applicationId, string homeTypeId, CancellationToken cancellationToken)
     {

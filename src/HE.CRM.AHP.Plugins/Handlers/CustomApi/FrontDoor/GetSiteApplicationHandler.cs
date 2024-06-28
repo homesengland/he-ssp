@@ -103,6 +103,23 @@ namespace HE.CRM.AHP.Plugins.Handlers.CustomApi.FrontDoor
                 var webroleList = _contactWebroleRepository.GetListOfUsersWithoutLimitedRole(OrganizationId);
                 TracingService.Trace($"WebroleList count : {webroleList.Count}");
                 var webroleDict = webroleList.ToDictionary(k => k.invln_Contactid);
+                foreach (var ap in applicationn)
+                {
+                    if (webroleDict.ContainsKey(app.invln_contactid) ||
+                        _consortiumService.CheckAccess(ConsortiumService.Operation.Get, ConsortiumService.RecordType.Application,
+                            contact.invln_externalid, null, ap.Id.ToString(), consortiumId, OrganizationId, null))
+                    {
+                        filteredApplication.Add(ap);
+                    }
+                }
+                var applicationn = new List<invln_scheme>
+                    {
+                        app
+                    };
+                var applicationsDict = applicationn.ToDictionary(k => k.invln_contactid);
+                var webroleList = _contactWebroleRepository.GetListOfUsersWithoutLimitedRole(OrganizationId);
+                TracingService.Trace($"WebroleList count : {webroleList.Count}");
+                var webroleDict = webroleList.ToDictionary(k => k.invln_Contactid);
                 var d1 = applicationsDict
                     .Where(x => webroleDict.ContainsKey(x.Key) ||
                     _consortiumService.CheckAccess(ConsortiumService.Operation.Get, ConsortiumService.RecordType.Application,

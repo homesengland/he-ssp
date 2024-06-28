@@ -12,9 +12,9 @@ public class Notification : ViewComponent
         _notificationConsumer = notificationConsumer;
     }
 
-    public IViewComponentResult Invoke(DisplayNotification? displayNotification = null)
+    public IViewComponentResult Invoke(DisplayNotification? displayNotification = null, bool shouldAddTopMargin = false)
     {
         displayNotification ??= _notificationConsumer.Pop();
-        return View("Notification", displayNotification);
+        return View("Notification", (displayNotification, shouldAddTopMargin));
     }
 }
