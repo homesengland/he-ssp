@@ -17,7 +17,7 @@ public class WithOwnerOfTheLandTests
         var provide = () => testCandidate.WithOwnerOfTheLand(InvestmentsOrganisationTestData.JjCompany, null);
 
         // then
-        provide.Should().Throw<DomainValidationException>().WithMessage("Select yes if you want to confirm the owner of the land during development");
+        provide.Should().Throw<DomainValidationException>().WithMessage("Select yes to confirm the owner of the land during development");
     }
 
     [Fact]

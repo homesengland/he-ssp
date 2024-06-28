@@ -61,7 +61,7 @@ public class WithOwnerOfTheHomesTests
         var provide = () => testCandidate.WithOwnerOfTheHomes(InvestmentsOrganisationTestData.JjCompany, null);
 
         // then
-        provide.Should().Throw<DomainValidationException>().WithMessage("Select yes if you want to confirm the owner of the homes after completion");
+        provide.Should().Throw<DomainValidationException>().WithMessage("Select yes to confirm the owner of the homes after completion");
     }
 
     [Fact]
