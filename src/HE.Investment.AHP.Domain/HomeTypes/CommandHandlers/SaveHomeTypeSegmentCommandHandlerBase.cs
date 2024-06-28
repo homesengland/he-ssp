@@ -15,11 +15,18 @@ public abstract class SaveHomeTypeSegmentCommandHandlerBase<TCommand> : HomeType
 
     private readonly IConsortiumUserContext _accountUserContext;
 
-    protected SaveHomeTypeSegmentCommandHandlerBase(IHomeTypeRepository homeTypeRepository, IConsortiumUserContext accountUserContext, ILogger logger)
+    private readonly bool _loadFiles;
+
+    protected SaveHomeTypeSegmentCommandHandlerBase(
+        IHomeTypeRepository homeTypeRepository,
+        IConsortiumUserContext accountUserContext,
+        ILogger logger,
+        bool loadFiles = false)
         : base(logger)
     {
         _homeTypeRepository = homeTypeRepository;
         _accountUserContext = accountUserContext;
+        _loadFiles = loadFiles;
     }
 
     protected abstract IReadOnlyCollection<HomeTypeSegmentType> SegmentTypes { get; }
@@ -33,7 +40,8 @@ public abstract class SaveHomeTypeSegmentCommandHandlerBase<TCommand> : HomeType
             request.ApplicationId,
             request.HomeTypeId,
             account,
-            cancellationToken);
+            cancellationToken,
+            _loadFiles);
 
         var errors = PerformWithValidation(SaveActions.Select<Action<TCommand, IHomeTypeEntity>, Action>(x => () => x(request, homeType)).ToArray());
         if (errors.Any())
