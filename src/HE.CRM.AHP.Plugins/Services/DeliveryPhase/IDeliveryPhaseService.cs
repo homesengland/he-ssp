@@ -20,7 +20,7 @@ namespace HE.CRM.AHP.Plugins.Services.DeliveryPhase
 
         Guid SetDeliveryPhase(string deliveryPhase, string userId, string organisationId, string applicationId, string fieldsToSet = null);
 
-        invln_DeliveryPhase CalculateFunding(invln_scheme application, invln_DeliveryPhase deliveryPhaseMapped, List<invln_milestoneframeworkitem> milestones, invln_DeliveryPhase deliveryPhaseToUpdateOrCreate);
+        invln_DeliveryPhase CalculateFunding(invln_scheme application, invln_DeliveryPhase deliveryPhaseMapped, List<invln_milestoneframeworkitem> milestones, bool resetMilestone, invln_DeliveryPhase deliveryPhaseToUpdateOrCreate);
 
     }
 }

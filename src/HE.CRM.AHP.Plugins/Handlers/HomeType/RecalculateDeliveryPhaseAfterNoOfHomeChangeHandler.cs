@@ -43,7 +43,7 @@ namespace HE.CRM.AHP.Plugins.Handlers.HomeType
 
             foreach (var deliveryphase in deliveryPhases)
             {
-                CrmServicesFactory.Get<IDeliveryPhaseService>().CalculateFunding(application, deliveryphase, milestones, deliveryphase);
+                CrmServicesFactory.Get<IDeliveryPhaseService>().CalculateFunding(application, deliveryphase, milestones, false, deliveryphase);
                 _deliveryPhaseRepository.Update(deliveryphase);
             }
         }
