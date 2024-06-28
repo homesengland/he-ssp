@@ -86,33 +86,5 @@ namespace HE.CRM.Plugins.Services.FrontDoorProjectSite.V2
 
             return true;
         }
-
-        private string GenerateFetchXmlAttributes(string fieldsToRetrieve)
-        {
-            if (!string.IsNullOrEmpty(fieldsToRetrieve))
-            {
-                var fields = fieldsToRetrieve.Split(',');
-                var generatedAttribuesFetchXml = "";
-                if (fields.Length > 0)
-                {
-                    foreach (var field in fields)
-                    {
-                        generatedAttribuesFetchXml += $"<attribute name=\"{field}\" />";
-                    }
-                }
-                return generatedAttribuesFetchXml;
-            }
-            return null;
-        }
-
-        private string GetFetchXmlConditionForGivenField(string fieldValue, string fieldName)
-        {
-            if (!string.IsNullOrEmpty(fieldValue))
-            {
-                return $"<condition attribute=\"{fieldName}\" operator=\"eq\" value=\"{fieldValue}\" />";
-            }
-            return string.Empty;
-        }
-
     }
 }

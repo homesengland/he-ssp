@@ -12,6 +12,6 @@ namespace HE.CRM.Plugins.Services.FrontDoorProject.V2
         List<FrontDoorProjectDto> GetFrontDoorProjects(Guid organisationId, string externalContactId = null);
         FrontDoorProjectDto GetFrontDoorProject(Guid organisationId, string externalContactId, Guid frontDoorProjectId, string includeInactive = null);
         bool CheckIfFrontDoorProjectWithGivenNameExists(string frontDoorProjectName, Guid organisationId);
-        bool DeactivateFrontDoorProject(string frontDoorProjectId, bool useHeTables);
+        bool DeactivateFrontDoorProject(Guid frontDoorProjectId);
     }
 }

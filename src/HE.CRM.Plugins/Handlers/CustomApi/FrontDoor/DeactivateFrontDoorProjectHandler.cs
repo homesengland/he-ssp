@@ -1,3 +1,4 @@
+using System;
 using DataverseModel;
 using HE.Base.Plugins.Handlers;
 using FrontDoorProjectV1 = HE.CRM.Plugins.Services.FrontDoorProject;
@@ -25,16 +26,21 @@ namespace HE.CRM.Plugins.Handlers.CustomApi.FrontDoor
             Logger.Trace($"FrontDoorProjectId: {FrontDoorProjectId}");
             Logger.Trace($"UseHeTablesFromPortal: {UseHeTablesFromPortal}");
 
-            if (FeatureFlags.UseNewFrontDoorApiManagement && false)
-            { // New frontdoor apim
+            var frontDoorProjectIdGuid = Guid.Parse(FrontDoorProjectId);
 
+            if (FeatureFlags.UseNewFrontDoorApiManagement)
+            { // New frontdoor apim
+                var service = CrmServicesFactory.Get<FrontDoorProjectV2.IFrontDoorProjectService>();
+                var result = service.DeactivateFrontDoorProject(frontDoorProjectIdGuid);
+                Logger.Trace("Send Response");
+                ExecutionData.SetOutputParameter(invln_deactivatefrontdoorprojectResponse.Fields.invln_projectdeactivated, result);
             }
             else
             { // old version
                 var service = CrmServicesFactory.Get<FrontDoorProjectV1.IFrontDoorProjectService>();
                 var useHeTables = !string.IsNullOrEmpty(UseHeTablesFromPortal);
                 var result = service.DeactivateFrontDoorProject(FrontDoorProjectId, useHeTables);
-                this.TracingService.Trace("Send Response");
+                Logger.Trace("Send Response");
                 ExecutionData.SetOutputParameter(invln_deactivatefrontdoorprojectResponse.Fields.invln_projectdeactivated, result);
             }
         }

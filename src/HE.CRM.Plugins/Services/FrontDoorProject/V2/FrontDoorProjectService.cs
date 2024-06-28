@@ -217,29 +217,18 @@ namespace HE.CRM.Plugins.Services.FrontDoorProject.V2
 
         public bool CheckIfFrontDoorProjectWithGivenNameExists(string frontDoorProjectName, Guid organisationId)
         {
+            Logger.Trace($"FrontDoorProject.V2.{nameof(CheckIfFrontDoorProjectWithGivenNameExists)}");
+
             return _frontDoorApiClient.CheckProjectExists(organisationId, frontDoorProjectName);
         }
 
-        public bool DeactivateFrontDoorProject(string frontDoorProjectId, bool useHeTables)
+        public bool DeactivateFrontDoorProject(Guid frontDoorProjectId)
         {
-            if (useHeTables)
-            {
-                // Update a he_RecordStaus on Project Record
-                var frontDoorProject = _heProjectRepository.GetById(new Guid(frontDoorProjectId), new string[] { nameof(he_Pipeline.he_PipelineId).ToLower() });
-                frontDoorProject.he_RecordStatus = new OptionSetValue((int)he_Pipeline_he_RecordStatus.Loancreated);
-                this.TracingService.Trace("Update a he_RecordStaus on Project Record");
-                _heProjectRepository.Update(frontDoorProject);
-                this.TracingService.Trace("After update a he_RecordStaus on Project Record");
-                var frontDoorProjectAfter = _heProjectRepository.GetById(new Guid(frontDoorProjectId), new string[] { nameof(he_Pipeline.he_RecordStatus).ToLower() });
-                return frontDoorProjectAfter.he_RecordStatus.Value == (int)he_Pipeline_he_RecordStatus.Loancreated;
-            }
-            else
-            {
-                var frontDoorProject = _frontDoorProjectRepository.GetById(new Guid(frontDoorProjectId), new string[] { nameof(invln_FrontDoorProjectPOC.invln_FrontDoorProjectPOCId).ToLower() });
-                _frontDoorProjectRepository.SetState(frontDoorProject, invln_FrontDoorProjectPOCState.Inactive, invln_FrontDoorProjectPOC_StatusCode.Inactive);
-                var frontDoorProjectAfter = _frontDoorProjectRepository.GetById(new Guid(frontDoorProjectId), new string[] { nameof(invln_FrontDoorProjectPOC.StateCode).ToLower() });
-                return frontDoorProjectAfter.StateCode.Value == (int)invln_FrontDoorProjectPOCState.Inactive;
-            }
+            Logger.Trace($"FrontDoorProject.V2.{nameof(DeactivateFrontDoorProject)}");
+
+            _frontDoorApiClient.DeactivateProject(frontDoorProjectId);
+            var frontDoorProject = _heProjectRepository.GetById(frontDoorProjectId, new string[] { nameof(he_Pipeline.he_RecordStatus).ToLower() });
+            return frontDoorProject.he_RecordStatus.Value == (int)he_Pipeline_he_RecordStatus.Loancreated;
         }
     }
 }
