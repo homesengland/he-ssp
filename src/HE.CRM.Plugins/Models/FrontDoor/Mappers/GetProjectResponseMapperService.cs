@@ -22,13 +22,6 @@ namespace HE.CRM.Plugins.Models.Frontdoor.Mappers
                 return null;
             }
 
-            Logger.Trace($"{nameof(GetProjectResponseMapperService)}.{nameof(Map)}");
-
-            if (contactsExternalIdMap == null || !contactsExternalIdMap.Any())
-            {
-                Logger.Warn("contactsExternalIdMap is empty");
-            }
-
             if (!contactsExternalIdMap.TryGetValue(response.PortalOwnerId, out var portalOwnerExternalId))
             {
                 Logger.Warn($"Could not find externalId for contact with id '{response.PortalOwnerId}'");
