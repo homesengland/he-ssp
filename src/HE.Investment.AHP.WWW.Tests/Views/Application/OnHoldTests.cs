@@ -40,7 +40,7 @@ public class OnHoldTests : AhpViewTestBase
         document
             .HasTitle(ApplicationPageTitles.OnHold)
             .HasElementWithText("div", "You can enter up to 1500 characters")
-            .HasSubmitButton(out _, "Hold")
+            .HasSubmitButton(out _, "Put on hold")
             .HasSummaryErrorMessage(nameof(ChangeApplicationStatusModel.HoldReason), errorMessage, !string.IsNullOrEmpty(errorMessage))
             .HasErrorMessage(nameof(ChangeApplicationStatusModel.HoldReason), errorMessage, !string.IsNullOrEmpty(errorMessage));
     }
