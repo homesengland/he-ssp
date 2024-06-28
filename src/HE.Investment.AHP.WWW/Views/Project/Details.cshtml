@@ -41,7 +41,8 @@
                 "Applications",
                 description,
                 "View all applications",
-                applications.Any() ? Url.OrganisationAction("Applications", "Project", new { projectId = Model.ProjectId }) : null);
+                applications.Any() ? Url.OrganisationAction("Applications", "Project", new { projectId = Model.ProjectId }) : null,
+                3);
 
             <vc:list-card model="@items"></vc:list-card>
         }
