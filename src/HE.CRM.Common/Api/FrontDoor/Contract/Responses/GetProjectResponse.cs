@@ -4,7 +4,7 @@ namespace HE.CRM.Common.Api.FrontDoor.Contract.Responses
 {
     public sealed class GetProjectResponse
     {
-        public Guid? ProjectId { get; set; }
+        public string ProjectId { get; set; }
 
         public string LocalAuthorityName { get; set; }
 
