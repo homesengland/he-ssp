@@ -29,4 +29,16 @@ public class AccountController : Controller
 
         return new RedirectResult($"{_accountConfig.Url}/{organisationId}/user-organisation");
     }
+
+    [HttpGet]
+    [Route("user-organisations/list")]
+    public async Task<IActionResult> OrganisationsList(CancellationToken cancellationToken)
+    {
+        if (await _featureManager.IsEnabledAsync(FeatureFlags.StayInCurrentApplication, cancellationToken))
+        {
+            return this.OrganisationRedirectToAction("Index", "Home");
+        }
+
+        return new RedirectResult($"{_accountConfig.Url}/user-organisations/list");
+    }
 }

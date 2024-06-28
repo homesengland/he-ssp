@@ -22,6 +22,12 @@ public class AhpBreadcrumbsBuilder : BreadcrumbsBuilderBase
         return new AhpBreadcrumbsBuilder(organisationId);
     }
 
+    public AhpBreadcrumbsBuilder WithOrganisations()
+    {
+        AddBreadcrumb("Your Organisations", nameof(AccountController.OrganisationsList), GetControllerName(nameof(AccountController)), new { organisationId = _organisationId });
+        return this;
+    }
+
     public AhpBreadcrumbsBuilder WithOrganisation(string organisationName)
     {
         AddBreadcrumb(organisationName, nameof(AccountController.Index), GetControllerName(nameof(AccountController)), new { organisationId = _organisationId });
@@ -36,10 +42,23 @@ public class AhpBreadcrumbsBuilder : BreadcrumbsBuilderBase
         return this;
     }
 
-    public AhpBreadcrumbsBuilder WithSchemes()
+    public AhpBreadcrumbsBuilder WithProjectsList()
     {
-        //// TODO: fix after implementing schemes
-        AddBreadcrumb("Schemes", cssClass: "govuk-!-padding-right-4");
+        AddBreadcrumb("AHP CME projects", nameof(ProjectsController.Index), GetControllerName(nameof(ProjectsController)), new { organisationId = _organisationId });
+
+        return this;
+    }
+
+    public AhpBreadcrumbsBuilder WithProjectDetails(string projectName, string projectId)
+    {
+        AddBreadcrumb(projectName, nameof(ProjectController.Details), GetControllerName(nameof(ProjectController)), new { organisationId = _organisationId, projectId });
+
+        return this;
+    }
+
+    public AhpBreadcrumbsBuilder WithProjectApplications()
+    {
+        AddBreadcrumb("Applications", nameof(ProjectController.Applications), GetControllerName(nameof(ProjectController)), new { organisationId = _organisationId });
 
         return this;
     }
