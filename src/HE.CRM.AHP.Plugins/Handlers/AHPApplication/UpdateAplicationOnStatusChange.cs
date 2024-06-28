@@ -60,7 +60,7 @@ namespace HE.CRM.AHP.Plugins.Handlers.AHPApplication
 
         private void MapData(IList<invln_HomeType> hometypes)
         {
-            if (CurrentState.invln_Tenure.Value == (int)invln_Tenure.Socialrent)
+            if (CurrentState.invln_Tenure.Value == (int)invln_Tenure.SocialRent)
             {
                 return;
             }
@@ -69,14 +69,14 @@ namespace HE.CRM.AHP.Plugins.Handlers.AHPApplication
             var percentageValueofNDSSStandardMin = hometypes.Min(x => x.invln_PercentageValueofNDSSStandard);
             ExecutionData.Target.invln_Maximumm2asofNDSSoftheHomeTypesonthis = percentageValueofNDSSStandardMax;
             ExecutionData.Target.invln_Minimumm2asofNDSSoftheHomeTypesonthis = percentageValueofNDSSStandardMin;
-            if (CurrentState.invln_Tenure.Value == (int)invln_Tenure.Affordablerent ||
-                CurrentState.invln_Tenure.Value == (int)invln_Tenure.Renttobuy)
+            if (CurrentState.invln_Tenure.Value == (int)invln_Tenure.AffordableRent ||
+                CurrentState.invln_Tenure.Value == (int)invln_Tenure.RenttoBuy)
             {
                 ExecutionData.Target.invln_MaxRentasofMarketRentoftheHomeTypeson = hometypes.Max(x => x.invln_prospectiverentasofmarketrent);
                 ExecutionData.Target.invln_MinRentasofMarketRentoftheHomeTypeson = hometypes.Min(x => x.invln_prospectiverentasofmarketrent);
             }
 
-            if (CurrentState.invln_Tenure.Value == (int)invln_Tenure.Sharedownership ||
+            if (CurrentState.invln_Tenure.Value == (int)invln_Tenure.SharedOwnership ||
                 CurrentState.invln_Tenure.Value == (int)invln_Tenure.OPSO ||
                 CurrentState.invln_Tenure.Value == (int)invln_Tenure.HOLD)
             {

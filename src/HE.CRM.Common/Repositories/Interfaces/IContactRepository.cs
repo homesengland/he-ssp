@@ -1,7 +1,7 @@
 using System;
-using HE.Base.Repositories;
-using DataverseModel;
 using System.Collections.Generic;
+using DataverseModel;
+using HE.Base.Repositories;
 using Microsoft.Xrm.Sdk.Messages;
 
 namespace HE.CRM.Common.Repositories.Interfaces
@@ -16,5 +16,6 @@ namespace HE.CRM.Common.Repositories.Interfaces
         AssociateResponse ExecuteAssociateRequest(AssociateRequest request);
         List<Contact> GetContactsForOrganisation(Guid organisationId);
         List<Contact> GetOrganisationAdministrators(Guid organisationId);
+        Dictionary<Guid, string> GetContactsMapExternalIds(IEnumerable<Guid> contactIds);
     }
 }

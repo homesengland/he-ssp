@@ -6,6 +6,8 @@ namespace HE.CRM.Common.Api.FrontDoor.Contract
     {
         public Guid AccountId { get; set; }
 
+        public Guid ContactId { get; set; }
+
         public string ContactFirstName { get; set; }
 
         public string ContactLastName { get; set; }

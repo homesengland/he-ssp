@@ -1,13 +1,13 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using DataverseModel;
 using HE.Base.Repositories;
 using HE.CRM.Common.Repositories.Interfaces;
-using System.Linq;
-using Microsoft.Xrm.Sdk.Client;
-using Microsoft.Xrm.Sdk.Query;
-using System.Collections.Generic;
-using Microsoft.Xrm.Sdk.Messages;
 using Microsoft.Xrm.Sdk;
+using Microsoft.Xrm.Sdk.Client;
+using Microsoft.Xrm.Sdk.Messages;
+using Microsoft.Xrm.Sdk.Query;
 
 namespace HE.CRM.Common.Repositories.Implementations
 {
@@ -140,6 +140,31 @@ namespace HE.CRM.Common.Repositories.Implementations
                         select cnt).ToList();
 
             }
+        }
+
+        public Dictionary<Guid, string> GetContactsMapExternalIds(IEnumerable<Guid> contactIds)
+        {
+            logger.Trace($"{nameof(ContactRepository)}.{nameof(GetContactsMapExternalIds)}");
+            if (!contactIds.Any())
+            {
+                return default;
+            }
+
+            var query = new QueryExpression(Contact.EntityLogicalName)
+            {
+                ColumnSet = new ColumnSet(Contact.Fields.invln_externalid),
+                Criteria = new FilterExpression
+                {
+                    Conditions =
+                    {
+                        new ConditionExpression(Contact.PrimaryIdAttribute, ConditionOperator.In, contactIds.ToList())
+                    }
+                }
+            };
+
+            return RetrieveAll(query).Entities
+                .Select(e => e.ToEntity<Contact>())
+                .ToDictionary(p => p.Id, p => p.invln_externalid);
         }
     }
 }

@@ -120,6 +120,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FeatureFlags.cs" />
     <Compile Include="CrmPluginRegistrationAttribute.cs" />
     <Compile Include="Exceptions\IntegrationApiException.cs" />
     <Compile Include="Handlers\Accounts\GenerateRandomAccountNameSampleHandler.cs" />
@@ -174,6 +175,28 @@
     <Compile Include="Handlers\SiteDetails\FulfillRegionOnLocalAuthorityChangeHandler.cs" />
     <Compile Include="Handlers\SiteDetails\UpdateLoansApplicationAfterStatusChange.cs" />
     <Compile Include="Models\AzureAdToken.cs" />
+    <Compile Include="Models\FrontDoor\Contract\FrontDoorProjectContact.cs" />
+    <Compile Include="Models\FrontDoor\Contract\Requests\CheckProjectExistsRequest.cs" />
+    <Compile Include="Models\FrontDoor\Contract\Requests\DeactivateProjectRequest.cs" />
+    <Compile Include="Models\FrontDoor\Contract\Requests\RemoveSiteRequest.cs" />
+    <Compile Include="Models\FrontDoor\Contract\Requests\SaveProjectRequest.cs" />
+    <Compile Include="Models\FrontDoor\Contract\Requests\SaveSiteRequest.cs" />
+    <Compile Include="Models\FrontDoor\Contract\Responses\CheckProjectExistsResponse.cs" />
+    <Compile Include="Models\FrontDoor\Contract\Responses\DeactivateProjectResponse.cs" />
+    <Compile Include="Models\FrontDoor\Contract\Responses\GetMultipleSitesResponse.cs" />
+    <Compile Include="Models\FrontDoor\Contract\Responses\GetProjectResponse.cs" />
+    <Compile Include="Models\FrontDoor\Contract\Responses\GetProjectsResponse.cs" />
+    <Compile Include="Models\FrontDoor\Contract\Responses\GetSiteResponse.cs" />
+    <Compile Include="Models\FrontDoor\Contract\Responses\RemoveSiteResponse.cs" />
+    <Compile Include="Models\FrontDoor\Contract\Responses\SaveProjectResponse.cs" />
+    <Compile Include="Models\FrontDoor\Contract\Responses\SaveSiteResponse.cs" />
+    <Compile Include="Models\FrontDoor\FrontDoorApiUrls.cs" />
+    <Compile Include="Models\FrontDoor\Mappers\FrontDoorProjectContactMapper.cs" />
+    <Compile Include="Models\FrontDoor\Mappers\GetProjectResponseMapperService.cs" />
+    <Compile Include="Models\FrontDoor\Mappers\GetProjectsResponseMapperService.cs" />
+    <Compile Include="Models\FrontDoor\Mappers\GetSiteResponseMapperService.cs" />
+    <Compile Include="Models\FrontDoor\Mappers\IGetProjectResponseMapperService.cs" />
+    <Compile Include="Models\FrontDoor\Mappers\IGetProjectsResponseMapperService.cs" />
     <Compile Include="Plugins\Accounts\SendEmailOnRatingChangePlugin.cs" />
     <Compile Include="Plugins\ContactWebrole\PostCreate.cs" />
     <Compile Include="Plugins\Contract\RejectAddingWhenRelatedLoanInApprovedStatusPlugin.cs" />
@@ -292,8 +315,12 @@
     <Compile Include="Services\Contract\IContractService.cs" />
     <Compile Include="Services\FrontDoorProjectSite\FrontDoorProjectSiteService.cs" />
     <Compile Include="Services\FrontDoorProjectSite\IFrontDoorProjectSiteService.cs" />
+    <Compile Include="Services\FrontDoorProjectSite\V2\FrontDoorProjectSiteService.cs" />
+    <Compile Include="Services\FrontDoorProjectSite\V2\IFrontDoorProjectSiteService.cs" />
     <Compile Include="Services\FrontDoorProject\FrontDoorProjectService.cs" />
     <Compile Include="Services\FrontDoorProject\IFrontDoorProjectService.cs" />
+    <Compile Include="Services\FrontDoorProject\V2\FrontDoorProjectService.cs" />
+    <Compile Include="Services\FrontDoorProject\V2\IFrontDoorProjectService.cs" />
     <Compile Include="Services\GovNotifyEmail\GovNotifyEmailService.cs" />
     <Compile Include="Services\GovNotifyEmail\IGovNotifyEmailService.cs" />
     <Compile Include="Services\HttpServices\AzureAdHttpClientService.cs" />

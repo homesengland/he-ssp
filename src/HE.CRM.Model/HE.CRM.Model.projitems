@@ -174,6 +174,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_ProjectSpecificCondition.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_reviewapproval.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_scheme.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_SecretVariable.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_SiteDetails.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_Sites.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_StandardCondition.cs" />

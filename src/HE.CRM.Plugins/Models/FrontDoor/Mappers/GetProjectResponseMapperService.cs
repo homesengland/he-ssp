@@ -1,22 +1,46 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using HE.Base.Services;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.CRM.Common.Api.FrontDoor.Contract.Responses;
 
-namespace HE.CRM.Common.Api.FrontDoor.Mappers
+namespace HE.CRM.Plugins.Models.Frontdoor.Mappers
 {
-    public static class GetProjectResponseMapper
+    public class GetProjectResponseMapperService : CrmService, IGetProjectResponseMapperService
     {
-        public static FrontDoorProjectDto Map(GetProjectResponse response)
+
+        public GetProjectResponseMapperService(CrmServiceArgs args)
+            : base(args)
         {
-            // TODO: AB#98936 those 3 properties are not mapped: ProjectType, ProposedInterventions, LeadDirectorate. What should we do with them?
+        }
+
+        public FrontDoorProjectDto Map(GetProjectResponse response, Dictionary<Guid, string> contactsExternalIdMap)
+        {
+            if (response == null)
+            {
+                return null;
+            }
+
+            Logger.Trace($"{nameof(GetProjectResponseMapperService)}.{nameof(Map)}");
+
+            if (contactsExternalIdMap == null || !contactsExternalIdMap.Any())
+            {
+                Logger.Warn("contactsExternalIdMap is empty");
+            }
+
+            if (!contactsExternalIdMap.TryGetValue(response.PortalOwnerId, out var portalOwnerExternalId))
+            {
+                Logger.Warn($"Could not find externalId for contact with id '{response.PortalOwnerId}'");
+            }
+
             return new FrontDoorProjectDto
             {
                 ProjectId = response.ProjectRecordId.ToString(),
                 ProjectName = response.ProjectName,
                 CreatedOn = response.CreatedOn?.UtcDateTime,
                 OrganisationId = response.OrganisationId,
-                externalId = null,
+                externalId = portalOwnerExternalId,
                 ProjectSupportsHousingDeliveryinEngland = response.ProjectSupportsHousingDeliveryInEngland,
                 ActivitiesinThisProject = response.ActivitiesInThisProject?.ToList() ?? new List<int>(),
                 InfrastructureDelivered = response.InfrastructureDelivered?.ToList() ?? new List<int>(),
@@ -35,7 +59,7 @@ namespace HE.CRM.Common.Api.FrontDoor.Mappers
                 IntentiontoMakeaProfit = response.IntentionToMakeAProfit,
                 StartofProjectMonth = response.StartOfProjectMonth,
                 StartofProjectYear = response.StartOfProjectYear,
-                FrontDoorProjectContact = FrontDoorProjectContactMapper.Map(response.FrontDoorProjectContact),
+                FrontDoorProjectContact = FrontDoorProjectContactMapper.Map(response.FrontDoorProjectContact, contactsExternalIdMap),
             };
         }
     }

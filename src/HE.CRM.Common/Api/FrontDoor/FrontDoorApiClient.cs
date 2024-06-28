@@ -1,17 +1,16 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
-using System.Threading;
-using System.Threading.Tasks;
 using HE.Base.Services;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.CRM.Common.Api.Auth;
 using HE.CRM.Common.Api.Auth.AzureAd;
+using HE.CRM.Common.Api.Exceptions;
 using HE.CRM.Common.Api.FrontDoor.Contract.Requests;
 using HE.CRM.Common.Api.FrontDoor.Contract.Responses;
 using HE.CRM.Common.Api.FrontDoor.Mappers;
 using HE.CRM.Common.Repositories.Interfaces;
+using Microsoft.Xrm.Sdk;
 
 namespace HE.CRM.Common.Api.FrontDoor
 {
@@ -23,111 +22,185 @@ namespace HE.CRM.Common.Api.FrontDoor
             : base(args)
         {
             _httpClient = CreateHttpClient(
-                CrmRepositoriesFactory.GetSystem<IEnvironmentVariableRepository>(),
+                CrmRepositoriesFactory.Get<ISecretVariableRepository>(),
                 CrmServicesFactory.Get<IAzureAdTokenProviderFactory>());
         }
 
-        public async Task<bool> CheckProjectExists(Guid organisationId, string projectName, CancellationToken cancellationToken)
+        public bool CheckProjectExists(Guid organisationId, string projectName)
         {
+            Logger.Trace("FrontDoorApiClient.CheckProjectExists");
+
             var request = new CheckProjectExistsRequest
             {
                 PartnerRecordId = organisationId,
                 ProjectName = projectName,
             };
 
-            var response = await _httpClient.SendAsync<CheckProjectExistsRequest, CheckProjectExistsResponse>(
-                request,
-                FrontDoorApiUrls.CheckProjectExists,
-                HttpMethod.Post,
-                cancellationToken);
+            try
+            {
+                var response = _httpClient.Send<CheckProjectExistsRequest, CheckProjectExistsResponse>(
+                    request,
+                    FrontDoorApiUrls.CheckProjectExists,
+                    HttpMethod.Post);
 
-            return response.Result;
+                return response.Result;
+            }
+            catch (ApiException apiEx)
+            {
+                throw new InvalidPluginExecutionException(apiEx.Message);
+            }
         }
 
-        public async Task DeactivateProject(Guid projectId, CancellationToken cancellationToken)
+        public string DeactivateProject(Guid projectId)
         {
+            Logger.Trace("FrontDoorApiClient.DeactivateProject");
+
             var request = new DeactivateProjectRequest { ProjectRecordId = projectId };
 
-            await _httpClient.SendAsync<DeactivateProjectRequest, DeactivateProjectResponse>(
-                request,
-                FrontDoorApiUrls.DeactivateProject,
-                HttpMethod.Post,
-                cancellationToken);
+            try
+            {
+                var response = _httpClient.Send<DeactivateProjectRequest, DeactivateProjectResponse>(
+                    request,
+                    FrontDoorApiUrls.DeactivateProject,
+                    HttpMethod.Post);
+
+                return response.Result;
+            }
+            catch (ApiException apiEx)
+            {
+                throw new InvalidPluginExecutionException(apiEx.Message);
+            }
         }
 
-        public async Task RemoveSite(Guid siteId, CancellationToken cancellationToken)
+        public void RemoveSite(Guid siteId)
         {
+            Logger.Trace("FrontDoorApiClient.RemoveSite");
+
             var request = new RemoveSiteRequest { ProjectSiteRecordId = siteId };
 
-            await _httpClient.SendAsync<RemoveSiteRequest, RemoveSiteResponse>(
-                request,
-                FrontDoorApiUrls.RemoveSite,
-                HttpMethod.Post,
-                cancellationToken);
+            try
+            {
+                _httpClient.Send<RemoveSiteRequest, RemoveSiteResponse>(
+                    request,
+                    FrontDoorApiUrls.RemoveSite,
+                    HttpMethod.Post);
+            }
+            catch (ApiException apiEx)
+            {
+                throw new InvalidPluginExecutionException(apiEx.Message);
+            }
         }
 
-        public async Task<IList<FrontDoorProjectDto>> GetProjects(Guid organisationId, CancellationToken cancellationToken)
+        public GetProjectsResponse GetProjects(Guid organisationId)
         {
-            var response = await _httpClient.SendAsync<GetProjectsResponse>(
-                FrontDoorApiUrls.GetProjects(organisationId),
-                HttpMethod.Get,
-                cancellationToken);
+            Logger.Trace("FrontDoorApiClient.GetProjects");
 
-            return response.Select(GetProjectResponseMapper.Map).ToList();
+            try
+            {
+                var baseResponse = _httpClient.Send<GetProjectsResponse>(
+                    FrontDoorApiUrls.GetProjects(organisationId),
+                    HttpMethod.Get);
+
+                return baseResponse;
+            }
+            catch (ApiException apiEx)
+            {
+                throw new InvalidPluginExecutionException(apiEx.Message);
+            }
         }
 
-        public async Task<IList<FrontDoorProjectSiteDto>> GetSites(Guid projectId, CancellationToken cancellationToken)
+        public GetMultipleSitesResponse GetSites(Guid projectId)
         {
-            var response = await _httpClient.SendAsync<GetMultipleSitesResponse>(
+            Logger.Trace("FrontDoorApiClient.GetSites");
+
+            try
+            {
+                var response = _httpClient.Send<GetMultipleSitesResponse>(
                 FrontDoorApiUrls.GetSites(projectId),
-                HttpMethod.Get,
-                cancellationToken);
+                HttpMethod.Get);
 
-            return response.Select(GetSiteResponseMapper.Map).ToList();
+                return response;
+            }
+            catch (ApiException apiEx)
+            {
+                throw new InvalidPluginExecutionException(apiEx.Message);
+            }
         }
 
-        public async Task<FrontDoorProjectDto> GetProject(Guid projectId, CancellationToken cancellationToken)
+        public GetProjectResponse GetProject(Guid projectId)
         {
-            var response = await _httpClient.SendAsync<GetProjectResponse>(
+            Logger.Trace("FrontDoorApiClient.GetProject");
+
+            try
+            {
+                var response = _httpClient.Send<GetProjectResponse>(
                 FrontDoorApiUrls.GetProject(projectId),
-                HttpMethod.Get,
-                cancellationToken);
+                HttpMethod.Get);
 
-            return GetProjectResponseMapper.Map(response);
+                return response;
+            }
+            catch (ApiException apiEx)
+            {
+                throw new InvalidPluginExecutionException(apiEx.Message);
+            }
         }
 
-        public async Task<FrontDoorProjectSiteDto> GetSite(Guid siteId, CancellationToken cancellationToken)
+        public GetSiteResponse GetSite(Guid siteId)
         {
-            var response = await _httpClient.SendAsync<GetSiteResponse>(
-                FrontDoorApiUrls.GetSite(siteId),
-                HttpMethod.Get,
-                cancellationToken);
+            Logger.Trace("FrontDoorApiClient.GetSite");
 
-            return GetSiteResponseMapper.Map(response);
+            try
+            {
+                var response = _httpClient.Send<GetSiteResponse>(
+                        FrontDoorApiUrls.GetSite(siteId),
+                        HttpMethod.Get);
+
+                return response;
+            }
+            catch (ApiException apiEx)
+            {
+                throw new InvalidPluginExecutionException(apiEx.Message);
+            }
         }
 
-        public async Task<Guid> SaveProject(FrontDoorProjectDto dto, Guid userId, CancellationToken cancellationToken)
+        public SaveProjectResponse SaveProject(FrontDoorProjectDto dto, Guid userId)
         {
-            var request = SaveProjectRequestMapper.Map(dto, userId);
-            var response = await _httpClient.SendAsync<SaveProjectRequest, SaveProjectResponse>(
-                request,
-                FrontDoorApiUrls.SaveProject,
-                HttpMethod.Post,
-                cancellationToken);
+            Logger.Trace("FrontDoorApiClient.SaveProject");
 
-            return Guid.Parse(response.Result);
+            try
+            {
+                var request = SaveProjectRequestMapper.Map(dto, userId);
+                var response = _httpClient.Send<SaveProjectRequest, SaveProjectResponse>(
+                    request,
+                    FrontDoorApiUrls.SaveProject,
+                    HttpMethod.Post);
+
+                return response;
+            }
+            catch (ApiException apiEx)
+            {
+                throw new InvalidPluginExecutionException(apiEx.Message);
+            }
         }
 
-        public async Task<Guid> SaveSite(FrontDoorProjectSiteDto dto, Guid projectId, CancellationToken cancellationToken)
+        public SaveSiteResponse SaveSite(FrontDoorProjectSiteDto dto, Guid projectId)
         {
-            var request = SaveSiteRequestMapper.Map(dto, projectId);
-            var response = await _httpClient.SendAsync<SaveSiteRequest, SaveSiteResponse>(
-                request,
-                FrontDoorApiUrls.SaveSite,
-                HttpMethod.Post,
-                cancellationToken);
+            Logger.Trace("FrontDoorApiClient.SaveSite");
 
-            return Guid.Parse(response.Result);
+            try
+            {
+                var request = SaveSiteRequestMapper.Map(dto, projectId);
+                var response = _httpClient.Send<SaveSiteRequest, SaveSiteResponse>(
+                    request,
+                    FrontDoorApiUrls.SaveSite,
+                    HttpMethod.Post);
+
+                return response;
+            }
+            catch (ApiException apiEx)
+            {
+                throw new InvalidPluginExecutionException(apiEx.Message);
+            }
         }
 
         public void Dispose()
@@ -136,18 +209,27 @@ namespace HE.CRM.Common.Api.FrontDoor
         }
 
         private static ApiHttpClient CreateHttpClient(
-            IEnvironmentVariableRepository environmentVariables,
+            ISecretVariableRepository secretVariableRepository,
             IAzureAdTokenProviderFactory tokenProviderFactory)
         {
+            var secrets = secretVariableRepository.GetMultiple(
+                EnvironmentVariables.FrontDoorApiBaseUrl,
+                EnvironmentVariables.AzureAd.TenantId,
+                EnvironmentVariables.AzureAd.ClientId,
+                EnvironmentVariables.AzureAd.ClientSecret,
+                EnvironmentVariables.AzureAd.Scope
+            );
+
             var azureAdAuthConfig = new AzureAdAuthConfig
             {
-                TenantId = environmentVariables.GetEnvironmentVariableValue(EnvironmentVariables.AzureAd.TenantId),
-                ClientId = environmentVariables.GetEnvironmentVariableValue(EnvironmentVariables.AzureAd.ClientId),
-                ClientSecret = environmentVariables.GetEnvironmentVariableValue(EnvironmentVariables.AzureAd.ClientSecret),
-                Scope = environmentVariables.GetEnvironmentVariableValue(EnvironmentVariables.AzureAd.Scope),
+                TenantId = secrets.First(x => x.invln_Name == EnvironmentVariables.AzureAd.TenantId).invln_Value,
+                ClientId = secrets.First(x => x.invln_Name == EnvironmentVariables.AzureAd.ClientId).invln_Value,
+                ClientSecret = secrets.First(x => x.invln_Name == EnvironmentVariables.AzureAd.ClientSecret).invln_Value,
+                Scope = secrets.First(x => x.invln_Name == EnvironmentVariables.AzureAd.Scope).invln_Value,
             };
+
             var tokenProvider = tokenProviderFactory.Create(azureAdAuthConfig);
-            var frontDoorApiUrl = environmentVariables.GetEnvironmentVariableValue(EnvironmentVariables.FrontDoorApiBaseUrl);
+            var frontDoorApiUrl = secrets.First(x => x.invln_Name == EnvironmentVariables.FrontDoorApiBaseUrl).invln_Value;
             var httpClient = new HttpClient(new BearerTokenAuthorizationHandler(tokenProvider))
             {
                 BaseAddress = new Uri(frontDoorApiUrl)

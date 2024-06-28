@@ -17,7 +17,7 @@ namespace DataverseModel
 	{
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Affordablerent = 858110000,
+		AffordableRent = 858110000,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		HOLD = 858110004,
@@ -26,13 +26,13 @@ namespace DataverseModel
 		OPSO = 858110005,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Renttobuy = 858110003,
+		RenttoBuy = 858110003,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Sharedownership = 858110002,
+		SharedOwnership = 858110002,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Socialrent = 858110001,
+		SocialRent = 858110001,
 	}
 }
 #pragma warning restore CS1591

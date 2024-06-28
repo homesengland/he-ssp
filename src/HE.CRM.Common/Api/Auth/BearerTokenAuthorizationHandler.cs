@@ -10,15 +10,16 @@ namespace HE.CRM.Common.Api.Auth
         private readonly ITokenProvider _tokenProvider;
 
         public BearerTokenAuthorizationHandler(ITokenProvider tokenProvider)
+            : base(new HttpClientHandler())
         {
             _tokenProvider = tokenProvider;
         }
 
-        protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+        protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
-            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", await _tokenProvider.GetToken());
+            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", _tokenProvider.GetToken());
 
-            return await base.SendAsync(request, cancellationToken);
+            return base.SendAsync(request, cancellationToken);
         }
     }
 }
