@@ -9,6 +9,7 @@ namespace HE.CRM.Plugins.Handlers.CustomApi.FrontDoor
     public class CheckIfFrontDoorProjectWithGivenNameExistsHandler : CrmActionHandlerBase<invln_checkiffrontdoorprojectwithgivennameexistsRequest, DataverseContext>
     {
         #region Fields
+
         private string FrontDoorProjectName => ExecutionData.GetInputParameter<string>(invln_checkiffrontdoorprojectwithgivennameexistsRequest.Fields.invln_frontdoorprojectname);
         private string OrganisationId => ExecutionData.GetInputParameter<string>(invln_checkiffrontdoorprojectwithgivennameexistsRequest.Fields.invln_organisationid);
         private string UseHeTablesFromPortal => ExecutionData.GetInputParameter<string>(invln_checkiffrontdoorprojectwithgivennameexistsRequest.Fields.invln_usehetables);
@@ -51,8 +52,5 @@ namespace HE.CRM.Plugins.Handlers.CustomApi.FrontDoor
             }
         }
         #endregion
-
-
-
     }
 }

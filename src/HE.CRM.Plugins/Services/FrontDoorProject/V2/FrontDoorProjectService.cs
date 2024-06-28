@@ -7,7 +7,6 @@ using HE.Base.Services;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.CRM.Common.Api.FrontDoor;
 using HE.CRM.Common.Api.FrontDoor.Contract.Responses;
-using HE.CRM.Common.DtoMapping;
 using HE.CRM.Common.Repositories.Interfaces;
 using HE.CRM.Plugins.Models.Frontdoor.Mappers;
 using Microsoft.Xrm.Sdk;
@@ -19,7 +18,6 @@ namespace HE.CRM.Plugins.Services.FrontDoorProject.V2
 
         #region Fields
 
-        //private readonly ApiHttpClient _httpClient;
         private readonly IFrontDoorApiClient _frontDoorApiClient;
 
         private readonly IFrontDoorProjectRepository _frontDoorProjectRepository;
@@ -34,6 +32,13 @@ namespace HE.CRM.Plugins.Services.FrontDoorProject.V2
 
         private readonly IContactWebroleRepository _contactWebroleRepository;
 
+        private readonly JsonSerializerOptions _jsonSerializerOptions = new JsonSerializerOptions
+        {
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+            PropertyNameCaseInsensitive = true,
+            //DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
+        };
+
         #endregion
 
         #region Constructors
@@ -41,10 +46,6 @@ namespace HE.CRM.Plugins.Services.FrontDoorProject.V2
             IGetProjectsResponseMapperService getProjectsResponseMapperService,
             IGetProjectResponseMapperService getProjectResponseMapperService) : base(args)
         {
-            //_httpClient = CreateHttpClient(
-            //    CrmRepositoriesFactory.Get<ISecretVariableRepository>(),
-            //    CrmServicesFactory.Get<IAzureAdTokenProviderFactory>());
-
             _frontDoorApiClient = CrmServicesFactory.Get<IFrontDoorApiClient>();
 
             _frontDoorProjectRepository = CrmRepositoriesFactory.Get<IFrontDoorProjectRepository>();
@@ -62,94 +63,65 @@ namespace HE.CRM.Plugins.Services.FrontDoorProject.V2
         #endregion
 
 
-        public string CreateRecordFromPortal(string externalContactId, string organisationId, string frontDoorProjectId, string entityFieldsParameters, bool useHeTables)
+        public string CreateRecordFromPortal(string externalContactId, string organisationId, string frontDoorProjectId, string entityFieldsParameters)
         {
-            Guid frontdoorprojectGUID = Guid.NewGuid();
-            this.TracingService.Trace("entityFieldsParameters:" + entityFieldsParameters);
-            FrontDoorProjectDto frontDoorProjectFromPortal = JsonSerializer.Deserialize<FrontDoorProjectDto>(entityFieldsParameters);
+            Logger.Trace($"FrontDoorProject.V2.{nameof(GetFrontDoorProjects)}");
+
+            var frontDoorProjectFromPortal = JsonSerializer.Deserialize<FrontDoorProjectDto>(entityFieldsParameters, _jsonSerializerOptions);
             var requestContact = _contactRepository.GetContactViaExternalId(externalContactId);
 
-            if (useHeTables)
+            var requestObj = HE.CRM.Common.Api.FrontDoor.Mappers.SaveProjectRequestMapper.Map(frontDoorProjectFromPortal, requestContact.Id);
+            var request = JsonSerializer.Serialize(requestObj, _jsonSerializerOptions);
+            Logger.Trace($"request: {request}");
+            var response = _frontDoorApiClient.SaveProject(frontDoorProjectFromPortal, requestContact.Id);
+
+            //if (frontDoorProjectFromPortal.LocalAuthorityCode != null)
+            //{
+            //    var localAuthorityGUID = _heLocalAuthorityRepository.GetLocalAuthorityWithGivenCode(frontDoorProjectFromPortal.LocalAuthorityCode)?.Id;
+            //    if (localAuthorityGUID != null)
+            //    {
+            //        frontDoorProjectFromPortal.LocalAuthority = localAuthorityGUID.ToString();
+            //    }
+            //    else
+            //    {
+            //        frontDoorProjectFromPortal.LocalAuthority = null;
+            //    }
+            //}
+            //else
+            //{
+            //    frontDoorProjectFromPortal.LocalAuthority = null;
+            //}
+
+
+            return response.Result;
+
+            /*
+            var frontDoorProjecToCreate = FrontDoorProjectMapper.MapDtoToProjectEntity(frontDoorProjectFromPortal, requestContact, organisationId);
+
+            // Update Or Create a Project Record
+            if (!string.IsNullOrEmpty(frontDoorProjectId) && Guid.TryParse(frontDoorProjectId, out Guid projectId))
             {
-                if (frontDoorProjectFromPortal.LocalAuthorityCode != null)
-                {
-                    var localAuthorityGUID = _heLocalAuthorityRepository.GetLocalAuthorityWithGivenCode(frontDoorProjectFromPortal.LocalAuthorityCode)?.Id;
-                    if (localAuthorityGUID != null)
-                    {
-                        frontDoorProjectFromPortal.LocalAuthority = localAuthorityGUID.ToString();
-                    }
-                    else
-                    {
-                        frontDoorProjectFromPortal.LocalAuthority = null;
-                    }
-                }
-                else
-                {
-                    frontDoorProjectFromPortal.LocalAuthority = null;
-                }
-
-                var frontDoorProjecToCreate = FrontDoorProjectMapper.MapDtoToProjectEntity(frontDoorProjectFromPortal, requestContact, organisationId);
-
-                // Update Or Create a Project Record
-                if (!string.IsNullOrEmpty(frontDoorProjectId) && Guid.TryParse(frontDoorProjectId, out Guid projectId))
-                {
-                    this.TracingService.Trace("Update Project");
-                    frontdoorprojectGUID = projectId;
-                    frontDoorProjecToCreate.Id = projectId;
-                    _heProjectRepository.Update(frontDoorProjecToCreate);
-                    this.TracingService.Trace("After update record");
-                }
-                else
-                {
-                    this.TracingService.Trace("Create Project");
-                    frontdoorprojectGUID = _heProjectRepository.Create(frontDoorProjecToCreate);
-                    this.TracingService.Trace("After create record");
-                }
+                this.TracingService.Trace("Update Project");
+                frontdoorprojectGUID = projectId;
+                frontDoorProjecToCreate.Id = projectId;
+                _heProjectRepository.Update(frontDoorProjecToCreate);
+                this.TracingService.Trace("After update record");
             }
             else
             {
-                if (frontDoorProjectFromPortal.LocalAuthorityCode != null)
-                {
-                    var localAuthorityGUID = _localAuthorityRepository.GetLocalAuthorityWithGivenOnsCode(frontDoorProjectFromPortal.LocalAuthorityCode)?.Id;
-                    if (localAuthorityGUID != null)
-                    {
-                        frontDoorProjectFromPortal.LocalAuthority = localAuthorityGUID.ToString();
-                    }
-                    else
-                    {
-                        frontDoorProjectFromPortal.LocalAuthority = null;
-                    }
-                }
-                else
-                {
-                    frontDoorProjectFromPortal.LocalAuthority = null;
-                }
-
-                var frontDoorProjecToCreate = FrontDoorProjectMapper.MapDtoToRegularEntity(frontDoorProjectFromPortal, requestContact, organisationId);
-
-                // Update Or Create a FrontDoorProject Record
-                if (!string.IsNullOrEmpty(frontDoorProjectId) && Guid.TryParse(frontDoorProjectId, out Guid projectId))
-                {
-                    this.TracingService.Trace("Update FrontDoorProjectPOC");
-                    frontdoorprojectGUID = projectId;
-                    frontDoorProjecToCreate.Id = projectId;
-                    _frontDoorProjectRepository.Update(frontDoorProjecToCreate);
-                    this.TracingService.Trace("After update record");
-                }
-                else
-                {
-                    this.TracingService.Trace("Create FrontDoorProject");
-                    frontdoorprojectGUID = _frontDoorProjectRepository.Create(frontDoorProjecToCreate);
-                    this.TracingService.Trace("After create record");
-                }
+                this.TracingService.Trace("Create Project");
+                frontdoorprojectGUID = _heProjectRepository.Create(frontDoorProjecToCreate);
+                this.TracingService.Trace("After create record");
             }
+            
 
             return frontdoorprojectGUID.ToString();
+            */
         }
 
         public List<FrontDoorProjectDto> GetFrontDoorProjects(Guid organisationId, string externalContactId = null)
         {
-            Logger.Trace($"{nameof(FrontDoorProjectService)}.{nameof(GetFrontDoorProjects)}");
+            Logger.Trace($"FrontDoorProject.V2.{nameof(GetFrontDoorProjects)}");
 
             var baseProjects = _frontDoorApiClient.GetProjects(organisationId);
 
@@ -201,11 +173,7 @@ namespace HE.CRM.Plugins.Services.FrontDoorProject.V2
 
         public FrontDoorProjectDto GetFrontDoorProject(Guid organisationId, string externalContactId, Guid frontDoorProjectId, string includeInactive = null)
         {
-            Logger.Trace($"{nameof(FrontDoorProjectService)}.{nameof(GetFrontDoorProject)}");
-
-            //var project = _httpClient.Send<GetProjectResponse>(
-            //    FrontDoorApiUrls.GetProject(frontDoorProjectId),
-            //    HttpMethod.Get);
+            Logger.Trace($"FrontDoorProject.V2.{nameof(GetFrontDoorProject)}");
 
             var project = _frontDoorApiClient.GetProject(frontDoorProjectId);
 
@@ -273,72 +241,5 @@ namespace HE.CRM.Plugins.Services.FrontDoorProject.V2
                 return frontDoorProjectAfter.StateCode.Value == (int)invln_FrontDoorProjectPOCState.Inactive;
             }
         }
-
-        private string GenerateFetchXmlAttributes(string fieldsToRetrieve)
-        {
-            var fields = fieldsToRetrieve.Split(',');
-            var generatedAttribuesFetchXml = "";
-            if (fields.Length > 0)
-            {
-                foreach (var field in fields)
-                {
-                    generatedAttribuesFetchXml += $"<attribute name=\"{field}\" />";
-                }
-            }
-            return generatedAttribuesFetchXml;
-        }
-
-        private string GetFetchXmlConditionForGivenField(string fieldValue, string fieldName)
-        {
-            if (!string.IsNullOrEmpty(fieldValue))
-            {
-                return $"<condition attribute=\"{fieldName}\" operator=\"eq\" value=\"{fieldValue}\" />";
-            }
-            return string.Empty;
-        }
-
-        private string GenerateFilterMarksForCondition(string condition)
-        {
-            if (!string.IsNullOrEmpty(condition))
-            {
-                return $"<filter>{condition}</filter>";
-            }
-            return string.Empty;
-        }
-
-        //public void Dispose()
-        //{
-        //    _httpClient?.Dispose();
-        //}
-
-        //private static ApiHttpClient CreateHttpClient(
-        //    ISecretVariableRepository secretVariableRepository,
-        //    IAzureAdTokenProviderFactory tokenProviderFactory)
-        //{
-        //    var secrets = secretVariableRepository.GetMultiple(
-        //        EnvironmentVariables.FrontDoorApiBaseUrl,
-        //        EnvironmentVariables.AzureAd.TenantId,
-        //        EnvironmentVariables.AzureAd.ClientId,
-        //        EnvironmentVariables.AzureAd.ClientSecret,
-        //        EnvironmentVariables.AzureAd.Scope
-        //    );
-
-        //    var azureAdAuthConfig = new AzureAdAuthConfig
-        //    {
-        //        TenantId = secrets.First(x => x.invln_Name == EnvironmentVariables.AzureAd.TenantId).invln_Value,
-        //        ClientId = secrets.First(x => x.invln_Name == EnvironmentVariables.AzureAd.ClientId).invln_Value,
-        //        ClientSecret = secrets.First(x => x.invln_Name == EnvironmentVariables.AzureAd.ClientSecret).invln_Value,
-        //        Scope = secrets.First(x => x.invln_Name == EnvironmentVariables.AzureAd.Scope).invln_Value,
-        //    };
-
-        //    var tokenProvider = tokenProviderFactory.Create(azureAdAuthConfig);
-        //    var frontDoorApiUrl = secrets.First(x => x.invln_Name == EnvironmentVariables.FrontDoorApiBaseUrl).invln_Value;
-        //    var httpClient = new HttpClient(new BearerTokenAuthorizationHandler(tokenProvider))
-        //    {
-        //        BaseAddress = new Uri(frontDoorApiUrl)
-        //    };
-
-        //    return new ApiHttpClient(httpClient);
-        //}
     }
 }

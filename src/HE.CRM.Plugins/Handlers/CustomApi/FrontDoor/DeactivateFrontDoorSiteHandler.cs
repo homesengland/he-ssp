@@ -29,7 +29,7 @@ namespace HE.CRM.Plugins.Handlers.CustomApi.FrontDoor
             var frontDoorSiteIdGuid = Guid.Parse(FrontDoorSiteId);
             var result = false;
 
-            if (FeatureFlags.UseNewFrontDoorApiManagement && false)
+            if (FeatureFlags.UseNewFrontDoorApiManagement)
             { // New frontdoor apim
                 var service = CrmServicesFactory.Get<FrontDoorProjectV2.IFrontDoorProjectSiteService>();
                 result = service.DeactivateFrontDoorSite(frontDoorSiteIdGuid);

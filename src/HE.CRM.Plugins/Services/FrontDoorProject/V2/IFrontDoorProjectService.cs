@@ -8,7 +8,7 @@ namespace HE.CRM.Plugins.Services.FrontDoorProject.V2
 {
     public interface IFrontDoorProjectService : ICrmService
     {
-        string CreateRecordFromPortal(string externalContactId, string organisationId, string frontDoorProjectId, string entityFieldsParameters, bool useHeTables);
+        string CreateRecordFromPortal(string externalContactId, string organisationId, string frontDoorProjectId, string entityFieldsParameters);
         List<FrontDoorProjectDto> GetFrontDoorProjects(Guid organisationId, string externalContactId = null);
         FrontDoorProjectDto GetFrontDoorProject(Guid organisationId, string externalContactId, Guid frontDoorProjectId, string includeInactive = null);
         bool CheckIfFrontDoorProjectWithGivenNameExists(string frontDoorProjectName, Guid organisationId);

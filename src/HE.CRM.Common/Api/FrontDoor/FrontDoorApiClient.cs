@@ -30,6 +30,8 @@ namespace HE.CRM.Common.Api.FrontDoor
 
         public bool CheckProjectExists(Guid organisationId, string projectName)
         {
+            Logger.Trace("FrontDoorApiClient.CheckProjectExists");
+
             var request = new CheckProjectExistsRequest
             {
                 PartnerRecordId = organisationId,
@@ -47,6 +49,8 @@ namespace HE.CRM.Common.Api.FrontDoor
 
         public void DeactivateProject(Guid projectId)
         {
+            Logger.Trace("FrontDoorApiClient.DeactivateProject");
+
             var request = new DeactivateProjectRequest { ProjectRecordId = projectId };
 
             _httpClient.Send<DeactivateProjectRequest, DeactivateProjectResponse>(
@@ -57,6 +61,8 @@ namespace HE.CRM.Common.Api.FrontDoor
 
         public void RemoveSite(Guid siteId)
         {
+            Logger.Trace("FrontDoorApiClient.RemoveSite");
+
             var request = new RemoveSiteRequest { ProjectSiteRecordId = siteId };
 
             _httpClient.Send<RemoveSiteRequest, RemoveSiteResponse>(
@@ -139,24 +145,40 @@ namespace HE.CRM.Common.Api.FrontDoor
 
         public SaveProjectResponse SaveProject(FrontDoorProjectDto dto, Guid userId)
         {
-            var request = SaveProjectRequestMapper.Map(dto, userId);
-            var response = _httpClient.Send<SaveProjectRequest, SaveProjectResponse>(
-                request,
-                FrontDoorApiUrls.SaveProject,
-                HttpMethod.Post);
+            Logger.Trace("FrontDoorApiClient.SaveProject");
+            try
+            {
+                var request = SaveProjectRequestMapper.Map(dto, userId);
+                var response = _httpClient.Send<SaveProjectRequest, SaveProjectResponse>(
+                    request,
+                    FrontDoorApiUrls.SaveProject,
+                    HttpMethod.Post);
 
-            return response;
+                return response;
+            }
+            catch (ApiException apiEx)
+            {
+                throw new InvalidPluginExecutionException(apiEx.Message);
+            }
         }
 
         public SaveSiteResponse SaveSite(FrontDoorProjectSiteDto dto, Guid projectId)
         {
-            var request = SaveSiteRequestMapper.Map(dto, projectId);
-            var response = _httpClient.Send<SaveSiteRequest, SaveSiteResponse>(
-                request,
-                FrontDoorApiUrls.SaveSite,
-                HttpMethod.Post);
+            Logger.Trace("FrontDoorApiClient.SaveSite");
+            try
+            {
+                var request = SaveSiteRequestMapper.Map(dto, projectId);
+                var response = _httpClient.Send<SaveSiteRequest, SaveSiteResponse>(
+                    request,
+                    FrontDoorApiUrls.SaveSite,
+                    HttpMethod.Post);
 
-            return response;
+                return response;
+            }
+            catch (ApiException apiEx)
+            {
+                throw new InvalidPluginExecutionException(apiEx.Message);
+            }
         }
 
         public void Dispose()

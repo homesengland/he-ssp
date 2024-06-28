@@ -77,6 +77,8 @@ namespace HE.CRM.Plugins.Handlers.CustomApi.FrontDoor
                     var frontDoorProjectDtoListSerialized = JsonSerializer.Serialize(frontDoorProjectsDtoList);
                     ExecutionData.SetOutputParameter(invln_getsinglefrontdoorprojectResponse.Fields.invln_retrievedfrontdoorprojectfields, frontDoorProjectDtoListSerialized);
                 }
+
+                Logger.Trace("end");
             }
 
             #endregion
