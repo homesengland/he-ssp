@@ -21,6 +21,7 @@ namespace HE.CRM.AHP.Plugins.Plugins.DeliveryPhase
         invln_DeliveryPhase.Fields.StatusCode,
         "HE.CRM.AHP.Plugins.Plugins.DeliveryPhase.PreUpdateDeliveryPhase : PreUpdate of Delivery Phase",
         1,
+
         IsolationModeEnum.Sandbox,
         Id = "acb6edf2-59bf-42fd-8416-74ba9b55e51a",
         Image1Name = "PreImage",
