@@ -28,7 +28,7 @@ public class NumberOfGreenLightsCtorTests
         // then
         result.Should()
             .Throw<DomainValidationException>()
-            .WithMessage("The value you enter for the Building for Life green traffic lights must be a whole number");
+            .WithMessage("The value you enter for the number of green lights must be a whole number");
     }
 
     [Fact]
@@ -40,7 +40,7 @@ public class NumberOfGreenLightsCtorTests
         // then
         result.Should()
             .Throw<DomainValidationException>()
-            .WithMessage("The value you enter for the Building for Life green traffic lights must be 0 or more");
+            .WithMessage("The value you enter for the number of green lights must be 0 or more");
     }
 
     [Fact]
@@ -52,6 +52,6 @@ public class NumberOfGreenLightsCtorTests
         // then
         result.Should()
             .Throw<DomainValidationException>()
-            .WithMessage("The value you enter for the Building for Life green traffic lights must be 12 or fewer");
+            .WithMessage("The value you enter for the number of green lights must be 12 or fewer");
     }
 }

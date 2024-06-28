@@ -6,7 +6,7 @@ namespace HE.Investment.AHP.Domain.Site.ValueObjects;
 
 public class NumberOfGreenLights : TheRequiredIntValueObject
 {
-    private const string DisplayName = "value you enter for the Building for Life green traffic lights";
+    private const string DisplayName = "value you enter for the number of green lights";
 
     private const int MinValue = 0;
 
