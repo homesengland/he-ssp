@@ -51,6 +51,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         _summaryViewModelFactory = summaryViewModelFactory;
     }
 
+    [ConsortiumAuthorize]
     [WorkflowState(HomeTypesWorkflowState.Index)]
     [HttpGet]
     public async Task<IActionResult> Index([FromRoute] string applicationId, CancellationToken cancellationToken)
