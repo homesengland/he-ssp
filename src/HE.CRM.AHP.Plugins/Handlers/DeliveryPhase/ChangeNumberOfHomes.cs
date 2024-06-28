@@ -34,7 +34,11 @@ namespace HE.CRM.AHP.Plugins.Handlers.DeliveryPhase
             var milestoneframeworks = _milestoneFrameworkRepository.GetMilestoneFrameworkItemByProgrammeId(application.invln_programmelookup.Id.ToString());
             var df = CrmServicesFactory.Get<IDeliveryPhaseService>().CalculateFunding(application, CurrentState, milestoneframeworks, ExecutionData.Target);
             if (df == null)
+            {
+                TracingService.Trace("df = null");
                 return;
+            }
+
             ExecutionData.Target.invln_AcquisitionPercentageValue = df.invln_AcquisitionPercentageValue;
             ExecutionData.Target.invln_AcquisitionValue = df.invln_AcquisitionValue;
             ExecutionData.Target.invln_StartOnSitePercentageValue = df.invln_StartOnSitePercentageValue;
