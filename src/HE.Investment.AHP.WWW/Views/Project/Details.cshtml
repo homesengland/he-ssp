@@ -1,5 +1,5 @@
 @using HE.Investments.Common.WWW.Components.PageHeader
-@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Links
+@using HE.Investment.AHP.WWW.Routing
 @using HE.Investments.Common.Extensions
 @using HE.Investments.Common.WWW.Components.ApplicationStatusTagComponent
 @using HE.Investments.Common.WWW.Components.ListCard
@@ -8,9 +8,18 @@
 @{
     var title = Model.ProjectName;
     ViewData["Title"] = title;
+    var organisationId = Context.Request.RouteValues["organisationId"]?.ToString();
+    var projectId = Context.Request.RouteValues["projectId"]?.ToString();
+
+    ViewBag.Breadcrumbs = AhpBreadcrumbsBuilder
+        .Empty(organisationId)
+        .WithOrganisations()
+        .WithOrganisation(Model.OrganisationName)
+        .WithProjectsList()
+        .WithProjectDetails(Model.ProjectName, projectId!)
+        .Build();
 }
-<div class="govuk-grid-column-full">
-    <gds-back-link href="@Url.OrganisationAction("Index", "Projects")" class="govuk-!-margin-bottom-8"></gds-back-link>
+<div class="govuk-grid-column-full govuk-!-margin-top-6">
     <vc:page-header title="@title" caption="@Model.OrganisationName"/>
 
     <gds-div-grid-column-two-thirds class="govuk-!-padding-left-0">
