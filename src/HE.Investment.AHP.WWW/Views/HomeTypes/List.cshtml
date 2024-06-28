@@ -1,3 +1,4 @@
+@using HE.Investment.AHP.Contract.Application
 @using HE.Investment.AHP.WWW.Routing
 @using HE.Investment.AHP.WWW.Extensions
 @using HE.Investment.AHP.Contract.HomeTypes.Enums
@@ -5,7 +6,9 @@
 @using HE.Investment.AHP.WWW.Views.Shared.Components.ReturnToApplicationLink
 @using HE.Investments.Common.Extensions
 @using HE.Investments.Common.Gds
+@using HE.Investments.Common.WWW.Components.FormButton
 @using HE.Investments.Common.WWW.Extensions
+@using Microsoft.AspNetCore.Mvc.TagHelpers
 @model HE.Investment.AHP.WWW.Models.HomeTypes.HomeTypeListModel
 
 @{
@@ -23,6 +26,11 @@
 <div class="govuk-grid-column-full govuk-!-margin-top-6">
     <partial name="~/Partials/Errors/_ErrorSummaryPartial.cshtml"/>
     <vc:notification/>
+
+    @if (Model.AllowedOperations.Contains(AhpApplicationOperation.RequestToEdit))
+    {
+    <partial name="_LockedApplicationInformation"/>
+    }
 
     <span class="govuk-caption-l govuk-!-margin-top-1">@Model.ApplicationName</span>
     <gds-h1>@HomeTypesPageTitles.HomeTypes</gds-h1>
