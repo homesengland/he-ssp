@@ -22,7 +22,7 @@ namespace HE.CRM.Common.Api.FrontDoor.Mappers
                 IdentifiedSite = dto.IdentifiedSite,
                 GeographicFocus = dto.GeographicFocus,
                 Region = dto.Region?.ToArray(),
-                LocalAuthority = dto.LocalAuthorityCode,
+                LocalAuthorityCode = dto.LocalAuthorityCode,
                 NumberOfHomesEnabledBuilt = dto.NumberofHomesEnabledBuilt,
                 WouldYourProjectFailWithoutHeSupport = dto.WouldyourprojectfailwithoutHEsupport,
                 FundingRequired = dto.FundingRequired,

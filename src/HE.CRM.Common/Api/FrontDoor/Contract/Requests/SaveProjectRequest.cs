@@ -30,7 +30,7 @@ namespace HE.CRM.Common.Api.FrontDoor.Contract.Requests
 
         public int[] Region { get; set; }
 
-        public string LocalAuthority { get; set; }
+        public string LocalAuthorityCode { get; set; }
 
         public int? NumberOfHomesEnabledBuilt { get; set; }
 
