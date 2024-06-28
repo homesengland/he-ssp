@@ -14,8 +14,9 @@
   text-align: left;
 }
 
-.govuk-breadcrumbs__link--inactive{
+.govuk-breadcrumbs__link--inactive {
   pointer-events: none;
+  text-decoration: none;
 }
 
 .govuk-button--disabled{
