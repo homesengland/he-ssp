@@ -61,7 +61,7 @@ public class WithDevelopingPartnerTests
         var provide = () => testCandidate.WithDevelopingPartner(InvestmentsOrganisationTestData.JjCompany, null);
 
         // then
-        provide.Should().Throw<DomainValidationException>().WithMessage("Select yes if you want to confirm the developing partner");
+        provide.Should().Throw<DomainValidationException>().WithMessage("Select yes to confirm the developing partner");
     }
 
     [Fact]
