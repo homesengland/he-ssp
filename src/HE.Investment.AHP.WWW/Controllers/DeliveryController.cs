@@ -27,6 +27,7 @@ public class DeliveryController : Controller
         _mediator = mediator;
     }
 
+    [ConsortiumAuthorize]
     [HttpGet("start")]
     public async Task<IActionResult> Start(string applicationId, CancellationToken cancellationToken)
     {
