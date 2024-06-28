@@ -18,11 +18,9 @@
 
         <vc:error-message field-name="@Model.fieldName"/>
 
-        <div class="govuk-radios" data-module="govuk-radios">
-            <vc:radio-list-content
-                field-name="@Model.fieldName"
-                available-options="@Model.availableOptions"
-                value="@Model.value"/>
-        </div>
+        <vc:radio-list-content
+            field-name="@Model.fieldName"
+            available-options="@Model.availableOptions"
+            value="@Model.value"/>
     </gds-field-set>
 </gds-div-form-group>
