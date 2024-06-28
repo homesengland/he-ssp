@@ -1,5 +1,4 @@
 using HE.Investments.Account.Shared;
-using HE.Investments.AHP.Consortium.Contract;
 using HE.Investments.AHP.Consortium.Contract.Commands;
 using HE.Investments.AHP.Consortium.Contract.Enums;
 using HE.Investments.AHP.Consortium.Domain.Entities;
@@ -39,7 +38,7 @@ public class CreateConsortiumCommandHandler : IRequestHandler<CreateConsortiumCo
     {
         if (request.ProgrammeId.IsNotProvided())
         {
-            OperationResult.ThrowValidationError("SelectedProgrammeId", "Please select what programme the consortium is related to");
+            OperationResult.ThrowValidationError("SelectedProgrammeId", "Please select which programme the consortium is related to");
         }
 
         var programme = await _mediator.Send(new GetProgrammeQuery(request.ProgrammeId!), cancellationToken);
