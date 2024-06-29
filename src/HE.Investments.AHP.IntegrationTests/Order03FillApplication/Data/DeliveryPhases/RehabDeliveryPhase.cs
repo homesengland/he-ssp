@@ -31,15 +31,15 @@ public sealed class RehabDeliveryPhase : DeliveryPhaseDataBase<RehabDeliveryPhas
 
     public RehabDeliveryPhase GenerateAcquisitionMilestone()
     {
-        AcquisitionMilestoneDate = new DateDetails("29", "11", "2025");
-        AcquisitionMilestonePaymentDate = new DateDetails("01", "01", "2026");
+        AcquisitionMilestoneDate = new DateDetails("01", "02", "2025");
+        AcquisitionMilestonePaymentDate = new DateDetails("10", "02", "2025");
         return this;
     }
 
     public RehabDeliveryPhase GenerateStartOnSiteMilestone()
     {
-        StartOnSiteMilestoneDate = new DateDetails("30", "11", "2025");
-        StartOnSiteMilestonePaymentDate = new DateDetails("01", "02", "2026");
+        StartOnSiteMilestoneDate = new DateDetails("01", "03", "2025");
+        StartOnSiteMilestonePaymentDate = new DateDetails("15", "03", "2025");
         return this;
     }
 
