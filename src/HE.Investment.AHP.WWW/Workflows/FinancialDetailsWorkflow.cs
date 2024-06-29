@@ -52,7 +52,7 @@ public class FinancialDetailsWorkflow : IStateRouting<FinancialDetailsWorkflowSt
             { OwnResourcesContribution: var x } when x.IsNotProvided() => FinancialDetailsWorkflowState.Contributions,
             { RecycledCapitalGrantFundContribution: var x } when x.IsNotProvided() => FinancialDetailsWorkflowState.Contributions,
             { OtherCapitalContributions: var x } when x.IsNotProvided() => FinancialDetailsWorkflowState.Contributions,
-            { TransferValueOfHomes: var x } when x.IsNotProvided() => FinancialDetailsWorkflowState.Contributions,
+            { TransferValueOfHomes: var x } when x.IsNotProvided() && IsUnregisteredBody() => FinancialDetailsWorkflowState.Contributions,
             { CountyCouncilGrants: var x } when x.IsNotProvided() => FinancialDetailsWorkflowState.Grants,
             { DhscExtraCareGrants: var x } when x.IsNotProvided() => FinancialDetailsWorkflowState.Grants,
             { LocalAuthorityGrants: var x } when x.IsNotProvided() => FinancialDetailsWorkflowState.Grants,
@@ -98,4 +98,6 @@ public class FinancialDetailsWorkflow : IStateRouting<FinancialDetailsWorkflowSt
         _machine.Configure(FinancialDetailsWorkflowState.CheckAnswers)
           .Permit(Trigger.Back, FinancialDetailsWorkflowState.Grants);
     }
+
+    private bool IsUnregisteredBody() => _model.IsUnregisteredBody;
 }

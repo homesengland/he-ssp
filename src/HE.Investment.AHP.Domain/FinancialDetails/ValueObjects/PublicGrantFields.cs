@@ -6,24 +6,24 @@ public enum PublicGrantFields
 {
     Undefined,
 
-    [Description("county council public grant value")]
+    [Description("amount you received from the county council")]
     CountyCouncilGrants,
 
-    [Description("DHSC Extra Care funding grant value")]
+    [Description("amount you received from DHSC Extra Care funding")]
     DhscExtraCareGrants,
 
-    [Description("local authority funding grant value")]
+    [Description("amount you received from local authority funding")]
     LocalAuthorityGrants,
 
-    [Description("social services funding grant value")]
+    [Description("amount you received from social services funding")]
     SocialServicesGrants,
 
-    [Description("health-related bodies grant value")]
+    [Description("amount you received from health-related bodies")]
     HealthRelatedGrants,
 
-    [Description("lottery funding grant value")]
+    [Description("amount you received from lottery funding")]
     LotteryGrants,
 
-    [Description("other public bodies grant value")]
+    [Description("amount you received from other public bodies")]
     OtherPublicBodiesGrants,
 }
