@@ -29,6 +29,6 @@ public class GetDeliveryPhasesQueryHandler : IRequestHandler<GetDeliveryPhasesQu
             ApplicationBasicInfoMapper.Map(deliveryPhases.Application),
             deliveryPhases.UnusedHomeTypesCount,
             account.SelectedOrganisation().IsUnregisteredBody,
-            deliveryPhases.DeliveryPhases.OrderByDescending(x => x.CreatedOn).Select(DeliveryPhaseEntityMapper.ToDeliveryPhaseBasicDetails).ToList());
+            deliveryPhases.DeliveryPhases.OrderBy(x => x.CreatedOn).Select(DeliveryPhaseEntityMapper.ToDeliveryPhaseBasicDetails).ToList());
     }
 }
