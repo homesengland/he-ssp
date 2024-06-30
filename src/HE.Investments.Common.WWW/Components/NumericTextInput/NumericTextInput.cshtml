@@ -26,7 +26,7 @@
         {
             <div class="govuk-input__prefix" aria-hidden="true">@Model.prefix</div>
         }
-        <input class="@inputClass" id="@Model.fieldName" name="@Model.fieldName" type="text" spellcheck="false" value="@Model.value">
+        <input class="@inputClass" id="@Model.fieldName" name="@Model.fieldName" type="text" spellcheck="false" value="@Model.value" aria-label="@Model.fieldName">
         @if (!string.IsNullOrWhiteSpace(Model.suffix))
         {
             <div class="govuk-input__suffix" aria-hidden="true">@Model.suffix</div>
