@@ -24,16 +24,16 @@ internal sealed class ProjectContextSelectorDecorator : IProjectContext
         _apiContextFactory = apiContextFactory;
     }
 
-    public async Task<FrontDoorProjectDto> GetOrganisationProjectById(string projectId, string organisationId, CancellationToken cancellationToken)
+    public async Task<FrontDoorProjectDto> GetOrganisationProjectById(string projectId, string organisationId, CancellationToken cancellationToken, bool? includeInactive = null)
     {
         var context = await GetProjectContext();
-        return await context.GetOrganisationProjectById(projectId, organisationId, cancellationToken);
+        return await context.GetOrganisationProjectById(projectId, organisationId, cancellationToken, includeInactive);
     }
 
-    public async Task<FrontDoorProjectDto> GetUserProjectById(string projectId, string userGlobalId, string organisationId, CancellationToken cancellationToken)
+    public async Task<FrontDoorProjectDto> GetUserProjectById(string projectId, string userGlobalId, string organisationId, CancellationToken cancellationToken, bool? includeInactive = null)
     {
         var context = await GetProjectContext();
-        return await context.GetUserProjectById(projectId, userGlobalId, organisationId, cancellationToken);
+        return await context.GetUserProjectById(projectId, userGlobalId, organisationId, cancellationToken, includeInactive);
     }
 
     public async Task<FrontDoorProjectSiteDto> GetProjectSite(string projectId, string siteId, CancellationToken cancellationToken)

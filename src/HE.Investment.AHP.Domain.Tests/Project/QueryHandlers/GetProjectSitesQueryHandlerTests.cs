@@ -6,6 +6,8 @@ using HE.Investment.AHP.Domain.Tests.Project.TestData;
 using HE.Investment.AHP.Domain.Tests.Project.TestDataBuilders;
 using HE.Investments.AHP.Consortium.Domain.Tests.TestObjectBuilders;
 using HE.Investments.Common.Contract.Pagination;
+using HE.Investments.Common.Tests.TestData;
+using HE.Investments.FrontDoor.Shared.Project;
 using HE.Investments.TestsUtils.TestFramework;
 
 namespace HE.Investment.AHP.Domain.Tests.Project.QueryHandlers;
@@ -23,6 +25,11 @@ public class GetProjectSitesQueryHandlerTests : TestBase<GetProjectSitesQueryHan
             .New()
             .Register(this)
             .ConsortiumUserFromMock;
+
+        PrefillDataRepositoryTestBuilder
+            .New()
+            .ReturnProjectPrefillData(projectSites.Id, userAccount, ProjectPrefillDataTestData.FirstProjectPrefillData)
+            .BuildMockAndRegister(this);
 
         ProjectRepositoryTestBuilder
             .New()
@@ -67,6 +74,11 @@ public class GetProjectSitesQueryHandlerTests : TestBase<GetProjectSitesQueryHan
             .Register(this)
             .ConsortiumUserFromMock;
 
+        PrefillDataRepositoryTestBuilder
+            .New()
+            .ReturnProjectPrefillData(projectSites.Id, userAccount, ProjectPrefillDataTestData.FirstProjectPrefillData)
+            .BuildMockAndRegister(this);
+
         ProjectRepositoryTestBuilder
             .New()
             .ReturnProjectSites(
@@ -106,6 +118,11 @@ public class GetProjectSitesQueryHandlerTests : TestBase<GetProjectSitesQueryHan
             .New()
             .Register(this)
             .ConsortiumUserFromMock;
+
+        PrefillDataRepositoryTestBuilder
+            .New()
+            .ReturnProjectPrefillData(projectSites.Id, userAccount, ProjectPrefillDataTestData.FirstProjectPrefillData)
+            .BuildMockAndRegister(this);
 
         ProjectRepositoryTestBuilder
             .New()
