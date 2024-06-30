@@ -5,7 +5,7 @@ using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.CRM.Common.Api.FrontDoor.Contract.Responses;
 using HE.CRM.Common.Repositories.Interfaces;
 
-namespace HE.CRM.Plugins.Models.Frontdoor.Mappers
+namespace HE.CRM.Common.Api.FrontDoor.Mappers
 {
     public class GetProjectsResponseMapperService : CrmService, IGetProjectsResponseMapperService
     {

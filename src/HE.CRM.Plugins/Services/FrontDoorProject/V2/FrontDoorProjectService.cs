@@ -7,8 +7,8 @@ using HE.Base.Services;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.CRM.Common.Api.FrontDoor;
 using HE.CRM.Common.Api.FrontDoor.Contract.Responses;
+using HE.CRM.Common.Api.FrontDoor.Mappers;
 using HE.CRM.Common.Repositories.Interfaces;
-using HE.CRM.Plugins.Models.Frontdoor.Mappers;
 
 namespace HE.CRM.Plugins.Services.FrontDoorProject.V2
 {
@@ -66,7 +66,7 @@ namespace HE.CRM.Plugins.Services.FrontDoorProject.V2
             Logger.Trace($"frontDoorProjectFromPortal.Local auth code = {frontDoorProjectFromPortal.LocalAuthorityCode}");
             var requestContact = _contactRepository.GetContactViaExternalId(externalContactId);
 
-            var requestObj = HE.CRM.Common.Api.FrontDoor.Mappers.SaveProjectRequestMapper.Map(frontDoorProjectFromPortal, requestContact.Id);
+            var requestObj = SaveProjectRequestMapper.Map(frontDoorProjectFromPortal, requestContact.Id);
             var request = JsonSerializer.Serialize(requestObj, _jsonSerializerOptions);
             Logger.Trace($"request: {request}");
             var response = _frontDoorApiClient.SaveProject(frontDoorProjectFromPortal, requestContact.Id);
