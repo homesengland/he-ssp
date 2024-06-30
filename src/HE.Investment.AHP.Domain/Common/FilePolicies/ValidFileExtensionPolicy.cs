@@ -1,5 +1,6 @@
 using HE.Investment.AHP.Domain.Common.ValueObjects;
 using HE.Investment.AHP.Domain.Documents.Config;
+using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Messages;
 
@@ -16,13 +17,15 @@ public class ValidFileExtensionPolicy : IFilePolicy<FileName>
         _documentSettings = documentSettings;
     }
 
-    public void Apply(FileName value)
+    public void Apply(FileName value, OperationResult operationResult)
     {
         if (!_documentSettings.AllowedExtensions.Contains(value.Extension))
         {
-            OperationResult.New()
-                .AddValidationError(_fieldName, GenericValidationError.InvalidFileType(value.Value, _documentSettings.AllowedExtensions.Select(x => x.Value)))
-                .CheckErrors();
+            operationResult.Aggregate(() => throw new DomainValidationException(
+                        _fieldName,
+                        GenericValidationError
+                            .InvalidFileType(value.Value, _documentSettings.AllowedExtensions
+                                .Select(x => x.Value))));
         }
     }
 }

@@ -21,6 +21,23 @@ public static class ModelStateExtensions
         return (true, modelState[key]!.GetErrorMessage());
     }
 
+    public static (bool HasAnyError, List<string> Messages) GetErrorList(this ModelStateDictionary? modelState, string key)
+    {
+        if (modelState is null)
+        {
+            return (false, []);
+        }
+
+        var hasError = modelState.GetFieldValidationState(key) == ModelValidationState.Invalid;
+        if (!hasError)
+        {
+            return (false, []);
+        }
+
+        var errorMessages = modelState[key]!.Errors.Select(e => e.ErrorMessage).ToList();
+        return (true, errorMessages);
+    }
+
     public static Dictionary<string, string> GetOrderedErrors(this ModelStateDictionary modelState, List<string> orderedKeys)
     {
         return modelState

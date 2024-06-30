@@ -29,6 +29,6 @@ public class DisplayAsUkFormatOnlyMonthAndYearDateTests
         var result = DateHelper.DisplayAsUkFormatOnlyMonthAndYearDate(date);
 
         // then
-        result.Should().Be("01/2022");
+        result.Should().Be("January 2022");
     }
 }

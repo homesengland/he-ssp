@@ -17,7 +17,7 @@ public class DisplayAsUkFormatDateWithConditionTests
         var result = DateHelper.DisplayAsUkFormatDateWithCondition(date, additionalInput);
 
         // then
-        result.Should().Be("Yes, 01/01/2022");
+        result.Should().Be("Yes, 1 January 2022");
     }
 
     [Fact]

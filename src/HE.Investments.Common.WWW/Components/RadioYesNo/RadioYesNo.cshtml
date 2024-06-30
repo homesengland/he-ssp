@@ -7,7 +7,7 @@
 @using HE.Investments.Common.Extensions
 @using Microsoft.AspNetCore.Html;
 
-@model (string fieldName, string title, InputTitleType titleType, DynamicComponentViewModel additionalContent, string hint, bool? value, bool isDisplayed)
+@model (string fieldName, string title, InputTitleType titleType, DynamicComponentViewModel additionalContent, string hint, string paragraph, bool? value, bool isDisplayed)
 @{
     var (hasError, radioErrors) = ViewData.ModelState.GetErrors(Model.fieldName);
     var groupClass = hasError ? "govuk-form-group--error" : string.Empty;
@@ -22,7 +22,7 @@
 {
     <gds-div-form-group class="@groupClass">
         <gds-field-set>
-            <vc:input-list-header title="@Model.title" title-type="@Model.titleType" additional-content="@Model.additionalContent" hint="@Model.hint"/>
+            <vc:input-list-header title="@Model.title" title-type="@Model.titleType" additional-content="@Model.additionalContent" hint="@Model.hint" paragraph="@Model.paragraph"/>
 
             <vc:error-message field-name="@Model.fieldName"/>
 

@@ -8,8 +8,9 @@ public class InputListHeader : ViewComponent
         string? title = null,
         InputTitleType? titleType = null,
         DynamicComponentViewModel? additionalContent = null,
-        string? hint = null)
+        string? hint = null,
+        string? paragraph = null)
     {
-        return View("InputListHeader", (title, titleType ?? InputTitleType.InputTitle, additionalContent, hint));
+        return View("InputListHeader", (title, titleType ?? InputTitleType.InputTitle, additionalContent, hint, paragraph));
     }
 }
