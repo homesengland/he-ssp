@@ -41,9 +41,9 @@ public class DisplayAsUkFormatDateTests
     }
 
     [Theory]
-    [InlineData("31", "12", "2024", "31/12/2024")]
-    [InlineData("01", "02", "2020", "01/02/2020")]
-    [InlineData("1", "2", "2020", "01/02/2020")]
+    [InlineData("31", "12", "2024", "31 December 2024")]
+    [InlineData("01", "02", "2020", "1 February 2020")]
+    [InlineData("1", "2", "2020", "1 February 2020")]
     public void ShouldReturnUkFormattedDate_WhenDateIsRealDate(string day, string month, string year, string expectedResult)
     {
         // given

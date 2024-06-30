@@ -29,6 +29,6 @@ public class DisplayAsUkFormatDateTests
         var result = DateHelper.DisplayAsUkFormatDate(date);
 
         // then
-        result.Should().Be("01/01/2022");
+        result.Should().Be("1 January 2022");
     }
 }
