@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.CRM.Common.Api.FrontDoor.Contract;
 
-namespace HE.CRM.Plugins.Models.Frontdoor.Mappers
+namespace HE.CRM.Common.Api.FrontDoor.Mappers
 {
     public static class FrontDoorProjectContactMapper
     {

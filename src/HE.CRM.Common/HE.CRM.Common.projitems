@@ -39,6 +39,12 @@
     <Compile Include="$(MSBuildThisFileDirectory)Api\FrontDoor\FrontDoorApiClient.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Api\FrontDoor\FrontDoorApiUrls.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Api\FrontDoor\IFrontDoorApiClient.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Api\FrontDoor\Mappers\FrontDoorProjectContactMapper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Api\FrontDoor\Mappers\GetProjectResponseMapperService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Api\FrontDoor\Mappers\GetProjectsResponseMapperService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Api\FrontDoor\Mappers\GetSiteResponseMapperService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Api\FrontDoor\Mappers\IGetProjectResponseMapperService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Api\FrontDoor\Mappers\IGetProjectsResponseMapperService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Api\FrontDoor\Mappers\SaveProjectRequestMapper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Api\FrontDoor\Mappers\SaveSiteRequestMapper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)dtomapping\AhpApplicationMapper.cs" />

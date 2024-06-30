@@ -5,7 +5,7 @@ using HE.Base.Services;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.CRM.Common.Api.FrontDoor.Contract.Responses;
 
-namespace HE.CRM.Plugins.Models.Frontdoor.Mappers
+namespace HE.CRM.Common.Api.FrontDoor.Mappers
 {
     public class GetProjectResponseMapperService : CrmService, IGetProjectResponseMapperService
     {
@@ -53,6 +53,7 @@ namespace HE.CRM.Plugins.Models.Frontdoor.Mappers
                 StartofProjectMonth = response.StartOfProjectMonth,
                 StartofProjectYear = response.StartOfProjectYear,
                 FrontDoorProjectContact = FrontDoorProjectContactMapper.Map(response.FrontDoorProjectContact, contactsExternalIdMap),
+                EligibleApplication = response.FrontDoorDecision?.ToList() ?? new List<int>(),
             };
         }
     }
