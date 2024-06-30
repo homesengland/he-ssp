@@ -6,11 +6,13 @@
 @using HE.Investment.AHP.Contract.Delivery
 @using HE.Investment.AHP.WWW.Extensions
 @using HE.Investment.AHP.WWW.Models.Delivery
+@using HE.Investments.Common.Gds
 @using HE.Investments.Common.Messages
 @using HE.Investments.Common.WWW.Components.PageHeader
 @using HE.Investments.Common.WWW.Components.RadioYesNo
 @using HE.Investments.Common.WWW.Extensions
 @using HE.Investments.Common.WWW.Helpers
+@using HE.Investments.Common.WWW.TagHelpers
 @inject ModelExpressionProvider ModelProvider
 @model DeliveryPhaseDetails;
 @{
@@ -65,7 +67,7 @@
             <dl class="govuk-summary-list govuk-!-margin-bottom-8">
                 <div class="govuk-summary-list__row">
                     <dt class="govuk-summary-list__key">
-                        <gds-h2 size="ControlSize.S">
+                        <gds-h2 class="govuk-heading-s">
                             Grant apportioned to this phase
                         </gds-h2>
                         <p class="govuk-body govuk-!-margin-bottom-1" data-testid="grant-apportioned-value">@((summaryOfDelivery?.GrantApportioned).DisplayPoundsPences() ?? "-")</p>
@@ -140,8 +142,9 @@
                 {
                     <vc:radio-yes-no
                         field-name="Tranches.SummaryOfDelivery.UnderstandClaimingMilestones"
-                        title="Do you understand that you must have incurred costs and made payments to at least the level of the grant in these revised milestone amounts before claiming the milestone?"
+                        title="Claiming the milestones"
                         title-type="InputTitleType.InputTitle"
+                        paragraph="Do you understand that you must have incurred costs and made payments to at least the level of the grant in these revised milestone amounts before claiming the milestone?"
                         value=@Model.Tranches?.SummaryOfDelivery?.UnderstandClaimingMilestones/>
 
                     <vc:form-button/>

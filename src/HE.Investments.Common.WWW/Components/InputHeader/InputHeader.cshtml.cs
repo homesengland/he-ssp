@@ -9,8 +9,9 @@ public class InputHeader : ViewComponent
         string? title = null,
         InputTitleType? titleType = null,
         string? hint = null,
+        string? boldParagraph = null,
         string? paragraph = null)
     {
-        return View("InputHeader", (fieldName, title, titleType ?? InputTitleType.InputTitle, hint, paragraph));
+        return View("InputHeader", (fieldName, title, titleType ?? InputTitleType.InputTitle, hint, boldParagraph, paragraph));
     }
 }

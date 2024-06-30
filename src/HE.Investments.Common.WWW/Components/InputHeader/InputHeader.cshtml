@@ -1,6 +1,6 @@
 @using HE.Investments.Common.WWW.Components
 
-@model (string fieldName, string title, HE.Investments.Common.WWW.Components.InputTitleType titleType, string hint, string paragraph)
+@model (string fieldName, string title, HE.Investments.Common.WWW.Components.InputTitleType titleType, string hint, string boldParagraph, string paragraph)
 
 @{
     var cssClass = Model.titleType switch
@@ -9,7 +9,7 @@
         InputTitleType.InputTitle => "govuk-label govuk-label--m",
         InputTitleType.InputDescription => "govuk-label",
         _ => string.Empty,
-        };
+    };
 }
 
 @if (!string.IsNullOrWhiteSpace(Model.title))
@@ -34,4 +34,12 @@
     <he-div-hint>
         @Model.hint
     </he-div-hint>
+}
+
+@if (!string.IsNullOrWhiteSpace(Model.boldParagraph))
+{
+    foreach (var line in Model.boldParagraph.Split(Environment.NewLine))
+    {
+        <div class="govuk-heading-s govuk-!-margin-top-7">@line</div>
+    }
 }
