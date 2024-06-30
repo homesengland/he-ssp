@@ -16,7 +16,7 @@ public static class CommonProjectApiUrls
 
         if (includeInactive != null)
         {
-            query.Add("includeInactive", includeInactive.Value.ToString());
+            query.Add("includeInactive", includeInactive.Value.ToString().ToLowerInvariant());
         }
 
         return $"{url}{query.ToQueryString()}";

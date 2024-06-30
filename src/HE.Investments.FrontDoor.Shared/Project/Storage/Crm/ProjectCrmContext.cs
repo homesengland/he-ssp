@@ -16,7 +16,7 @@ internal sealed class ProjectCrmContext : IProjectContext
         _service = service;
     }
 
-    public async Task<FrontDoorProjectDto> GetOrganisationProjectById(string projectId, string organisationId, CancellationToken cancellationToken)
+    public async Task<FrontDoorProjectDto> GetOrganisationProjectById(string projectId, string organisationId, CancellationToken cancellationToken, bool? includeInactive = null)
     {
         var request = new invln_getsinglefrontdoorprojectRequest
         {
@@ -29,7 +29,7 @@ internal sealed class ProjectCrmContext : IProjectContext
         return await GetProject(request, cancellationToken);
     }
 
-    public async Task<FrontDoorProjectDto> GetUserProjectById(string projectId, string userGlobalId, string organisationId, CancellationToken cancellationToken)
+    public async Task<FrontDoorProjectDto> GetUserProjectById(string projectId, string userGlobalId, string organisationId, CancellationToken cancellationToken, bool? includeInactive = null)
     {
         var request = new invln_getsinglefrontdoorprojectRequest
         {

@@ -25,8 +25,8 @@ internal sealed class PrefillDataRepository : IPrefillDataRepository
     {
         var organisationId = userAccount.SelectedOrganisationId().Value;
         var project = userAccount.CanViewAllApplications()
-            ? await _context.GetOrganisationProjectById(projectId.Value, organisationId, cancellationToken)
-            : await _context.GetUserProjectById(projectId.Value, userAccount.UserGlobalId.Value, organisationId, cancellationToken);
+            ? await _context.GetOrganisationProjectById(projectId.Value, organisationId, cancellationToken, true)
+            : await _context.GetUserProjectById(projectId.Value, userAccount.UserGlobalId.Value, organisationId, cancellationToken, true);
 
         var sites = project.IdentifiedSite == true
             ? await _context.GetProjectSites(projectId.Value, cancellationToken)
