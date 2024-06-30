@@ -37,12 +37,16 @@
 </he-div-grid-column-full>
 
 <gds-div-grid-column-two-thirds>
-    <a
-        class="govuk-heading-m govuk-!-margin-top-9 @(Model.CanManageConsortium ? null : "link-disabled")"
-        href="@(Model.CanManageConsortium ? Url.OrganisationAction(nameof(ConsortiumController.Start), new ControllerName(nameof(ConsortiumController)).WithoutPrefix()) : null)"
-        data-testId="create-new-consortium">
-        Create new consortium
-    </a>
+    @if (Model.CanManageConsortium)
+    {
+        <a
+            class="govuk-heading-m govuk-!-margin-top-9"
+            href="@Url.OrganisationAction(nameof(ConsortiumController.Start), new ControllerName(nameof(ConsortiumController)).WithoutPrefix())"
+            data-testId="create-new-consortium">
+            Create new consortium
+        </a>
+    }
+
     <div class="govuk-!-margin-bottom-9 govuk-!-margin-top-7">
         <gds-p>
             A consortium is a group of organisations or separate legal entities acting together to deliver homes under the Affordable Homes Programme.
