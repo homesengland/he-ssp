@@ -80,7 +80,8 @@
         hasErrors = true;
         addInputFieldError(errorMessage);
         addInputFieldErrorSummary(errorMessage);
-      } else if (!allowedExtensionsArray.includes(getFileExtension(file.name))) {
+      }
+      if (!allowedExtensionsArray.includes(getFileExtension(file.name))) {
         const errorMessage = `The selected file ${sanitize(file.name)} must be a ${allowedExtensions}`;
 
         hasErrors = true;

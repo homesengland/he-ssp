@@ -1,4 +1,5 @@
-@model (string title, string fieldName, string allowedExtensions, string customHeader, int? maxFileSizeInMb, string description, string multiple, bool isHidden, bool hasFileError, string fileErrorMessage, string uploadOneFileUrl, string removeFileUrlTemplate, string downloadFileUrlTemplate)
+@using HE.Investments.Common.Extensions
+@model (string title, string fieldName, string allowedExtensions, string customHeader, int? maxFileSizeInMb, string description, string multiple, bool isHidden, bool hasFileError, List<string> fileErrorMessages, string uploadOneFileUrl, string removeFileUrlTemplate, string downloadFileUrlTemplate)
 
 @if (!string.IsNullOrWhiteSpace(Model.title))
 {
@@ -48,14 +49,17 @@
             </label>
         }
 
-        @if (Model.hasFileError)
+        @if (Model.hasFileError && Model.fileErrorMessages.IsProvided())
         {
-            <span id="File-error"
-                  class="govuk-error-message field-validation-error"
-                  data-valmsg-for="@Model.fieldName"
-                  data-valmsg-replace="true">
-                <span class="govuk-visually-hidden">Error:</span>@Model.fileErrorMessage
-            </span>
+            foreach (var errorMessage in Model.fileErrorMessages)
+            {
+                <span id="File-error"
+                      class="govuk-error-message field-validation-error"
+                      data-valmsg-for="@(Model.fieldName)"
+                      data-valmsg-replace="true">
+                    <span class="govuk-visually-hidden">Error:</span>@errorMessage
+                </span>
+            }
         }
         <input class="govuk-file-upload" id="@Model.fieldName" name="@Model.fieldName" type="file" @Model.multiple>
     }
