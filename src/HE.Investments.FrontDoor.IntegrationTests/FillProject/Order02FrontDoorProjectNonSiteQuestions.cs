@@ -126,6 +126,6 @@ public class Order02FrontDoorProjectNonSiteQuestions : FrontDoorIntegrationTest
         summary.Should().ContainKey("Homes your project enables").WithValue(ProjectData.HomesNumber.ToString(CultureInfo.InvariantCulture));
         summary.Should().ContainKey("Project progress more slowly or stall").WithValue(ProjectData.IsSupportRequired.MapToCommonResponse());
         summary.Should().ContainKey("Funding required").WithValue(ProjectData.IsFundingRequired.MapToCommonResponse());
-        summary.Should().ContainKey("Expected project start date").WithValue($"{ProjectData.ExpectedStartDate.Month:00}/{ProjectData.ExpectedStartDate.Year}");
+        summary.Should().ContainKey("Expected project start date").WithValue($"{CultureInfo.InvariantCulture.DateTimeFormat.GetMonthName(ProjectData.ExpectedStartDate.Month)} {ProjectData.ExpectedStartDate.Year}");
     }
 }

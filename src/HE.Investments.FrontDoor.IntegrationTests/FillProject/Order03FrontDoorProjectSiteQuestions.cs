@@ -247,7 +247,7 @@ public class Order03FrontDoorProjectSiteQuestions : FrontDoorIntegrationTest
         summary.Should().ContainKey("Funding required").WithValue(ProjectData.IsFundingRequired.MapToCommonResponse());
         summary.Should().ContainKey("How much funding").WithValue(ProjectData.RequiredFunding.GetDescription());
         summary.Should().ContainKey("Intention to make a profit").WithValue(ProjectData.IsProfit.MapToCommonResponse());
-        summary.Should().ContainKey("Expected project start date").WithValue($"{ProjectData.ExpectedStartDate.Month:00}/{ProjectData.ExpectedStartDate.Year}");
+        summary.Should().ContainKey("Expected project start date").WithValue($"{CultureInfo.InvariantCulture.DateTimeFormat.GetMonthName(ProjectData.ExpectedStartDate.Month)} {ProjectData.ExpectedStartDate.Year}");
     }
 
     [Fact(Skip = FrontDoorConfig.SkipTest)]
