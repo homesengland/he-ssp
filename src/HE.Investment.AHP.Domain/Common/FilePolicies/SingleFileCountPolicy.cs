@@ -14,11 +14,11 @@ public class SingleFileCountPolicy : IFilePolicy<int>
         _fieldName = fieldName;
     }
 
-    public void Apply(int value)
+    public void Apply(int value, OperationResult operationResult)
     {
         if (value > AllowedNumberOfFiles)
         {
-            OperationResult.New().AddValidationError(_fieldName, GenericValidationError.FileCountLimit(AllowedNumberOfFiles)).CheckErrors();
+            operationResult.AddValidationError(_fieldName, GenericValidationError.FileCountLimit(AllowedNumberOfFiles));
         }
     }
 }

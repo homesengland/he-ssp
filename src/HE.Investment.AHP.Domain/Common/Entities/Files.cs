@@ -1,6 +1,7 @@
 using HE.Investment.AHP.Domain.Common.FilePolicies;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Exceptions;
+using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Extensions;
 
 namespace HE.Investment.AHP.Domain.Common.Entities;
@@ -25,7 +26,9 @@ public class Files<TFileEntity>
 
     public void AddFilesToUpload(IList<TFileEntity> files)
     {
-        _filesCountPolicy?.Apply(UploadedFiles.Count + _filesToUpload.Count + files.Count - _filesToRemove.Count);
+        var operationResult = OperationResult.New();
+        _filesCountPolicy?.Apply(UploadedFiles.Count + _filesToUpload.Count + files.Count - _filesToRemove.Count, operationResult);
+        operationResult.CheckErrors();
 
         foreach (var file in files)
         {
