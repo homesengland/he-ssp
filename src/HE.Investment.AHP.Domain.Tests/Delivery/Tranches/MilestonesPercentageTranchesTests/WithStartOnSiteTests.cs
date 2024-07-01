@@ -38,6 +38,6 @@ public class WithStartOnSiteTests
         var result = () => milestonesPercentageTranches.WithStartOnSite(startOnSitePercentage);
 
         // then
-        result.Should().Throw<DomainValidationException>().WithMessage("Start on site tranche must be at max 95% or less of the grant apportioned");
+        result.Should().Throw<DomainValidationException>().WithMessage("Start on site tranche must be 95% or less of the grant apportioned");
     }
 }
