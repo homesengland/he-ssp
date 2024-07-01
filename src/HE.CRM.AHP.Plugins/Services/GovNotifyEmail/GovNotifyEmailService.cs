@@ -554,7 +554,7 @@ namespace HE.CRM.AHP.Plugins.Services.GovNotifyEmail
                 user = _systemUserRepositoryAdmin.GetById(account.invln_ProviderManagementLead.Id, SystemUser.Fields.FullName, SystemUser.Fields.DomainName);
             }
 
-            if (account != null && user != null && emailTemplate != null)
+            if (account != null && emailTemplate != null)
             {
                 var subject = emailTemplate.invln_subject.Replace("[SchemeName]", ahpApplication.invln_schemename);
 
@@ -578,17 +578,24 @@ namespace HE.CRM.AHP.Plugins.Services.GovNotifyEmail
                     WriteIndented = true
                 };
 
-                govNotParams.personalisation.recipientEmail = user.DomainName;
+                govNotParams.personalisation.recipientEmail = "Housing.Contracts@homesengland.gov.uk";
                 var parameters = JsonSerializer.Serialize(govNotParams, options);
                 this.SendGovNotifyEmail(ahpApplication.OwnerId, ahpApplication.ToEntityReference(), subject, parameters, emailTemplate);
 
-                govNotParams.personalisation.recipientEmail = "Housing.Contracts@homesengland.gov.uk";
-                parameters = JsonSerializer.Serialize(govNotParams, options);
-                this.SendGovNotifyEmail(ahpApplication.OwnerId, ahpApplication.ToEntityReference(), subject, parameters, emailTemplate);
+                if (user != null)
+                {
+                    govNotParams.personalisation.recipientEmail = user.DomainName;
+                    parameters = JsonSerializer.Serialize(govNotParams, options);
+                    this.SendGovNotifyEmail(ahpApplication.OwnerId, ahpApplication.ToEntityReference(), subject, parameters, emailTemplate);
+                }
+                else
+                {
+                    TracingService.Trace("Probably there is no invln_ProviderManagementLead on Account. Mail not sent.");
+                }
             }
             else
             {
-                TracingService.Trace("Probably there is no email template or invln_ProviderManagementLead on Account. Mail not sent.");
+                TracingService.Trace("Probably there is no email template. Mail not sent.");
             }
         }
 
