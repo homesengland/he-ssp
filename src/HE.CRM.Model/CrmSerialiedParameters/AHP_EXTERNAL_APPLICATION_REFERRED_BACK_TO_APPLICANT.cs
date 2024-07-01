@@ -17,6 +17,5 @@ namespace HE.CRM.Model.CrmSerialiedParameters
         // Additional
         public string name { get; set; }
         public string schemename { get; set; }
-        public string programmename { get; set; }
     }
 }
