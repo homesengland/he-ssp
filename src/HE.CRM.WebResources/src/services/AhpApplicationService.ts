@@ -20,12 +20,7 @@ export class AhpApplicationService {
     if (!(ndssmax == null && ndssmin == null))
       return;
 
-    if (tenure == 858110001) {
-      this.common.setFormNotification("NDSS cannot be calulated because Tenure is set to Social Rent", XrmEnum.FormNotificationLevel.Info, "NDSSNotification");
-    } else {
-      this.common.setFormNotification("Home type not covered by NDSS.", XrmEnum.FormNotificationLevel.Info, "NDSSNotCoveredNotification");
-    }
-
+    this.common.setFormNotification("Home type not covered by NDSS.", XrmEnum.FormNotificationLevel.Info, "NDSSNotCoveredNotification");
   }
 
   public openCustomPage() {
