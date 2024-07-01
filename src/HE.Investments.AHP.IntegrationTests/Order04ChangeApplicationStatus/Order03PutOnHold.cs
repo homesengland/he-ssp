@@ -25,7 +25,7 @@ public class Order03PutOnHold : AhpIntegrationTest
     public async Task Order01_ShouldNavigateToOnHoldPage_WhenApplicationHasStatusRequestedEditing()
     {
         // given
-        var taskListPage = await TestClient.NavigateTo(ApplicationPagesUrl.TaskList(ApplicationData.ApplicationId));
+        var taskListPage = await TestClient.NavigateTo(ApplicationPagesUrl.TaskList(UserOrganisationData.OrganisationId, ApplicationData.ApplicationId));
         taskListPage
             .UrlEndWith(ApplicationPagesUrl.TaskListSuffix)
             .HasTitle(ApplicationData.ApplicationName)
@@ -40,7 +40,7 @@ public class Order03PutOnHold : AhpIntegrationTest
             .UrlEndWith(ApplicationPagesUrl.OnHoldSuffix)
             .HasTitle(ApplicationPageTitles.OnHold)
             .HasTextAreaInput("HoldReason")
-            .HasSubmitButton(out _, "Hold");
+            .HasSubmitButton(out _, "Put on hold");
 
         SaveCurrentPage();
     }
@@ -52,7 +52,7 @@ public class Order03PutOnHold : AhpIntegrationTest
         // given
         var holdPage = await GetCurrentPage();
         var holdButton = holdPage
-            .GetSubmitButton("Hold");
+            .GetSubmitButton("Put on hold");
 
         // when
         var taskListPage = await TestClient.SubmitButton(holdButton, ("HoldReason", "very important reason"));

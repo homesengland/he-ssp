@@ -15,7 +15,6 @@ using HE.Investments.FrontDoor.Contract.Project.Queries;
 using HE.Investments.FrontDoor.Contract.Site;
 using HE.Investments.FrontDoor.Contract.Site.Queries;
 using HE.Investments.FrontDoor.Shared.Project;
-using HE.Investments.FrontDoor.Shared.Project.Contract;
 using HE.Investments.FrontDoor.WWW.Extensions;
 using HE.Investments.FrontDoor.WWW.Models;
 using HE.Investments.FrontDoor.WWW.Models.Factories;
@@ -27,7 +26,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace HE.Investments.FrontDoor.WWW.Controllers;
 
 [AuthorizeWithCompletedProfile]
-[Route("project")]
+[Route("{organisationId}/project")]
 public class ProjectController : WorkflowController<ProjectWorkflowState>
 {
     private readonly IMediator _mediator;
@@ -67,7 +66,7 @@ public class ProjectController : WorkflowController<ProjectWorkflowState>
         return await this.ExecuteCommand<ProjectDetails>(
             _mediator,
             new ProvideEnglandHousingDeliveryCommand(null, isEnglandHousingDelivery),
-            () => Task.FromResult<IActionResult>(RedirectToAction(isEnglandHousingDelivery == true ? nameof(NewName) : nameof(NewNotEligibleForAnything))),
+            () => Task.FromResult<IActionResult>(this.OrganisationRedirectToAction(isEnglandHousingDelivery == true ? nameof(NewName) : nameof(NewNotEligibleForAnything))),
             () => Task.FromResult<IActionResult>(View("EnglandHousingDelivery", isEnglandHousingDelivery)),
             cancellationToken);
     }
@@ -130,7 +129,7 @@ public class ProjectController : WorkflowController<ProjectWorkflowState>
     public async Task<IActionResult> Index([FromRoute] string projectId, CancellationToken cancellationToken)
     {
         var summary = await CreateProjectSummary(cancellationToken, false);
-        return ContinueSectionAnswering(summary, () => RedirectToAction("CheckAnswers", new { projectId }));
+        return ContinueSectionAnswering(summary, () => this.OrganisationRedirectToAction("CheckAnswers", routeValues: new { projectId }));
     }
 
     [HttpGet("{projectId}/name")]
@@ -268,8 +267,8 @@ public class ProjectController : WorkflowController<ProjectWorkflowState>
     {
         var project = await GetProjectDetails(projectId, cancellationToken);
         return project.LastSiteId.IsProvided()
-            ? RedirectToAction("Name", "Site", new { projectId, siteId = project.LastSiteId!.Value })
-            : RedirectToAction("NewName", "Site", new { projectId });
+            ? this.OrganisationRedirectToAction("Name", "Site", new { projectId, siteId = project.LastSiteId!.Value })
+            : this.OrganisationRedirectToAction("NewName", "Site", new { projectId });
     }
 
     [HttpGet("{projectId}/last-site-details")]
@@ -278,8 +277,8 @@ public class ProjectController : WorkflowController<ProjectWorkflowState>
     {
         var project = await GetProjectDetails(projectId, cancellationToken);
         return project.LastSiteId.IsProvided()
-            ? RedirectToAction("AddAnotherSite", "Site", new { projectId, siteId = project.LastSiteId!.Value })
-            : RedirectToAction("IdentifiedSite", "Project", new { projectId });
+            ? this.OrganisationRedirectToAction("AddAnotherSite", "Site", new { projectId, siteId = project.LastSiteId!.Value })
+            : this.OrganisationRedirectToAction("IdentifiedSite", "Project", new { projectId });
     }
 
     [HttpGet("{projectId}/geographic-focus")]
@@ -330,7 +329,7 @@ public class ProjectController : WorkflowController<ProjectWorkflowState>
     [WorkflowState(ProjectWorkflowState.LocalAuthoritySearch)]
     public IActionResult LocalAuthoritySearch([FromRoute] string projectId, [FromQuery] string? redirect)
     {
-        return RedirectToAction("Search", "LocalAuthority", new { projectId, redirect });
+        return this.OrganisationRedirectToAction("Search", "LocalAuthority", new { projectId, redirect });
     }
 
     [HttpGet("{projectId}/local-authority-confirm")]
@@ -368,7 +367,7 @@ public class ProjectController : WorkflowController<ProjectWorkflowState>
                 cancellationToken);
         }
 
-        return RedirectToAction("Search", "LocalAuthority", new { projectId });
+        return this.OrganisationRedirectToAction("Search", "LocalAuthority", new { projectId });
     }
 
     [HttpGet("{projectId}/homes-number")]
@@ -525,10 +524,10 @@ public class ProjectController : WorkflowController<ProjectWorkflowState>
 
         if (applicationType != ApplicationType.Undefined)
         {
-            return RedirectToAction("Redirect", "ConvertProject", new { fdProjectId = projectId, applicationType });
+            return this.OrganisationRedirectToAction("Redirect", "ConvertProject", new { fdProjectId = projectId, applicationType });
         }
 
-        return RedirectToAction("YouNeedToSpeakToHomesEngland", new { projectId });
+        return this.OrganisationRedirectToAction("YouNeedToSpeakToHomesEngland", routeValues: new { projectId });
     }
 
     [HttpGet("{projectId}/you-need-to-speak-to-homes-england")]
@@ -582,7 +581,7 @@ public class ProjectController : WorkflowController<ProjectWorkflowState>
     {
         if (Request.IsSaveAndReturnAction())
         {
-            return RedirectToAction("Index", "Account");
+            return this.OrganisationRedirectToAction("Index", "Account");
         }
 
         return await onContinue();

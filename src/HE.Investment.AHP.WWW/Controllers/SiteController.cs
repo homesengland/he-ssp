@@ -1,6 +1,7 @@
 using He.AspNetCore.Mvc.Gds.Components.Extensions;
 using HE.Investment.AHP.Contract.Common.Enums;
 using HE.Investment.AHP.Contract.PrefillData.Queries;
+using HE.Investment.AHP.Contract.Project;
 using HE.Investment.AHP.Contract.Project.Queries;
 using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Contract.Site.Commands;
@@ -36,7 +37,7 @@ using LocalAuthority = HE.Investments.Common.Contract.LocalAuthority;
 namespace HE.Investment.AHP.WWW.Controllers;
 
 [ConsortiumAuthorize(ConsortiumAccessContext.Edit)]
-[Route("site")]
+[Route("{organisationId}/site")]
 public class SiteController : SiteControllerBase<SiteWorkflowState>
 {
     private readonly IMediator _mediator;
@@ -57,14 +58,15 @@ public class SiteController : SiteControllerBase<SiteWorkflowState>
     [HttpGet]
     public IActionResult Index(string projectId)
     {
-        return RedirectToAction("Sites", "Project", new { projectId });
+        return this.OrganisationRedirectToAction("Sites", "Project", new { projectId });
     }
 
     [HttpGet("select")]
-    public async Task<IActionResult> Select([FromQuery] int? page, [FromQuery] string projectId, CancellationToken cancellationToken)
+    public async Task<IActionResult> Select([FromQuery] int? page, [FromQuery] string projectId, [FromQuery] bool isAfterFdProject, CancellationToken cancellationToken)
     {
         var response = await _mediator.Send(new GetProjectSitesQuery(FrontDoorProjectId.From(projectId), new PaginationRequest(page ?? 1)), cancellationToken);
-        return View("Select", response);
+        var model = new SelectProjectSitesModel(response, BuildSelectSitesCallBackUrl(projectId, isAfterFdProject));
+        return View("Select", model);
     }
 
     [HttpGet("{siteId}/confirm-select")]
@@ -85,8 +87,8 @@ public class SiteController : SiteControllerBase<SiteWorkflowState>
         }
 
         return isConfirmed!.Value
-            ? RedirectToAction("Name", "Application", new { siteId })
-            : RedirectToAction("Select", new { projectId = site.ProjectId });
+            ? this.OrganisationRedirectToAction("Name", "Application", new { siteId })
+            : this.OrganisationRedirectToAction("Select", routeValues: new { projectId = site.ProjectId });
     }
 
     [ConsortiumAuthorize]
@@ -99,10 +101,10 @@ public class SiteController : SiteControllerBase<SiteWorkflowState>
 
     [ConsortiumAuthorize]
     [HttpGet("{siteId}/continue-answering")]
-    public async Task<IActionResult> ContinueAnswering(string siteId, CancellationToken cancellationToken)
+    public async Task<IActionResult> ContinueAnswering(string siteId, CancellationToken cancellationToken, [FromQuery] string? callback = null)
     {
         var summary = await CreateSiteSummary(cancellationToken, useWorkflowRedirection: false);
-        return this.ContinueSectionAnswering(summary, () => RedirectToAction("CheckAnswers", new { siteId }));
+        return this.ContinueSectionAnswering(summary, () => this.OrganisationRedirectToAction("CheckAnswers", routeValues: new { siteId, callback }));
     }
 
     [HttpGet("{siteId}/start")]
@@ -295,12 +297,20 @@ public class SiteController : SiteControllerBase<SiteWorkflowState>
 
     [HttpPost("{siteId}/local-authority/search")]
     [WorkflowState(SiteWorkflowState.LocalAuthoritySearch)]
-    public async Task<IActionResult> LocalAuthoritySearch(string siteId, [FromQuery] string? workflow, LocalAuthorities model, CancellationToken cancellationToken)
+    public async Task<IActionResult> LocalAuthoritySearch(
+        string siteId,
+        [FromQuery] string? workflow,
+        LocalAuthorities model,
+        CancellationToken cancellationToken)
     {
         return await this.ExecuteCommand<LocalAuthorities>(
             _mediator,
             new ProvideLocalAuthoritySearchPhraseCommand(SiteId.From(siteId), model.Phrase),
-            async () => await this.ReturnToSitesListOrContinue((await GetSiteDetails(siteId, cancellationToken)).ProjectId, () => Task.FromResult<IActionResult>(RedirectToAction("LocalAuthorityResult", new { siteId, phrase = model.Phrase, workflow }))),
+            async () => await this.ReturnToSitesListOrContinue(
+                (await GetSiteDetails(siteId, cancellationToken)).ProjectId,
+                () => Task.FromResult<IActionResult>(this.OrganisationRedirectToAction(
+                        "LocalAuthorityResult",
+                        routeValues: new { siteId, phrase = model.Phrase, workflow }))),
             () => Task.FromResult<IActionResult>(View("LocalAuthoritySearch", model)),
             cancellationToken);
     }
@@ -319,7 +329,7 @@ public class SiteController : SiteControllerBase<SiteWorkflowState>
 
         if (result.ReturnedData.Page?.TotalItems == 0)
         {
-            return RedirectToAction(nameof(LocalAuthorityNotFound), new { siteId, workflow });
+            return this.OrganisationRedirectToAction(nameof(LocalAuthorityNotFound), routeValues: new { siteId, workflow });
         }
 
         var model = result.ReturnedData;
@@ -370,10 +380,10 @@ public class SiteController : SiteControllerBase<SiteWorkflowState>
     {
         if (model.Response == YesNoType.No.ToString() && !Request.IsSaveAndReturnAction())
         {
-            return RedirectToAction(nameof(LocalAuthoritySearch), new { siteId, workflow });
+            return this.OrganisationRedirectToAction(nameof(LocalAuthoritySearch), routeValues: new { siteId, workflow });
         }
 
-        return await ExecuteSiteCommand<ConfirmModel<LocalAuthorities>>(
+        return await ExecuteSiteCommand(
             new ProvideLocalAuthorityCommand(SiteId.From(siteId), model.ViewModel.LocalAuthorityCode, model.ViewModel.LocalAuthorityName, model.Response),
             nameof(LocalAuthorityConfirm),
             _ => model,
@@ -415,7 +425,9 @@ public class SiteController : SiteControllerBase<SiteWorkflowState>
         return await this.ExecuteCommand<SitePlanningDetails>(
             _mediator,
             new ProvideSitePlanningStatusCommand(this.GetSiteIdFromRoute(), model.PlanningStatus),
-            async () => await this.ReturnToSitesListOrContinue((await GetSiteDetails(siteId.Value, cancellationToken)).ProjectId, () => Task.FromResult<IActionResult>(RedirectToAction("PlanningDetails", new { siteId, workflow }))),
+            async () => await this.ReturnToSitesListOrContinue(
+                (await GetSiteDetails(siteId.Value, cancellationToken)).ProjectId,
+                () => Task.FromResult<IActionResult>(this.OrganisationRedirectToAction("PlanningDetails", routeValues: new { siteId, workflow }))),
             async () =>
             {
                 var siteDetails = await GetSiteDetails(siteId.Value, cancellationToken);
@@ -472,7 +484,7 @@ public class SiteController : SiteControllerBase<SiteWorkflowState>
     [WorkflowState(SiteWorkflowState.LandRegistry)]
     public async Task<IActionResult> LandRegistry(SitePlanningDetails model, CancellationToken cancellationToken)
     {
-        return await ExecuteSiteCommand<SitePlanningDetails>(
+        return await ExecuteSiteCommand(
             new ProvideLandRegistryDetailsCommand(
                 this.GetSiteIdFromRoute(),
                 model.LandRegistryTitleNumber,
@@ -524,7 +536,7 @@ public class SiteController : SiteControllerBase<SiteWorkflowState>
     [WorkflowState(SiteWorkflowState.BuildingForHealthyLife)]
     public async Task<IActionResult> BuildingForHealthyLife(SiteModel model, CancellationToken cancellationToken)
     {
-        return await ExecuteSiteCommand<SiteModel>(
+        return await ExecuteSiteCommand(
             new ProvideBuildingForHealthyLifeCommand(
                 this.GetSiteIdFromRoute(),
                 model.BuildingForHealthyLife),
@@ -545,7 +557,7 @@ public class SiteController : SiteControllerBase<SiteWorkflowState>
     [WorkflowState(SiteWorkflowState.NumberOfGreenLights)]
     public async Task<IActionResult> NumberOfGreenLights(SiteModel model, CancellationToken cancellationToken)
     {
-        return await ExecuteSiteCommand<SiteModel>(
+        return await ExecuteSiteCommand(
             new ProvideNumberOfGreenLightsCommand(
                 this.GetSiteIdFromRoute(),
                 model.NumberOfGreenLights),
@@ -560,7 +572,7 @@ public class SiteController : SiteControllerBase<SiteWorkflowState>
     {
         return isBack
             ? await Back(new { siteId })
-            : RedirectToAction("StartSitePartnersFlow", "SitePartners", new { siteId, workflow });
+            : this.OrganisationRedirectToAction("StartSitePartnersFlow", "SitePartners", new { siteId, workflow });
     }
 
     [HttpGet("{siteId}/finish-site-partners")]
@@ -568,7 +580,7 @@ public class SiteController : SiteControllerBase<SiteWorkflowState>
     public async Task<IActionResult> FinishSitePartnersFlow([FromRoute] string siteId, [FromQuery] string? workflow, bool isBack)
     {
         return isBack
-            ? RedirectToAction("FinishSitePartnersFlow", "SitePartners", new { siteId, isBack })
+            ? this.OrganisationRedirectToAction("FinishSitePartnersFlow", "SitePartners", new { siteId, isBack })
             : await Continue(new { siteId, workflow });
     }
 
@@ -584,7 +596,7 @@ public class SiteController : SiteControllerBase<SiteWorkflowState>
     [WorkflowState(SiteWorkflowState.LandAcquisitionStatus)]
     public async Task<IActionResult> LandAcquisitionStatus(SiteModel model, CancellationToken cancellationToken)
     {
-        return await ExecuteSiteCommand<SiteModel>(
+        return await ExecuteSiteCommand(
             new ProvideLandAcquisitionStatusCommand(
                 this.GetSiteIdFromRoute(),
                 model.LandAcquisitionStatus),
@@ -605,7 +617,7 @@ public class SiteController : SiteControllerBase<SiteWorkflowState>
     [WorkflowState(SiteWorkflowState.TenderingStatus)]
     public async Task<IActionResult> TenderingStatus(SiteTenderingStatusDetails model, CancellationToken cancellationToken)
     {
-        return await ExecuteSiteCommand<SiteTenderingStatusDetails>(
+        return await ExecuteSiteCommand(
             new ProvideTenderingStatusCommand(
                 this.GetSiteIdFromRoute(),
                 model.TenderingStatus),
@@ -626,7 +638,7 @@ public class SiteController : SiteControllerBase<SiteWorkflowState>
     [WorkflowState(SiteWorkflowState.ContractorDetails)]
     public async Task<IActionResult> ContractorDetails(SiteTenderingStatusDetails model, CancellationToken cancellationToken)
     {
-        return await ExecuteSiteCommand<SiteTenderingStatusDetails>(
+        return await ExecuteSiteCommand(
             new ProvideContractorDetailsCommand(
                 this.GetSiteIdFromRoute(),
                 model.ContractorName,
@@ -648,7 +660,7 @@ public class SiteController : SiteControllerBase<SiteWorkflowState>
     [WorkflowState(SiteWorkflowState.IntentionToWorkWithSme)]
     public async Task<IActionResult> IntentionToWorkWithSme(SiteTenderingStatusDetails model, CancellationToken cancellationToken)
     {
-        return await ExecuteSiteCommand<SiteTenderingStatusDetails>(
+        return await ExecuteSiteCommand(
             new ProvideIsIntentionToWorkWithSmeCommand(
                 this.GetSiteIdFromRoute(),
                 model.IsIntentionToWorkWithSme),
@@ -669,7 +681,7 @@ public class SiteController : SiteControllerBase<SiteWorkflowState>
     [WorkflowState(SiteWorkflowState.StrategicSite)]
     public async Task<IActionResult> StrategicSite(StrategicSite model, CancellationToken cancellationToken)
     {
-        return await ExecuteSiteCommand<StrategicSite>(
+        return await ExecuteSiteCommand(
             new ProvideStrategicSiteDetailsCommand(
                 this.GetSiteIdFromRoute(),
                 model.IsStrategicSite,
@@ -691,7 +703,7 @@ public class SiteController : SiteControllerBase<SiteWorkflowState>
     [WorkflowState(SiteWorkflowState.SiteType)]
     public async Task<IActionResult> SiteType(SiteTypeDetails model, CancellationToken cancellationToken)
     {
-        return await ExecuteSiteCommand<SiteTypeDetails>(
+        return await ExecuteSiteCommand(
             new ProvideSiteTypeDetailsCommand(
                 this.GetSiteIdFromRoute(),
                 model.SiteType,
@@ -714,7 +726,7 @@ public class SiteController : SiteControllerBase<SiteWorkflowState>
     [WorkflowState(SiteWorkflowState.SiteUse)]
     public async Task<IActionResult> SiteUse(SiteUseDetails model, CancellationToken cancellationToken)
     {
-        return await ExecuteSiteCommand<SiteUseDetails>(
+        return await ExecuteSiteCommand(
             new ProvideSiteUseDetailsCommand(
                 this.GetSiteIdFromRoute(),
                 model.IsPartOfStreetFrontInfill,
@@ -736,7 +748,7 @@ public class SiteController : SiteControllerBase<SiteWorkflowState>
     [WorkflowState(SiteWorkflowState.TravellerPitchType)]
     public async Task<IActionResult> TravellerPitchType(SiteUseDetails model, CancellationToken cancellationToken)
     {
-        return await ExecuteSiteCommand<SiteUseDetails>(
+        return await ExecuteSiteCommand(
             new ProvideTravellerPitchSiteTypeCommand(this.GetSiteIdFromRoute(), model.TravellerPitchSiteType),
             nameof(TravellerPitchType),
             _ => model,
@@ -755,7 +767,7 @@ public class SiteController : SiteControllerBase<SiteWorkflowState>
     [WorkflowState(SiteWorkflowState.RuralClassification)]
     public async Task<IActionResult> RuralClassification(SiteRuralClassification model, CancellationToken cancellationToken)
     {
-        return await ExecuteSiteCommand<SiteRuralClassification>(
+        return await ExecuteSiteCommand(
             new ProvideSiteRuralClassificationCommand(this.GetSiteIdFromRoute(), model.IsWithinRuralSettlement, model.IsRuralExceptionSite),
             nameof(RuralClassification),
             _ => model,
@@ -774,7 +786,7 @@ public class SiteController : SiteControllerBase<SiteWorkflowState>
     [WorkflowState(SiteWorkflowState.MmcUsing)]
     public async Task<IActionResult> MmcUsing(SiteModernMethodsOfConstruction model, CancellationToken cancellationToken)
     {
-        return await ExecuteSiteCommand<SiteModernMethodsOfConstruction>(
+        return await ExecuteSiteCommand(
             new ProvideSiteUsingModernMethodsOfConstructionCommand(this.GetSiteIdFromRoute(), model.UsingModernMethodsOfConstruction),
             nameof(MmcUsing),
             _ => model,
@@ -793,7 +805,7 @@ public class SiteController : SiteControllerBase<SiteWorkflowState>
     [WorkflowState(SiteWorkflowState.MmcFutureAdoption)]
     public async Task<IActionResult> MmcFutureAdoption(SiteModernMethodsOfConstruction model, CancellationToken cancellationToken)
     {
-        return await ExecuteSiteCommand<SiteModernMethodsOfConstruction>(
+        return await ExecuteSiteCommand(
             new ProvideModernMethodsConstructionFutureAdoptionCommand(this.GetSiteIdFromRoute(), model.FutureAdoptionPlans, model.FutureAdoptionExpectedImpact),
             nameof(MmcFutureAdoption),
             _ => model,
@@ -812,7 +824,7 @@ public class SiteController : SiteControllerBase<SiteWorkflowState>
     [WorkflowState(SiteWorkflowState.MmcInformation)]
     public async Task<IActionResult> MmcInformation(SiteModernMethodsOfConstruction model, CancellationToken cancellationToken)
     {
-        return await ExecuteSiteCommand<SiteModernMethodsOfConstruction>(
+        return await ExecuteSiteCommand(
             new ProvideModernMethodsConstructionInformationCommand(this.GetSiteIdFromRoute(), model.InformationBarriers, model.InformationImpact),
             nameof(MmcInformation),
             _ => model,
@@ -831,7 +843,7 @@ public class SiteController : SiteControllerBase<SiteWorkflowState>
     [WorkflowState(SiteWorkflowState.MmcCategories)]
     public async Task<IActionResult> MmcCategories(SiteModernMethodsOfConstruction model, CancellationToken cancellationToken)
     {
-        return await ExecuteSiteCommand<SiteModernMethodsOfConstruction>(
+        return await ExecuteSiteCommand(
             new ProvideModernMethodsConstructionCategoriesCommand(this.GetSiteIdFromRoute(), model.ModernMethodsConstructionCategories),
             nameof(MmcCategories),
             _ => model,
@@ -850,7 +862,7 @@ public class SiteController : SiteControllerBase<SiteWorkflowState>
     [WorkflowState(SiteWorkflowState.Mmc3DCategory)]
     public async Task<IActionResult> Mmc3DCategory(SiteModernMethodsOfConstruction model, CancellationToken cancellationToken)
     {
-        return await ExecuteSiteCommand<SiteModernMethodsOfConstruction>(
+        return await ExecuteSiteCommand(
             new ProvideModernMethodsConstruction3DSubcategoriesCommand(this.GetSiteIdFromRoute(), model.ModernMethodsConstruction3DSubcategories),
             nameof(Mmc3DCategory),
             _ => model,
@@ -869,7 +881,7 @@ public class SiteController : SiteControllerBase<SiteWorkflowState>
     [WorkflowState(SiteWorkflowState.Mmc2DCategory)]
     public async Task<IActionResult> Mmc2DCategory(SiteModernMethodsOfConstruction model, CancellationToken cancellationToken)
     {
-        return await ExecuteSiteCommand<SiteModernMethodsOfConstruction>(
+        return await ExecuteSiteCommand(
             new ProvideModernMethodsConstruction2DSubcategoriesCommand(this.GetSiteIdFromRoute(), model.ModernMethodsConstruction2DSubcategories),
             nameof(Mmc2DCategory),
             _ => model,
@@ -888,7 +900,7 @@ public class SiteController : SiteControllerBase<SiteWorkflowState>
     [WorkflowState(SiteWorkflowState.EnvironmentalImpact)]
     public async Task<IActionResult> EnvironmentalImpact(SiteModel model, CancellationToken cancellationToken)
     {
-        return await ExecuteSiteCommand<SiteModel>(
+        return await ExecuteSiteCommand(
             new ProvideSiteEnvironmentalImpactCommand(this.GetSiteIdFromRoute(), model.EnvironmentalImpact),
             nameof(EnvironmentalImpact),
             _ => model,
@@ -907,7 +919,7 @@ public class SiteController : SiteControllerBase<SiteWorkflowState>
     [WorkflowState(SiteWorkflowState.Procurements)]
     public async Task<IActionResult> Procurements(SiteModel model, CancellationToken cancellationToken)
     {
-        return await ExecuteSiteCommand<SiteModel>(
+        return await ExecuteSiteCommand(
             new ProvideSiteProcurementsCommand(this.GetSiteIdFromRoute(), model.SiteProcurements),
             nameof(Procurements),
             _ => model,
@@ -929,7 +941,7 @@ public class SiteController : SiteControllerBase<SiteWorkflowState>
         return await this.ExecuteCommand<SiteSummaryViewModel>(
             _mediator,
             new CompleteSiteCommand(SiteId.From(siteId), isSectionCompleted),
-            () => Task.FromResult<IActionResult>(RedirectToAction("Details", new { siteId })),
+            () => Task.FromResult<IActionResult>(this.OrganisationRedirectToAction("Details", routeValues: new { siteId })),
             async () => View("CheckAnswers", await CreateSiteSummary(cancellationToken, isSectionCompleted)),
             cancellationToken);
     }
@@ -1002,7 +1014,7 @@ public class SiteController : SiteControllerBase<SiteWorkflowState>
     {
         var siteId = this.GetSiteIdFromRoute();
         var siteDetails = await GetSiteDetails(siteId.Value, cancellationToken);
-        var isEditable = (await _accountAccessContext.GetSelectedAccount()).CanEdit && siteDetails.Status != SiteStatus.Submitted;
+        var isEditable = (await _accountAccessContext.GetSelectedAccount()).CanEdit && !siteDetails.IsReadOnly;
         var sections = _siteSummaryViewModelFactory.CreateSiteSummary(siteDetails, Url, isEditable, useWorkflowRedirection);
 
         return new SiteSummaryViewModel(
@@ -1011,5 +1023,12 @@ public class SiteController : SiteControllerBase<SiteWorkflowState>
             isSectionCompleted ?? (siteDetails.Status == SiteStatus.Submitted ? IsSectionCompleted.Yes : IsSectionCompleted.Undefied),
             sections.ToList(),
             isEditable);
+    }
+
+    private string? BuildSelectSitesCallBackUrl(string fdProjectId, bool isAfterFdProject)
+    {
+        return isAfterFdProject
+            ? Url.OrganisationAction("Start", "Project", new { fdProjectId })
+            : Url.OrganisationAction("Start", "Application", new { projectId = fdProjectId });
     }
 }

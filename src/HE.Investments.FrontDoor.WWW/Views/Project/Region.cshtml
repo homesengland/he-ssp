@@ -21,7 +21,7 @@
 
     <vc:page-header caption="@ViewBag.ProjectName"/>
 
-    <form asp-controller="Project" asp-action="Region" asp-method="post" asp-route-redirect="@Context.Request.Query["redirect"]" novalidate>
+    <he-organisation-form asp-controller="Project" asp-action="Region" asp-method="post" asp-route-redirect="@Context.Request.Query["redirect"]" novalidate>
 
         <vc:checkbox-list
             title="@ProjectPageTitles.Region"
@@ -33,5 +33,5 @@
 
         <vc:form-button/>
         <vc:return-to-account-link/>
-    </form>
+    </he-organisation-form>
 </gds-div-grid-column-two-thirds>

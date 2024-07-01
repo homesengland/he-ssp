@@ -1,3 +1,4 @@
+using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.Common.Enums;
 using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Contract.Site.Enums;
@@ -8,6 +9,7 @@ using HE.Investment.AHP.Domain.Site.ValueObjects.Planning;
 using HE.Investment.AHP.Domain.Site.ValueObjects.StrategicSite;
 using HE.Investment.AHP.Domain.Site.ValueObjects.TenderingStatus;
 using HE.Investments.Account.Shared;
+using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Extensions;
@@ -242,6 +244,13 @@ public class SiteEntity : DomainEntity, IQuestion
     public void ProvideProcurement(SiteProcurements procurements)
     {
         Procurements = _modificationTracker.Change(Procurements, procurements, MarkAsNotCompleted);
+    }
+
+    public bool CanBeEdited(IList<ApplicationBasicDetails> applications)
+    {
+        return applications.All(application =>
+            application.Status is ApplicationStatus.Draft or ApplicationStatus.ReferredBackToApplicant or ApplicationStatus.Withdrawn
+                or ApplicationStatus.Deleted);
     }
 
     public void Complete(IsSectionCompleted isSectionCompleted)

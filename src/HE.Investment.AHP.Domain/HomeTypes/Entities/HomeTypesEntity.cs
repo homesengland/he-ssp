@@ -105,9 +105,14 @@ public class HomeTypesEntity
                     notCompletedHomeTypes.Select(x => new ErrorItem($"HomeType-{x.Id}", $"Complete {x.Name.Value} to save and continue")).ToList()));
             }
 
-            if (expectedNumberOfHomes.HasValue && expectedNumberOfHomes != _homeTypes.Sum(x => x.HomeInformation.NumberOfHomes?.Value ?? 0))
+            if (expectedNumberOfHomes.HasValue && _homeTypes.Sum(x => x.HomeInformation.NumberOfHomes?.Value ?? 0) < expectedNumberOfHomes)
             {
                 OperationResult.New().AddValidationError("HomeTypes", "You have not assigned all of the homes you are delivering to a home type").CheckErrors();
+            }
+
+            if (expectedNumberOfHomes.HasValue && _homeTypes.Sum(x => x.HomeInformation.NumberOfHomes?.Value ?? 0) > expectedNumberOfHomes)
+            {
+                OperationResult.New().AddValidationError("HomeTypes", "Remove homes to match the numbers in your scheme").CheckErrors();
             }
 
             Status = _statusModificationTracker.Change(Status, SectionStatus.Completed);

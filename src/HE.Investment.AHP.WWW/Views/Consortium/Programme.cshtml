@@ -3,6 +3,7 @@
 @using HE.Investment.AHP.WWW.Views.Consortium.Const
 @using HE.Investment.AHP.WWW.Views.Shared.Components.ReturnToAccountLink
 @using HE.Investments.Common.WWW.Components.RadioList
+@using HE.Investments.Common.WWW.Extensions
 @using HE.Investments.Common.WWW.Models
 
 @model HE.Investment.AHP.WWW.Models.Consortium.SelectProgramme;
@@ -15,11 +16,11 @@
 }
 
 <gds-div-grid-column-two-thirds>
-    <gds-back-link href="@Url.Action("Start", "Consortium")"></gds-back-link>
+    <gds-back-link href="@Url.OrganisationAction("Start", "Consortium")"></gds-back-link>
 
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
 
-    <form asp-controller="Consortium" asp-action="Programme" asp-method="post" novalidate>
+    <he-organisation-form asp-controller="Consortium" asp-action="Programme" asp-method="post" novalidate>
         <vc:page-header title=@title/>
 
         <gds-p>You can only add one consortium per programme.</gds-p>
@@ -32,6 +33,6 @@
 
         <vc:form-button/>
 
-        <vc:return-to-account-link />
-    </form>
+        <vc:return-to-account-link link-text="Cancel and return to your account"/>
+    </he-organisation-form>
 </gds-div-grid-column-two-thirds>

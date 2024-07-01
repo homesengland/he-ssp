@@ -22,7 +22,7 @@ using SiteDetails = HE.Investments.FrontDoor.Contract.Site.SiteDetails;
 namespace HE.Investments.FrontDoor.WWW.Controllers;
 
 [AuthorizeWithCompletedProfile]
-[Route("project/{projectId}/site")]
+[Route("{organisationId}/project/{projectId}/site")]
 public class SiteController : WorkflowController<SiteWorkflowState>
 {
     private readonly IMediator _mediator;
@@ -79,7 +79,7 @@ public class SiteController : WorkflowController<SiteWorkflowState>
                 FrontDoorSiteId.From(siteId),
                 name),
             nameof(Name),
-            project => View(nameof(Name), name),
+            _ => View(nameof(Name), name),
             cancellationToken);
     }
 
@@ -110,7 +110,7 @@ public class SiteController : WorkflowController<SiteWorkflowState>
     public IActionResult LocalAuthoritySearch([FromRoute] string projectId, [FromQuery] string? redirect, [FromRoute] string siteId)
     {
         var optional = this.GetOptionalParameterFromRoute();
-        return RedirectToAction("Search", "LocalAuthority", new { projectId, siteId, redirect, optional });
+        return this.OrganisationRedirectToAction("Search", "LocalAuthority", new { projectId, siteId, redirect, optional });
     }
 
     [HttpGet("{siteId}/local-authority-confirm")]
@@ -153,7 +153,7 @@ public class SiteController : WorkflowController<SiteWorkflowState>
         }
 
         var optional = this.GetOptionalParameterFromRoute();
-        return RedirectToAction("Search", "LocalAuthority", new { projectId, siteId, optional });
+        return this.OrganisationRedirectToAction("Search", "LocalAuthority", new { projectId, siteId, optional });
     }
 
     [HttpGet("{siteId}/planning-status")]
@@ -191,12 +191,12 @@ public class SiteController : WorkflowController<SiteWorkflowState>
     {
         if (model.AddAnotherSite == Contract.Site.AddAnotherSite.Yes)
         {
-            return RedirectToAction("NewName", "Site", new { projectId });
+            return this.OrganisationRedirectToAction("NewName", "Site", new { projectId });
         }
 
         if (model.AddAnotherSite == Contract.Site.AddAnotherSite.No)
         {
-            return RedirectToAction("Progress", "Project", new { projectId });
+            return this.OrganisationRedirectToAction("Progress", "Project", new { projectId });
         }
 
         ModelState.Clear();

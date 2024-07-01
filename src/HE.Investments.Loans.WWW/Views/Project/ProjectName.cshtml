@@ -1,10 +1,8 @@
-@using HE.Investments.Common.Gds
 @using HE.Investments.Common.WWW.Extensions
 @using HE.Investments.Loans.BusinessLogic.Projects.Consts
 @using HE.Investments.Loans.WWW.Views.Project.Consts
 @using Microsoft.AspNetCore.Mvc.TagHelpers
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Divs
-@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Headings
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Input
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Links
 @model HE.Investments.Loans.Contract.Projects.ViewModels.ProjectViewModel;
@@ -13,10 +11,10 @@
 }
 
 <gds-div-grid-column-two-thirds>
-    <gds-back-link href="@Url.Action("TaskList", "LoanApplicationV2" , new {id = Model.ApplicationId})" text="Back" class="govuk-!-margin-bottom-8">
+    <gds-back-link href="@Url.OrganisationAction("TaskList", "LoanApplicationV2" , new {id = Model.ApplicationId})" text="Back" class="govuk-!-margin-bottom-7">
     </gds-back-link>
     <partial name="_ErrorSummaryPartial" model="null" />
-    <form asp-controller="Project" asp-action="ProjectName" asp-route-id="@Model.ApplicationId" asp-route-projectId="@Model.ProjectId" asp-route-redirect="@Context.Request.Query["redirect"]" asp-method="post" novalidate>
+    <he-organisation-form asp-controller="Project" asp-action="ProjectName" asp-route-id="@Model.ApplicationId" asp-route-projectId="@Model.ProjectId" asp-route-redirect="@Context.Request.Query["redirect"]" asp-method="post" novalidate>
             <gds-div-form-group invalid="inputInvalid">
                 <vc:page-header title="@ProjectPageTitles.Name"/>
 
@@ -39,7 +37,7 @@
             <button id="continue-button" class="govuk-button" data-module="govuk-button" name="action" type="submit" value="Continue">
                 Continue
             </button>
-    </form>
+    </he-organisation-form>
 
     <partial name="_HomeAndCheckAnswersLinks" />
 </gds-div-grid-column-two-thirds>

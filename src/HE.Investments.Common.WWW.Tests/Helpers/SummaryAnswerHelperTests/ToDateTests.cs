@@ -26,7 +26,7 @@ public class ToDateTests
         var result = SummaryAnswerHelper.ToDate(date);
 
         // then
-        result.Should().ContainSingle().Which.Should().Be("31/12/2022");
+        result.Should().ContainSingle().Which.Should().Be("31 December 2022");
     }
 
     [Fact]
@@ -39,6 +39,6 @@ public class ToDateTests
         var result = SummaryAnswerHelper.ToDate(date);
 
         // then
-        result.Should().ContainSingle().Which.Should().Be("01/01/2022");
+        result.Should().ContainSingle().Which.Should().Be("1 January 2022");
     }
 }

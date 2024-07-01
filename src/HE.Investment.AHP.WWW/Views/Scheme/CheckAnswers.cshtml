@@ -8,6 +8,7 @@
 @using HE.Investment.AHP.WWW.Views.Shared.Components.ReturnToApplicationLink
 @using HE.Investments.Common.WWW.Components.PageHeader
 @using HE.Investment.AHP.Contract.Application
+@using HE.Investments.Common.WWW.Extensions
 @model HE.Investment.AHP.WWW.Models.Scheme.SchemeSummaryViewModel
 
 @{
@@ -18,7 +19,7 @@
 <gds-div-grid-column-two-thirds>
     @if (Model.IsReadOnly)
     {
-        <gds-back-link href="@Url.Action("TaskList", "Application", new { applicationId = Model.ApplicationId })" class="govuk-!-margin-bottom-8"></gds-back-link>
+        <gds-back-link href="@Url.OrganisationAction("TaskList", "Application", new { applicationId = Model.ApplicationId })" class="govuk-!-margin-bottom-8"></gds-back-link>
     }
     else
     {
@@ -39,18 +40,20 @@
 
     <vc:section-summary title="@Model.Section.Title" items="@Model.Section.Items"/>
 
-    <form asp-controller="Scheme" asp-action="Complete" asp-route-applicationId="@Model.ApplicationId" asp-method="post" novalidate hidden="@Model.IsReadOnly">
+    <he-organisation-form asp-controller="Scheme" asp-action="Complete" asp-route-applicationId="@Model.ApplicationId" asp-method="post" novalidate>
         @Html.HiddenFor(m => Model.ApplicationName)
         @Html.HiddenFor(m => Model.IsReadOnly)
 
-        <vc:radio-list
-            field-name="@(nameof(Model.IsCompleted))"
-            title="Have you completed this section?"
-            available-options="@CommonFormOptions.IsSectionCompletedExtended"
-            value="@Model.IsCompleted"/>
+        <gds-field-set role="group" hidden="@Model.IsReadOnly">
+            <vc:radio-list
+                field-name="@(nameof(Model.IsCompleted))"
+                title="Have you completed this section?"
+                available-options="@CommonFormOptions.IsSectionCompletedExtended"
+                value="@Model.IsCompleted"/>
 
-        <vc:form-button/>
-        <vc:return-to-application-link application-id="@Model.ApplicationId" is-editable="@Model.IsEditable" should-submit="@false" />
-    </form>
+            <vc:form-button/>
+        </gds-field-set>
+        <vc:return-to-application-link application-id="@Model.ApplicationId" is-editable="@Model.IsEditable" should-submit="@false"/>
+    </he-organisation-form>
 
 </gds-div-grid-column-two-thirds>

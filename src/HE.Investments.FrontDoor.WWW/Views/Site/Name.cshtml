@@ -3,6 +3,7 @@
 @using HE.Investments.FrontDoor.WWW.Extensions
 @using Microsoft.AspNetCore.Mvc.TagHelpers
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Links
+@using HE.Investments.Common.WWW.Extensions
 @using HE.Investments.FrontDoor.Contract.Site
 @using HE.Investments.FrontDoor.WWW.Views.Site.Const
 @model string
@@ -15,13 +16,13 @@
 }
 
 <gds-div-grid-column-two-thirds>
-    <gds-back-link href="@Url.Action("IdentifiedSite", "Project", new { projectId })" text="Back" class="govuk-!-margin-bottom-8"></gds-back-link>
+    <gds-back-link href="@Url.OrganisationAction("IdentifiedSite", "Project", new { projectId })" text="Back" class="govuk-!-margin-bottom-7"></gds-back-link>
 
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
 
     <vc:page-header caption="@ViewBag.ProjectName" />
 
-    <form asp-controller="Site" asp-action="@submitAction" asp-route-workflow="@Context.Request.Query["workflow"]" asp-route-redirect="@Context.Request.Query["redirect"]" asp-route-optional="@Context.Request.Query["optional"]" asp-method="post" novalidate>
+    <he-organisation-form asp-controller="Site" asp-action="@submitAction" asp-route-workflow="@Context.Request.Query["workflow"]" asp-route-redirect="@Context.Request.Query["redirect"]" asp-route-optional="@Context.Request.Query["optional"]" asp-method="post" novalidate>
 
         <vc:text-input
             title="@title"
@@ -33,5 +34,5 @@
 
         <vc:form-button/>
         <vc:return-to-account-link/>
-    </form>
+    </he-organisation-form>
 </gds-div-grid-column-two-thirds>

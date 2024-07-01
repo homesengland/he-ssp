@@ -11,14 +11,13 @@
 }
 
 <div class="govuk-grid-column-two-thirds">
-    <form asp-controller="HomeTypes" asp-action="DisabledPeopleClientGroup" asp-method="post" asp-route-workflow="@workflow" novalidate>
+    <he-organisation-form asp-controller="HomeTypes" asp-action="DisabledPeopleClientGroup" asp-method="post" asp-route-workflow="@workflow" novalidate>
         @Html.HiddenFor(m => Model.ApplicationName)
         @Html.HiddenFor(m => Model.HomeTypeName)
         <vc:home-type-form-header title="@HomeTypesPageTitles.DisabledPeopleClientGroup"
                                   current-page="@HomeTypesWorkflowState.DisabledPeopleClientGroup"
                                   caption="@Model.Header" />
 
-        <gds-field-set>
             <he-error-form-group asp-for="DisabledPeopleClientGroup">
                 <gds-legend class="govuk-!-margin-bottom-6">
                     If the homes will be housing people from different groups, select the priority client group. You can also create another home type for each group and enter them separately.
@@ -31,9 +30,6 @@
                 </gds-radio>
             </he-error-form-group>
             <vc:form-button/>
-
-        </gds-field-set>
-
         <vc:return-to-application-link application-id="@applicationId" />
-    </form>
+    </he-organisation-form>
 </div>

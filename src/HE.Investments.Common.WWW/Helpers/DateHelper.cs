@@ -64,7 +64,7 @@ public static class DateHelper
             return null;
         }
 
-        return DateOnly.FromDateTime(utcDateTime.Value.ConvertUtcToUkLocalTime()).ToString(Culture.Uk);
+        return utcDateTime.Value.ConvertUtcToUkLocalTime().ToString("d MMMM yyyy", Culture.Uk);
     }
 
     public static string? DisplayAsUkFormatDateTime(DateTime? utcDateTime)
@@ -74,7 +74,6 @@ public static class DateHelper
 
     private static string? GetOnlyMonthAndYearAsUkFormat(DateTime? utcDateTime)
     {
-        var onlyDateUkFormat = DisplayAsUkFormatOnlyDate(utcDateTime);
-        return onlyDateUkFormat?[3..];
+        return utcDateTime?.ConvertUtcToUkLocalTime().ToString("MMMM yyyy", Culture.Uk);
     }
 }

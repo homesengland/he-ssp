@@ -22,7 +22,7 @@
 <gds-div-grid-column-two-thirds>
     @if (Model.IsReadOnly)
     {
-        <gds-back-link href="@Url.Action("List", "Delivery", new { applicationId = Model.ApplicationId })" class="govuk-!-margin-bottom-8"></gds-back-link>
+        <gds-back-link href="@Url.OrganisationAction("List", "Delivery", new { applicationId = Model.ApplicationId })" class="govuk-!-margin-bottom-8"></gds-back-link>
     }
     else
     {
@@ -43,16 +43,17 @@
         <vc:section-summary title="@summarySection.Title" items="@summarySection.Items" name="@summarySection.Title.ToPascalCase()" has-error="@ViewData.ModelState.GetErrors(summarySection.Title.ToPascalCase()).HasAnyError"/>
     }
 
-    <form asp-controller="DeliveryPhase" asp-action="Complete" asp-route-applicationId="@Model.ApplicationId" asp-route-deliveryPhaseId="@Model.DeliveryPhaseId" asp-method="post" novalidate hidden="@Model.IsReadOnly">
+    <he-organisation-form asp-controller="DeliveryPhase" asp-action="Complete" asp-route-applicationId="@Model.ApplicationId" asp-route-deliveryPhaseId="@Model.DeliveryPhaseId" asp-method="post" novalidate>
+        <gds-field-set role="group" hidden="@Model.IsReadOnly">
+            <vc:radio-list
+                field-name="@(nameof(Model.IsSectionCompleted))"
+                title="Have you completed this section?"
+                available-options="@CommonFormOptions.IsSectionCompletedExtended"
+                value="@Model.IsSectionCompleted"/>
 
-        <vc:radio-list
-            field-name="@(nameof(Model.IsSectionCompleted))"
-            title="Have you completed this section?"
-            available-options="@CommonFormOptions.IsSectionCompletedExtended"
-            value="@Model.IsSectionCompleted"/>
-
-        <vc:form-button/>
+            <vc:form-button/>
+        </gds-field-set>
         <vc:return-to-application-link application-id="@Model.ApplicationId" is-editable="@Model.IsEditable" should-submit="@false"/>
-    </form>
+    </he-organisation-form>
 
 </gds-div-grid-column-two-thirds>

@@ -6,6 +6,7 @@ using HE.Investment.AHP.WWW.Workflows;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Workflow;
 using HE.Investments.Common.WWW.Components.SectionSummary;
+using HE.Investments.Common.WWW.Extensions;
 using HE.Investments.Common.WWW.Routing;
 using Microsoft.AspNetCore.Mvc;
 
@@ -113,6 +114,6 @@ internal sealed class HomeTypeQuestionFactory
             ? new { applicationId = _homeType.Application.Id.Value, homeTypeId = _homeType.Id.Value, workflow = _encodedWorkflow.Value }
             : new { applicationId = _homeType.Application.Id.Value, homeTypeId = _homeType.Id.Value };
 
-        return _urlHelper.Action(controllerActionName, "HomeTypes", routeParameters) ?? string.Empty;
+        return _urlHelper.OrganisationAction(controllerActionName, "HomeTypes", routeParameters) ?? string.Empty;
     }
 }

@@ -1,12 +1,13 @@
 using HE.Investments.Account.Shared.Authorization.Attributes;
 using HE.Investments.Account.Shared.Routing;
 using HE.Investments.Common;
+using HE.Investments.Common.WWW.Controllers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.FeatureManagement;
 
 namespace HE.Investments.FrontDoor.WWW.Controllers;
 
-[Route("account")]
+[Route("{organisationId}/account")]
 [AuthorizeWithCompletedProfile]
 public class AccountController : Controller
 {
@@ -21,13 +22,13 @@ public class AccountController : Controller
     }
 
     [HttpGet]
-    public async Task<IActionResult> Index(CancellationToken cancellationToken)
+    public async Task<IActionResult> Index([FromRoute] string organisationId, CancellationToken cancellationToken)
     {
         if (await _featureManager.IsEnabledAsync(FeatureFlags.StayInCurrentApplication, cancellationToken))
         {
-            return RedirectToAction("Index", "Projects");
+            return this.OrganisationRedirectToAction("Index", "Projects");
         }
 
-        return new RedirectResult(_accountConfig.Url);
+        return new RedirectResult($"{_accountConfig.Url}/{organisationId}/user-organisation");
     }
 }

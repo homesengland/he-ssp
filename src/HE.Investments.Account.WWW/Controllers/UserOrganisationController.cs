@@ -10,16 +10,15 @@ using HE.Investments.Account.Shared.Routing;
 using HE.Investments.Account.WWW.Models.UserOrganisation;
 using HE.Investments.Account.WWW.Routing;
 using HE.Investments.Account.WWW.Utils;
-using HE.Investments.Common;
 using HE.Investments.Common.WWW.Controllers;
+using HE.Investments.Common.WWW.Extensions;
 using HE.Investments.Common.WWW.Models;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.FeatureManagement;
 
 namespace HE.Investments.Account.WWW.Controllers;
 
-[Route(UserOrganisationAccountEndpoints.Controller)]
+[Route($"{{organisationId}}/{UserOrganisationAccountEndpoints.Controller}")]
 [AuthorizeWithCompletedProfile]
 public class UserOrganisationController : Controller
 {
@@ -31,20 +30,16 @@ public class UserOrganisationController : Controller
 
     private readonly ProgrammeUrlConfig _programmeUrlConfig;
 
-    private readonly IFeatureManager _featureManager;
-
     public UserOrganisationController(
         IMediator mediator,
         IProgrammes programmes,
         IAccountAccessContext accountAccessContext,
-        ProgrammeUrlConfig programmeUrlConfig,
-        IFeatureManager featureManager)
+        ProgrammeUrlConfig programmeUrlConfig)
     {
         _mediator = mediator;
         _programmes = programmes;
         _accountAccessContext = accountAccessContext;
         _programmeUrlConfig = programmeUrlConfig;
-        _featureManager = featureManager;
     }
 
     [HttpGet(UserOrganisationAccountEndpoints.DashboardSuffix)]
@@ -122,7 +117,7 @@ public class UserOrganisationController : Controller
     {
         if (await _accountAccessContext.CanEditApplication())
         {
-            return $"{_programmeUrlConfig.FrontDoor}/project/start";
+            return $"{_programmeUrlConfig.FrontDoor}/{Request.GetOrganisationIdFromRoute()}/project/start";
         }
 
         return null;
@@ -130,7 +125,7 @@ public class UserOrganisationController : Controller
 
     private string GetProjectUrl(HeProjectId projectId)
     {
-        return $"{_programmeUrlConfig.FrontDoor}/project/{projectId}";
+        return $"{_programmeUrlConfig.FrontDoor}/{Request.GetOrganisationIdFromRoute()}/project/{projectId}";
     }
 
     private Dictionary<ProgrammeType, ProgrammeModel> GetProgrammes(IList<ProgrammeType> programmeTypes)
@@ -140,6 +135,7 @@ public class UserOrganisationController : Controller
 
     private async Task<List<ActionModel>> UserOrganisationActions(string organisationName)
     {
+        var organisationId = Request.GetOrganisationIdFromRoute();
         var canViewOrganisationDetails = await _accountAccessContext.CanAccessOrganisationView();
         var userOrganisationActions = new List<ActionModel>
         {
@@ -147,7 +143,7 @@ public class UserOrganisationController : Controller
                 "Add another organisation",
                 "SearchOrganisation",
                 "Organisation",
-                new { callback = Url.Action("Index", "UserOrganisation") },
+                new { callback = Url.OrganisationAction("Index", "UserOrganisation") },
                 HasAccess: true,
                 DataTestId: "add-another-organisation-link"),
         };
@@ -160,12 +156,14 @@ public class UserOrganisationController : Controller
                     "Add or manage users at this Organisation",
                     "Index",
                     "Users",
+                    new { organisationId },
                     HasAccess: canViewOrganisationDetails,
                     DataTestId: "manage-users-link"),
                 new(
                     $"Manage {organisationName} details",
                     "Details",
                     "UserOrganisation",
+                    new { organisationId },
                     HasAccess: canViewOrganisationDetails,
                     DataTestId: "manage-organisation-link"),
             ]);
@@ -175,16 +173,17 @@ public class UserOrganisationController : Controller
             "Manage your account",
             "GetProfileDetails",
             "User",
-            new { callback = Url.Action("Index", "UserOrganisation") },
+            new { callback = Url.OrganisationAction("Index", "UserOrganisation") },
             HasAccess: true,
             DataTestId: "manage-profile-link"));
 
-        if (await _featureManager.IsEnabledAsync(FeatureFlags.AhpProgram) && canViewOrganisationDetails)
+        if (canViewOrganisationDetails)
         {
             userOrganisationActions.Add(new(
                 "Consortium management",
                 "Index",
                 "Consortium",
+                new { organisationId },
                 HasAccess: canViewOrganisationDetails,
                 DataTestId: "manage-consortium-link"));
         }

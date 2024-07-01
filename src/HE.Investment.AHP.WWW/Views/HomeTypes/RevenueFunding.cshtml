@@ -11,7 +11,7 @@
 }
 
 <gds-div-grid-column-two-thirds>
-    <form asp-controller="HomeTypes" asp-action="RevenueFunding" asp-method="post" asp-route-workflow="@workflow" novalidate>
+    <he-organisation-form asp-controller="HomeTypes" asp-action="RevenueFunding" asp-method="post" asp-route-workflow="@workflow" novalidate>
         @Html.HiddenFor(m => Model.ApplicationName)
         @Html.HiddenFor(m => Model.HomeTypeName)
         <vc:home-type-form-header current-page="@HomeTypesWorkflowState.RevenueFunding"
@@ -19,10 +19,9 @@
                                   title="@HomeTypesPageTitles.RevenueFunding"/>
 
         <gds-field-set class="govuk-!-margin-bottom-6">
-            <span class="govuk-caption-m govuk-!-margin-bottom-6">Select all that apply.</span>
-            <vc:form-hidden-label
-                field-name="Sources"
-                title="Revenue funding sources"/>
+            <legend>
+                <span class="govuk-caption-m govuk-!-margin-bottom-6">Select all that apply.</span>
+            </legend>
             <gds-checkbox class="exclusive-checkbox-group"
                           govuk-formgroup-asp-for="@Model.Sources"
                           asp-selectlistitems="HomeTypesFormOptions.RevenueFundingSourceTypes"
@@ -35,5 +34,5 @@
         <br/>
 
         <vc:return-to-application-link application-id="@applicationId"/>
-    </form>
+    </he-organisation-form>
 </gds-div-grid-column-two-thirds>

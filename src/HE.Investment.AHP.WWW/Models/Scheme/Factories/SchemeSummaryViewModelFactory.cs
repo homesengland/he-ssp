@@ -4,6 +4,7 @@ using HE.Investment.AHP.Contract.Common;
 using HE.Investment.AHP.WWW.Controllers;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.WWW.Components.SectionSummary;
+using HE.Investments.Common.WWW.Extensions;
 using HE.Investments.Common.WWW.Helpers;
 using HE.Investments.Common.WWW.Models.Summary;
 using HE.Investments.Common.WWW.Utils;
@@ -20,7 +21,7 @@ public class SchemeSummaryViewModelFactory : ISchemeSummaryViewModelFactory
 
     private static string CreateSchemeActionUrl(IUrlHelper urlHelper, AhpApplicationId applicationId, string actionName, bool allowWcagDuplicate = false)
     {
-        var action = urlHelper.Action(
+        var action = urlHelper.OrganisationAction(
             actionName,
             new ControllerName(nameof(SchemeController)).WithoutPrefix(),
             new { applicationId = applicationId.Value, redirect = nameof(SchemeController.CheckAnswers) });
@@ -112,7 +113,7 @@ public class SchemeSummaryViewModelFactory : ISchemeSummaryViewModelFactory
             : new Dictionary<string, string>
             {
                 {
-                    uploadedFile.FileName, urlHelper.Action(
+                    uploadedFile.FileName, urlHelper.OrganisationAction(
                         "DownloadStakeholderDiscussionsFile",
                         "Scheme",
                         new { applicationId = applicationId.Value, fileId = uploadedFile.FileId.Value }) ?? string.Empty

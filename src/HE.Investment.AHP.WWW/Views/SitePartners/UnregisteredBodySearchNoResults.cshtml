@@ -3,6 +3,7 @@
 @using HE.Investment.AHP.WWW.Views.Shared.Components.AhpWorkflowBackButton
 @using HE.Investment.AHP.WWW.Views.SitePartners.Const
 @using HE.Investments.Common.WWW.Components.PageHeader
+@using HE.Investments.Common.WWW.Extensions
 @{
     ViewData["Title"] = SitePartnersPageTitles.UnregisteredBodySearchNoResults;
 
@@ -20,14 +21,14 @@
 
     <gds-p>
         If you think you have entered the wrong details, you can
-        <gds-link href="@Url.Action("UnregisteredBodySearch", "SitePartners", new { siteId, workflow })">
+        <gds-link href="@Url.OrganisationAction("UnregisteredBodySearch", "SitePartners", new { siteId, workflow })">
             search again for your organisation.
         </gds-link>
     </gds-p>
 
     <gds-p>
         Or,
-        <gds-link href="@Url.Action("UnregisteredBodyCreateManual", "SitePartners", new { siteId, workflow })">
+        <gds-link href="@Url.OrganisationAction("UnregisteredBodyCreateManual", "SitePartners", new { siteId, workflow })">
             enter the details manually.
         </gds-link>
     </gds-p>

@@ -4,7 +4,7 @@ namespace HE.CRM.Common.Api.FrontDoor.Contract.Responses
 {
     public sealed class GetProjectResponse
     {
-        public Guid ProjectId { get; set; }
+        public string ProjectId { get; set; }
 
         public string LocalAuthorityName { get; set; }
 
@@ -13,6 +13,8 @@ namespace HE.CRM.Common.Api.FrontDoor.Contract.Responses
         public DateTimeOffset? CreatedOn { get; set; }
 
         public FrontDoorProjectContact FrontDoorProjectContact { get; set; }
+
+        public int? RecordStatus { get; set; }
 
         public Guid ProjectRecordId { get; set; }
 
@@ -59,5 +61,7 @@ namespace HE.CRM.Common.Api.FrontDoor.Contract.Responses
         public int[] ProposedInterventions { get; set; }
 
         public int? LeadDirectorate { get; set; }
+
+        public int[] FrontDoorDecision { get; set; }
     }
 }

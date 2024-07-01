@@ -94,18 +94,9 @@ public abstract class WorkflowController<TState> : Controller
             workflow = queryWorkflow;
         }
 
-        var dynamicRouteData = new System.Dynamic.ExpandoObject() as IDictionary<string, object>;
-        foreach (var property in routeData.GetType().GetProperties(BindingFlags.Instance | BindingFlags.Public))
-        {
-            dynamicRouteData.Add(property.Name, property.GetValue(routeData)!);
-        }
+        routeData = routeData.ExpandRouteValues(new { workflow });
 
-        if (!dynamicRouteData.ContainsKey("workflow"))
-        {
-            dynamicRouteData.Add("workflow", workflow);
-        }
-
-        return Continue(dynamicRouteData);
+        return Continue(routeData);
     }
 
     public IActionResult Change(string redirectToState, object routeData)
@@ -184,12 +175,8 @@ public abstract class WorkflowController<TState> : Controller
 
     private RedirectToActionResult RedirectToState(TState nextState, object? routeData)
     {
+        routeData = AddOrganisationIdToRouteData(routeData);
         var nextAction = GetWorkflowAction(nextState);
-
-        if (routeData is null)
-        {
-            return RedirectToAction(nextAction.ActionName, nextAction.ControllerName.WithoutPrefix());
-        }
 
         return RedirectToAction(nextAction.ActionName, nextAction.ControllerName.WithoutPrefix(), routeData);
     }
@@ -222,5 +209,12 @@ public abstract class WorkflowController<TState> : Controller
                 return workflowMethods;
             })
             .ToList();
+    }
+
+    private object AddOrganisationIdToRouteData(object? routeData)
+    {
+        var organisationId = Request.GetOrganisationIdFromRoute();
+        routeData = routeData.ExpandRouteValues(new { organisationId });
+        return routeData;
     }
 }

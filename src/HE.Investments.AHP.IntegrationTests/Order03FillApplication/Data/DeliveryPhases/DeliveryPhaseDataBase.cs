@@ -36,8 +36,8 @@ public abstract class DeliveryPhaseDataBase<TDeliveryPhaseData> : INestedItemDat
 
     public virtual TDeliveryPhaseData GenerateCompletionMilestone()
     {
-        CompletionMilestoneDate = new DateDetails("30", "12", "2025");
-        CompletionMilestonePaymentDate = new DateDetails("01", "03", "2026");
+        CompletionMilestoneDate = new DateDetails("01", "04", "2025");
+        CompletionMilestonePaymentDate = new DateDetails("10", "04", "2025");
         return DeliveryPhase;
     }
 }

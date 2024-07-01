@@ -12,15 +12,15 @@
 @model FinancialDetailsCheckAnswersModel
 @{
     ViewData["Title"] = FinancialDetailsPageTitles.CheckAnswers;
-    var (costsAndFundingAreInvalid, costAndFundingErrors) = @ViewData.ModelState.GetErrors(FinancialDetailsValidationFieldNames.CostsAndFunding);
+    var (costsAndFundingAreInvalid, costAndFundingErrors) = ViewData.ModelState.GetErrors(FinancialDetailsValidationFieldNames.CostsAndFunding);
     var errorCssClass = costsAndFundingAreInvalid ? "govuk-form-group--error" : string.Empty;
-    var customBackLinkUrl = Model.IsReadOnly ? @Url.Action("TaskList", "Application", new { applicationId = Model.ApplicationId }) : null;
+    var customBackLinkUrl = Model.IsReadOnly ? Url.OrganisationAction("TaskList", "Application", new { applicationId = Model.ApplicationId }) : null;
 }
 <gds-div-grid-column-two-thirds>
-    <form asp-controller="FinancialDetails" asp-action="CheckAnswers" asp-route-applicationId="@Model.ApplicationId" asp-method="post" novalidate>
+    <he-organisation-form asp-controller="FinancialDetails" asp-action="CheckAnswers" asp-route-applicationId="@Model.ApplicationId" asp-method="post" novalidate>
         <vc:financial-details-form-header title="@FinancialDetailsPageTitles.CheckAnswers"
                                           current-page="@FinancialDetailsWorkflowState.CheckAnswers"
-                                          application-id="@Model.ApplicationId.ToString()"
+                                          application-id="@Model.ApplicationId"
                                           caption="@Model.ApplicationName - Finance details"
                                           custom-back-link-url="@customBackLinkUrl"
                                           is-application-locked="@Model.AllowedOperations.Contains(AhpApplicationOperation.RequestToEdit)"/>
@@ -48,7 +48,7 @@
             </gds-radio>
             <vc:form-button/>
         </gds-field-set>
-        <vc:return-to-application-link application-id="@Model.ApplicationId.ToString()" is-editable="@Model.IsEditable" should-submit="@false" />
-    </form>
+        <vc:return-to-application-link application-id="@Model.ApplicationId" is-editable="@Model.IsEditable" should-submit="@false" />
+    </he-organisation-form>
 
 </gds-div-grid-column-two-thirds>

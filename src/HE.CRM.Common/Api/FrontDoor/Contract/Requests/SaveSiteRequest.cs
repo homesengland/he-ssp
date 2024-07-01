@@ -2,7 +2,7 @@ using System;
 
 namespace HE.CRM.Common.Api.FrontDoor.Contract.Requests
 {
-    internal sealed class SaveSiteRequest
+    public sealed class SaveSiteRequest
     {
         public Guid ProjectRecordId { get; set; }
 

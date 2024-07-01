@@ -14,7 +14,7 @@
     <vc:ahp-workflow-back-button current-page="@ApplicationWorkflowState.OnHold"/>
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
 
-    <form asp-controller="Application" asp-action="OnHold" asp-method="post" asp-route-applicationName="@Model.ApplicationName" novalidate>
+    <he-organisation-form asp-controller="Application" asp-action="OnHold" asp-method="post" asp-route-applicationName="@Model.ApplicationName" novalidate>
         <vc:page-header caption="@Model.ApplicationName"/>
         @Html.HiddenFor(m => Model.ApplicationName)
 
@@ -26,6 +26,6 @@
             hint="This will notify Homes England that you no longer wish to proceed with this application at this time.
                   You can revisit this later on and submit once you’re ready."/>
 
-        <vc:form-button text="Hold"/>
-    </form>
+        <vc:form-button text="Put on hold"/>
+    </he-organisation-form>
 </gds-div-grid-column-two-thirds>

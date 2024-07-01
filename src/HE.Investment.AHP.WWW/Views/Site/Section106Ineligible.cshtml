@@ -1,6 +1,7 @@
 @using HE.Investment.AHP.Contract.Site;
 @using HE.Investments.Common.WWW.Components.PageHeader;
 @using HE.Investment.AHP.WWW.Views.Site.Const;
+@using HE.Investments.Common.WWW.Extensions
 @model Section106Dto
 @{
     ViewData["Title"] = SitePageTitles.Section106Ineligible;
@@ -46,6 +47,6 @@
         }
 
     </div>
-    <link-button action-url="@Url.Action("Section106GeneralAgreement", "Site", new { siteId = Model.SiteId })">Go back and try again</link-button>
-    <link-button action-url="@Url.Action("Index", "Account")" class="govuk-button--secondary">Save and return to your account</link-button>
+    <link-button action-url="@Url.OrganisationAction("Section106GeneralAgreement", "Site", new { siteId = Model.SiteId })">Go back and try again</link-button>
+    <link-button action-url="@Url.OrganisationAction("Index", "Account")" class="govuk-button--secondary">Save and return to your account</link-button>
 </div>

@@ -32,7 +32,7 @@ public class WithGeneralAgreementTests
         action.Should()
             .ThrowExactly<DomainValidationException>()
             .Which.OperationResult.Errors.Should()
-            .ContainSingle(x => x.ErrorMessage == ValidationErrorMessage.MustProvideRequiredField("General Agreement"));
+            .ContainSingle(x => x.ErrorMessage == ValidationErrorMessage.MustBeSelectedYes("there is a s106 agreement in place or in discussion"));
     }
 
     [Fact]

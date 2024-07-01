@@ -1,4 +1,5 @@
 namespace HE.Investments.Loans.IntegrationTests.Loans.LoansHelpers.Pages;
+
 internal static class FundingPageUrls
 {
     public const string StartFundingSuffix = "/funding/start-funding";
@@ -17,19 +18,25 @@ internal static class FundingPageUrls
 
     public const string CheckYourAnswersSuffix = "/funding/check-answers";
 
-    public static string StartFunding(string applicationId) => $"/application/{applicationId}{StartFundingSuffix}";
+    public static string StartFunding(string organisationId, string applicationId) => $"/{organisationId}/application/{applicationId}{StartFundingSuffix}";
 
-    public static string GrossDevelopmentValue(string applicationId) => $"/application/{applicationId}{GrossDevelopmentValueSuffix}";
+    public static string GrossDevelopmentValue(string organisationId, string applicationId) =>
+        $"/{organisationId}/application/{applicationId}{GrossDevelopmentValueSuffix}";
 
-    public static string EstimatedTotalCosts(string applicationId) => $"/application/{applicationId}{EstimatedTotalCostsSuffix}";
+    public static string EstimatedTotalCosts(string organisationId, string applicationId) =>
+        $"/{organisationId}/application/{applicationId}{EstimatedTotalCostsSuffix}";
 
-    public static string AbnormalCosts(string applicationId) => $"/application/{applicationId}{AbnormalCostsSuffix}";
+    public static string AbnormalCosts(string organisationId, string applicationId) => $"/{organisationId}/application/{applicationId}{AbnormalCostsSuffix}";
 
-    public static string PrivateSectorFunding(string applicationId) => $"/application/{applicationId}{PrivateSectorFundingSuffix}";
+    public static string PrivateSectorFunding(string organisationId, string applicationId) =>
+        $"/{organisationId}/application/{applicationId}{PrivateSectorFundingSuffix}";
 
-    public static string RepaymentSystem(string applicationId) => $"/application/{applicationId}{RepaymentSystemSuffix}";
+    public static string RepaymentSystem(string organisationId, string applicationId) =>
+        $"/{organisationId}/application/{applicationId}{RepaymentSystemSuffix}";
 
-    public static string AdditionalProjects(string applicationId) => $"/application/{applicationId}{AdditionalProjectsSuffix}";
+    public static string AdditionalProjects(string organisationId, string applicationId) =>
+        $"/{organisationId}/application/{applicationId}{AdditionalProjectsSuffix}";
 
-    public static string CheckYourAnswers(string applicationId) => $"/application/{applicationId}{CheckYourAnswersSuffix}";
+    public static string CheckYourAnswers(string organisationId, string applicationId) =>
+        $"/{organisationId}/application/{applicationId}{CheckYourAnswersSuffix}";
 }

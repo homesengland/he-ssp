@@ -1,3 +1,4 @@
+@using HE.Investments.Common.WWW.Extensions
 @using HE.Investments.Loans.WWW.Views.LoanApplicationV2.Consts
 @using HE.Investments.Loans.BusinessLogic.Config
 @inject ILoanAppConfig LoanAppConfig
@@ -7,7 +8,7 @@
 }
 
 <gds-div-grid-column-two-thirds>
-        <gds-back-link href="@Url.Action("BackToCheckAnswers", "FrontDoor", new { fdProjectId })" text="Back" class="govuk-!-margin-bottom-8"></gds-back-link>
+        <gds-back-link href="@Url.OrganisationAction("BackToCheckAnswers", "FrontDoor", new { fdProjectId })" text="Back" class="govuk-!-margin-bottom-7"></gds-back-link>
 
         <vc:page-header title="@LoanApplicationPageTitles.LoanApplyInformation"/>
 
@@ -24,11 +25,11 @@
         </gds-p>
 
         <vc:button-start
-            href="@Url.Action("AboutLoan", "LoanApplicationV2", new { fdProjectId })"/>
+            href="@Url.OrganisationAction("AboutLoan", "LoanApplicationV2", new { fdProjectId })"/>
 
         <div>
             <gds-link class="govuk-link--no-visited-state"
-                      href="@Url.Action("Index", "Accounts")">
+                      href="@Url.OrganisationAction("Index", "Accounts")">
                 Return to your account
             </gds-link>
         </div>

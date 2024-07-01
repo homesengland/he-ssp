@@ -28,7 +28,7 @@ public class Order01Submit : AhpIntegrationTest
     public async Task Order01_ShouldNavigateToSubmitApplication_WhenApplicationIsCompletelyFilled()
     {
         // given
-        var taskListPage = await TestClient.NavigateTo(ApplicationPagesUrl.TaskList(ApplicationData.ApplicationId));
+        var taskListPage = await TestClient.NavigateTo(ApplicationPagesUrl.TaskList(UserOrganisationData.OrganisationId, ApplicationData.ApplicationId));
         taskListPage
             .UrlEndWith(ApplicationPagesUrl.TaskListSuffix)
             .HasTitle(ApplicationData.ApplicationName)
@@ -53,7 +53,7 @@ public class Order01Submit : AhpIntegrationTest
     public async Task Order02_ShouldNavigateToCompleted_WhenApplicationWasSubmitted()
     {
         // given
-        var currentPage = await GetCurrentPage(ApplicationPagesUrl.Submit(ApplicationData.ApplicationId));
+        var currentPage = await GetCurrentPage(ApplicationPagesUrl.Submit(UserOrganisationData.OrganisationId, ApplicationData.ApplicationId));
         currentPage
             .UrlWithoutQueryEndsWith(ApplicationPagesUrl.SubmitSuffix)
             .HasTitle(ApplicationPageTitles.Submit)
@@ -87,7 +87,7 @@ public class Order01Submit : AhpIntegrationTest
 
         // then
         mainPage
-            .UrlEndWith(ProjectPagesUrl.ProjectApplicationList(ShortGuid.FromString(ProjectData.ProjectId).Value))
+            .UrlEndWith(ProjectPagesUrl.ProjectApplicationList(UserOrganisationData.OrganisationId, ShortGuid.FromString(ProjectData.ProjectId).Value))
             .HasTitle(ProjectPageTitles.ApplicationList(ProjectData.ProjectName))
             .HasApplicationInStatus(ApplicationData.ApplicationId, ApplicationStatus.ApplicationSubmitted);
     }

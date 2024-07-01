@@ -113,7 +113,6 @@ invln_ahpcontract|
 invln_ahpproject|
 invln_ahpstatuschange|
 invln_borrowerpreviousschemes|
-invln_comment|
 invln_conditions|
 invln_consortium|
 invln_consortiummember|
@@ -150,6 +149,7 @@ invln_programme|
 invln_projectspecificcondition|
 invln_reviewapproval|
 invln_scheme|
+invln_secretvariable|
 invln_sitedetails|
 invln_sites|
 invln_standardcondition|

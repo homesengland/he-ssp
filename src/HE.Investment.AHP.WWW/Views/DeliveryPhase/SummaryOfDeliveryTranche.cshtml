@@ -39,7 +39,7 @@
 
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
 
-    <form asp-controller="DeliveryPhase" asp-action="SummaryOfDeliveryTranche" asp-method="post" asp-route-applicationId="@applicationId" asp-route-deliveryPhaseId="@Model.DeliveryPhaseId" asp-route-workflow="@Context.Request.Query["workflow"]" novalidate>
+    <he-organisation-form asp-controller="DeliveryPhase" asp-action="SummaryOfDeliveryTranche" asp-method="post" asp-route-applicationId="@applicationId" asp-route-deliveryPhaseId="@Model.DeliveryPhaseId" asp-route-workflow="@Context.Request.Query["workflow"]" novalidate>
         <vc:page-header caption="@($"{Model.ApplicationName} - {Model.DeliveryPhaseName}")" title="@title" hint="@description"/>
 
         @Html.HiddenFor(x => x.TrancheType)
@@ -47,12 +47,12 @@
         @Html.HiddenFor(x => x.DeliveryPhaseName)
         <vc:numeric-text-input field-name=@nameof(Model.Value)
                                value="@Model.Value"
-                               hint="Percentage of grant apportioned to this phase"
+                               bold-paragraph="Percentage of grant apportioned to this phase"
                                suffix="%"
                                css-class="govuk-input--width-4"/>
 
         <vc:form-button/>
 
         <vc:return-to-application-link application-id="@applicationId"/>
-    </form>
+    </he-organisation-form>
 </gds-div-grid-column-two-thirds>

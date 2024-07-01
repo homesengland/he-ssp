@@ -1,4 +1,5 @@
 using HE.Investment.AHP.Domain.Common.ValueObjects;
+using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Messages;
 
@@ -15,13 +16,12 @@ public class FileSizePolicy : IFilePolicy<FileSize>
         _maxFileSize = maxFileSize;
     }
 
-    public void Apply(FileSize value)
+    public void Apply(FileSize value, OperationResult operationResult)
     {
         if (value > _maxFileSize)
         {
-            OperationResult.New()
-                .AddValidationError(_fieldName, GenericValidationError.FileTooBig(_maxFileSize.Megabytes))
-                .CheckErrors();
+            operationResult.Aggregate(() =>
+                throw new DomainValidationException(_fieldName, GenericValidationError.FileTooBig(_maxFileSize.Megabytes)));
         }
     }
 }

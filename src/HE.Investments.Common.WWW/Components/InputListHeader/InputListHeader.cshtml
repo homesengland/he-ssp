@@ -1,6 +1,6 @@
 @using HE.Investments.Common.WWW.Components
 
-@model (string title, InputTitleType titleType, DynamicComponentViewModel additionalContent,  string hint)
+@model (string title, InputTitleType titleType, DynamicComponentViewModel additionalContent,  string hint, string paragraph)
 
 <gds-legend>
 
@@ -48,5 +48,12 @@
         <he-div-hint>
             @Model.hint
         </he-div-hint>
+    }
+
+    @if (!string.IsNullOrWhiteSpace(Model.paragraph))
+    {
+    <gds-p>
+        @Model.paragraph
+    </gds-p>
     }
 </gds-legend>

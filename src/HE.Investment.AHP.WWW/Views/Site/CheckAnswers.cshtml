@@ -6,15 +6,17 @@
 @using HE.Investments.Common.WWW.Components.PageHeader
 @using HE.Investments.Common.WWW.Components.RadioList
 @using HE.Investments.Common.WWW.Components.SectionSummary
+@using HE.Investments.Common.WWW.Extensions
 @model HE.Investment.AHP.WWW.Models.Site.SiteSummaryViewModel
 @{
     ViewData["Title"] = SitePageTitles.CheckAnswers;
+    Context.Request.TryGetCallbackQueryParameter(out var callbackUrl);
 }
 
 <gds-div-grid-column-two-thirds>
-    @if (Model.IsReadOnly)
+    @if (Model.IsReadOnly || callbackUrl == "Details")
     {
-        <gds-back-link href="@Url.Action("Details", "Site", new { siteId = Model.SiteId })" class="govuk-!-margin-bottom-8"></gds-back-link>
+    <gds-back-link href="@Url.OrganisationAction("Details", "Site", new { siteId = Model.SiteId })" class="govuk-!-margin-bottom-8"></gds-back-link>
     }
     else
     {
@@ -33,7 +35,7 @@
         <vc:section-summary title="@summarySection.Title" items="@summarySection.Items"/>
     }
 
-    <form asp-controller="Site" asp-action="Complete" asp-route-siteId="@Model.SiteId" asp-method="post" novalidate hidden="@Model.IsReadOnly">
+    <he-organisation-form asp-controller="Site" asp-action="Complete" asp-route-siteId="@Model.SiteId" asp-method="post" novalidate hidden="@Model.IsReadOnly">
         <vc:radio-list
             field-name="@(nameof(Model.IsSectionCompleted))"
             title="Have you completed this section?"
@@ -42,5 +44,5 @@
 
         <vc:form-button/>
         <vc:return-to-sites-link project-id="@ViewBag.ProjectId" is-editable="@Model.IsEditable" should-submit="@false" />
-    </form>
+    </he-organisation-form>
 </gds-div-grid-column-two-thirds>

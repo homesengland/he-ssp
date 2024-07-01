@@ -2,16 +2,17 @@
 @using HE.Investments.FrontDoor.WWW.Config
 @using HE.Investments.FrontDoor.WWW.Views.Project.Const
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Links
+@using HE.Investments.Common.WWW.Extensions
 @inject IFrontDoorExternalLinks ExternalLinks
 @{
     var title = ProjectPageTitles.YouNeedToSpeakToHomesEngland;
     ViewData["Title"] = title;
     var projectId = ViewContext.RouteData.Values.FirstOrDefault(x => x.Key == "projectId").Value as string;
-    var backUrl = Url.Action("CheckAnswers", "Project", new { projectId });
+    var backUrl = Url.OrganisationAction("CheckAnswers", "Project", new { projectId });
 }
 
 <gds-div-grid-column-two-thirds>
-    <gds-back-link href="@backUrl" text="Back" class="govuk-!-margin-bottom-8"></gds-back-link>
+    <gds-back-link href="@backUrl" text="Back" class="govuk-!-margin-bottom-7"></gds-back-link>
     <vc:page-header title="@title"/>
     <gds-p> Based on the answers given, we need to discuss your project in more detail with you before being able to invite you to apply.</gds-p>
     <gds-p>
@@ -28,7 +29,7 @@
         Go back and try again
     </a>
 
-    <a class="govuk-button govuk-button--secondary" data-module="govuk-button" href="@Url.Action("Index", "Account")">
+    <a class="govuk-button govuk-button--secondary" data-module="govuk-button" href="@Url.OrganisationAction("Index", "Account")">
         Return to your account
     </a>
 </gds-div-grid-column-two-thirds>

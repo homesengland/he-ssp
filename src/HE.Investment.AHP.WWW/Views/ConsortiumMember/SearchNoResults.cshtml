@@ -2,6 +2,7 @@
 @using HE.Investment.AHP.WWW.Views.Shared.Components.AhpWorkflowBackButton
 @using HE.Investments.AHP.Consortium.Contract
 @using HE.Investments.Common.WWW.Components.PageHeader
+@using HE.Investments.Common.WWW.Extensions
 @{
     ViewData["Title"] = ConsortiumMemberPageTitles.SearchNoResults;
     var consortiumId = ViewContext.RouteData.Values["consortiumId"];
@@ -17,14 +18,14 @@
 
     <gds-p>
         If you think you have entered the wrong details, you can
-        <gds-link href="@Url.Action("SearchOrganisation", "ConsortiumMember", new { consortiumId })">
+        <gds-link href="@Url.OrganisationAction("SearchOrganisation", "ConsortiumMember", new { consortiumId })">
             try again using a different name.
         </gds-link>
     </gds-p>
 
     <gds-p>
         Or,
-        <gds-link href="@Url.Action("AddOrganisation", "ConsortiumMember", new { consortiumId })">
+        <gds-link href="@Url.OrganisationAction("AddOrganisation", "ConsortiumMember", new { consortiumId })">
             enter the details manually.
         </gds-link>
     </gds-p>

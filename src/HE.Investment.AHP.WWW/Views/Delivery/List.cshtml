@@ -1,15 +1,21 @@
+@using HE.Investment.AHP.Contract.Application
 @using HE.Investment.AHP.WWW.Routing
 @using HE.Investment.AHP.WWW.Extensions
 @using HE.Investment.AHP.WWW.Views.Delivery.Const
+@using HE.Investment.AHP.WWW.Views.Shared.Components.ReturnToApplicationLink
 @using HE.Investments.Common.Gds
+@using HE.Investments.Common.WWW.Components.FormButton
+@using HE.Investments.Common.WWW.Extensions
+@using Microsoft.AspNetCore.Mvc.TagHelpers
 @model HE.Investment.AHP.WWW.Models.Delivery.DeliveryListModel
 @{
     var applicationId = this.GetApplicationIdFromRoute();
     var title = DeliveryPageTitles.List;
     var columnCount = Model.IsUnregisteredBody ? 4 : 6;
+    var organisationId = Context.Request.RouteValues["organisationId"]?.ToString();
 
     ViewBag.Breadcrumbs = AhpBreadcrumbsBuilder
-        .New()
+        .New(organisationId)
         .WithSites(Model.ProjectId)
         .WithApplication(applicationId, Model.ApplicationName)
         .Build();
@@ -18,6 +24,11 @@
 <div class="govuk-grid-column-full govuk-!-margin-top-6">
     <partial name="~/Partials/Errors/_ErrorSummaryPartial.cshtml"/>
     <vc:notification/>
+
+    @if (Model.AllowedOperations.Contains(AhpApplicationOperation.RequestToEdit))
+    {
+    <partial name="_LockedApplicationInformation"/>
+    }
 
     <span class="govuk-caption-l govuk-!-margin-top-1">@Model.ApplicationName</span>
     <gds-h1>@title</gds-h1>
@@ -41,14 +52,14 @@
             <table class="govuk-table govuk-!-margin-bottom-0">
                 <thead class="govuk-table__head">
                 <tr class="govuk-table__row">
-                    <th scope="col" class="govuk-table__header">Phase</th>
-                    <th scope="col" class="govuk-table__header">Number of homes</th>
+                    <th scope="col" class="govuk-table__header govuk-!-width-one-third">Phase</th>
+                    <th scope="col" class="govuk-table__header govuk-!-width-one-sixth">Number of homes</th>
                     @if (!Model.IsUnregisteredBody)
                     {
-                        <th scope="col" class="govuk-table__header">Acquisition</th>
-                        <th scope="col" class="govuk-table__header">Start on site</th>
+                        <th scope="col" class="govuk-table__header govuk-!-width-one-sixth">Acquisition</th>
+                        <th scope="col" class="govuk-table__header govuk-!-width-one-sixth">Start on site</th>
                     }
-                    <th scope="col" class="govuk-table__header">Practical completion</th>
+                    <th scope="col" class="govuk-table__header govuk-!-width-one-sixth">Practical completion</th>
                     <td class="govuk-table__header"/>
                 </tr>
                 </thead>
@@ -68,7 +79,7 @@
                     <tr class="govuk-table__row">
                         <td class="govuk-table__cell">
                             <gds-link class="govuk-link--no-visited-state"
-                                      href="@Url.Action("Start", "DeliveryPhase", new { applicationId, deliveryPhaseId = Model.DeliveryPhases[index].DeliveryPhaseId })">
+                                      href="@Url.OrganisationAction("Start", "DeliveryPhase", new { applicationId, deliveryPhaseId = Model.DeliveryPhases[index].DeliveryPhaseId })">
                                 @(Model.DeliveryPhases[index].DeliveryPhaseName)
                             </gds-link>
                         </td>
@@ -92,7 +103,7 @@
                         <td class="govuk-table__cell govuk-!-text-align-right" hidden="@Model.IsReadOnly">
                             <gds-link class="govuk-link--no-visited-state govuk-!-margin-left-4"
                                       data-testid="remove-@Model.DeliveryPhases[index].DeliveryPhaseId"
-                                      href="@Url.Action("Remove", "DeliveryPhase", new { applicationId, deliveryPhaseId = Model.DeliveryPhases[index].DeliveryPhaseId })">
+                                      href="@Url.OrganisationAction("Remove", "DeliveryPhase", new { applicationId, deliveryPhaseId = Model.DeliveryPhases[index].DeliveryPhaseId })">
                                 Remove
                             </gds-link>
                         </td>
@@ -111,7 +122,7 @@
                     <tr>
                         <td colspan="@columnCount">
                             <link-button button-type="@ButtonType.Standard"
-                                         href="@Url.Action("Create", "DeliveryPhase", new { applicationId })"
+                                         href="@Url.OrganisationAction("Create", "DeliveryPhase", new { applicationId })"
                                          data-testid="add-delivery-phase"
                                          is-disabled="@Model.IsReadOnly">
                                 Add another delivery phase
@@ -171,7 +182,7 @@
 
             <link-button is-disabled="@Model.IsReadOnly"
                          data-testid="add-delivery-phase"
-                         href="@Url.Action("Create", "DeliveryPhase", new { applicationId })">
+                         href="@Url.OrganisationAction("Create", "DeliveryPhase", new { applicationId })">
                 Add a delivery phase
             </link-button>
         }

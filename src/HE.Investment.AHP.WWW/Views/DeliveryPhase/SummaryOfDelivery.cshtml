@@ -6,12 +6,13 @@
 @using HE.Investment.AHP.Contract.Delivery
 @using HE.Investment.AHP.WWW.Extensions
 @using HE.Investment.AHP.WWW.Models.Delivery
+@using HE.Investments.Common.Gds
 @using HE.Investments.Common.Messages
 @using HE.Investments.Common.WWW.Components.PageHeader
 @using HE.Investments.Common.WWW.Components.RadioYesNo
 @using HE.Investments.Common.WWW.Extensions
 @using HE.Investments.Common.WWW.Helpers
-@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using HE.Investments.Common.WWW.TagHelpers
 @inject ModelExpressionProvider ModelProvider
 @model DeliveryPhaseDetails;
 @{
@@ -27,7 +28,7 @@
 <div class="govuk-grid-column-full">
     <vc:ahp-workflow-back-button current-page="@DeliveryPhaseWorkflowState.SummaryOfDelivery"/>
 
-    <form asp-controller="DeliveryPhase" asp-action="SummaryOfDelivery" asp-method="post" asp-route-applicationId="@applicationId" asp-route-deliveryPhaseId="@Model.Id" asp-route-workflow="@workflow" novalidate>
+    <he-organisation-form asp-controller="DeliveryPhase" asp-action="SummaryOfDelivery" asp-method="post" asp-route-applicationId="@applicationId" asp-route-deliveryPhaseId="@Model.Id" asp-route-workflow="@workflow" novalidate>
         <vc:page-header caption="@($"{Model.Application.Name} - {Model.Name}")" title="@title"/>
 
         @Html.HiddenFor(x => x.Tranches!.ShouldBeAmended)
@@ -55,7 +56,7 @@
                     <td class="govuk-table__cell">
                         <gds-link
                             data-testid="change-number-of-homes"
-                            href="@Url.Action("AddHomes", "DeliveryPhase", new { applicationId, deliveryPhaseId = Model.Id, workflow })">
+                            href="@Url.OrganisationAction("AddHomes", "DeliveryPhase", new { applicationId, deliveryPhaseId = Model.Id, workflow })">
                             Change
                         </gds-link>
                     </td>
@@ -66,7 +67,7 @@
             <dl class="govuk-summary-list govuk-!-margin-bottom-8">
                 <div class="govuk-summary-list__row">
                     <dt class="govuk-summary-list__key">
-                        <gds-h2 size="ControlSize.S">
+                        <gds-h2 class="govuk-heading-s">
                             Grant apportioned to this phase
                         </gds-h2>
                         <p class="govuk-body govuk-!-margin-bottom-1" data-testid="grant-apportioned-value">@((summaryOfDelivery?.GrantApportioned).DisplayPoundsPences() ?? "-")</p>
@@ -89,7 +90,7 @@
                         <th scope="col" class="govuk-table__header govuk-!-width-one-quarter"> Tranche </th >
                         <th scope="col" class="govuk-table__header govuk-!-width-one-third"> Amount of grant apportioned to this milestone </th >
                         <th scope="col" class="govuk-table__header govuk-!-width-one-third"> Percentage of grant apportioned to this milestone </th >
-                        @(isAmendable ? Html.Raw("<th scope=\"col\" class=\"govuk-table__header govuk-!-width-one-sixth\"></th>") : null)
+                        @(isAmendable ? Html.Raw("<td scope=\"col\" class=\"govuk-table__header govuk-!-width-one-sixth\"></td>") : null)
                     </tr >
                     </thead >
                     <tbody class="govuk-table__body">
@@ -141,8 +142,9 @@
                 {
                     <vc:radio-yes-no
                         field-name="Tranches.SummaryOfDelivery.UnderstandClaimingMilestones"
-                        title="Do you understand that you must have incurred costs and made payments to at least the level of the grant in these revised milestone amounts before claiming the milestone?"
+                        title="Claiming the milestones"
                         title-type="InputTitleType.InputTitle"
+                        paragraph="Do you understand that you must have incurred costs and made payments to at least the level of the grant in these revised milestone amounts before claiming the milestone?"
                         value=@Model.Tranches?.SummaryOfDelivery?.UnderstandClaimingMilestones/>
 
                     <vc:form-button/>
@@ -156,5 +158,5 @@
                 }
             }
         </div>
-    </form>
+    </he-organisation-form>
 </div>

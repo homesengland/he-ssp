@@ -1,17 +1,25 @@
 @using HE.Investments.Common.WWW.Components.PageHeader
-@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Links
 @using HE.Investment.AHP.Contract.Project;
+@using HE.Investment.AHP.WWW.Routing
 @using HE.Investment.AHP.WWW.Views.Shared.Components.ProjectListCard
 @using HE.Investment.AHP.WWW.Views.Shared.Components.SiteStatusTag
+@using HE.Investments.Common.WWW.Extensions
 @using HE.Investments.Common.WWW.TagHelpers.Pagination
 
 @model ProjectsListModel;
 @{
     var title = $"{Model.ProgrammeName} projects";
     ViewData["Title"] = title;
+    var organisationId = Context.Request.RouteValues["organisationId"]?.ToString();
+
+    ViewBag.Breadcrumbs = AhpBreadcrumbsBuilder
+        .Empty(organisationId)
+        .WithOrganisations()
+        .WithOrganisation(Model.OrganisationName)
+        .WithProjectsList()
+        .Build();
 }
-<div class="govuk-grid-column-two-thirds">
-    <gds-back-link href="@Url.Action("Index", "Account")" class="govuk-!-margin-bottom-8"></gds-back-link>
+<div class="govuk-grid-column-two-thirds govuk-!-margin-top-6">
     <vc:page-header title="@title" caption="@Model.OrganisationName"/>
 
     <gds-p>View a project to start or manage an application. You can also view the details of each site.</gds-p>
@@ -22,21 +30,21 @@
         {
             var items = new ProjectListCardModel(
                 project.ProjectName,
-                Url.Action("Details", "Project", new { projectId = project.ProjectId })!,
+                Url.OrganisationAction("Details", "Project", new { projectId = project.ProjectId })!,
                 project.Sites?.Select(x =>
                     new ProjectListCardItemModel(
                         x.SiteName,
                         new DynamicComponentViewModel(
                             nameof(SiteStatusTag),
                             new { siteStatus = x.SiteStatus }),
-                        Url.Action("Details", "Site", new { siteId = x.SiteId })!)).ToList(),
-                Url.Action("Sites", "Project", new { projectId = project.ProjectId })!);
+                        Url.OrganisationAction("Details", "Site", new { siteId = x.SiteId })!)).ToList(),
+                Url.OrganisationAction("Sites", "Project", new { projectId = project.ProjectId })!);
             <vc:project-list-card model="@items"></vc:project-list-card>
         }
     }
 
     <he-pagination
-        base-url="@Url.Action("Index", "Projects")"
+        base-url="@Url.OrganisationAction("Index", "Projects")"
         page="@Model.Result.CurrentPage"
         items-per-page="@Model.Result.ItemsPerPage"
         total-items="@Model.Result.TotalItems">

@@ -3,6 +3,7 @@
 @using HE.Investments.AHP.Consortium.Contract
 @using HE.Investments.Common.WWW.Components.FormButton
 @using HE.Investments.Common.WWW.Components.RadioList
+@using HE.Investments.Common.WWW.Extensions
 @model HE.Investment.AHP.WWW.Models.Common.SearchOrganisationResultModel
 @{
     ViewData["Title"] = ConsortiumMemberPageTitles.SearchResult;
@@ -14,7 +15,7 @@
     <vc:ahp-workflow-back-button current-page="@ConsortiumMemberWorkflowState.SearchResult"/>
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
 
-    <form asp-controller="ConsortiumMember" asp-action="SearchResult" asp-route-phrase="@Context.Request.Query["phrase"]" asp-route-page="@Context.Request.Query["page"]" asp-method="post" novalidate>
+    <he-organisation-form asp-controller="ConsortiumMember" asp-action="SearchResult" asp-route-phrase="@Context.Request.Query["phrase"]" asp-route-page="@Context.Request.Query["page"]" asp-method="post" novalidate>
         @Html.HiddenFor(x => x.Phrase)
         @Html.HiddenFor(x => x.Result.CurrentPage)
         @Html.HiddenFor(x => x.Result.ItemsPerPage)
@@ -33,12 +34,15 @@
             total-items="@Model.Result.TotalItems">
         </he-pagination>
 
-        <gds-link href="@Url.Action("AddOrganisation", "ConsortiumMember", new { consortiumId })">
+        <gds-link href="@Url.OrganisationAction("AddOrganisation", "ConsortiumMember", new { consortiumId })">
             The organisation is not listed above, enter details manually
         </gds-link>
 
         <div class="govuk-!-margin-top-6">
             <vc:form-button text="Continue"/>
         </div>
-    </form>
+    </he-organisation-form>
+    <div class="govuk-!-margin-top-4">
+        <vc:return-to-account-link link-text="Cancel and return to your account"/>
+    </div>
 </gds-div-grid-column-two-thirds>

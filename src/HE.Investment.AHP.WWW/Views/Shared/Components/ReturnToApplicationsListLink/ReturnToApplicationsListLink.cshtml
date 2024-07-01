@@ -1,7 +1,8 @@
-@model string?
+@using HE.Investments.Common.WWW.Extensions
+@model string
 <div>
     <gds-link class="govuk-link--no-visited-state" data-testId="return-to-applications"
-              href="@Url.Action("Index", "Application", new { projectId = Model })">
+              href="@Url.OrganisationAction("Index", "Application", new { projectId = Model })">
         Return to applications
     </gds-link>
 </div>

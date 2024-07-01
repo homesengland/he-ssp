@@ -106,7 +106,7 @@ public class ApplicationPartners : ValueObject
     {
         if (isPartnerConfirmed == null)
         {
-            OperationResult.ThrowValidationError(nameof(isPartnerConfirmed), $"Select yes if you want to confirm the {partnerType}");
+            OperationResult.ThrowValidationError(nameof(isPartnerConfirmed), $"Select yes to confirm the {partnerType}");
         }
 
         if (isPartnerConfirmed!.Value)

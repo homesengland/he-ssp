@@ -220,15 +220,10 @@ public class DeliveryPhaseCheckAnswersViewModelFactory : IDeliveryPhaseCheckAnsw
         string actionName,
         EncodedWorkflow<DeliveryPhaseWorkflowState>? encodedWorkflow)
     {
-        var action = urlHelper.Action(
+        var action = urlHelper.OrganisationAction(
             actionName,
             new ControllerName(nameof(DeliveryPhaseController)).WithoutPrefix(),
-            new
-            {
-                applicationId = applicationId.Value,
-                deliveryPhaseId = deliveryPhaseId.Value,
-                workflow = encodedWorkflow?.Value,
-            });
+            new { applicationId = applicationId.Value, deliveryPhaseId = deliveryPhaseId.Value, workflow = encodedWorkflow?.Value, });
 
         return action ?? string.Empty;
     }

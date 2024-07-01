@@ -75,7 +75,7 @@ public class CompleteSectionTests
     }
 
     [Fact]
-    public void ShouldThrowException_WhenFinishAnswerIsYesAndExpectedNumberOfHomesDoesNotMatch()
+    public void ShouldThrowException_WhenFinishAnswerIsYesAndExpectedNumberOfHomesIsHigher()
     {
         // given
         var homeType1 = new HomeTypeEntityBuilder()
@@ -99,6 +99,33 @@ public class CompleteSectionTests
             .Which.OperationResult.GetAllErrors()
             .Should()
             .Be("You have not assigned all of the homes you are delivering to a home type");
+    }
+
+    [Fact]
+    public void ShouldThrowException_WhenFinishAnswerIsYesAndExpectedNumberOfHomesIsLower()
+    {
+        // given
+        var homeType1 = new HomeTypeEntityBuilder()
+            .WithName("Mercury")
+            .WithStatus(SectionStatus.Completed)
+            .WithHomeInformation(new HomeInformationBuilder().WithNumberOfHomes(20).Build())
+            .Build();
+        var homeType2 = new HomeTypeEntityBuilder()
+            .WithName("Venus")
+            .WithStatus(SectionStatus.Completed)
+            .WithHomeInformation(new HomeInformationBuilder().WithNumberOfHomes(10).Build())
+            .Build();
+        var testCandidate = new HomeTypesEntityBuilder().WithHomeTypes(homeType1, homeType2).Build();
+
+        // when
+        var complete = () => testCandidate.CompleteSection(FinishHomeTypesAnswer.Yes, 15);
+
+        // then
+        complete.Should()
+            .Throw<DomainValidationException>()
+            .Which.OperationResult.GetAllErrors()
+            .Should()
+            .Be("Remove homes to match the numbers in your scheme");
     }
 
     [Fact]

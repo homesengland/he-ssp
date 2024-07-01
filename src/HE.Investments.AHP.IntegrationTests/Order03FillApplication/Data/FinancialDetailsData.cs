@@ -54,8 +54,7 @@ public class FinancialDetailsData
                                                   ExpectedContributionsSaleOfHomesOnOtherSchemes +
                                                   ExpectedContributionsOwnResources +
                                                   ExpectedContributionsRcgfContribution +
-                                                  ExpectedContributionsOtherCapitalSources +
-                                                  ExpectedContributionsHomesTransferValue;
+                                                  ExpectedContributionsOtherCapitalSources;
 
     public decimal TotalGrants => CountyCouncilGrants +
                                    DhscExtraCareGrants +

@@ -67,7 +67,7 @@ public class SitePartners : ValueObject, IQuestion
     {
         if (isConfirmed == null)
         {
-            OperationResult.ThrowValidationError(nameof(isConfirmed), $"Select yes if you want to confirm the {partnerType}");
+            OperationResult.ThrowValidationError(nameof(isConfirmed), $"Select yes to confirm the {partnerType}");
         }
 
         return isConfirmed!.Value

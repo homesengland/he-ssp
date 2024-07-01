@@ -120,6 +120,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FeatureFlags.cs" />
     <Compile Include="CrmPluginRegistrationAttribute.cs" />
     <Compile Include="Exceptions\IntegrationApiException.cs" />
     <Compile Include="Handlers\Accounts\GenerateRandomAccountNameSampleHandler.cs" />
@@ -292,8 +293,12 @@
     <Compile Include="Services\Contract\IContractService.cs" />
     <Compile Include="Services\FrontDoorProjectSite\FrontDoorProjectSiteService.cs" />
     <Compile Include="Services\FrontDoorProjectSite\IFrontDoorProjectSiteService.cs" />
+    <Compile Include="Services\FrontDoorProjectSite\V2\FrontDoorProjectSiteService.cs" />
+    <Compile Include="Services\FrontDoorProjectSite\V2\IFrontDoorProjectSiteService.cs" />
     <Compile Include="Services\FrontDoorProject\FrontDoorProjectService.cs" />
     <Compile Include="Services\FrontDoorProject\IFrontDoorProjectService.cs" />
+    <Compile Include="Services\FrontDoorProject\V2\FrontDoorProjectService.cs" />
+    <Compile Include="Services\FrontDoorProject\V2\IFrontDoorProjectService.cs" />
     <Compile Include="Services\GovNotifyEmail\GovNotifyEmailService.cs" />
     <Compile Include="Services\GovNotifyEmail\IGovNotifyEmailService.cs" />
     <Compile Include="Services\HttpServices\AzureAdHttpClientService.cs" />

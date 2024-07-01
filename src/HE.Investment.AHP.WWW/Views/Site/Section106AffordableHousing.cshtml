@@ -9,7 +9,7 @@
     <vc:ahp-workflow-back-button current-page="@SiteWorkflowState.Section106AffordableHousing" />
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
 
-    <form asp-controller="Site" asp-action="Section106AffordableHousing" asp-route-workflow="@Context.Request.Query["workflow"]" asp-method="post" novalidate>
+    <he-organisation-form asp-controller="Site" asp-action="Section106AffordableHousing" asp-route-workflow="@Context.Request.Query["workflow"]" asp-method="post" novalidate>
         <vc:page-header title="@SitePageTitles.SiteSection106AffordableHousing" caption="@Model.SiteName"/>
         <gds-p>
             Developer contributions are planning tools that can be used to secure
@@ -31,6 +31,6 @@
 
         <vc:form-button />
         <vc:return-to-sites-link project-id="@ViewBag.ProjectId" />
-    </form>
+    </he-organisation-form>
 
 </gds-div-grid-column-two-thirds>

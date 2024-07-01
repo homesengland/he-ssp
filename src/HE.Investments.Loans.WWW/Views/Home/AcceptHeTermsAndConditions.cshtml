@@ -9,16 +9,17 @@
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Paragraphs
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Checkboxes
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Buttons
+@using HE.Investments.Common.WWW.Extensions
 @model HE.Investments.Loans.WWW.Models.AcceptHeTermsAndConditionsModel;
 @{
     var privacyLink = "https://www.gov.uk/government/publications/homes-england-privacy-notice/homes-england-privacy-notice#home-building-fund-and-affordable-housing-programme";
 }
 
 <gds-div-grid-column-two-thirds>
-    <gds-back-link href="@Url.Action("WhatTheHomeBuildingFundIs", "Guidance")" text="Back" class="govuk-!-margin-bottom-8">
+    <gds-back-link href="@Url.OrganisationAction("WhatTheHomeBuildingFundIs", "Guidance")" text="Back" class="govuk-!-margin-bottom-7">
     </gds-back-link>
     <partial name="_ErrorSummaryPartial" model="null"/>
-    <form asp-controller="Home" asp-action="AcceptHeTermsAndConditions" asp-method="post" novalidate>
+    <he-organisation-form asp-controller="Home" asp-action="AcceptHeTermsAndConditions" asp-method="post" novalidate>
         <gds-h1 size="@ControlSize.L">
             Information about your Homes England account
         </gds-h1>
@@ -59,7 +60,7 @@
         <gds-button data-module="govuk-button" type="submit" name="redirect" value=@RedirectOption.SignUp>
             Create an account
         </gds-button>
-    </form>
+    </he-organisation-form>
 
 
 </gds-div-grid-column-two-thirds>

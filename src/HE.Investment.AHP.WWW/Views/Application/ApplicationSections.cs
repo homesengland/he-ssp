@@ -1,6 +1,7 @@
 using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.WWW.Controllers;
 using HE.Investments.Common.Contract;
+using HE.Investments.Common.WWW.Extensions;
 using HE.Investments.Common.WWW.Models.TaskList;
 using HE.Investments.Common.WWW.Utils;
 using Microsoft.AspNetCore.Mvc;
@@ -25,7 +26,7 @@ public static class ApplicationSections
                     sections,
                     "Home types",
                     "Complete information about the type of homes, information about the homes, home design and rent details.",
-                    "Add home type",
+                    "Add home types",
                     section => GetAction(url, applicationId, typeof(HomeTypesController), section.SectionStatus == SectionStatus.NotStarted ? nameof(HomeTypesController.Index) : nameof(HomeTypesController.List))),
                 AddSection(
                     SectionType.FinancialDetails,
@@ -75,6 +76,6 @@ public static class ApplicationSections
     private static string GetAction(IUrlHelper url, string applicationId, Type controller, string actionName)
     {
         ArgumentNullException.ThrowIfNull(controller);
-        return url.Action(actionName, new ControllerName(controller.Name).WithoutPrefix(), new { applicationId }) ?? string.Empty;
+        return url.OrganisationAction(actionName, new ControllerName(controller.Name).WithoutPrefix(), new { applicationId }) ?? string.Empty;
     }
 }

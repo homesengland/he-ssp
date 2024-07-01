@@ -10,9 +10,10 @@ public class RadioYesNo : ViewComponent
         InputTitleType? titleType = null,
         DynamicComponentViewModel? additionalContent = null,
         string? hint = null,
+        string? paragraph = null,
         bool? value = null,
         bool? isDisplayed = null)
     {
-        return View("RadioYesNo", (fieldName, title, titleType ?? InputTitleType.InputTitle, additionalContent, hint, value, isDisplayed ?? true));
+        return View("RadioYesNo", (fieldName, title, titleType ?? InputTitleType.InputTitle, additionalContent, hint, paragraph, value, isDisplayed ?? true));
     }
 }

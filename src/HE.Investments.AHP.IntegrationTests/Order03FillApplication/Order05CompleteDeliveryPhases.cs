@@ -45,7 +45,7 @@ public class Order05CompleteDeliveryPhases : AhpApplicationIntegrationTest
     public async Task Order00_DeliveryPhasesLandingPage()
     {
         // given
-        var taskListPage = await TestClient.NavigateTo(ApplicationPagesUrl.TaskList(ApplicationData.ApplicationId));
+        var taskListPage = await TestClient.NavigateTo(ApplicationPagesUrl.TaskList(UserOrganisationData.OrganisationId, ApplicationData.ApplicationId));
         taskListPage.HasLinkWithTestId("add-delivery-phases", out var enterDeliveryPhasesSection);
 
         // when
@@ -66,7 +66,8 @@ public class Order05CompleteDeliveryPhases : AhpApplicationIntegrationTest
     public async Task Order01_ClearAllDeliveryPhases()
     {
         // given
-        var deliveryPhasesListPage = await TestClient.NavigateTo(DeliveryPhasesPagesUrl.List(ApplicationData.ApplicationId));
+        var deliveryPhasesListPage =
+            await TestClient.NavigateTo(DeliveryPhasesPagesUrl.List(UserOrganisationData.OrganisationId, ApplicationData.ApplicationId));
         var deliveryPhaseIds = deliveryPhasesListPage.GetDeliveryPhaseIds();
 
         // when
@@ -76,9 +77,9 @@ public class Order05CompleteDeliveryPhases : AhpApplicationIntegrationTest
         }
 
         // then
-        deliveryPhasesListPage.UrlEndWith(DeliveryPhasesPagesUrl.List(ApplicationData.ApplicationId))
+        deliveryPhasesListPage.UrlEndWith(DeliveryPhasesPagesUrl.List(UserOrganisationData.OrganisationId, ApplicationData.ApplicationId))
             .HasTitle(DeliveryPageTitles.List);
-        _deliveryPhasesData.GenerateHomes(await GetHomeTypes(DeliveryPhasesPagesUrl.List(ApplicationData.ApplicationId)));
+        _deliveryPhasesData.GenerateHomes(await GetHomeTypes(DeliveryPhasesPagesUrl.List(UserOrganisationData.OrganisationId, ApplicationData.ApplicationId)));
 
         SaveCurrentPage();
     }
@@ -88,8 +89,9 @@ public class Order05CompleteDeliveryPhases : AhpApplicationIntegrationTest
     public async Task Order02_CreateRehabDeliveryPhase()
     {
         // given
-        var deliveryPhasesListPage = await TestClient.NavigateTo(DeliveryPhasesPagesUrl.List(ApplicationData.ApplicationId));
-        deliveryPhasesListPage.UrlEndWith(DeliveryPhasesPagesUrl.List(ApplicationData.ApplicationId))
+        var deliveryPhasesListPage =
+            await TestClient.NavigateTo(DeliveryPhasesPagesUrl.List(UserOrganisationData.OrganisationId, ApplicationData.ApplicationId));
+        deliveryPhasesListPage.UrlEndWith(DeliveryPhasesPagesUrl.List(UserOrganisationData.OrganisationId, ApplicationData.ApplicationId))
             .HasTitle(DeliveryPageTitles.List)
             .HasLinkButtonForTestId("add-delivery-phase", out var enterDeliveryPhasePage);
 
@@ -303,7 +305,9 @@ public class Order05CompleteDeliveryPhases : AhpApplicationIntegrationTest
         checkAnswersPage
             .UrlEndWith(BuildDeliveryPhasesPage(DeliveryPhasePagesUrl.CheckAnswers, RehabDeliveryPhase))
             .HasTitle(DeliveryPageTitles.CheckAnswers)
-            .HasSummaryErrorMessage("Milestones", text: "Dates fall outside of the programme requirements. Check your dates against the published funding requirements")
+            .HasSummaryErrorMessage(
+                "Milestones",
+                text: "Dates fall outside of the programme requirements. Check your dates against the published funding requirements")
             .HasSaveAndContinueButton();
         SaveCurrentPage();
     }
@@ -368,8 +372,8 @@ public class Order05CompleteDeliveryPhases : AhpApplicationIntegrationTest
     public async Task Order15_CreateNewBuildDeliveryPhase()
     {
         // given
-        var deliveryPhasesListPage = await GetCurrentPage(DeliveryPhasesPagesUrl.List(ApplicationData.ApplicationId));
-        deliveryPhasesListPage.UrlEndWith(DeliveryPhasesPagesUrl.List(ApplicationData.ApplicationId))
+        var deliveryPhasesListPage = await GetCurrentPage(DeliveryPhasesPagesUrl.List(UserOrganisationData.OrganisationId, ApplicationData.ApplicationId));
+        deliveryPhasesListPage.UrlEndWith(DeliveryPhasesPagesUrl.List(UserOrganisationData.OrganisationId, ApplicationData.ApplicationId))
             .HasTitle(DeliveryPageTitles.List)
             .HasLinkButtonForTestId("add-delivery-phase", out var enterDeliveryPhasePage);
 
@@ -418,7 +422,8 @@ public class Order05CompleteDeliveryPhases : AhpApplicationIntegrationTest
     public async Task Order18_ProvideHomes()
     {
         // given
-        var inputs = OffTheShelfDeliveryPhase.DeliveryPhaseHomes.Select(x => ($"HomesToDeliver[{x.Id}]", x.NumberOfHomes.ToString(CultureInfo.InvariantCulture)))
+        var inputs = OffTheShelfDeliveryPhase.DeliveryPhaseHomes
+            .Select(x => ($"HomesToDeliver[{x.Id}]", x.NumberOfHomes.ToString(CultureInfo.InvariantCulture)))
             .ToArray();
 
         // when & then
@@ -565,7 +570,7 @@ public class Order05CompleteDeliveryPhases : AhpApplicationIntegrationTest
         var taskListPage = await TestClient.SubmitButton(continueButton, ("IsDeliveryCompleted", "Yes"));
 
         // then
-        taskListPage.UrlEndWith(ApplicationPagesUrl.TaskList(ApplicationData.ApplicationId))
+        taskListPage.UrlEndWith(ApplicationPagesUrl.TaskList(UserOrganisationData.OrganisationId, ApplicationData.ApplicationId))
             .HasSectionWithStatus("add-delivery-phases-status", "Completed");
         SaveCurrentPage();
     }
@@ -573,7 +578,7 @@ public class Order05CompleteDeliveryPhases : AhpApplicationIntegrationTest
     private async Task<IHtmlDocument> RemoveDeliveryPhase(IHtmlDocument deliveryPhasesListPage, string deliveryPhaseId)
     {
         // given
-        deliveryPhasesListPage.UrlEndWith(DeliveryPhasesPagesUrl.List(ApplicationData.ApplicationId))
+        deliveryPhasesListPage.UrlEndWith(DeliveryPhasesPagesUrl.List(UserOrganisationData.OrganisationId, ApplicationData.ApplicationId))
             .HasTitle(DeliveryPageTitles.List)
             .HasRemoveDeliveryPhaseLink(deliveryPhaseId, out var removeDeliveryPhaseLink);
 
@@ -590,7 +595,7 @@ public class Order05CompleteDeliveryPhases : AhpApplicationIntegrationTest
 
     private async Task<IList<HomeTypeDetails>> GetHomeTypes(string currentPageUrl)
     {
-        var homeTypeListPage = await TestClient.NavigateTo(HomeTypesPagesUrl.List(ApplicationData.ApplicationId));
+        var homeTypeListPage = await TestClient.NavigateTo(HomeTypesPagesUrl.List(UserOrganisationData.OrganisationId, ApplicationData.ApplicationId));
         var result = homeTypeListPage.GetHomeTypeIds().Select(x => homeTypeListPage.GetHomeTypeDetails(x)).ToList();
 
         await TestClient.NavigateTo(currentPageUrl);
@@ -600,7 +605,8 @@ public class Order05CompleteDeliveryPhases : AhpApplicationIntegrationTest
 
     private async Task<decimal> GetRequiredFunding(string currentPageUrl)
     {
-        var fundingDetailsPage = await TestClient.NavigateTo(SchemeInformationPagesUrl.FundingDetails(ApplicationData.ApplicationId));
+        var fundingDetailsPage =
+            await TestClient.NavigateTo(SchemeInformationPagesUrl.FundingDetails(UserOrganisationData.OrganisationId, ApplicationData.ApplicationId));
         fundingDetailsPage.HasInput("RequiredFunding", out var requiredFunding);
 
         await TestClient.NavigateTo(currentPageUrl);
@@ -608,17 +614,17 @@ public class Order05CompleteDeliveryPhases : AhpApplicationIntegrationTest
         return int.Parse(requiredFunding.Value, CultureInfo.InvariantCulture);
     }
 
-    private string BuildDeliveryPhasesPage(Func<string, string> deliveryPhasesPageUrlFactory)
+    private string BuildDeliveryPhasesPage(Func<string, string, string> deliveryPhasesPageUrlFactory)
     {
-        return deliveryPhasesPageUrlFactory(ApplicationData.ApplicationId);
+        return deliveryPhasesPageUrlFactory(UserOrganisationData.OrganisationId, ApplicationData.ApplicationId);
     }
 
-    private string BuildDeliveryPhasesPage(Func<string, string, string> deliveryPhasesPageUrlFactory, string deliveryPhaseId)
+    private string BuildDeliveryPhasesPage(Func<string, string, string, string> deliveryPhasesPageUrlFactory, string deliveryPhaseId)
     {
-        return deliveryPhasesPageUrlFactory(ApplicationData.ApplicationId, deliveryPhaseId);
+        return deliveryPhasesPageUrlFactory(UserOrganisationData.OrganisationId, ApplicationData.ApplicationId, deliveryPhaseId);
     }
 
-    private string BuildDeliveryPhasesPage(Func<string, string, string> deliveryPhasesPageUrlFactory, INestedItemData nestedItemData)
+    private string BuildDeliveryPhasesPage(Func<string, string, string, string> deliveryPhasesPageUrlFactory, INestedItemData nestedItemData)
     {
         return BuildDeliveryPhasesPage(deliveryPhasesPageUrlFactory, nestedItemData.Id);
     }

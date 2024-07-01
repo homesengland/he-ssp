@@ -1,12 +1,9 @@
 using System.Diagnostics.CodeAnalysis;
 using HE.Investments.Common.Contract.Constants;
-using HE.Investments.IntegrationTestsFramework;
-using HE.Investments.Loans.Common.Utils.Constants.FormOption;
 using HE.Investments.Loans.Contract.Projects.ViewModels;
 using HE.Investments.Loans.IntegrationTests.IntegrationFramework;
 using HE.Investments.Loans.IntegrationTests.Loans.LoansHelpers.Extensions;
 using HE.Investments.Loans.IntegrationTests.Loans.LoansHelpers.Pages;
-using HE.Investments.Loans.WWW;
 using HE.Investments.Loans.WWW.Views.Project.Consts;
 using HE.Investments.TestsUtils.Extensions;
 using Xunit;
@@ -34,7 +31,8 @@ public class Order14GrantFundingExistsIntegrationTests : IntegrationTest
     public async Task Order01_ShouldRedirectToChargesDebt_WhenNoWasSelected()
     {
         // given
-        var ownershipPage = await TestClient.NavigateTo(ProjectPagesUrls.GrantFundingExists(_applicationLoanId, _projectId));
+        var ownershipPage =
+            await TestClient.NavigateTo(ProjectPagesUrls.GrantFundingExists(UserOrganisationData.OrganisationId, _applicationLoanId, _projectId));
 
         var continueButton = ownershipPage.GetGdsSubmitButtonById("continue-button");
 
@@ -54,7 +52,7 @@ public class Order14GrantFundingExistsIntegrationTests : IntegrationTest
     public async Task Order02_ShouldRedirectToChargesDebt_WhenDoNotKnowWasSelected()
     {
         // given
-        var ownershipPage = await GetCurrentPage(ProjectPagesUrls.GrantFundingExists(_applicationLoanId, _projectId));
+        var ownershipPage = await GetCurrentPage(ProjectPagesUrls.GrantFundingExists(UserOrganisationData.OrganisationId, _applicationLoanId, _projectId));
 
         var continueButton = ownershipPage.GetGdsSubmitButtonById("continue-button");
 
@@ -72,7 +70,7 @@ public class Order14GrantFundingExistsIntegrationTests : IntegrationTest
     public async Task Order03_ShouldRedirectToGrantFunding_WhenYesWasSelected()
     {
         // given
-        var ownershipPage = await GetCurrentPage(ProjectPagesUrls.GrantFundingExists(_applicationLoanId, _projectId));
+        var ownershipPage = await GetCurrentPage(ProjectPagesUrls.GrantFundingExists(UserOrganisationData.OrganisationId, _applicationLoanId, _projectId));
 
         var continueButton = ownershipPage.GetGdsSubmitButtonById("continue-button");
 

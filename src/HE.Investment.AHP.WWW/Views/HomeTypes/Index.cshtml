@@ -1,5 +1,6 @@
 @using HE.Investment.AHP.WWW.Extensions
 @using HE.Investment.AHP.WWW.Views.HomeTypes.Const
+@using HE.Investments.Common.WWW.Extensions
 @model HE.Investment.AHP.WWW.Models.HomeTypes.HomeTypeModelBase;
 
 @{
@@ -8,7 +9,7 @@
 }
 
 <div class="govuk-grid-column-full">
-    <gds-back-link href="@Url.Action("TaskList", "Application", new { applicationId })" class="govuk-!-margin-bottom-8"></gds-back-link>
+    <gds-back-link href="@Url.OrganisationAction("TaskList", "Application", new { applicationId })" class="govuk-!-margin-bottom-8"></gds-back-link>
     <vc:page-header title="@HomeTypesPageTitles.LandingPage" caption="@Model.ApplicationName" />
 
     <gds-p>
@@ -34,7 +35,7 @@
         Once you have created one home type, you will be able to duplicate this and amend any necessary details to create another.
     </gds-p>
 
-    <link-button action-url="@Url.Action("List", "HomeTypes", new { applicationId })">
+    <link-button action-url="@Url.OrganisationAction("List", "HomeTypes", new { applicationId })">
         Continue
     </link-button>
 </div>

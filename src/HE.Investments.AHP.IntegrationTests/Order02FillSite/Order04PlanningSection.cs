@@ -24,9 +24,9 @@ public class Order04PlanningSection : AhpSiteIntegrationTest
     public async Task Order01_ShouldProvidePlanningStatus()
     {
         await TestSiteQuestionPage(
-            SitePagesUrl.SitePlanningStatus(SiteData.SiteId),
+            SitePagesUrl.SitePlanningStatus(UserOrganisationData.OrganisationId, SiteData.SiteId),
             SitePageTitles.PlanningStatus,
-            SitePagesUrl.SitePlanningDetails(SiteData.SiteId),
+            SitePagesUrl.SitePlanningDetails(UserOrganisationData.OrganisationId, SiteData.SiteId),
             (nameof(SitePlanningDetails.PlanningStatus), SiteData.PlanningStatus.ToString()));
     }
 
@@ -35,9 +35,9 @@ public class Order04PlanningSection : AhpSiteIntegrationTest
     public async Task Order02_ShouldProvidePlanningDetails()
     {
         await TestSiteQuestionPage(
-            SitePagesUrl.SitePlanningDetails(SiteData.SiteId),
+            SitePagesUrl.SitePlanningDetails(UserOrganisationData.OrganisationId, SiteData.SiteId),
             "Planning details",
-            SitePagesUrl.SiteLandRegistry(SiteData.SiteId),
+            SitePagesUrl.SiteLandRegistry(UserOrganisationData.OrganisationId, SiteData.SiteId),
             ("ExpectedPlanningApprovalDate.Day", SiteData.ExpectedPlanningApprovalDate.Day!),
             ("ExpectedPlanningApprovalDate.Month", SiteData.ExpectedPlanningApprovalDate.Month!),
             ("ExpectedPlanningApprovalDate.Year", SiteData.ExpectedPlanningApprovalDate.Year!),
@@ -49,9 +49,9 @@ public class Order04PlanningSection : AhpSiteIntegrationTest
     public async Task Order03_ShouldProvideLandRegistry()
     {
         await TestSiteQuestionPage(
-            SitePagesUrl.SiteLandRegistry(SiteData.SiteId),
+            SitePagesUrl.SiteLandRegistry(UserOrganisationData.OrganisationId, SiteData.SiteId),
             SitePageTitles.LandRegistry,
-            SitePagesUrl.SiteNationalDesignGuide(SiteData.SiteId),
+            SitePagesUrl.SiteNationalDesignGuide(UserOrganisationData.OrganisationId, SiteData.SiteId),
             (nameof(SitePlanningDetails.LandRegistryTitleNumber), SiteData.GenerateLandRegistryTitleNumber()),
             (nameof(SitePlanningDetails.IsGrantFundingForAllHomesCoveredByTitleNumber), SiteData.IsGrantFundingForAllHomesCoveredByTitleNumber.ToBoolAnswer()));
     }

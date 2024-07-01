@@ -1,18 +1,27 @@
 @using HE.Investments.Common.WWW.Components.PageHeader
-@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Links
+@using HE.Investment.AHP.WWW.Routing
 @using HE.Investment.AHP.WWW.Views.Project.Const
 @using HE.Investment.AHP.WWW.Views.Shared.Components.ApplicationsTable
 @model HE.Investment.AHP.Contract.Project.ProjectDetailsModel
 @{
     var title = ProjectPageTitles.ApplicationList(Model.ProjectName);
     ViewData["Title"] = title;
-}
-<div class="govuk-grid-column-two-thirds govuk-!-padding-top-4">
-    <vc:notification/>
-</div>
+    var organisationId = Context.Request.RouteValues["organisationId"]?.ToString();
+    var projectId = Context.Request.RouteValues["projectId"]?.ToString();
 
-<div class="govuk-grid-column-full">
-    <gds-back-link href="@Url.Action("Details", "Project", new { projectId = Model.ProjectId })" class="govuk-!-margin-bottom-8"></gds-back-link>
+    ViewBag.Breadcrumbs = AhpBreadcrumbsBuilder
+        .Empty(organisationId)
+        .WithOrganisations()
+        .WithOrganisation(Model.OrganisationName)
+        .WithProjectsList()
+        .WithProjectDetails(Model.ProjectName, projectId!)
+        .WithProjectApplications()
+        .Build();
+}
+
+<div class="govuk-grid-column-full govuk-!-margin-top-6">
+    <vc:notification />
+
     <vc:page-header title="@title" caption="@Model.OrganisationName"/>
 
     @if (Model.Applications.TotalItems > 0)

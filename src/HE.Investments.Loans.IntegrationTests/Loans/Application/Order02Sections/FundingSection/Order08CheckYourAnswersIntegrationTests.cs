@@ -2,14 +2,12 @@ using System.Diagnostics.CodeAnalysis;
 using AngleSharp.Html.Dom;
 using FluentAssertions;
 using HE.Investments.Common.Extensions;
-using HE.Investments.IntegrationTestsFramework;
 using HE.Investments.Loans.Common.Tests.TestData;
 using HE.Investments.Loans.Common.Utils.Constants.FormOption;
 using HE.Investments.Loans.IntegrationTests.IntegrationFramework;
 using HE.Investments.Loans.IntegrationTests.Loans.LoansHelpers;
 using HE.Investments.Loans.IntegrationTests.Loans.LoansHelpers.Extensions;
 using HE.Investments.Loans.IntegrationTests.Loans.LoansHelpers.Pages;
-using HE.Investments.Loans.WWW;
 using HE.Investments.Loans.WWW.Views.FundingV2.Consts;
 using HE.Investments.TestsUtils.Extensions;
 using Xunit;
@@ -35,7 +33,7 @@ public class Order08CheckYourAnswersIntegrationTests : IntegrationTest
     public async Task Order01_ShouldDisplayDataSummary()
     {
         // given
-        var checkYourAnswersPage = await TestClient.NavigateTo(FundingPageUrls.CheckYourAnswers(_applicationId));
+        var checkYourAnswersPage = await TestClient.NavigateTo(FundingPageUrls.CheckYourAnswers(UserOrganisationData.OrganisationId, _applicationId));
 
         // when
         var fundingSummary = checkYourAnswersPage.GetSummaryListItems();
@@ -44,8 +42,14 @@ public class Order08CheckYourAnswersIntegrationTests : IntegrationTest
         fundingSummary[FundingFields.GrossDevelopmentValue].Value.Should().Be("£12");
         fundingSummary[FundingFields.EstimatedTotalCosts].Value.Should().Be("£999");
         fundingSummary[FundingFields.AbnormalCosts].Value.Should().Contain(CommonResponse.Yes).And.Contain(TextTestData.TextThatNotExceedsLongInputLimit);
-        fundingSummary[FundingFields.PrivateSectorFunding].Value.Should().Contain(CommonResponse.Yes).And.Contain(TextTestData.TextThatNotExceedsLongInputLimit);
-        fundingSummary[FundingFields.RefinanceOrRepay].Value.Should().Contain(FundingFormOption.Refinance.TitleCaseFirstLetterInString()).And.Contain(TextTestData.TextThatNotExceedsLongInputLimit);
+        fundingSummary[FundingFields.PrivateSectorFunding]
+            .Value.Should()
+            .Contain(CommonResponse.Yes)
+            .And.Contain(TextTestData.TextThatNotExceedsLongInputLimit);
+        fundingSummary[FundingFields.RefinanceOrRepay]
+            .Value.Should()
+            .Contain(FundingFormOption.Refinance.TitleCaseFirstLetterInString())
+            .And.Contain(TextTestData.TextThatNotExceedsLongInputLimit);
         fundingSummary[FundingFields.AdditionalProjects].Value.Should().Be(CommonResponse.No);
 
         SetSharedData(SharedKeys.CurrentPageKey, checkYourAnswersPage);
@@ -61,7 +65,8 @@ public class Order08CheckYourAnswersIntegrationTests : IntegrationTest
 
         // when
         checkYourAnswersPage = await TestClient.SubmitButton(
-            continueButton, new Dictionary<string, string> { { "CheckAnswers", string.Empty } });
+            continueButton,
+            new Dictionary<string, string> { { "CheckAnswers", string.Empty } });
 
         // then
         checkYourAnswersPage
@@ -98,7 +103,8 @@ public class Order08CheckYourAnswersIntegrationTests : IntegrationTest
         // when
         var continueButton = grossDevelopmentValuePage.GetGdsSubmitButtonById("continue-button");
         var returnPage = await TestClient.SubmitButton(
-            continueButton, new Dictionary<string, string> { { "GrossDevelopmentValue", "12" } });
+            continueButton,
+            new Dictionary<string, string> { { "GrossDevelopmentValue", "12" } });
 
         // then
         returnPage
@@ -135,7 +141,8 @@ public class Order08CheckYourAnswersIntegrationTests : IntegrationTest
         // when
         var continueButton = estimatedTotalCostsPage.GetGdsSubmitButtonById("continue-button");
         var returnPage = await TestClient.SubmitButton(
-            continueButton, new Dictionary<string, string> { { "TotalCosts", "999" } });
+            continueButton,
+            new Dictionary<string, string> { { "TotalCosts", "999" } });
 
         // then
         returnPage
@@ -172,7 +179,8 @@ public class Order08CheckYourAnswersIntegrationTests : IntegrationTest
         // when
         var continueButton = abnormalCostsPage.GetGdsSubmitButtonById("continue-button");
         var returnPage = await TestClient.SubmitButton(
-            continueButton, new Dictionary<string, string> { { "AbnormalCosts", CommonResponse.Yes }, { "AbnormalCostsInfo", TextTestData.TextThatNotExceedsLongInputLimit } });
+            continueButton,
+            new Dictionary<string, string> { { "AbnormalCosts", CommonResponse.Yes }, { "AbnormalCostsInfo", TextTestData.TextThatNotExceedsLongInputLimit } });
 
         // then
         returnPage
@@ -209,7 +217,13 @@ public class Order08CheckYourAnswersIntegrationTests : IntegrationTest
         // when
         var continueButton = privateSectorFundingPage.GetGdsSubmitButtonById("continue-button");
         var returnPage = await TestClient.SubmitButton(
-            continueButton, new Dictionary<string, string> { { "PrivateSectorFunding", CommonResponse.Yes }, { "PrivateSectorFundingResult", TextTestData.TextThatNotExceedsLongInputLimit }, { "PrivateSectorFundingReason", string.Empty } });
+            continueButton,
+            new Dictionary<string, string>
+            {
+                { "PrivateSectorFunding", CommonResponse.Yes },
+                { "PrivateSectorFundingResult", TextTestData.TextThatNotExceedsLongInputLimit },
+                { "PrivateSectorFundingReason", string.Empty },
+            });
 
         // then
         returnPage
@@ -246,7 +260,12 @@ public class Order08CheckYourAnswersIntegrationTests : IntegrationTest
         // when
         var continueButton = repaymentSystemPage.GetGdsSubmitButtonById("continue-button");
         var returnPage = await TestClient.SubmitButton(
-            continueButton, new Dictionary<string, string> { { "Refinance", FundingFormOption.Refinance }, { "RefinanceInfo", TextTestData.TextThatNotExceedsLongInputLimit } });
+            continueButton,
+            new Dictionary<string, string>
+            {
+                { "Refinance", FundingFormOption.Refinance },
+                { "RefinanceInfo", TextTestData.TextThatNotExceedsLongInputLimit },
+            });
 
         // then
         returnPage
@@ -283,7 +302,8 @@ public class Order08CheckYourAnswersIntegrationTests : IntegrationTest
         // when
         var continueButton = additionalProjectsPage.GetGdsSubmitButtonById("continue-button");
         var returnPage = await TestClient.SubmitButton(
-            continueButton, new Dictionary<string, string> { { "AdditionalProjects", CommonResponse.No } });
+            continueButton,
+            new Dictionary<string, string> { { "AdditionalProjects", CommonResponse.No } });
 
         // then
         returnPage
@@ -301,11 +321,14 @@ public class Order08CheckYourAnswersIntegrationTests : IntegrationTest
 
         // when
         var taskListPage = await TestClient.SubmitButton(
-            continueButton, new Dictionary<string, string> { { "CheckAnswers", CommonResponse.Yes } });
+            continueButton,
+            new Dictionary<string, string> { { "CheckAnswers", CommonResponse.Yes } });
 
         // then
         taskListPage
-            .UrlEndWith(ApplicationPagesUrls.TaskList(_applicationId))
-            .GetTaskListItems()[TaskListFields.ProvideDetailsAboutFunding].Should().Be("Completed");
+            .UrlEndWith(ApplicationPagesUrls.TaskList(UserOrganisationData.OrganisationId, _applicationId))
+            .GetTaskListItems()[TaskListFields.ProvideDetailsAboutFunding]
+            .Should()
+            .Be("Completed");
     }
 }

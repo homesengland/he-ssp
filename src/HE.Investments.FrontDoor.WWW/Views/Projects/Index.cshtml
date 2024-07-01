@@ -1,3 +1,4 @@
+@using HE.Investments.Common.WWW.Extensions
 @model IList<HE.Investments.FrontDoor.Domain.Project.ProjectEntity>
 @{
     ViewData["Title"] = "Morelas Ltd. Homes England account";
@@ -22,7 +23,7 @@
                 <td class="govuk-table__cell">
                     <span class="app-task-list__task-name">
                         <strong>
-                            <a href="@Url.Action("Index", "Project", new { projectId = project.Id.Value })" id=@($"open-project-link-{project.Id.Value}")>@project.Name.Value</a>
+                            <a href="@Url.OrganisationAction("Index", "Project", new { projectId = project.Id.Value })" id=@($"open-project-link-{project.Id.Value}")>@project.Name.Value</a>
                         </strong>
                     </span>
                 </td>
@@ -31,6 +32,6 @@
         </tbody>
     </table>
 
-    <a href="@(Url.Action("Start", "Project"))" data-testId="start-new-project" class="govuk-button">Start a new project</a>
+    <a href="@(Url.OrganisationAction("Start", "Project"))" data-testId="start-new-project" class="govuk-button">Start a new project</a>
 
 </gds-div-grid-column-two-thirds>

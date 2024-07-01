@@ -5,6 +5,7 @@ using HE.Investments.Common.Extensions;
 using HE.Investments.Common.WWW.Components;
 using HE.Investments.Common.WWW.Components.Link;
 using HE.Investments.Common.WWW.Components.Table;
+using HE.Investments.Common.WWW.Extensions;
 using HE.Investments.Common.WWW.Utils;
 using HE.Investments.Programme.Contract;
 using Microsoft.AspNetCore.Mvc;
@@ -15,6 +16,7 @@ public class ConsortiumsTable : ViewComponent
 {
     public Task<IViewComponentResult> InvokeAsync(ConsortiumsList consortiumsList)
     {
+        var organisationId = HttpContext.GetOrganisationIdFromRoute();
         var tableHeaders = new List<TableHeaderViewModel>
         {
             new("Programme name", CellWidth.OneHalf),
@@ -26,7 +28,7 @@ public class ConsortiumsTable : ViewComponent
             {
                 var tableItems = new List<TableValueViewModel>
                 {
-                    new(Component: CreateLinkComponent(x.Programme, x.ConsortiumId)),
+                    new(Component: CreateLinkComponent(organisationId, x.Programme, x.ConsortiumId)),
                     new(x.LeadPartnerName),
                     new(x.MembershipRole.GetDescription()),
                 };
@@ -38,7 +40,7 @@ public class ConsortiumsTable : ViewComponent
         return Task.FromResult<IViewComponentResult>(View("ConsortiumsTable", (tableHeaders, rows)));
     }
 
-    private static DynamicComponentViewModel CreateLinkComponent(Programme programme, ConsortiumId consortiumId)
+    private static DynamicComponentViewModel CreateLinkComponent(OrganisationId? organisationId, Programme programme, ConsortiumId consortiumId)
     {
         return new DynamicComponentViewModel(
             nameof(Link),
@@ -47,7 +49,7 @@ public class ConsortiumsTable : ViewComponent
                 text = programme.Name,
                 controller = new ControllerName(nameof(ConsortiumMemberController)).WithoutPrefix(),
                 action = nameof(ConsortiumMemberController.Index),
-                values = new { consortiumId = consortiumId.Value },
+                values = new { consortiumId = consortiumId.Value, organisationId },
                 isStrong = true,
             });
     }

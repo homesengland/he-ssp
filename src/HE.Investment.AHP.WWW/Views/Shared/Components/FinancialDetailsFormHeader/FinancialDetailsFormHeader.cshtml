@@ -1,3 +1,4 @@
+@using HE.Investments.Common.WWW.Extensions
 @model (string Title, string Caption, string ApplicationId, HE.Investment.AHP.Contract.FinancialDetails.FinancialDetailsWorkflowState CurrentPage, string CustomBackLinkUrl, bool IsApplicationLocked)
 @{
     var redirectParameters = new { applicationId = Model.ApplicationId, currentPage = Model.CurrentPage };
@@ -5,7 +6,7 @@
 
 @if (string.IsNullOrWhiteSpace(Model.CustomBackLinkUrl))
 {
-    <gds-back-link href="@Url.Action("Back", "FinancialDetails", redirectParameters)" class="govuk-!-margin-bottom-8"></gds-back-link>
+    <gds-back-link href="@Url.OrganisationAction("Back", "FinancialDetails", redirectParameters)" class="govuk-!-margin-bottom-8"></gds-back-link>
 }
 else
 {

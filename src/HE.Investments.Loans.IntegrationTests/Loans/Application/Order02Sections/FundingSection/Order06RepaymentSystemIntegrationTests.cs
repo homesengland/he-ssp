@@ -1,13 +1,11 @@
 using System.Diagnostics.CodeAnalysis;
 using AngleSharp.Html.Dom;
 using HE.Investments.Common.Messages;
-using HE.Investments.IntegrationTestsFramework;
 using HE.Investments.Loans.Common.Tests.TestData;
 using HE.Investments.Loans.Common.Utils.Constants.FormOption;
 using HE.Investments.Loans.IntegrationTests.IntegrationFramework;
 using HE.Investments.Loans.IntegrationTests.Loans.LoansHelpers.Extensions;
 using HE.Investments.Loans.IntegrationTests.Loans.LoansHelpers.Pages;
-using HE.Investments.Loans.WWW;
 using HE.Investments.Loans.WWW.Views.FundingV2.Consts;
 using HE.Investments.TestsUtils.Extensions;
 using Xunit;
@@ -29,12 +27,14 @@ public class Order06RepaymentSystemIntegrationTests : IntegrationTest
     public async Task Order01_ShouldDisplayValidationError_WhenRefinanceIsSelectedAndAdditionalInformationIsNotProvided()
     {
         // given
-        var repaymentSystemPage = await TestClient.NavigateTo(FundingPageUrls.RepaymentSystem(UserData.LoanApplicationIdInDraftState));
+        var repaymentSystemPage =
+            await TestClient.NavigateTo(FundingPageUrls.RepaymentSystem(UserOrganisationData.OrganisationId, UserData.LoanApplicationIdInDraftState));
         var continueButton = repaymentSystemPage.GetGdsSubmitButtonById("continue-button");
 
         // when
         repaymentSystemPage = await TestClient.SubmitButton(
-            continueButton, new Dictionary<string, string> { { "Refinance", FundingFormOption.Refinance }, { "RefinanceInfo", string.Empty } });
+            continueButton,
+            new Dictionary<string, string> { { "Refinance", FundingFormOption.Refinance }, { "RefinanceInfo", string.Empty } });
 
         // then
         repaymentSystemPage
@@ -56,7 +56,8 @@ public class Order06RepaymentSystemIntegrationTests : IntegrationTest
 
         // when
         repaymentSystemPage = await TestClient.SubmitButton(
-            continueButton, new Dictionary<string, string> { { "Refinance", FundingFormOption.Refinance }, { "RefinanceInfo", TextTestData.TextThatExceedsLongInputLimit } });
+            continueButton,
+            new Dictionary<string, string> { { "Refinance", FundingFormOption.Refinance }, { "RefinanceInfo", TextTestData.TextThatExceedsLongInputLimit } });
 
         // then
         repaymentSystemPage
@@ -75,7 +76,8 @@ public class Order06RepaymentSystemIntegrationTests : IntegrationTest
 
         // when
         var additionalProjectsPage = await TestClient.SubmitButton(
-            continueButton, new Dictionary<string, string> { { "Refinance", FundingFormOption.Repay }, { "RefinanceInfo", string.Empty } });
+            continueButton,
+            new Dictionary<string, string> { { "Refinance", FundingFormOption.Repay }, { "RefinanceInfo", string.Empty } });
 
         // then
         additionalProjectsPage
@@ -93,7 +95,12 @@ public class Order06RepaymentSystemIntegrationTests : IntegrationTest
 
         // when
         var additionalProjectsPage = await TestClient.SubmitButton(
-            continueButton, new Dictionary<string, string> { { "Refinance", FundingFormOption.Refinance }, { "RefinanceInfo", TextTestData.TextThatNotExceedsLongInputLimit } });
+            continueButton,
+            new Dictionary<string, string>
+            {
+                { "Refinance", FundingFormOption.Refinance },
+                { "RefinanceInfo", TextTestData.TextThatNotExceedsLongInputLimit },
+            });
 
         // then
         additionalProjectsPage

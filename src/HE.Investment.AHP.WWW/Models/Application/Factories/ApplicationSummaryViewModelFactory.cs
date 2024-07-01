@@ -37,10 +37,11 @@ public class ApplicationSummaryViewModelFactory : IApplicationSummaryViewModelFa
 
     public async Task<ApplicationSummaryViewModel> GetDataAndCreate(AhpApplicationId applicationId, IUrlHelper urlHelper, CancellationToken cancellationToken)
     {
-        var scheme = await _mediator.Send(new GetApplicationSchemeQuery(applicationId), cancellationToken);
+        var scheme = await _mediator.Send(new GetApplicationSchemeQuery(applicationId, true), cancellationToken);
         var schemeSummary = _schemeSummaryViewModelFactory.GetSchemeAndCreateSummary("Scheme information", scheme, urlHelper);
         var homeTypesSummaries = await GetHomeTypesAndCreateSummary(applicationId, urlHelper, cancellationToken);
-        var financialDetailsSummary = await _financialDetailsSummaryViewModelFactory.GetFinancialDetailsAndCreateSummary(applicationId, urlHelper, cancellationToken);
+        var financialDetailsSummary =
+            await _financialDetailsSummaryViewModelFactory.GetFinancialDetailsAndCreateSummary(applicationId, urlHelper, cancellationToken);
         var deliveryPhasesSummaries = await GetDeliveryPhasesAndCreateSummary(applicationId, urlHelper, cancellationToken);
 
         var summaries = new List<SectionSummaryViewModel> { schemeSummary };
@@ -53,7 +54,10 @@ public class ApplicationSummaryViewModelFactory : IApplicationSummaryViewModelFa
         return new ApplicationSummaryViewModel(applicationId.Value, scheme.Application.Name, summaries);
     }
 
-    private async Task<IList<SectionSummaryViewModel>> GetHomeTypesAndCreateSummary(AhpApplicationId applicationId, IUrlHelper urlHelper, CancellationToken cancellationToken)
+    private async Task<IList<SectionSummaryViewModel>> GetHomeTypesAndCreateSummary(
+        AhpApplicationId applicationId,
+        IUrlHelper urlHelper,
+        CancellationToken cancellationToken)
     {
         var sections = new List<SectionSummaryViewModel>();
         var homeTypes = await _mediator.Send(new GetHomeTypesQuery(applicationId), cancellationToken);
@@ -66,7 +70,10 @@ public class ApplicationSummaryViewModelFactory : IApplicationSummaryViewModelFa
         return sections;
     }
 
-    private async Task<IList<SectionSummaryViewModel>> GetDeliveryPhasesAndCreateSummary(AhpApplicationId applicationId, IUrlHelper urlHelper, CancellationToken cancellationToken)
+    private async Task<IList<SectionSummaryViewModel>> GetDeliveryPhasesAndCreateSummary(
+        AhpApplicationId applicationId,
+        IUrlHelper urlHelper,
+        CancellationToken cancellationToken)
     {
         var sections = new List<SectionSummaryViewModel>();
         var deliveryPhases = await _mediator.Send(new GetDeliveryPhasesQuery(applicationId), cancellationToken);

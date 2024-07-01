@@ -6,12 +6,12 @@
 <gds-div-grid-column-two-thirds>
     <vc:ahp-workflow-back-button current-page="@ConsortiumMemberWorkflowState.RemoveMember"/>
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
-    <form asp-controller="ConsortiumMember" asp-action="RemoveMember" asp-method="post" novalidate>
+    <he-organisation-form asp-controller="ConsortiumMember" asp-action="RemoveMember" asp-method="post" novalidate>
         <vc:radio-yes-no title="@ConsortiumMemberPageTitles.RemoveMember(Model.Name)"
                          title-type="InputTitleType.PageHeader"
                          hint="The organisation will no longer be able to view any applications."
                          field-name="isConfirmed"/>
 
-        <vc:form-button text="Continue"/>
-    </form>
+        <vc:form-button text="Save and Continue"/>
+    </he-organisation-form>
 </gds-div-grid-column-two-thirds>

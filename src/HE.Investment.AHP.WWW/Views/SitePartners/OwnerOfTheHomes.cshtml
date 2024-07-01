@@ -4,6 +4,7 @@
 @using HE.Investment.AHP.WWW.Views.Shared.Components.AhpWorkflowBackButton
 @using HE.Investment.AHP.WWW.Views.Shared.Components.ReturnToSitesLink
 @using HE.Investments.Common.WWW.Components.PageHeader
+@using HE.Investments.Common.WWW.Extensions
 @using SelectList = Microsoft.AspNetCore.Mvc.Rendering.SelectList
 @model HE.Investment.AHP.WWW.Models.SitePartners.SelectPartnerModel;
 @{
@@ -11,11 +12,15 @@
     var workflow = Context.Request.Query["workflow"];
 
     var items = Model.ConsortiumMembers.ToSelectListViewModel(
-        x => Url.Action("OwnerOfTheHomesConfirm", "SitePartners", new { Model.SiteId, organisationId = x.Value, workflow }));
+        x => Url.OrganisationAction("OwnerOfTheHomesConfirm", "SitePartners", new { Model.SiteId, partnerId = x.Value, workflow }));
+
+    var backUrl = string.IsNullOrWhiteSpace(Model.PreviousPagePartnerId)
+        ? Url.OrganisationAction("OwnerOfTheLand", "SitePartners", new { siteId = this.GetSiteIdFromRoute() })
+        : Url.OrganisationAction("OwnerOfTheLandConfirm", "SitePartners", new { siteId = this.GetSiteIdFromRoute(), partnerId = Model.PreviousPagePartnerId });
 }
 
 <gds-div-grid-column-two-thirds>
-    <vc:ahp-workflow-back-button current-page="@SitePartnersWorkflowState.OwnerOfTheHomes"/>
+    <gds-back-link href="@backUrl" text="Back" class="govuk-!-margin-bottom-8"></gds-back-link>
     <vc:page-header title="@SharedPageTitles.OwnerOfTheHomes" caption="@Model.SiteName"/>
 
     @foreach (var paragraph in SharedParagraphs.OwnerOfTheHomes)
@@ -25,7 +30,7 @@
 
     <vc:select-list
         items="@items"
-        paging-navigation-url="@Url.Action("OwnerOfTheHomes", "SitePartners", new { siteId = Model.SiteId, workflow })"/>
+        paging-navigation-url="@Url.OrganisationAction("OwnerOfTheHomes", "SitePartners", new { siteId = Model.SiteId, workflow })"/>
 
     <vc:return-to-sites-link is-link-inside-form="false" is-editable="false" project-id="@ViewBag.ProjectId" />
 </gds-div-grid-column-two-thirds>

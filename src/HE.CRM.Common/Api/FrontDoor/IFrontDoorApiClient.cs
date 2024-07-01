@@ -1,30 +1,29 @@
 using System;
-using System.Collections.Generic;
 using System.Threading;
-using System.Threading.Tasks;
 using HE.Base.Services;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
+using HE.CRM.Common.Api.FrontDoor.Contract.Responses;
 
 namespace HE.CRM.Common.Api.FrontDoor
 {
     public interface IFrontDoorApiClient : ICrmService, IDisposable
     {
-        Task<bool> CheckProjectExists(Guid organisationId, string projectName, CancellationToken cancellationToken);
+        bool CheckProjectExists(Guid organisationId, string projectName);
 
-        Task DeactivateProject(Guid projectId, CancellationToken cancellationToken);
+        string DeactivateProject(Guid projectId);
 
-        Task RemoveSite(Guid siteId, CancellationToken cancellationToken);
+        void RemoveSite(Guid siteId);
 
-        Task<IList<FrontDoorProjectDto>> GetProjects(Guid organisationId, CancellationToken cancellationToken);
+        GetProjectsResponse GetProjects(Guid organisationId);
 
-        Task<IList<FrontDoorProjectSiteDto>> GetSites(Guid projectId, CancellationToken cancellationToken);
+        GetMultipleSitesResponse GetSites(Guid projectId);
 
-        Task<FrontDoorProjectDto> GetProject(Guid projectId, CancellationToken cancellationToken);
+        GetProjectResponse GetProject(Guid projectId);
 
-        Task<FrontDoorProjectSiteDto> GetSite(Guid siteId, CancellationToken cancellationToken);
+        GetSiteResponse GetSite(Guid siteId);
 
-        Task<Guid> SaveProject(FrontDoorProjectDto dto, Guid userId, CancellationToken cancellationToken);
+        SaveProjectResponse SaveProject(FrontDoorProjectDto dto, Guid userId);
 
-        Task<Guid> SaveSite(FrontDoorProjectSiteDto dto, Guid projectId, CancellationToken cancellationToken);
+        SaveSiteResponse SaveSite(FrontDoorProjectSiteDto dto, Guid projectId);
     }
 }

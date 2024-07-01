@@ -4,7 +4,6 @@ using System.IO;
 using System.Net.Http;
 using System.Runtime.Serialization.Json;
 using System.Text;
-using System.Threading.Tasks;
 using HE.Base.Log;
 
 namespace HE.CRM.Common.Api.Auth.AzureAd
@@ -23,7 +22,7 @@ namespace HE.CRM.Common.Api.Auth.AzureAd
             _config = config;
         }
 
-        public async Task<string> GetToken()
+        public string GetToken()
         {
             if (!string.IsNullOrEmpty(_accessToken))
             {
@@ -34,6 +33,9 @@ namespace HE.CRM.Common.Api.Auth.AzureAd
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri("https://login.microsoftonline.com");
+                client.Timeout = TimeSpan.FromSeconds(10);
+                client.DefaultRequestHeaders.ConnectionClose = true;
+
                 var formValues = new List<KeyValuePair<string, string>>
                 {
                     new KeyValuePair<string, string>("grant_type", "client_credentials"),
@@ -41,15 +43,15 @@ namespace HE.CRM.Common.Api.Auth.AzureAd
                     new KeyValuePair<string, string>("client_secret", _config.ClientSecret),
                     new KeyValuePair<string, string>("scope", $"api://{_config.Scope}/.default")
                 };
-                var request = new HttpRequestMessage(HttpMethod.Post, $"/{_config.TenantId}/oauth2/token")
+                var request = new HttpRequestMessage(HttpMethod.Post, $"/{_config.TenantId}/oauth2/v2.0/token")
                 {
                     Content = new FormUrlEncodedContent(formValues)
                 };
 
-                var response = await client.SendAsync(request);
+                var response = client.SendAsync(request).GetAwaiter().GetResult();
                 if (response.IsSuccessStatusCode)
                 {
-                    var result = await response.Content.ReadAsStringAsync();
+                    var result = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
                     var adToken = Deserialize<AzureAdToken>(result);
                     _accessToken = adToken?.AccessToken;
 
@@ -57,7 +59,9 @@ namespace HE.CRM.Common.Api.Auth.AzureAd
                 }
                 else
                 {
+                    var responceContent = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
                     _logger.Error($"ApiTokenProvider.GetToken: Azure AD execution failed, response code: {response.StatusCode}");
+                    _logger.Error(responceContent);
                 }
             }
 

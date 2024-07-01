@@ -1,9 +1,11 @@
+@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Links
 @using HE.Investments.Common.WWW.Components.SummaryItem
 @using HE.Investments.Account.WWW.Models.Users
 @using HE.Investments.Common.WWW.Components.FormButton
 @using HE.Investments.Common.WWW.Components.RadioListWithOr
 @using HE.Investments.Common.WWW.Models
 @using HE.Investments.Account.Api.Contract.User
+@using HE.Investments.Common.WWW.Extensions
 @model (string OrganisationName, HE.Investments.Account.Contract.Users.UserDetails UserDetails)
 @{
     ViewData["Title"] = "Manage users";
@@ -17,7 +19,7 @@
 }
 
 <gds-div-grid-column-two-thirds>
-    <gds-back-link class="govuk-!-margin-bottom-8" href="@Url.Action("Index", "Users")"></gds-back-link>
+    <gds-back-link class="govuk-!-margin-bottom-7" href="@Url.OrganisationAction("Index", "Users")"></gds-back-link>
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
     <vc:page-header title=@title caption="@Model.OrganisationName"/>
     <gds-summary-list class="govuk-!-margin-bottom-9">
@@ -27,7 +29,7 @@
         <vc:summary-item title="Email" value="@Model.UserDetails.Email"/>
     </gds-summary-list>
 
-    <form asp-controller="Users" asp-action="ChangeRole" asp-route-id="@Model.UserDetails.Id.Value" asp-method="post" novalidate>
+    <he-organisation-form asp-controller="Users" asp-action="ChangeRole" asp-route-id="@Model.UserDetails.Id.Value" asp-method="post" novalidate>
 
         <vc:radio-list-with-or
             field-name="Role"
@@ -39,5 +41,5 @@
 
         <vc:form-button/>
 
-    </form>
+    </he-organisation-form>
 </gds-div-grid-column-two-thirds>

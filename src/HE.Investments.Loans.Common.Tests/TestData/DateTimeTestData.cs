@@ -12,5 +12,5 @@ public static class DateTimeTestData
 
     public static readonly (string Year, string Month, string Day) OtherCorrectDateAsStrings = ("2022", "3", "31");
 
-    public static readonly string CorrectDateDisplay = "31/01/2022";
+    public static readonly string CorrectDateDisplay = "31 January 2022";
 }

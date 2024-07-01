@@ -1,3 +1,4 @@
+@using HE.Investment.AHP.Contract.Application
 @using HE.Investment.AHP.WWW.Routing
 @using HE.Investment.AHP.WWW.Extensions
 @using HE.Investment.AHP.Contract.HomeTypes.Enums
@@ -5,13 +6,17 @@
 @using HE.Investment.AHP.WWW.Views.Shared.Components.ReturnToApplicationLink
 @using HE.Investments.Common.Extensions
 @using HE.Investments.Common.Gds
+@using HE.Investments.Common.WWW.Components.FormButton
+@using HE.Investments.Common.WWW.Extensions
+@using Microsoft.AspNetCore.Mvc.TagHelpers
 @model HE.Investment.AHP.WWW.Models.HomeTypes.HomeTypeListModel
 
 @{
     var applicationId = this.GetApplicationIdFromRoute();
+    var organisationId = Context.Request.RouteValues["organisationId"]?.ToString();
 
     ViewBag.Breadcrumbs = AhpBreadcrumbsBuilder
-        .New()
+        .New(organisationId)
         .WithSites(Model.ProjectId)
         .WithApplication(applicationId, Model.ApplicationName)
         .Build();
@@ -22,13 +27,18 @@
     <partial name="~/Partials/Errors/_ErrorSummaryPartial.cshtml"/>
     <vc:notification/>
 
+    @if (Model.AllowedOperations.Contains(AhpApplicationOperation.RequestToEdit))
+    {
+    <partial name="_LockedApplicationInformation"/>
+    }
+
     <span class="govuk-caption-l govuk-!-margin-top-1">@Model.ApplicationName</span>
     <gds-h1>@HomeTypesPageTitles.HomeTypes</gds-h1>
 
     <gds-p class="govuk-!-width-three-quarters" hidden="@Model.IsReadOnly">
         Add the home types for this application. You can duplicate and edit a home type.
     </gds-p>
-    <form asp-controller="HomeTypes" asp-action="List" asp-method="post" novalidate>
+    <he-organisation-form asp-controller="HomeTypes" asp-action="List" asp-method="post" novalidate>
         @Html.HiddenFor(m => Model.ApplicationName)
         @Html.HiddenFor(m => Model.TotalExpectedNumberOfHomes)
         @for (var i = 0; i < Model.AllowedOperations.Length; i++)
@@ -62,7 +72,7 @@
                         <td class="govuk-table__cell">
                             <gds-link class="govuk-link--no-visited-state"
                                       data-testid="home-type-@Model.HomeTypes[index].HomeTypeId"
-                                      href="@Url.Action("Start", "HomeTypes", new { applicationId, homeTypeId = Model.HomeTypes[index].HomeTypeId, redirect = true })">
+                                      href="@Url.OrganisationAction("Start", "HomeTypes", new { applicationId, homeTypeId = Model.HomeTypes[index].HomeTypeId, redirect = true })">
                                 @(Model.HomeTypes[index].HomeTypeName)
                             </gds-link>
                         </td>
@@ -75,11 +85,11 @@
                         <td class="govuk-table__cell govuk-!-text-align-right" hidden="@Model.IsReadOnly">
                             <gds-link class="govuk-link--no-visited-state"
                                       data-testid="duplicate-@Model.HomeTypes[index].HomeTypeId"
-                                      href="@Url.Action("Duplicate", "HomeTypes", new { applicationId, homeTypeId = Model.HomeTypes[index].HomeTypeId })">
+                                      href="@Url.OrganisationAction("Duplicate", "HomeTypes", new { applicationId, homeTypeId = Model.HomeTypes[index].HomeTypeId })">
                                 Duplicate
                             </gds-link>
                             <gds-link class="govuk-link--no-visited-state govuk-!-margin-left-4"
-                                      href="@Url.Action("Remove", "HomeTypes", new { applicationId, homeTypeId = Model.HomeTypes[index].HomeTypeId })">
+                                      href="@Url.OrganisationAction("Remove", "HomeTypes", new { applicationId, homeTypeId = Model.HomeTypes[index].HomeTypeId })">
                                 Remove
                             </gds-link>
                         </td>
@@ -111,7 +121,7 @@
                         <vc:form-button is-disabled="@Model.IsReadOnly" />
                     </td>
                     <td class="govuk-!-padding-top-6" colspan="3">
-                        <link-button href="@Url.Action("NewHomeTypeDetails","HomeTypes", new  { applicationId })"
+                        <link-button href="@Url.OrganisationAction("NewHomeTypeDetails","HomeTypes", new  { applicationId })"
                                      button-type="@ButtonType.Secondary"
                                      data-testid="add-home-type"
                                      is-disabled="@Model.IsReadOnly">
@@ -128,12 +138,12 @@
                 Your home type details will appear here once added.
             </gds-p>
 
-            <link-button href="@Url.Action("NewHomeTypeDetails","HomeTypes", new  { applicationId })"
+            <link-button href="@Url.OrganisationAction("NewHomeTypeDetails","HomeTypes", new  { applicationId })"
                          data-testid="add-home-type"
                          is-disabled="@Model.IsReadOnly">
                 Add a home type
             </link-button>
         }
         <vc:return-to-application-link application-id="@applicationId" is-editable="@false" />
-    </form>
+    </he-organisation-form>
 </div>

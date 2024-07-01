@@ -12,7 +12,7 @@ public class RemoveDesignPlansFileCommandHandler : SaveHomeTypeSegmentCommandHan
         IHomeTypeRepository homeTypeRepository,
         IConsortiumUserContext accountUserContext,
         ILogger<RemoveDesignPlansFileCommandHandler> logger)
-        : base(homeTypeRepository, accountUserContext, logger)
+        : base(homeTypeRepository, accountUserContext, logger, true)
     {
     }
 
@@ -20,6 +20,6 @@ public class RemoveDesignPlansFileCommandHandler : SaveHomeTypeSegmentCommandHan
 
     protected override IEnumerable<Action<RemoveDesignPlansFileCommand, IHomeTypeEntity>> SaveActions =>
     [
-        (RemoveDesignPlansFileCommand request, IHomeTypeEntity homeType) => homeType.DesignPlans.MarkFileToRemove(request.FileId),
+        (request, homeType) => homeType.DesignPlans.MarkFileToRemove(request.FileId),
     ];
 }

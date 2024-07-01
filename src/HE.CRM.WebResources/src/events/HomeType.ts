@@ -13,6 +13,7 @@ export class HomeType {
   public static onLoad(eCtx) {
     const eventLogic = new HomeType(eCtx)
     eventLogic.registerEvents();
+    eventLogic.homeTypeService.showHideSection();
   }
 
   static nDSSNotification(eCtx) {

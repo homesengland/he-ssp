@@ -4,19 +4,15 @@
 @using Microsoft.AspNetCore.Mvc.TagHelpers
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Divs
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Input
-@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Links
 @model HE.Investments.Loans.Contract.Projects.ViewModels.ProjectViewModel;
 @{
-    var id = ViewContext.RouteData.Values["id"];
-
     var (inputInvalid, inputErrors) = @ViewData.ModelState.GetErrors(nameof(ProjectViewModel.PlanningReferenceNumber));
 }
 
 <gds-div-grid-column-two-thirds>
-    <form asp-controller="Project" asp-action="PlanningReferenceNumber" asp-route-id="@Model.ApplicationId" asp-route-projectId="@Model.ProjectId" asp-route-redirect="@Context.Request.Query["redirect"]" asp-method="post" novalidate>
+    <he-organisation-form asp-controller="Project" asp-action="PlanningReferenceNumber" asp-route-id="@Model.ApplicationId" asp-route-projectId="@Model.ProjectId" asp-route-redirect="@Context.Request.Query["redirect"]" asp-method="post" novalidate>
+        <vc:loans-workflow-back-button current-page="@ProjectState.PlanningRefEnter"/>
 
-        <gds-back-link href="@Url.Action("Back", "Project", new { id = Model.ApplicationId, projectId = Model.ProjectId, currentPage = ProjectState.PlanningRefEnter })" text="Back" class="govuk-!-margin-bottom-8">
-        </gds-back-link>
         <partial name="_ErrorSummaryPartial" model="null"/>
             <gds-div-form-group invalid="inputInvalid">
                 <vc:page-header
@@ -37,7 +33,7 @@
             <button id="continue-button" class="govuk-button" data-module="govuk-button" name="action" type="submit" value="Continue">
                 Continue
             </button>
-    </form>
+    </he-organisation-form>
 
     <partial name="_HomeAndCheckAnswersLinks"/>
 </gds-div-grid-column-two-thirds>

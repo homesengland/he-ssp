@@ -649,6 +649,10 @@ namespace DataverseModel
 			public const string lk_invln_scheme_createdonbehalfby = "lk_invln_scheme_createdonbehalfby";
 			public const string lk_invln_scheme_modifiedby = "lk_invln_scheme_modifiedby";
 			public const string lk_invln_scheme_modifiedonbehalfby = "lk_invln_scheme_modifiedonbehalfby";
+			public const string lk_invln_secretvariable_createdby = "lk_invln_secretvariable_createdby";
+			public const string lk_invln_secretvariable_createdonbehalfby = "lk_invln_secretvariable_createdonbehalfby";
+			public const string lk_invln_secretvariable_modifiedby = "lk_invln_secretvariable_modifiedby";
+			public const string lk_invln_secretvariable_modifiedonbehalfby = "lk_invln_secretvariable_modifiedonbehalfby";
 			public const string lk_invln_sitedetails_createdby = "lk_invln_sitedetails_createdby";
 			public const string lk_invln_sitedetails_createdonbehalfby = "lk_invln_sitedetails_createdonbehalfby";
 			public const string lk_invln_sitedetails_modifiedby = "lk_invln_sitedetails_modifiedby";
@@ -8181,6 +8185,86 @@ namespace DataverseModel
 				this.OnPropertyChanging("lk_invln_scheme_modifiedonbehalfby");
 				this.SetRelatedEntities<DataverseModel.invln_scheme>("lk_invln_scheme_modifiedonbehalfby", null, value);
 				this.OnPropertyChanged("lk_invln_scheme_modifiedonbehalfby");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N lk_invln_secretvariable_createdby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_invln_secretvariable_createdby")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_SecretVariable> lk_invln_secretvariable_createdby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_SecretVariable>("lk_invln_secretvariable_createdby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("lk_invln_secretvariable_createdby");
+				this.SetRelatedEntities<DataverseModel.invln_SecretVariable>("lk_invln_secretvariable_createdby", null, value);
+				this.OnPropertyChanged("lk_invln_secretvariable_createdby");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N lk_invln_secretvariable_createdonbehalfby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_invln_secretvariable_createdonbehalfby")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_SecretVariable> lk_invln_secretvariable_createdonbehalfby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_SecretVariable>("lk_invln_secretvariable_createdonbehalfby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("lk_invln_secretvariable_createdonbehalfby");
+				this.SetRelatedEntities<DataverseModel.invln_SecretVariable>("lk_invln_secretvariable_createdonbehalfby", null, value);
+				this.OnPropertyChanged("lk_invln_secretvariable_createdonbehalfby");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N lk_invln_secretvariable_modifiedby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_invln_secretvariable_modifiedby")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_SecretVariable> lk_invln_secretvariable_modifiedby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_SecretVariable>("lk_invln_secretvariable_modifiedby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("lk_invln_secretvariable_modifiedby");
+				this.SetRelatedEntities<DataverseModel.invln_SecretVariable>("lk_invln_secretvariable_modifiedby", null, value);
+				this.OnPropertyChanged("lk_invln_secretvariable_modifiedby");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N lk_invln_secretvariable_modifiedonbehalfby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_invln_secretvariable_modifiedonbehalfby")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_SecretVariable> lk_invln_secretvariable_modifiedonbehalfby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_SecretVariable>("lk_invln_secretvariable_modifiedonbehalfby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("lk_invln_secretvariable_modifiedonbehalfby");
+				this.SetRelatedEntities<DataverseModel.invln_SecretVariable>("lk_invln_secretvariable_modifiedonbehalfby", null, value);
+				this.OnPropertyChanged("lk_invln_secretvariable_modifiedonbehalfby");
 			}
 		}
 		
