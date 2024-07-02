@@ -26,7 +26,7 @@ public class DesignPlanFileEntity
         if (size > documentSettings.MaxFileSize)
         {
             OperationResult.New()
-                .AddValidationError("File", GenericValidationError.FileTooBig(documentSettings.MaxFileSize.Megabytes))
+                .AddValidationError("File", GenericValidationError.FileTooBig(name.Value, documentSettings.MaxFileSize.Megabytes))
                 .CheckErrors();
         }
 

@@ -75,14 +75,14 @@
     for (let i = invalidFiles.files.length - 1; i >= 0; i--) {
       const file = invalidFiles.files[i];
       if (file.size > maxFileSize) {
-        const errorMessage = `The selected file ${sanitize(file.name)} must be smaller than ${maxFileSizeInMegabytes}MB`;
+        const errorMessage = `The selected file \"${sanitize(file.name)}\" must be smaller than or equal to ${maxFileSizeInMegabytes}MB`;
 
         hasErrors = true;
         addInputFieldError(errorMessage);
         addInputFieldErrorSummary(errorMessage);
       }
       if (!allowedExtensionsArray.includes(getFileExtension(file.name))) {
-        const errorMessage = `The selected file ${sanitize(file.name)} must be a ${allowedExtensions}`;
+        const errorMessage = `The selected file \"${sanitize(file.name)}\" must be a ${allowedExtensions}`;
 
         hasErrors = true;
         addInputFieldError(errorMessage);
