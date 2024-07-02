@@ -56,11 +56,11 @@ namespace HE.CRM.AHP.Plugins.Handlers.DeliveryPhase
                 var application = _applicationRepository.GetById(CurrentState.invln_Application, new string[] { invln_scheme.Fields.invln_programmelookup });
                 var milestonesFramework = _milestoneFrameworkItemRepository.GetMilestoneFrameworkItemByProgrammeId(application.invln_programmelookup.Id.ToString());
                 ExecutionData.Target.invln_AcquisitionPercentageValue = milestonesFramework
-                             .FirstOrDefault(x => x.invln_milestone.Value == (int)invln_Milestone.Acquisition).invln_percentagepaidonmilestone.Value / 100;
+                             .FirstOrDefault(x => x.invln_milestone.Value == (int)invln_Milestone.Acquisition).invln_percentagepaidonmilestone.Value;
                 ExecutionData.Target.invln_CompletionPercentageValue = milestonesFramework
-                             .FirstOrDefault(x => x.invln_milestone.Value == (int)invln_Milestone.PC).invln_percentagepaidonmilestone.Value / 100;
+                             .FirstOrDefault(x => x.invln_milestone.Value == (int)invln_Milestone.PC).invln_percentagepaidonmilestone.Value;
                 ExecutionData.Target.invln_StartOnSitePercentageValue = milestonesFramework
-                             .FirstOrDefault(x => x.invln_milestone.Value == (int)invln_Milestone.SoS).invln_percentagepaidonmilestone.Value / 100;
+                             .FirstOrDefault(x => x.invln_milestone.Value == (int)invln_Milestone.SoS).invln_percentagepaidonmilestone.Value;
             }
         }
     }
