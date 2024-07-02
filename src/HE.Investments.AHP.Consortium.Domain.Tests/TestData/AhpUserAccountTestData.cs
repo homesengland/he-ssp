@@ -19,4 +19,11 @@ public static class AhpUserAccountTestData
         UserAccountTestData.UserAccountOne.Organisation,
         UserAccountTestData.UserAccountOne.Roles,
         new ConsortiumBasicInfo(new ConsortiumId("consortium-id-123"), true, []));
+
+    public static readonly ConsortiumUserAccount UserAccountOneWithConsortiumAsMember = new(
+        UserAccountTestData.UserAccountOne.UserGlobalId,
+        UserAccountTestData.UserAccountOne.UserEmail,
+        UserAccountTestData.UserAccountOne.Organisation,
+        UserAccountTestData.UserAccountOne.Roles,
+        new ConsortiumBasicInfo(new ConsortiumId("consortium-id-123"), false, []));
 }
