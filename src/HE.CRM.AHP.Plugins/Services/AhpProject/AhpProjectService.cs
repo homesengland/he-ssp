@@ -109,7 +109,11 @@ namespace HE.CRM.AHP.Plugins.Services.AhpProject
 
                     var listOfApps = _ahpApplicationRepository.GetApplicationsForAhpProject(ahpProject.Id, contactWebRole, contact, new Guid(organisationId), isALeadPartner, isSitePartner, consortiumId);
                     TracingService.Trace($"List of Application downloaded. no: {listOfApps.Count}");
-                    var listOfAppsDto = listOfApps.Select(x => AhpApplicationMapper.MapRegularEntityToDto(x)).ToList();
+
+                    var filteredList = listOfApps.Where(x => _consortiumService.CheckAccess(ConsortiumService.Operation.Get, ConsortiumService.RecordType.Application,
+                        externalContactId, null, x.Id.ToString(), consortiumId, organisationId, null));
+
+                    var listOfAppsDto = filteredList.Select(x => AhpApplicationMapper.MapRegularEntityToDto(x)).ToList();
                     TracingService.Trace($"Records mapped.");
 
                     TracingService.Trace($"List of Sites downloaded. no: {listOfSites.Count}");

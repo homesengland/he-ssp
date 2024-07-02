@@ -17,7 +17,7 @@ public class LocalAuthoritySupportFile : FileEntity
             size,
             content,
             new ValidFileExtensionPolicy(nameof(LocalAuthoritySupportFile), documentSettings),
-            new FileSizePolicy(nameof(LocalAuthoritySupportFile), documentSettings.MaxFileSize))
+            new FileSizePolicy(nameof(LocalAuthoritySupportFile), name, documentSettings.MaxFileSize))
     {
     }
 }

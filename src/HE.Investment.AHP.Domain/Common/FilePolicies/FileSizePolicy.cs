@@ -9,11 +9,13 @@ public class FileSizePolicy : IFilePolicy<FileSize>
 {
     private readonly string _fieldName;
     private readonly FileSize _maxFileSize;
+    private readonly FileName _fileName;
 
-    public FileSizePolicy(string fieldName, FileSize maxFileSize)
+    public FileSizePolicy(string fieldName, FileName fileName, FileSize maxFileSize)
     {
         _fieldName = fieldName;
         _maxFileSize = maxFileSize;
+        _fileName = fileName;
     }
 
     public void Apply(FileSize value, OperationResult operationResult)
@@ -21,7 +23,7 @@ public class FileSizePolicy : IFilePolicy<FileSize>
         if (value > _maxFileSize)
         {
             operationResult.Aggregate(() =>
-                throw new DomainValidationException(_fieldName, GenericValidationError.FileTooBig(_maxFileSize.Megabytes)));
+                throw new DomainValidationException(_fieldName, GenericValidationError.FileTooBig(_fileName.Value, _maxFileSize.Megabytes)));
         }
     }
 }
