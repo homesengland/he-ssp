@@ -38,6 +38,6 @@ public class WithAcquisitionTests
         var result = () => milestonesPercentageTranches.WithAcquisition(acquisitionPercentage);
 
         // then
-        result.Should().Throw<DomainValidationException>().WithMessage("Acquisition tranche must be at max 95% or less of the grant apportioned");
+        result.Should().Throw<DomainValidationException>().WithMessage("Acquisition tranche must be 95% or less of the grant apportioned");
     }
 }

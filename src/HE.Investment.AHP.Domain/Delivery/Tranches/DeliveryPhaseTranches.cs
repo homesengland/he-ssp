@@ -82,7 +82,7 @@ public class DeliveryPhaseTranches : IQuestion
 
         if (!Percentages.IsSumUpTo100Percentage())
         {
-            OperationResult.ThrowValidationError("Tranches", "Tranche proportions for this delivery phase must add to 100%");
+            OperationResult.ThrowValidationError("Tranches", "Tranche proportions for this delivery phase must total 100%");
         }
 
         ClaimMilestone = _modificationTracker.Change(ClaimMilestone, true, () => TranchesAmended?.Invoke());

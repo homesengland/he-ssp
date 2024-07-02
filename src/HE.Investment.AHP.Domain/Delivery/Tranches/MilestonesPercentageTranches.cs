@@ -33,7 +33,7 @@ public class MilestonesPercentageTranches : ValueObject
     {
         if (acquisition.Value > MaxTranche)
         {
-            OperationResult.ThrowValidationError(UiFieldName, "Acquisition tranche must be at max 95% or less of the grant apportioned");
+            OperationResult.ThrowValidationError(UiFieldName, "Acquisition tranche must be 95% or less of the grant apportioned");
         }
 
         return new MilestonesPercentageTranches(acquisition, StartOnSite, Completion);
@@ -41,14 +41,9 @@ public class MilestonesPercentageTranches : ValueObject
 
     public MilestonesPercentageTranches WithCompletion(WholePercentage completion)
     {
-        if (completion.Value < MinimalCompletionTranche)
+        if (completion.Value is < MinimalCompletionTranche or > MaxCompletionTranche)
         {
-            OperationResult.ThrowValidationError(UiFieldName, "Completion tranche must be at least 5% or more of the grant apportioned");
-        }
-
-        if (completion.Value > MaxCompletionTranche)
-        {
-            OperationResult.ThrowValidationError(UiFieldName, "Completion tranche must be at max 100% or less of the grant apportioned");
+            OperationResult.ThrowValidationError(UiFieldName, "Completion tranche must be between 5% and 100% of the grant apportioned");
         }
 
         return new MilestonesPercentageTranches(Acquisition, StartOnSite, completion);
@@ -58,7 +53,7 @@ public class MilestonesPercentageTranches : ValueObject
     {
         if (startOnSite.Value > MaxTranche)
         {
-            OperationResult.ThrowValidationError(UiFieldName, "Start on Site tranche must be at max 95% or less of the grant apportioned");
+            OperationResult.ThrowValidationError(UiFieldName, "Start on site tranche must be 95% or less of the grant apportioned");
         }
 
         return new MilestonesPercentageTranches(Acquisition, startOnSite, Completion);

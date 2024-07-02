@@ -50,8 +50,6 @@ export class AhpApplicationService {
       actions: null
     });
 
-  }
-
   public openCustomPage() {
     var recordId = this.common.trimBraces(this.common.getCurrentEntityId())
     var pageInput: any = {
