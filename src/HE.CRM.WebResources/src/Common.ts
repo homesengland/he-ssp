@@ -772,7 +772,6 @@ export class CommonLib {
     return Xrm.WebApi.retrieveMultipleRecords(entityLogicalName, fetchXml, maxPageSize);
   }
 
-
   public retrieveRecord(retrieveRequestType: RetrieveRequestType, logicalName: string, collectionName: string, id: string, options?: any, headers?: {}): Promise<any> {
     var baseHeaders = {
       "OData-MaxVersion": "4.0", "OData-Version": "4.0",

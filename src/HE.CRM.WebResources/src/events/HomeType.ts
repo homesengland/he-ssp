@@ -13,7 +13,13 @@ export class HomeType {
   public static onLoad(eCtx) {
     const eventLogic = new HomeType(eCtx)
     eventLogic.registerEvents();
+    eventLogic.homeTypeService.ndssCalculationError();
     eventLogic.homeTypeService.showHideSection();
+  }
+
+  public static onSave(eCtx) {
+    const eventLogic = new HomeType(eCtx)
+    eventLogic.homeTypeService.removeNotification();
   }
 
   static nDSSNotification(eCtx) {
