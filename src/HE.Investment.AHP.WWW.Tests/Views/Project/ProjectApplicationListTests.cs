@@ -36,8 +36,8 @@ public class ProjectApplicationListTests : AhpViewTestBase
     public async Task ShouldDisplayView_WhenThereAreTwoApplications()
     {
         // given
-        var application1 = new ApplicationProjectModel(AhpApplicationId.From("1"), "Application 1", ApplicationStatus.ApplicationSubmitted, 1564553, 12);
-        var application2 = new ApplicationProjectModel(AhpApplicationId.From("2"), "Application 2", ApplicationStatus.Draft, 266468, null);
+        var application1 = new ApplicationProjectModel(AhpApplicationId.From("1"), "Application 1", ApplicationStatus.ApplicationSubmitted, 1564553, 12, "Liverpol");
+        var application2 = new ApplicationProjectModel(AhpApplicationId.From("2"), "Application 2", ApplicationStatus.Draft, 266468, null, "Manchester");
 
         var applicationListModel = new ProjectDetailsModel(
             new FrontDoorProjectId("project-id"),
@@ -61,6 +61,7 @@ public class ProjectApplicationListTests : AhpViewTestBase
         document.HasElementWithText("a", application.Name)
             .HasElementWithText("td", expectedGrant)
             .HasElementWithText("td", application.Unit?.ToString(CultureInfo.InvariantCulture) ?? "-")
+            .HasElementWithText("td", application.LocalAuthorityName?.ToString(CultureInfo.InvariantCulture) ?? "-")
             .HasElementWithText("strong", application.Status.GetDescription());
     }
 

@@ -14,7 +14,8 @@ public static class AhpProjectApplicationTestData
         ApplicationStatus.ApplicationSubmitted,
         new SchemeFunding("100000", "10"),
         Tenure.AffordableRent,
-        null);
+        null,
+        "Oxford");
 
     public static readonly AhpProjectApplication SecondAhpProjectApplication = new(
         new AhpApplicationId("application-id-2"),
@@ -22,7 +23,8 @@ public static class AhpProjectApplicationTestData
         ApplicationStatus.UnderReview,
         new SchemeFunding("99999", "527"),
         Tenure.OlderPersonsSharedOwnership,
-        null);
+        null,
+        "Liverpool");
 
     public static readonly AhpProjectApplication ThirdAhpProjectApplication = new(
         new AhpApplicationId("application-id-3"),
@@ -30,5 +32,6 @@ public static class AhpProjectApplicationTestData
         ApplicationStatus.LoanAvailable,
         new SchemeFunding("368434", "345"),
         Tenure.RentToBuy,
-        null);
+        null,
+        "London");
 }

@@ -70,7 +70,8 @@ public class ProjectRepository : IProjectRepository
                 AhpApplicationStatusMapper.MapToPortalStatus(x.applicationStatus),
                 new SchemeFunding((int?)x.fundingRequested, x.noOfHomes),
                 ApplicationTenureMapper.ToDomain(x.tenure)!.Value,
-                x.lastExternalModificationOn))
+                x.lastExternalModificationOn,
+                GetSiteLocalAuthority(x, project.ListOfSites)))
             .ToList();
 
         return new AhpProjectApplications(
@@ -160,5 +161,11 @@ public class ProjectRepository : IProjectRepository
             fdSiteid = x.Id.ToGuidAsString(),
             name = x.Name.ToString(),
         }).ToList() ?? [];
+    }
+
+    private string? GetSiteLocalAuthority(AhpApplicationDto application, List<SiteDto> sites)
+    {
+        var site = sites.Find(x => x.id == application.siteId);
+        return site?.localAuthority.name;
     }
 }
