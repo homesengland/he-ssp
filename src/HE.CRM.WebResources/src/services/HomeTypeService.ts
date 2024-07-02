@@ -14,6 +14,7 @@ export class HomeTypeService {
   }
 
   public async ndssCalculationError() {
+
     this.common.clearFieldNotification("invln_percentagevalueofndssstandard", "NDSS Alert");
 
     let numberofbedrooms = this.common.getAttribute("invln_numberofbedrooms").getValue();
@@ -29,7 +30,23 @@ export class HomeTypeService {
     let concatenatevalue = numberofbedrooms.toString() + maxoccupancy.toString() + numberofstoreys.toString();
     let ndss = await Xrm.WebApi.retrieveMultipleRecords("invln_ndss", "?$select=invln_standardnumber&$filter=(invln_standardnumber eq " + concatenatevalue + ")&$top=50");
     if (ndss.entities.length == 0) {
-      this.common.setFieldNotification("invln_percentagevalueofndssstandard", "Home type not covered by NDSS.", "NDSS Alert")
+      var myControl = <any>this.common.getControl('invln_percentagevalueofndssstandard');
+
+      var actionCollection = {
+        message: 'Home type not covered by NDSS.',
+        actions: <any>null
+      };
+
+      actionCollection.actions = [function () {
+        myControl.clearNotification('my_unique_id');
+      }];
+
+      myControl.addNotification({
+        messages: ["Home type not covered by NDSS."],
+        notificationLevel: 'RECOMMENDATION',
+        uniqueId: 'my_unique_id',
+        actions: null
+      });
     }
   }
 
