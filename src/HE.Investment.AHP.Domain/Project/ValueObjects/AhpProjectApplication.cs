@@ -14,7 +14,8 @@ public class AhpProjectApplication : ValueObject
         ApplicationStatus applicationStatus,
         SchemeFunding funding,
         Tenure tenure,
-        DateTime? lastModificationOn)
+        DateTime? lastModificationOn,
+        string? localAuthorityName)
     {
         Id = id;
         Name = name;
@@ -22,6 +23,7 @@ public class AhpProjectApplication : ValueObject
         Funding = funding;
         Tenure = tenure;
         LastModificationOn = lastModificationOn;
+        LocalAuthorityName = localAuthorityName;
     }
 
     public AhpApplicationId Id { get; }
@@ -36,6 +38,8 @@ public class AhpProjectApplication : ValueObject
 
     public DateTime? LastModificationOn { get; }
 
+    public string? LocalAuthorityName { get; }
+
     protected override IEnumerable<object?> GetAtomicValues()
     {
         yield return Id;
@@ -43,5 +47,6 @@ public class AhpProjectApplication : ValueObject
         yield return ApplicationStatus;
         yield return Funding;
         yield return Tenure;
+        yield return LastModificationOn;
     }
 }

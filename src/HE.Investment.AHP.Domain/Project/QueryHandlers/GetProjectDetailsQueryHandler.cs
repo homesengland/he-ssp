@@ -50,7 +50,8 @@ public class GetProjectDetailsQueryHandler : IRequestHandler<GetProjectDetailsQu
                 x.Name.ToString(),
                 x.ApplicationStatus,
                 x.Funding.RequiredFunding,
-                x.Funding.HousesToDeliver))
+                x.Funding.HousesToDeliver,
+                x.LocalAuthorityName))
             .ToList();
 
         return new ProjectDetailsModel(
