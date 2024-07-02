@@ -57,6 +57,36 @@ namespace HE.CRM.Common.Repositories.Implementations
             };
         }
 
+        public PagedResponseDto<he_LocalAuthority> GetLocalAuthoritiesForFdAhp(PagingRequestDto pagingRequestDto, string searchPhrase)
+        {
+            var condition = string.IsNullOrWhiteSpace(searchPhrase)
+            ? string.Empty
+            : $@"<condition attribute=""he_name"" operator=""like"" value=""%{searchPhrase}%"" />";
+
+            var fetchXml =
+                $@"<fetch page=""{pagingRequestDto.pageNumber}"" count=""{pagingRequestDto.pageSize}"" returntotalrecordcount=""true"">
+	                <entity name=""he_localauthority"">
+		                <attribute name=""he_localauthorityid"" />
+		                <attribute name=""he_gsscode"" />
+		                <attribute name=""he_name"" />
+                        <order attribute=""he_name""/>
+                        <filter>
+                          <condition attribute=""he_governmentofficeregion"" operator=""ne"" value=""134370008"" />
+                          {condition}
+                        </filter>
+	                </entity>
+                </fetch>";
+
+            var result = service.RetrieveMultiple(new FetchExpression(fetchXml));
+
+            return new PagedResponseDto<he_LocalAuthority>
+            {
+                paging = pagingRequestDto,
+                items = result.Entities.Select(x => x.ToEntity<he_LocalAuthority>()).AsEnumerable().ToList(),
+                totalItemsCount = result.TotalRecordCount,
+            };
+        }
+
         public he_LocalAuthority GetHeLocalAuthorityrelatedToLoanApplication(Guid siteDetailsId)
         {
             var query = new QueryExpression(he_LocalAuthority.EntityLogicalName);

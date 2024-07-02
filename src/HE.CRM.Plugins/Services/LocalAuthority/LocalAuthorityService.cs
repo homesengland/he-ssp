@@ -28,7 +28,7 @@ namespace HE.CRM.Plugins.Services.LocalAuthority
             var localAuthoritiesDtoList = new List<LocalAuthorityDto>();
             if (localAuthorities.Any())
             {
-                foreach(var authority in localAuthorities)
+                foreach (var authority in localAuthorities)
                 {
                     localAuthoritiesDtoList.Add(new LocalAuthorityDto()
                     {
@@ -69,10 +69,23 @@ namespace HE.CRM.Plugins.Services.LocalAuthority
                 };
             }
 
-            if (useHeTables)
+            if (module != "ahp" && useHeTables)
             {
                 this.TracingService.Trace("module loanFD");
                 var result = _heLocalAuthorityRepository.GetLocalAuthoritiesForFdLoan(pagingRequestDto, searchPhrase);
+
+                return new PagedResponseDto<LocalAuthorityDto>
+                {
+                    paging = result.paging,
+                    totalItemsCount = result.totalItemsCount,
+                    items = result.items.Select(i => new LocalAuthorityDto { id = i.he_LocalAuthorityId.ToString(), name = i.he_Name, code = i.he_GSSCode }).ToList(),
+                };
+            }
+
+            if (module == "ahp" && useHeTables)
+            {
+                this.TracingService.Trace("module ahp");
+                var result = _heLocalAuthorityRepository.GetLocalAuthoritiesForFdAhp(pagingRequestDto, searchPhrase);
 
                 return new PagedResponseDto<LocalAuthorityDto>
                 {
