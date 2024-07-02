@@ -250,7 +250,7 @@ public class SiteEntity : DomainEntity, IQuestion
     {
         return applications.All(application =>
             application.Status is ApplicationStatus.Draft or ApplicationStatus.ReferredBackToApplicant or ApplicationStatus.Withdrawn
-                or ApplicationStatus.Deleted);
+                or ApplicationStatus.Deleted or ApplicationStatus.Rejected);
     }
 
     public void Complete(IsSectionCompleted isSectionCompleted)

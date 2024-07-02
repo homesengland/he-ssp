@@ -10,7 +10,7 @@ namespace HE.Investment.AHP.Domain.Tests.Site.Entities.SiteEntityTests;
 public class CanBeEditedTests
 {
     [Fact]
-    public void ShouldReturnTrue_WhenAllApplicationsAreDraftOrReferredBackToApplicant()
+    public void ShouldReturnTrue_WhenAllApplicationsHaveEditableStatuses()
     {
         // given
         var applications = new List<ApplicationBasicDetails>
@@ -19,6 +19,7 @@ public class CanBeEditedTests
             ApplicationBasicDetailsBuilder.New().WithStatus(ApplicationStatus.ReferredBackToApplicant).Build(),
             ApplicationBasicDetailsBuilder.New().WithStatus(ApplicationStatus.Withdrawn).Build(),
             ApplicationBasicDetailsBuilder.New().WithStatus(ApplicationStatus.Deleted).Build(),
+            ApplicationBasicDetailsBuilder.New().WithStatus(ApplicationStatus.Rejected).Build(),
         };
         var siteEntity = SiteEntityBuilder.New().WithStatus(SiteStatus.Submitted).Build();
 
@@ -40,6 +41,7 @@ public class CanBeEditedTests
             ApplicationBasicDetailsBuilder.New().WithStatus(ApplicationStatus.ReferredBackToApplicant).Build(),
             ApplicationBasicDetailsBuilder.New().WithStatus(ApplicationStatus.Withdrawn).Build(),
             ApplicationBasicDetailsBuilder.New().WithStatus(ApplicationStatus.Deleted).Build(),
+            ApplicationBasicDetailsBuilder.New().WithStatus(ApplicationStatus.Rejected).Build(),
             ApplicationBasicDetailsBuilder.New().WithStatus(ApplicationStatus.ApplicationSubmitted).Build(),
         };
         var siteEntity = SiteEntityBuilder.New().WithStatus(SiteStatus.Submitted).Build();
