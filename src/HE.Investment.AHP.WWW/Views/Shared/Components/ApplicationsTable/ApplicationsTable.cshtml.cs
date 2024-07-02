@@ -23,6 +23,7 @@ public class ApplicationsTable : ViewComponent
             new("Name", CellWidth.OneThird),
             new("Units", CellWidth.OneEighth),
             new("Grant", CellWidth.OneEighth),
+            new("Local authority", CellWidth.OneQuarter),
             new("Status", CellWidth.OneFifth),
         };
 
@@ -34,6 +35,7 @@ public class ApplicationsTable : ViewComponent
                     new(Component: CreateLinkComponent(x, organisationId)),
                     new(x.Unit?.ToString(CultureInfo.InvariantCulture)),
                     new(x.Grant.DisplayPounds()),
+                    new(x.LocalAuthorityName),
                     new(Component: CreateApplicationStatusComponent(x)),
                 };
 
