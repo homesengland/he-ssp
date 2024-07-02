@@ -15,6 +15,11 @@ public static class AhpProjectSitesTestData
         new AhpProjectName("First project"),
         [AhpProjectSiteTestData.ThirdAhpProjectSite]);
 
+    public static readonly AhpProjectSites AhpProjectWithNotCompletedSite = new(
+        new FrontDoorProjectId("project-id-1"),
+        new AhpProjectName("First project"),
+        [AhpProjectSiteTestData.AhpProjectSiteWithoutLocalAuthority]);
+
     public static readonly AhpProjectSites ProjectWithoutSites = new(
         new FrontDoorProjectId("project-id-3"),
         new AhpProjectName("Third project"),

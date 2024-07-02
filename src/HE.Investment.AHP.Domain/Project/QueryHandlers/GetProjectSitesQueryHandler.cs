@@ -5,6 +5,8 @@ using HE.Investment.AHP.Domain.Project.Repositories;
 using HE.Investments.Common.Contract.Pagination;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Consortium.Shared.UserContext;
+using HE.Investments.FrontDoor.Shared.Project;
+using HE.Investments.FrontDoor.Shared.Project.Data;
 using HE.Investments.FrontDoor.Shared.Project.Repositories;
 using MediatR;
 
@@ -29,14 +31,15 @@ public class GetProjectSitesQueryHandler : IRequestHandler<GetProjectSitesQuery,
     {
         var userAccount = await _userContext.GetSelectedAccount();
         var projectSites = await _projectRepository.GetProjectSites(request.ProjectId, userAccount, cancellationToken);
-        var fdProject = await _prefillDataRepository.GetProjectPrefillData(request.ProjectId, userAccount, cancellationToken);
+
+        var fdProject = await GetProjectPrefillData(request.ProjectId, userAccount, cancellationToken);
 
         var sites = projectSites.Sites.IsProvided()
             ? projectSites.Sites!
                 .TakePage(request.PaginationRequest)
                 .Select(x =>
                 {
-                    var fdSite = fdProject.Sites?.FirstOrDefault(y => y.Id == x.FdSiteId);
+                    var fdSite = fdProject?.Sites?.FirstOrDefault(y => y.Id == x.FdSiteId);
 
                     return new SiteBasicModel(
                         x.Id.Value,
@@ -57,5 +60,19 @@ public class GetProjectSitesQueryHandler : IRequestHandler<GetProjectSitesQuery,
                 request.PaginationRequest.Page,
                 request.PaginationRequest.ItemsPerPage,
                 projectSites.Sites?.Count ?? 0));
+    }
+
+    private async Task<ProjectPrefillData?> GetProjectPrefillData(
+        FrontDoorProjectId fdProjectId,
+        ConsortiumUserAccount userAccount,
+        CancellationToken cancellationToken)
+    {
+        ProjectPrefillData? fdProject = null;
+        if ((await _userContext.GetSelectedAccount()).CanEdit)
+        {
+            fdProject = await _prefillDataRepository.GetProjectPrefillData(fdProjectId, userAccount, cancellationToken);
+        }
+
+        return fdProject;
     }
 }

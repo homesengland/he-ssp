@@ -29,4 +29,11 @@ public static class AhpProjectSiteTestData
         new SiteName("Third site"),
         SiteStatus.Submitted,
         new LocalAuthority(new LocalAuthorityCode("LA-3"), "London"));
+
+    public static readonly AhpProjectSite AhpProjectSiteWithoutLocalAuthority = new(
+        FrontDoorSiteId.From(Guid.NewGuid().ToString()),
+        SiteId.From(Guid.NewGuid().ToString()),
+        new SiteName("Site without local authority"),
+        SiteStatus.InProgress,
+        null);
 }
