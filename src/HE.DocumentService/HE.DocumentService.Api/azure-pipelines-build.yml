@@ -3,11 +3,10 @@
 # Add steps that build, run tests, deploy, and more:
 # https://aka.ms/yaml
 
-trigger:
+pr:
   branches:
     include:
     - development_R3
-    - feature*/*
   paths:
     include:
     - src/HE.DocumentService/*
