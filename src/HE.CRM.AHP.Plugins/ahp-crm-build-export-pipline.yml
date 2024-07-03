@@ -1,12 +1,12 @@
 trigger: none
 pr: none
 
-schedules:
-- cron: '0 0 * * *'
-  displayName: Daily midnight build
-  branches:
-    include:
-    - development_R3
+# schedules:
+# - cron: '0 0 * * *'
+#   displayName: Daily midnight build
+#   branches:
+#     include:
+#     - development_R3
 
 pool:
   vmImage: windows-latest
