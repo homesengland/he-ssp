@@ -8,14 +8,14 @@
 trigger:
 - none
 
-pool: 
+pool:
   vmImage: windows-latest
 
 variables:
   solution: '**/*.sln'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
-  branch: 'master'
+  branch: 'development_R3'
 
 
 resources:
@@ -23,7 +23,7 @@ resources:
   - repository: he-invst-deployment
     type: git
     name: 'Investments Programme/he-invst-deployment'
-    ref: 'main'
+    ref: 'development_R3'
 
 stages:
 - template: azure-pipelines-crm-build-export.yml@he-invst-deployment

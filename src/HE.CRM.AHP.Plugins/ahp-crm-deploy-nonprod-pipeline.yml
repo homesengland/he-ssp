@@ -34,14 +34,14 @@ variables:
   solution: "**/*.sln"
   buildPlatform: "Any CPU"
   buildConfiguration: "Release"
-  branch: "master"
+  branch: "development_R3"
 
 resources:
   repositories:
     - repository: he-invst-deployment
       type: git
       name: "Investments Programme/he-invst-deployment"
-      ref: "main"
+      ref: "development_R3"
   pipelines:
     - pipeline: BuildPipeline
       source: "AHP - CRM - Build"

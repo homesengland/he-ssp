@@ -2,11 +2,11 @@
 # Start with a minimal pipeline that you can customize to build and deploy your code.
 # Add steps that build, run tests, deploy, and more:
 # https://aka.ms/yaml
- 
+
 trigger:
   branches:
     include:
-    - main
+    - development_R3
     - feature*/*
   paths:
     include:
@@ -20,7 +20,7 @@ resources:
   - repository: he-invst-deployment
     type: git
     name: 'Investments Programme/he-invst-deployment'
-    ref: 'main'
+    ref: 'development_R3'
   - repository: templates
     type: git
     name: 'Cloud Hosting Service/Templates'
