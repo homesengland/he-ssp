@@ -104,12 +104,6 @@ namespace HE.CRM.AHP.Plugins.Services.DeliveryPhase
                 TracingService.Trace($"Get Contact by externalUserId:{userId}");
                 var contact = _contactRepository.GetContactViaExternalId(userId);
                 TracingService.Trace($"Get Milestones");
-                var milestones = new List<invln_milestoneframeworkitem>();
-                if (application.invln_programmelookup != null)
-                {
-                    milestones = _ahpMilestoneFrameworkItemRepository.
-                    GetByAttribute(invln_milestoneframeworkitem.Fields.invln_programmeId, application.invln_programmelookup.Id).ToList();
-                }
                 TracingService.Trace($"{organisationGuid}");
                 if (string.IsNullOrEmpty(devlieryPhaseDto.id) &&
                    _ahpApplicationRepository.ApplicationWithGivenIdExistsForOrganisation(applicationGuid, organisationGuid))
@@ -158,14 +152,13 @@ namespace HE.CRM.AHP.Plugins.Services.DeliveryPhase
             TracingService.Trace($"Calculation");
             if (milestones.Count == 0)
             {
-                TracingService.Trace($"Noe milestones");
+                TracingService.Trace($"No milestones");
                 return null;
             }
 
             if (application.invln_noofhomes == null || deliveryPhaseMapped.invln_NoofHomes == null ||
                 application.invln_fundingrequired == null)
             {
-                TracingService.Trace($"a");
                 return null;
             }
             var account = _accountRepository.GetById(application.invln_organisationid, Account.Fields.invln_UnregisteredBody);
@@ -259,7 +252,7 @@ namespace HE.CRM.AHP.Plugins.Services.DeliveryPhase
                                             decimal acquisitionPer, decimal startOnSitePer, decimal completionPer,
                                             invln_DeliveryPhase deliveryPhase, decimal fundingForPhase)
         {
-            if (acquisitionPer + startOnSitePer + completionPer == 1)
+            if ((int)(acquisitionPer + startOnSitePer + completionPer) == 100)
             {
                 var leftOver = fundingForPhase - (acquisition + startOnSite + completion);
                 if (leftOver > 0 && (leftOver < fundingForPhase * 0.01m || leftOver < 1))
