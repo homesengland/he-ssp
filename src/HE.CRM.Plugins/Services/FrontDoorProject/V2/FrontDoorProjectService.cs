@@ -107,11 +107,10 @@ namespace HE.CRM.Plugins.Services.FrontDoorProject.V2
 
                 var webroleList = _contactWebroleRepository.GetListOfUsersWithoutLimitedRole(organisationId.ToString());
                 Logger.Trace($"WebroleList count : {webroleList.Count}");
-                var webroleDict = webroleList.ToDictionary(k => k.invln_Contactid.Id);
 
                 foreach (var projectResponse in projects)
                 {
-                    if (webroleDict.ContainsKey(projectResponse.PortalOwnerId))
+                    if (webroleList.Exists(x => x.invln_Contactid.Id == projectResponse.PortalOwnerId))
                     {
                         filteredProjects.Add(projectResponse);
                     }
