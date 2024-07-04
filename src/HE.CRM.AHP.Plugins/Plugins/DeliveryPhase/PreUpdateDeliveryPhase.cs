@@ -38,7 +38,9 @@ namespace HE.CRM.AHP.Plugins.Plugins.DeliveryPhase
         invln_DeliveryPhase.Fields.invln_nbrh + "," +
         invln_DeliveryPhase.Fields.invln_AcquisitionPercentageValue + "," +
         invln_DeliveryPhase.Fields.invln_StartOnSitePercentageValue + "," +
-        invln_DeliveryPhase.Fields.invln_CompletionPercentageValue,
+        invln_DeliveryPhase.Fields.invln_CompletionPercentageValue + "," +
+        invln_DeliveryPhase.Fields.invln_sumofcalculatedfounds + "," +
+        invln_DeliveryPhase.Fields.invln_completionmilestoneclaimdate,
         Image1Type = ImageTypeEnum.PreImage)]
     public class PreUpdateDeliveryPhase : PluginBase<DataverseContext>, IPlugin
     {

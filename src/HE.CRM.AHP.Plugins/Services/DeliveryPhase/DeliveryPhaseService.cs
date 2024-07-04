@@ -103,13 +103,6 @@ namespace HE.CRM.AHP.Plugins.Services.DeliveryPhase
 
                 TracingService.Trace($"Get Contact by externalUserId:{userId}");
                 var contact = _contactRepository.GetContactViaExternalId(userId);
-                TracingService.Trace($"Get Milestones");
-                var milestones = new List<invln_milestoneframeworkitem>();
-                if (application.invln_programmelookup != null)
-                {
-                    milestones = _ahpMilestoneFrameworkItemRepository.
-                    GetByAttribute(invln_milestoneframeworkitem.Fields.invln_programmeId, application.invln_programmelookup.Id).ToList();
-                }
                 TracingService.Trace($"{organisationGuid}");
                 if (string.IsNullOrEmpty(devlieryPhaseDto.id) &&
                    _ahpApplicationRepository.ApplicationWithGivenIdExistsForOrganisation(applicationGuid, organisationGuid))
@@ -165,7 +158,6 @@ namespace HE.CRM.AHP.Plugins.Services.DeliveryPhase
             if (application.invln_noofhomes == null || deliveryPhaseMapped.invln_NoofHomes == null ||
                 application.invln_fundingrequired == null)
             {
-                TracingService.Trace($"a");
                 return null;
             }
             var account = _accountRepository.GetById(application.invln_organisationid, Account.Fields.invln_UnregisteredBody);
@@ -226,23 +218,23 @@ namespace HE.CRM.AHP.Plugins.Services.DeliveryPhase
             if (deliveryPhaseToUpdateOrCreate == null)
             {
                 TracingService.Trace($"CalculateFundings deliveryPhaseToUpdateOrCreate == null");
-                CalculateFundings(deliveryPhaseMapped, acquisitionPercentageValue, startOnSitePercentageValue, completionPercentageValue, fundingForPhase);
+                CalculateFundings(deliveryPhaseMapped, acquisitionPercentageValue, startOnSitePercentageValue, completionPercentageValue, fundingForPhase, application.invln_fundingrequired.Value);
                 return deliveryPhaseMapped;
             }
             else
             {
                 TracingService.Trace($"CalculateFundings");
-                CalculateFundings(deliveryPhaseToUpdateOrCreate, acquisitionPercentageValue, startOnSitePercentageValue, completionPercentageValue, fundingForPhase);
+                CalculateFundings(deliveryPhaseToUpdateOrCreate, acquisitionPercentageValue, startOnSitePercentageValue, completionPercentageValue, fundingForPhase, application.invln_fundingrequired.Value);
                 return deliveryPhaseToUpdateOrCreate;
             }
         }
 
-        private void CalculateFundings(invln_DeliveryPhase deliveryPhase, decimal acquisitionPercentageValue, decimal startOnSitePercentageValue, decimal completionPercentageValue, decimal fundingForPhase)
+        private void CalculateFundings(invln_DeliveryPhase deliveryPhase, decimal acquisitionPercentageValue, decimal startOnSitePercentageValue, decimal completionPercentageValue, decimal fundingForPhase, decimal grandRequested)
         {
             TracingService.Trace($"acquisitionPercentageValue:{acquisitionPercentageValue}");
             TracingService.Trace($"startOnSitePercentageValue:{startOnSitePercentageValue}");
             TracingService.Trace($"completionPercentageValue:{completionPercentageValue}");
-
+            fundingForPhase = Math.Round(fundingForPhase, 0, MidpointRounding.AwayFromZero);
             deliveryPhase.invln_AcquisitionPercentageValue = acquisitionPercentageValue * 100;
             deliveryPhase.invln_StartOnSitePercentageValue = startOnSitePercentageValue * 100;
             deliveryPhase.invln_CompletionPercentageValue = completionPercentageValue * 100;
@@ -252,7 +244,22 @@ namespace HE.CRM.AHP.Plugins.Services.DeliveryPhase
             CalculateFieldValue(deliveryPhase.invln_AcquisitionValue.Value, deliveryPhase.invln_StartOnSiteValue.Value, deliveryPhase.invln_CompletionValue.Value,
                                 acquisitionPercentageValue, startOnSitePercentageValue, completionPercentageValue,
                                 deliveryPhase, fundingForPhase);
+            ValidateGrantRequest(deliveryPhase.invln_Application.Id, grandRequested);
             TracingService.Trace("End Of Calculation");
+        }
+
+        private void ValidateGrantRequest(Guid aplicationId, decimal grandRequested)
+        {
+            var deliveryPhases = _deliveryPhaseRepository.GetByAttribute(invln_DeliveryPhase.Fields.invln_Application, aplicationId,
+                new string[] { invln_DeliveryPhase.Fields.invln_sumofcalculatedfounds, invln_DeliveryPhase.Fields.invln_CompletionValue });
+            var sumOfFounds = deliveryPhases.Sum(x => x.invln_sumofcalculatedfounds.Value);
+            if (sumOfFounds != grandRequested)
+            {
+                TracingService.Trace("Adjust last deliveryphase");
+                var lastDeliveryPhase = deliveryPhases.OrderByDescending(x => x.invln_completionmilestoneclaimdate).FirstOrDefault();
+                lastDeliveryPhase.invln_CompletionValue = new Money(lastDeliveryPhase.invln_CompletionValue.Value + (sumOfFounds - grandRequested));
+                lastDeliveryPhase.invln_sumofcalculatedfounds = new Money(lastDeliveryPhase.invln_sumofcalculatedfounds.Value + (sumOfFounds - grandRequested));
+            }
         }
 
         private void CalculateFieldValue(decimal acquisition, decimal startOnSite, decimal completion,
