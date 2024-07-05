@@ -32,17 +32,6 @@ namespace HE.CRM.AHP.Plugins.Handlers.DeliveryPhase
 
         public override void DoWork()
         {
-            TracingService.Trace(ExecutionData.Target.invln_AcquisitionPercentageValue.ToString());
-            TracingService.Trace(CurrentState.invln_AcquisitionPercentageValue.ToString());
-            if (ExecutionData.Target.invln_AcquisitionPercentageValue != null)
-            {
-                TracingService.Trace(CurrentState.invln_AcquisitionPercentageValue.ToString());
-                CurrentState.invln_AcquisitionPercentageValue = ExecutionData.Target.invln_AcquisitionPercentageValue; // Błąd we frameworku dla decimali
-            }
-            else
-            {
-                TracingService.Trace("Why");
-            }
             var resetMilestone = CurrentState.StatusCode.Value == (int)invln_DeliveryPhase_StatusCode.RejectedAdjustment;
             var application = _applicationRepository.GetById(CurrentState.invln_Application.Id);
             var milestoneframeworks = _milestoneFrameworkRepository.GetMilestoneFrameworkItemByProgrammeId(application.invln_programmelookup.Id.ToString());
