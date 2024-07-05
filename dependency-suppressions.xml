@@ -4,7 +4,7 @@
         <notes><![CDATA[
         This suppresses a false positive for Dataverse Client DLL
         ]]></notes>
-        <packageUrl regex="true">^nuget:Microsoft\.PowerPlatform\.Dataverse\.Client@1\.1\.22$</packageUrl>
+        <packageUrl regex="true">^pkg:nuget/Microsoft\.PowerPlatform\.Dataverse\.Client@1\.1\.22$</packageUrl>
         <vulnerabilityName regex="true">.*</vulnerabilityName>
     </suppress>
 </suppressions>
