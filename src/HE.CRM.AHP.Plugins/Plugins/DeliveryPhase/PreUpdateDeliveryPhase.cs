@@ -18,11 +18,9 @@ namespace HE.CRM.AHP.Plugins.Plugins.DeliveryPhase
         invln_DeliveryPhase.Fields.invln_buildactivitytype + "," +
         invln_DeliveryPhase.Fields.invln_rehabactivitytype + "," +
         invln_DeliveryPhase.Fields.invln_nbrh + "," +
-        invln_DeliveryPhase.Fields.invln_nbrh + "," +
         invln_DeliveryPhase.Fields.invln_AcquisitionPercentageValue + "," +
         invln_DeliveryPhase.Fields.invln_StartOnSitePercentageValue + "," +
         invln_DeliveryPhase.Fields.invln_CompletionPercentageValue + "," +
-        invln_DeliveryPhase.Fields.StatusCode + "," +
         invln_DeliveryPhase.Fields.StatusCode,
         "HE.CRM.AHP.Plugins.Plugins.DeliveryPhase.PreUpdateDeliveryPhase : PreUpdate of Delivery Phase",
         1,
@@ -38,7 +36,8 @@ namespace HE.CRM.AHP.Plugins.Plugins.DeliveryPhase
         invln_DeliveryPhase.Fields.invln_nbrh + "," +
         invln_DeliveryPhase.Fields.invln_AcquisitionPercentageValue + "," +
         invln_DeliveryPhase.Fields.invln_StartOnSitePercentageValue + "," +
-        invln_DeliveryPhase.Fields.invln_CompletionPercentageValue,
+        invln_DeliveryPhase.Fields.invln_CompletionPercentageValue + "," +
+        invln_DeliveryPhase.Fields.StatusCode,
         Image1Type = ImageTypeEnum.PreImage)]
     public class PreUpdateDeliveryPhase : PluginBase<DataverseContext>, IPlugin
     {

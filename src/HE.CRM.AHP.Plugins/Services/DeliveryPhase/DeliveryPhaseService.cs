@@ -200,12 +200,12 @@ namespace HE.CRM.AHP.Plugins.Services.DeliveryPhase
                     {
                         if (deliveryPhaseMapped.invln_AcquisitionPercentageValue != null)
                         {
-                            acquisitionPercentageValue = (int)deliveryPhaseMapped.invln_AcquisitionPercentageValue == (int)acquisitionPercentageValue * 100 ? acquisitionPercentageValue : deliveryPhaseMapped.invln_AcquisitionPercentageValue.Value / 100m;
+                            acquisitionPercentageValue = (int)deliveryPhaseMapped.invln_AcquisitionPercentageValue == (int)(acquisitionPercentageValue * 100) ? acquisitionPercentageValue : deliveryPhaseMapped.invln_AcquisitionPercentageValue.Value / 100m;
                         }
                         TracingService.Trace($"invln_AcquisitionPercentageValue:{deliveryPhaseMapped.invln_AcquisitionPercentageValue} {acquisitionPercentageValue}");
                         if (deliveryPhaseMapped.invln_StartOnSitePercentageValue != null)
                         {
-                            startOnSitePercentageValue = (int)deliveryPhaseMapped.invln_StartOnSitePercentageValue == (int)startOnSitePercentageValue * 100 ? startOnSitePercentageValue : deliveryPhaseMapped.invln_StartOnSitePercentageValue.Value / 100m;
+                            startOnSitePercentageValue = (int)deliveryPhaseMapped.invln_StartOnSitePercentageValue == (int)(startOnSitePercentageValue * 100) ? startOnSitePercentageValue : deliveryPhaseMapped.invln_StartOnSitePercentageValue.Value / 100m;
                         }
                         TracingService.Trace($"invln_StartOnSitePercentageValue:{deliveryPhaseMapped.invln_StartOnSitePercentageValue} {startOnSitePercentageValue}");
                         if (deliveryPhaseMapped.invln_CompletionPercentageValue != null)
