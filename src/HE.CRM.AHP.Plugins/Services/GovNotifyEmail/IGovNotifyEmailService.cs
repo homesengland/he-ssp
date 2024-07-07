@@ -24,8 +24,6 @@ namespace HE.CRM.AHP.Plugins.Services.GovNotifyEmail
 
         void SendNotification_AHP_DELIVERY_PHASE_NOTIFICATION_OF_ADJUSTMENT_ACCEPTED(invln_scheme ahpApplication);
 
-        void SendNotifications_AHP_INTERNAL_EXTERNAL_WANTS_ADDITIONAL_PAYMENTS_FOR_PHASE(EntityReference deliveryPhaseId);
-
         void SendNotifications_AHP_INTERNAL_EXTERNAL_WANTS_ADDITIONAL_PAYMENTS_FOR_PHASE(invln_AHPStatusChange ahpStatusChange, invln_scheme ahpApplication);
 
         void SendNotifications_AHP_EXTERNAL_REJECT_ON_DELIVERY_PHASE(EntityReference deliveryPhaseId);
