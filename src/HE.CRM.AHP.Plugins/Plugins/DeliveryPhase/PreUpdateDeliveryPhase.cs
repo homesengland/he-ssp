@@ -27,7 +27,8 @@ namespace HE.CRM.AHP.Plugins.Plugins.DeliveryPhase
         IsolationModeEnum.Sandbox,
         Id = "acb6edf2-59bf-42fd-8416-74ba9b55e51a",
         Image1Name = "PreImage",
-        Image1Attributes = invln_DeliveryPhase.Fields.StatusCode + "," +
+        Image1Attributes =
+        invln_DeliveryPhase.Fields.StatusCode + "," +
         invln_DeliveryPhase.Fields.invln_Application + "," +
         invln_DeliveryPhase.Fields.ModifiedBy + "," +
         invln_DeliveryPhase.Fields.invln_NoofHomes + "," +
@@ -36,8 +37,7 @@ namespace HE.CRM.AHP.Plugins.Plugins.DeliveryPhase
         invln_DeliveryPhase.Fields.invln_nbrh + "," +
         invln_DeliveryPhase.Fields.invln_AcquisitionPercentageValue + "," +
         invln_DeliveryPhase.Fields.invln_StartOnSitePercentageValue + "," +
-        invln_DeliveryPhase.Fields.invln_CompletionPercentageValue + "," +
-        invln_DeliveryPhase.Fields.StatusCode,
+        invln_DeliveryPhase.Fields.invln_CompletionPercentageValue,
         Image1Type = ImageTypeEnum.PreImage)]
     public class PreUpdateDeliveryPhase : PluginBase<DataverseContext>, IPlugin
     {
