@@ -13,7 +13,7 @@ resources:
   - repository: he-invst-deployment
     type: git
     name: 'Investments Programme/he-invst-deployment'
-    ref: 'main'
+    ref: 'feature/trnenv'
   - repository: templates
     type: git
     name: 'Cloud Hosting Service/Templates'
