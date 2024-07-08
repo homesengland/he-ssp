@@ -16,7 +16,7 @@ export class LoanApplication {
     eventLogic.loanApplicationService.setFieldsVisibilityBasedOnSecurities();
     eventLogic.loanApplicationService.populateFields();
     eventLogic.loanApplicationService.setFieldsVisibilityBasedOnAssessedAsSppi();
-    eventLogic.loanApplicationService.setFieldRequired();
+    eventLogic.loanApplicationService.setFieldRequiredBasedOnStatuscode();
   }
 
   public static onChangeLoanApplicationStatusButtonClick(eCtx) {
