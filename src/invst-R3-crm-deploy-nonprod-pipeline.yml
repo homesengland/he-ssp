@@ -24,7 +24,7 @@ parameters:
   - name: deployDataMigration
     displayName: Migrate Data ?
     type: boolean
-    default: true
+    default: false
 
 variables:
   solution: "**/*.sln"
