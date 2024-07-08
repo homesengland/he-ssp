@@ -13,10 +13,10 @@ parameters:
     displayName: Build & Update Webresources ?
     type: boolean
     default: true
-  - name: exportMigrationData
-    displayName: Export Migration Data ?
-    type: boolean
-    default: false
+  # - name: exportMigrationData
+  #   displayName: Export Migration Data ?
+  #   type: boolean
+  #   default: false
   - name: exportEnvironmentVariables
     displayName: Export Environment Variables ?
     type: boolean
