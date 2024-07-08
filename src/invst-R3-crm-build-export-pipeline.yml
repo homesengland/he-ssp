@@ -8,11 +8,11 @@ parameters:
   - name: buildAndUpdatePlugins
     displayName: Build & Update Plugins ?
     type: boolean
-    default: true
+    default: false
   - name: buildAndUpdateWebResources
     displayName: Build & Update Webresources ?
     type: boolean
-    default: true
+    default: false
   - name: exportEnvironmentVariables
     displayName: Export Environment Variables ?
     type: boolean
