@@ -41,7 +41,7 @@ resources:
     - repository: he-invst-deployment
       type: git
       name: "Investments Programme/he-invst-deployment"
-      ref: "development_R3"
+      ref: "INVST_R3_deployments"
 
 stages:
   - template: crm-deployment-pipelines/invst-R3-crm-build-export.yml@he-invst-deployment
