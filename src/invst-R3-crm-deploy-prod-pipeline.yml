@@ -41,7 +41,7 @@ resources:
     - repository: he-invst-deployment
       type: git
       name: "Investments Programme/he-invst-deployment"
-      ref: "INVST_R3_deployments"
+      ref: "development_R3"
   pipelines:
     - pipeline: BuildPipeline
       source: "Loans - CRM - Build"
