@@ -34,7 +34,7 @@ variables:
   solution: "**/*.sln"
   buildPlatform: "Any CPU"
   buildConfiguration: "Release"
-  branch: "INVST_R3_deployments"
+  branch: "master"
 
 resources:
   repositories:
