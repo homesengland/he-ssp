@@ -59,7 +59,7 @@ stages:
     parameters:
       buildAndUpdatePlugins: "${{ parameters.buildAndUpdatePlugins }}"
       buildAndUpdateWebResources: "${{ parameters.buildAndUpdateWebResources }}"
-      exportMigrationData: "${{ parameters.exportMigrationData }}"
+      # exportMigrationData: "${{ parameters.exportMigrationData }}"
       exportEnvironmentVariables: "${{ parameters.exportEnvironmentVariables }}"
       exportMainSolution: "${{ parameters.exportMainSolution }}"
       exportFlowsSolution: "${{ parameters.exportFlowsSolution }}"
