@@ -1,0 +1,12 @@
+@using HE.Investment.AHP.WWW.Views.Claim.Const
+@using HE.Investments.AHP.Consortium.Contract;
+@using HE.Investments.Common.WWW.TagHelpers
+@model (ConsortiumsList ConsortiumsList, bool CanManageConsortium);
+@{
+    ViewData["Title"] = ClaimPageTitles.Summary;
+    var organisationId = Context.Request.RouteValues["organisationId"]?.ToString();
+}
+
+<he-div-grid-column-full>
+    to do
+</he-div-grid-column-full>
