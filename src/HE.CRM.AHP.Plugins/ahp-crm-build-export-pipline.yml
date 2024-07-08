@@ -20,10 +20,6 @@ parameters:
     displayName: Build & Update Webresources ?
     type: boolean
     default: true
-  - name: exportMigrationData
-    displayName: Export Migration Data ?
-    type: boolean
-    default: false
   - name: exportEnvironmentVariables
     displayName: Export Environment Variables ?
     type: boolean
@@ -59,7 +55,7 @@ stages:
     parameters:
       buildAndUpdatePlugins: "${{ parameters.buildAndUpdatePlugins }}"
       buildAndUpdateWebResources: "${{ parameters.buildAndUpdateWebResources }}"
-      exportMigrationData: "${{ parameters.exportMigrationData }}"
+      # exportMigrationData: "${{ parameters.exportMigrationData }}"
       exportEnvironmentVariables: "${{ parameters.exportEnvironmentVariables }}"
       exportMainSolution: "${{ parameters.exportMainSolution }}"
       exportFlowsSolution: "${{ parameters.exportFlowsSolution }}"
