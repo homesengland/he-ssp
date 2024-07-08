@@ -26,7 +26,8 @@ namespace HE.CRM.AHP.Plugins.Handlers.DeliveryPhase
         {
             return ValueChanged(invln_DeliveryPhase.Fields.invln_NoofHomes) || ValueChanged(invln_DeliveryPhase.Fields.invln_buildactivitytype)
                 || ValueChanged(invln_DeliveryPhase.Fields.invln_rehabactivitytype) || ValueChanged(invln_DeliveryPhase.Fields.invln_nbrh)
-                 || ValueChanged(invln_DeliveryPhase.Fields.StatusCode);
+                || ValueChanged(invln_DeliveryPhase.Fields.StatusCode)
+                || ValueChanged(invln_DeliveryPhase.Fields.invln_AcquisitionPercentageValue) || ValueChanged(invln_DeliveryPhase.Fields.invln_StartOnSitePercentageValue) || ValueChanged(invln_DeliveryPhase.Fields.invln_CompletionPercentageValue);
         }
 
         public override void DoWork()
@@ -40,16 +41,13 @@ namespace HE.CRM.AHP.Plugins.Handlers.DeliveryPhase
                 TracingService.Trace("df = null");
                 return;
             }
-            if (!resetMilestone)
-            {
-                ExecutionData.Target.invln_AcquisitionPercentageValue = df.invln_AcquisitionPercentageValue;
-                ExecutionData.Target.invln_AcquisitionValue = df.invln_AcquisitionValue;
-                ExecutionData.Target.invln_StartOnSitePercentageValue = df.invln_StartOnSitePercentageValue;
-                ExecutionData.Target.invln_StartOnSiteValue = df.invln_StartOnSiteValue;
-                ExecutionData.Target.invln_CompletionPercentageValue = df.invln_CompletionPercentageValue;
-                ExecutionData.Target.invln_CompletionValue = df.invln_CompletionValue;
-            }
-
+            ExecutionData.Target.invln_AcquisitionPercentageValue = df.invln_AcquisitionPercentageValue;
+            ExecutionData.Target.invln_AcquisitionValue = df.invln_AcquisitionValue;
+            ExecutionData.Target.invln_StartOnSitePercentageValue = df.invln_StartOnSitePercentageValue;
+            ExecutionData.Target.invln_StartOnSiteValue = df.invln_StartOnSiteValue;
+            ExecutionData.Target.invln_CompletionPercentageValue = df.invln_CompletionPercentageValue;
+            ExecutionData.Target.invln_CompletionValue = df.invln_CompletionValue;
+            ExecutionData.Target.invln_sumofcalculatedfounds = df.invln_sumofcalculatedfounds;
         }
     }
 }
