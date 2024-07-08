@@ -150,11 +150,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HE.Investments.Api", "HE.In
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Allocation", "Allocation", "{C1F0382E-84D4-41C2-B420-F7ECDB7DECB9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HE.Investment.AHP.Allocation.Domain", "HE.Investment.AHP.Allocation.Domain\HE.Investment.AHP.Allocation.Domain.csproj", "{87511FA8-2F24-4455-A4F3-6E51554F5D67}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HE.Investments.AHP.Allocation.Domain", "HE.Investments.AHP.Allocation.Domain\HE.Investments.AHP.Allocation.Domain.csproj", "{87511FA8-2F24-4455-A4F3-6E51554F5D67}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HE.Investment.AHP.Allocation.Domain.Tests", "HE.Investment.AHP.Allocation.Domain.Tests\HE.Investment.AHP.Allocation.Domain.Tests.csproj", "{EE38C340-E71E-4DFD-807F-C084F32C8B05}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HE.Investments.AHP.Allocation.Domain.Tests", "HE.Investments.AHP.Allocation.Domain.Tests\HE.Investments.AHP.Allocation.Domain.Tests.csproj", "{EE38C340-E71E-4DFD-807F-C084F32C8B05}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HE.Investment.AHP.Allocation.Contract", "HE.Investment.AHP.Allocation.Contract\HE.Investment.AHP.Allocation.Contract.csproj", "{03A9950E-9877-4B4C-9109-7C12E09CF254}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HE.Investments.AHP.Allocation.Contract", "HE.Investments.AHP.Allocation.Contract\HE.Investments.AHP.Allocation.Contract.csproj", "{03A9950E-9877-4B4C-9109-7C12E09CF254}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
