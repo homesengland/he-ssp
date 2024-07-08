@@ -1,7 +1,7 @@
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Extensions;
 
-namespace HE.Investment.AHP.Allocation.Contract.Allocation;
+namespace HE.Investments.AHP.Allocation.Contract.Allocation;
 
 public record AhpAllocationId : StringIdValueObject
 {
