@@ -20,8 +20,7 @@ namespace HE.CRM.AHP.Plugins.Plugins.DeliveryPhase
         invln_DeliveryPhase.Fields.invln_nbrh + "," +
         invln_DeliveryPhase.Fields.invln_AcquisitionPercentageValue + "," +
         invln_DeliveryPhase.Fields.invln_StartOnSitePercentageValue + "," +
-        invln_DeliveryPhase.Fields.invln_CompletionPercentageValue + "," +
-        invln_DeliveryPhase.Fields.StatusCode,
+        invln_DeliveryPhase.Fields.invln_CompletionPercentageValue,
         "HE.CRM.AHP.Plugins.Plugins.DeliveryPhase.PreUpdateDeliveryPhase : PreUpdate of Delivery Phase",
         1,
         IsolationModeEnum.Sandbox,
