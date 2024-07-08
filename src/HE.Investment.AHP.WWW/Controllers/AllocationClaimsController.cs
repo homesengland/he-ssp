@@ -3,14 +3,21 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HE.Investment.AHP.WWW.Controllers;
 
-[Route("{organisationId}/allocation/{allocationId}/claim")]
-public class ClaimController : Controller
+[Route("{organisationId}/allocation/{allocationId}/claims")]
+public class AllocationClaimsController : Controller
 {
     [HttpGet]
-    [Route("/")]
     [Route("summary")]
     [AuthorizeWithCompletedProfile]
     public IActionResult Summary()
+    {
+        return View();
+    }
+
+    [HttpGet]
+    [Route("{phaseId}/overview")]
+    [AuthorizeWithCompletedProfile]
+    public IActionResult Overview()
     {
         return View();
     }
