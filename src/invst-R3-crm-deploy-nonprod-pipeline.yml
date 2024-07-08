@@ -40,7 +40,7 @@ resources:
       ref: "INVST_R3_deployments"
   pipelines:
     - pipeline: BuildPipeline
-      source: "Loans - CRM - Build"
+      source: "Invst - R3 - CRM - Build"
       trigger: none
 
 stages:
