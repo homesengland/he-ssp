@@ -1,13 +1,13 @@
 @using HE.Investments.Common.Extensions
 @model HE.Investments.AHP.Allocation.Contract.IAllocation;
 
-<gds-h3 class="govuk-!-margin-bottom-1">
+<h2 class="govuk-heading-s govuk-!-margin-bottom-1">
     ID @Model.ReferenceNumber
     <span class="govuk-!-margin-2">|</span>
     @Model.LocalAuthority
     <span class="govuk-!-margin-2">|</span>
     @Model.Tenure.GetDescription()
-</gds-h3>
+</h2>
 
-<gds-h3>@Model.ProgrammeName</gds-h3>
+<h3 class="govuk-heading-s">@Model.ProgrammeName</h3>
 

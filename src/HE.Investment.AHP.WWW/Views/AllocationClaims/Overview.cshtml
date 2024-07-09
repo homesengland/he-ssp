@@ -6,16 +6,16 @@
 @using HE.Investments.Common.WWW.Extensions
 @using HE.Investments.Common.WWW.TagHelpers
 @inject IAhpExternalLinks ExternalLinks
-@model HE.Investments.AHP.Allocation.Contract.Claims.Phase
+@model (HE.Investments.AHP.Allocation.Contract.Claims.Phase Phase, bool CanClaimMilestone)
 @{
-    var title = ClaimPageTitles.MilestoneOverview(Model.Name);
+    var title = ClaimPageTitles.MilestoneOverview(Model.Phase.Name);
     ViewData["Title"] = title;
 }
 
 <gds-div-grid-column-two-thirds>
-    <gds-back-link href="@Url.OrganisationAction("Summary", "AllocationClaims",  new { allocationId = Model.Allocation.Id.Value })"></gds-back-link>
-    <vc:page-header caption="@Model.Allocation.Name" title="@title"/>
-    <vc:allocation-header allocation="@Model.Allocation"/>
+    <gds-back-link href="@Url.OrganisationAction("Summary", "AllocationClaims",  new { allocationId = Model.Phase.Allocation.Id.Value })"></gds-back-link>
+    <vc:page-header caption="@Model.Phase.Allocation.Name" title="@title"/>
+    <vc:allocation-header allocation="@Model.Phase.Allocation"/>
 
     <gds-p>
         To claim a milestone, you need to meet the requirements as set out in the
@@ -26,11 +26,12 @@
     <gds-p>Milestones must be claimed in order.</gds-p>
     <he-div-hint>If your claim is approved, you will receive payment within 15 business days, resources permitting. If you need to recall a milestone claim, you can do this at any time before your claim is approved.</he-div-hint>
 
-    @foreach (var milestoneClaim in Model.MilestoneClaims)
+    @foreach (var milestoneClaim in Model.Phase.MilestoneClaims)
     {
         <vc:claim-details-card
             claim="@milestoneClaim"
-            claim-milestone-url="@Url.OrganisationAction("TODO", "AllocationClaims", new { allocationId = Model.Allocation.Id.Value, claimType = milestoneClaim.Type })"/>
+            can-claim-milestone="@Model.CanClaimMilestone"
+            claim-milestone-url="@Url.OrganisationAction("TODO", "AllocationClaims", new { allocationId = Model.Phase.Allocation.Id.Value, claimType = milestoneClaim.Type })"/>
     }
 
 </gds-div-grid-column-two-thirds>

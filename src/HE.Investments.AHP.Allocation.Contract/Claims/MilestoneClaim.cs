@@ -9,4 +9,6 @@ public record MilestoneClaim(
     decimal AmountOfGrantApportioned,
     decimal PercentageOfGrantApportioned,
     DateDetails ForecastClaimDate,
-    DateDetails? ClaimDate);
+    DateDetails? AchievementDate,
+    DateDetails? SubmissionDate,
+    bool CanBeClaimed);
