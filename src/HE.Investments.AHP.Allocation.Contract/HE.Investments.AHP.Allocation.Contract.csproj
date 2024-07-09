@@ -9,6 +9,7 @@
 </ItemGroup>
 
 <ItemGroup>
+  <ProjectReference Include="..\HE.Investment.AHP.Contract\HE.Investment.AHP.Contract.csproj" />
   <ProjectReference Include="..\HE.Investments.Common.Contract\HE.Investments.Common.Contract.csproj"/>
   <ProjectReference Include="..\HE.Investments.Common\HE.Investments.Common.csproj"/>
 </ItemGroup>

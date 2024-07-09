@@ -9,12 +9,11 @@
 </ItemGroup>
 
 <ItemGroup>
+  <ProjectReference Include="..\HE.Investment.AHP.Contract\HE.Investment.AHP.Contract.csproj" />
+  <ProjectReference Include="..\HE.Investment.AHP.Domain\HE.Investment.AHP.Domain.csproj" />
   <ProjectReference Include="..\HE.Investments.AHP.Allocation.Contract\HE.Investments.AHP.Allocation.Contract.csproj" />
   <ProjectReference Include="..\HE.Investments.Account.Shared\HE.Investments.Account.Shared.csproj"/>
-</ItemGroup>
-
-<ItemGroup>
-  <Folder Include="Claim\" />
+  <ProjectReference Include="..\HE.Investments.Programme.Contract\HE.Investments.Programme.Contract.csproj" />
 </ItemGroup>
 
 
