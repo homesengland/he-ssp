@@ -1,5 +1,6 @@
-using HE.Investments.AHP.Allocation.Domain.Claims.Enums;
+using HE.Investments.AHP.Allocation.Contract.Claims.Enum;
 using HE.Investments.Common.Domain;
+using MilestoneStatus = HE.Investments.AHP.Allocation.Domain.Claims.Enums.MilestoneStatus;
 
 namespace HE.Investments.AHP.Allocation.Domain.Claims.ValueObjects;
 

@@ -1,9 +1,36 @@
+@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Links
+@using HE.Investment.AHP.WWW.Config
+@using HE.Investment.AHP.WWW.Views.Claim.Const
+@using HE.Investment.AHP.WWW.Views.Shared.Components.AllocationHeader
+@using HE.Investments.Common.WWW.Components.PageHeader
+@using HE.Investments.Common.WWW.Extensions
 @using HE.Investments.Common.WWW.TagHelpers
+@inject IAhpExternalLinks ExternalLinks
+@model HE.Investments.AHP.Allocation.Contract.Claims.Phase
 @{
-    ViewData["Title"] = "Overview";
-    var organisationId = Context.Request.RouteValues["organisationId"]?.ToString();
+    var title = ClaimPageTitles.MilestoneOverview(Model.Name);
+    ViewData["Title"] = title;
 }
 
-<he-div-grid-column-full>
-    to do
-</he-div-grid-column-full>
+<gds-div-grid-column-two-thirds>
+    <gds-back-link href="@Url.OrganisationAction("Summary", "AllocationClaims",  new { allocationId = Model.Allocation.Id.Value })"></gds-back-link>
+    <vc:page-header caption="@Model.Allocation.Name" title="@title"/>
+    <vc:allocation-header allocation="@Model.Allocation"/>
+
+    <gds-p>
+        To claim a milestone, you need to meet the requirements as set out in the
+        <gds-link target="_blank" href="@ExternalLinks.CapitalFundingGuideProgrammeManagement">
+            Capital Funding Guide, under 4.1 onwards (opens in a new tab).
+        </gds-link>
+    </gds-p>
+    <gds-p>Milestones must be claimed in order.</gds-p>
+    <he-div-hint>If your claim is approved, you will receive payment within 15 business days, resources permitting. If you need to recall a milestone claim, you can do this at any time before your claim is approved.</he-div-hint>
+
+    @foreach (var milestoneClaim in Model.MilestoneClaims)
+    {
+        <vc:claim-details-card
+            claim="@milestoneClaim"
+            claim-milestone-url="@Url.OrganisationAction("TODO", "AllocationClaims", new { allocationId = Model.Allocation.Id.Value, claimType = milestoneClaim.Type })"/>
+    }
+
+</gds-div-grid-column-two-thirds>

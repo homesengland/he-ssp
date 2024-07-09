@@ -8,4 +8,4 @@ public record AllocationBasicInfo(
     string ReferenceNumber,
     string LocalAuthority,
     string ProgrammeName,
-    Tenure Tenure);
+    Tenure Tenure) : IAllocation;
