@@ -41,7 +41,7 @@ variables:
   solution: "**/*.sln"
   buildPlatform: "Any CPU"
   buildConfiguration: "Release"
-  branch: "development_R3"
+  branch: "main"
 
 resources:
   repositories:
