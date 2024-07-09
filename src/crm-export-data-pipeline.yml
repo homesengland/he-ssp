@@ -27,7 +27,7 @@ resources:
     - repository: he-invst-deployment
       type: git
       name: "Investments Programme/he-invst-deployment"
-      ref: "development_R3"
+      ref: "CRM_Migration_change_of_repo"
 
 stages:
   - template: crm-deployment-pipelines/crm-export-data.yml@he-invst-deployment
