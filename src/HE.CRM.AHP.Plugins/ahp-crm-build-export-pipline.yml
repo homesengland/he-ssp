@@ -41,7 +41,7 @@ variables:
   solution: "**/*.sln"
   buildPlatform: "Any CPU"
   buildConfiguration: "Release"
-  branch: "development_R3"
+  branch: "main"
 
 resources:
   repositories:
@@ -55,7 +55,6 @@ stages:
     parameters:
       buildAndUpdatePlugins: "${{ parameters.buildAndUpdatePlugins }}"
       buildAndUpdateWebResources: "${{ parameters.buildAndUpdateWebResources }}"
-      # exportMigrationData: "${{ parameters.exportMigrationData }}"
       exportEnvironmentVariables: "${{ parameters.exportEnvironmentVariables }}"
       exportMainSolution: "${{ parameters.exportMainSolution }}"
       exportFlowsSolution: "${{ parameters.exportFlowsSolution }}"

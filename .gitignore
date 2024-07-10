@@ -352,3 +352,4 @@ MigrationBackup/
 src/.idea/
 /src/HE.Investment.AHP.WWW/appsettings.Development.json
 src/HE.DocumentService/.idea/
+.DS_Store
