@@ -1,0 +1,6 @@
+@using HE.Investments.Common.Extensions
+@model (HE.Investments.AHP.Allocation.Contract.Claims.Enum.MilestoneStatus Status, HE.Investments.Common.Gds.TagColour TagColour)
+
+<strong class="govuk-tag govuk-tag--@Model.TagColour.GetDescription().ToLowerInvariant()">
+    @Model.Status.GetDescription()
+</strong>
