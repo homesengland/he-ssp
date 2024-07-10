@@ -8,6 +8,14 @@ namespace HE.Investments.AHP.Allocation.Domain.Allocation.Crm;
 
 public class AllocationCrmContext : IAllocationCrmContext
 {
+    private static readonly string ApplicationCrmFields =
+        string.Join(
+                ",",
+                nameof(invln_scheme.invln_schemename),
+                nameof(invln_scheme.invln_Tenure),
+                nameof(invln_scheme.invln_applicationid))
+            .ToLowerInvariant();
+
     private readonly ICrmService _service;
 
     public AllocationCrmContext(ICrmService service)
@@ -27,6 +35,7 @@ public class AllocationCrmContext : IAllocationCrmContext
             invln_userid = userId,
             invln_organisationid = organisationId.TryToGuidAsString(),
             invln_applicationid = id.ToGuidAsString(),
+            invln_appfieldstoretrieve = ApplicationCrmFields,
         };
 
         return await Get(request, cancellationToken);

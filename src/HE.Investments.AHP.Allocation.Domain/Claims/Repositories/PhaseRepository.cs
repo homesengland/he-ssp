@@ -27,7 +27,7 @@ public class PhaseRepository : IPhaseRepository
         var organisation = userAccount.SelectedOrganisation();
         var organisationId = organisation.OrganisationId.Value;
         var allocation = await _allocationCrmContext.GetById(allocationId.ToGuidAsString(), organisationId, userAccount.UserGlobalId.ToString(), cancellationToken);
-        var phase = allocation.ListOfPhaseClaims.Find(x => x.Id == phaseId.ToGuidAsString());
+        var phase = allocation.ListOfPhaseClaims.FirstOrDefault(); // TODO: AB#89858 Find phase by Id when CRM not mocked
 
         if (phase != null)
         {

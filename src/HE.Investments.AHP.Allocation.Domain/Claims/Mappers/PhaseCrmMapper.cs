@@ -61,7 +61,7 @@ public class PhaseCrmMapper : IPhaseCrmMapper
         return new MilestoneClaim(
             MapMilestoneType(dto.Type),
             MapMilestoneStatus(dto.Status),
-            new GrantApportioned(dto.AmountOfGrantApportioned, dto.PercentageOfGrantApportioned),
+            new GrantApportioned(dto.AmountOfGrantApportioned, dto.PercentageOfGrantApportioned / 100m),
             new ClaimDate(dto.ForecastClaimDate, dto.ClaimDate),
             dto.CostIncurred,
             dto.IsConfirmed);
