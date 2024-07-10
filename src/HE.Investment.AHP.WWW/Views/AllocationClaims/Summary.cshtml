@@ -1,10 +1,39 @@
+@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Links
 @using HE.Investment.AHP.WWW.Views.Claim.Const
-@using HE.Investments.Common.WWW.TagHelpers
+@using HE.Investment.AHP.WWW.Views.Shared.Components.AllocationHeader
+@using HE.Investments.Common.WWW.Components.PageHeader
+@using HE.Investments.Common.WWW.Extensions
+@model HE.Investments.AHP.Allocation.Contract.AllocationDetails
 @{
-    ViewData["Title"] = ClaimPageTitles.Summary;
-    var organisationId = Context.Request.RouteValues["organisationId"]?.ToString();
+    var title = ClaimPageTitles.Summary;
+    ViewData["Title"] = title;
 }
 
-<he-div-grid-column-full>
-    to do
-</he-div-grid-column-full>
+<gds-div-grid-column-two-thirds>
+    <gds-back-link href="@Url.OrganisationAction("Overview", "Allocation",  new { allocationId = Model.AllocationBasicInfo.Id })"></gds-back-link>
+    <vc:page-header caption="@Model.AllocationBasicInfo.Name" title="@title"/>
+    <vc:allocation-header allocation="@Model.AllocationBasicInfo"/>
+
+    <gds-p>
+        Select a phase to make a claim or view previous claim details.
+    </gds-p>
+
+    @foreach (var phase in Model.PhaseList.Items)
+    {
+        <vc:phase-details-card
+            phase="@phase"
+            phase-url="@Url.OrganisationAction("Overview", "AllocationClaims",  new { allocationId = Model.AllocationBasicInfo.Id, phaseId = phase.Id })"
+            />
+    }
+    <he-pagination
+        base-url="@Url.OrganisationAction("Summary", "AllocationClaims", new { allocationId = Model.AllocationBasicInfo.Id })"
+        page="@Model.PhaseList.CurrentPage"
+        items-per-page="@Model.PhaseList.ItemsPerPage"
+        total-items="@Model.PhaseList.TotalItems">
+    </he-pagination>
+
+    <vc:return-to-allocation-link allocation-id="@Model.AllocationBasicInfo.Id"/>
+</gds-div-grid-column-two-thirds>
+<div class="govuk-grid-column-one-third">
+    <vc:grant-details-panel grant-details="@Model.GrantDetails"/>
+</div>

@@ -2,6 +2,7 @@ using HE.Investments.Account.Shared.Authorization.Attributes;
 using HE.Investments.AHP.Allocation.Contract;
 using HE.Investments.AHP.Allocation.Contract.Claims;
 using HE.Investments.AHP.Allocation.Contract.Claims.Queries;
+using HE.Investments.Common.Contract.Pagination;
 using HE.Investments.Consortium.Shared.UserContext;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -23,9 +24,13 @@ public class AllocationClaimsController : Controller
     }
 
     [HttpGet("summary")]
-    public IActionResult Summary()
+    public async Task<IActionResult> Summary([FromQuery] int? page, string allocationId, CancellationToken cancellationToken)
     {
-        return View();
+        var allocationClaims =
+            await _mediator.Send(
+                new GetAllocationClaimsQuery(AllocationId.From(allocationId), new PaginationRequest(page ?? 1, 3)),
+                cancellationToken);
+        return View(allocationClaims);
     }
 
     [HttpGet("{phaseId}/overview")]

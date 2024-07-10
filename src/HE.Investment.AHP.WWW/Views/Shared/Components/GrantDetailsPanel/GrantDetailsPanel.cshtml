@@ -1,0 +1,24 @@
+@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Headings
+@model HE.Investments.AHP.Allocation.Contract.Claims.GrantDetails
+
+<div class="govuk-body-s">
+    <hr class="separator"/>
+    <gds-h3 class="govuk-heading-s">
+        Grant details
+    </gds-h3>
+    <div>
+        <span>Total grant allocated:</span>
+        <span>@Model.TotalGrantAllocated</span>
+    </div>
+    <div>
+        <span>Amount paid:</span>
+        <span>@Model.AmountPaid</span>
+    </div>
+    <div>
+        <span>Amount remaining: </span>
+        <span>@Model.AmountRemaining</span>
+    </div>
+</div>
+
+
+

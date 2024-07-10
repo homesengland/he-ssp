@@ -43,4 +43,8 @@
     <ProjectReference Include="..\HE.Investments.Common\HE.Investments.Common.csproj" />
     <ProjectReference Include="..\HE.Investments.Programme.Domain\HE.Investments.Programme.Domain.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Views\Shared\GrantDetailsPanel\GrantDetailsPanel.cshtml" />
+  </ItemGroup>
 </Project>

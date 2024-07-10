@@ -138,6 +138,73 @@ public class AllocationCrmContext : IAllocationCrmContext
                         ForecastClaimDate = DateTime.Today.AddDays(40),
                     },
                 },
+                new()
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    AllocationId = applicationDto.id,
+                    Name = "Phase 3",
+                    NumberOfHomes = 200,
+                    BuildActivityType = 2,
+                    AcquisitionMilestone = new MilestoneClaimDto()
+                    {
+                        Type = 1,
+                        Status = 1,
+                        AmountOfGrantApportioned = 20000m,
+                        PercentageOfGrantApportioned = 20,
+                        ForecastClaimDate = DateTime.Today,
+                        ClaimDate = DateTime.Today,
+                    },
+                    StartOnSiteMilestone = new MilestoneClaimDto()
+                    {
+                        Type = 2,
+                        Status = 1,
+                        AmountOfGrantApportioned = 30000m,
+                        PercentageOfGrantApportioned = 30,
+                        ForecastClaimDate = DateTime.Today.AddDays(10),
+                        ClaimDate = DateTime.Today.AddDays(10),
+                    },
+                    CompletionMilestone = new MilestoneClaimDto()
+                    {
+                        Type = 3,
+                        Status = 1,
+                        AmountOfGrantApportioned = 40000m,
+                        PercentageOfGrantApportioned = 50,
+                        ForecastClaimDate = DateTime.Today.AddDays(40),
+                        ClaimDate = DateTime.Today.AddDays(20),
+                    },
+                },
+                new()
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    AllocationId = applicationDto.id,
+                    Name = "Phase 4",
+                    NumberOfHomes = 200,
+                    BuildActivityType = 2,
+                    AcquisitionMilestone = new MilestoneClaimDto()
+                    {
+                        Type = 1,
+                        Status = 1,
+                        AmountOfGrantApportioned = 20000m,
+                        PercentageOfGrantApportioned = 20,
+                        ForecastClaimDate = DateTime.Today,
+                    },
+                    StartOnSiteMilestone = new MilestoneClaimDto()
+                    {
+                        Type = 2,
+                        Status = 1,
+                        AmountOfGrantApportioned = 30000m,
+                        PercentageOfGrantApportioned = 30,
+                        ForecastClaimDate = DateTime.Today.AddDays(10),
+                    },
+                    CompletionMilestone = new MilestoneClaimDto()
+                    {
+                        Type = 3,
+                        Status = 1,
+                        AmountOfGrantApportioned = 40000m,
+                        PercentageOfGrantApportioned = 50,
+                        ForecastClaimDate = DateTime.Today.AddDays(40),
+                    },
+                },
             ],
         };
     }
