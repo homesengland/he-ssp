@@ -37,7 +37,7 @@ resources:
     - repository: he-invst-deployment
       type: git
       name: "Investments Programme/he-invst-deployment"
-      ref: "CRM_Migration_change_of_repo"
+      ref: "development_R3"
   pipelines:
     - pipeline: BuildPipeline
       source: "AHP - CRM - Build"
