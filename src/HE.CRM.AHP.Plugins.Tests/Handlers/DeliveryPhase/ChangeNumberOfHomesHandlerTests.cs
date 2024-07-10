@@ -16,65 +16,65 @@ namespace HE.CRM.AHP.Plugins.Tests.Handlers.DeliveryPhase
     [TestClass]
     public class ChangeNumberOfHomesHandlerTests : CrmEntityHandlerTestBase<invln_DeliveryPhase, ChangeNumberOfHomes, DataverseContext>
     {
-        private static int _numberOfHouseOnDeliveryphase = 10;
-        private static int _numberOfHouseOnApplication = 100;
-        private static Money fundingrequired = new Money(100000);
-        private static readonly Guid _deliveryPhaseId = Guid.NewGuid();
-        private static readonly Guid _applicationId = Guid.NewGuid();
-        private static readonly Guid _programmeId = Guid.NewGuid();
-        private static readonly Guid _milestonesAcquisitionId = Guid.NewGuid();
-        private static readonly Guid _milestonesSoSId = Guid.NewGuid();
-        private static readonly Guid _milestonesPCId = Guid.NewGuid();
-        private static readonly Guid _AccountId = Guid.NewGuid();
+        private static readonly int NumberOfHouseOnDeliveryphase = 47;
+        private static readonly int NumberOfHouseOnApplication = 47;
+        private static readonly Money Fundingrequired = new Money(333333);
+        private static readonly Guid DeliveryPhaseId = Guid.NewGuid();
+        private static readonly Guid ApplicationId = Guid.NewGuid();
+        private static readonly Guid ProgrammeId = Guid.NewGuid();
+        private static readonly Guid MilestonesAcquisitionId = Guid.NewGuid();
+        private static readonly Guid MilestonesSoSId = Guid.NewGuid();
+        private static readonly Guid MilestonesPCId = Guid.NewGuid();
+        private static readonly Guid AccountId = Guid.NewGuid();
 
-        private static invln_programme _programme = new invln_programme()
+        private static readonly invln_programme _programme = new invln_programme()
         {
-            Id = _programmeId
+            Id = ProgrammeId
         };
 
-        private static invln_milestoneframeworkitem _milestonesAcquisition = new invln_milestoneframeworkitem()
+        private static readonly invln_milestoneframeworkitem MilestonesAcquisition = new invln_milestoneframeworkitem()
         {
-            Id = _milestonesAcquisitionId,
+            Id = MilestonesAcquisitionId,
             invln_percentagepaidonmilestone = 40,
             invln_programmeId = _programme.ToEntityReference(),
             invln_milestone = new OptionSetValue((int)invln_Milestone.Acquisition),
         };
 
-        private static invln_milestoneframeworkitem _milestonesSoS = new invln_milestoneframeworkitem()
+        private static readonly invln_milestoneframeworkitem MilestonesSoS = new invln_milestoneframeworkitem()
         {
-            Id = _milestonesSoSId,
+            Id = MilestonesSoSId,
             invln_percentagepaidonmilestone = 35,
             invln_programmeId = _programme.ToEntityReference(),
             invln_milestone = new OptionSetValue((int)invln_Milestone.SoS),
         };
 
-        private static invln_milestoneframeworkitem _milestonesPC = new invln_milestoneframeworkitem()
+        private static readonly invln_milestoneframeworkitem MilestonesPC = new invln_milestoneframeworkitem()
         {
-            Id = _milestonesPCId,
+            Id = MilestonesPCId,
             invln_percentagepaidonmilestone = 25,
             invln_programmeId = _programme.ToEntityReference(),
             invln_milestone = new OptionSetValue((int)invln_Milestone.PC),
         };
 
-        private static Account _partner = new Account()
+        private static readonly Account Partner = new Account()
         {
-            Id = _AccountId,
+            Id = AccountId,
             invln_UnregisteredBody = false,
         };
 
-        private static Account _URBpartner = new Account()
+        private static readonly Account URBpartner = new Account()
         {
-            Id = _AccountId,
+            Id = AccountId,
             invln_UnregisteredBody = true,
         };
 
-        private static invln_scheme _application = new invln_scheme()
+        private static readonly invln_scheme Application = new invln_scheme()
         {
-            Id = _applicationId,
-            invln_noofhomes = 100,
-            invln_fundingrequired = fundingrequired,
+            Id = ApplicationId,
+            invln_noofhomes = 47,
+            invln_fundingrequired = Fundingrequired,
             invln_programmelookup = _programme.ToEntityReference(),
-            invln_organisationid = _partner.ToEntityReference(),
+            invln_organisationid = Partner.ToEntityReference(),
         };
 
         [TestInitialize]
@@ -88,13 +88,13 @@ namespace HE.CRM.AHP.Plugins.Tests.Handlers.DeliveryPhase
         {
             Target = new invln_DeliveryPhase()
             {
-                Id = _deliveryPhaseId,
+                Id = DeliveryPhaseId,
                 invln_NoofHomes = 10
             };
 
             PreImage = new invln_DeliveryPhase()
             {
-                Id = _deliveryPhaseId,
+                Id = DeliveryPhaseId,
                 invln_NoofHomes = 5
             };
 
@@ -107,13 +107,13 @@ namespace HE.CRM.AHP.Plugins.Tests.Handlers.DeliveryPhase
         {
             Target = new invln_DeliveryPhase()
             {
-                Id = _deliveryPhaseId,
+                Id = DeliveryPhaseId,
                 invln_buildactivitytype = new Microsoft.Xrm.Sdk.OptionSetValue((int)invln_NewBuildActivityType.AcquisitionandWorks)
             };
 
             PreImage = new invln_DeliveryPhase()
             {
-                Id = _deliveryPhaseId,
+                Id = DeliveryPhaseId,
                 invln_buildactivitytype = new Microsoft.Xrm.Sdk.OptionSetValue((int)invln_NewBuildActivityType.WorksOnly)
             };
 
@@ -126,13 +126,13 @@ namespace HE.CRM.AHP.Plugins.Tests.Handlers.DeliveryPhase
         {
             Target = new invln_DeliveryPhase()
             {
-                Id = _deliveryPhaseId,
+                Id = DeliveryPhaseId,
                 invln_CompletionPercentageValue = 5
             };
 
             PreImage = new invln_DeliveryPhase()
             {
-                Id = _deliveryPhaseId,
+                Id = DeliveryPhaseId,
                 invln_CompletionPercentageValue = 15
             };
 
@@ -145,13 +145,13 @@ namespace HE.CRM.AHP.Plugins.Tests.Handlers.DeliveryPhase
         {
             Target = new invln_DeliveryPhase()
             {
-                Id = _deliveryPhaseId,
+                Id = DeliveryPhaseId,
                 invln_StartOnSitePercentageValue = 20
             };
 
             PreImage = new invln_DeliveryPhase()
             {
-                Id = _deliveryPhaseId,
+                Id = DeliveryPhaseId,
                 invln_StartOnSitePercentageValue = 25
             };
 
@@ -164,13 +164,13 @@ namespace HE.CRM.AHP.Plugins.Tests.Handlers.DeliveryPhase
         {
             Target = new invln_DeliveryPhase()
             {
-                Id = _deliveryPhaseId,
+                Id = DeliveryPhaseId,
                 invln_AcquisitionPercentageValue = 15
             };
 
             PreImage = new invln_DeliveryPhase()
             {
-                Id = _deliveryPhaseId,
+                Id = DeliveryPhaseId,
                 invln_AcquisitionPercentageValue = 45
             };
 
@@ -183,13 +183,13 @@ namespace HE.CRM.AHP.Plugins.Tests.Handlers.DeliveryPhase
         {
             Target = new invln_DeliveryPhase()
             {
-                Id = _deliveryPhaseId,
+                Id = DeliveryPhaseId,
                 StatusCode = new Microsoft.Xrm.Sdk.OptionSetValue((int)invln_DeliveryPhase_StatusCode.PendingAdjustment)
             };
 
             PreImage = new invln_DeliveryPhase()
             {
-                Id = _deliveryPhaseId,
+                Id = DeliveryPhaseId,
                 StatusCode = new Microsoft.Xrm.Sdk.OptionSetValue((int)invln_DeliveryPhase_StatusCode.RejectedAdjustment)
             };
 
@@ -202,13 +202,13 @@ namespace HE.CRM.AHP.Plugins.Tests.Handlers.DeliveryPhase
         {
             Target = new invln_DeliveryPhase()
             {
-                Id = _deliveryPhaseId,
+                Id = DeliveryPhaseId,
                 invln_nbrh = true
             };
 
             PreImage = new invln_DeliveryPhase()
             {
-                Id = _deliveryPhaseId,
+                Id = DeliveryPhaseId,
                 invln_nbrh = false
             };
 
@@ -221,13 +221,13 @@ namespace HE.CRM.AHP.Plugins.Tests.Handlers.DeliveryPhase
         {
             Target = new invln_DeliveryPhase()
             {
-                Id = _deliveryPhaseId,
+                Id = DeliveryPhaseId,
                 invln_rehabactivitytype = new Microsoft.Xrm.Sdk.OptionSetValue((int)invln_RehabActivityType.AcquisitionandWorksrehab)
             };
 
             PreImage = new invln_DeliveryPhase()
             {
-                Id = _deliveryPhaseId,
+                Id = DeliveryPhaseId,
                 invln_rehabactivitytype = new Microsoft.Xrm.Sdk.OptionSetValue((int)invln_RehabActivityType.WorksOnly)
             };
 
@@ -238,23 +238,21 @@ namespace HE.CRM.AHP.Plugins.Tests.Handlers.DeliveryPhase
         [TestMethod]
         public void DoWork_NumberOFHomesChange()
         {
-            int newNumnerOfHomes = 5;
+            var newNumnerOfHomes = 47;
 
             Target = new invln_DeliveryPhase()
             {
-                Id = _deliveryPhaseId,
-                invln_rehabactivitytype = new OptionSetValue((int)invln_RehabActivityType.AcquisitionandWorksrehab),
-                StatusCode = new OptionSetValue((int)invln_DeliveryPhase_StatusCode.RejectedAdjustment),
+                Id = DeliveryPhaseId,
                 invln_NoofHomes = newNumnerOfHomes
             };
 
             PreImage = new invln_DeliveryPhase()
             {
-                Id = _deliveryPhaseId,
+                Id = DeliveryPhaseId,
                 invln_rehabactivitytype = new OptionSetValue((int)invln_RehabActivityType.AcquisitionandWorksrehab),
                 StatusCode = new OptionSetValue((int)invln_DeliveryPhase_StatusCode.RejectedAdjustment),
-                invln_Application = _application.ToEntityReference(),
-                invln_NoofHomes = _numberOfHouseOnDeliveryphase,
+                invln_Application = Application.ToEntityReference(),
+                invln_NoofHomes = 30,
                 invln_buildactivitytype = new OptionSetValue((int)invln_NewBuildActivityType.WorksOnly),
                 invln_nbrh = true,
                 invln_AcquisitionPercentageValue = 40,
@@ -266,22 +264,24 @@ namespace HE.CRM.AHP.Plugins.Tests.Handlers.DeliveryPhase
             fakedContext.Initialize(new List<Entity>()
             {
                 _programme,
-                _milestonesAcquisition,
-                _milestonesPC,
-                _milestonesSoS,
-                _application,
-                _partner,
+                MilestonesAcquisition,
+                MilestonesPC,
+                MilestonesSoS,
+                Application,
+                Partner,
                 new invln_DeliveryPhase() {
-                Id = _deliveryPhaseId,
+                Id = DeliveryPhaseId,
                 invln_rehabactivitytype = new OptionSetValue((int)invln_RehabActivityType.AcquisitionandWorksrehab),
                 StatusCode = new OptionSetValue((int)invln_DeliveryPhase_StatusCode.RejectedAdjustment),
-                invln_Application = _application.ToEntityReference(),
-                invln_NoofHomes = _numberOfHouseOnDeliveryphase,
+                invln_Application = Application.ToEntityReference(),
+                invln_NoofHomes = NumberOfHouseOnDeliveryphase,
                 invln_buildactivitytype = new OptionSetValue((int)invln_NewBuildActivityType.WorksOnly),
                 invln_nbrh = true,
                 invln_AcquisitionPercentageValue = 40,
                 invln_StartOnSitePercentageValue = 35,
                 invln_CompletionPercentageValue = 25,
+                invln_sumofcalculatedfounds = new Money(100),
+                invln_CompletionValue = new Money(100)
                 }
             });
 
@@ -289,31 +289,29 @@ namespace HE.CRM.AHP.Plugins.Tests.Handlers.DeliveryPhase
             Assert.IsTrue(handler.CanWork());
 
             handler.DoWork();
-            Assert.AreEqual(fundingrequired.Value / _numberOfHouseOnApplication * newNumnerOfHomes * 0.4m, Target.invln_AcquisitionValue.Value);
-            Assert.AreEqual(fundingrequired.Value / _numberOfHouseOnApplication * newNumnerOfHomes * 0.35m, Target.invln_StartOnSiteValue.Value);
-            Assert.AreEqual(fundingrequired.Value / _numberOfHouseOnApplication * newNumnerOfHomes * 0.25m, Target.invln_CompletionValue.Value);
+            Assert.AreEqual(Math.Round(Fundingrequired.Value / NumberOfHouseOnApplication * newNumnerOfHomes * 0.4m, MidpointRounding.AwayFromZero), Target.invln_AcquisitionValue.Value);
+            Assert.AreEqual(Math.Round(Fundingrequired.Value / NumberOfHouseOnApplication * newNumnerOfHomes * 0.35m, MidpointRounding.AwayFromZero), Target.invln_StartOnSiteValue.Value);
+            Assert.AreEqual(Math.Round(Fundingrequired.Value / NumberOfHouseOnApplication * newNumnerOfHomes * 0.25m, MidpointRounding.AwayFromZero), Target.invln_CompletionValue.Value);
         }
 
         [TestMethod]
         public void DoWork_NumberOFHomesChange_urb()
         {
-            int newNumnerOfHomes = 5;
+            var newNumnerOfHomes = 47;
 
             Target = new invln_DeliveryPhase()
             {
-                Id = _deliveryPhaseId,
-                invln_rehabactivitytype = new OptionSetValue((int)invln_RehabActivityType.AcquisitionandWorksrehab),
-                StatusCode = new OptionSetValue((int)invln_DeliveryPhase_StatusCode.RejectedAdjustment),
+                Id = DeliveryPhaseId,
                 invln_NoofHomes = newNumnerOfHomes
             };
 
             PreImage = new invln_DeliveryPhase()
             {
-                Id = _deliveryPhaseId,
+                Id = DeliveryPhaseId,
                 invln_rehabactivitytype = new OptionSetValue((int)invln_RehabActivityType.AcquisitionandWorksrehab),
                 StatusCode = new OptionSetValue((int)invln_DeliveryPhase_StatusCode.RejectedAdjustment),
-                invln_Application = _application.ToEntityReference(),
-                invln_NoofHomes = _numberOfHouseOnDeliveryphase,
+                invln_Application = Application.ToEntityReference(),
+                invln_NoofHomes = 30,
                 invln_buildactivitytype = new OptionSetValue((int)invln_NewBuildActivityType.WorksOnly),
                 invln_nbrh = true,
                 invln_AcquisitionPercentageValue = 40,
@@ -325,51 +323,54 @@ namespace HE.CRM.AHP.Plugins.Tests.Handlers.DeliveryPhase
             fakedContext.Initialize(new List<Entity>()
             {
                 _programme,
-                _milestonesAcquisition,
-                _milestonesPC,
-                _milestonesSoS,
-                _application,
-                _URBpartner,
+                MilestonesAcquisition,
+                MilestonesPC,
+                MilestonesSoS,
+                Application,
+                URBpartner,
                 new invln_DeliveryPhase() {
-                Id = _deliveryPhaseId,
+                Id = DeliveryPhaseId,
                 invln_rehabactivitytype = new OptionSetValue((int)invln_RehabActivityType.AcquisitionandWorksrehab),
                 StatusCode = new OptionSetValue((int)invln_DeliveryPhase_StatusCode.RejectedAdjustment),
-                invln_Application = _application.ToEntityReference(),
-                invln_NoofHomes = _numberOfHouseOnDeliveryphase,
+                invln_Application = Application.ToEntityReference(),
+                invln_NoofHomes = NumberOfHouseOnDeliveryphase,
                 invln_buildactivitytype = new OptionSetValue((int)invln_NewBuildActivityType.WorksOnly),
                 invln_nbrh = true,
                 invln_AcquisitionPercentageValue = 40,
                 invln_StartOnSitePercentageValue = 35,
                 invln_CompletionPercentageValue = 25,
+                invln_sumofcalculatedfounds = new Money(100),
+                invln_CompletionValue = new Money(333333),
                 }
-            });
+            })
+            ;
 
             Asset("Update", (int)StageEnum.PreOperation);
             Assert.IsTrue(handler.CanWork());
 
             handler.DoWork();
-            Assert.AreEqual(fundingrequired.Value / _numberOfHouseOnApplication * newNumnerOfHomes * 1m, Target.invln_CompletionValue.Value);
+            Assert.AreEqual(Fundingrequired.Value / NumberOfHouseOnApplication * newNumnerOfHomes * 1m, Target.invln_CompletionValue.Value);
         }
 
         [TestMethod]
         public void DoWork_ResetMilestons()
         {
-            int newNumnerOfHomes = 10;
+            var newNumnerOfHomes = 47;
 
             Target = new invln_DeliveryPhase()
             {
-                Id = _deliveryPhaseId,
+                Id = DeliveryPhaseId,
                 invln_rehabactivitytype = new OptionSetValue((int)invln_RehabActivityType.AcquisitionandWorksrehab),
                 StatusCode = new OptionSetValue((int)invln_DeliveryPhase_StatusCode.RejectedAdjustment),
             };
 
             PreImage = new invln_DeliveryPhase()
             {
-                Id = _deliveryPhaseId,
+                Id = DeliveryPhaseId,
                 invln_rehabactivitytype = new OptionSetValue((int)invln_RehabActivityType.AcquisitionandWorksrehab),
                 StatusCode = new OptionSetValue((int)invln_DeliveryPhase_StatusCode.PendingAdjustment),
-                invln_Application = _application.ToEntityReference(),
-                invln_NoofHomes = _numberOfHouseOnDeliveryphase,
+                invln_Application = Application.ToEntityReference(),
+                invln_NoofHomes = NumberOfHouseOnDeliveryphase,
                 invln_buildactivitytype = new OptionSetValue((int)invln_NewBuildActivityType.WorksOnly),
                 invln_nbrh = true,
                 invln_AcquisitionPercentageValue = 40,
@@ -381,22 +382,24 @@ namespace HE.CRM.AHP.Plugins.Tests.Handlers.DeliveryPhase
             fakedContext.Initialize(new List<Entity>()
             {
                 _programme,
-                _milestonesAcquisition,
-                _milestonesPC,
-                _milestonesSoS,
-                _application,
-                _partner,
+                MilestonesAcquisition,
+                MilestonesPC,
+                MilestonesSoS,
+                Application,
+                Partner,
                 new invln_DeliveryPhase() {
-                Id = _deliveryPhaseId,
+                Id = DeliveryPhaseId,
                 invln_rehabactivitytype = new OptionSetValue((int)invln_RehabActivityType.AcquisitionandWorksrehab),
                 StatusCode = new OptionSetValue((int)invln_DeliveryPhase_StatusCode.RejectedAdjustment),
-                invln_Application = _application.ToEntityReference(),
-                invln_NoofHomes = _numberOfHouseOnDeliveryphase,
+                invln_Application = Application.ToEntityReference(),
+                invln_NoofHomes = NumberOfHouseOnDeliveryphase,
                 invln_buildactivitytype = new OptionSetValue((int)invln_NewBuildActivityType.WorksOnly),
                 invln_nbrh = true,
                 invln_AcquisitionPercentageValue = 40,
                 invln_StartOnSitePercentageValue = 35,
                 invln_CompletionPercentageValue = 25,
+                invln_sumofcalculatedfounds = new Money(100),
+                invln_CompletionValue = new Money(100)
                 }
             });
 
@@ -407,56 +410,58 @@ namespace HE.CRM.AHP.Plugins.Tests.Handlers.DeliveryPhase
             Assert.AreEqual(0.4m * 100, Target.invln_AcquisitionPercentageValue);
             Assert.AreEqual(0.35m * 100, Target.invln_StartOnSitePercentageValue);
             Assert.AreEqual(0.25m * 100, Target.invln_CompletionPercentageValue);
-            Assert.AreEqual(fundingrequired.Value / _numberOfHouseOnApplication * newNumnerOfHomes * 0.4m, Target.invln_AcquisitionValue.Value);
-            Assert.AreEqual(fundingrequired.Value / _numberOfHouseOnApplication * newNumnerOfHomes * 0.35m, Target.invln_StartOnSiteValue.Value);
-            Assert.AreEqual(fundingrequired.Value / _numberOfHouseOnApplication * newNumnerOfHomes * 0.25m, Target.invln_CompletionValue.Value);
+            Assert.AreEqual(Math.Round(Fundingrequired.Value / NumberOfHouseOnApplication * newNumnerOfHomes * 0.4m, MidpointRounding.AwayFromZero), Target.invln_AcquisitionValue.Value);
+            Assert.AreEqual(Math.Round(Fundingrequired.Value / NumberOfHouseOnApplication * newNumnerOfHomes * 0.35m, MidpointRounding.AwayFromZero), Target.invln_StartOnSiteValue.Value);
+            Assert.AreEqual(Math.Round(Fundingrequired.Value / NumberOfHouseOnApplication * newNumnerOfHomes * 0.25m, MidpointRounding.AwayFromZero), Target.invln_CompletionValue.Value);
         }
 
         [TestMethod]
         public void DoWork_ChangeActivityTypeToAcquisitionandWorksrehab()
         {
-            int newNumnerOfHomes = 10;
+            var newNumnerOfHomes = 47;
 
             Target = new invln_DeliveryPhase()
             {
-                Id = _deliveryPhaseId,
+                Id = DeliveryPhaseId,
                 invln_rehabactivitytype = new OptionSetValue((int)invln_RehabActivityType.AcquisitionandWorksrehab),
             };
 
             PreImage = new invln_DeliveryPhase()
             {
-                Id = _deliveryPhaseId,
+                Id = DeliveryPhaseId,
                 invln_rehabactivitytype = new OptionSetValue((int)invln_RehabActivityType.ExistingSatisfactory),
                 StatusCode = new OptionSetValue((int)invln_DeliveryPhase_StatusCode.PendingAdjustment),
-                invln_Application = _application.ToEntityReference(),
-                invln_NoofHomes = _numberOfHouseOnDeliveryphase,
+                invln_Application = Application.ToEntityReference(),
+                invln_NoofHomes = NumberOfHouseOnDeliveryphase,
                 invln_buildactivitytype = new OptionSetValue((int)invln_NewBuildActivityType.WorksOnly),
                 invln_nbrh = true,
-                invln_AcquisitionPercentageValue = 20,
-                invln_StartOnSitePercentageValue = 20,
-                invln_CompletionPercentageValue = 60,
+                invln_AcquisitionPercentageValue = 0,
+                invln_StartOnSitePercentageValue = 0,
+                invln_CompletionPercentageValue = 100,
 
             };
 
             fakedContext.Initialize(new List<Entity>()
             {
                 _programme,
-                _milestonesAcquisition,
-                _milestonesPC,
-                _milestonesSoS,
-                _application,
-                _partner,
+                MilestonesAcquisition,
+                MilestonesPC,
+                MilestonesSoS,
+                Application,
+                Partner,
                 new invln_DeliveryPhase() {
-                Id = _deliveryPhaseId,
+                Id = DeliveryPhaseId,
                 invln_rehabactivitytype = new OptionSetValue((int)invln_RehabActivityType.AcquisitionandWorksrehab),
                 StatusCode = new OptionSetValue((int)invln_DeliveryPhase_StatusCode.RejectedAdjustment),
-                invln_Application = _application.ToEntityReference(),
-                invln_NoofHomes = _numberOfHouseOnDeliveryphase,
+                invln_Application = Application.ToEntityReference(),
+                invln_NoofHomes = NumberOfHouseOnDeliveryphase,
                 invln_buildactivitytype = new OptionSetValue((int)invln_NewBuildActivityType.WorksOnly),
                 invln_nbrh = true,
-                invln_AcquisitionPercentageValue = 20,
-                invln_StartOnSitePercentageValue = 20,
-                invln_CompletionPercentageValue = 60,
+                invln_AcquisitionPercentageValue = 0,
+                invln_StartOnSitePercentageValue = 0,
+                invln_CompletionPercentageValue = 100,
+                invln_sumofcalculatedfounds = new Money(100),
+                invln_CompletionValue = new Money(100)
                 }
             });
 
@@ -464,58 +469,60 @@ namespace HE.CRM.AHP.Plugins.Tests.Handlers.DeliveryPhase
             Assert.IsTrue(handler.CanWork());
 
             handler.DoWork();
-            Assert.AreEqual(0.2m * 100, Target.invln_AcquisitionPercentageValue);
-            Assert.AreEqual(0.2m * 100, Target.invln_StartOnSitePercentageValue);
-            Assert.AreEqual(0.6m * 100, Target.invln_CompletionPercentageValue);
-            Assert.AreEqual(fundingrequired.Value / _numberOfHouseOnApplication * newNumnerOfHomes * 0.2m, Target.invln_AcquisitionValue.Value);
-            Assert.AreEqual(fundingrequired.Value / _numberOfHouseOnApplication * newNumnerOfHomes * 0.2m, Target.invln_StartOnSiteValue.Value);
-            Assert.AreEqual(fundingrequired.Value / _numberOfHouseOnApplication * newNumnerOfHomes * 0.6m, Target.invln_CompletionValue.Value);
+            Assert.AreEqual(0.4m * 100, Target.invln_AcquisitionPercentageValue);
+            Assert.AreEqual(0.35m * 100, Target.invln_StartOnSitePercentageValue);
+            Assert.AreEqual(0.25m * 100, Target.invln_CompletionPercentageValue);
+            Assert.AreEqual(Math.Round(Fundingrequired.Value / NumberOfHouseOnApplication * newNumnerOfHomes * 0.4m, MidpointRounding.AwayFromZero), Target.invln_AcquisitionValue.Value);
+            Assert.AreEqual(Math.Round(Fundingrequired.Value / NumberOfHouseOnApplication * newNumnerOfHomes * 0.35m, MidpointRounding.AwayFromZero), Target.invln_StartOnSiteValue.Value);
+            Assert.AreEqual(Math.Round(Fundingrequired.Value / NumberOfHouseOnApplication * newNumnerOfHomes * 0.25m, MidpointRounding.AwayFromZero), Target.invln_CompletionValue.Value);
         }
 
         [TestMethod]
         public void DoWork_ChangeActivityTypeToExistingSatisfactory()
         {
-            int newNumnerOfHomes = 10;
+            var newNumnerOfHomes = 47;
             Target = new invln_DeliveryPhase()
             {
-                Id = _deliveryPhaseId,
+                Id = DeliveryPhaseId,
                 invln_rehabactivitytype = new OptionSetValue((int)invln_RehabActivityType.ExistingSatisfactory),
             };
 
             PreImage = new invln_DeliveryPhase()
             {
-                Id = _deliveryPhaseId,
+                Id = DeliveryPhaseId,
                 invln_rehabactivitytype = new OptionSetValue((int)invln_RehabActivityType.AcquisitionandWorksrehab),
                 StatusCode = new OptionSetValue((int)invln_DeliveryPhase_StatusCode.PendingAdjustment),
-                invln_Application = _application.ToEntityReference(),
-                invln_NoofHomes = _numberOfHouseOnDeliveryphase,
+                invln_Application = Application.ToEntityReference(),
+                invln_NoofHomes = NumberOfHouseOnDeliveryphase,
                 invln_buildactivitytype = new OptionSetValue((int)invln_NewBuildActivityType.WorksOnly),
                 invln_nbrh = true,
                 invln_AcquisitionPercentageValue = 20,
                 invln_StartOnSitePercentageValue = 20,
-                invln_CompletionPercentageValue = 20,
+                invln_CompletionPercentageValue = 60,
 
             };
 
             fakedContext.Initialize(new List<Entity>()
             {
                 _programme,
-                _milestonesAcquisition,
-                _milestonesPC,
-                _milestonesSoS,
-                _application,
-                _partner,
+                MilestonesAcquisition,
+                MilestonesPC,
+                MilestonesSoS,
+                Application,
+                Partner,
                 new invln_DeliveryPhase() {
-                Id = _deliveryPhaseId,
+                Id = DeliveryPhaseId,
                 invln_rehabactivitytype = new OptionSetValue((int)invln_RehabActivityType.AcquisitionandWorksrehab),
                 StatusCode = new OptionSetValue((int)invln_DeliveryPhase_StatusCode.RejectedAdjustment),
-                invln_Application = _application.ToEntityReference(),
-                invln_NoofHomes = _numberOfHouseOnDeliveryphase,
+                invln_Application = Application.ToEntityReference(),
+                invln_NoofHomes = NumberOfHouseOnDeliveryphase,
                 invln_buildactivitytype = new OptionSetValue((int)invln_NewBuildActivityType.WorksOnly),
                 invln_nbrh = true,
                 invln_AcquisitionPercentageValue = 20,
                 invln_StartOnSitePercentageValue = 20,
                 invln_CompletionPercentageValue = 60,
+                invln_sumofcalculatedfounds = new Money(100),
+                invln_CompletionValue = new Money(100)
                 }
             });
 
@@ -528,7 +535,657 @@ namespace HE.CRM.AHP.Plugins.Tests.Handlers.DeliveryPhase
             Assert.AreEqual(1m * 100, Target.invln_CompletionPercentageValue);
             Assert.AreEqual(0, Target.invln_AcquisitionValue.Value);
             Assert.AreEqual(0, Target.invln_StartOnSiteValue.Value);
-            Assert.AreEqual(fundingrequired.Value / _numberOfHouseOnApplication * newNumnerOfHomes, Target.invln_CompletionValue.Value);
+            Assert.AreEqual(Fundingrequired.Value / NumberOfHouseOnApplication * newNumnerOfHomes, Target.invln_CompletionValue.Value);
+        }
+
+        [TestMethod]
+        public void DoWork_Percentage_5_5_90()
+        {
+
+            var newNumnerOfHomes = 47;
+            Target = new invln_DeliveryPhase()
+            {
+                Id = DeliveryPhaseId,
+                invln_rehabactivitytype = new OptionSetValue((int)invln_RehabActivityType.AcquisitionandWorksrehab),
+                invln_AcquisitionPercentageValue = 5,
+                invln_StartOnSitePercentageValue = 5,
+                invln_CompletionPercentageValue = 90,
+            };
+
+            PreImage = new invln_DeliveryPhase()
+            {
+                Id = DeliveryPhaseId,
+                invln_rehabactivitytype = new OptionSetValue((int)invln_RehabActivityType.AcquisitionandWorksrehab),
+                StatusCode = new OptionSetValue((int)invln_DeliveryPhase_StatusCode.PendingAdjustment),
+                invln_Application = Application.ToEntityReference(),
+                invln_NoofHomes = NumberOfHouseOnDeliveryphase,
+                invln_buildactivitytype = new OptionSetValue((int)invln_NewBuildActivityType.WorksOnly),
+                invln_nbrh = true,
+                invln_AcquisitionPercentageValue = 20,
+                invln_StartOnSitePercentageValue = 20,
+                invln_CompletionPercentageValue = 60,
+
+            };
+
+            fakedContext.Initialize(new List<Entity>()
+            {
+                _programme,
+                MilestonesAcquisition,
+                MilestonesPC,
+                MilestonesSoS,
+                Application,
+                Partner,
+                new invln_DeliveryPhase() {
+                Id = DeliveryPhaseId,
+                invln_rehabactivitytype = new OptionSetValue((int)invln_RehabActivityType.AcquisitionandWorksrehab),
+                StatusCode = new OptionSetValue((int)invln_DeliveryPhase_StatusCode.RejectedAdjustment),
+                invln_Application = Application.ToEntityReference(),
+                invln_NoofHomes = NumberOfHouseOnDeliveryphase,
+                invln_buildactivitytype = new OptionSetValue((int)invln_NewBuildActivityType.WorksOnly),
+                invln_nbrh = true,
+                invln_AcquisitionPercentageValue = 20,
+                invln_StartOnSitePercentageValue = 20,
+                invln_CompletionPercentageValue = 60,
+                invln_sumofcalculatedfounds = new Money(100),
+                invln_CompletionValue = new Money(100)
+                }
+            });
+
+            Asset("Update", (int)StageEnum.PreOperation);
+            Assert.IsTrue(handler.CanWork());
+
+            handler.DoWork();
+            Assert.AreEqual(0.05m * 100, Target.invln_AcquisitionPercentageValue);
+            Assert.AreEqual(0.05m * 100, Target.invln_StartOnSitePercentageValue);
+            Assert.AreEqual(0.90m * 100, Target.invln_CompletionPercentageValue);
+            Assert.AreEqual(Math.Round(Fundingrequired.Value / NumberOfHouseOnApplication * newNumnerOfHomes * 0.05m, MidpointRounding.AwayFromZero), Target.invln_AcquisitionValue.Value);
+            Assert.AreEqual(Math.Round(Fundingrequired.Value / NumberOfHouseOnApplication * newNumnerOfHomes * 0.05m, MidpointRounding.AwayFromZero), Target.invln_StartOnSiteValue.Value);
+            Assert.AreEqual(Math.Round(Fundingrequired.Value / NumberOfHouseOnApplication * newNumnerOfHomes * 0.9m, MidpointRounding.AwayFromZero), Target.invln_CompletionValue.Value, 1);
+        }
+
+        [TestMethod]
+        public void DoWork_Pervcentage_0_5_95()
+        {
+            var newNumnerOfHomes = 47;
+            Target = new invln_DeliveryPhase()
+            {
+                Id = DeliveryPhaseId,
+                invln_rehabactivitytype = new OptionSetValue((int)invln_RehabActivityType.AcquisitionandWorksrehab),
+                invln_AcquisitionPercentageValue = 0,
+                invln_StartOnSitePercentageValue = 5,
+                invln_CompletionPercentageValue = 95,
+            };
+
+            PreImage = new invln_DeliveryPhase()
+            {
+                Id = DeliveryPhaseId,
+                invln_rehabactivitytype = new OptionSetValue((int)invln_RehabActivityType.AcquisitionandWorksrehab),
+                StatusCode = new OptionSetValue((int)invln_DeliveryPhase_StatusCode.PendingAdjustment),
+                invln_Application = Application.ToEntityReference(),
+                invln_NoofHomes = NumberOfHouseOnDeliveryphase,
+                invln_buildactivitytype = new OptionSetValue((int)invln_NewBuildActivityType.WorksOnly),
+                invln_nbrh = true,
+                invln_AcquisitionPercentageValue = 20,
+                invln_StartOnSitePercentageValue = 20,
+                invln_CompletionPercentageValue = 60,
+
+            };
+
+            fakedContext.Initialize(new List<Entity>()
+            {
+                _programme,
+                MilestonesAcquisition,
+                MilestonesPC,
+                MilestonesSoS,
+                Application,
+                Partner,
+                new invln_DeliveryPhase() {
+                Id = DeliveryPhaseId,
+                invln_rehabactivitytype = new OptionSetValue((int)invln_RehabActivityType.AcquisitionandWorksrehab),
+                StatusCode = new OptionSetValue((int)invln_DeliveryPhase_StatusCode.RejectedAdjustment),
+                invln_Application = Application.ToEntityReference(),
+                invln_NoofHomes = NumberOfHouseOnDeliveryphase,
+                invln_buildactivitytype = new OptionSetValue((int)invln_NewBuildActivityType.WorksOnly),
+                invln_nbrh = true,
+                invln_AcquisitionPercentageValue = 20,
+                invln_StartOnSitePercentageValue = 20,
+                invln_CompletionPercentageValue = 60,
+                invln_sumofcalculatedfounds = new Money(100),
+                invln_CompletionValue = new Money(100)
+                }
+            });
+
+            Asset("Update", (int)StageEnum.PreOperation);
+            Assert.IsTrue(handler.CanWork());
+
+            handler.DoWork();
+            Assert.AreEqual(0, Target.invln_AcquisitionPercentageValue);
+            Assert.AreEqual(0.05m * 100, Target.invln_StartOnSitePercentageValue);
+            Assert.AreEqual(0.95m * 100, Target.invln_CompletionPercentageValue);
+            Assert.AreEqual(0, Target.invln_AcquisitionValue.Value);
+            Assert.AreEqual(Math.Round(Fundingrequired.Value / NumberOfHouseOnApplication * newNumnerOfHomes * 0.05m, MidpointRounding.AwayFromZero), Target.invln_StartOnSiteValue.Value);
+            Assert.AreEqual(Math.Round(Fundingrequired.Value / NumberOfHouseOnApplication * newNumnerOfHomes * 0.95m, MidpointRounding.AwayFromZero), Target.invln_CompletionValue.Value);
+        }
+
+        [TestMethod]
+        public void DoWork_Percentage_5_0_95()
+        {
+            var newNumnerOfHomes = 47;
+            Target = new invln_DeliveryPhase()
+            {
+                Id = DeliveryPhaseId,
+                invln_rehabactivitytype = new OptionSetValue((int)invln_RehabActivityType.AcquisitionandWorksrehab),
+                invln_AcquisitionPercentageValue = 5,
+                invln_StartOnSitePercentageValue = 0,
+                invln_CompletionPercentageValue = 95,
+            };
+
+            PreImage = new invln_DeliveryPhase()
+            {
+                Id = DeliveryPhaseId,
+                invln_rehabactivitytype = new OptionSetValue((int)invln_RehabActivityType.AcquisitionandWorksrehab),
+                StatusCode = new OptionSetValue((int)invln_DeliveryPhase_StatusCode.PendingAdjustment),
+                invln_Application = Application.ToEntityReference(),
+                invln_NoofHomes = NumberOfHouseOnDeliveryphase,
+                invln_buildactivitytype = new OptionSetValue((int)invln_NewBuildActivityType.WorksOnly),
+                invln_nbrh = true,
+                invln_AcquisitionPercentageValue = 20,
+                invln_StartOnSitePercentageValue = 20,
+                invln_CompletionPercentageValue = 60,
+
+            };
+
+            fakedContext.Initialize(new List<Entity>()
+            {
+                _programme,
+                MilestonesAcquisition,
+                MilestonesPC,
+                MilestonesSoS,
+                Application,
+                Partner,
+                new invln_DeliveryPhase() {
+                Id = DeliveryPhaseId,
+                invln_rehabactivitytype = new OptionSetValue((int)invln_RehabActivityType.AcquisitionandWorksrehab),
+                StatusCode = new OptionSetValue((int)invln_DeliveryPhase_StatusCode.RejectedAdjustment),
+                invln_Application = Application.ToEntityReference(),
+                invln_NoofHomes = NumberOfHouseOnDeliveryphase,
+                invln_buildactivitytype = new OptionSetValue((int)invln_NewBuildActivityType.WorksOnly),
+                invln_nbrh = true,
+                invln_AcquisitionPercentageValue = 20,
+                invln_StartOnSitePercentageValue = 20,
+                invln_CompletionPercentageValue = 60,
+                invln_sumofcalculatedfounds = new Money(100),
+                invln_CompletionValue = new Money(100)
+                }
+            });
+
+            Asset("Update", (int)StageEnum.PreOperation);
+            Assert.IsTrue(handler.CanWork());
+
+            handler.DoWork();
+            Assert.AreEqual(0.05m * 100, Target.invln_AcquisitionPercentageValue);
+            Assert.AreEqual(0, Target.invln_StartOnSitePercentageValue);
+            Assert.AreEqual(0.95m * 100, Target.invln_CompletionPercentageValue);
+            Assert.AreEqual(Math.Round(Fundingrequired.Value / NumberOfHouseOnApplication * newNumnerOfHomes * 0.05m, MidpointRounding.AwayFromZero), Target.invln_AcquisitionValue.Value);
+            Assert.AreEqual(0, Target.invln_StartOnSiteValue.Value);
+            Assert.AreEqual(Math.Round(Fundingrequired.Value / NumberOfHouseOnApplication * newNumnerOfHomes * 0.95m, MidpointRounding.AwayFromZero), Target.invln_CompletionValue.Value);
+        }
+
+        [TestMethod]
+        public void DoWork_Percentage_0_0_100()
+        {
+            var newNumnerOfHomes = 47;
+            Target = new invln_DeliveryPhase()
+            {
+                Id = DeliveryPhaseId,
+                invln_rehabactivitytype = new OptionSetValue((int)invln_RehabActivityType.AcquisitionandWorksrehab),
+                invln_AcquisitionPercentageValue = 0,
+                invln_StartOnSitePercentageValue = 0,
+                invln_CompletionPercentageValue = 100,
+            };
+
+            PreImage = new invln_DeliveryPhase()
+            {
+                Id = DeliveryPhaseId,
+                invln_rehabactivitytype = new OptionSetValue((int)invln_RehabActivityType.AcquisitionandWorksrehab),
+                StatusCode = new OptionSetValue((int)invln_DeliveryPhase_StatusCode.PendingAdjustment),
+                invln_Application = Application.ToEntityReference(),
+                invln_NoofHomes = NumberOfHouseOnDeliveryphase,
+                invln_buildactivitytype = new OptionSetValue((int)invln_NewBuildActivityType.WorksOnly),
+                invln_nbrh = true,
+                invln_AcquisitionPercentageValue = 20,
+                invln_StartOnSitePercentageValue = 20,
+                invln_CompletionPercentageValue = 20,
+
+            };
+
+            fakedContext.Initialize(new List<Entity>()
+            {
+                _programme,
+                MilestonesAcquisition,
+                MilestonesPC,
+                MilestonesSoS,
+                Application,
+                Partner,
+                new invln_DeliveryPhase() {
+                Id = DeliveryPhaseId,
+                invln_rehabactivitytype = new OptionSetValue((int)invln_RehabActivityType.AcquisitionandWorksrehab),
+                StatusCode = new OptionSetValue((int)invln_DeliveryPhase_StatusCode.RejectedAdjustment),
+                invln_Application = Application.ToEntityReference(),
+                invln_NoofHomes = NumberOfHouseOnDeliveryphase,
+                invln_buildactivitytype = new OptionSetValue((int)invln_NewBuildActivityType.WorksOnly),
+                invln_nbrh = true,
+                invln_AcquisitionPercentageValue = 20,
+                invln_StartOnSitePercentageValue = 20,
+                invln_CompletionPercentageValue = 60,
+                invln_sumofcalculatedfounds = new Money(100),
+                invln_CompletionValue = new Money(100)
+                }
+            });
+
+            Asset("Update", (int)StageEnum.PreOperation);
+            Assert.IsTrue(handler.CanWork());
+
+            handler.DoWork();
+            Assert.AreEqual(0, Target.invln_AcquisitionPercentageValue);
+            Assert.AreEqual(0, Target.invln_StartOnSitePercentageValue);
+            Assert.AreEqual(1m * 100, Target.invln_CompletionPercentageValue);
+            Assert.AreEqual(0, Target.invln_AcquisitionValue.Value);
+            Assert.AreEqual(0, Target.invln_StartOnSiteValue.Value);
+            Assert.AreEqual(Math.Round(Fundingrequired.Value / NumberOfHouseOnApplication * newNumnerOfHomes, MidpointRounding.AwayFromZero), Target.invln_CompletionValue.Value);
+        }
+
+        [TestMethod]
+        public void DoWork_ManyDeliverypahses()
+        {
+            var df2 = Guid.NewGuid();
+            var df3 = Guid.NewGuid();
+
+            Target = new invln_DeliveryPhase()
+            {
+                Id = DeliveryPhaseId,
+                invln_NoofHomes = 10
+            };
+
+            PreImage = new invln_DeliveryPhase()
+            {
+                Id = DeliveryPhaseId,
+                invln_rehabactivitytype = new OptionSetValue((int)invln_RehabActivityType.AcquisitionandWorksrehab),
+                StatusCode = new OptionSetValue((int)invln_DeliveryPhase_StatusCode.Default),
+                invln_Application = Application.ToEntityReference(),
+                invln_NoofHomes = 30,
+                invln_buildactivitytype = new OptionSetValue((int)invln_NewBuildActivityType.WorksOnly),
+                invln_nbrh = true,
+                invln_AcquisitionPercentageValue = 40,
+                invln_StartOnSitePercentageValue = 35,
+                invln_CompletionPercentageValue = 25,
+
+            };
+
+            fakedContext.Initialize(new List<Entity>()
+            {
+                _programme,
+                MilestonesAcquisition,
+                MilestonesPC,
+                MilestonesSoS,
+                Application,
+                Partner,
+                new invln_DeliveryPhase() {
+                Id = DeliveryPhaseId,
+                invln_rehabactivitytype = new OptionSetValue((int)invln_RehabActivityType.AcquisitionandWorksrehab),
+                StatusCode = new OptionSetValue((int)invln_DeliveryPhase_StatusCode.RejectedAdjustment),
+                invln_Application = Application.ToEntityReference(),
+                invln_NoofHomes = 9,
+                invln_buildactivitytype = new OptionSetValue((int)invln_NewBuildActivityType.WorksOnly),
+                invln_nbrh = true,
+                invln_AcquisitionPercentageValue = 40,
+                invln_StartOnSitePercentageValue = 35,
+                invln_CompletionPercentageValue = 25,
+                invln_sumofcalculatedfounds = new Money(70922),
+                invln_CompletionValue = new Money(70922),
+                invln_completionmilestoneclaimdate = DateTime.Now.AddDays(10),
+                },
+
+                new invln_DeliveryPhase() {
+                Id = df2,
+                invln_rehabactivitytype = new OptionSetValue((int)invln_RehabActivityType.AcquisitionandWorksrehab),
+                StatusCode = new OptionSetValue((int)invln_DeliveryPhase_StatusCode.RejectedAdjustment),
+                invln_Application = Application.ToEntityReference(),
+                invln_NoofHomes = 15,
+                invln_buildactivitytype = new OptionSetValue((int)invln_NewBuildActivityType.WorksOnly),
+                invln_nbrh = true,
+                invln_AcquisitionPercentageValue = 40,
+                invln_StartOnSitePercentageValue = 35,
+                invln_CompletionPercentageValue = 25,
+                invln_sumofcalculatedfounds = new Money(106383),
+                invln_CompletionValue = new Money(26596),
+                invln_completionmilestoneclaimdate = DateTime.Now.AddDays(20),
+                },
+                new invln_DeliveryPhase() {
+                Id = df3,
+                invln_rehabactivitytype = new OptionSetValue((int)invln_RehabActivityType.AcquisitionandWorksrehab),
+                StatusCode = new OptionSetValue((int)invln_DeliveryPhase_StatusCode.RejectedAdjustment),
+                invln_Application = Application.ToEntityReference(),
+                invln_NoofHomes = 22,
+                invln_buildactivitytype = new OptionSetValue((int)invln_NewBuildActivityType.WorksOnly),
+                invln_nbrh = true,
+                invln_AcquisitionPercentageValue = 40,
+                invln_StartOnSitePercentageValue = 35,
+                invln_CompletionPercentageValue = 25,
+                invln_sumofcalculatedfounds = new Money(156027),
+                invln_CompletionValue = new Money(39007),
+                invln_completionmilestoneclaimdate = DateTime.Now.AddDays(30),
+                }
+            });
+            ;
+
+            Asset("Update", (int)StageEnum.PreOperation);
+            Assert.IsTrue(handler.CanWork());
+
+            handler.DoWork();
+            Assert.AreEqual(Math.Round(Math.Round(Fundingrequired.Value / NumberOfHouseOnApplication * 10, 0, MidpointRounding.AwayFromZero) * 0.4m, 0, MidpointRounding.AwayFromZero), Target.invln_AcquisitionValue.Value);
+            Assert.AreEqual(Math.Round(Math.Round(Fundingrequired.Value / NumberOfHouseOnApplication * 10, 0, MidpointRounding.AwayFromZero) * 0.35m, 0, MidpointRounding.AwayFromZero), Target.invln_StartOnSiteValue.Value);
+            Assert.AreEqual(Math.Round(Math.Round(Fundingrequired.Value / NumberOfHouseOnApplication * 10, 0, MidpointRounding.AwayFromZero) * 0.25m, 0, MidpointRounding.AwayFromZero), Target.invln_CompletionValue.Value, 1);
+            Assert.AreEqual(70922, Target.invln_AcquisitionValue.Value + Target.invln_StartOnSiteValue.Value + Target.invln_CompletionValue.Value);
+            var sum = fakedContext.CreateQuery<invln_DeliveryPhase>().Where(x => x.invln_Application.Id == ApplicationId).Sum(x => x.invln_sumofcalculatedfounds.Value);
+            Assert.AreEqual(333333, sum);
+            var df = fakedContext.CreateQuery<invln_DeliveryPhase>().Where(x => x.Id == df3).FirstOrDefault();
+            Assert.AreEqual(156028, df.invln_sumofcalculatedfounds.Value);
+
+        }
+
+        [TestMethod]
+        public void DoWork_ManyDeliverypahses_5_5_90()
+        {
+            Guid df2 = Guid.NewGuid();
+            Guid df3 = Guid.NewGuid();
+
+            Target = new invln_DeliveryPhase()
+            {
+                Id = DeliveryPhaseId,
+                invln_AcquisitionPercentageValue = 5,
+            };
+
+            PreImage = new invln_DeliveryPhase()
+            {
+                Id = DeliveryPhaseId,
+                invln_rehabactivitytype = new OptionSetValue((int)invln_RehabActivityType.AcquisitionandWorksrehab),
+                StatusCode = new OptionSetValue((int)invln_DeliveryPhase_StatusCode.Default),
+                invln_Application = Application.ToEntityReference(),
+                invln_NoofHomes = 10,
+                invln_buildactivitytype = new OptionSetValue((int)invln_NewBuildActivityType.WorksOnly),
+                invln_nbrh = true,
+                invln_AcquisitionPercentageValue = 40,
+                invln_StartOnSitePercentageValue = 5,
+                invln_CompletionPercentageValue = 90,
+
+            };
+
+            fakedContext.Initialize(new List<Entity>()
+            {
+                _programme,
+                MilestonesAcquisition,
+                MilestonesPC,
+                MilestonesSoS,
+                Application,
+                Partner,
+                new invln_DeliveryPhase() {
+                Id = DeliveryPhaseId,
+                invln_rehabactivitytype = new OptionSetValue((int)invln_RehabActivityType.AcquisitionandWorksrehab),
+                StatusCode = new OptionSetValue((int)invln_DeliveryPhase_StatusCode.RejectedAdjustment),
+                invln_Application = Application.ToEntityReference(),
+                invln_NoofHomes = 10,
+                invln_buildactivitytype = new OptionSetValue((int)invln_NewBuildActivityType.WorksOnly),
+                invln_nbrh = true,
+                invln_AcquisitionPercentageValue = 40,
+                invln_StartOnSitePercentageValue = 5,
+                invln_CompletionPercentageValue = 90,
+                invln_sumofcalculatedfounds = new Money(70922),
+                invln_CompletionValue = new Money(70922),
+                invln_completionmilestoneclaimdate = DateTime.Now.AddDays(10),
+                },
+
+                new invln_DeliveryPhase() {
+                Id = df2,
+                invln_rehabactivitytype = new OptionSetValue((int)invln_RehabActivityType.AcquisitionandWorksrehab),
+                StatusCode = new OptionSetValue((int)invln_DeliveryPhase_StatusCode.RejectedAdjustment),
+                invln_Application = Application.ToEntityReference(),
+                invln_NoofHomes = 15,
+                invln_buildactivitytype = new OptionSetValue((int)invln_NewBuildActivityType.WorksOnly),
+                invln_nbrh = true,
+                invln_AcquisitionPercentageValue = 40,
+                invln_StartOnSitePercentageValue = 35,
+                invln_CompletionPercentageValue = 25,
+                invln_sumofcalculatedfounds = new Money(106383),
+                invln_CompletionValue = new Money(26596),
+                invln_completionmilestoneclaimdate = DateTime.Now.AddDays(20),
+                },
+                new invln_DeliveryPhase() {
+                Id = df3,
+                invln_rehabactivitytype = new OptionSetValue((int)invln_RehabActivityType.AcquisitionandWorksrehab),
+                StatusCode = new OptionSetValue((int)invln_DeliveryPhase_StatusCode.RejectedAdjustment),
+                invln_Application = Application.ToEntityReference(),
+                invln_NoofHomes = 22,
+                invln_buildactivitytype = new OptionSetValue((int)invln_NewBuildActivityType.WorksOnly),
+                invln_nbrh = true,
+                invln_AcquisitionPercentageValue = 40,
+                invln_StartOnSitePercentageValue = 35,
+                invln_CompletionPercentageValue = 25,
+                invln_sumofcalculatedfounds = new Money(156027),
+                invln_CompletionValue = new Money(39007),
+                invln_completionmilestoneclaimdate = DateTime.Now.AddDays(30),
+                }
+            });
+            ;
+
+            Asset("Update", (int)StageEnum.PreOperation);
+            Assert.IsTrue(handler.CanWork());
+
+            handler.DoWork();
+            Assert.AreEqual(Math.Round(Math.Round(Fundingrequired.Value / NumberOfHouseOnApplication * 10, 0, MidpointRounding.AwayFromZero) * 0.05m, 0, MidpointRounding.AwayFromZero), Target.invln_AcquisitionValue.Value);
+            Assert.AreEqual(Math.Round(Math.Round(Fundingrequired.Value / NumberOfHouseOnApplication * 10, 0, MidpointRounding.AwayFromZero) * 0.05m, 0, MidpointRounding.AwayFromZero), Target.invln_StartOnSiteValue.Value);
+            Assert.AreEqual(Math.Round(Math.Round(Fundingrequired.Value / NumberOfHouseOnApplication * 10, 0, MidpointRounding.AwayFromZero) * 0.9m, 0, MidpointRounding.AwayFromZero), Target.invln_CompletionValue.Value, 1);
+            Assert.AreEqual(70922, Target.invln_AcquisitionValue.Value + Target.invln_StartOnSiteValue.Value + Target.invln_CompletionValue.Value);
+            var sum = fakedContext.CreateQuery<invln_DeliveryPhase>().Where(x => x.invln_Application.Id == ApplicationId).Sum(x => x.invln_sumofcalculatedfounds.Value);
+            Assert.AreEqual(333333, sum);
+            var df = fakedContext.CreateQuery<invln_DeliveryPhase>().Where(x => x.Id == df3).FirstOrDefault();
+            Assert.AreEqual(156028, df.invln_sumofcalculatedfounds.Value);
+
+        }
+
+        [TestMethod]
+        public void DoWork_ManyDeliverypahses_0_0_100()
+        {
+            var df2 = Guid.NewGuid();
+            var df3 = Guid.NewGuid();
+
+            Target = new invln_DeliveryPhase()
+            {
+                Id = DeliveryPhaseId,
+                invln_AcquisitionPercentageValue = 0,
+            };
+
+            PreImage = new invln_DeliveryPhase()
+            {
+                Id = DeliveryPhaseId,
+                invln_rehabactivitytype = new OptionSetValue((int)invln_RehabActivityType.AcquisitionandWorksrehab),
+                StatusCode = new OptionSetValue((int)invln_DeliveryPhase_StatusCode.Default),
+                invln_Application = Application.ToEntityReference(),
+                invln_NoofHomes = 10,
+                invln_buildactivitytype = new OptionSetValue((int)invln_NewBuildActivityType.WorksOnly),
+                invln_nbrh = true,
+                invln_AcquisitionPercentageValue = 40,
+                invln_StartOnSitePercentageValue = 0,
+                invln_CompletionPercentageValue = 100,
+
+            };
+
+            fakedContext.Initialize(new List<Entity>()
+            {
+                _programme,
+                MilestonesAcquisition,
+                MilestonesPC,
+                MilestonesSoS,
+                Application,
+                Partner,
+                new invln_DeliveryPhase() {
+                Id = DeliveryPhaseId,
+                invln_rehabactivitytype = new OptionSetValue((int)invln_RehabActivityType.AcquisitionandWorksrehab),
+                StatusCode = new OptionSetValue((int)invln_DeliveryPhase_StatusCode.RejectedAdjustment),
+                invln_Application = Application.ToEntityReference(),
+                invln_NoofHomes = 10,
+                invln_buildactivitytype = new OptionSetValue((int)invln_NewBuildActivityType.WorksOnly),
+                invln_nbrh = true,
+                invln_AcquisitionPercentageValue = 40,
+                invln_StartOnSitePercentageValue = 5,
+                invln_CompletionPercentageValue = 90,
+                invln_sumofcalculatedfounds = new Money(70922),
+                invln_CompletionValue = new Money(70922),
+                invln_completionmilestoneclaimdate = DateTime.Now.AddDays(10),
+                },
+
+                new invln_DeliveryPhase() {
+                Id = df2,
+                invln_rehabactivitytype = new OptionSetValue((int)invln_RehabActivityType.AcquisitionandWorksrehab),
+                StatusCode = new OptionSetValue((int)invln_DeliveryPhase_StatusCode.RejectedAdjustment),
+                invln_Application = Application.ToEntityReference(),
+                invln_NoofHomes = 15,
+                invln_buildactivitytype = new OptionSetValue((int)invln_NewBuildActivityType.WorksOnly),
+                invln_nbrh = true,
+                invln_AcquisitionPercentageValue = 40,
+                invln_StartOnSitePercentageValue = 35,
+                invln_CompletionPercentageValue = 25,
+                invln_sumofcalculatedfounds = new Money(106383),
+                invln_CompletionValue = new Money(26596),
+                invln_completionmilestoneclaimdate = DateTime.Now.AddDays(20),
+                },
+                new invln_DeliveryPhase() {
+                Id = df3,
+                invln_rehabactivitytype = new OptionSetValue((int)invln_RehabActivityType.AcquisitionandWorksrehab),
+                StatusCode = new OptionSetValue((int)invln_DeliveryPhase_StatusCode.RejectedAdjustment),
+                invln_Application = Application.ToEntityReference(),
+                invln_NoofHomes = 22,
+                invln_buildactivitytype = new OptionSetValue((int)invln_NewBuildActivityType.WorksOnly),
+                invln_nbrh = true,
+                invln_AcquisitionPercentageValue = 40,
+                invln_StartOnSitePercentageValue = 35,
+                invln_CompletionPercentageValue = 25,
+                invln_sumofcalculatedfounds = new Money(156027),
+                invln_CompletionValue = new Money(39007),
+                invln_completionmilestoneclaimdate = DateTime.Now.AddDays(30),
+                }
+            });
+
+            Asset("Update", (int)StageEnum.PreOperation);
+            Assert.IsTrue(handler.CanWork());
+
+            handler.DoWork();
+            Assert.AreEqual(Math.Round(Math.Round(Fundingrequired.Value / NumberOfHouseOnApplication * 10, 0, MidpointRounding.AwayFromZero) * 0m, 0, MidpointRounding.AwayFromZero), Target.invln_AcquisitionValue.Value);
+            Assert.AreEqual(Math.Round(Math.Round(Fundingrequired.Value / NumberOfHouseOnApplication * 10, 0, MidpointRounding.AwayFromZero) * 0m, 0, MidpointRounding.AwayFromZero), Target.invln_StartOnSiteValue.Value);
+            Assert.AreEqual(Math.Round(Math.Round(Fundingrequired.Value / NumberOfHouseOnApplication * 10, 0, MidpointRounding.AwayFromZero) * 1m, 0, MidpointRounding.AwayFromZero), Target.invln_CompletionValue.Value, 1);
+            Assert.AreEqual(70922, Target.invln_AcquisitionValue.Value + Target.invln_StartOnSiteValue.Value + Target.invln_CompletionValue.Value);
+            var sum = fakedContext.CreateQuery<invln_DeliveryPhase>().Where(x => x.invln_Application.Id == ApplicationId).Sum(x => x.invln_sumofcalculatedfounds.Value);
+            Assert.AreEqual(333333, sum);
+            var df = fakedContext.CreateQuery<invln_DeliveryPhase>().Where(x => x.Id == df3).FirstOrDefault();
+            Assert.AreEqual(156028, df.invln_sumofcalculatedfounds.Value);
+        }
+
+        [TestMethod]
+        public void DoWork_ManyDeliverypahses_100_0_0()
+        {
+            var df2 = Guid.NewGuid();
+            var df3 = Guid.NewGuid();
+
+            Target = new invln_DeliveryPhase()
+            {
+                Id = DeliveryPhaseId,
+                invln_AcquisitionPercentageValue = 100,
+            };
+
+            PreImage = new invln_DeliveryPhase()
+            {
+                Id = DeliveryPhaseId,
+                invln_rehabactivitytype = new OptionSetValue((int)invln_RehabActivityType.AcquisitionandWorksrehab),
+                StatusCode = new OptionSetValue((int)invln_DeliveryPhase_StatusCode.Default),
+                invln_Application = Application.ToEntityReference(),
+                invln_NoofHomes = 10,
+                invln_buildactivitytype = new OptionSetValue((int)invln_NewBuildActivityType.AcquisitionandWorks),
+                invln_nbrh = true,
+                invln_AcquisitionPercentageValue = 40,
+                invln_StartOnSitePercentageValue = 0,
+                invln_CompletionPercentageValue = 0,
+
+            };
+
+            fakedContext.Initialize(new List<Entity>()
+            {
+                _programme,
+                MilestonesAcquisition,
+                MilestonesPC,
+                MilestonesSoS,
+                Application,
+                Partner,
+                new invln_DeliveryPhase() {
+                Id = DeliveryPhaseId,
+                invln_rehabactivitytype = new OptionSetValue((int)invln_RehabActivityType.AcquisitionandWorksrehab),
+                StatusCode = new OptionSetValue((int)invln_DeliveryPhase_StatusCode.RejectedAdjustment),
+                invln_Application = Application.ToEntityReference(),
+                invln_NoofHomes = 10,
+                invln_buildactivitytype = new OptionSetValue((int)invln_NewBuildActivityType.WorksOnly),
+                invln_nbrh = true,
+                invln_AcquisitionPercentageValue = 40,
+                invln_StartOnSitePercentageValue = 5,
+                invln_CompletionPercentageValue = 90,
+                invln_sumofcalculatedfounds = new Money(70922),
+                invln_CompletionValue = new Money(70922),
+                invln_completionmilestoneclaimdate = DateTime.Now.AddDays(10),
+                },
+
+                new invln_DeliveryPhase() {
+                Id = df2,
+                invln_rehabactivitytype = new OptionSetValue((int)invln_RehabActivityType.AcquisitionandWorksrehab),
+                StatusCode = new OptionSetValue((int)invln_DeliveryPhase_StatusCode.RejectedAdjustment),
+                invln_Application = Application.ToEntityReference(),
+                invln_NoofHomes = 15,
+                invln_buildactivitytype = new OptionSetValue((int)invln_NewBuildActivityType.WorksOnly),
+                invln_nbrh = true,
+                invln_AcquisitionPercentageValue = 40,
+                invln_StartOnSitePercentageValue = 35,
+                invln_CompletionPercentageValue = 25,
+                invln_sumofcalculatedfounds = new Money(106383),
+                invln_CompletionValue = new Money(26596),
+                invln_completionmilestoneclaimdate = DateTime.Now.AddDays(20),
+                },
+                new invln_DeliveryPhase() {
+                Id = df3,
+                invln_rehabactivitytype = new OptionSetValue((int)invln_RehabActivityType.AcquisitionandWorksrehab),
+                StatusCode = new OptionSetValue((int)invln_DeliveryPhase_StatusCode.RejectedAdjustment),
+                invln_Application = Application.ToEntityReference(),
+                invln_NoofHomes = 22,
+                invln_buildactivitytype = new OptionSetValue((int)invln_NewBuildActivityType.WorksOnly),
+                invln_nbrh = true,
+                invln_AcquisitionPercentageValue = 40,
+                invln_StartOnSitePercentageValue = 35,
+                invln_CompletionPercentageValue = 25,
+                invln_sumofcalculatedfounds = new Money(156027),
+                invln_CompletionValue = new Money(39007),
+                invln_completionmilestoneclaimdate = DateTime.Now.AddDays(30),
+                }
+            });
+
+            Asset("Update", (int)StageEnum.PreOperation);
+            Assert.IsTrue(handler.CanWork());
+
+            handler.DoWork();
+            Assert.AreEqual(Math.Round(Math.Round(Fundingrequired.Value / NumberOfHouseOnApplication * 10, 0, MidpointRounding.AwayFromZero) * 1m, 0, MidpointRounding.AwayFromZero), Target.invln_AcquisitionValue.Value);
+            Assert.AreEqual(Math.Round(Math.Round(Fundingrequired.Value / NumberOfHouseOnApplication * 10, 0, MidpointRounding.AwayFromZero) * 0m, 0, MidpointRounding.AwayFromZero), Target.invln_StartOnSiteValue.Value);
+            Assert.AreEqual(Math.Round(Math.Round(Fundingrequired.Value / NumberOfHouseOnApplication * 10, 0, MidpointRounding.AwayFromZero) * 0m, 0, MidpointRounding.AwayFromZero), Target.invln_CompletionValue.Value, 1);
+            Assert.AreEqual(70922, Target.invln_AcquisitionValue.Value + Target.invln_StartOnSiteValue.Value + Target.invln_CompletionValue.Value);
+            var sum = fakedContext.CreateQuery<invln_DeliveryPhase>().Where(x => x.invln_Application.Id == ApplicationId).Sum(x => x.invln_sumofcalculatedfounds.Value);
+            Assert.AreEqual(333333, sum);
+            var df = fakedContext.CreateQuery<invln_DeliveryPhase>().Where(x => x.Id == df3).FirstOrDefault();
+            Assert.AreEqual(156028, df.invln_sumofcalculatedfounds.Value);
         }
     }
+
 }

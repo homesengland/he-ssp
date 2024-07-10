@@ -195,43 +195,43 @@ namespace HE.CRM.AHP.Plugins.Services.DeliveryPhase
             {
                 if (!resetMilestone)
                 {
-                    if (!(deliveryPhaseMapped.invln_AcquisitionPercentageValue == 0m && deliveryPhaseMapped.invln_StartOnSitePercentageValue == 0m
-                        && deliveryPhaseMapped.invln_CompletionPercentageValue == 100m))
+                    if (deliveryPhaseMapped.invln_AcquisitionPercentageValue != null)
                     {
-                        if (deliveryPhaseMapped.invln_AcquisitionPercentageValue != null)
-                        {
-                            acquisitionPercentageValue = (int)deliveryPhaseMapped.invln_AcquisitionPercentageValue == (int)(acquisitionPercentageValue * 100) ? acquisitionPercentageValue : deliveryPhaseMapped.invln_AcquisitionPercentageValue.Value / 100m;
-                        }
-                        TracingService.Trace($"invln_AcquisitionPercentageValue:{deliveryPhaseMapped.invln_AcquisitionPercentageValue} {acquisitionPercentageValue}");
-                        if (deliveryPhaseMapped.invln_StartOnSitePercentageValue != null)
-                        {
-                            startOnSitePercentageValue = (int)deliveryPhaseMapped.invln_StartOnSitePercentageValue == (int)(startOnSitePercentageValue * 100) ? startOnSitePercentageValue : deliveryPhaseMapped.invln_StartOnSitePercentageValue.Value / 100m;
-                        }
-                        TracingService.Trace($"invln_StartOnSitePercentageValue:{deliveryPhaseMapped.invln_StartOnSitePercentageValue} {startOnSitePercentageValue}");
-                        if (deliveryPhaseMapped.invln_CompletionPercentageValue != null)
-                        {
-                            completionPercentageValue = (int)deliveryPhaseMapped.invln_CompletionPercentageValue == (int)completionPercentageValue * 100 ? completionPercentageValue : deliveryPhaseMapped.invln_CompletionPercentageValue.Value / 100m;
-                        }
-                        TracingService.Trace($"invln_CompletionPercentageValue:{deliveryPhaseMapped.invln_CompletionPercentageValue} {completionPercentageValue}");
+                        acquisitionPercentageValue = (int)deliveryPhaseMapped.invln_AcquisitionPercentageValue == (int)(acquisitionPercentageValue * 100) ? acquisitionPercentageValue : deliveryPhaseMapped.invln_AcquisitionPercentageValue.Value / 100m;
                     }
+                    TracingService.Trace($"invln_AcquisitionPercentageValue:{deliveryPhaseMapped.invln_AcquisitionPercentageValue} {acquisitionPercentageValue}");
+                    if (deliveryPhaseMapped.invln_StartOnSitePercentageValue != null)
+                    {
+                        startOnSitePercentageValue = (int)deliveryPhaseMapped.invln_StartOnSitePercentageValue == (int)(startOnSitePercentageValue * 100) ? startOnSitePercentageValue : deliveryPhaseMapped.invln_StartOnSitePercentageValue.Value / 100m;
+                    }
+                    TracingService.Trace($"invln_StartOnSitePercentageValue:{deliveryPhaseMapped.invln_StartOnSitePercentageValue} {startOnSitePercentageValue}");
+                    if (deliveryPhaseMapped.invln_CompletionPercentageValue != null)
+                    {
+                        completionPercentageValue = (int)deliveryPhaseMapped.invln_CompletionPercentageValue == (int)(completionPercentageValue * 100) ? completionPercentageValue : deliveryPhaseMapped.invln_CompletionPercentageValue.Value / 100m;
+                    }
+                    TracingService.Trace($"invln_CompletionPercentageValue:{deliveryPhaseMapped.invln_CompletionPercentageValue} {completionPercentageValue}");
                 }
             }
             if (deliveryPhaseToUpdateOrCreate == null)
             {
                 TracingService.Trace($"CalculateFundings deliveryPhaseToUpdateOrCreate == null");
-                CalculateFundings(deliveryPhaseMapped, acquisitionPercentageValue, startOnSitePercentageValue, completionPercentageValue, fundingForPhase, application.invln_fundingrequired.Value);
+                CalculateFundings(deliveryPhaseMapped, acquisitionPercentageValue, startOnSitePercentageValue,
+                    completionPercentageValue, fundingForPhase, application.invln_fundingrequired.Value, numberOfHouseApplication);
                 return deliveryPhaseMapped;
             }
             else
             {
                 TracingService.Trace($"CalculateFundings");
-                CalculateFundings(deliveryPhaseToUpdateOrCreate, acquisitionPercentageValue, startOnSitePercentageValue, completionPercentageValue, fundingForPhase, application.invln_fundingrequired.Value);
+                CalculateFundings(deliveryPhaseToUpdateOrCreate, acquisitionPercentageValue, startOnSitePercentageValue
+                    , completionPercentageValue, fundingForPhase, application.invln_fundingrequired.Value, numberOfHouseApplication);
                 return deliveryPhaseToUpdateOrCreate;
             }
         }
 
-        private void CalculateFundings(invln_DeliveryPhase deliveryPhase, decimal acquisitionPercentageValue, decimal startOnSitePercentageValue, decimal completionPercentageValue, decimal fundingForPhase, decimal grandRequested)
+        private void CalculateFundings(invln_DeliveryPhase deliveryPhase, decimal acquisitionPercentageValue, decimal startOnSitePercentageValue, decimal completionPercentageValue, decimal fundingForPhase, decimal grandRequested, int numberOfHouseApplication)
         {
+            var df = _deliveryPhaseRepository.GetById(deliveryPhase.Id, invln_DeliveryPhase.Fields.invln_NoofHomes);
+
             TracingService.Trace($"acquisitionPercentageValue:{acquisitionPercentageValue}");
             TracingService.Trace($"startOnSitePercentageValue:{startOnSitePercentageValue}");
             TracingService.Trace($"completionPercentageValue:{completionPercentageValue}");
@@ -239,27 +239,36 @@ namespace HE.CRM.AHP.Plugins.Services.DeliveryPhase
             deliveryPhase.invln_AcquisitionPercentageValue = acquisitionPercentageValue * 100;
             deliveryPhase.invln_StartOnSitePercentageValue = startOnSitePercentageValue * 100;
             deliveryPhase.invln_CompletionPercentageValue = completionPercentageValue * 100;
-            deliveryPhase.invln_AcquisitionValue = new Money(fundingForPhase * acquisitionPercentageValue);
-            deliveryPhase.invln_StartOnSiteValue = new Money(fundingForPhase * startOnSitePercentageValue);
-            deliveryPhase.invln_CompletionValue = new Money(fundingForPhase * completionPercentageValue);
+            deliveryPhase.invln_AcquisitionValue = new Money(Math.Round(fundingForPhase * acquisitionPercentageValue, 0, MidpointRounding.AwayFromZero));
+            deliveryPhase.invln_StartOnSiteValue = new Money(Math.Round(fundingForPhase * startOnSitePercentageValue, MidpointRounding.AwayFromZero));
+            deliveryPhase.invln_CompletionValue = new Money(Math.Round(fundingForPhase * completionPercentageValue, MidpointRounding.AwayFromZero));
             CalculateFieldValue(deliveryPhase.invln_AcquisitionValue.Value, deliveryPhase.invln_StartOnSiteValue.Value, deliveryPhase.invln_CompletionValue.Value,
                                 acquisitionPercentageValue, startOnSitePercentageValue, completionPercentageValue,
                                 deliveryPhase, fundingForPhase);
-            ValidateGrantRequest(deliveryPhase.invln_Application.Id, grandRequested);
+            int noOfHomesChange = deliveryPhase.invln_NoofHomes.Value - df.invln_NoofHomes.Value;
+            ValidateGrantRequest(deliveryPhase.invln_Application.Id, grandRequested, noOfHomesChange, numberOfHouseApplication);
             TracingService.Trace("End Of Calculation");
         }
 
-        private void ValidateGrantRequest(Guid aplicationId, decimal grandRequested)
+        private void ValidateGrantRequest(Guid aplicationId, decimal grandRequested, int noOfHomesChange, int numberOfHouseApplication)
         {
             var deliveryPhases = _deliveryPhaseRepository.GetByAttribute(invln_DeliveryPhase.Fields.invln_Application, aplicationId,
-                new string[] { invln_DeliveryPhase.Fields.invln_sumofcalculatedfounds, invln_DeliveryPhase.Fields.invln_CompletionValue });
+                new string[] { invln_DeliveryPhase.Fields.invln_sumofcalculatedfounds, invln_DeliveryPhase.Fields.invln_CompletionValue,
+                invln_DeliveryPhase.Fields.invln_NoofHomes, invln_DeliveryPhase.Fields.invln_completionmilestoneclaimdate});
+            var sumOfHomes = deliveryPhases.Sum(x => x.invln_NoofHomes.Value) + noOfHomesChange;
+            if (sumOfHomes < numberOfHouseApplication)
+            {
+                return;
+            }
+
             var sumOfFounds = deliveryPhases.Sum(x => x.invln_sumofcalculatedfounds.Value);
             if (sumOfFounds != grandRequested)
             {
                 TracingService.Trace("Adjust last deliveryphase");
-                var lastDeliveryPhase = deliveryPhases.OrderByDescending(x => x.invln_completionmilestoneclaimdate).FirstOrDefault();
-                lastDeliveryPhase.invln_CompletionValue = new Money(lastDeliveryPhase.invln_CompletionValue.Value + (sumOfFounds - grandRequested));
-                lastDeliveryPhase.invln_sumofcalculatedfounds = new Money(lastDeliveryPhase.invln_sumofcalculatedfounds.Value + (sumOfFounds - grandRequested));
+                var lastDeliveryPhase = deliveryPhases.Where(x => x.invln_CompletionValue.Value > 0).OrderByDescending(x => x.invln_completionmilestoneclaimdate).FirstOrDefault();
+                lastDeliveryPhase.invln_CompletionValue = new Money(lastDeliveryPhase.invln_CompletionValue.Value + (grandRequested - sumOfFounds));
+                lastDeliveryPhase.invln_sumofcalculatedfounds = new Money(lastDeliveryPhase.invln_sumofcalculatedfounds.Value + (grandRequested - sumOfFounds));
+                _deliveryPhaseRepository.Update(lastDeliveryPhase);
             }
         }
 
@@ -267,10 +276,10 @@ namespace HE.CRM.AHP.Plugins.Services.DeliveryPhase
                                             decimal acquisitionPer, decimal startOnSitePer, decimal completionPer,
                                             invln_DeliveryPhase deliveryPhase, decimal fundingForPhase)
         {
-            if ((int)(acquisitionPer + startOnSitePer + completionPer) == 100)
+            if ((acquisitionPer + startOnSitePer + completionPer) == 1)
             {
                 var leftOver = fundingForPhase - (acquisition + startOnSite + completion);
-                if (leftOver > 0 && (leftOver < fundingForPhase * 0.01m || leftOver < 1))
+                if (leftOver != 0 && (leftOver < fundingForPhase * 0.01m || leftOver < 1))
                 {
                     deliveryPhase.invln_CompletionValue.Value += leftOver;
                 }
