@@ -42,6 +42,15 @@
   justify-content: center;
 }
 
+.grant-details-value {
+  font-weight: bold;
+  float: right;
+}
+
+.grant-details-section {
+  margin-top: 9em;
+}
+
 .link-disabled {
   cursor: not-allowed;
   opacity: 0.5;
