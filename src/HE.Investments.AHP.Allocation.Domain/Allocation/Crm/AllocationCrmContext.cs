@@ -71,6 +71,7 @@ public class AllocationCrmContext : IAllocationCrmContext
             },
             LocalAuthority = new LocalAuthorityDto() { code = "000003", name = "Reading" },
             Tenure = applicationDto.tenure!.Value,
+            ProgrammeId = "d5fe3baa-eeae-ee11-a569-0022480041cf",
             ListOfPhaseClaims =
             [
                 new()

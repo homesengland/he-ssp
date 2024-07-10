@@ -1,4 +1,5 @@
 using HE.Investments.AHP.Allocation.Domain.Allocation.Crm;
+using HE.Investments.AHP.Allocation.Domain.Allocation.Mappers;
 using HE.Investments.AHP.Allocation.Domain.Allocation.Repositories;
 using HE.Investments.AHP.Allocation.Domain.Claims.Mappers;
 using HE.Investments.AHP.Allocation.Domain.Claims.Repositories;
@@ -16,5 +17,6 @@ public static class DomainModule
         services.AddScoped<IAllocationRepository, AllocationRepository>();
         services.AddScoped<IPhaseRepository, PhaseRepository>();
         services.AddScoped<IPhaseCrmMapper, PhaseCrmMapper>();
+        services.AddScoped<IAllocationBasicInfoMapper, AllocationBasicInfoMapper>();
     }
 }

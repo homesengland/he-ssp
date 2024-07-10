@@ -2,6 +2,7 @@ using HE.Investments.Account.Shared.User;
 using HE.Investments.AHP.Allocation.Contract;
 using HE.Investments.AHP.Allocation.Contract.Claims;
 using HE.Investments.AHP.Allocation.Domain.Allocation.Crm;
+using HE.Investments.AHP.Allocation.Domain.Allocation.Mappers;
 using HE.Investments.AHP.Allocation.Domain.Claims.Entities;
 using HE.Investments.AHP.Allocation.Domain.Claims.Mappers;
 using HE.Investments.Common.Contract.Exceptions;
@@ -14,12 +15,16 @@ public class PhaseRepository : IPhaseRepository
 
     private readonly IPhaseCrmMapper _phaseCrmMapper;
 
+    private readonly IAllocationBasicInfoMapper _allocationBasicInfoMapper;
+
     public PhaseRepository(
         IAllocationCrmContext allocationCrmContext,
-        IPhaseCrmMapper phaseCrmMapper)
+        IPhaseCrmMapper phaseCrmMapper,
+        IAllocationBasicInfoMapper allocationBasicInfoMapper)
     {
         _allocationCrmContext = allocationCrmContext;
         _phaseCrmMapper = phaseCrmMapper;
+        _allocationBasicInfoMapper = allocationBasicInfoMapper;
     }
 
     public async Task<PhaseEntity> GetById(PhaseId phaseId, AllocationId allocationId, UserAccount userAccount, CancellationToken cancellationToken)
@@ -31,7 +36,8 @@ public class PhaseRepository : IPhaseRepository
 
         if (phase != null)
         {
-            return _phaseCrmMapper.MapToDomain(phase);
+            var allocationBasicInfo = await _allocationBasicInfoMapper.Map(allocation, cancellationToken);
+            return _phaseCrmMapper.MapToDomain(phase, allocationBasicInfo);
         }
 
         throw new NotFoundException(nameof(PhaseEntity), phaseId);

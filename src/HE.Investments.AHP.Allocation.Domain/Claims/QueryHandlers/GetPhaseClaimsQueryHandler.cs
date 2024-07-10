@@ -1,4 +1,3 @@
-using HE.Investment.AHP.Contract.Application;
 using HE.Investments.Account.Shared;
 using HE.Investments.AHP.Allocation.Contract;
 using HE.Investments.AHP.Allocation.Contract.Claims;
@@ -41,11 +40,11 @@ internal sealed class GetPhaseClaimsQueryHandler : IRequestHandler<GetPhaseClaim
             phase.Name.Value,
             new AllocationBasicInfo(
                 request.AllocationId,
-                "Allocation one", // TODO: AB#85082 Add AllocationBasicInfo to PhaseEntity and map
-                "G0001231",
-                "Oxford",
-                "AHP 21-26 CME",
-                Tenure.SharedOwnership),
+                phase.Allocation.Name,
+                phase.Allocation.ReferenceNumber,
+                phase.Allocation.LocalAuthority,
+                phase.Allocation.Programme.ShortName,
+                phase.Allocation.Tenure),
             milestones);
     }
 
