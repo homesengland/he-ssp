@@ -1,5 +1,5 @@
-using HE.Investments.AHP.Allocation.Contract;
 using HE.Investments.AHP.Allocation.Contract.Claims;
+using HE.Investments.AHP.Allocation.Domain.Allocation.ValueObjects;
 using HE.Investments.AHP.Allocation.Domain.Claims.ValueObjects;
 using HE.Investments.Common.Domain;
 using MilestoneClaim = HE.Investments.AHP.Allocation.Domain.Claims.ValueObjects.MilestoneClaim;
@@ -12,7 +12,7 @@ public class PhaseEntity : DomainEntity
 
     public PhaseEntity(
         PhaseId id,
-        AllocationId allocationId,
+        AllocationBasicInfo allocation,
         PhaseName name,
         NumberOfHomes numberOfHomes,
         BuildActivity buildActivityType,
@@ -21,7 +21,7 @@ public class PhaseEntity : DomainEntity
         MilestoneClaim? startOnSiteMilestone = null)
     {
         Id = id;
-        AllocationId = allocationId;
+        Allocation = allocation;
         Name = name;
         NumberOfHomes = numberOfHomes;
         BuildActivityType = buildActivityType;
@@ -32,7 +32,7 @@ public class PhaseEntity : DomainEntity
 
     public PhaseId Id { get; }
 
-    public AllocationId AllocationId { get; }
+    public AllocationBasicInfo Allocation { get; }
 
     public PhaseName Name { get; }
 
@@ -50,7 +50,7 @@ public class PhaseEntity : DomainEntity
 
     public static PhaseEntity New(
         PhaseId id,
-        AllocationId allocationId,
+        AllocationBasicInfo allocation,
         PhaseName name,
         NumberOfHomes numberOfHomes,
         BuildActivity buildActivityType,
@@ -60,7 +60,7 @@ public class PhaseEntity : DomainEntity
     {
         return new PhaseEntity(
             id,
-            allocationId,
+            allocation,
             name,
             numberOfHomes,
             buildActivityType,

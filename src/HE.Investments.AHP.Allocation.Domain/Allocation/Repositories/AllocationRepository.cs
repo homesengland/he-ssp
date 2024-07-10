@@ -11,6 +11,7 @@ using HE.Investments.Programme.Contract;
 using HE.Investments.Programme.Contract.Queries;
 using MediatR;
 using AhpProgramme = HE.Investments.Programme.Contract.Programme;
+using AllocationBasicInfo = HE.Investments.AHP.Allocation.Domain.Allocation.ValueObjects.AllocationBasicInfo;
 
 namespace HE.Investments.AHP.Allocation.Domain.Allocation.Repositories;
 
@@ -41,14 +42,24 @@ public class AllocationRepository : IAllocationRepository
 
     private AllocationEntity CreateEntity(AhpAllocationDto allocationDto, AhpProgramme programme)
     {
+        var allocationId = AllocationId.From(allocationDto.Id);
+        var tenure = AllocationTenureMapper.ToDomain(allocationDto.Tenure);
+        var allocationBasicInfo = new AllocationBasicInfo(
+            allocationId,
+            allocationDto.Name,
+            allocationDto.ReferenceNumber,
+            allocationDto.LocalAuthority.name,
+            programme,
+            tenure.Value);
+
         return new AllocationEntity(
-            AllocationId.From(allocationDto.Id),
+            allocationId,
             new AllocationName(allocationDto.Name),
             new AllocationReferenceNumber(allocationDto.ReferenceNumber),
             new LocalAuthority(allocationDto.LocalAuthority.code, allocationDto.LocalAuthority.name),
             programme,
-            AllocationTenureMapper.ToDomain(allocationDto.Tenure),
+            tenure,
             new GrantDetails(allocationDto.GrantDetails.TotalGrantAllocated, allocationDto.GrantDetails.AmountPaid, allocationDto.GrantDetails.AmountRemaining),
-            allocationDto.ListOfPhaseClaims.Select(x => _phaseCrmMapper.MapToDomain(x)).ToList());
+            allocationDto.ListOfPhaseClaims.Select(x => _phaseCrmMapper.MapToDomain(x, allocationBasicInfo)).ToList());
     }
 }
