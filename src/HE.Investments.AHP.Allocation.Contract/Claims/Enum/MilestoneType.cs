@@ -6,12 +6,12 @@ public enum MilestoneType
 {
     Undefined,
 
-    [Description("Acquisition milestone")]
+    [Description("Acquisition")]
     Acquisition,
 
-    [Description("Start on site milestone")]
+    [Description("Start on site")]
     StartOnSite,
 
-    [Description("Practical completion milestone")]
+    [Description("Practical completion")]
     Completion,
 }

@@ -1,0 +1,25 @@
+@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Headings
+@using HE.Investments.Common.WWW.Helpers
+@model HE.Investments.AHP.Allocation.Contract.Claims.GrantDetails
+
+<div class="govuk-body-s grant-details-section">
+    <hr class="separator"/>
+    <gds-h3 class="govuk-heading-s">
+        Grant details
+    </gds-h3>
+    <div>
+        <span>Total grant allocated:</span>
+        <span class="grant-details-value">@(CurrencyHelper.DisplayPounds(Model.TotalGrantAllocated))</span>
+    </div>
+    <div>
+        <span>Amount paid:</span>
+        <span class="grant-details-value">@(CurrencyHelper.DisplayPounds(Model.AmountPaid))</span>
+    </div>
+    <div>
+        <span>Amount remaining: </span>
+        <span class="grant-details-value">@(CurrencyHelper.DisplayPounds(Model.AmountRemaining))</span>
+    </div>
+</div>
+
+
+

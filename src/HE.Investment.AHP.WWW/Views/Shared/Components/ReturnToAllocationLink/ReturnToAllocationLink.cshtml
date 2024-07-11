@@ -1,0 +1,10 @@
+@using HE.Investments.Common.Extensions
+@using HE.Investments.Common.WWW.Extensions
+@model (HE.Investments.AHP.Allocation.Contract.AllocationId AllocationId, string LinkText);
+
+<div>
+    <gds-link class="govuk-link--no-visited-state"
+              href="@Url.OrganisationAction("Overview", "Allocation",  new { allocationId = Model.AllocationId })">
+        @(Model.LinkText.IsProvided() ? Model : "Return to allocation")
+    </gds-link>
+</div>

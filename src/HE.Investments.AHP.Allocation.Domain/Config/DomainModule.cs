@@ -18,5 +18,6 @@ public static class DomainModule
         services.AddScoped<IPhaseRepository, PhaseRepository>();
         services.AddScoped<IPhaseCrmMapper, PhaseCrmMapper>();
         services.AddScoped<IAllocationBasicInfoMapper, AllocationBasicInfoMapper>();
+        services.AddScoped<IClaimsContractMapper, ClaimsContractMapper>();
     }
 }

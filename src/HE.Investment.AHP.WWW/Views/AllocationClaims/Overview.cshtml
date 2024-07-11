@@ -33,5 +33,5 @@
             can-claim-milestone="@Model.CanClaimMilestone"
             claim-milestone-url="@Url.OrganisationAction("TODO", "AllocationClaims", new { allocationId = Model.Phase.Allocation.Id.Value, claimType = milestoneClaim.Type })"/>
     }
-
+    <vc:return-to-allocation-link allocation-id="@Model.Phase.Allocation.Id"/>
 </gds-div-grid-column-two-thirds>

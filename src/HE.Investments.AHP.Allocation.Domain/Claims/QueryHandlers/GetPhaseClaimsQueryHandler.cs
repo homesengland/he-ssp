@@ -1,11 +1,8 @@
 using HE.Investments.Account.Shared;
-using HE.Investments.AHP.Allocation.Contract;
 using HE.Investments.AHP.Allocation.Contract.Claims;
-using HE.Investments.AHP.Allocation.Contract.Claims.Enum;
 using HE.Investments.AHP.Allocation.Contract.Claims.Queries;
+using HE.Investments.AHP.Allocation.Domain.Claims.Mappers;
 using HE.Investments.AHP.Allocation.Domain.Claims.Repositories;
-using HE.Investments.Common.Contract;
-using HE.Investments.Common.Extensions;
 using MediatR;
 
 namespace HE.Investments.AHP.Allocation.Domain.Claims.QueryHandlers;
@@ -16,53 +13,20 @@ internal sealed class GetPhaseClaimsQueryHandler : IRequestHandler<GetPhaseClaim
 
     private readonly IAccountUserContext _accountUserContext;
 
-    public GetPhaseClaimsQueryHandler(IPhaseRepository phaseRepository, IAccountUserContext accountUserContext)
+    private readonly IClaimsContractMapper _contractMapper;
+
+    public GetPhaseClaimsQueryHandler(IPhaseRepository phaseRepository, IAccountUserContext accountUserContext, IClaimsContractMapper contractMapper)
     {
         _phaseRepository = phaseRepository;
         _accountUserContext = accountUserContext;
+        _contractMapper = contractMapper;
     }
 
     public async Task<Phase> Handle(GetPhaseClaimsQuery request, CancellationToken cancellationToken)
     {
         var userAccount = await _accountUserContext.GetSelectedAccount();
         var phase = await _phaseRepository.GetById(request.PhaseId, request.AllocationId, userAccount, cancellationToken);
-        var milestones = new[]
-            {
-                MapMilestoneClaim(MilestoneType.Acquisition, phase.AcquisitionMilestone),
-                MapMilestoneClaim(MilestoneType.StartOnSite, phase.StartOnSiteMilestone),
-                MapMilestoneClaim(MilestoneType.Completion, phase.CompletionMilestone),
-            }
-            .Where(x => x != null)
-            .Select(x => x!)
-            .ToList();
 
-        return new Phase(
-            phase.Name.Value,
-            new AllocationBasicInfo(
-                request.AllocationId,
-                phase.Allocation.Name,
-                phase.Allocation.ReferenceNumber,
-                phase.Allocation.LocalAuthority,
-                phase.Allocation.Programme.ShortName,
-                phase.Allocation.Tenure),
-            milestones);
-    }
-
-    private static MilestoneClaim? MapMilestoneClaim(MilestoneType milestoneType, Domain.Claims.ValueObjects.MilestoneClaim? milestoneClaim)
-    {
-        if (milestoneClaim.IsNotProvided())
-        {
-            return null;
-        }
-
-        return new MilestoneClaim(
-            milestoneType,
-            MilestoneStatus.Due, // TODO: AB#102109 Calculate display status
-            milestoneClaim!.GrantApportioned.Amount,
-            milestoneClaim.GrantApportioned.Percentage,
-            DateDetails.FromDateTime(milestoneClaim.ClaimDate.ForecastClaimDate)!,
-            DateDetails.FromDateTime(milestoneClaim.ClaimDate.ActualClaimDate),
-            null, // TODO: AB#85082 Map Submission date when available
-            false); // TODO: AB#102144 Calculate whether can be claimed
+        return _contractMapper.Map(phase);
     }
 }
