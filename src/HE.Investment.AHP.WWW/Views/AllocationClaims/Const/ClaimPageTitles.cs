@@ -1,4 +1,4 @@
-namespace HE.Investment.AHP.WWW.Views.Claim.Const;
+namespace HE.Investment.AHP.WWW.Views.AllocationClaims.Const;
 
 public static class ClaimPageTitles
 {
