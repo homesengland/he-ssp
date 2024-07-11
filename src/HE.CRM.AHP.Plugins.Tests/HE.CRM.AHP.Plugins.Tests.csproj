@@ -152,6 +152,7 @@
     <Compile Include="Handlers\AhpStatusChange\SendNotificationOnCreateHandlerTest.cs" />
     <Compile Include="Handlers\ContactWebRole\SendNotificationOnAdminRoleGrantedHandlerTests.cs" />
     <Compile Include="Handlers\ContactWebRole\SendNotificationOnRoleModificationHandlerTests.cs" />
+    <Compile Include="Handlers\DeliveryPhase\ChangeNumberOfHomesHandlerTests.cs" />
     <Compile Include="Handlers\HomeType\CreateDocumentLocationOnCreateHandlerTests.cs" />
     <Compile Include="Handlers\HomeType\SetHappiPrinciplesValueHandlerTest.cs" />
     <Compile Include="Handlers\HomeType\SetWhichNdssStandardsHaveBeenMetValueHandlerTests.cs" />
