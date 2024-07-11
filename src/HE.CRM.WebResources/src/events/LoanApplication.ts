@@ -13,10 +13,9 @@ export class LoanApplication {
   public static onLoad(eCtx) {
     const eventLogic = new LoanApplication(eCtx)
     eventLogic.registerEvents();
-    eventLogic.loanApplicationService.setFieldsVisibilityBasedOnSecurities();
     eventLogic.loanApplicationService.populateFields();
     eventLogic.loanApplicationService.setFieldsVisibilityBasedOnAssessedAsSppi();
-    eventLogic.loanApplicationService.setFieldRequiredBasedOnStatuscode();
+    eventLogic.loanApplicationService.takeActionsOnTabSecurities();
   }
 
   public static onChangeLoanApplicationStatusButtonClick(eCtx) {
@@ -26,7 +25,7 @@ export class LoanApplication {
 
   public static onSecuritiesChange(eCtx) {
     const eventLogic = new LoanApplication(eCtx)
-    eventLogic.loanApplicationService.setFieldsVisibilityBasedOnSecurities()
+    eventLogic.loanApplicationService.takeActionsOnTabSecurities()
   }
 
   public static onAdditionalReturnsChange(eCtx) {

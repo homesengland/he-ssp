@@ -54,6 +54,7 @@ export enum Securities {
   completionGuarantee = 858110007,
   interestShortfall = 858110008,
   other = 858110009,
+  collateralWarranty = 858110010,
 }
 
 export enum StatusReviewApproval {
