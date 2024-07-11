@@ -10,8 +10,15 @@ using HE.Investments.Common.Extensions;
 
 namespace HE.Investments.AHP.Allocation.Domain.Claims.Mappers;
 
-public class ClaimsContractMapper : IClaimsContractMapper
+public sealed class ClaimsContractMapper : IClaimsContractMapper
 {
+    private readonly IMilestoneClaimStatusMapper _milestoneClaimStatusMapper;
+
+    public ClaimsContractMapper(IMilestoneClaimStatusMapper milestoneClaimStatusMapper)
+    {
+        _milestoneClaimStatusMapper = milestoneClaimStatusMapper;
+    }
+
     public AllocationDetails Map(AllocationEntity allocation, PaginationRequest paginationRequest)
     {
         var allocationBasicInfo = new AllocationBasicInfo(
@@ -65,8 +72,8 @@ public class ClaimsContractMapper : IClaimsContractMapper
 
         return new MilestoneClaim(
             milestoneType,
-            MilestoneStatus.Due, // TODO: AB#102109 Calculate display status
-            milestoneClaim!.GrantApportioned.Amount,
+            _milestoneClaimStatusMapper.MapStatus(milestoneClaim!.Status, milestoneClaim.ClaimDate.ForecastClaimDate),
+            milestoneClaim.GrantApportioned.Amount,
             milestoneClaim.GrantApportioned.Percentage,
             DateDetails.FromDateTime(milestoneClaim.ClaimDate.ForecastClaimDate)!,
             DateDetails.FromDateTime(milestoneClaim.ClaimDate.ActualClaimDate),
@@ -74,7 +81,7 @@ public class ClaimsContractMapper : IClaimsContractMapper
             false); // TODO: AB#102144 Calculate whether can be claimed
     }
 
-    private AllocationBasicInfo Map(Allocation.ValueObjects.AllocationBasicInfo allocationBasicInfo)
+    private static AllocationBasicInfo Map(Allocation.ValueObjects.AllocationBasicInfo allocationBasicInfo)
     {
         return new(
             allocationBasicInfo.Id,
@@ -85,7 +92,7 @@ public class ClaimsContractMapper : IClaimsContractMapper
             allocationBasicInfo.Tenure);
     }
 
-    private GrantDetails Map(Allocation.ValueObjects.GrantDetails grantDetails)
+    private static GrantDetails Map(Allocation.ValueObjects.GrantDetails grantDetails)
     {
         return new GrantDetails(
             grantDetails.TotalGrantAllocated,

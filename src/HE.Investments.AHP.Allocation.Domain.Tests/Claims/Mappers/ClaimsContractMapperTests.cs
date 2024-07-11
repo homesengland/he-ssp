@@ -4,19 +4,13 @@ using HE.Investments.AHP.Allocation.Contract.Claims.Enum;
 using HE.Investments.AHP.Allocation.Domain.Claims.Mappers;
 using HE.Investments.AHP.Allocation.Domain.Tests.TestObjectBuilders;
 using HE.Investments.Common.Contract.Pagination;
+using HE.Investments.TestsUtils.TestFramework;
 using Xunit;
 
 namespace HE.Investments.AHP.Allocation.Domain.Tests.Claims.Mappers;
 
-public class ClaimsContractMapperTests
+public class ClaimsContractMapperTests : TestBase<ClaimsContractMapper>
 {
-    private readonly ClaimsContractMapper _mapper;
-
-    public ClaimsContractMapperTests()
-    {
-        _mapper = new ClaimsContractMapper();
-    }
-
     [Fact]
     public void ShouldReturnCorrectAllocationDetails_WhenDataIsValid()
     {
@@ -26,7 +20,7 @@ public class ClaimsContractMapperTests
             .Build();
 
         // when
-        var result = _mapper.Map(allocation, new PaginationRequest(1));
+        var result = TestCandidate.Map(allocation, new PaginationRequest(1));
 
         // then
         result.AllocationBasicInfo.Id.Should().Be(allocation.Id);
@@ -45,7 +39,7 @@ public class ClaimsContractMapperTests
         var phase = PhaseEntityTestBuilder.New().Build();
 
         // when
-        var result = _mapper.Map(phase);
+        var result = TestCandidate.Map(phase);
 
         // then
         result.MilestoneClaims.Count.Should().Be(1);
@@ -63,7 +57,7 @@ public class ClaimsContractMapperTests
             .Build();
 
         // when
-        var result = _mapper.Map(MilestoneType.Completion, milestoneClaim);
+        var result = TestCandidate.Map(MilestoneType.Completion, milestoneClaim);
 
         // then
         result!.ForecastClaimDate.Should().NotBeNull();
@@ -80,7 +74,7 @@ public class ClaimsContractMapperTests
     public void ShouldReturnNull_WhenMilestoneClaimIsNull()
     {
         // given && when
-        var result = _mapper.Map(MilestoneType.Completion, null);
+        var result = TestCandidate.Map(MilestoneType.Completion, null);
 
         // then
         result.Should().BeNull();
