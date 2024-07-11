@@ -274,6 +274,26 @@ export class IspService {
     this.common.setControlRequiredV2('invln_datesentforapproval', sendForApproval)
   }
 
+  public async blockFieldsForLoansReviewer() {
+    let securityRoles = this.common.getUserSecurityRoles();
+    let app = <any>this.common.getAttributeValue("invln_loanapplication");
+    let application = await Xrm.WebApi.retrieveRecord("invln_loanapplication", app[0].id);
+
+    console.log(securityRoles);
+    let reviewerRoleName = "[Loans] Reviewer";
+    let transactionMenagerRoleName = "[Loans] Transaction manager";
+
+    let isReviewerOrTrasactionMenager = false;
+    securityRoles?.forEach(function (value) {
+      if (value.name == reviewerRoleName) isReviewerOrTrasactionMenager = true;
+      if (value.name == transactionMenagerRoleName) isReviewerOrTrasactionMenager = true
+      console.log(value.name);
+    });
+    if (isReviewerOrTrasactionMenager && application.invln_externalstatus != 858110010) { //send for aproval
+      this.common.disableAllFields();
+    };
+  };
+
   private hideFirstLegalChargeFields(isDisabled: boolean) {
     this.common.hideControl('invln_firstlegalchargedescription', isDisabled);
     this.common.hideControl('invln_firstlegalchargemarginedsecurityvalue', isDisabled);
