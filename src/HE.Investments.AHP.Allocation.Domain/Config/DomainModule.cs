@@ -25,6 +25,6 @@ public static class DomainModule
         services.AddScoped<IPhaseCrmMapper, PhaseCrmMapper>();
         services.AddScoped<IAllocationBasicInfoMapper, AllocationBasicInfoMapper>();
         services.AddScoped<IClaimsContractMapper, ClaimsContractMapper>();
-        services.AddScoped<IMilestoneClaimStatusMapper, MilestoneClaimStatusMapper>();
+        services.AddSingleton<IMilestoneClaimStatusMapper, MilestoneClaimStatusMapper>();
     }
 }

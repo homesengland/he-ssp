@@ -1,24 +1,18 @@
-using HE.Investments.AHP.Allocation.Contract.Claims.Enum;
+using HE.Investments.AHP.Allocation.Domain.Claims.Enums;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Utils;
+using MilestoneStatus = HE.Investments.AHP.Allocation.Contract.Claims.Enum.MilestoneStatus;
 
 namespace HE.Investments.AHP.Allocation.Domain.Claims.Mappers;
 
 public sealed class MilestoneClaimStatusMapper : IMilestoneClaimStatusMapper
 {
-    private readonly IDateTimeProvider _dateTimeProvider;
-
-    public MilestoneClaimStatusMapper(IDateTimeProvider dateTimeProvider)
-    {
-        _dateTimeProvider = dateTimeProvider;
-    }
-
-    public MilestoneStatus MapStatus(Enums.MilestoneStatus status, DateTime forecastClaimDate)
+    public MilestoneStatus MapStatus(Enums.MilestoneStatus status, MilestoneDueStatus dueStatus)
     {
         return status switch
         {
-            Enums.MilestoneStatus.Undefined => CalculateDueStatus(forecastClaimDate),
-            Enums.MilestoneStatus.Draft => CalculateDueStatus(forecastClaimDate),
+            Enums.MilestoneStatus.Undefined => MapDueStatus(dueStatus),
+            Enums.MilestoneStatus.Draft => MapDueStatus(dueStatus),
             Enums.MilestoneStatus.Submitted => MilestoneStatus.Submitted,
             Enums.MilestoneStatus.UnderReview => MilestoneStatus.UnderReview,
             Enums.MilestoneStatus.Approved => MilestoneStatus.Approved,
@@ -28,24 +22,14 @@ public sealed class MilestoneClaimStatusMapper : IMilestoneClaimStatusMapper
         };
     }
 
-    private MilestoneStatus CalculateDueStatus(DateTime forecastClaimDate)
+    private static MilestoneStatus MapDueStatus(MilestoneDueStatus dueStatus)
     {
-        var today = _dateTimeProvider.Now.Date;
-        if (forecastClaimDate.Date.IsAfter(today.AddDays(14)))
+        return dueStatus switch
         {
-            return MilestoneStatus.Undefined;
-        }
-
-        if (forecastClaimDate.Date.IsAfter(today.AddDays(6)))
-        {
-            return MilestoneStatus.DueSoon;
-        }
-
-        if (forecastClaimDate.Date.IsAfter(today.AddDays(-7)))
-        {
-            return MilestoneStatus.Due;
-        }
-
-        return MilestoneStatus.Overdue;
+            MilestoneDueStatus.DueSoon => MilestoneStatus.DueSoon,
+            MilestoneDueStatus.Due => MilestoneStatus.Due,
+            MilestoneDueStatus.Overdue => MilestoneStatus.Overdue,
+            _ => MilestoneStatus.Undefined,
+        };
     }
 }

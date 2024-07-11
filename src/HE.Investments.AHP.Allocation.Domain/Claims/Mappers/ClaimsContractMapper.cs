@@ -7,6 +7,7 @@ using HE.Investments.AHP.Allocation.Domain.Claims.Entities;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Pagination;
 using HE.Investments.Common.Extensions;
+using HE.Investments.Common.Utils;
 
 namespace HE.Investments.AHP.Allocation.Domain.Claims.Mappers;
 
@@ -14,9 +15,12 @@ public sealed class ClaimsContractMapper : IClaimsContractMapper
 {
     private readonly IMilestoneClaimStatusMapper _milestoneClaimStatusMapper;
 
-    public ClaimsContractMapper(IMilestoneClaimStatusMapper milestoneClaimStatusMapper)
+    private readonly IDateTimeProvider _dateTimeProvider;
+
+    public ClaimsContractMapper(IMilestoneClaimStatusMapper milestoneClaimStatusMapper, IDateTimeProvider dateTimeProvider)
     {
         _milestoneClaimStatusMapper = milestoneClaimStatusMapper;
+        _dateTimeProvider = dateTimeProvider;
     }
 
     public AllocationDetails Map(AllocationEntity allocation, PaginationRequest paginationRequest)
@@ -72,7 +76,7 @@ public sealed class ClaimsContractMapper : IClaimsContractMapper
 
         return new MilestoneClaim(
             milestoneType,
-            _milestoneClaimStatusMapper.MapStatus(milestoneClaim!.Status, milestoneClaim.ClaimDate.ForecastClaimDate),
+            _milestoneClaimStatusMapper.MapStatus(milestoneClaim!.Status, milestoneClaim.CalculateDueStatus(_dateTimeProvider)),
             milestoneClaim.GrantApportioned.Amount,
             milestoneClaim.GrantApportioned.Percentage,
             DateDetails.FromDateTime(milestoneClaim.ClaimDate.ForecastClaimDate)!,
