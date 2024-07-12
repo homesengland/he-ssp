@@ -12,7 +12,7 @@ public interface IAhpExternalLinks
 
     public string GrantAgreementForAhp21To26 { get; }
 
-    public string MailToHelpToBuildTechSupport { get; }
+    public string MailToHomesEnglandTeam { get; }
 
     public string CapitalFundingGuide { get; }
 
