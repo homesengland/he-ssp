@@ -13,9 +13,9 @@ internal sealed class GetPhaseClaimsQueryHandler : IRequestHandler<GetPhaseClaim
 
     private readonly IAccountUserContext _accountUserContext;
 
-    private readonly IClaimsContractMapper _contractMapper;
+    private readonly IPhaseContractMapper _contractMapper;
 
-    public GetPhaseClaimsQueryHandler(IPhaseRepository phaseRepository, IAccountUserContext accountUserContext, IClaimsContractMapper contractMapper)
+    public GetPhaseClaimsQueryHandler(IPhaseRepository phaseRepository, IAccountUserContext accountUserContext, IPhaseContractMapper contractMapper)
     {
         _phaseRepository = phaseRepository;
         _accountUserContext = accountUserContext;

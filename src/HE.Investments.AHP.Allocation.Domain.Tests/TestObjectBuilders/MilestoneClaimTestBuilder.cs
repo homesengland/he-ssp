@@ -1,12 +1,14 @@
 using HE.Investments.AHP.Allocation.Contract.Claims.Enum;
 using HE.Investments.AHP.Allocation.Domain.Claims.ValueObjects;
+using HE.Investments.TestsUtils;
 using HE.Investments.TestsUtils.TestFramework;
+using MilestoneStatus = HE.Investments.AHP.Allocation.Domain.Claims.Enums.MilestoneStatus;
 
 namespace HE.Investments.AHP.Allocation.Domain.Tests.TestObjectBuilders;
 
 public class MilestoneClaimTestBuilder : TestObjectBuilder<MilestoneClaimTestBuilder, MilestoneClaim>
 {
-    public MilestoneClaimTestBuilder(MilestoneClaim item)
+    private MilestoneClaimTestBuilder(MilestoneClaim item)
         : base(item)
     {
     }
@@ -22,4 +24,22 @@ public class MilestoneClaimTestBuilder : TestObjectBuilder<MilestoneClaimTestBui
             new DateTime(2022, 12, 12, 0, 0, 0, DateTimeKind.Utc)),
         null,
         null));
+
+    public MilestoneClaimTestBuilder NotClaimed()
+    {
+        return WithStatus(MilestoneStatus.Draft);
+    }
+
+    public MilestoneClaimTestBuilder Claimed()
+    {
+        return WithStatus(MilestoneStatus.Approved);
+    }
+
+    public MilestoneClaimTestBuilder WithStatus(MilestoneStatus value) => SetProperty(x => x.Status, value);
+
+    public MilestoneClaimTestBuilder WithForecastClaimDate(DateTime value)
+    {
+        PrivatePropertySetter.SetPropertyWithNoSetter(Item.ClaimDate, nameof(ClaimDate.ForecastClaimDate), value);
+        return this;
+    }
 }

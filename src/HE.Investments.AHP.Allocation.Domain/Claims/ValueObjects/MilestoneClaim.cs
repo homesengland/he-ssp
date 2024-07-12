@@ -2,7 +2,6 @@ using HE.Investments.AHP.Allocation.Contract.Claims.Enum;
 using HE.Investments.AHP.Allocation.Domain.Claims.Enums;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Extensions;
-using HE.Investments.Common.Utils;
 using MilestoneStatus = HE.Investments.AHP.Allocation.Domain.Claims.Enums.MilestoneStatus;
 
 namespace HE.Investments.AHP.Allocation.Domain.Claims.ValueObjects;
@@ -37,9 +36,12 @@ public class MilestoneClaim : ValueObject
 
     public bool? IsConfirmed { get; }
 
-    public MilestoneDueStatus CalculateDueStatus(IDateTimeProvider dateTimeProvider)
+    public bool IsClaimed => Status >= MilestoneStatus.Submitted;
+
+    public bool IsNotClaimed => !IsClaimed;
+
+    public MilestoneDueStatus CalculateDueStatus(DateTime today)
     {
-        var today = dateTimeProvider.Now.Date;
         if (ClaimDate.ForecastClaimDate.Date.IsAfter(today.AddDays(14)))
         {
             return MilestoneDueStatus.Undefined;
