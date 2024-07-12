@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace HE.Common.IntegrationModel.PortalIntegrationModel
 {
-    public class AllocationClaimsDto
+    public class AhpAllocationDto
     {
         public string Id { get; set; }
         public string Name { get; set; }
@@ -10,7 +10,6 @@ namespace HE.Common.IntegrationModel.PortalIntegrationModel
         public LocalAuthorityDto LocalAuthority { get; set; }
         public string ProgrammeId { get; set; }
         public int Tenure { get; set; }
-        public GrantDetailsDto GrantDetails { get; set; }
-        public List<PhaseClaimsDto> ListOfPhaseClaims { get; set; }
+        public int Homes { get; set; }
     }
 }
