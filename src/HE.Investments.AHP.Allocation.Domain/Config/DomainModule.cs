@@ -16,8 +16,15 @@ public static class DomainModule
         services.Decorate<IAllocationCrmContext, RequestCacheAllocationCrmContextDecorator>();
         services.AddScoped<IAllocationRepository, AllocationRepository>();
         services.AddScoped<IPhaseRepository, PhaseRepository>();
+
+        services.AddMappers();
+    }
+
+    private static void AddMappers(this IServiceCollection services)
+    {
         services.AddScoped<IPhaseCrmMapper, PhaseCrmMapper>();
         services.AddScoped<IAllocationBasicInfoMapper, AllocationBasicInfoMapper>();
         services.AddScoped<IClaimsContractMapper, ClaimsContractMapper>();
+        services.AddSingleton<IMilestoneClaimStatusMapper, MilestoneClaimStatusMapper>();
     }
 }

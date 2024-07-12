@@ -87,7 +87,7 @@ public class AllocationCrmContext : IAllocationCrmContext
                         Status = 1,
                         AmountOfGrantApportioned = 10000m,
                         PercentageOfGrantApportioned = 40,
-                        ForecastClaimDate = DateTime.Today,
+                        ForecastClaimDate = DateTime.Today.AddDays(-7),
                     },
                     StartOnSiteMilestone = new MilestoneClaimDto()
                     {
@@ -95,7 +95,7 @@ public class AllocationCrmContext : IAllocationCrmContext
                         Status = 1,
                         AmountOfGrantApportioned = 20000m,
                         PercentageOfGrantApportioned = 40,
-                        ForecastClaimDate = DateTime.Today.AddDays(10),
+                        ForecastClaimDate = DateTime.Today.AddDays(-6),
                     },
                     CompletionMilestone = new MilestoneClaimDto()
                     {
@@ -103,7 +103,7 @@ public class AllocationCrmContext : IAllocationCrmContext
                         Status = 1,
                         AmountOfGrantApportioned = 30000m,
                         PercentageOfGrantApportioned = 20,
-                        ForecastClaimDate = DateTime.Today.AddDays(40),
+                        ForecastClaimDate = DateTime.Today.AddDays(7),
                     },
                 },
                 new()
