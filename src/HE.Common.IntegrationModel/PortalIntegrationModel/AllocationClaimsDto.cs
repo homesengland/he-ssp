@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace HE.Common.IntegrationModel.PortalIntegrationModel
 {
     public class AhpAllocationDto

@@ -11,9 +11,9 @@
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)Enums\AccountEnum.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)PortalIntegrationModel\AhgLocalAuthorityDto.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)PortalIntegrationModel\AhpProjectDto.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)PortalIntegrationModel\AllocationClaimsDto.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)PortalIntegrationModel\AhpApplicationDto.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)PortalIntegrationModel\AhpProjectDto.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)PortalIntegrationModel\AhpSiteApplicationDto.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)PortalIntegrationModel\ConsortiumDto.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)PortalIntegrationModel\ConsortiumMemberDto.cs" />

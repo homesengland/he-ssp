@@ -65,7 +65,7 @@ namespace HE.CRM.Common.Repositories.Implementations
             return result.Entities.Select(x => x.ToEntity<invln_scheme>()).ToList();
         }
 
-        public List<invln_scheme> GetApplicationsForAhpProject(Guid ahpProjectGuid, invln_Permission contactWebRole, Contact contact, Guid organisationGuid, bool isLeadPartner, bool IsSitePartner, string consortiumId = null)
+        public List<invln_scheme> GetRecordsFromAhpApplicationsForAhpProject(Guid ahpProjectGuid, invln_Permission contactWebRole, Contact contact, Guid organisationGuid, bool isLeadPartner, bool IsSitePartner, bool isAllocation, string consortiumId = null)
         {
             var query_invln_sites_invln_ahpprojectid = ahpProjectGuid.ToString();
 
@@ -84,7 +84,9 @@ namespace HE.CRM.Common.Repositories.Implementations
                 invln_scheme.Fields.invln_DevelopingPartner,
                 invln_scheme.Fields.invln_OwneroftheLand,
                 invln_scheme.Fields.invln_OwneroftheHomes,
-                invln_scheme.Fields.invln_Site
+                invln_scheme.Fields.invln_Site,
+                invln_scheme.Fields.invln_programmelookup,
+                invln_scheme.Fields.invln_HELocalAuthorityID
                 );
 
             var query_invln_sites = query.AddLink(
@@ -93,6 +95,15 @@ namespace HE.CRM.Common.Repositories.Implementations
                 invln_Sites.Fields.invln_SitesId);
 
             query_invln_sites.LinkCriteria.AddCondition(invln_Sites.Fields.invln_AHPProjectId, ConditionOperator.Equal, query_invln_sites_invln_ahpprojectid);
+
+            if (isAllocation == true)
+            {
+                query.Criteria.AddCondition(invln_scheme.Fields.invln_isallocation, ConditionOperator.Equal, true);
+            }
+            else
+            {
+                query.Criteria.AddCondition(invln_scheme.Fields.invln_isallocation, ConditionOperator.NotEqual, true);
+            }
 
             if (consortiumId == null)
             {

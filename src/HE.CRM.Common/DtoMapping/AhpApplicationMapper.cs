@@ -192,6 +192,26 @@ namespace HE.CRM.Common.DtoMapping
             return applicationDtoToReturn;
         }
 
+        public static AhpAllocationDto MapRegularEntityToAlloctionDto(invln_scheme allocation, he_LocalAuthority localAuthority)
+        {
+            var ahpAllocationDtoToReturn = new AhpAllocationDto()
+            {
+                Id = allocation.invln_schemeId.ToString(),
+                Name = allocation.invln_schemename,
+                ReferenceNumber = allocation.invln_applicationid + " (allocationId in future)",
+                LocalAuthority = new LocalAuthorityDto()
+                {
+                    id = localAuthority.Id.ToString(),
+                    name = localAuthority.he_Name,
+                    code = localAuthority.he_GSSCode,
+                },
+                ProgrammeId = allocation.invln_programmelookup?.Id.ToString(),
+                Tenure = allocation.invln_Tenure.Value,
+            };
+            return ahpAllocationDtoToReturn;
+        }
+
+
         private static OptionSetValue MapNullableIntToOptionSetValue(int? valueToMap)
         {
             if (valueToMap.HasValue)
