@@ -192,7 +192,7 @@ namespace HE.CRM.Common.DtoMapping
             return applicationDtoToReturn;
         }
 
-        public static AhpAllocationDto MapRegularEntityToAlloctionDto(invln_scheme allocation, he_LocalAuthority localAuthority)
+        public static AhpAllocationDto MapRegularEntityToAhpAlloctionDto(invln_scheme allocation, he_LocalAuthority localAuthority)
         {
             var ahpAllocationDtoToReturn = new AhpAllocationDto()
             {
@@ -207,6 +207,7 @@ namespace HE.CRM.Common.DtoMapping
                 },
                 ProgrammeId = allocation.invln_programmelookup?.Id.ToString(),
                 Tenure = allocation.invln_Tenure.Value,
+                Homes = allocation.invln_noofhomes.Value,
             };
             return ahpAllocationDtoToReturn;
         }

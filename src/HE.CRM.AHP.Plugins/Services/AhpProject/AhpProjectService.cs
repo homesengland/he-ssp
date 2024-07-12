@@ -81,7 +81,7 @@ namespace HE.CRM.AHP.Plugins.Services.AhpProject
                     var listOfSitesDto = listOfSites.Select(x => SiteMapper.ToDto(x, GetHeLaForSite(x.invln_HeLocalAuthorityId?.Id.ToString()))).ToList();
                     TracingService.Trace("Get listOfAlloctions");
                     var listOfAlloctions = _ahpApplicationRepository.GetRecordsFromAhpApplicationsForAhpProject(ahpProject.Id, contactWebRole, contact, new Guid(organisationId), false, false, true, consortiumId);
-                    var listOfAlloctionsDto = listOfAlloctions.Select(x => AhpApplicationMapper.MapRegularEntityToAlloctionDto(x, _heLocalAuthorityRepository.GetById(x.invln_HELocalAuthorityID.Id))).ToList();
+                    var listOfAlloctionsDto = listOfAlloctions.Select(x => AhpApplicationMapper.MapRegularEntityToAhpAlloctionDto(x, _heLocalAuthorityRepository.GetById(x.invln_HELocalAuthorityID.Id))).ToList();
                     TracingService.Trace("Create result");
                     result = AhpProjectMapper.MapRegularEntityToDto(ahpProject, listOfSitesDto, listOfAppsDto, listOfAlloctionsDto);
                 }
@@ -132,7 +132,7 @@ namespace HE.CRM.AHP.Plugins.Services.AhpProject
                     var filteredListOfAlloctions = listOfAlloctions.Where(x => _consortiumService.CheckAccess(ConsortiumService.Operation.Get, ConsortiumService.RecordType.Application,
                         externalContactId, null, x.Id.ToString(), consortiumId, organisationId, null));
 
-                    var listOfAlloctionsDto = filteredListOfAlloctions.Select(x => AhpApplicationMapper.MapRegularEntityToAlloctionDto(x, _heLocalAuthorityRepository.GetById(x.invln_HELocalAuthorityID.Id))).ToList();
+                    var listOfAlloctionsDto = filteredListOfAlloctions.Select(x => AhpApplicationMapper.MapRegularEntityToAhpAlloctionDto(x, _heLocalAuthorityRepository.GetById(x.invln_HELocalAuthorityID.Id))).ToList();
                     TracingService.Trace($"Records mapped.");
 
 

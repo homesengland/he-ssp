@@ -40,7 +40,7 @@ public class AllocationRepository : IAllocationRepository
         return CreateEntity(allocation, programme);
     }
 
-    private AllocationEntity CreateEntity(AhpAllocationDto allocationDto, AhpProgramme programme)
+    private AllocationEntity CreateEntity(AllocationClaimsDto allocationDto, AhpProgramme programme)
     {
         var allocationId = AllocationId.From(allocationDto.Id);
         var tenure = AllocationTenureMapper.ToDomain(allocationDto.Tenure);
