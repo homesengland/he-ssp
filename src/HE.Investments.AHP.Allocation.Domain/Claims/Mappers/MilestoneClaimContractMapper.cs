@@ -29,7 +29,7 @@ public sealed class MilestoneClaimContractMapper : IMilestoneClaimContractMapper
             phase.CanMilestoneBeClaimed(milestoneType));
     }
 
-    public MilestoneStatus MapStatus(Enums.MilestoneStatus status, MilestoneDueStatus dueStatus)
+    private static MilestoneStatus MapStatus(Enums.MilestoneStatus status, MilestoneDueStatus dueStatus)
     {
         return status switch
         {

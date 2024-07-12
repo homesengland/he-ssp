@@ -17,7 +17,7 @@ public class MilestoneClaimTestBuilder : TestObjectBuilder<MilestoneClaimTestBui
 
     public static MilestoneClaimTestBuilder New() => new(new(
         MilestoneType.Completion,
-        Domain.Claims.Enums.MilestoneStatus.Submitted,
+        MilestoneStatus.Submitted,
         new GrantApportioned(100, 50),
         new ClaimDate(
             new DateTime(2021, 1, 1, 0, 0, 0, DateTimeKind.Utc),
