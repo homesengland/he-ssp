@@ -40,8 +40,8 @@ public class ContactService : IContactService
         {
             string[] fields =
             [
-                "firstname", "lastname", "emailaddress1", "address1_telephone1", "invln_externalid", "jobtitle", "address1_city",
-                "address1_county", "address1_postalcode", "address1_country", "address1_telephone2", "invln_termsandconditionsaccepted"
+                "firstname", "lastname", "emailaddress1", "telephone1", "invln_externalid", "jobtitle", "address1_city",
+                "address1_county", "address1_postalcode", "address1_country", "mobilephone", "invln_termsandconditionsaccepted"
             ];
             var retrievedContact = _contactRepository.GetContactViaExternalId(service, contactExternalId, fields);
             if (retrievedContact != null)
@@ -332,8 +332,8 @@ public class ContactService : IContactService
             firstName = contact.Contains("firstname") ? contact["firstname"].ToString() : string.Empty,
             lastName = contact.Contains("lastname") ? contact["lastname"].ToString() : string.Empty,
             email = contact.Contains("emailaddress1") ? contact["emailaddress1"].ToString() : string.Empty,
-            phoneNumber = contact.Contains("address1_telephone1") ? contact["address1_telephone1"].ToString() : string.Empty,
-            secondaryPhoneNumber = contact.Contains("address1_telephone2") ? contact["address1_telephone2"].ToString() : string.Empty,
+            phoneNumber = contact.Contains("telephone1") ? contact["telephone1"].ToString() : string.Empty,
+            secondaryPhoneNumber = contact.Contains("mobilephone") ? contact["mobilephone"].ToString() : string.Empty,
             jobTitle = contact.Contains("jobtitle") ? contact["jobtitle"].ToString() : string.Empty,
             city = contact.Contains("address1_city") ? contact["address1_city"].ToString() : string.Empty,
             county = contact.Contains("address1_county") ? contact["address1_county"].ToString() : string.Empty,
@@ -359,8 +359,8 @@ public class ContactService : IContactService
             ["firstname"] = contactDto.firstName,
             ["lastname"] = contactDto.lastName,
             ["emailaddress1"] = contactDto.email,
-            ["address1_telephone1"] = contactDto.phoneNumber,
-            ["address1_telephone2"] = contactDto.secondaryPhoneNumber,
+            ["telephone1"] = contactDto.phoneNumber,
+            ["mobilephone"] = contactDto.secondaryPhoneNumber,
             ["jobtitle"] = contactDto.jobTitle,
             ["address1_city"] = contactDto.city,
             ["address1_county"] = contactDto.county,
