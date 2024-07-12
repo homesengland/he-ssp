@@ -1,6 +1,6 @@
 import { CommonLib } from '../Common'
 import { ExternalStatus, Securities } from "../OptionSet"
-
+import * as Collections from 'typescript-collections';
 export class IspService {
   common: CommonLib
 
@@ -272,6 +272,87 @@ export class IspService {
     this.common.setControlRequiredV2('invln_recommendation', sendForApproval)
     this.common.setControlRequiredV2('invln_tmname', sendForApproval)
     this.common.setControlRequiredV2('invln_datesentforapproval', sendForApproval)
+  }
+
+  public mapFieldOnLoad() {
+    if (this.common.getFormType() != XrmEnum.FormType.Create)
+      return;
+
+    const dictionary = new Map<string, string>([
+      ['invln_projectname', 'invln_projectname'],
+      ['invln_submitternew', '_ownerid'],
+      ['invln_heregion', 'invln_laregion'],
+      ['invln_programmenew', 'invln_programme'],
+      ['invln_sppimet', 'invln_assessedassppi'],//  SPPI Met ?
+      ['invln_firstlegalchargedescription', 'invln_firstlegalchargedescription'],//First Legal Charge Description
+      ['invln_firstlegalchargevaluek', 'invln_firstlegalchargevalue'],//First Legal Charge Value £
+      ['invln_firstlegalchargemarginedsecurityvalue', 'invln_firstlegalchargemarginedsecurityvalue'],//  First Legal Charge Margined Security Value
+      ['invln_subsequentchargedescription', 'invln_subsequentchargedescription'],//Subsequent Charge Description
+      ['invln_subsequentchargevaluek', 'invln_subsequentchargevalue'],//Subsequent Charge Value £
+      ['invln_subsequentchargemarginedsecurityvalue', 'invln_subsequentchargemarginedsecurityvalue'],//  Subsequent Charge Margined Security Value
+      ['invln_debenturedescription', 'invln_debenturedescription'],//Debenture Description
+      ['invln_debenturevaluek', 'invln_debenturevalue'],//Debenture Value £
+      ['invln_debenturemarginedsecurityk', 'invln_debenturemarginedsecurityvalue'],//  Debenture Margined Security Value
+      ['invln_personalguaranteedescription', 'invln_personalguaranteedescription'],//Personal Guarantee Description
+      ['invln_personalguaranteevaluek', 'invln_personalguaranteevalue'],//Personal Guarantee Value £
+      ['invln_personalguaranteemarginedsecurityk', 'invln_personalguaranteemarginedsecurityvalue'],//  Personal Guarantee Margined Security Value
+      ['invln_parentcompanyguaranteedescription', 'invln_parentcompanyguaranteedescription'],//Parent Company Guarantee Description
+      ['invln_parentcompanyguaranteevaluek', 'invln_parentcompanyguaranteevalue'],//Parent Company Guarantee Value £
+      ['invln_parentcompanyguaranteemarginedsecurityk', 'invln_parentcompanyguaranteemarginedsecurityvalue'],//  Parent Company Guarantee Margined Security Value
+      ['invln_subordinateddeeddescription', 'invln_subordinateddeeddescription'],//Subordinated Deed Description
+      ['invln_subordinateddeedvaluek', 'invln_subordinateddeedvalue'],//Subordinated Deed Value £
+      ['invln_subordinateddeedmarginedsecurityk', 'invln_subordinateddeedmarginedsecurityvalue'],//  Subordinated Deed Margined Security Value
+      ['invln_costoverrunguarantee', 'invln_costoverrunguarantee'],//Cost Overrun Guarantee
+      ['invln_costoverrunvaluek', 'invln_costoverrunvalue'],//Cost Overrun Value £
+      ['invln_costoverrunmarginedsecurityk', 'invln_costoverrunmarginedsecurityvalue'],//  Cost Overrun Margined Security Value
+      ['invln_completionguaranteedescription', 'invln_completionguaranteedescription'],//Completion Guarantee Description
+      ['invln_completionguaranteevaluek', 'invln_completionguaranteevalue'],//Completion Guarantee Value £
+      ['invln_completionguaranteemarginedsecurityk', 'invln_completionguaranteemarginedsecurityvalue'],//  Completion Guarantee Margined Security Value
+      ['invln_interestshortfalldescription', 'invln_interestshortfalldescription'],//Interest Shortfall Description
+      ['invln_interestshortfallvaluek', 'invln_interestshortfallvalue'],//Interest Shortfall Value £
+      ['invln_interestshortfallmarginedsecurityk', 'invln_interestshortfallmarginedsecurityvalue'],//  Interest Shortfall Margined Security Value
+      ['invln_collateralwarrantydescription', 'invln_collateralwarrantydescription'],//Collateral Warranty Description
+      ['invln_collateralwarrantyvalue', 'invln_collateralwarrantyvalue'],//Collateral Warranty Value £
+      ['invln_collateralwarrantymarginatedsecurityvalue', 'invln_collateralwarrantymarginatedsecurityvalue'],//  Collateral Warranty Marginated Security Value
+      ['invln_otherdescription', 'invln_otherdescription'],//Other Description
+      ['invln_othervaluek', 'invln_othervalue'],//Other Value £
+      ['invln_othermarginedsecurityk', 'invln_othermarginedsecurityvalue'],//  Other Margined Security Value
+      ['ownerid', '_ownerid'],
+      ['invln_organisation', '_invln_account'],
+      ['invln_borrowername', '_invln_contact']
+    ]);
+
+    let loanApplication = this.common.getLookupValue('invln_loanapplication')
+    if (loanApplication != null) {
+      Xrm.WebApi.retrieveRecord('invln_loanapplication', loanApplication.id).then(result => {
+        console.log(result);
+        for (const [key, value] of dictionary) {
+          console.log(result[value]);
+          try {
+            if (value.startsWith('_')) {
+              this.common.setLookUpValue(key,
+                result[value + "_value@Microsoft.Dynamics.CRM.lookuplogicalname"],
+                result[value + "_value"],
+                result[value + "_value@OData.Community.Display.V1.FormattedValue"]
+              )
+            } else {
+              this.common.setAttributeValue(key, result[value]);
+            }
+          } catch (e) {
+            console.log(e);
+          }
+          console.log(key, value);
+        }
+
+        console.log(result['invln_securities']);
+        let values = result['invln_securities'].split(',')
+        let osv = values.map(function (x) {
+          return parseInt(x);
+        })
+        this.common.setAttributeValue('invln_securities', osv);
+
+      })
+    }
   }
 
   private hideFirstLegalChargeFields(isDisabled: boolean) {
