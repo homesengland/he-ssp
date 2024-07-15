@@ -1,7 +1,9 @@
 using HE.Investments.AHP.Allocation.Contract.Claims;
+using HE.Investments.AHP.Allocation.Contract.Claims.Enum;
 using HE.Investments.AHP.Allocation.Domain.Allocation.ValueObjects;
 using HE.Investments.AHP.Allocation.Domain.Claims.ValueObjects;
 using HE.Investments.Common.Domain;
+using HE.Investments.Common.Extensions;
 using MilestoneClaim = HE.Investments.AHP.Allocation.Domain.Claims.ValueObjects.MilestoneClaim;
 
 namespace HE.Investments.AHP.Allocation.Domain.Claims.Entities;
@@ -67,5 +69,27 @@ public class PhaseEntity : DomainEntity
             completionMilestone,
             acquisitionMilestone,
             startOnSiteMilestone);
+    }
+
+    public MilestoneClaim? GetMilestoneClaim(MilestoneType milestoneType)
+    {
+        return milestoneType switch
+        {
+            MilestoneType.Acquisition => AcquisitionMilestone,
+            MilestoneType.StartOnSite => StartOnSiteMilestone,
+            MilestoneType.Completion => CompletionMilestone,
+            _ => null,
+        };
+    }
+
+    public bool CanMilestoneBeClaimed(MilestoneType milestoneType)
+    {
+        return milestoneType switch
+        {
+            MilestoneType.Acquisition => AcquisitionMilestone?.IsSubmitted == false,
+            MilestoneType.StartOnSite => AcquisitionMilestone?.IsSubmitted == true && StartOnSiteMilestone?.IsSubmitted == false,
+            MilestoneType.Completion => !CompletionMilestone.IsSubmitted && (StartOnSiteMilestone.IsNotProvided() || StartOnSiteMilestone!.IsSubmitted),
+            _ => false,
+        };
     }
 }

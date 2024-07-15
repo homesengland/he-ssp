@@ -1,13 +1,35 @@
+using HE.Investments.AHP.Allocation.Contract.Claims;
+using HE.Investments.AHP.Allocation.Contract.Claims.Enum;
+using HE.Investments.AHP.Allocation.Domain.Claims.Entities;
 using HE.Investments.AHP.Allocation.Domain.Claims.Enums;
+using HE.Investments.Common.Contract;
 using HE.Investments.Common.Extensions;
-using HE.Investments.Common.Utils;
 using MilestoneStatus = HE.Investments.AHP.Allocation.Contract.Claims.Enum.MilestoneStatus;
 
 namespace HE.Investments.AHP.Allocation.Domain.Claims.Mappers;
 
-public sealed class MilestoneClaimStatusMapper : IMilestoneClaimStatusMapper
+public sealed class MilestoneClaimContractMapper : IMilestoneClaimContractMapper
 {
-    public MilestoneStatus MapStatus(Enums.MilestoneStatus status, MilestoneDueStatus dueStatus)
+    public MilestoneClaim? Map(MilestoneType milestoneType, PhaseEntity phase, DateTime today)
+    {
+        var milestoneClaim = phase.GetMilestoneClaim(milestoneType);
+        if (milestoneClaim.IsNotProvided())
+        {
+            return null;
+        }
+
+        return new MilestoneClaim(
+            milestoneType,
+            MapStatus(milestoneClaim!.Status, milestoneClaim.CalculateDueStatus(today)),
+            milestoneClaim.GrantApportioned.Amount,
+            milestoneClaim.GrantApportioned.Percentage,
+            DateDetails.FromDateTime(milestoneClaim.ClaimDate.ForecastClaimDate)!,
+            DateDetails.FromDateTime(milestoneClaim.ClaimDate.ActualClaimDate),
+            null, // TODO: AB#85082 Map Submission date when available
+            phase.CanMilestoneBeClaimed(milestoneType));
+    }
+
+    private static MilestoneStatus MapStatus(Enums.MilestoneStatus status, MilestoneDueStatus dueStatus)
     {
         return status switch
         {
