@@ -4,6 +4,8 @@ using HE.Investments.AHP.IntegrationTests.Crm;
 using HE.Investments.AHP.IntegrationTests.Order01StartAhpProjectWithSite.Data;
 using HE.Investments.AHP.IntegrationTests.Order02FillSite.Data;
 using HE.Investments.AHP.IntegrationTests.Order03FillApplication.Data;
+using HE.Investments.AHP.IntegrationTests.Order03FillApplication.Data.Allocation;
+using HE.Investments.AHP.IntegrationTests.Utils;
 using HE.Investments.Common.Contract;
 using HE.Investments.FrontDoor.IntegrationTests.Utils;
 using HE.Investments.IntegrationTestsFramework;
@@ -25,6 +27,7 @@ public class AhpIntegrationTest : IntegrationTestBase<Program>
         : base(fixture)
     {
         SetApplicationData();
+        SetAllocationData();
         SetSiteData();
         SetProjectData();
         InitStopwatch();
@@ -34,10 +37,13 @@ public class AhpIntegrationTest : IntegrationTestBase<Program>
         _fixture = fixture;
         LoginData = fixture.LoginData;
         InFrontDoor = fixture.ServiceProvider.GetRequiredService<FrontDoorDataManipulator>();
+        AhpDataManipulator = fixture.ServiceProvider.GetRequiredService<AhpDataManipulator>();
         SetUserOrganisationData();
     }
 
     public ApplicationData ApplicationData { get; private set; }
+
+    public AllocationData AllocationData { get; private set; }
 
     public SiteData SiteData { get; private set; }
 
@@ -53,6 +59,8 @@ public class AhpIntegrationTest : IntegrationTestBase<Program>
 
     protected FrontDoorDataManipulator InFrontDoor { get; }
 
+    protected AhpDataManipulator AhpDataManipulator { get; }
+
     public override async Task DisposeAsync()
     {
         await base.DisposeAsync();
@@ -67,63 +75,31 @@ public class AhpIntegrationTest : IntegrationTestBase<Program>
 
     private void SetApplicationData()
     {
-        var applicationData = GetSharedDataOrNull<ApplicationData>(nameof(ApplicationData));
-        if (applicationData is null)
-        {
-            applicationData = new ApplicationData();
-            SetSharedData(nameof(ApplicationData), applicationData);
-        }
+        ApplicationData = ReturnSharedData<ApplicationData>();
+    }
 
-        ApplicationData = applicationData;
+    private void SetAllocationData()
+    {
+        AllocationData = ReturnSharedData<AllocationData>();
     }
 
     private void SetSiteData()
     {
-        var siteData = GetSharedDataOrNull<SiteData>(nameof(SiteData));
-        if (siteData is null)
-        {
-            siteData = new SiteData();
-            SetSharedData(nameof(SiteData), siteData);
-        }
-
-        SiteData = siteData;
+        SiteData = ReturnSharedData<SiteData>();
     }
 
     private void SetProjectData()
     {
-        var projectData = GetSharedDataOrNull<AhpProjectData>(nameof(ProjectData));
-        if (projectData is null)
-        {
-            projectData = new AhpProjectData();
-            SetSharedData(nameof(ProjectData), projectData);
-        }
-
-        ProjectData = projectData;
+        ProjectData = ReturnSharedData<AhpProjectData>();
     }
 
     private void InitStopwatch()
     {
-        var stopwatch = GetSharedDataOrNull<Stopwatch>(nameof(Stopwatch));
-        if (stopwatch is null)
-        {
-            stopwatch = new Stopwatch();
-            stopwatch.Start();
-            SetSharedData(nameof(Stopwatch), stopwatch);
-        }
-
-        Stopwatch = stopwatch;
+        Stopwatch = ReturnSharedData<Stopwatch>(data => data.Start());
     }
 
     private void SetUserOrganisationData()
     {
-        var userOrganisationData = GetSharedDataOrNull<UserOrganisationData>(nameof(UserOrganisationData));
-        if (userOrganisationData is null)
-        {
-            userOrganisationData = new UserOrganisationData();
-            userOrganisationData.SetOrganisationId(LoginData.OrganisationId);
-            SetSharedData(nameof(UserOrganisationData), userOrganisationData);
-        }
-
-        UserOrganisationData = userOrganisationData;
+        UserOrganisationData = ReturnSharedData<UserOrganisationData>(data => data.SetOrganisationId(LoginData.OrganisationId));
     }
 }

@@ -26,14 +26,7 @@ public class Order05CompleteDeliveryPhases : AhpApplicationIntegrationTest
     public Order05CompleteDeliveryPhases(AhpIntegrationTestFixture fixture, ITestOutputHelper output)
         : base(fixture, output)
     {
-        var deliveryPhasesData = GetSharedDataOrNull<DeliveryPhasesData>(nameof(_deliveryPhasesData));
-        if (deliveryPhasesData is null)
-        {
-            deliveryPhasesData = new DeliveryPhasesData();
-            SetSharedData(nameof(_deliveryPhasesData), deliveryPhasesData);
-        }
-
-        _deliveryPhasesData = deliveryPhasesData;
+        _deliveryPhasesData = ReturnSharedData<DeliveryPhasesData>();
     }
 
     private RehabDeliveryPhase RehabDeliveryPhase => _deliveryPhasesData.RehabDeliveryPhase;

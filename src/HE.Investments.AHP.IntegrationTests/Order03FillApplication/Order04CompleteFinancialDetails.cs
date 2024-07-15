@@ -23,16 +23,11 @@ public class Order04CompleteFinancialDetails : AhpApplicationIntegrationTest
     public Order04CompleteFinancialDetails(AhpIntegrationTestFixture fixture, ITestOutputHelper output)
         : base(fixture, output)
     {
-        var financialDetailsData = GetSharedDataOrNull<FinancialDetailsData>(nameof(FinancialDetailsData));
-        if (financialDetailsData is null)
+        FinancialDetailsData = ReturnSharedData<FinancialDetailsData>(data =>
         {
             var schemeInformationData = GetSharedDataOrNull<SchemeInformationData>(nameof(SchemeInformationData));
-            financialDetailsData = new FinancialDetailsData();
-            financialDetailsData.ProvideSchemeFunding(schemeInformationData?.RequiredFunding ?? 0m);
-            SetSharedData(nameof(FinancialDetailsData), financialDetailsData);
-        }
-
-        FinancialDetailsData = financialDetailsData;
+            data.ProvideSchemeFunding(schemeInformationData?.RequiredFunding ?? 0m);
+        });
     }
 
     public FinancialDetailsData FinancialDetailsData { get; }
