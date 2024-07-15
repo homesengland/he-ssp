@@ -319,7 +319,7 @@ export class IspService {
       ['invln_othermarginedsecurityk', 'invln_othermarginedsecurityvalue'],//  Other Margined Security Value
       ['ownerid', '_ownerid'],
       ['invln_organisation', '_invln_account'],
-      ['invln_borrowername', '_invln_contact']
+      ['invln_borrowername', '_invln_contact'],
     ]);
 
     let loanApplication = this.common.getLookupValue('invln_loanapplication')
@@ -350,7 +350,6 @@ export class IspService {
           return parseInt(x);
         })
         this.common.setAttributeValue('invln_securities', osv);
-
       })
     }
   }
