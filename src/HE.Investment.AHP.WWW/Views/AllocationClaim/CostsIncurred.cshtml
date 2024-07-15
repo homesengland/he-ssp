@@ -1,0 +1,23 @@
+@using HE.Investment.AHP.WWW.Views.AllocationClaims.Const
+@using HE.Investments.Common.Extensions
+@using HE.Investments.Common.WWW.Components.BackLinkWithCallback
+@using HE.Investments.Common.WWW.Components.FormButton
+@using HE.Investments.Common.WWW.Components.PageHeader
+@using HE.Investments.Common.WWW.Extensions
+@using HE.Investments.Common.WWW.TagHelpers
+@model HE.Investment.AHP.WWW.Models.AllocationClaim.PhaseClaimModel
+@{
+    var title = ClaimPageTitles.CostsIncurred(Model.Name, Model.Claim.Type);
+    ViewData["Title"] = title;
+}
+
+<gds-div-grid-column-two-thirds>
+    <vc:back-link-with-callback url="@Url.OrganisationAction("Overview", "AllocationClaims", new { allocationId = Model.Allocation.Id.Value, phaseId = Model.Id })"/>
+    <vc:page-header caption="@Model.Allocation.Name - @Model.Allocation.Tenure.GetDescription()" title="@title"/>
+
+    <he-organisation-form asp-controller="AllocationClaim" asp-action="CostsIncurred" asp-route-workflow="@Context.Request.Query["workflow"]" asp-method="post" novalidate>
+        <gds-p>TODO: AB#85084 implement view</gds-p>
+
+        <vc:form-button/>
+    </he-organisation-form>
+</gds-div-grid-column-two-thirds>

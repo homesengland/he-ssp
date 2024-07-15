@@ -1,6 +1,6 @@
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Links
 @using HE.Investment.AHP.WWW.Config
-@using HE.Investment.AHP.WWW.Views.Claim.Const
+@using HE.Investment.AHP.WWW.Views.AllocationClaims.Const
 @using HE.Investment.AHP.WWW.Views.Shared.Components.AllocationHeader
 @using HE.Investments.Common.WWW.Components.PageHeader
 @using HE.Investments.Common.WWW.Extensions
@@ -31,7 +31,7 @@
         <vc:claim-details-card
             claim="@milestoneClaim"
             can-claim-milestone="@Model.CanClaimMilestone"
-            claim-milestone-url="@Url.OrganisationAction("TODO", "AllocationClaims", new { allocationId = Model.Phase.Allocation.Id.Value, claimType = milestoneClaim.Type })"/>
+            claim-milestone-url="@Url.OrganisationAction("ContinueAnswering", "AllocationClaim", new { allocationId = Model.Phase.Allocation.Id.Value, phaseId = Model.Phase.Id.Value, claimType = milestoneClaim.Type })"/>
     }
     <vc:return-to-allocation-link allocation-id="@Model.Phase.Allocation.Id"/>
 </gds-div-grid-column-two-thirds>
