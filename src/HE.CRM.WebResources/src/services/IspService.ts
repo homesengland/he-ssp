@@ -278,7 +278,7 @@ export class IspService {
     if (this.common.getFormType() != XrmEnum.FormType.Create)
       return;
 
-    const dictionary = new Map<string, string>([
+    const dictionaryLoans = new Map<string, string>([
       ['invln_projectname', 'invln_projectname'],
       ['invln_submitternew', '_ownerid'],
       ['invln_heregion', 'invln_laregion'],
@@ -322,12 +322,17 @@ export class IspService {
       ['invln_borrowername', '_invln_contact'],
     ]);
 
+    const dictionaryAccount = new Map<string, string>([
+      ['invln_crr', 'invln_currentcrr'],
+      ['invln_kycrating', 'invln_rating']
+    ]);
+    //    CRR
+    //KYC Rating
+
     let loanApplication = this.common.getLookupValue('invln_loanapplication')
     if (loanApplication != null) {
       Xrm.WebApi.retrieveRecord('invln_loanapplication', loanApplication.id).then(result => {
-        console.log(result);
-        for (const [key, value] of dictionary) {
-          console.log(result[value]);
+        for (const [key, value] of dictionaryLoans) {
           try {
             if (value.startsWith('_')) {
               this.common.setLookUpValue(key,
@@ -341,7 +346,6 @@ export class IspService {
           } catch (e) {
             console.log(e);
           }
-          console.log(key, value);
         }
 
         console.log(result['invln_securities']);
@@ -350,6 +354,26 @@ export class IspService {
           return parseInt(x);
         })
         this.common.setAttributeValue('invln_securities', osv);
+
+        let accountId = result['_invln_account_value'];
+        Xrm.WebApi.retrieveRecord('account', accountId).then(function (result) {
+          for (const [key, value] of dictionaryAccount) {
+            try {
+              if (value.startsWith('_')) {
+                this.common.setLookUpValue(key,
+                  result[value + "_value@Microsoft.Dynamics.CRM.lookuplogicalname"],
+                  result[value + "_value"],
+                  result[value + "_value@OData.Community.Display.V1.FormattedValue"]
+                )
+              } else {
+                this.common.setAttributeValue(key, result[value]);
+              }
+            } catch (e) {
+              console.log(e);
+            }
+          }
+        });
+
       })
     }
   }
