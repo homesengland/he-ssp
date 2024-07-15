@@ -23,7 +23,7 @@ public class AllocationCrmContext : IAllocationCrmContext
         _service = service;
     }
 
-    public async Task<AhpAllocationDto> GetById(string id, string organisationId, string userId, CancellationToken cancellationToken)
+    public async Task<AllocationClaimsDto> GetById(string id, string organisationId, string userId, CancellationToken cancellationToken)
     {
         // todo AB#102108
         // var request = new invln_getallocationphaseclaimsRequest
@@ -41,7 +41,7 @@ public class AllocationCrmContext : IAllocationCrmContext
         return await Get(request, cancellationToken);
     }
 
-    private async Task<AhpAllocationDto> Get(invln_getahpapplicationRequest request, CancellationToken cancellationToken)
+    private async Task<AllocationClaimsDto> Get(invln_getahpapplicationRequest request, CancellationToken cancellationToken)
     {
         var response = await _service.ExecuteAsync<invln_getahpapplicationRequest, invln_getahpapplicationResponse, IList<AhpApplicationDto>>(
             request,
@@ -56,9 +56,9 @@ public class AllocationCrmContext : IAllocationCrmContext
         return GetMockedAllocation(response[0]);
     }
 
-    private AhpAllocationDto GetMockedAllocation(AhpApplicationDto applicationDto)
+    private AllocationClaimsDto GetMockedAllocation(AhpApplicationDto applicationDto)
     {
-        return new AhpAllocationDto()
+        return new AllocationClaimsDto()
         {
             Id = applicationDto.id,
             Name = applicationDto.name,
@@ -87,7 +87,7 @@ public class AllocationCrmContext : IAllocationCrmContext
                         Status = 1,
                         AmountOfGrantApportioned = 10000m,
                         PercentageOfGrantApportioned = 40,
-                        ForecastClaimDate = DateTime.Today,
+                        ForecastClaimDate = DateTime.Today.AddDays(-7),
                     },
                     StartOnSiteMilestone = new MilestoneClaimDto()
                     {
@@ -95,7 +95,7 @@ public class AllocationCrmContext : IAllocationCrmContext
                         Status = 1,
                         AmountOfGrantApportioned = 20000m,
                         PercentageOfGrantApportioned = 40,
-                        ForecastClaimDate = DateTime.Today.AddDays(10),
+                        ForecastClaimDate = DateTime.Today.AddDays(-6),
                     },
                     CompletionMilestone = new MilestoneClaimDto()
                     {
@@ -103,7 +103,7 @@ public class AllocationCrmContext : IAllocationCrmContext
                         Status = 1,
                         AmountOfGrantApportioned = 30000m,
                         PercentageOfGrantApportioned = 20,
-                        ForecastClaimDate = DateTime.Today.AddDays(40),
+                        ForecastClaimDate = DateTime.Today.AddDays(7),
                     },
                 },
                 new()

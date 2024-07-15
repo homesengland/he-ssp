@@ -16,7 +16,7 @@ public sealed class AllocationBasicInfoMapper : IAllocationBasicInfoMapper
         _mediator = mediator;
     }
 
-    public async Task<AllocationBasicInfo> Map(AhpAllocationDto allocation, CancellationToken cancellationToken)
+    public async Task<AllocationBasicInfo> Map(AllocationClaimsDto allocation, CancellationToken cancellationToken)
     {
         var programme = await _mediator.Send(new GetProgrammeQuery(ProgrammeId.From(allocation.ProgrammeId)), cancellationToken);
 
