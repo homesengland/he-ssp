@@ -255,6 +255,9 @@ public class Order05CompleteDeliveryPhases : AhpApplicationIntegrationTest
         // given
         var checkAnswersUrl = BuildDeliveryPhasesPage(DeliveryPhasePagesUrl.CheckAnswers, RehabDeliveryPhase);
         var rehabFunding = await GetRequiredFunding(checkAnswersUrl) * DeliveryPhasesData.RehabHomesPercentage;
+        var acquisitionFunding = Math.Round(rehabFunding * 0.4m);
+        var startOnSiteFunding = Math.Round(rehabFunding * 0.35m);
+        var completionFunding = rehabFunding - acquisitionFunding - startOnSiteFunding;
         var checkAnswersPage = await GetCurrentPage(checkAnswersUrl);
         checkAnswersPage
             .UrlEndWith(BuildDeliveryPhasesPage(DeliveryPhasePagesUrl.CheckAnswers, RehabDeliveryPhase))
@@ -275,10 +278,10 @@ public class Order05CompleteDeliveryPhases : AhpApplicationIntegrationTest
             summary.Should().ContainKey($"Number of homes {homeType.Name}").WithValue(homeType.NumberOfHomes.ToString(CultureInfo.InvariantCulture));
         }
 
-        summary.Should().ContainKey("Grant apportioned to this phase").WhoseValue.Value.Should().BePoundsPences(rehabFunding);
-        summary.Should().ContainKey("Acquisition milestone").WhoseValue.Value.Should().BePoundsPences(rehabFunding * 0.4m);
-        summary.Should().ContainKey("Start on site milestone").WhoseValue.Value.Should().BePoundsPences(rehabFunding * 0.35m);
-        summary.Should().ContainKey("Completion milestone").WhoseValue.Value.Should().BePoundsPences(rehabFunding * 0.25m);
+        summary.Should().ContainKey("Grant apportioned to this phase").WhoseValue.Value.Should().BePoundsOnly(rehabFunding);
+        summary.Should().ContainKey("Acquisition milestone").WhoseValue.Value.Should().BePoundsOnly(acquisitionFunding);
+        summary.Should().ContainKey("Start on site milestone").WhoseValue.Value.Should().BePoundsOnly(startOnSiteFunding);
+        summary.Should().ContainKey("Completion milestone").WhoseValue.Value.Should().BePoundsOnly(completionFunding);
         summary.Should().ContainKey("Acquisition date").WithValue(RehabDeliveryPhase.AcquisitionMilestoneDate);
         summary.Should().ContainKey("Forecast acquisition claim date").WithValue(RehabDeliveryPhase.AcquisitionMilestonePaymentDate);
         summary.Should().ContainKey("Start on site date").WithValue(RehabDeliveryPhase.StartOnSiteMilestoneDate);
