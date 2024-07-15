@@ -86,9 +86,9 @@ public class PhaseEntity : DomainEntity
     {
         return milestoneType switch
         {
-            MilestoneType.Acquisition => AcquisitionMilestone?.IsNotClaimed == true,
-            MilestoneType.StartOnSite => AcquisitionMilestone?.IsClaimed == true && StartOnSiteMilestone?.IsNotClaimed == true,
-            MilestoneType.Completion => CompletionMilestone.IsNotClaimed && (StartOnSiteMilestone.IsNotProvided() || StartOnSiteMilestone!.IsClaimed),
+            MilestoneType.Acquisition => AcquisitionMilestone?.IsSubmitted == false,
+            MilestoneType.StartOnSite => AcquisitionMilestone?.IsSubmitted == true && StartOnSiteMilestone?.IsSubmitted == false,
+            MilestoneType.Completion => !CompletionMilestone.IsSubmitted && (StartOnSiteMilestone.IsNotProvided() || StartOnSiteMilestone!.IsSubmitted),
             _ => false,
         };
     }

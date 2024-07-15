@@ -25,12 +25,12 @@ public class MilestoneClaimTestBuilder : TestObjectBuilder<MilestoneClaimTestBui
         null,
         null));
 
-    public MilestoneClaimTestBuilder NotClaimed()
+    public MilestoneClaimTestBuilder NotSubmitted()
     {
         return WithStatus(MilestoneStatus.Draft);
     }
 
-    public MilestoneClaimTestBuilder Claimed()
+    public MilestoneClaimTestBuilder Submitted()
     {
         return WithStatus(MilestoneStatus.Approved);
     }

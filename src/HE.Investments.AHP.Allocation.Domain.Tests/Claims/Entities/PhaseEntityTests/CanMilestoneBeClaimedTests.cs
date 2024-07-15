@@ -8,10 +8,10 @@ namespace HE.Investments.AHP.Allocation.Domain.Tests.Claims.Entities.PhaseEntity
 public class CanMilestoneBeClaimedTests
 {
     [Fact]
-    public void ShouldAcquisitionMilestoneReturnTrue_WhenItHasNotBeenClaimed()
+    public void ShouldAcquisitionMilestoneReturnTrue_WhenItHasNotBeenSubmitted()
     {
         // given
-        var acquisitionMilestone = MilestoneClaimTestBuilder.New().NotClaimed().Build();
+        var acquisitionMilestone = MilestoneClaimTestBuilder.New().NotSubmitted().Build();
         var testCandidate = PhaseEntityTestBuilder.New().WithAcquisitionMilestone(acquisitionMilestone).Build();
 
         // when
@@ -22,10 +22,10 @@ public class CanMilestoneBeClaimedTests
     }
 
     [Fact]
-    public void ShouldAcquisitionMilestoneReturnFalse_WhenItHasBeenClaimed()
+    public void ShouldAcquisitionMilestoneReturnFalse_WhenItHasBeenSubmitted()
     {
         // given
-        var acquisitionMilestone = MilestoneClaimTestBuilder.New().Claimed().Build();
+        var acquisitionMilestone = MilestoneClaimTestBuilder.New().Submitted().Build();
         var testCandidate = PhaseEntityTestBuilder.New().WithAcquisitionMilestone(acquisitionMilestone).Build();
 
         // when
@@ -36,11 +36,11 @@ public class CanMilestoneBeClaimedTests
     }
 
     [Fact]
-    public void ShouldStartOnSiteMilestoneReturnTrue_WhenAcquisitionMilestoneHasBeenClaimedAndStartOnSiteNot()
+    public void ShouldStartOnSiteMilestoneReturnTrue_WhenAcquisitionMilestoneHasBeenSubmittedAndStartOnSiteNot()
     {
         // given
-        var acquisitionMilestone = MilestoneClaimTestBuilder.New().Claimed().Build();
-        var startOnSiteMilestone = MilestoneClaimTestBuilder.New().NotClaimed().Build();
+        var acquisitionMilestone = MilestoneClaimTestBuilder.New().Submitted().Build();
+        var startOnSiteMilestone = MilestoneClaimTestBuilder.New().NotSubmitted().Build();
         var testCandidate = PhaseEntityTestBuilder.New()
             .WithAcquisitionMilestone(acquisitionMilestone)
             .WithStartOnSiteMilestone(startOnSiteMilestone)
@@ -54,11 +54,11 @@ public class CanMilestoneBeClaimedTests
     }
 
     [Fact]
-    public void ShouldStartOnSiteMilestoneReturnFalse_WhenAcquisitionMilestoneHasNotBeenClaimed()
+    public void ShouldStartOnSiteMilestoneReturnFalse_WhenAcquisitionMilestoneHasNotBeenSubmitted()
     {
         // given
-        var acquisitionMilestone = MilestoneClaimTestBuilder.New().NotClaimed().Build();
-        var startOnSiteMilestone = MilestoneClaimTestBuilder.New().NotClaimed().Build();
+        var acquisitionMilestone = MilestoneClaimTestBuilder.New().NotSubmitted().Build();
+        var startOnSiteMilestone = MilestoneClaimTestBuilder.New().NotSubmitted().Build();
         var testCandidate = PhaseEntityTestBuilder.New()
             .WithAcquisitionMilestone(acquisitionMilestone)
             .WithStartOnSiteMilestone(startOnSiteMilestone)
@@ -72,11 +72,11 @@ public class CanMilestoneBeClaimedTests
     }
 
     [Fact]
-    public void ShouldStartOnSiteMilestoneReturnFalse_WhenAcquisitionAndStartOnSiteMilestonesHasBeenClaimed()
+    public void ShouldStartOnSiteMilestoneReturnFalse_WhenAcquisitionAndStartOnSiteMilestonesHasBeenSubmitted()
     {
         // given
-        var acquisitionMilestone = MilestoneClaimTestBuilder.New().Claimed().Build();
-        var startOnSiteMilestone = MilestoneClaimTestBuilder.New().Claimed().Build();
+        var acquisitionMilestone = MilestoneClaimTestBuilder.New().Submitted().Build();
+        var startOnSiteMilestone = MilestoneClaimTestBuilder.New().Submitted().Build();
         var testCandidate = PhaseEntityTestBuilder.New()
             .WithAcquisitionMilestone(acquisitionMilestone)
             .WithStartOnSiteMilestone(startOnSiteMilestone)
@@ -90,11 +90,11 @@ public class CanMilestoneBeClaimedTests
     }
 
     [Fact]
-    public void ShouldCompletionMilestoneReturnTrue_WhenStartOnSiteMilestoneHasBeenClaimedAndCompletionNot()
+    public void ShouldCompletionMilestoneReturnTrue_WhenStartOnSiteMilestoneHasBeenSubmittedAndCompletionNot()
     {
         // given
-        var startOnSiteMilestone = MilestoneClaimTestBuilder.New().Claimed().Build();
-        var completionMilestone = MilestoneClaimTestBuilder.New().NotClaimed().Build();
+        var startOnSiteMilestone = MilestoneClaimTestBuilder.New().Submitted().Build();
+        var completionMilestone = MilestoneClaimTestBuilder.New().NotSubmitted().Build();
         var testCandidate = PhaseEntityTestBuilder.New()
             .WithStartOnSiteMilestone(startOnSiteMilestone)
             .WithCompletionMilestone(completionMilestone)
@@ -108,10 +108,10 @@ public class CanMilestoneBeClaimedTests
     }
 
     [Fact]
-    public void ShouldCompletionMilestoneReturnTrue_WhenStartOnSiteDoesNotExistAndCompletionMilestoneHasNotBeenClaimed()
+    public void ShouldCompletionMilestoneReturnTrue_WhenStartOnSiteDoesNotExistAndCompletionMilestoneHasNotBeenSubmitted()
     {
         // given
-        var completionMilestone = MilestoneClaimTestBuilder.New().NotClaimed().Build();
+        var completionMilestone = MilestoneClaimTestBuilder.New().NotSubmitted().Build();
         var testCandidate = PhaseEntityTestBuilder.New()
             .WithAcquisitionMilestone(null)
             .WithStartOnSiteMilestone(null)
@@ -126,11 +126,11 @@ public class CanMilestoneBeClaimedTests
     }
 
     [Fact]
-    public void ShouldCompletionMilestoneReturnFalse_WhenStartOnSiteAndCompletionMilestoneHasBeenClaimed()
+    public void ShouldCompletionMilestoneReturnFalse_WhenStartOnSiteAndCompletionMilestoneHasBeenSubmitted()
     {
         // given
-        var startOnSiteMilestone = MilestoneClaimTestBuilder.New().Claimed().Build();
-        var completionMilestone = MilestoneClaimTestBuilder.New().Claimed().Build();
+        var startOnSiteMilestone = MilestoneClaimTestBuilder.New().Submitted().Build();
+        var completionMilestone = MilestoneClaimTestBuilder.New().Submitted().Build();
         var testCandidate = PhaseEntityTestBuilder.New()
             .WithStartOnSiteMilestone(startOnSiteMilestone)
             .WithCompletionMilestone(completionMilestone)
@@ -144,11 +144,11 @@ public class CanMilestoneBeClaimedTests
     }
 
     [Fact]
-    public void ShouldCompletionMilestoneReturnFalse_WhenCompletionMilestoneHasNotBeenClaimed()
+    public void ShouldCompletionMilestoneReturnFalse_WhenCompletionMilestoneHasNotBeenSubmitted()
     {
         // given
-        var startOnSiteMilestone = MilestoneClaimTestBuilder.New().NotClaimed().Build();
-        var completionMilestone = MilestoneClaimTestBuilder.New().NotClaimed().Build();
+        var startOnSiteMilestone = MilestoneClaimTestBuilder.New().NotSubmitted().Build();
+        var completionMilestone = MilestoneClaimTestBuilder.New().NotSubmitted().Build();
         var testCandidate = PhaseEntityTestBuilder.New()
             .WithStartOnSiteMilestone(startOnSiteMilestone)
             .WithCompletionMilestone(completionMilestone)
@@ -162,10 +162,10 @@ public class CanMilestoneBeClaimedTests
     }
 
     [Fact]
-    public void ShouldCompletionMilestoneReturnFalse_WhenStartOnSiteDoesNotExistAndCompletionMilestoneHasBeenClaimed()
+    public void ShouldCompletionMilestoneReturnFalse_WhenStartOnSiteDoesNotExistAndCompletionMilestoneHasBeenSubmitted()
     {
         // given
-        var completionMilestone = MilestoneClaimTestBuilder.New().Claimed().Build();
+        var completionMilestone = MilestoneClaimTestBuilder.New().Submitted().Build();
         var testCandidate = PhaseEntityTestBuilder.New()
             .WithAcquisitionMilestone(null)
             .WithStartOnSiteMilestone(null)

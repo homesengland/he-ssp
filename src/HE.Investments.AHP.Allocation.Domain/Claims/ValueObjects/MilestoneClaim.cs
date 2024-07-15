@@ -36,9 +36,7 @@ public class MilestoneClaim : ValueObject
 
     public bool? IsConfirmed { get; }
 
-    public bool IsClaimed => Status >= MilestoneStatus.Submitted;
-
-    public bool IsNotClaimed => !IsClaimed;
+    public bool IsSubmitted => Status >= MilestoneStatus.Submitted;
 
     public MilestoneDueStatus CalculateDueStatus(DateTime today)
     {

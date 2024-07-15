@@ -5,7 +5,7 @@ using Xunit;
 
 namespace HE.Investments.AHP.Allocation.Domain.Tests.Claims.ValueObjects.MilestoneClaimTests;
 
-public class IsClaimedTests
+public class IsSubmittedTests
 {
     [Theory]
     [InlineData(MilestoneStatus.Undefined)]
@@ -16,7 +16,7 @@ public class IsClaimedTests
         var testCandidate = MilestoneClaimTestBuilder.New().WithStatus(status).Build();
 
         // when
-        var result = testCandidate.IsClaimed;
+        var result = testCandidate.IsSubmitted;
 
         // then
         result.Should().BeFalse();
@@ -34,7 +34,7 @@ public class IsClaimedTests
         var testCandidate = MilestoneClaimTestBuilder.New().WithStatus(status).Build();
 
         // when
-        var result = testCandidate.IsClaimed;
+        var result = testCandidate.IsSubmitted;
 
         // then
         result.Should().BeTrue();
