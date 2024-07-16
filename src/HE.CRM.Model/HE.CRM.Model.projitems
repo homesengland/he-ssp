@@ -34,6 +34,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getahpapplicationdocumentlocation.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getahpproject.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getahpprojects.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getallocationclaims.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getconsortium.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getconsortiums.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getcontactrole.cs" />
@@ -135,6 +136,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_AHPStatusChange.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_BorrowerPreviousSchemes.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_Cashflow.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_Claim.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_comment.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_Conditions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_Consortium.cs" />

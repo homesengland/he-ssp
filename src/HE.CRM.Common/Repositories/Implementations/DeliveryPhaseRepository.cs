@@ -78,6 +78,23 @@ namespace HE.CRM.Common.Repositories.implementations
             return service.RetrieveMultiple(query).Entities.Select(x => x.ToEntity<invln_DeliveryPhase>()).ToList();
         }
 
+        public List<invln_DeliveryPhase> GetDeliveryPhasesForAllocation(Guid allocationId)
+        {
+            var query_invln_application = allocationId.ToString();
+
+            var query = new QueryExpression(invln_DeliveryPhase.EntityLogicalName);
+            query.ColumnSet.AddColumns(
+                invln_DeliveryPhase.Fields.invln_DeliveryPhaseId,
+                invln_DeliveryPhase.Fields.invln_Application,
+                invln_DeliveryPhase.Fields.invln_phasename,
+                invln_DeliveryPhase.Fields.invln_NoofHomes,
+                invln_DeliveryPhase.Fields.invln_buildactivitytype
+                );
+            query.Criteria.AddCondition(invln_DeliveryPhase.Fields.invln_Application, ConditionOperator.Equal, query_invln_application);
+
+            return service.RetrieveMultiple(query).Entities.Select(x => x.ToEntity<invln_DeliveryPhase>()).ToList();
+        }
+
         private string GenerateContactFilter(string userId)
         {
             if (!string.IsNullOrEmpty(userId))
