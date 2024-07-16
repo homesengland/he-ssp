@@ -439,15 +439,12 @@ export class IspService {
       }
       let cashflowSubmition = await Xrm.WebApi.retrieveMultipleRecords("invln_cashflowsubmission",
         "?$filter=(_invln_loanapplication_value eq " + loanApplication.id + ")&$orderby=invln_dateagreed desc&$top=1")
-      console.log(cashflowSubmition);
       if (cashflowSubmition != null) {
         for (const [key, value] of dictionaryCashFlow) {
           try {
 
             this.common.setAttributeValue(key, cashflowSubmition[value]);
-            console.log(key, value + "----------succes");
           } catch (e) {
-            console.log(key, value);
             console.log(e);
           }
         }
