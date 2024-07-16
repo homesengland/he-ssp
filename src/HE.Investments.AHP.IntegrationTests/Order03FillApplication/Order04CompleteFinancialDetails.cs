@@ -25,7 +25,7 @@ public class Order04CompleteFinancialDetails : AhpApplicationIntegrationTest
     {
         FinancialDetailsData = ReturnSharedData<FinancialDetailsData>(data =>
         {
-            var schemeInformationData = GetSharedDataOrNull<SchemeInformationData>(nameof(SchemeInformationData));
+            var schemeInformationData = ReturnSharedData<SchemeInformationData>();
             data.ProvideSchemeFunding(schemeInformationData?.RequiredFunding ?? 0m);
         });
     }

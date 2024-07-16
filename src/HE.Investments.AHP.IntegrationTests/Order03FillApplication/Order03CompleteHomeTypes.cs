@@ -29,7 +29,7 @@ public class Order03CompleteHomeTypes : AhpApplicationIntegrationTest
     {
         _homeTypesData = ReturnSharedData<HomeTypesData>();
 
-        var schemaInformationData = GetSharedDataOrNull<SchemeInformationData>(nameof(SchemeInformationData));
+        var schemaInformationData = ReturnSharedData<SchemeInformationData>();
         _numberOfHomesPerHomeType = (schemaInformationData?.HousesToDeliver ?? 10) / 2;
     }
 
