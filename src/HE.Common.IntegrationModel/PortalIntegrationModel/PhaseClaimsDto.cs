@@ -6,7 +6,7 @@ namespace HE.Common.IntegrationModel.PortalIntegrationModel
         public string AllocationId { get; set; }
         public string Name { get; set; }
         public int NumberOfHomes { get; set; }
-        public int BuildActivityType { get; set; }
+        public int? BuildActivityType { get; set; }
         public MilestoneClaimDto AcquisitionMilestone { get; set; }
         public MilestoneClaimDto StartOnSiteMilestone { get; set; }
         public MilestoneClaimDto CompletionMilestone { get; set; }

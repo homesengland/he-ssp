@@ -88,7 +88,24 @@ namespace HE.CRM.Common.Repositories.implementations
                 invln_DeliveryPhase.Fields.invln_Application,
                 invln_DeliveryPhase.Fields.invln_phasename,
                 invln_DeliveryPhase.Fields.invln_NoofHomes,
-                invln_DeliveryPhase.Fields.invln_buildactivitytype
+                invln_DeliveryPhase.Fields.invln_buildactivitytype,
+
+                invln_DeliveryPhase.Fields.invln_acquisitiondate,
+                invln_DeliveryPhase.Fields.invln_AcquisitionValue,
+                invln_DeliveryPhase.Fields.invln_AcquisitionPercentageValue,
+                invln_DeliveryPhase.Fields.invln_acquisitionmilestoneclaimdate,
+
+                invln_DeliveryPhase.Fields.invln_startonsitedate,
+                invln_DeliveryPhase.Fields.invln_StartOnSiteValue,
+                invln_DeliveryPhase.Fields.invln_StartOnSitePercentageValue,
+                invln_DeliveryPhase.Fields.invln_startonsitemilestoneclaimdate,
+
+                invln_DeliveryPhase.Fields.invln_completiondate,
+                invln_DeliveryPhase.Fields.invln_CompletionValue,
+                invln_DeliveryPhase.Fields.invln_CompletionPercentageValue,
+                invln_DeliveryPhase.Fields.invln_completionmilestoneclaimdate
+
+
                 );
             query.Criteria.AddCondition(invln_DeliveryPhase.Fields.invln_Application, ConditionOperator.Equal, query_invln_application);
 

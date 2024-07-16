@@ -212,6 +212,32 @@ namespace HE.CRM.Common.DtoMapping
             return ahpAllocationDtoToReturn;
         }
 
+        public static AllocationClaimsDto MapToAllocationClaimsDto(invln_scheme allocation, List<PhaseClaimsDto> listOfPhaseClaims, he_LocalAuthority localAuthority) {
+            var allocationClaimsDtoReturn = new AllocationClaimsDto()
+            {
+                Id = allocation.invln_schemeId.ToString(),
+                Name = allocation.invln_schemename,
+                ReferenceNumber = allocation.invln_applicationid + " (allocationId in future)",
+                LocalAuthority = new LocalAuthorityDto()
+                {
+                    id = localAuthority.Id.ToString(),
+                    name = localAuthority.he_Name,
+                    code = localAuthority.he_GSSCode,
+                },
+                ProgrammeId = allocation.invln_programmelookup?.Id.ToString(),
+                Tenure = allocation.invln_Tenure.Value,
+
+                GrantDetails = new GrantDetailsDto()
+                {
+                    TotalGrantAllocated = allocation.invln_TotalGrantAllocated?.Value,
+                    AmountPaid = allocation.invln_AmountPaid?.Value,
+                    AmountRemaining = allocation.invln_AmountRemaining?.Value,
+                },
+
+                ListOfPhaseClaims = listOfPhaseClaims,
+            };
+            return allocationClaimsDtoReturn;
+        }
 
         private static OptionSetValue MapNullableIntToOptionSetValue(int? valueToMap)
         {

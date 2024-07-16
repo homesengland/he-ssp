@@ -11,19 +11,54 @@ namespace HE.CRM.Common.DtoMapping
     public class ClaimMapper
     {
 
-        public static MilestoneClaimDto MapToMilestoneClaimDto(invln_Claim claim)
+        public static MilestoneClaimDto MapToMilestoneClaimDto(invln_DeliveryPhase deliveryphase, int milestone, invln_Claim claim = null)
         {
-            var result = new MilestoneClaimDto()
+            var result = new MilestoneClaimDto();
+            if (claim == null)
             {
-                Type = claim.invln_Milestone.Value,
-                Status = claim.StateCode.Value,
-                AmountOfGrantApportioned = claim.invln_AmountApportionedtoMilestone.Value,
-                PercentageOfGrantApportioned = (decimal) claim.invln_PercentageofGrantApportionedtoThisMilestone.Value,
-                ForecastClaimDate = claim.invln_MilestoneDate.Value,
-                ClaimDate = claim.invln_ClaimSubmissionDate.Value,
-                CostIncurred = claim.invln_IncurredCosts,
-                IsConfirmed = claim.invln_RequirementsConfirmation,
-            };
+                result.Type = milestone;
+
+                if (milestone == (int)invln_Milestone.Acquisition)
+                {
+                    result.AmountOfGrantApportioned = deliveryphase.invln_AcquisitionValue.Value;
+                    result.PercentageOfGrantApportioned = deliveryphase.invln_AcquisitionPercentageValue ?? 0;
+                }
+                if (milestone == (int)invln_Milestone.SoS)
+                {
+                    result.AmountOfGrantApportioned = deliveryphase.invln_StartOnSiteValue.Value;
+                    result.PercentageOfGrantApportioned = deliveryphase.invln_StartOnSitePercentageValue ?? 0;
+                }
+                if (milestone == (int)invln_Milestone.PC)
+                {
+                    result.AmountOfGrantApportioned = deliveryphase.invln_CompletionValue.Value;
+                    result.PercentageOfGrantApportioned = deliveryphase.invln_CompletionPercentageValue ?? 0;
+                }
+            }
+            else
+            {
+                result.Type = claim.invln_Milestone.Value;
+                result.Status = claim.StatusCode.Value;
+                result.AmountOfGrantApportioned = claim.invln_AmountApportionedtoMilestone.Value;
+                result.PercentageOfGrantApportioned = claim.invln_PercentageofGrantApportionedtoThisMilestone.HasValue ? (decimal)claim.invln_PercentageofGrantApportionedtoThisMilestone.Value : 0;
+                result.AchivmentDate = claim.invln_MilestoneDate ?? null;
+                result.SubmisstionDate = claim.invln_ClaimSubmissionDate ?? null;
+                result.CostIncurred = claim.invln_IncurredCosts;
+                result.IsConfirmed = claim.invln_RequirementsConfirmation;
+            }
+
+            if (milestone == (int)invln_Milestone.Acquisition)
+            {
+                result.ForecastClaimDate = deliveryphase.invln_acquisitionmilestoneclaimdate ?? null;
+            }
+            if (milestone == (int)invln_Milestone.SoS)
+            {
+                result.ForecastClaimDate = deliveryphase.invln_startonsitemilestoneclaimdate ?? null;
+            }
+            if (milestone == (int)invln_Milestone.PC)
+            {
+                result.ForecastClaimDate = deliveryphase.invln_completionmilestoneclaimdate ?? null;
+            }
+
             return result;
         }
     }

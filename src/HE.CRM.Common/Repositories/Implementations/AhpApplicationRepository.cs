@@ -182,7 +182,8 @@ namespace HE.CRM.Common.Repositories.Implementations
             invln_scheme allocation = null;
 
             var query_invln_isallocation = true;
-            var query_invln_schemeid = organisationId.ToString();
+            var query_invln_schemeid = allocationId.ToString();
+            var query_invln_organisationid = organisationId.ToString();
 
             var query = new QueryExpression(invln_scheme.EntityLogicalName);
             query.ColumnSet.AddColumns(
@@ -191,7 +192,11 @@ namespace HE.CRM.Common.Repositories.Implementations
                 invln_scheme.Fields.invln_schemename,
                 invln_scheme.Fields.invln_HELocalAuthorityID,
                 invln_scheme.Fields.invln_programmelookup,
-                invln_scheme.Fields.invln_Tenure);
+                invln_scheme.Fields.invln_Tenure,
+                invln_scheme.Fields.invln_TotalGrantAllocated,
+                invln_scheme.Fields.invln_AmountPaid,
+                invln_scheme.Fields.invln_AmountRemaining);
+            query.Criteria.AddCondition(invln_scheme.Fields.invln_organisationid, ConditionOperator.Equal, query_invln_organisationid);
             query.Criteria.AddCondition(invln_scheme.Fields.invln_isallocation, ConditionOperator.Equal, query_invln_isallocation);
             query.Criteria.AddCondition(invln_scheme.Fields.invln_schemeId, ConditionOperator.Equal, query_invln_schemeid);
 

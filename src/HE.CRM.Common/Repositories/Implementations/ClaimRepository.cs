@@ -17,7 +17,7 @@ namespace HE.CRM.Common.Repositories.Implementations
 
         public invln_Claim GetClaimForAllocationDeliveryPhase(Guid deliveryPhaseId, int milestone)
         {
-            var claim = new invln_Claim();
+            invln_Claim claim = null;
 
             var query_invln_deliveryphase = deliveryPhaseId.ToString();
             var query_invln_Milestone = milestone;
