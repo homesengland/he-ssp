@@ -37,7 +37,6 @@ public class AhpIntegrationTest : IntegrationTestBase<Program>
         _fixture = fixture;
         LoginData = fixture.LoginData;
         InFrontDoor = fixture.ServiceProvider.GetRequiredService<FrontDoorDataManipulator>();
-        AhpDataManipulator = fixture.ServiceProvider.GetRequiredService<AhpDataManipulator>();
         SetUserOrganisationData();
     }
 
@@ -59,7 +58,7 @@ public class AhpIntegrationTest : IntegrationTestBase<Program>
 
     protected FrontDoorDataManipulator InFrontDoor { get; }
 
-    protected AhpDataManipulator AhpDataManipulator { get; }
+    protected AhpDataManipulator AhpDataManipulator => _fixture.AhpDataManipulator;
 
     public override async Task DisposeAsync()
     {

@@ -2,7 +2,7 @@ using HE.Investment.AHP.Contract.HomeTypes;
 using HE.Investment.AHP.Contract.HomeTypes.Commands;
 using HE.Investment.AHP.Domain.HomeTypes.Entities;
 using HE.Investment.AHP.Domain.HomeTypes.Repositories;
-using HE.Investments.Common.Contract;
+using HE.Investments.Account.Shared.User;
 using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Extensions;
@@ -29,23 +29,22 @@ public class SaveHomeTypeDetailsCommandHandler : HomeTypeCommandHandlerBase, IRe
     {
         var account = await _accountUserContext.GetSelectedAccount();
         var homeTypes = await _repository.GetByApplicationId(request.ApplicationId, account, cancellationToken);
-        var organisationId = account.SelectedOrganisationId();
 
         return request.HomeTypeId.IsNotProvided()
-            ? await CreateNewHomeType(homeTypes, organisationId, request, cancellationToken)
-            : await UpdateExistingHomeType(homeTypes, organisationId, request, cancellationToken);
+            ? await CreateNewHomeType(homeTypes, account, request, cancellationToken)
+            : await UpdateExistingHomeType(homeTypes, account, request, cancellationToken);
     }
 
     private async Task<OperationResult<HomeTypeId?>> CreateNewHomeType(
         HomeTypesEntity homeTypes,
-        OrganisationId organisationId,
+        UserAccount userAccount,
         SaveHomeTypeDetailsCommand request,
         CancellationToken cancellationToken)
     {
         try
         {
             var homeType = homeTypes.CreateHomeType(request.HomeTypeName, request.HousingType);
-            await _repository.Save(homeType, organisationId, cancellationToken);
+            await _repository.Save(homeType, userAccount, cancellationToken);
 
             return new OperationResult<HomeTypeId?>(homeType.Id);
         }
@@ -57,7 +56,7 @@ public class SaveHomeTypeDetailsCommandHandler : HomeTypeCommandHandlerBase, IRe
 
     private async Task<OperationResult<HomeTypeId?>> UpdateExistingHomeType(
         HomeTypesEntity homeTypes,
-        OrganisationId organisationId,
+        UserAccount userAccount,
         SaveHomeTypeDetailsCommand request,
         CancellationToken cancellationToken)
     {
@@ -70,7 +69,7 @@ public class SaveHomeTypeDetailsCommandHandler : HomeTypeCommandHandlerBase, IRe
             return new OperationResult<HomeTypeId?>(validationErrors, null);
         }
 
-        await _repository.Save(homeType, organisationId, cancellationToken);
+        await _repository.Save(homeType, userAccount, cancellationToken);
 
         return new OperationResult<HomeTypeId?>(homeType.Id);
     }

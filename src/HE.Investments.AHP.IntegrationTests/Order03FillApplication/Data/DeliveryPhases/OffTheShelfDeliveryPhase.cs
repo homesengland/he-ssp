@@ -9,4 +9,10 @@ public sealed class OffTheShelfDeliveryPhase : DeliveryPhaseDataBase<OffTheShelf
     public override BuildActivityType BuildActivityType => BuildActivityType.OffTheShelf;
 
     protected override OffTheShelfDeliveryPhase DeliveryPhase => this;
+
+    public override void PopulateAllData()
+    {
+        GenerateDeliveryPhase();
+        GenerateCompletionMilestone();
+    }
 }

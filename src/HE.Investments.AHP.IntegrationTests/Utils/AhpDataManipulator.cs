@@ -1,9 +1,7 @@
 using System.Globalization;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
-using HE.Investment.AHP.Domain.Application.Crm;
 using HE.Investment.AHP.Domain.Common.Mappers;
-using HE.Investment.AHP.Domain.Delivery.Crm;
-using HE.Investment.AHP.Domain.HomeTypes.Crm;
+using HE.Investments.AHP.IntegrationTests.Crm;
 using HE.Investments.AHP.IntegrationTests.Order03FillApplication.Data;
 using HE.Investments.AHP.IntegrationTests.Order03FillApplication.Data.DeliveryPhases;
 using HE.Investments.AHP.IntegrationTests.Order03FillApplication.Data.HomeTypes;
@@ -14,20 +12,11 @@ namespace HE.Investments.AHP.IntegrationTests.Utils;
 
 public class AhpDataManipulator
 {
-    private readonly IApplicationCrmContext _applicationCrmContext;
+    private readonly AhpCrmContext _ahpCrmContext;
 
-    private readonly IHomeTypeCrmContext _homeTypeCrmContext;
-
-    private readonly IDeliveryPhaseCrmContext _deliveryPhaseCrmContext;
-
-    public AhpDataManipulator(
-        IApplicationCrmContext applicationCrmContext,
-        IHomeTypeCrmContext homeTypeCrmContext,
-        IDeliveryPhaseCrmContext deliveryPhaseCrmContext)
+    public AhpDataManipulator(AhpCrmContext ahpCrmContext)
     {
-        _applicationCrmContext = applicationCrmContext;
-        _homeTypeCrmContext = homeTypeCrmContext;
-        _deliveryPhaseCrmContext = deliveryPhaseCrmContext;
+        _ahpCrmContext = ahpCrmContext;
     }
 
     public async Task<string> CreateAhpAllocation(
@@ -39,8 +28,9 @@ public class AhpDataManipulator
         DeliveryPhasesData deliveryPhasesData)
     {
         var allocationId = await CreateApplication(loginData, applicationData, financialDetailsData, schemeInformationData);
-        await AddHomeType(loginData, allocationId, homeTypesData);
-        await AddDeliveryPhases(loginData, allocationId, deliveryPhasesData);
+        applicationData.SetApplicationId(allocationId);
+        await AddHomeTypes(loginData, allocationId, homeTypesData);
+        await AddDeliveryPhases(loginData, allocationId, deliveryPhasesData, homeTypesData);
 
         return allocationId;
     }
@@ -51,12 +41,6 @@ public class AhpDataManipulator
         FinancialDetailsData financialDetailsData,
         SchemeInformationData schemeInformationData)
     {
-        MethodRunner
-            .New()
-            .RunAllPublicMethods(applicationData.GetType())
-            .RunAllPublicMethods(financialDetailsData.GetType())
-            .RunAllPublicMethods(schemeInformationData.GetType());
-
         var applicationDto = new AhpApplicationDto
         {
             applicationPartnerConfirmation = true,
@@ -66,8 +50,7 @@ public class AhpDataManipulator
             currentLandValue = financialDetailsData.PublicLandValue,
             dateSubmitted = DateTime.UtcNow,
             deliveryPhasesSectionCompletionStatus = (int)invln_Sectioncompletionstatus.Completed,
-            developingPartnerId = schemeInformationData.DevelopingPartner.Id.ToGuidAsString(),
-            developingPartnerName = schemeInformationData.DevelopingPartner.Name,
+            developingPartnerId = loginData.OrganisationId,
             discussionsWithLocalStakeholders = schemeInformationData.StakeholderDiscussions,
             expectedAcquisitionCost = financialDetailsData.LandStatus,
             expectedOnCosts = financialDetailsData.ExpectedOnCosts,
@@ -93,10 +76,8 @@ public class AhpDataManipulator
             organisationId = loginData.OrganisationId,
             otherCapitalSources = financialDetailsData.ExpectedContributionsOtherCapitalSources,
             ownResources = financialDetailsData.ExpectedContributionsOwnResources,
-            ownerOfTheHomesAfterCompletionId = schemeInformationData.OwnerOfTheHomes.Id.ToGuidAsString(),
-            ownerOfTheHomesAfterCompletionName = schemeInformationData.OwnerOfTheHomes.Name,
-            ownerOfTheLandDuringDevelopmentId = schemeInformationData.OwnerOfTheLand.Id.ToGuidAsString(),
-            ownerOfTheLandDuringDevelopmentName = schemeInformationData.OwnerOfTheLand.Name,
+            ownerOfTheHomesAfterCompletionId = loginData.OrganisationId,
+            ownerOfTheLandDuringDevelopmentId = loginData.OrganisationId,
             previousExternalStatus = (int)invln_scheme_StatusCode.ApplicationSubmitted,
             programmeId = "d5fe3baa-eeae-ee11-a569-0022480041cf",
             recycledCapitalGrantFund = financialDetailsData.ExpectedContributionsRcgfContribution,
@@ -106,12 +87,12 @@ public class AhpDataManipulator
 
             // todo set isAllocation flag
         };
-        var applicationId = await _applicationCrmContext.Save(applicationDto, loginData.OrganisationId, loginData.UserGlobalId, CancellationToken.None);
+        var applicationId = await _ahpCrmContext.SaveAhpApplication(applicationDto, loginData, CancellationToken.None);
 
         return applicationId;
     }
 
-    private async Task AddHomeType(ILoginData loginData, string applicationId, HomeTypesData homeTypesData)
+    private async Task AddHomeTypes(ILoginData loginData, string applicationId, HomeTypesData homeTypesData)
     {
         var disabledHomeTypeDto = new HomeTypeDto()
         {
@@ -122,12 +103,12 @@ public class AhpDataManipulator
             buildingType = (int)invln_Buildingtype.House,
             clientGroup = (int)invln_Clientgroup.APeoplewithalcoholproblems,
             designPlansMoreInformation = homeTypesData.Disabled.DesignPlanInformation,
-            designPrinciples = { (int)invln_HAPPIprinciples.KNone },
+            designPrinciples = [(int)invln_HAPPIprinciples.KNone],
             doAllHomesMeetNDSS = false,
             exemptionJustification = homeTypesData.Disabled.ExemptionJustification,
             exitPlan = homeTypesData.Disabled.ExitPlan,
             floorArea = homeTypesData.Disabled.FloorArea,
-            fundingSources = { (int)invln_Revenuefundingsources.SocialServicesDepartment },
+            fundingSources = [(int)invln_Revenuefundingsources.SocialServicesDepartment],
             homeTypeName = homeTypesData.Disabled.Name,
             homesDesignedForUseOfParticularGroup = (int)invln_Homesdesignedforuseofparticulargrou.Disabledpeople,
             housingType = (int)invln_Typeofhousing.Housingfordisabledandvulnerablepeople,
@@ -140,16 +121,16 @@ public class AhpDataManipulator
             maxOccupancy = homeTypesData.Disabled.MaximumOccupancy,
             mmcApplied = YesNoTypeMapper.Map(homeTypesData.Disabled.ModernMethodsOfConstruction),
             mmcCategories =
-            {
+            [
                 (int)invln_MMCCategories.Category1Premanufacturing3Dprimarystructuralsystems,
                 (int)invln_MMCCategories.Category2Premanufacturing2Dprimarystructuralsystems,
-                (int)invln_MMCCategories.Category6Traditionalbuildingproductledsitelabourreductionproductivityimprovements,
-            },
-            mmcCategories1Subcategories = { (int)invln_MMCcategory1subcategories._1astructuralchassisonlynotfittedout },
+                (int)invln_MMCCategories.Category6Traditionalbuildingproductledsitelabourreductionproductivityimprovements
+            ],
+            mmcCategories1Subcategories = [(int)invln_MMCcategory1subcategories._1astructuralchassisonlynotfittedout],
             mmcCategories2Subcategories =
-            {
-                (int)invln_MMCcategory2subcategories._2cfurtherenhancedconsolidationinsulationliningsexternalcladdingroofingdoorswindows,
-            },
+            [
+                (int)invln_MMCcategory2subcategories._2cfurtherenhancedconsolidationinsulationliningsexternalcladdingroofingdoorswindows
+            ],
             moveOnArrangements = homeTypesData.Disabled.MoveOnArrangements,
             numberOfBedrooms = homeTypesData.Disabled.NumberOfBedrooms,
             numberOfHomes = homeTypesData.Disabled.NumberOfHomes,
@@ -162,7 +143,7 @@ public class AhpDataManipulator
             shortStayAccommodation = YesNoTypeMapper.Map(homeTypesData.Disabled.ShortStayAccommodation),
             targetRentOver80PercentOfMarketRent = YesNoTypeMapper.Map(homeTypesData.Disabled.Exceeds80PercentOfMarketRent),
             typologyLocationAndDesign = homeTypesData.Disabled.TypologyLocationAndDesign,
-            whichNDSSStandardsHaveBeenMet = { (int)invln_WhichNDSSstandardshavebeenmet.Bedroomwidths },
+            whichNDSSStandardsHaveBeenMet = [(int)invln_WhichNDSSstandardshavebeenmet.Bedroomwidths],
         };
 
         var generalHomeTypeDto = new HomeTypeDto
@@ -185,16 +166,16 @@ public class AhpDataManipulator
             maxOccupancy = homeTypesData.General.MaximumOccupancy,
             mmcApplied = YesNoTypeMapper.Map(homeTypesData.General.ModernMethodsOfConstruction),
             mmcCategories =
-            {
+            [
                 (int)invln_MMCCategories.Category1Premanufacturing3Dprimarystructuralsystems,
                 (int)invln_MMCCategories.Category2Premanufacturing2Dprimarystructuralsystems,
-                (int)invln_MMCCategories.Category6Traditionalbuildingproductledsitelabourreductionproductivityimprovements,
-            },
-            mmcCategories1Subcategories = { (int)invln_MMCcategory1subcategories._1astructuralchassisonlynotfittedout },
+                (int)invln_MMCCategories.Category6Traditionalbuildingproductledsitelabourreductionproductivityimprovements
+            ],
+            mmcCategories1Subcategories = [(int)invln_MMCcategory1subcategories._1astructuralchassisonlynotfittedout],
             mmcCategories2Subcategories =
-            {
-                (int)invln_MMCcategory2subcategories._2cfurtherenhancedconsolidationinsulationliningsexternalcladdingroofingdoorswindows,
-            },
+            [
+                (int)invln_MMCcategory2subcategories._2cfurtherenhancedconsolidationinsulationliningsexternalcladdingroofingdoorswindows
+            ],
             numberOfBedrooms = homeTypesData.General.NumberOfBedrooms,
             numberOfHomes = homeTypesData.General.NumberOfHomes,
             numberOfStoreys = homeTypesData.General.NumberOfStoreys,
@@ -203,112 +184,80 @@ public class AhpDataManipulator
                 int.Parse(homeTypesData.General.ProspectiveRentPercentage.Replace("%", string.Empty), CultureInfo.InvariantCulture) / 100,
             sharedFacilities = (int)invln_Facilities.Selfcontainedfacilities,
             targetRentOver80PercentOfMarketRent = YesNoTypeMapper.Map(homeTypesData.General.Exceeds80PercentOfMarketRent),
-            whichNDSSStandardsHaveBeenMet = { (int)invln_WhichNDSSstandardshavebeenmet.Bedroomwidths },
+            whichNDSSStandardsHaveBeenMet = [(int)invln_WhichNDSSstandardshavebeenmet.Bedroomwidths],
         };
-        await _homeTypeCrmContext.Save(disabledHomeTypeDto, loginData.OrganisationId, CancellationToken.None);
-        await _homeTypeCrmContext.Save(generalHomeTypeDto, loginData.OrganisationId, CancellationToken.None);
+
+        var disabledHomeTypeId = await _ahpCrmContext.SaveAhpHomeType(disabledHomeTypeDto, loginData, CancellationToken.None);
+        var generalHomeTypeId = await _ahpCrmContext.SaveAhpHomeType(generalHomeTypeDto, loginData, CancellationToken.None);
+
+        homeTypesData.Disabled.SetHomeTypeId(disabledHomeTypeId);
+        homeTypesData.General.SetHomeTypeId(generalHomeTypeId);
     }
 
-    private async Task AddDeliveryPhases(ILoginData loginData, string applicationId, DeliveryPhasesData deliveryPhasesData)
+    private async Task AddDeliveryPhases(ILoginData loginData, string applicationId, DeliveryPhasesData deliveryPhasesData, HomeTypesData homeTypesData)
     {
-        var firstDeliveryPhase = new DeliveryPhaseDto()
+        var rehabDeliveryPhase = new DeliveryPhaseDto()
         {
-            acquisitionDate = new DateTime(
-                int.Parse(deliveryPhasesData.RehabDeliveryPhase.AcquisitionMilestoneDate.Day!, CultureInfo.InvariantCulture),
-                int.Parse(deliveryPhasesData.RehabDeliveryPhase.AcquisitionMilestoneDate.Month!, CultureInfo.InvariantCulture),
-                int.Parse(deliveryPhasesData.RehabDeliveryPhase.AcquisitionMilestoneDate.Year!, CultureInfo.InvariantCulture),
-                0,
-                0,
-                0,
-                DateTimeKind.Unspecified),
-            acquisitionPaymentDate = new DateTime(
-                int.Parse(deliveryPhasesData.RehabDeliveryPhase.AcquisitionMilestonePaymentDate.Day!, CultureInfo.InvariantCulture),
-                int.Parse(deliveryPhasesData.RehabDeliveryPhase.AcquisitionMilestonePaymentDate.Month!, CultureInfo.InvariantCulture),
-                int.Parse(deliveryPhasesData.RehabDeliveryPhase.AcquisitionMilestonePaymentDate.Year!, CultureInfo.InvariantCulture),
-                0,
-                0,
-                0,
-                DateTimeKind.Unspecified),
+            acquisitionDate = DateTime.ParseExact(
+                $"{deliveryPhasesData.RehabDeliveryPhase.AcquisitionMilestoneDate.Day}/{deliveryPhasesData.RehabDeliveryPhase.AcquisitionMilestoneDate.Month}/{deliveryPhasesData.RehabDeliveryPhase.AcquisitionMilestoneDate.Year}",
+                "dd/MM/yyyy",
+                CultureInfo.InvariantCulture),
+            acquisitionPaymentDate = DateTime.ParseExact(
+                $"{deliveryPhasesData.RehabDeliveryPhase.AcquisitionMilestonePaymentDate.Day}/{deliveryPhasesData.RehabDeliveryPhase.AcquisitionMilestonePaymentDate.Month}/{deliveryPhasesData.RehabDeliveryPhase.AcquisitionMilestonePaymentDate.Year}",
+                "dd/MM/yyyy",
+                CultureInfo.InvariantCulture),
             applicationId = applicationId,
-            completionDate = new DateTime(
-                int.Parse(deliveryPhasesData.RehabDeliveryPhase.CompletionMilestoneDate.Day!, CultureInfo.InvariantCulture),
-                int.Parse(deliveryPhasesData.RehabDeliveryPhase.CompletionMilestoneDate.Month!, CultureInfo.InvariantCulture),
-                int.Parse(deliveryPhasesData.RehabDeliveryPhase.CompletionMilestoneDate.Year!, CultureInfo.InvariantCulture),
-                0,
-                0,
-                0,
-                DateTimeKind.Unspecified),
-            completionPaymentDate = new DateTime(
-                int.Parse(deliveryPhasesData.RehabDeliveryPhase.CompletionMilestonePaymentDate.Day!, CultureInfo.InvariantCulture),
-                int.Parse(deliveryPhasesData.RehabDeliveryPhase.CompletionMilestonePaymentDate.Month!, CultureInfo.InvariantCulture),
-                int.Parse(deliveryPhasesData.RehabDeliveryPhase.CompletionMilestonePaymentDate.Year!, CultureInfo.InvariantCulture),
-                0,
-                0,
-                0,
-                DateTimeKind.Unspecified),
+            completionDate = DateTime.ParseExact(
+                $"{deliveryPhasesData.RehabDeliveryPhase.CompletionMilestoneDate.Day}/{deliveryPhasesData.RehabDeliveryPhase.CompletionMilestoneDate.Month}/{deliveryPhasesData.RehabDeliveryPhase.CompletionMilestoneDate.Year}",
+                "dd/MM/yyyy",
+                CultureInfo.InvariantCulture),
+            completionPaymentDate = DateTime.ParseExact(
+                $"{deliveryPhasesData.RehabDeliveryPhase.CompletionMilestonePaymentDate.Day}/{deliveryPhasesData.RehabDeliveryPhase.CompletionMilestonePaymentDate.Month}/{deliveryPhasesData.RehabDeliveryPhase.CompletionMilestonePaymentDate.Year}",
+                "dd/MM/yyyy",
+                CultureInfo.InvariantCulture),
             isCompleted = true,
             isReconfigurationOfExistingProperties = deliveryPhasesData.RehabDeliveryPhase.ReconfiguringExisting,
             name = deliveryPhasesData.RehabDeliveryPhase.Name,
             numberOfHomes =
-                new Dictionary<string, int?>
-                {
-                    {
-                        deliveryPhasesData.RehabDeliveryPhase.DeliveryPhaseHomes[0].Id,
-                        deliveryPhasesData.RehabDeliveryPhase.DeliveryPhaseHomes[0].NumberOfHomes
-                    },
-                },
+                new Dictionary<string, int?> { { homeTypesData.Disabled.Id, homeTypesData.Disabled.NumberOfHomes }, },
             rehabBuildActivityType = (int)invln_RehabActivityType.WorksOnly,
-            startOnSiteDate = new DateTime(
-                int.Parse(deliveryPhasesData.RehabDeliveryPhase.StartOnSiteMilestoneDate.Day!, CultureInfo.InvariantCulture),
-                int.Parse(deliveryPhasesData.RehabDeliveryPhase.StartOnSiteMilestoneDate.Month!, CultureInfo.InvariantCulture),
-                int.Parse(deliveryPhasesData.RehabDeliveryPhase.StartOnSiteMilestoneDate.Year!, CultureInfo.InvariantCulture),
-                0,
-                0,
-                0,
-                DateTimeKind.Unspecified),
-            startOnSitePaymentDate = new DateTime(
-                int.Parse(deliveryPhasesData.RehabDeliveryPhase.StartOnSiteMilestonePaymentDate.Day!, CultureInfo.InvariantCulture),
-                int.Parse(deliveryPhasesData.RehabDeliveryPhase.StartOnSiteMilestonePaymentDate.Month!, CultureInfo.InvariantCulture),
-                int.Parse(deliveryPhasesData.RehabDeliveryPhase.StartOnSiteMilestonePaymentDate.Year!, CultureInfo.InvariantCulture),
-                0,
-                0,
-                0,
-                DateTimeKind.Unspecified),
+            startOnSiteDate = DateTime.ParseExact(
+                $"{deliveryPhasesData.RehabDeliveryPhase.StartOnSiteMilestoneDate.Day}/{deliveryPhasesData.RehabDeliveryPhase.StartOnSiteMilestoneDate.Month}/{deliveryPhasesData.RehabDeliveryPhase.StartOnSiteMilestoneDate.Year}",
+                "dd/MM/yyyy",
+                CultureInfo.InvariantCulture),
+            startOnSitePaymentDate = DateTime.ParseExact(
+                $"{deliveryPhasesData.RehabDeliveryPhase.StartOnSiteMilestonePaymentDate.Day}/{deliveryPhasesData.RehabDeliveryPhase.StartOnSiteMilestonePaymentDate.Month}/{deliveryPhasesData.RehabDeliveryPhase.StartOnSiteMilestonePaymentDate.Year}",
+                "dd/MM/yyyy",
+                CultureInfo.InvariantCulture),
             typeOfHomes = "rehab",
+            acquisitionValue = 1,
+            acquisitionPercentageValue = 1,
+            startOnSiteValue = 1,
+            startOnSitePercentageValue = 1,
+            completionValue = 1,
+            completionPercentageValue = 1,
+            requiresAdditionalPayments = "yes",
+            claimingtheMilestoneConfirmed = false,
         };
-        var secondDeliveryPhase = new DeliveryPhaseDto()
+        var offTheShelfDeliveryPhase = new DeliveryPhaseDto()
         {
             applicationId = applicationId,
-            completionDate = new DateTime(
-                int.Parse(deliveryPhasesData.OffTheShelfDeliveryPhase.CompletionMilestoneDate.Day!, CultureInfo.InvariantCulture),
-                int.Parse(deliveryPhasesData.OffTheShelfDeliveryPhase.CompletionMilestoneDate.Month!, CultureInfo.InvariantCulture),
-                int.Parse(deliveryPhasesData.OffTheShelfDeliveryPhase.CompletionMilestoneDate.Year!, CultureInfo.InvariantCulture),
-                0,
-                0,
-                0,
-                DateTimeKind.Unspecified),
-            completionPaymentDate = new DateTime(
-                int.Parse(deliveryPhasesData.OffTheShelfDeliveryPhase.CompletionMilestonePaymentDate.Day!, CultureInfo.InvariantCulture),
-                int.Parse(deliveryPhasesData.OffTheShelfDeliveryPhase.CompletionMilestonePaymentDate.Month!, CultureInfo.InvariantCulture),
-                int.Parse(deliveryPhasesData.OffTheShelfDeliveryPhase.CompletionMilestonePaymentDate.Year!, CultureInfo.InvariantCulture),
-                0,
-                0,
-                0,
-                DateTimeKind.Unspecified),
+            completionDate = DateTime.ParseExact(
+                $"{deliveryPhasesData.RehabDeliveryPhase.CompletionMilestoneDate.Day}/{deliveryPhasesData.RehabDeliveryPhase.CompletionMilestoneDate.Month}/{deliveryPhasesData.RehabDeliveryPhase.CompletionMilestoneDate.Year}",
+                "dd/MM/yyyy",
+                CultureInfo.InvariantCulture),
+            completionPaymentDate = DateTime.ParseExact(
+                $"{deliveryPhasesData.RehabDeliveryPhase.CompletionMilestonePaymentDate.Day}/{deliveryPhasesData.RehabDeliveryPhase.CompletionMilestonePaymentDate.Month}/{deliveryPhasesData.RehabDeliveryPhase.CompletionMilestonePaymentDate.Year}",
+                "dd/MM/yyyy",
+                CultureInfo.InvariantCulture),
             isCompleted = true,
             name = deliveryPhasesData.OffTheShelfDeliveryPhase.Name,
             newBuildActivityType = (int)invln_NewBuildActivityType.OffTheShelf,
-            numberOfHomes = new Dictionary<string, int?>
-            {
-                {
-                    deliveryPhasesData.OffTheShelfDeliveryPhase.DeliveryPhaseHomes[0].Id,
-                    deliveryPhasesData.OffTheShelfDeliveryPhase.DeliveryPhaseHomes[0].NumberOfHomes
-                },
-            },
+            numberOfHomes = new Dictionary<string, int?> { { homeTypesData.General.Id, homeTypesData.General.NumberOfHomes }, },
             typeOfHomes = "newBuild",
         };
 
-        await _deliveryPhaseCrmContext.Save(firstDeliveryPhase, loginData.OrganisationId, CancellationToken.None);
-        await _deliveryPhaseCrmContext.Save(secondDeliveryPhase, loginData.OrganisationId, CancellationToken.None);
+        await _ahpCrmContext.SaveAhpDeliveryPhase(rehabDeliveryPhase, loginData, CancellationToken.None);
+        await _ahpCrmContext.SaveAhpDeliveryPhase(offTheShelfDeliveryPhase, loginData, CancellationToken.None);
     }
 }

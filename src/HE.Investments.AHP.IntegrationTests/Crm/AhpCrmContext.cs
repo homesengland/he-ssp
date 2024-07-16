@@ -1,5 +1,7 @@
+using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investment.AHP.Domain.Application.Crm;
-using HE.Investment.AHP.Domain.Config;
+using HE.Investment.AHP.Domain.Delivery.Crm;
+using HE.Investment.AHP.Domain.HomeTypes.Crm;
 using HE.Investments.AHP.Consortium.Domain.Crm;
 using HE.Investments.Common.Contract;
 using HE.Investments.IntegrationTestsFramework.Auth;
@@ -11,16 +13,24 @@ public class AhpCrmContext
 {
     private readonly IApplicationCrmContext _applicationCrmContext;
 
+    private readonly IHomeTypeCrmContext _homeTypeCrmContext;
+
+    private readonly IDeliveryPhaseCrmContext _deliveryPhaseCrmContext;
+
     private readonly IConsortiumCrmContext _consortiumCrmContext;
 
     private readonly string _ahpProgrammeId;
 
     public AhpCrmContext(
         IApplicationCrmContext applicationCrmContext,
+        IHomeTypeCrmContext homeTypeCrmContext,
+        IDeliveryPhaseCrmContext deliveryPhaseCrmContext,
         IConsortiumCrmContext consortiumCrmContext,
         IProgrammeSettings programmeSettings)
     {
         _applicationCrmContext = applicationCrmContext;
+        _homeTypeCrmContext = homeTypeCrmContext;
+        _deliveryPhaseCrmContext = deliveryPhaseCrmContext;
         _consortiumCrmContext = consortiumCrmContext;
         _ahpProgrammeId = programmeSettings.AhpProgrammeId;
     }
@@ -48,5 +58,24 @@ public class AhpCrmContext
         }
 
         return (ConsortiumId.From(consortium.id), consortium.leadPartnerId == loginData.OrganisationId);
+    }
+
+    public async Task<string> SaveAhpApplication(AhpApplicationDto dto, ILoginData loginData, CancellationToken cancellationToken)
+    {
+        var organisationId = loginData.OrganisationId;
+        var applicationId = await _applicationCrmContext.Save(dto, organisationId, loginData.UserGlobalId, cancellationToken);
+        return applicationId;
+    }
+
+    public async Task<string> SaveAhpHomeType(HomeTypeDto homeType, ILoginData loginData, CancellationToken cancellationToken)
+    {
+        var organisationId = loginData.OrganisationId;
+        return await _homeTypeCrmContext.Save(homeType, organisationId, loginData.UserGlobalId, cancellationToken);
+    }
+
+    public async Task SaveAhpDeliveryPhase(DeliveryPhaseDto deliveryPhase, ILoginData loginData, CancellationToken cancellationToken)
+    {
+        var organisationId = loginData.OrganisationId;
+        await _deliveryPhaseCrmContext.Save(deliveryPhase, organisationId, loginData.UserGlobalId, cancellationToken);
     }
 }

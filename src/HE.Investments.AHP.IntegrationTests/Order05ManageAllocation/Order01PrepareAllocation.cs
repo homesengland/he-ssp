@@ -45,6 +45,13 @@ public class Order01PrepareAllocation : AhpIntegrationTest
     public async Task Order01_AhpProjectShouldBeCreated()
     {
         // given
+        ApplicationData.GenerateApplicationName();
+        SchemeInformationData.PopulateAllData();
+        FinancialDetailsData.PopulateAllData(SchemeInformationData.RequiredFunding);
+        HomeTypesData.General.PopulateAllData();
+        HomeTypesData.Disabled.PopulateAllData();
+        DeliveryPhasesData.RehabDeliveryPhase.PopulateAllData();
+        DeliveryPhasesData.OffTheShelfDeliveryPhase.PopulateAllData();
         var allocationId = await AhpDataManipulator.CreateAhpAllocation(
             LoginData,
             ApplicationData,

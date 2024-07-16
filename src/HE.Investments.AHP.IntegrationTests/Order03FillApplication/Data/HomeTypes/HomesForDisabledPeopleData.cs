@@ -75,6 +75,11 @@ public class HomesForDisabledPeopleData : HomeTypeDataBase<HomesForDisabledPeopl
         return new HomesForDisabledPeopleData(homeTypeId, homeTypeName, homeType);
     }
 
+    public void SetHomeTypeId(string homeTypeId)
+    {
+        Id = homeTypeId;
+    }
+
     public override HomesForDisabledPeopleData GenerateHomeTypeDetails()
     {
         Name = $"IT-Disabled-{GenerateDateString()}";
@@ -142,5 +147,34 @@ public class HomesForDisabledPeopleData : HomeTypeDataBase<HomesForDisabledPeopl
     {
         PeopleGroupForSpecificDesignFeatures = PeopleGroupForSpecificDesignFeaturesType.DisabledPeople;
         return this;
+    }
+
+    public override void PopulateAllData()
+    {
+        GenerateInformation();
+        GenerateBuildingInformation();
+        GenerateCustomBuild();
+        GenerateFacilityType();
+        GenerateAccessibilityStandards();
+        GenerateAccessibilityCategory();
+        GenerateFloorArea();
+        GenerateFloorAreaStandards();
+        GenerateAffordableRent();
+        GenerateExemptFromTheRightToSharedOwnership();
+        GenerateExemptionJustification();
+        GenerateModernMethodsOfConstruction();
+        GenerateModernMethodsConstructionCategories();
+        GenerateDateString();
+        GenerateHomeTypeDetails();
+        GenerateDisabledPeopleHousingType();
+        GenerateClientGroup();
+        GenerateHappiDesignPrinciple();
+        GenerateDesignPlans();
+        GenerateSupportedHousingInformation();
+        GenerateRevenueFundingSource();
+        GenerateMoveOnArrangements();
+        GenerateExitPlan();
+        GenerateTypologyLocationAndDesign();
+        GeneratePeopleGroupForSpecificDesignFeatures();
     }
 }

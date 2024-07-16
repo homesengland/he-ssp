@@ -159,5 +159,7 @@ public abstract class HomeTypeDataBase<THomeTypeData> : INestedItemData
         return HomeType;
     }
 
+    public abstract void PopulateAllData();
+
     protected static string GenerateDateString() => DateTime.UtcNow.ToString(CultureInfo.InvariantCulture);
 }
