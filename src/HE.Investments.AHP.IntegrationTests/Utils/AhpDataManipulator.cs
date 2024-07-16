@@ -29,8 +29,8 @@ public class AhpDataManipulator
     {
         var allocationId = await CreateApplication(loginData, applicationData, financialDetailsData, schemeInformationData);
         applicationData.SetApplicationId(allocationId);
-        await AddHomeTypes(loginData, allocationId, homeTypesData);
-        await AddDeliveryPhases(loginData, allocationId, deliveryPhasesData, homeTypesData);
+        await AddHomeTypes(loginData, allocationId, homeTypesData, schemeInformationData);
+        await AddDeliveryPhases(loginData, allocationId, deliveryPhasesData, homeTypesData, schemeInformationData);
 
         return allocationId;
     }
@@ -92,7 +92,7 @@ public class AhpDataManipulator
         return applicationId;
     }
 
-    private async Task AddHomeTypes(ILoginData loginData, string applicationId, HomeTypesData homeTypesData)
+    private async Task AddHomeTypes(ILoginData loginData, string applicationId, HomeTypesData homeTypesData, SchemeInformationData schemeInformationData)
     {
         var disabledHomeTypeDto = new HomeTypeDto()
         {
@@ -133,7 +133,7 @@ public class AhpDataManipulator
             ],
             moveOnArrangements = homeTypesData.Disabled.MoveOnArrangements,
             numberOfBedrooms = homeTypesData.Disabled.NumberOfBedrooms,
-            numberOfHomes = homeTypesData.Disabled.NumberOfHomes,
+            numberOfHomes = schemeInformationData.HousesToDeliver / 2,
             numberOfStoreys = homeTypesData.Disabled.NumberOfStoreys,
             prospectiveRent = homeTypesData.Disabled.RentPerWeek,
             prospectiveRentAsPercentOfMarketRent =
@@ -177,7 +177,7 @@ public class AhpDataManipulator
                 (int)invln_MMCcategory2subcategories._2cfurtherenhancedconsolidationinsulationliningsexternalcladdingroofingdoorswindows
             ],
             numberOfBedrooms = homeTypesData.General.NumberOfBedrooms,
-            numberOfHomes = homeTypesData.General.NumberOfHomes,
+            numberOfHomes = schemeInformationData.HousesToDeliver / 2,
             numberOfStoreys = homeTypesData.General.NumberOfStoreys,
             prospectiveRent = homeTypesData.General.RentPerWeek,
             prospectiveRentAsPercentOfMarketRent =
@@ -194,7 +194,7 @@ public class AhpDataManipulator
         homeTypesData.General.SetHomeTypeId(generalHomeTypeId);
     }
 
-    private async Task AddDeliveryPhases(ILoginData loginData, string applicationId, DeliveryPhasesData deliveryPhasesData, HomeTypesData homeTypesData)
+    private async Task AddDeliveryPhases(ILoginData loginData, string applicationId, DeliveryPhasesData deliveryPhasesData, HomeTypesData homeTypesData, SchemeInformationData schemeInformationData)
     {
         var rehabDeliveryPhase = new DeliveryPhaseDto()
         {
@@ -218,8 +218,7 @@ public class AhpDataManipulator
             isCompleted = true,
             isReconfigurationOfExistingProperties = deliveryPhasesData.RehabDeliveryPhase.ReconfiguringExisting,
             name = deliveryPhasesData.RehabDeliveryPhase.Name,
-            numberOfHomes =
-                new Dictionary<string, int?> { { homeTypesData.Disabled.Id, homeTypesData.Disabled.NumberOfHomes }, },
+            numberOfHomes = [],
             rehabBuildActivityType = (int)invln_RehabActivityType.WorksOnly,
             startOnSiteDate = DateTime.ParseExact(
                 $"{deliveryPhasesData.RehabDeliveryPhase.StartOnSiteMilestoneDate.Day}/{deliveryPhasesData.RehabDeliveryPhase.StartOnSiteMilestoneDate.Month}/{deliveryPhasesData.RehabDeliveryPhase.StartOnSiteMilestoneDate.Year}",
@@ -230,18 +229,12 @@ public class AhpDataManipulator
                 "dd/MM/yyyy",
                 CultureInfo.InvariantCulture),
             typeOfHomes = "rehab",
-            acquisitionValue = 1,
-            acquisitionPercentageValue = 1,
-            startOnSiteValue = 1,
-            startOnSitePercentageValue = 1,
-            completionValue = 1,
-            completionPercentageValue = 1,
-            requiresAdditionalPayments = "yes",
-            claimingtheMilestoneConfirmed = false,
         };
         var offTheShelfDeliveryPhase = new DeliveryPhaseDto()
         {
+            name = deliveryPhasesData.OffTheShelfDeliveryPhase.Name,
             applicationId = applicationId,
+            numberOfHomes = [],
             completionDate = DateTime.ParseExact(
                 $"{deliveryPhasesData.RehabDeliveryPhase.CompletionMilestoneDate.Day}/{deliveryPhasesData.RehabDeliveryPhase.CompletionMilestoneDate.Month}/{deliveryPhasesData.RehabDeliveryPhase.CompletionMilestoneDate.Year}",
                 "dd/MM/yyyy",
@@ -251,13 +244,36 @@ public class AhpDataManipulator
                 "dd/MM/yyyy",
                 CultureInfo.InvariantCulture),
             isCompleted = true,
-            name = deliveryPhasesData.OffTheShelfDeliveryPhase.Name,
             newBuildActivityType = (int)invln_NewBuildActivityType.OffTheShelf,
-            numberOfHomes = new Dictionary<string, int?> { { homeTypesData.General.Id, homeTypesData.General.NumberOfHomes }, },
             typeOfHomes = "newBuild",
         };
+        var rehabDeliveryPhaseId = await _ahpCrmContext.SaveAhpDeliveryPhase(rehabDeliveryPhase, loginData, CancellationToken.None);
 
-        await _ahpCrmContext.SaveAhpDeliveryPhase(rehabDeliveryPhase, loginData, CancellationToken.None);
-        await _ahpCrmContext.SaveAhpDeliveryPhase(offTheShelfDeliveryPhase, loginData, CancellationToken.None);
+        var offTheShelfDeliveryPhaseId = await _ahpCrmContext.SaveAhpDeliveryPhase(offTheShelfDeliveryPhase, loginData, CancellationToken.None);
+
+        var rehabDeliveryPhaseNumberOfHomes = new DeliveryPhaseDto()
+        {
+            id = rehabDeliveryPhaseId,
+            applicationId = applicationId,
+            numberOfHomes =
+                new Dictionary<string, int?>
+                {
+                    { homeTypesData.Disabled.Id, schemeInformationData.HousesToDeliver / 2 },
+                    { homeTypesData.General.Id, schemeInformationData.HousesToDeliver / 2 },
+                },
+        };
+        var offTheShelfDeliveryPhaseNumberOfHomes = new DeliveryPhaseDto()
+        {
+            id = offTheShelfDeliveryPhaseId,
+            applicationId = applicationId,
+            numberOfHomes = new Dictionary<string, int?>
+            {
+                { homeTypesData.General.Id, schemeInformationData.HousesToDeliver / 2 },
+                { homeTypesData.Disabled.Id, schemeInformationData.HousesToDeliver / 2 },
+            },
+        };
+
+        await _ahpCrmContext.SaveAhpDeliveryPhase(rehabDeliveryPhaseNumberOfHomes, loginData, CancellationToken.None);
+        await _ahpCrmContext.SaveAhpDeliveryPhase(offTheShelfDeliveryPhaseNumberOfHomes, loginData, CancellationToken.None);
     }
 }
