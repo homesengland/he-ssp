@@ -73,9 +73,9 @@ public class AhpCrmContext
         return await _homeTypeCrmContext.Save(homeType, organisationId, loginData.UserGlobalId, cancellationToken);
     }
 
-    public async Task SaveAhpDeliveryPhase(DeliveryPhaseDto deliveryPhase, ILoginData loginData, CancellationToken cancellationToken)
+    public async Task<string> SaveAhpDeliveryPhase(DeliveryPhaseDto deliveryPhase, ILoginData loginData, CancellationToken cancellationToken)
     {
         var organisationId = loginData.OrganisationId;
-        await _deliveryPhaseCrmContext.Save(deliveryPhase, organisationId, loginData.UserGlobalId, cancellationToken);
+        return await _deliveryPhaseCrmContext.Save(deliveryPhase, organisationId, loginData.UserGlobalId, cancellationToken);
     }
 }
