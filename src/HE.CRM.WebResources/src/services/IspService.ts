@@ -274,7 +274,7 @@ export class IspService {
     this.common.setControlRequiredV2('invln_datesentforapproval', sendForApproval)
   }
 
-  public mapFieldOnLoad() {
+  public async mapFieldOnLoad() {
     if (this.common.getFormType() != XrmEnum.FormType.Create)
       return;
 
@@ -326,10 +326,75 @@ export class IspService {
       ['invln_crr', 'invln_currentcrr'],
       ['invln_kycrating', 'invln_rating']
     ]);
-    //    CRR
-    //KYC Rating
+
+    const dictionaryCashFlow = new Map<string, string>([
+      ['invln_loanprincipal', 'invln_loanprincipal'],//Loan(Principal)
+      ['invln_interestmargin', 'invln_interestmargin'],//Interest Margin Number
+      ['invln_interestmarginpercent', 'invln_interestmarginpercent'],//Interest Margin %
+      ['invln_interestmarginvalue', 'invln_interestvalue'], //Interest Value
+      ['invln_baseratenumber', 'invln_baseratenumber'],//Base Rate Number
+      ['invln_baseratepercent', 'invln_baseratepercent'],//Base Rate %
+      ['invln_loanprincipalpercent', 'invln_loanprincipalpercent'],//Loan(Principal) %
+      ['invln_interestandfeespercentage', 'invln_interestandfeespercent'],//Interest and Fees %
+      ['invln_interestandfees', 'invln_interestandfees'],//Interest and Fees £
+      ['invln_nonrechargedfeespercentage', 'invln_nonrechargedfeespercent'],//Non Recharged Fees %
+      ['invln_nonrechargedfees', 'invln_nonrechargedfees'],//Non Recharged Fees £
+      ['invln_totalexposurepercent', 'invln_totalexposurepercent'],//Total Exposure %
+      ['invln_totalexposurek', 'invln_totalexposure'],//Total Exposure £
+      ['invln_borrowerequitycashpercentage', 'invln_borrowerequitycashpercent'],//Borrower Equity Cash %
+      ['invln_borrowerequitycash', 'invln_borrowerequitycash'],//Borrower Equity Cash £
+      ['invln_borrowerequitylandpercent', 'invln_borrowerequitylandpercent'],//Borrower Equity Land %
+      ['invln_borrowerequitylandk', 'invln_borrowerequityland'],//Borrower Equity Land £
+      ['invln_recycledincomepercent', 'invln_recycledincomepercent'],//Recycled Income %
+      ['invln_recycledincomek', 'invln_recycledincome'],//Recycled Income £
+      ['invln_otherdebtpercent', 'invln_otherdebtpercent'],//      Other Debt %
+      ['invln_otherdebtk', 'invln_otherdebt'],//    Other Debt £
+      ['invln_totalfundspercent', 'invln_totalfundspercent'],//      Total Funds %
+      ['invln_totalfundsk', 'invln_totalfunds'],//Total Funds £
+      ['invln_landcostpaidpercent', 'invln_landcostpaidpercent'],//      Land Cost - Paid %
+      ['invln_landcostpaidk', 'invln_landcostpaid'],//      Land Cost - Paid £
+      ['invln_landcostdeferredpercent', 'invln_landcostdeferredpercent'],//      Land Cost - Deferred %
+      ['invln_landcostdeferredk', 'invln_landcostdeferred'],//      Land Cost - Deferred £
+      ['invln_landvaluationupliftpercentage', 'invln_landvaluationupliftpercent'],//     Land Valuation Uplift %
+      ['invln_landvaluationuplift', 'invln_landvaluationuplift'],//    Land Valuation Uplift £
+      ['invln_infrastructurecostspercent', 'invln_infrastructurecostspercent'],//      Infrastructure Costs %
+      ['invln_infrastructurecostsk', 'invln_infrastructurecosts'],//    Infrastructure Costs £
+      ['invln_constructioncostsk', 'invln_constructioncosts'],//   Construction Costs £
+      ['invln_constructioncostspercent', 'invln_constructioncostspercent'],//    Construction Costs %
+      ['invln_prelimcostspercentage', 'invln_prelimcostspercent'],//      Prelim Costs %
+      ['invln_prelimcosts', 'invln_prelimcosts'],//    Prelim Costs £
+      ['invln_s106costspercent', 'invln_s106costspercent'],//      S106 Costs %
+      ['invln_s106costsk', 'invln_s106costs'],//    S106 Costs £
+      ['invln_abnormalspercent', 'invln_abnormalspercent'],//      Abnormals %
+      ['invln_abnormalsk', 'invln_abnormals'],//      Abnormals £
+      ['invln_salescostspercentage', 'invln_salescostspercent'],//      Sales Costs %
+      ['invln_salescosts', 'invln_salescosts'],//    Sales Costs £
+      ['invln_professionalfeespercentage', 'invln_professionalfeespercent'],//      Professional Fees %
+      ['invln_professionalfees', 'invln_professionalfees'],//    Professional Fees £
+      ['invln_financepercent', 'invln_financepercent'],//      Finance %
+      ['invln_financek', 'invln_finance'],//      Finance £
+      ['invln_contingencypercent', 'invln_contingencypercent'],//      Contingency %
+      ['invln_contingencyk', 'invln_contingency'],//      Contingency £
+      ['invln_otherpercent', 'invln_othercostspercent'],//      Other Costs %
+      ['invln_otherk', 'invln_othercosts'],//    Other Costs £
+      ['invln_totalcostspercent', 'invln_totalcostspercent'],//      Total Costs %
+      ['invln_totalcostsk', 'invln_totalcosts'],//    Total Costs £
+      ['invln_totalnounitstobedevelopedunlocked', 'invln_totalnumberofhomes'],//      Total No.Units to be Developed / Unlocked
+      ['invln_grossdevelopmentvaluegdv', 'invln_grossdevelopmentvalue'],//Gross Development Value(GDV)
+      ['invln_developersoverallprofit', 'invln_developersoverallprofitvalue'],//Developer's Overall Profit
+      ['invln_returnonequityroe', 'invln_returnonequityroe'],//Return on Equity(ROE)
+      ['invln_peakfunding', 'invln_peakfunding'],//Peak Funding
+      ['invln_peakfundingdate', 'invln_peakfundingdate'],//Peak Funding Date
+      ['invln_loanrecycledincomeotherdebttocostspeak', 'invln_loanrecycledincomeotherdebttocostspeak'],//Loan + Recycled Income + Other Debt to Costs Peak
+      ['invln_loanrecycledincomeotherdebttocostsdate', 'invln_loanrecycledincomeotherdebttocostdate'],//Loan + Recycled Income + Other Debt to Cost Date
+      ['invln_loanrecycledincomeotherdebttogdvpeak', 'invln_loanotherdebttogdvpeak'],//Loan + Other Debt to GDV Peak
+      ['invln_loanotherdebttogdvpeakdate', 'invln_loanotherdebttogdvdate'],//Loan + Other Debt to GDV Date
+      ['invln_arrangementfee', 'invln_arrangementfee'],//Arrangement Fee
+      ['invln_arrangementfeevalue', 'invln_arrangementfeevalue'], //Arrangement Fee Value
+    ])
 
     let loanApplication = this.common.getLookupValue('invln_loanapplication')
+    let accountId = null;
     if (loanApplication != null) {
       Xrm.WebApi.retrieveRecord('invln_loanapplication', loanApplication.id).then(result => {
         for (const [key, value] of dictionaryLoans) {
@@ -354,27 +419,39 @@ export class IspService {
           return parseInt(x);
         })
         this.common.setAttributeValue('invln_securities', osv);
-
-        let accountId = result['_invln_account_value'];
-        Xrm.WebApi.retrieveRecord('account', accountId).then(function (result) {
+      })
+    };
+    if (loanApplication != null) {
+      console.log(1);
+      let loans = await Xrm.WebApi.retrieveRecord('invln_loanapplication', loanApplication.id)
+      console.log(loans['_invln_account_value']);
+      if (loans['_invln_account_value'] != null) {
+        console.log(3);
+        Xrm.WebApi.retrieveRecord('account', loans['_invln_account_value']).then(result => {
           for (const [key, value] of dictionaryAccount) {
             try {
-              if (value.startsWith('_')) {
-                this.common.setLookUpValue(key,
-                  result[value + "_value@Microsoft.Dynamics.CRM.lookuplogicalname"],
-                  result[value + "_value"],
-                  result[value + "_value@OData.Community.Display.V1.FormattedValue"]
-                )
-              } else {
-                this.common.setAttributeValue(key, result[value]);
-              }
+              this.common.setAttributeValue(key, result[value]);
             } catch (e) {
               console.log(e);
             }
           }
-        });
+        })
+      }
+      let cashflowSubmition = await Xrm.WebApi.retrieveMultipleRecords("invln_cashflowsubmission",
+        "?$filter=(_invln_loanapplication_value eq " + loanApplication.id + ")&$orderby=invln_dateagreed desc&$top=1")
+      console.log(cashflowSubmition);
+      if (cashflowSubmition != null) {
+        for (const [key, value] of dictionaryCashFlow) {
+          try {
 
-      })
+            this.common.setAttributeValue(key, cashflowSubmition[value]);
+            console.log(key, value + "----------succes");
+          } catch (e) {
+            console.log(key, value);
+            console.log(e);
+          }
+        }
+      }
     }
   }
 
