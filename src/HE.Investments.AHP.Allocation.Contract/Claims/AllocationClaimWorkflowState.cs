@@ -3,7 +3,7 @@ namespace HE.Investments.AHP.Allocation.Contract.Claims;
 public enum AllocationClaimWorkflowState
 {
     CostsIncurred,
-    MilestoneDate,
+    AchievementDate,
     Confirmation,
     CheckAnswers,
 }

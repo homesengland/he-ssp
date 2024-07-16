@@ -22,7 +22,7 @@ public class CanBeAccessedTests
 
     [Theory]
     [InlineData(AllocationClaimWorkflowState.CostsIncurred)]
-    [InlineData(AllocationClaimWorkflowState.MilestoneDate)]
+    [InlineData(AllocationClaimWorkflowState.AchievementDate)]
     [InlineData(AllocationClaimWorkflowState.Confirmation)]
     [InlineData(AllocationClaimWorkflowState.CheckAnswers)]
     public void ShouldReturnFalse_WhenMilestoneCanNotBeClaimed(AllocationClaimWorkflowState state)
@@ -40,7 +40,7 @@ public class CanBeAccessedTests
 
     [Theory]
     [InlineData(AllocationClaimWorkflowState.CostsIncurred)]
-    [InlineData(AllocationClaimWorkflowState.MilestoneDate)]
+    [InlineData(AllocationClaimWorkflowState.AchievementDate)]
     [InlineData(AllocationClaimWorkflowState.Confirmation)]
     [InlineData(AllocationClaimWorkflowState.CheckAnswers)]
     public void ShouldReturnTrue_WhenMilestoneIsAcquisitionAndCanBeClaimed(AllocationClaimWorkflowState state)

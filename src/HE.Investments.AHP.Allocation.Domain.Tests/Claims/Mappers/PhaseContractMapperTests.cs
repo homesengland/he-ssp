@@ -24,7 +24,7 @@ public class PhaseContractMapperTests : TestBase<PhaseContractMapper>
 
         var claimMapper = CreateAndRegisterDependencyMock<IMilestoneClaimContractMapper>();
         claimMapper.Setup(x => x.Map(MilestoneType.Completion, phase, It.IsAny<DateTime>()))
-            .Returns(new MilestoneClaim(MilestoneType.Completion, MilestoneStatus.Due, 0, 0, DateDetails.Empty(), null, null, false));
+            .Returns(new MilestoneClaim(MilestoneType.Completion, MilestoneStatus.Due, 0, 0, DateDetails.Empty(), null, null, false, null, null));
 
         // when
         var result = TestCandidate.Map(phase);

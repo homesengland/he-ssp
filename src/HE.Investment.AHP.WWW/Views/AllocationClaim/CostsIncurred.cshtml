@@ -1,3 +1,4 @@
+@using HE.Investment.AHP.WWW.Config
 @using HE.Investment.AHP.WWW.Views.AllocationClaims.Const
 @using HE.Investments.Common.Extensions
 @using HE.Investments.Common.WWW.Components.BackLinkWithCallback
@@ -5,6 +6,7 @@
 @using HE.Investments.Common.WWW.Components.PageHeader
 @using HE.Investments.Common.WWW.Extensions
 @using HE.Investments.Common.WWW.TagHelpers
+@inject IAhpExternalLinks ExternalLinks
 @model HE.Investment.AHP.WWW.Models.AllocationClaim.PhaseClaimModel
 @{
     var title = ClaimPageTitles.CostsIncurred(Model.Name, Model.Claim.Type);
@@ -13,11 +15,27 @@
 
 <gds-div-grid-column-two-thirds>
     <vc:back-link-with-callback url="@Url.OrganisationAction("Overview", "AllocationClaims", new { allocationId = Model.Allocation.Id.Value, phaseId = Model.Id })"/>
+    @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
     <vc:page-header caption="@Model.Allocation.Name - @Model.Allocation.Tenure.GetDescription()" title="@title"/>
 
+    <gds-details>
+        <gds-summary-details>What is the acquisition milestone?</gds-summary-details>
+        <gds-div-details-text>
+            Acquisition of land is a payment milestone that triggers payment of 40% of the grant. To claim the grant for the acquisition of land, you must have an unconditional secure legal interest in the land. For full details of the requirements for claiming this milestone, read the
+            <a href="@ExternalLinks.CapitalFundingGuideProgrammeManagement" target="_blank">Capital Funding Guide, under 4.1 onwards (opens in a new tab).</a>
+        </gds-div-details-text>
+    </gds-details>
+    <gds-p>You must have incurred costs and made payments to at least the level of the grant apportioned to this milestone before claiming the acquisition milestone.</gds-p>
+    <gds-p>If you have not, you can still record the achievement of the milestone, but the grant apportioned to the milestone will be reduced to £0. The grant apportioned to this milestone will be added to the start on site milestone.</gds-p>
+    <gds-p>If you are unsure about any of the above, contact your Provider Manager.</gds-p>
+
     <he-organisation-form asp-controller="AllocationClaim" asp-action="CostsIncurred" asp-route-workflow="@Context.Request.Query["workflow"]" asp-method="post" novalidate>
-        <gds-p>TODO: AB#85084 implement view</gds-p>
+        <vc:radio-yes-no title="Have you incurred costs and made payments to at least the level of the grant in the milestone amount?"
+                         title-type="InputTitleType.InputTitle"
+                         field-name="@nameof(Model.Claim.CostsIncurred)"
+                         value="@Model.Claim.CostsIncurred"/>
 
         <vc:form-button/>
+        <vc:return-to-allocation-link allocation-id="@Model.Allocation.Id"/>
     </he-organisation-form>
 </gds-div-grid-column-two-thirds>

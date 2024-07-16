@@ -1,12 +1,13 @@
 using HE.Investment.AHP.WWW.Models.AllocationClaim;
 using HE.Investment.AHP.WWW.Workflows;
-using HE.Investments.Account.Shared;
 using HE.Investments.Account.Shared.Authorization.Attributes;
 using HE.Investments.AHP.Allocation.Contract;
 using HE.Investments.AHP.Allocation.Contract.Claims;
+using HE.Investments.AHP.Allocation.Contract.Claims.Commands;
 using HE.Investments.AHP.Allocation.Contract.Claims.Enum;
 using HE.Investments.AHP.Allocation.Contract.Claims.Queries;
 using HE.Investments.Common.Contract.Exceptions;
+using HE.Investments.Common.WWW.Controllers;
 using HE.Investments.Common.WWW.Extensions;
 using HE.Investments.Common.WWW.Routing;
 using HE.Investments.Consortium.Shared.Authorization;
@@ -64,17 +65,21 @@ public class AllocationClaimController : WorkflowController<AllocationClaimWorkf
     [HttpPost("costs-incurred")]
     [WorkflowState(AllocationClaimWorkflowState.CostsIncurred)]
     public async Task<IActionResult> CostsIncurred(
-        [FromRoute] string organisationId,
         [FromRoute] string allocationId,
         [FromRoute] string phaseId,
-        [FromRoute] MilestoneType claimType)
+        [FromRoute] MilestoneType claimType,
+        [FromForm] bool? costsIncurred,
+        CancellationToken cancellationToken)
     {
-        return await ContinueWithWorkflow(new { organisationId, allocationId, phaseId, claimType });
+        return await ExecuteClaimCommand(
+            new ProvideCostsIncurredCommand(AllocationId.From(allocationId), PhaseId.From(phaseId), claimType, costsIncurred),
+            nameof(CostsIncurred),
+            cancellationToken);
     }
 
-    [HttpGet("milestone-date")]
-    [WorkflowState(AllocationClaimWorkflowState.MilestoneDate)]
-    public async Task<IActionResult> MilestoneDate(
+    [HttpGet("achievement-date")]
+    [WorkflowState(AllocationClaimWorkflowState.AchievementDate)]
+    public async Task<IActionResult> AchievementDate(
         [FromRoute] string allocationId,
         [FromRoute] string phaseId,
         [FromRoute] MilestoneType claimType,
@@ -83,9 +88,9 @@ public class AllocationClaimController : WorkflowController<AllocationClaimWorkf
         return View(await GetClaimModel(allocationId, phaseId, claimType, cancellationToken));
     }
 
-    [HttpPost("milestone-date")]
-    [WorkflowState(AllocationClaimWorkflowState.MilestoneDate)]
-    public async Task<IActionResult> MilestoneDate(
+    [HttpPost("achievement-date")]
+    [WorkflowState(AllocationClaimWorkflowState.AchievementDate)]
+    public async Task<IActionResult> AchievementDate(
         [FromRoute] string organisationId,
         [FromRoute] string allocationId,
         [FromRoute] string phaseId,
@@ -172,5 +177,26 @@ public class AllocationClaimController : WorkflowController<AllocationClaimWorkf
             phaseClaims.Name,
             phaseClaims.Allocation,
             phaseClaims.MilestoneClaims.Single(x => x.Type == claimType));
+    }
+
+    private async Task<IActionResult> ExecuteClaimCommand<TCommand>(
+        TCommand command,
+        string viewName,
+        CancellationToken cancellationToken)
+            where TCommand : IProvideClaimDetailsCommand
+    {
+        return await this.ExecuteCommand<TCommand>(
+            _mediator,
+            command,
+            async () => await ContinueWithWorkflow(
+                new
+                {
+                    organisationId = Request.GetOrganisationIdFromRoute()?.Value,
+                    allocationId = command.AllocationId.Value,
+                    phaseId = command.PhaseId.Value,
+                    claimType = command.MilestoneType,
+                }),
+            async () => View(viewName, await GetClaimModel(command.AllocationId.Value, command.PhaseId.Value, command.MilestoneType, cancellationToken)),
+            cancellationToken);
     }
 }

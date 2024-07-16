@@ -25,7 +25,7 @@ public class NextStateTests
         };
 
         // then
-        result[0].Should().Be(AllocationClaimWorkflowState.MilestoneDate);
+        result[0].Should().Be(AllocationClaimWorkflowState.AchievementDate);
         result[1].Should().Be(AllocationClaimWorkflowState.Confirmation);
         result[2].Should().Be(AllocationClaimWorkflowState.CheckAnswers);
     }
@@ -46,7 +46,7 @@ public class NextStateTests
 
         // then
         result[0].Should().Be(AllocationClaimWorkflowState.Confirmation);
-        result[1].Should().Be(AllocationClaimWorkflowState.MilestoneDate);
+        result[1].Should().Be(AllocationClaimWorkflowState.AchievementDate);
         result[2].Should().Be(AllocationClaimWorkflowState.CostsIncurred);
     }
 }

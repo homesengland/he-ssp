@@ -10,13 +10,13 @@ namespace HE.Investments.AHP.Allocation.Domain.Claims.Mappers;
 
 public sealed class PhaseContractMapper : IPhaseContractMapper
 {
-    private readonly IMilestoneClaimContractMapper _milestoneClaimStatusMapper;
+    private readonly IMilestoneClaimContractMapper _milestoneClaimMapper;
 
     private readonly IDateTimeProvider _dateTimeProvider;
 
-    public PhaseContractMapper(IMilestoneClaimContractMapper milestoneClaimStatusMapper, IDateTimeProvider dateTimeProvider)
+    public PhaseContractMapper(IMilestoneClaimContractMapper milestoneClaimMapper, IDateTimeProvider dateTimeProvider)
     {
-        _milestoneClaimStatusMapper = milestoneClaimStatusMapper;
+        _milestoneClaimMapper = milestoneClaimMapper;
         _dateTimeProvider = dateTimeProvider;
     }
 
@@ -24,7 +24,7 @@ public sealed class PhaseContractMapper : IPhaseContractMapper
     {
         var today = _dateTimeProvider.Now.Date;
         var milestoneClaims = new[] { MilestoneType.Acquisition, MilestoneType.StartOnSite, MilestoneType.Completion }
-            .Select(x => _milestoneClaimStatusMapper.Map(x, phase, today))
+            .Select(x => _milestoneClaimMapper.Map(x, phase, today))
             .Where(x => x.IsProvided())
             .Select(x => x!)
             .ToList();

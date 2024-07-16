@@ -25,7 +25,7 @@ public class AllocationClaimWorkflow : EncodedStateRouting<AllocationClaimWorkfl
         return state switch
         {
             AllocationClaimWorkflowState.CostsIncurred => _model is { Type: MilestoneType.Acquisition, CanBeClaimed: true },
-            AllocationClaimWorkflowState.MilestoneDate => _model.CanBeClaimed,
+            AllocationClaimWorkflowState.AchievementDate => _model.CanBeClaimed,
             AllocationClaimWorkflowState.Confirmation => _model.CanBeClaimed,
             AllocationClaimWorkflowState.CheckAnswers => _model.CanBeClaimed,
             _ => false,
@@ -35,15 +35,15 @@ public class AllocationClaimWorkflow : EncodedStateRouting<AllocationClaimWorkfl
     private void ConfigureTransitions()
     {
         Machine.Configure(AllocationClaimWorkflowState.CostsIncurred)
-            .Permit(Trigger.Continue, AllocationClaimWorkflowState.MilestoneDate);
+            .Permit(Trigger.Continue, AllocationClaimWorkflowState.AchievementDate);
 
-        Machine.Configure(AllocationClaimWorkflowState.MilestoneDate)
+        Machine.Configure(AllocationClaimWorkflowState.AchievementDate)
             .Permit(Trigger.Continue, AllocationClaimWorkflowState.Confirmation)
             .PermitIf(Trigger.Back, AllocationClaimWorkflowState.CostsIncurred, () => _model.Type == MilestoneType.Acquisition);
 
         Machine.Configure(AllocationClaimWorkflowState.Confirmation)
             .Permit(Trigger.Continue, AllocationClaimWorkflowState.CheckAnswers)
-            .Permit(Trigger.Back, AllocationClaimWorkflowState.MilestoneDate);
+            .Permit(Trigger.Back, AllocationClaimWorkflowState.AchievementDate);
 
         Machine.Configure(AllocationClaimWorkflowState.CheckAnswers)
             .Permit(Trigger.Back, AllocationClaimWorkflowState.Confirmation);

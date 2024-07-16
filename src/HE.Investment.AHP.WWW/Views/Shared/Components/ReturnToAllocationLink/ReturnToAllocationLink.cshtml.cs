@@ -5,8 +5,8 @@ namespace HE.Investment.AHP.WWW.Views.Shared.Components.ReturnToAllocationLink;
 
 public class ReturnToAllocationLink : ViewComponent
 {
-    public IViewComponentResult Invoke(AllocationId allocationId, string? linkText = null)
+    public IViewComponentResult Invoke(AllocationId allocationId, bool isEditable = true)
     {
-        return View("ReturnToAllocationLink", (allocationId, linkText));
+        return View("ReturnToAllocationLink", (allocationId, isEditable));
     }
 }

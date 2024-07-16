@@ -32,7 +32,7 @@
         total-items="@Model.PhaseList.TotalItems">
     </he-pagination>
 
-    <vc:return-to-allocation-link allocation-id="@Model.AllocationBasicInfo.Id"/>
+    <vc:return-to-allocation-link allocation-id="@Model.AllocationBasicInfo.Id" is-editable="false"/>
 </gds-div-grid-column-two-thirds>
 <div class="govuk-grid-column-one-third">
     <vc:grant-details-panel grant-details="@Model.GrantDetails"/>

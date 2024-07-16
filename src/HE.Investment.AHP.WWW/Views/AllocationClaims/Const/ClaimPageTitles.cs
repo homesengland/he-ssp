@@ -15,5 +15,5 @@ public static class ClaimPageTitles
 
     public static string CostsIncurred(string phaseName, MilestoneType milestoneType) => $"{phaseName} - {milestoneType.GetDescription()} milestone";
 
-    public static string MilestoneDate(string phaseName, MilestoneType milestoneType) => $"{phaseName} - {milestoneType.GetDescription()} milestone";
+    public static string AchievementDate(string phaseName, MilestoneType milestoneType) => $"{phaseName} - {milestoneType.GetDescription()} milestone";
 }
