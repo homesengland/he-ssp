@@ -13,12 +13,12 @@ internal sealed class GetAllocationClaimsQueryHandler : IRequestHandler<GetAlloc
 
     private readonly IAccountUserContext _accountUserContext;
 
-    private readonly IClaimsContractMapper _contractMapper;
+    private readonly IAllocationContractMapper _contractMapper;
 
     public GetAllocationClaimsQueryHandler(
         IAllocationRepository allocationRepository,
         IAccountUserContext accountUserContext,
-        IClaimsContractMapper contractMapper)
+        IAllocationContractMapper contractMapper)
     {
         _allocationRepository = allocationRepository;
         _accountUserContext = accountUserContext;

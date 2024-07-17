@@ -74,7 +74,7 @@ namespace HE.CRM.AHP.Plugins.Handlers.CustomApi.FrontDoor
                 TracingService.Trace($"* consortiumId: {consortiumId}");
             };
 
-            AhpProjectDto ahpProjectDto = CrmServicesFactory.Get<IAhpProjectService>().GetAhpProjectWithApplicationsAndSites(externalContactId, organisationId, ahpProjectId, heProjectId, consortiumId);
+            AhpProjectDto ahpProjectDto = CrmServicesFactory.Get<IAhpProjectService>().GetAhpProjectWithApplicationsAndSitesAndAlloctions(externalContactId, organisationId, ahpProjectId, heProjectId, consortiumId);
 
             this.TracingService.Trace("Send Response");
             ExecutionData.SetOutputParameter(invln_getahpprojectResponse.Fields.invln_ahpProjectApplications, JsonSerializer.Serialize(ahpProjectDto));

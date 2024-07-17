@@ -23,7 +23,7 @@ public class AllocationCrmContext : IAllocationCrmContext
         _service = service;
     }
 
-    public async Task<AhpAllocationDto> GetById(string id, string organisationId, string userId, CancellationToken cancellationToken)
+    public async Task<AllocationClaimsDto> GetById(string id, string organisationId, string userId, CancellationToken cancellationToken)
     {
         // todo AB#102108
         // var request = new invln_getallocationphaseclaimsRequest
@@ -41,7 +41,7 @@ public class AllocationCrmContext : IAllocationCrmContext
         return await Get(request, cancellationToken);
     }
 
-    private async Task<AhpAllocationDto> Get(invln_getahpapplicationRequest request, CancellationToken cancellationToken)
+    private async Task<AllocationClaimsDto> Get(invln_getahpapplicationRequest request, CancellationToken cancellationToken)
     {
         var response = await _service.ExecuteAsync<invln_getahpapplicationRequest, invln_getahpapplicationResponse, IList<AhpApplicationDto>>(
             request,
@@ -56,9 +56,9 @@ public class AllocationCrmContext : IAllocationCrmContext
         return GetMockedAllocation(response[0]);
     }
 
-    private AhpAllocationDto GetMockedAllocation(AhpApplicationDto applicationDto)
+    private AllocationClaimsDto GetMockedAllocation(AhpApplicationDto applicationDto)
     {
-        return new AhpAllocationDto()
+        return new AllocationClaimsDto()
         {
             Id = applicationDto.id,
             Name = applicationDto.name,

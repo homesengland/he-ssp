@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace HE.Common.IntegrationModel.PortalIntegrationModel
 {
-    public class AhpAllocationDto
+    public class AllocationClaimsDto
     {
         public string Id { get; set; }
         public string Name { get; set; }

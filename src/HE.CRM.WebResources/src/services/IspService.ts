@@ -49,17 +49,6 @@ export class IspService {
     }
   }
 
-  public setFieldsAvailabilityOnLoad() {
-    var loanApplication = this.common.getLookupValue('invln_loanapplication')
-    if (loanApplication != null) {
-      Xrm.WebApi.retrieveRecord('invln_loanapplication', loanApplication.id).then(result => {
-        if (result.invln_externalstatus == ExternalStatus.sentForApproval) {
-          this.common.disableAllFields()
-        }
-      })
-    }
-  }
-
   public setFieldsVisibilityBasedOnSecurity() {
     var loanApplication = this.common.getLookupValue('invln_loanapplication')
     this.hideFirstLegalChargeFields(true);
@@ -146,17 +135,26 @@ export class IspService {
 
   public setFieldsRequirementBasedOnSendOnApproval() {
     var sendForApproval = this.common.getAttributeValue('invln_sendforapproval') ?? false;
-    this.common.setControlRequiredV2('invln_briefoutline', sendForApproval)
+    let list: Array<string>;
+    list = ['invln_briefoutline', 'invln_kycnarrative', 'invln_fundrecoveryrate', 'invln_approvallevelnew', 'invln_baserate', 'invln_aggregatelimitproposed',
+      'invln_expirydate', 'invln_nounitsdirectlyfundedbyinvestment', 'invln_loanrecycledincomeotherdebttocostscoven', 'invln_keyriskssummary',
+      'invln_compliance', 'invln_strategicrationale', 'invln_borrowingentityandrelationship', 'invln_borrowingentityandrelationshipcomments',
+      'invln_locationanddevelopment', 'invln_projectfundamentals', 'invln_securitycover', 'invln_renumeration', 'invln_reportfrequency',
+      'invln_financialsummary', 'invln_crranalysis', 'invln_sensitivityanalysiscomments', 'invln_summary', 'invln_strategicassessmentbanding',
+      'invln_newhomesbyscaleandtypemeasure', 'invln_achievementofwiderhousingobjectivesmeasure', 'invln_achievementofwidereconomicobjectivesmeasure',
+      'invln_vfmassessment', 'invln_economymeasure', 'invln_efficiencymeasure', 'invln_effectivenessmeasure', 'invln_additionalitymeasure', 'invln_totalpublicsectorexpendituremeasure',
+      'invln_deliverabilityassessment', 'invln_commercialmeasure', 'invln_financialmeasure', 'invln_managementmeasure', 'invln_legalrechargedfees',
+      'invln_legalnonrechargedfees', 'invln_propertyrechargedfees', 'invln_propertynonrechargedfees', 'invln_monitoringrechargedfees', 'invln_otherrechargedfees',
+      'invln_othernonrechargedfees', 'invln_totalrechargedfees', 'invln_totalnonrechargedfees', 'invln_recommendation', 'invln_tmname',
+      'invln_sensitivityanalysistable', 'invln_encouragingdiversityandinnovation'
+    ];
+
+    list.forEach(x => { this.common.setControlRequiredV2(x, sendForApproval) })
+
     this.common.setControlRequiredV2('invln_datesubmitted', sendForApproval)
-    this.common.setControlRequiredV2('invln_kycnarrative', sendForApproval)
-    this.common.setControlRequiredV2('invln_fundrecoveryrate', sendForApproval)
-    this.common.setControlRequiredV2('invln_approvallevel', sendForApproval)
     this.common.setControlRequiredV2('invln_interestmargin', sendForApproval)
-    this.common.setControlRequiredV2('invln_baserate', sendForApproval)
     this.common.setControlRequiredV2('invln_baseratepercent', sendForApproval)
-    this.common.setControlRequiredV2('invln_aggregatelimitproposed', sendForApproval)
     this.common.setControlRequiredV2('invln_sppimet', sendForApproval)
-    this.common.setControlRequiredV2('invln_expirydate', sendForApproval)
     this.common.setControlRequiredV2('invln_producttype', sendForApproval)
     this.common.setControlRequiredV2('invln_loanprincipalpercent', sendForApproval)
     this.common.setControlRequiredV2('invln_loanprincipalk', sendForApproval)
@@ -209,26 +207,15 @@ export class IspService {
     this.common.setControlRequiredV2('invln_totalcostspercent', sendForApproval)
     this.common.setControlRequiredV2('invln_totalcostsk', sendForApproval)
     this.common.setControlRequiredV2('invln_totalnounitstobedevelopedunlocked', sendForApproval)
-    this.common.setControlRequiredV2('invln_nounitsdirectlyfundedbyinvestment', sendForApproval)
     this.common.setControlRequiredV2('invln_grossdevelopmentvaluegdv', sendForApproval)
     this.common.setControlRequiredV2('invln_developersoverallprofit', sendForApproval)
     this.common.setControlRequiredV2('invln_returnonequityroe', sendForApproval)
     this.common.setControlRequiredV2('invln_peakfunding', sendForApproval)
     this.common.setControlRequiredV2('invln_loanrecycledincomeotherdebttocostspeak', sendForApproval)
     this.common.setControlRequiredV2('invln_loanrecycledincomeotherdebttogdvpeak', sendForApproval)
-    this.common.setControlRequiredV2('invln_loanrecycledincomeotherdebttocostscoven', sendForApproval)
     this.common.setControlRequiredV2('invln_loanrecycledincomeotherdebttogdvcovenan', sendForApproval)
-    this.common.setControlRequiredV2('invln_keyriskssummary', sendForApproval)
-    this.common.setControlRequiredV2('invln_compliance', sendForApproval)
-    this.common.setControlRequiredV2('invln_strategicrationale', sendForApproval)
-    this.common.setControlRequiredV2('invln_borrowingentityandrelationship', sendForApproval)
-    this.common.setControlRequiredV2('invln_borrowingentityandrelationshipcomments', sendForApproval)
-    this.common.setControlRequiredV2('invln_locationanddevelopment', sendForApproval)
-    this.common.setControlRequiredV2('invln_projectfundamentals', sendForApproval)
     this.common.setControlRequiredV2('invln_margin', sendForApproval)
-    this.common.setControlRequiredV2('invln_securitycover', sendForApproval)
     this.common.setControlRequiredV2('invln_arrangementfee', sendForApproval)
-    this.common.setControlRequiredV2('invln_renumeration', sendForApproval)
     this.common.setControlRequiredV2('invln_firstlegalchargedescription', sendForApproval)
     this.common.setControlRequiredV2('invln_subsequentchargedescription', sendForApproval)
     this.common.setControlRequiredV2('invln_debenturedescription', sendForApproval)
@@ -239,38 +226,8 @@ export class IspService {
     this.common.setControlRequiredV2('invln_completionguaranteedescription', sendForApproval)
     this.common.setControlRequiredV2('invln_interestshortfalldescription', sendForApproval)
     this.common.setControlRequiredV2('invln_otherdescription', sendForApproval)
-    this.common.setControlRequiredV2('invln_reportfrequency', sendForApproval)
-    this.common.setControlRequiredV2('invln_financialsummary', sendForApproval)
-    this.common.setControlRequiredV2('invln_crranalysis', sendForApproval)
-    this.common.setControlRequiredV2('invln_sensitivityanalysiscomments', sendForApproval)
-    this.common.setControlRequiredV2('invln_summary', sendForApproval)
-    this.common.setControlRequiredV2('invln_strategicassessmentbanding', sendForApproval)
-    this.common.setControlRequiredV2('invln_newhomesbyscaleandtypemeasure', sendForApproval)
     this.common.setControlRequiredV2('invln_encouragingdiversityandinnovation', sendForApproval)
-    this.common.setControlRequiredV2('invln_achievementofwiderhousingobjectivesmeasure', sendForApproval)
-    this.common.setControlRequiredV2('invln_achievementofwidereconomicobjectivesmeasure', sendForApproval)
-    this.common.setControlRequiredV2('invln_vfmassessment', sendForApproval)
-    this.common.setControlRequiredV2('invln_economymeasure', sendForApproval)
-    this.common.setControlRequiredV2('invln_efficiencymeasure', sendForApproval)
-    this.common.setControlRequiredV2('invln_effectivenessmeasure', sendForApproval)
-    this.common.setControlRequiredV2('invln_additionalitymeasure', sendForApproval)
-    this.common.setControlRequiredV2('invln_totalpublicsectorexpendituremeasure', sendForApproval)
-    this.common.setControlRequiredV2('invln_deliverabilityassessment', sendForApproval)
-    this.common.setControlRequiredV2('invln_commercialmeasure', sendForApproval)
-    this.common.setControlRequiredV2('invln_financialmeasure', sendForApproval)
-    this.common.setControlRequiredV2('invln_managementmeasure', sendForApproval)
-    this.common.setControlRequiredV2('invln_legalrechargedfees', sendForApproval)
-    this.common.setControlRequiredV2('invln_legalnonrechargedfees', sendForApproval)
-    this.common.setControlRequiredV2('invln_propertyrechargedfees', sendForApproval)
-    this.common.setControlRequiredV2('invln_propertynonrechargedfees', sendForApproval)
-    this.common.setControlRequiredV2('invln_monitoringrechargedfees', sendForApproval)
     this.common.setControlRequiredV2('invln_monitoringnonrechargedfees', sendForApproval)
-    this.common.setControlRequiredV2('invln_otherrechargedfees', sendForApproval)
-    this.common.setControlRequiredV2('invln_othernonrechargedfees', sendForApproval)
-    this.common.setControlRequiredV2('invln_totalrechargedfees', sendForApproval)
-    this.common.setControlRequiredV2('invln_totalnonrechargedfees', sendForApproval)
-    this.common.setControlRequiredV2('invln_recommendation', sendForApproval)
-    this.common.setControlRequiredV2('invln_tmname', sendForApproval)
     this.common.setControlRequiredV2('invln_datesentforapproval', sendForApproval)
   }
 
@@ -451,6 +408,35 @@ export class IspService {
       }
     }
   }
+
+  public async blockFieldsForLoansReviewer() {
+    let isReviewer = false;
+    let isTrasactionMenager = false;
+    let reviewerRoleName = "[Loans] Reviewer";
+    let transactionMenagerRoleName = "[Loans] Transaction manager";
+
+    let securityRoles = this.common.getUserSecurityRoles();
+    securityRoles?.forEach(function (value) {
+      if (value.name == reviewerRoleName) isReviewer = true;
+      if (value.name == transactionMenagerRoleName) isTrasactionMenager = true
+      console.log(value.name);
+    });
+
+    let appLookup = <any>this.common.getAttributeValue("invln_loanapplication");
+    let application = await Xrm.WebApi.retrieveRecord("invln_loanapplication", appLookup[0].id);
+    console.log(application.invln_externalstatus)
+
+    if (isReviewer && application.invln_externalstatus != 858110010) { //send for aproval
+      this.common.disableAllFields();
+    };
+
+    var ispStatus = this.common.getAttributeValue("invln_approvalstatus");
+
+    if ((isReviewer || isTrasactionMenager) && application.invln_externalstatus != 858110010 && ispStatus == 858110001) {
+      this.common.disableAllFields();
+    };
+    console.log(ispStatus);
+  };
 
   private hideFirstLegalChargeFields(isDisabled: boolean) {
     this.common.hideControl('invln_firstlegalchargedescription', isDisabled);

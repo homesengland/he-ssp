@@ -22,9 +22,9 @@ public class PhaseCrmMapper : IPhaseCrmMapper
             new PhaseName(dto.Name),
             new NumberOfHomes(dto.NumberOfHomes),
             new BuildActivity(MapBuildActivityType(dto.BuildActivityType)),
-            ToMilestoneClaim(dto.CompletionMilestone),
-            dto.AcquisitionMilestone.IsProvided() ? ToMilestoneClaim(dto.AcquisitionMilestone) : null,
-            dto.StartOnSiteMilestone.IsProvided() ? ToMilestoneClaim(dto.StartOnSiteMilestone) : null);
+            dto.AcquisitionMilestone.IsProvided() ? ToMilestoneClaim(dto.AcquisitionMilestone, MilestoneType.Acquisition) : null,
+            dto.StartOnSiteMilestone.IsProvided() ? ToMilestoneClaim(dto.StartOnSiteMilestone, MilestoneType.StartOnSite) : null,
+            ToMilestoneClaim(dto.CompletionMilestone, MilestoneType.Completion));
     }
 
     public PhaseClaimsDto MapToDto(PhaseEntity entity)
@@ -41,7 +41,7 @@ public class PhaseCrmMapper : IPhaseCrmMapper
         };
     }
 
-    private MilestoneClaimDto ToMilestoneClaimDto(MilestoneClaim milestoneClaim)
+    private static MilestoneClaimDto ToMilestoneClaimDto(MilestoneClaim milestoneClaim)
     {
         return new MilestoneClaimDto
         {
@@ -51,15 +51,15 @@ public class PhaseCrmMapper : IPhaseCrmMapper
             PercentageOfGrantApportioned = milestoneClaim.GrantApportioned.Percentage,
             ForecastClaimDate = milestoneClaim.ClaimDate.ForecastClaimDate,
             ClaimDate = milestoneClaim.ClaimDate.ActualClaimDate,
-            CostIncurred = milestoneClaim.CostIncurred,
+            CostIncurred = milestoneClaim.CostsIncurred,
             IsConfirmed = milestoneClaim.IsConfirmed,
         };
     }
 
-    private MilestoneClaim ToMilestoneClaim(MilestoneClaimDto dto)
+    private static MilestoneClaim ToMilestoneClaim(MilestoneClaimDto dto, MilestoneType type)
     {
         return new MilestoneClaim(
-            MapMilestoneType(dto.Type),
+            type,
             MapMilestoneStatus(dto.Status),
             new GrantApportioned(dto.AmountOfGrantApportioned, dto.PercentageOfGrantApportioned / 100m),
             new ClaimDate(dto.ForecastClaimDate, dto.ClaimDate),
@@ -67,7 +67,7 @@ public class PhaseCrmMapper : IPhaseCrmMapper
             dto.IsConfirmed);
     }
 
-    private BuildActivityType MapBuildActivityType(int buildActivityType)
+    private static BuildActivityType MapBuildActivityType(int buildActivityType)
     {
         return buildActivityType switch
         {
@@ -78,18 +78,7 @@ public class PhaseCrmMapper : IPhaseCrmMapper
         };
     }
 
-    private MilestoneType MapMilestoneType(int milestoneType)
-    {
-        return milestoneType switch
-        {
-            // (int)invln_MilestoneType.Acquisition => MilestoneType.Acquisition,
-            _ => MilestoneType.Completion,
-
-            // _ => throw new ArgumentOutOfRangeException(nameof(milestoneType), status, null), // todo: map milestone type
-        };
-    }
-
-    private MilestoneStatus MapMilestoneStatus(int milestoneStatus)
+    private static MilestoneStatus MapMilestoneStatus(int milestoneStatus)
     {
         return milestoneStatus switch
         {

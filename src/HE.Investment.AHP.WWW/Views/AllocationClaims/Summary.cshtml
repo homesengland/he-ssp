@@ -1,5 +1,5 @@
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Links
-@using HE.Investment.AHP.WWW.Views.Claim.Const
+@using HE.Investment.AHP.WWW.Views.AllocationClaims.Const
 @using HE.Investment.AHP.WWW.Views.Shared.Components.AllocationHeader
 @using HE.Investments.Common.WWW.Components.PageHeader
 @using HE.Investments.Common.WWW.Extensions
@@ -32,7 +32,7 @@
         total-items="@Model.PhaseList.TotalItems">
     </he-pagination>
 
-    <vc:return-to-allocation-link allocation-id="@Model.AllocationBasicInfo.Id"/>
+    <vc:return-to-allocation-link allocation-id="@Model.AllocationBasicInfo.Id" is-editable="false"/>
 </gds-div-grid-column-two-thirds>
 <div class="govuk-grid-column-one-third">
     <vc:grant-details-panel grant-details="@Model.GrantDetails"/>

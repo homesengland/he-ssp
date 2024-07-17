@@ -26,6 +26,26 @@ public class GeneralHomeTypeData : HomeTypeDataBase<GeneralHomeTypeData>
         return this;
     }
 
+    public override void PopulateAllData()
+    {
+        GenerateInformation();
+        GenerateBuildingInformation();
+        GenerateCustomBuild();
+        GenerateFacilityType();
+        GenerateAccessibilityStandards();
+        GenerateAccessibilityCategory();
+        GenerateFloorArea();
+        GenerateFloorAreaStandards();
+        GenerateAffordableRent();
+        GenerateExemptFromTheRightToSharedOwnership();
+        GenerateExemptionJustification();
+        GenerateModernMethodsOfConstruction();
+        GenerateModernMethodsConstructionCategories();
+        GenerateDateString();
+        GenerateHomeTypeDetails();
+        GenerateMoveOnAccommodation();
+    }
+
     public GeneralHomeTypeData GenerateMoveOnAccommodation()
     {
         MoveOnAccommodation = YesNoType.Yes;

@@ -2,6 +2,7 @@ using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.Delivery.Enums;
 using HE.Investments.AHP.Allocation.Contract;
 using HE.Investments.AHP.Allocation.Contract.Claims;
+using HE.Investments.AHP.Allocation.Contract.Claims.Enum;
 using HE.Investments.AHP.Allocation.Domain.Claims.Entities;
 using HE.Investments.AHP.Allocation.Domain.Claims.ValueObjects;
 using HE.Investments.Common.Tests.TestData;
@@ -9,12 +10,13 @@ using HE.Investments.Programme.Contract;
 using HE.Investments.Programme.Contract.Enums;
 using HE.Investments.TestsUtils.TestFramework;
 using AllocationBasicInfo = HE.Investments.AHP.Allocation.Domain.Allocation.ValueObjects.AllocationBasicInfo;
+using MilestoneClaim = HE.Investments.AHP.Allocation.Domain.Claims.ValueObjects.MilestoneClaim;
 
 namespace HE.Investments.AHP.Allocation.Domain.Tests.TestObjectBuilders;
 
 public class PhaseEntityTestBuilder : TestObjectBuilder<PhaseEntityTestBuilder, PhaseEntity>
 {
-    public PhaseEntityTestBuilder(PhaseEntity item)
+    private PhaseEntityTestBuilder(PhaseEntity item)
         : base(item)
     {
     }
@@ -42,5 +44,13 @@ public class PhaseEntityTestBuilder : TestObjectBuilder<PhaseEntityTestBuilder, 
         new PhaseName("Phase"),
         new NumberOfHomes(100),
         new BuildActivity(BuildActivityType.WorksOnly),
-        MilestoneClaimTestBuilder.New().Build()));
+        null,
+        null,
+        MilestoneClaimTestBuilder.New().WithType(MilestoneType.Completion).Build()));
+
+    public PhaseEntityTestBuilder WithAcquisitionMilestone(MilestoneClaim? value) => SetProperty(x => x.AcquisitionMilestone, value);
+
+    public PhaseEntityTestBuilder WithStartOnSiteMilestone(MilestoneClaim? value) => SetProperty(x => x.StartOnSiteMilestone, value);
+
+    public PhaseEntityTestBuilder WithCompletionMilestone(MilestoneClaim value) => SetProperty(x => x.CompletionMilestone, value);
 }

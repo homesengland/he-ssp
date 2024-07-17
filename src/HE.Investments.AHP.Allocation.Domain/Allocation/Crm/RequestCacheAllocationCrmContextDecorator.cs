@@ -6,7 +6,7 @@ namespace HE.Investments.AHP.Allocation.Domain.Allocation.Crm;
 
 public class RequestCacheAllocationCrmContextDecorator : IAllocationCrmContext
 {
-    private readonly InMemoryCache<AhpAllocationDto, string> _cache = new();
+    private readonly InMemoryCache<AllocationClaimsDto, string> _cache = new();
 
     private readonly IAllocationCrmContext _decorated;
 
@@ -15,7 +15,7 @@ public class RequestCacheAllocationCrmContextDecorator : IAllocationCrmContext
         _decorated = decorated;
     }
 
-    public async Task<AhpAllocationDto> GetById(string id, string organisationId, string userId, CancellationToken cancellationToken)
+    public async Task<AllocationClaimsDto> GetById(string id, string organisationId, string userId, CancellationToken cancellationToken)
     {
         return (await _cache.GetFromCache(
             id.ToGuidAsString(),
