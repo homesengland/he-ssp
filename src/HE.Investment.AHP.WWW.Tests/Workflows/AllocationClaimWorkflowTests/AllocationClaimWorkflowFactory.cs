@@ -20,7 +20,9 @@ internal static class AllocationClaimWorkflowFactory
             new DateDetails("01", "01", "2025"),
             null,
             null,
-            canBeClaimed);
+            canBeClaimed,
+            null,
+            null);
 
         return new AllocationClaimWorkflow(state, model);
     }
