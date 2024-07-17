@@ -25,7 +25,7 @@ public class DuplicateHomeTypeCommandHandler : IRequestHandler<DuplicateHomeType
         var homeTypes = await _repository.GetByApplicationId(request.ApplicationId, account, cancellationToken);
         var duplicatedHomeType = homeTypes.Duplicate(request.HomeTypeId);
 
-        await _repository.Save(duplicatedHomeType, account.SelectedOrganisationId(), cancellationToken);
+        await _repository.Save(duplicatedHomeType, account, cancellationToken);
 
         return OperationResult.Success(duplicatedHomeType.Id);
     }

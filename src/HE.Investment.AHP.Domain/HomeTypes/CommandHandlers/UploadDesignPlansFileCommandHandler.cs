@@ -45,7 +45,7 @@ public class UploadDesignPlansFileCommandHandler : IRequestHandler<UploadDesignP
                 _documentSettings);
             homeType.DesignPlans.AddFilesToUpload([designFile]);
 
-            await _homeTypeRepository.Save(homeType, account.SelectedOrganisationId(), cancellationToken);
+            await _homeTypeRepository.Save(homeType, account, cancellationToken);
 
             var uploadedFile = homeType.DesignPlans.UploadedFiles.Single(x => x.Id == designFile.Id);
             return OperationResult.Success<UploadedFileContract?>(Map(uploadedFile));
