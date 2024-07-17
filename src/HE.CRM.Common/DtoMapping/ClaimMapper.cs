@@ -21,17 +21,17 @@ namespace HE.CRM.Common.DtoMapping
                 if (milestone == (int)invln_Milestone.Acquisition)
                 {
                     result.AmountOfGrantApportioned = deliveryphase.invln_AcquisitionValue.Value;
-                    result.PercentageOfGrantApportioned = deliveryphase.invln_AcquisitionPercentageValue ?? 0;
+                    result.PercentageOfGrantApportioned = deliveryphase.invln_AcquisitionPercentageValue.Value;
                 }
                 if (milestone == (int)invln_Milestone.SoS)
                 {
                     result.AmountOfGrantApportioned = deliveryphase.invln_StartOnSiteValue.Value;
-                    result.PercentageOfGrantApportioned = deliveryphase.invln_StartOnSitePercentageValue ?? 0;
+                    result.PercentageOfGrantApportioned = deliveryphase.invln_StartOnSitePercentageValue.Value;
                 }
                 if (milestone == (int)invln_Milestone.PC)
                 {
                     result.AmountOfGrantApportioned = deliveryphase.invln_CompletionValue.Value;
-                    result.PercentageOfGrantApportioned = deliveryphase.invln_CompletionPercentageValue ?? 0;
+                    result.PercentageOfGrantApportioned = deliveryphase.invln_CompletionPercentageValue.Value;
                 }
             }
             else
@@ -48,15 +48,15 @@ namespace HE.CRM.Common.DtoMapping
 
             if (milestone == (int)invln_Milestone.Acquisition)
             {
-                result.ForecastClaimDate = deliveryphase.invln_acquisitionmilestoneclaimdate ?? null;
+                result.ForecastClaimDate = deliveryphase.invln_acquisitionmilestoneclaimdate.Value;
             }
             if (milestone == (int)invln_Milestone.SoS)
             {
-                result.ForecastClaimDate = deliveryphase.invln_startonsitemilestoneclaimdate ?? null;
+                result.ForecastClaimDate = deliveryphase.invln_startonsitemilestoneclaimdate.Value;
             }
             if (milestone == (int)invln_Milestone.PC)
             {
-                result.ForecastClaimDate = deliveryphase.invln_completionmilestoneclaimdate ?? null;
+                result.ForecastClaimDate = deliveryphase.invln_completionmilestoneclaimdate.Value;
             }
 
             return result;

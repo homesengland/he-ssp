@@ -111,7 +111,7 @@ namespace HE.CRM.Common.DtoMapping
                 AllocationId = deliveryPhase.invln_Application.Id.ToString(),
                 Name = deliveryPhase.invln_phasename,
                 NumberOfHomes = deliveryPhase.invln_NoofHomes.Value,
-                BuildActivityType = deliveryPhase.invln_buildactivitytype?.Value,
+                BuildActivityType = deliveryPhase.invln_buildactivitytype.Value,
                 AcquisitionMilestone = AcquisitionDto,
                 StartOnSiteMilestone = SoSDto,
                 CompletionMilestone = PCDto,

@@ -229,9 +229,9 @@ namespace HE.CRM.Common.DtoMapping
 
                 GrantDetails = new GrantDetailsDto()
                 {
-                    TotalGrantAllocated = allocation.invln_TotalGrantAllocated?.Value,
-                    AmountPaid = allocation.invln_AmountPaid?.Value,
-                    AmountRemaining = allocation.invln_AmountRemaining?.Value,
+                    TotalGrantAllocated = allocation.invln_TotalGrantAllocated?.Value ?? 0,
+                    AmountPaid = allocation.invln_AmountPaid?.Value ?? 0,
+                    AmountRemaining = allocation.invln_AmountRemaining?.Value ?? 0,
                 },
 
                 ListOfPhaseClaims = listOfPhaseClaims,
