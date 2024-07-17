@@ -28,6 +28,8 @@ export class IspService {
   private static lessThan10MInformationValue: string = "You will not be able to send this ISP for approval until the DES and HoF reviews have taken place. It is policy that the following review / approve this ISP: Risk, CRO Delegated Authority";
   private static moreThan10MLessThan50InformationValue: string = "You will not be able to send this ISP for approval until the DES and HoF reviews have taken place. It is policy that the following review / approve this ISP: Risk, CRO, IPE";
   private static statictextaboveplots = "Please use this section to give an overview of the homes being delivered."
+  private static sensitivityanalysistablestatictext = "Please paste the sensitivity analysis table from the cashflow here";
+
   constructor(eCtx) {
     this.common = new CommonLib(eCtx)
   }
@@ -131,6 +133,8 @@ export class IspService {
     this.common.setAttributeValue('invln_staticrecommendation', IspService.recommendationValue)
     this.common.setAttributeValue('invln_staticstandardconditionstobewaived', IspService.standardConditionsToBeWaivedValue)
     this.common.setAttributeValue('invln_statictextaboveplots', IspService.statictextaboveplots)
+
+    this.common.setAttributeValue('invln_sensitivityanalysistablestatictext', IspService.sensitivityanalysistablestatictext);
   }
 
   public setFieldsRequirementBasedOnSendOnApproval() {
