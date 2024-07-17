@@ -111,7 +111,7 @@ namespace HE.CRM.AHP.Plugins.Services.Application
                 listOfPhaseClaims.Add(DeliveryPhaseMapper.MapToPhaseClaimsDto(deliveryPhase, claimAcquisitionDto, claimSoSDto, claimPCDto));
             }
 
-            // Mapowanie Alocacji na DTO
+            // Mapp Allocation
             TracingService.Trace("Mapp to AllocationClaimsDto");
             result = AhpApplicationMapper.MapToAllocationClaimsDto(allocation, listOfPhaseClaims, _heLocalAuthorityRepository.GetById(allocation.invln_HELocalAuthorityID.Id));
 
