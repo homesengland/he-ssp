@@ -13,10 +13,10 @@ export class Isp {
   public static onLoad(eCtx) {
     const eventLogic = new Isp(eCtx)
     eventLogic.registerEvents()
-    eventLogic.ispService.setFieldsAvailabilityOnLoad()
     eventLogic.ispService.setStaticFieldsOnLoad()
     eventLogic.ispService.setFieldsRequirementBasedOnSendOnApproval()
     eventLogic.ispService.setFieldsVisibilityBasedOnSecurity()
+    eventLogic.ispService.blockFieldsForLoansReviewer()
   }
 
   public static onSendOnApprovalChange(eCtx) {

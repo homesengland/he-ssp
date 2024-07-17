@@ -49,17 +49,6 @@ export class IspService {
     }
   }
 
-  public setFieldsAvailabilityOnLoad() {
-    var loanApplication = this.common.getLookupValue('invln_loanapplication')
-    if (loanApplication != null) {
-      Xrm.WebApi.retrieveRecord('invln_loanapplication', loanApplication.id).then(result => {
-        if (result.invln_externalstatus == ExternalStatus.sentForApproval) {
-          this.common.disableAllFields()
-        }
-      })
-    }
-  }
-
   public setFieldsVisibilityBasedOnSecurity() {
     var loanApplication = this.common.getLookupValue('invln_loanapplication')
     this.hideFirstLegalChargeFields(true);
@@ -273,6 +262,35 @@ export class IspService {
     this.common.setControlRequiredV2('invln_tmname', sendForApproval)
     this.common.setControlRequiredV2('invln_datesentforapproval', sendForApproval)
   }
+
+  public async blockFieldsForLoansReviewer() {
+    let isReviewer = false;
+    let isTrasactionMenager = false;
+    let reviewerRoleName = "[Loans] Reviewer";
+    let transactionMenagerRoleName = "[Loans] Transaction manager";
+
+    let securityRoles = this.common.getUserSecurityRoles();
+    securityRoles?.forEach(function (value) {
+      if (value.name == reviewerRoleName) isReviewer = true;
+      if (value.name == transactionMenagerRoleName) isTrasactionMenager = true
+      console.log(value.name);
+    });
+
+    let appLookup = <any>this.common.getAttributeValue("invln_loanapplication");
+    let application = await Xrm.WebApi.retrieveRecord("invln_loanapplication", appLookup[0].id);
+    console.log(application.invln_externalstatus)
+
+    if (isReviewer && application.invln_externalstatus != 858110010) { //send for aproval
+      this.common.disableAllFields();
+    };
+
+    var ispStatus = this.common.getAttributeValue("invln_approvalstatus");
+
+    if ((isReviewer || isTrasactionMenager) && application.invln_externalstatus != 858110010 && ispStatus == 858110001) {
+      this.common.disableAllFields();
+    };
+    console.log(ispStatus);
+  };
 
   private hideFirstLegalChargeFields(isDisabled: boolean) {
     this.common.hideControl('invln_firstlegalchargedescription', isDisabled);
