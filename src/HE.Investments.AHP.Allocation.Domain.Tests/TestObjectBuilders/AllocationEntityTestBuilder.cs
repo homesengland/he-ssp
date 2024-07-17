@@ -12,7 +12,7 @@ namespace HE.Investments.AHP.Allocation.Domain.Tests.TestObjectBuilders;
 
 public class AllocationEntityTestBuilder : TestObjectBuilder<AllocationEntityTestBuilder, AllocationEntity>
 {
-    public AllocationEntityTestBuilder(AllocationEntity item)
+    private AllocationEntityTestBuilder(AllocationEntity item)
         : base(item)
     {
     }

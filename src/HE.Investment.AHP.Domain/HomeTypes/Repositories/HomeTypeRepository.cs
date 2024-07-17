@@ -9,7 +9,6 @@ using HE.Investment.AHP.Domain.HomeTypes.Entities;
 using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
 using HE.Investment.AHP.Domain.Site.Repositories;
 using HE.Investments.Account.Shared.User;
-using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Infrastructure.Events;
 using HE.Investments.Consortium.Shared.UserContext;
@@ -60,12 +59,13 @@ public class HomeTypeRepository : IHomeTypeRepository
         var site = await _siteRepository.GetSiteBasicInfo(application.SiteId, userAccount, cancellationToken);
         var homeTypes = userAccount.CanViewAllApplications()
             ? await _homeTypeCrmContext.GetAllOrganisationHomeTypes(applicationId.Value, organisationId, cancellationToken)
-            : await _homeTypeCrmContext.GetAllUserHomeTypes(applicationId.Value, organisationId, cancellationToken);
+            : await _homeTypeCrmContext.GetAllUserHomeTypes(applicationId.Value, organisationId, userAccount.UserGlobalId.Value, cancellationToken);
 
         return new HomeTypesEntity(
             application,
             site,
-            homeTypes.Select(x => _homeTypeCrmMapper.MapToDomain(application, site, x, new Dictionary<HomeTypeSegmentType, IReadOnlyCollection<UploadedFile>>())),
+            homeTypes.Select(
+                x => _homeTypeCrmMapper.MapToDomain(application, site, x, new Dictionary<HomeTypeSegmentType, IReadOnlyCollection<UploadedFile>>())),
             application.Sections.HomeTypesStatus);
     }
 
@@ -81,7 +81,12 @@ public class HomeTypeRepository : IHomeTypeRepository
         var site = await _siteRepository.GetSiteBasicInfo(application.SiteId, userAccount, cancellationToken);
         var homeType = userAccount.CanViewAllApplications()
             ? await _homeTypeCrmContext.GetOrganisationHomeTypeById(applicationId.Value, homeTypeId.Value, organisationId, cancellationToken)
-            : await _homeTypeCrmContext.GetUserHomeTypeById(applicationId.Value, homeTypeId.Value, organisationId, cancellationToken);
+            : await _homeTypeCrmContext.GetUserHomeTypeById(
+                applicationId.Value,
+                homeTypeId.Value,
+                organisationId,
+                userAccount.UserGlobalId.Value,
+                cancellationToken);
 
         var uploadedFiles = await GetUploadedFiles(applicationId, homeTypeId, loadFiles, cancellationToken);
         if (homeType != null)
@@ -94,20 +99,25 @@ public class HomeTypeRepository : IHomeTypeRepository
 
     public async Task<IHomeTypeEntity> Save(
         IHomeTypeEntity homeType,
-        OrganisationId organisationId,
+        UserAccount userAccount,
         CancellationToken cancellationToken)
     {
         var entity = (HomeTypeEntity)homeType;
+        var organisationId = userAccount.SelectedOrganisationId().ToGuidAsString();
         if (entity.IsNew)
         {
-            entity.Id = HomeTypeId.From(await _homeTypeCrmContext.Save(_homeTypeCrmMapper.MapToDto(entity), organisationId.Value, cancellationToken));
+            entity.Id = HomeTypeId.From(await _homeTypeCrmContext.Save(
+                _homeTypeCrmMapper.MapToDto(entity),
+                organisationId,
+                userAccount.UserGlobalId.Value,
+                cancellationToken));
             await _eventDispatcher.Publish(
                 new HomeTypeHasBeenCreatedEvent(homeType.Application.Id, entity.Id, entity.Name.Value),
                 cancellationToken);
         }
         else if (entity.IsModified)
         {
-            await _homeTypeCrmContext.Save(_homeTypeCrmMapper.MapToDto(entity), organisationId.Value, cancellationToken);
+            await _homeTypeCrmContext.Save(_homeTypeCrmMapper.MapToDto(entity), organisationId, userAccount.UserGlobalId.Value, cancellationToken);
             await _eventDispatcher.Publish(entity, cancellationToken);
             await _eventDispatcher.Publish(new HomeTypeHasBeenUpdatedEvent(homeType.Application.Id, entity.Id), cancellationToken);
         }
@@ -133,9 +143,15 @@ public class HomeTypeRepository : IHomeTypeRepository
         }
 
         var homeTypeToRemove = homeTypes.PopRemovedHomeType();
+        var organisationId = userAccount.SelectedOrganisationId().ToGuidAsString();
         while (homeTypeToRemove != null)
         {
-            await _homeTypeCrmContext.Remove(homeTypes.Application.Id.Value, homeTypeToRemove.Id.Value, userAccount.SelectedOrganisationId().ToGuidAsString(), cancellationToken);
+            await _homeTypeCrmContext.Remove(
+                homeTypes.Application.Id.Value,
+                homeTypeToRemove.Id.Value,
+                organisationId,
+                userAccount.UserGlobalId.Value,
+                cancellationToken);
             await _eventDispatcher.Publish(
                 new HomeTypeHasBeenRemovedEvent(homeTypeToRemove.Application.Id, homeTypeToRemove.Id),
                 cancellationToken);

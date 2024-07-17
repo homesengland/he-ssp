@@ -6,7 +6,7 @@ using HE.Investment.AHP.Domain.Delivery.Crm;
 using HE.Investment.AHP.Domain.Delivery.Entities;
 using HE.Investment.AHP.Domain.Delivery.ValueObjects;
 using HE.Investment.AHP.Domain.HomeTypes.Repositories;
-using HE.Investments.Common.Contract;
+using HE.Investments.Account.Shared.User;
 using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Infrastructure.Events;
 using HE.Investments.Consortium.Shared.UserContext;
@@ -43,14 +43,17 @@ public class DeliveryPhaseRepository : IDeliveryPhaseRepository
         _crmMapper = crmMapper;
     }
 
-    public async Task<DeliveryPhasesEntity> GetByApplicationId(AhpApplicationId applicationId, ConsortiumUserAccount userAccount, CancellationToken cancellationToken)
+    public async Task<DeliveryPhasesEntity> GetByApplicationId(
+        AhpApplicationId applicationId,
+        ConsortiumUserAccount userAccount,
+        CancellationToken cancellationToken)
     {
         var organisation = userAccount.SelectedOrganisation();
         var organisationId = organisation.OrganisationId.Value;
         var application = await _applicationRepository.GetApplicationBasicInfo(applicationId, userAccount, cancellationToken);
         var deliveryPhases = userAccount.CanViewAllApplications()
             ? await _crmContext.GetAllOrganisationDeliveryPhases(applicationId.Value, organisationId, cancellationToken)
-            : await _crmContext.GetAllUserDeliveryPhases(applicationId.Value, organisationId, cancellationToken);
+            : await _crmContext.GetAllUserDeliveryPhases(applicationId.Value, organisationId, userAccount.UserGlobalId.Value, cancellationToken);
         var homesToDeliver = await GetHomesToDeliver(applicationId, userAccount, cancellationToken);
 
         return new DeliveryPhasesEntity(
@@ -71,7 +74,12 @@ public class DeliveryPhaseRepository : IDeliveryPhaseRepository
         var application = await _applicationRepository.GetApplicationBasicInfo(applicationId, userAccount, cancellationToken);
         var deliveryPhase = userAccount.CanViewAllApplications()
             ? await _crmContext.GetOrganisationDeliveryPhaseById(applicationId.Value, deliveryPhaseId.Value, organisationId, cancellationToken)
-            : await _crmContext.GetUserDeliveryPhaseById(applicationId.Value, deliveryPhaseId.Value, organisationId, cancellationToken);
+            : await _crmContext.GetUserDeliveryPhaseById(
+                applicationId.Value,
+                deliveryPhaseId.Value,
+                organisationId,
+                userAccount.UserGlobalId.Value,
+                cancellationToken);
 
         if (deliveryPhase != null)
         {
@@ -81,17 +89,22 @@ public class DeliveryPhaseRepository : IDeliveryPhaseRepository
         throw new NotFoundException(nameof(DeliveryPhaseEntity), deliveryPhaseId);
     }
 
-    public async Task<DeliveryPhaseId> Save(IDeliveryPhaseEntity deliveryPhase, OrganisationId organisationId, CancellationToken cancellationToken)
+    public async Task<DeliveryPhaseId> Save(IDeliveryPhaseEntity deliveryPhase, UserAccount userAccount, CancellationToken cancellationToken)
     {
         var entity = (DeliveryPhaseEntity)deliveryPhase;
+        var organisationId = userAccount.SelectedOrganisationId().ToGuidAsString();
         if (entity.IsNew)
         {
-            entity.Id = DeliveryPhaseId.From(await _crmContext.Save(_crmMapper.MapToDto(entity), organisationId.Value, cancellationToken));
+            entity.Id = DeliveryPhaseId.From(await _crmContext.Save(
+                _crmMapper.MapToDto(entity),
+                organisationId,
+                userAccount.UserGlobalId.Value,
+                cancellationToken));
             await _eventDispatcher.Publish(new DeliveryPhaseHasBeenCreatedEvent(entity.Application.Id, entity.Name.Value), cancellationToken);
         }
         else if (entity.IsModified)
         {
-            await _crmContext.Save(_crmMapper.MapToDto(entity), organisationId.Value, cancellationToken);
+            await _crmContext.Save(_crmMapper.MapToDto(entity), organisationId, userAccount.UserGlobalId.Value, cancellationToken);
             await _eventDispatcher.Publish(new DeliveryPhaseHasBeenUpdatedEvent(entity.Application.Id), cancellationToken);
         }
 
@@ -112,13 +125,19 @@ public class DeliveryPhaseRepository : IDeliveryPhaseRepository
 
         foreach (var deliveryPhase in deliveryPhases.DeliveryPhases.Where(x => x.IsModified))
         {
-            await Save(deliveryPhase, userAccount.SelectedOrganisationId(), cancellationToken);
+            await Save(deliveryPhase, userAccount, cancellationToken);
         }
 
         var deliveryPhaseToRemove = deliveryPhases.PopRemovedDeliveryPhase();
+        var organisationId = userAccount.SelectedOrganisationId().ToGuidAsString();
         while (deliveryPhaseToRemove != null)
         {
-            await _crmContext.Remove(deliveryPhases.Application.Id.Value, deliveryPhaseToRemove.Id.Value, userAccount.SelectedOrganisationId().ToGuidAsString(), cancellationToken);
+            await _crmContext.Remove(
+                deliveryPhases.Application.Id.Value,
+                deliveryPhaseToRemove.Id.Value,
+                organisationId,
+                userAccount.UserGlobalId.Value,
+                cancellationToken);
             await _eventDispatcher.Publish(new DeliveryPhaseHasBeenRemovedEvent(deliveryPhaseToRemove.Application.Id), cancellationToken);
 
             deliveryPhaseToRemove = deliveryPhases.PopRemovedDeliveryPhase();

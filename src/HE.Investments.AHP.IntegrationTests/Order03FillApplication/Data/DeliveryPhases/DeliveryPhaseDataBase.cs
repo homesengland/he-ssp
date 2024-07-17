@@ -40,4 +40,6 @@ public abstract class DeliveryPhaseDataBase<TDeliveryPhaseData> : INestedItemDat
         CompletionMilestonePaymentDate = new DateDetails("10", "04", "2025");
         return DeliveryPhase;
     }
+
+    public abstract void PopulateAllData();
 }

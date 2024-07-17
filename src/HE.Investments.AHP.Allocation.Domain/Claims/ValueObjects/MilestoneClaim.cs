@@ -1,8 +1,9 @@
 using HE.Investments.AHP.Allocation.Contract.Claims.Enum;
 using HE.Investments.AHP.Allocation.Domain.Claims.Enums;
+using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Extensions;
-using HE.Investments.Common.Utils;
+using HE.Investments.Common.Messages;
 using MilestoneStatus = HE.Investments.AHP.Allocation.Domain.Claims.Enums.MilestoneStatus;
 
 namespace HE.Investments.AHP.Allocation.Domain.Claims.ValueObjects;
@@ -14,14 +15,20 @@ public class MilestoneClaim : ValueObject
         MilestoneStatus status,
         GrantApportioned grantApportioned,
         ClaimDate claimDate,
-        bool? costIncurred,
+        bool? costsIncurred,
         bool? isConfirmed)
     {
+        if (type != MilestoneType.Acquisition && costsIncurred.IsProvided())
+        {
+            OperationResult.ThrowValidationError(
+                nameof(CostsIncurred), "Costs incurred can be provided only for Acquisition milestone");
+        }
+
         Type = type;
         Status = status;
         GrantApportioned = grantApportioned;
         ClaimDate = claimDate;
-        CostIncurred = costIncurred;
+        CostsIncurred = costsIncurred;
         IsConfirmed = isConfirmed;
     }
 
@@ -33,13 +40,14 @@ public class MilestoneClaim : ValueObject
 
     public ClaimDate ClaimDate { get; }
 
-    public bool? CostIncurred { get; }
+    public bool? CostsIncurred { get; }
 
     public bool? IsConfirmed { get; }
 
-    public MilestoneDueStatus CalculateDueStatus(IDateTimeProvider dateTimeProvider)
+    public bool IsSubmitted => Status >= MilestoneStatus.Submitted;
+
+    public MilestoneDueStatus CalculateDueStatus(DateTime today)
     {
-        var today = dateTimeProvider.Now.Date;
         if (ClaimDate.ForecastClaimDate.Date.IsAfter(today.AddDays(14)))
         {
             return MilestoneDueStatus.Undefined;
@@ -58,13 +66,32 @@ public class MilestoneClaim : ValueObject
         return MilestoneDueStatus.Overdue;
     }
 
+    public MilestoneClaim WithCostsIncurred(bool? costsIncurred)
+    {
+        if (costsIncurred.IsNotProvided())
+        {
+            OperationResult.ThrowValidationError(
+                nameof(CostsIncurred),
+                ValidationErrorMessage.MustBeSelectedYes(
+                    "you have incurred costs and made payments to at least the level of the grant"));
+        }
+
+        return new MilestoneClaim(
+            Type,
+            Status,
+            GrantApportioned,
+            ClaimDate,
+            costsIncurred,
+            IsConfirmed);
+    }
+
     protected override IEnumerable<object?> GetAtomicValues()
     {
         yield return Type;
         yield return Status;
         yield return GrantApportioned;
         yield return ClaimDate;
-        yield return CostIncurred;
+        yield return CostsIncurred;
         yield return IsConfirmed;
     }
 }

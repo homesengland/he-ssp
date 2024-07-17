@@ -49,7 +49,7 @@ public abstract class SaveHomeTypeSegmentCommandHandlerBase<TCommand> : HomeType
             return new OperationResult(errors);
         }
 
-        await _homeTypeRepository.Save(homeType, account.SelectedOrganisationId(), cancellationToken);
+        await _homeTypeRepository.Save(homeType, account, cancellationToken);
         return OperationResult.Success();
     }
 }

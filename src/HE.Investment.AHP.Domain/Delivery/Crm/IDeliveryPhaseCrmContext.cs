@@ -6,7 +6,7 @@ public interface IDeliveryPhaseCrmContext
 {
     Task<IList<DeliveryPhaseDto>> GetAllOrganisationDeliveryPhases(string applicationId, string organisationId, CancellationToken cancellationToken);
 
-    Task<IList<DeliveryPhaseDto>> GetAllUserDeliveryPhases(string applicationId, string organisationId, CancellationToken cancellationToken);
+    Task<IList<DeliveryPhaseDto>> GetAllUserDeliveryPhases(string applicationId, string organisationId, string userId, CancellationToken cancellationToken);
 
     Task<DeliveryPhaseDto?> GetOrganisationDeliveryPhaseById(
         string applicationId,
@@ -18,9 +18,10 @@ public interface IDeliveryPhaseCrmContext
         string applicationId,
         string deliveryPhaseId,
         string organisationId,
+        string userId,
         CancellationToken cancellationToken);
 
-    Task Remove(string applicationId, string deliveryPhaseId, string organisationId, CancellationToken cancellationToken);
+    Task Remove(string applicationId, string deliveryPhaseId, string organisationId, string userId, CancellationToken cancellationToken);
 
-    Task<string> Save(DeliveryPhaseDto deliveryPhase, string organisationId, CancellationToken cancellationToken);
+    Task<string> Save(DeliveryPhaseDto deliveryPhase, string organisationId, string userId, CancellationToken cancellationToken);
 }

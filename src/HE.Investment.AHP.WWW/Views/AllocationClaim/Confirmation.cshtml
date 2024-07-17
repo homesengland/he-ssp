@@ -1,0 +1,22 @@
+@using HE.Investment.AHP.WWW.Views.AllocationClaims.Const
+@using HE.Investments.AHP.Allocation.Contract.Claims
+@using HE.Investments.Common.Extensions
+@using HE.Investments.Common.WWW.Components.PageHeader
+@model HE.Investment.AHP.WWW.Models.AllocationClaim.PhaseClaimModel
+@{
+    var title = ClaimPageTitles.Confirmation;
+    ViewData["Title"] = title;
+}
+
+<gds-div-grid-column-two-thirds>
+    <vc:ahp-workflow-back-button current-page="@AllocationClaimWorkflowState.Confirmation"/>
+    <vc:page-header caption="@Model.Allocation.Name - @Model.Allocation.Tenure.GetDescription()" title="@title"/>
+
+    <he-organisation-form asp-controller="AllocationClaim" asp-action="Confirmation" asp-route-workflow="@Context.Request.Query["workflow"]" asp-method="post" novalidate>
+        <gds-p>
+            TODO: AB#92672 implement view
+        </gds-p>
+
+        <vc:form-button/>
+    </he-organisation-form>
+</gds-div-grid-column-two-thirds>

@@ -20,9 +20,9 @@ internal sealed class RequestCacheHomeTypeCrmContextDecorator : IHomeTypeCrmCont
         return await _decorated.GetAllOrganisationHomeTypes(applicationId, organisationId, cancellationToken);
     }
 
-    public async Task<IList<HomeTypeDto>> GetAllUserHomeTypes(string applicationId, string organisationId, CancellationToken cancellationToken)
+    public async Task<IList<HomeTypeDto>> GetAllUserHomeTypes(string applicationId, string organisationId, string userId, CancellationToken cancellationToken)
     {
-        return await _decorated.GetAllUserHomeTypes(applicationId, organisationId, cancellationToken);
+        return await _decorated.GetAllUserHomeTypes(applicationId, organisationId, userId, cancellationToken);
     }
 
     public async Task<HomeTypeDto?> GetOrganisationHomeTypeById(string applicationId, string homeTypeId, string organisationId, CancellationToken cancellationToken)
@@ -32,22 +32,22 @@ internal sealed class RequestCacheHomeTypeCrmContextDecorator : IHomeTypeCrmCont
             async () => await _decorated.GetOrganisationHomeTypeById(applicationId, homeTypeId, organisationId, cancellationToken));
     }
 
-    public async Task<HomeTypeDto?> GetUserHomeTypeById(string applicationId, string homeTypeId, string organisationId, CancellationToken cancellationToken)
+    public async Task<HomeTypeDto?> GetUserHomeTypeById(string applicationId, string homeTypeId, string organisationId, string userId, CancellationToken cancellationToken)
     {
         return await _cache.GetFromCache(
             homeTypeId.ToGuidAsString(),
-            async () => await _decorated.GetUserHomeTypeById(applicationId, homeTypeId, organisationId, cancellationToken));
+            async () => await _decorated.GetUserHomeTypeById(applicationId, homeTypeId, organisationId, userId, cancellationToken));
     }
 
-    public async Task Remove(string applicationId, string homeTypeId, string organisationId, CancellationToken cancellationToken)
+    public async Task Remove(string applicationId, string homeTypeId, string organisationId, string userId, CancellationToken cancellationToken)
     {
-        await _decorated.Remove(applicationId, homeTypeId, organisationId, cancellationToken);
+        await _decorated.Remove(applicationId, homeTypeId, organisationId, userId, cancellationToken);
         _cache.Delete(homeTypeId);
     }
 
-    public async Task<string> Save(HomeTypeDto homeType, string organisationId, CancellationToken cancellationToken)
+    public async Task<string> Save(HomeTypeDto homeType, string organisationId, string userId, CancellationToken cancellationToken)
     {
-        homeType.id = await _decorated.Save(homeType, organisationId, cancellationToken);
+        homeType.id = await _decorated.Save(homeType, organisationId, userId, cancellationToken);
         _cache.ReplaceCache(homeType.id, homeType);
 
         return homeType.id;

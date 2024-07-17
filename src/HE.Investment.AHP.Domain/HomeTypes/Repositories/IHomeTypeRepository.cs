@@ -23,7 +23,7 @@ public interface IHomeTypeRepository
 
     Task<IHomeTypeEntity> Save(
         IHomeTypeEntity homeType,
-        OrganisationId organisationId,
+        UserAccount userAccount,
         CancellationToken cancellationToken);
 
     Task Save(HomeTypesEntity homeTypes, UserAccount userAccount, CancellationToken cancellationToken);
