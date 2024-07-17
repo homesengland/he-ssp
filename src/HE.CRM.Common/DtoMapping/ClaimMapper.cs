@@ -40,8 +40,8 @@ namespace HE.CRM.Common.DtoMapping
                 result.Status = claim.StatusCode.Value;
                 result.AmountOfGrantApportioned = claim.invln_AmountApportionedtoMilestone.Value;
                 result.PercentageOfGrantApportioned = claim.invln_PercentageofGrantApportionedtoThisMilestone.HasValue ? (decimal)claim.invln_PercentageofGrantApportionedtoThisMilestone.Value : 0;
-                result.AchivmentDate = claim.invln_MilestoneDate ?? null;
-                result.SubmisstionDate = claim.invln_ClaimSubmissionDate ?? null;
+                result.AchievementDate = claim.invln_MilestoneDate ?? null;
+                result.SubmissionDate = claim.invln_ClaimSubmissionDate ?? null;
                 result.CostIncurred = claim.invln_IncurredCosts;
                 result.IsConfirmed = claim.invln_RequirementsConfirmation;
             }
