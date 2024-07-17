@@ -44,4 +44,14 @@ public class MilestoneClaimTestBuilder : TestObjectBuilder<MilestoneClaimTestBui
         PrivatePropertySetter.SetPropertyWithNoSetter(Item.ClaimDate, nameof(ClaimDate.ForecastClaimDate), value);
         return this;
     }
+
+    public MilestoneClaimTestBuilder WithMilestoneAchievedDate(DateTime value)
+    {
+        PrivatePropertySetter.SetPropertyWithNoSetter(Item.ClaimDate, nameof(ClaimDate.ActualClaimDate), value);
+        return this;
+    }
+
+    public MilestoneClaimTestBuilder WithCostsIncurred(bool value) => SetProperty(x => x.CostsIncurred, value);
+
+    public MilestoneClaimTestBuilder WithConfirmation(bool value) => SetProperty(x => x.IsConfirmed, value);
 }
