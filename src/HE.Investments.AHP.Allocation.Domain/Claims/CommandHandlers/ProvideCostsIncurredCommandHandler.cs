@@ -1,19 +1,20 @@
+using HE.Investments.Account.Shared;
 using HE.Investments.AHP.Allocation.Contract.Claims.Commands;
-using HE.Investments.Common.Contract.Validators;
-using MediatR;
+using HE.Investments.AHP.Allocation.Domain.Claims.Repositories;
+using HE.Investments.AHP.Allocation.Domain.Claims.ValueObjects;
 
 namespace HE.Investments.AHP.Allocation.Domain.Claims.CommandHandlers;
 
-internal sealed class ProvideCostsIncurredCommandHandler : IRequestHandler<ProvideCostsIncurredCommand, OperationResult>
+internal sealed class ProvideCostsIncurredCommandHandler :
+    ProvideClaimDetailsBaseCommandHandler<ProvideCostsIncurredCommand>
 {
-    public Task<OperationResult> Handle(ProvideCostsIncurredCommand request, CancellationToken cancellationToken)
+    public ProvideCostsIncurredCommandHandler(IPhaseRepository phaseRepository, IAccountUserContext accountUserContext)
+        : base(phaseRepository, accountUserContext)
     {
-        // TODO: AB#85084 Implement command handler
-        if (request.CostsIncurred == null)
-        {
-            OperationResult.ThrowValidationError(nameof(request.CostsIncurred), "Invalid value");
-        }
+    }
 
-        return Task.FromResult(OperationResult.Success());
+    protected override MilestoneClaim Provide(ProvideCostsIncurredCommand request, MilestoneClaim claim)
+    {
+        return claim.WithCostsIncurred(request.CostsIncurred);
     }
 }

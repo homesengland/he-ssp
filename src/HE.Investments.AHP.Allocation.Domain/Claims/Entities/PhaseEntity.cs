@@ -18,9 +18,9 @@ public class PhaseEntity : DomainEntity
         PhaseName name,
         NumberOfHomes numberOfHomes,
         BuildActivity buildActivityType,
-        MilestoneClaim completionMilestone,
-        MilestoneClaim? acquisitionMilestone = null,
-        MilestoneClaim? startOnSiteMilestone = null)
+        MilestoneClaim? acquisitionMilestone,
+        MilestoneClaim? startOnSiteMilestone,
+        MilestoneClaim completionMilestone)
     {
         Id = id;
         Allocation = allocation;
@@ -42,11 +42,11 @@ public class PhaseEntity : DomainEntity
 
     public BuildActivity BuildActivityType { get; }
 
-    public MilestoneClaim? AcquisitionMilestone { get; }
+    public MilestoneClaim? AcquisitionMilestone { get; private set; }
 
-    public MilestoneClaim? StartOnSiteMilestone { get; }
+    public MilestoneClaim? StartOnSiteMilestone { get; private set; }
 
-    public MilestoneClaim CompletionMilestone { get; }
+    public MilestoneClaim CompletionMilestone { get; private set; }
 
     public bool IsModified => _modificationTracker.IsModified;
 
@@ -56,9 +56,9 @@ public class PhaseEntity : DomainEntity
         PhaseName name,
         NumberOfHomes numberOfHomes,
         BuildActivity buildActivityType,
-        MilestoneClaim completionMilestone,
-        MilestoneClaim? acquisitionMilestone = null,
-        MilestoneClaim? startOnSiteMilestone = null)
+        MilestoneClaim? acquisitionMilestone,
+        MilestoneClaim? startOnSiteMilestone,
+        MilestoneClaim completionMilestone)
     {
         return new PhaseEntity(
             id,
@@ -66,9 +66,9 @@ public class PhaseEntity : DomainEntity
             name,
             numberOfHomes,
             buildActivityType,
-            completionMilestone,
             acquisitionMilestone,
-            startOnSiteMilestone);
+            startOnSiteMilestone,
+            completionMilestone);
     }
 
     public MilestoneClaim? GetMilestoneClaim(MilestoneType milestoneType)
@@ -91,5 +91,24 @@ public class PhaseEntity : DomainEntity
             MilestoneType.Completion => !CompletionMilestone.IsSubmitted && (StartOnSiteMilestone.IsNotProvided() || StartOnSiteMilestone!.IsSubmitted),
             _ => false,
         };
+    }
+
+    public void ProvideMilestoneClaim(MilestoneClaim claim)
+    {
+        switch (claim.Type)
+        {
+            case MilestoneType.Acquisition:
+                AcquisitionMilestone = _modificationTracker.Change(AcquisitionMilestone, claim);
+                break;
+            case MilestoneType.StartOnSite:
+                StartOnSiteMilestone = _modificationTracker.Change(StartOnSiteMilestone, claim);
+                break;
+            case MilestoneType.Completion:
+                CompletionMilestone = _modificationTracker.Change(CompletionMilestone, claim);
+                break;
+            case MilestoneType.Undefined:
+            default:
+                throw new InvalidOperationException("Cannot provide Unknown claim type.");
+        }
     }
 }

@@ -27,7 +27,7 @@ public sealed class MilestoneClaimContractMapper : IMilestoneClaimContractMapper
             DateDetails.FromDateTime(milestoneClaim.ClaimDate.ActualClaimDate),
             null, // TODO: AB#85082 Map Submission date when available
             phase.CanMilestoneBeClaimed(milestoneType),
-            milestoneClaim.CostIncurred,
+            milestoneClaim.CostsIncurred,
             milestoneClaim.IsConfirmed);
     }
 
