@@ -50,6 +50,6 @@ public class PhaseRepository : IPhaseRepository
             return Task.CompletedTask;
         }
 
-        throw new NotImplementedException(); // todo implement when save milestones will be added
+        return Task.CompletedTask; // todo implement when save milestones will be added
     }
 }

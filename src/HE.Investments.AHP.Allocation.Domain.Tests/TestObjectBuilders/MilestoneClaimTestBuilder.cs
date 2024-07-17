@@ -37,6 +37,8 @@ public class MilestoneClaimTestBuilder : TestObjectBuilder<MilestoneClaimTestBui
 
     public MilestoneClaimTestBuilder WithStatus(MilestoneStatus value) => SetProperty(x => x.Status, value);
 
+    public MilestoneClaimTestBuilder WithType(MilestoneType value) => SetProperty(x => x.Type, value);
+
     public MilestoneClaimTestBuilder WithForecastClaimDate(DateTime value)
     {
         PrivatePropertySetter.SetPropertyWithNoSetter(Item.ClaimDate, nameof(ClaimDate.ForecastClaimDate), value);
