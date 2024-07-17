@@ -36,34 +36,65 @@ public class SharePointFilesService : ISharePointFilesService
     {
         var take = 20;
         var documentsList = _spContext.Web.Lists.GetByTitle(filter.ListTitle);
-        var camlQuery = new CamlQuery()
+        var camlQuery = new CamlQuery();
+
+        if (filter.PartitionId == null)
         {
-            ViewXml = $@"<View Scope='RecursiveAll'>
-                        <Query>
-                            <Where>
-                                <And>
-                                    <And>
-                                        <And>
-                                            {GetCamlQueryForFolderPaths(filter.ListAlias, filter.FolderPaths)}
-                                            <Eq>
-                                                <FieldRef Name='FSObjType' />
-                                                <Value Type='FSObjType'>0</Value>
-                                            </Eq>
-                                        </And>
-                                        <IsNull>
-                                            <FieldRef Name='_VirusInfo' />
-                                        </IsNull>
-                                    </And>
-                                    <IsNotNull>
-                                        <FieldRef Name='_ModerationComments' />
-                                    </IsNotNull>
-                                </And>
-                            </Where>
-                            <OrderBy><FieldRef Name='Modified' Ascending='false'/></OrderBy>
-                        </Query>
-                        <RowLimit>{take}</RowLimit>
-                    </View>",
-        };
+            camlQuery.ViewXml = $@"<View Scope='RecursiveAll'>
+                                    <Query>
+                                        <Where>
+                                            <And>
+                                                <And>
+                                                    <And>
+                                                        {GetCamlQueryForFolderPaths(filter.ListAlias, filter.FolderPaths)}
+                                                        <Eq>
+                                                            <FieldRef Name='FSObjType' />
+                                                            <Value Type='FSObjType'>0</Value>
+                                                        </Eq>
+                                                    </And>
+                                                    <IsNull>
+                                                        <FieldRef Name='_VirusInfo' />
+                                                    </IsNull>
+                                                </And>
+                                                <IsNotNull>
+                                                    <FieldRef Name='_ModerationComments' />
+                                                </IsNotNull>
+                                            </And>
+                                        </Where>
+                                        <OrderBy><FieldRef Name='Modified' Ascending='false'/></OrderBy>
+                                    </Query>
+                                    <RowLimit>{take}</RowLimit>
+                                </View>";
+        }
+        else
+        {
+            camlQuery.ViewXml = $@"<View Scope='RecursiveAll'>
+                                    <Query>
+                                        <Where>
+                                            <And>
+                                                <And>
+                                                    <And>
+                                                        {GetCamlQueryForFolderPaths(filter.ListAlias, filter.FolderPaths)}
+                                                        <Eq>
+                                                            <FieldRef Name='_PartitionId' />
+                                                            <Value Type='Text'>{filter.PartitionId}</Value>
+                                                        </Eq>
+                                                    </And>
+                                                    <IsNull>
+                                                        <FieldRef Name='_VirusInfo' />
+                                                    </IsNull>
+                                                </And>
+                                                <IsNotNull>
+                                                    <FieldRef Name='_ModerationComments' />
+                                                </IsNotNull>
+                                            </And>
+                                        </Where>
+                                        <OrderBy><FieldRef Name='Modified' Ascending='false'/></OrderBy>
+                                    </Query>
+                                    <RowLimit>{take}</RowLimit>
+                                </View>";
+        }
+
         camlQuery.SetPosition(filter.PagingInfo);
         var listItems = documentsList.GetItems(camlQuery);
         _spContext.Load(

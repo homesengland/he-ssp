@@ -19,4 +19,7 @@ public class FileTableFilter
 
     [DefaultValue(null)]
     public string? PagingInfo { get; set; }
+
+    [DefaultValue(null)]
+    public string? PartitionId { get; set; }
 }

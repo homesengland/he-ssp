@@ -18,4 +18,6 @@ public class FileUploadModel
     public string Metadata { get; set; }
 
     public bool? Overwrite { get; set; }
+
+    public string? PartitionId { get; set; }
 }
