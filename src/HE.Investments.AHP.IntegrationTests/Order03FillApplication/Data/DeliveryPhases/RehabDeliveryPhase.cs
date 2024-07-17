@@ -48,4 +48,13 @@ public sealed class RehabDeliveryPhase : DeliveryPhaseDataBase<RehabDeliveryPhas
         InvalidCompletionMilestonePaymentDate = new DateDetails("01", "01", "2030");
         return base.GenerateCompletionMilestone();
     }
+
+    public override void PopulateAllData()
+    {
+        GenerateDeliveryPhase();
+        GenerateReconfiguringExisting();
+        GenerateAcquisitionMilestone();
+        GenerateStartOnSiteMilestone();
+        GenerateCompletionMilestone();
+    }
 }

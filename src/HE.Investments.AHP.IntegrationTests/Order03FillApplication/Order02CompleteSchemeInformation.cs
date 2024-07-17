@@ -24,14 +24,7 @@ public class Order02CompleteSchemeInformation : AhpApplicationIntegrationTest
     public Order02CompleteSchemeInformation(AhpIntegrationTestFixture fixture, ITestOutputHelper output)
         : base(fixture, output)
     {
-        var schemaInformationData = GetSharedDataOrNull<SchemeInformationData>(nameof(SchemeInformationData));
-        if (schemaInformationData is null)
-        {
-            schemaInformationData = new SchemeInformationData();
-            SetSharedData(nameof(SchemeInformationData), schemaInformationData);
-        }
-
-        SchemeInformationData = schemaInformationData;
+        SchemeInformationData = ReturnSharedData<SchemeInformationData>();
     }
 
     public SchemeInformationData SchemeInformationData { get; }

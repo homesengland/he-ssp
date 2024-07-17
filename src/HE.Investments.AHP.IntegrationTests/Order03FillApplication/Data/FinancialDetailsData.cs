@@ -112,6 +112,16 @@ public class FinancialDetailsData
         SchemaFunding = schemaFunding;
     }
 
+    public void PopulateAllData(decimal schemaFunding)
+    {
+        GenerateLandStatus();
+        GenerateLandValue();
+        GenerateOtherApplicationCosts();
+        GenerateExpectedContributions();
+        GenerateGrants();
+        ProvideSchemeFunding(schemaFunding);
+    }
+
     private decimal GetDecimalValue(string fieldName)
     {
         return _dataSeed + 100_000 + (fieldName.Length * 1_000);

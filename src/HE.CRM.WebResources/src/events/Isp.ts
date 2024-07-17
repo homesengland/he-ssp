@@ -1,5 +1,6 @@
 import { IspService } from '../services/IspService'
 import { CommonLib } from '../Common'
+import { event } from 'jquery'
 
 export class Isp {
   private common: CommonLib
@@ -12,11 +13,12 @@ export class Isp {
 
   public static onLoad(eCtx) {
     const eventLogic = new Isp(eCtx)
+    eventLogic.ispService.mapFieldOnLoad();
     eventLogic.registerEvents()
-    eventLogic.ispService.setFieldsAvailabilityOnLoad()
     eventLogic.ispService.setStaticFieldsOnLoad()
     eventLogic.ispService.setFieldsRequirementBasedOnSendOnApproval()
     eventLogic.ispService.setFieldsVisibilityBasedOnSecurity()
+    eventLogic.ispService.blockFieldsForLoansReviewer()
   }
 
   public static onSendOnApprovalChange(eCtx) {

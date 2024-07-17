@@ -1,10 +1,18 @@
-@using HE.Investments.Common.Extensions
+@using HE.Investments.Common.Messages
+@using HE.Investments.Common.WWW.Components.LinkWorkingAsButton
 @using HE.Investments.Common.WWW.Extensions
-@model (HE.Investments.AHP.Allocation.Contract.AllocationId AllocationId, string LinkText);
+@model (HE.Investments.AHP.Allocation.Contract.AllocationId AllocationId, bool IsEditable);
 
 <div>
-    <gds-link class="govuk-link--no-visited-state"
-              href="@Url.OrganisationAction("Overview", "Allocation",  new { allocationId = Model.AllocationId })">
-        @(Model.LinkText.IsProvided() ? Model : "Return to allocation")
-    </gds-link>
+    @if (Model.IsEditable)
+    {
+        <vc:link-working-as-button text="Cancel and return to allocation" name="action" value="@GenericMessages.CancelAndReturn"/>
+    }
+    else
+    {
+        <gds-link class="govuk-link--no-visited-state"
+                  href="@Url.OrganisationAction("Overview", "Allocation", new { allocationId = Model.AllocationId })">
+            Return to allocation
+        </gds-link>
+    }
 </div>

@@ -12,6 +12,7 @@ public interface IHomeTypeCrmContext
     Task<IList<HomeTypeDto>> GetAllUserHomeTypes(
         string applicationId,
         string organisationId,
+        string userId,
         CancellationToken cancellationToken);
 
     Task<HomeTypeDto?> GetOrganisationHomeTypeById(
@@ -24,9 +25,10 @@ public interface IHomeTypeCrmContext
         string applicationId,
         string homeTypeId,
         string organisationId,
+        string userId,
         CancellationToken cancellationToken);
 
-    Task Remove(string applicationId, string homeTypeId, string organisationId, CancellationToken cancellationToken);
+    Task Remove(string applicationId, string homeTypeId, string organisationId, string userId, CancellationToken cancellationToken);
 
-    Task<string> Save(HomeTypeDto homeType, string organisationId, CancellationToken cancellationToken);
+    Task<string> Save(HomeTypeDto homeType, string organisationId, string userId, CancellationToken cancellationToken);
 }

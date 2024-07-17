@@ -1,4 +1,3 @@
-using System.Diagnostics.CodeAnalysis;
 using HE.Investments.Account.Api.Contract.User;
 using HE.Investments.Account.Shared;
 using HE.Investments.Account.Shared.Authorization;
