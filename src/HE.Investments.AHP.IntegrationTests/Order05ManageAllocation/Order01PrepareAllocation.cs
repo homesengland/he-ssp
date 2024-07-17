@@ -42,7 +42,7 @@ public class Order01PrepareAllocation : AhpIntegrationTest
 
     [Fact(Skip = AhpConfig.SkipTest)]
     [Order(1)]
-    public async Task Order01_AhpProjectShouldBeCreated()
+    public async Task Order01_AhpAllocationShouldBeCreated()
     {
         // given
         ApplicationData.GenerateApplicationName();
