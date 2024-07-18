@@ -49,6 +49,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Api\FrontDoor\Mappers\SaveSiteRequestMapper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)dtomapping\AhpApplicationMapper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)dtomapping\AhpProjectMapper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)dtomapping\ClaimMapper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)dtomapping\ConsortiumMapper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)dtomapping\ContactDtoMapper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DtoMapping\DeliveryPhaseMapper.cs" />
@@ -72,6 +73,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Implementations\AhpApplicationRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Implementations\AhpProjectRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\implementations\AhpStatusChangeRepository.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Repositories\Implementations\ClaimRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Implementations\ConditionRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)repositories\implementations\ConsortiumRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Implementations\ContactRepository.cs" />
@@ -115,6 +117,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\IAhpApplicationRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\IAhpProjectRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\IAhpStatusChangeRepository.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\IClaimRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\IConditionRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)repositories\interfaces\IConsortiumrepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\IContactRepository.cs" />

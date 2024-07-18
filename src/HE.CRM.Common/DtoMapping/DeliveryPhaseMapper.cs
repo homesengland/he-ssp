@@ -76,7 +76,7 @@ namespace HE.CRM.Common.DtoMapping
                 invln_completionmilestoneclaimdate = deliveryPhaseDto.completionPaymentDate,
                 invln_nbrh = MapTypeOfHome(deliveryPhaseDto.typeOfHomes),
                 invln_urbrequestingearlymilestonepayments = MapYesNo(deliveryPhaseDto.requiresAdditionalPayments),
-                invln_invln_homesindeliveryphase_deliveryphasel = MapHomesInDeliveryPhase(deliveryPhaseDto),
+        invln_invln_homesindeliveryphase_deliveryphasel = MapHomesInDeliveryPhase(deliveryPhaseDto),
                 invln_iscompleted = deliveryPhaseDto.isCompleted,
                 invln_AcquisitionPercentageValue = deliveryPhaseDto.acquisitionPercentageValue * 100,
                 invln_StartOnSitePercentageValue = deliveryPhaseDto.startOnSitePercentageValue * 100,
@@ -101,6 +101,25 @@ namespace HE.CRM.Common.DtoMapping
 
             return deliveryPhase;
         }
+
+
+        public static PhaseClaimsDto MapToPhaseClaimsDto(invln_DeliveryPhase deliveryPhase, MilestoneClaimDto AcquisitionDto, MilestoneClaimDto SoSDto, MilestoneClaimDto PCDto)
+        {
+            var result = new PhaseClaimsDto()
+            {
+                Id = deliveryPhase.Id.ToString(),
+                AllocationId = deliveryPhase.invln_Application.Id.ToString(),
+                Name = deliveryPhase.invln_phasename,
+                NumberOfHomes = deliveryPhase.invln_NoofHomes.Value,
+                BuildActivityType = deliveryPhase.invln_buildactivitytype.Value,
+                AcquisitionMilestone = AcquisitionDto,
+                StartOnSiteMilestone = SoSDto,
+                CompletionMilestone = PCDto,
+            };
+            return result;
+        }
+
+
 
         private static IList<invln_homesindeliveryphase> MapHomesInDeliveryPhase(DeliveryPhaseDto deliveryPhaseDto)
         {

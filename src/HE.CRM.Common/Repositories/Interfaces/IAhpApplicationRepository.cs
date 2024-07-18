@@ -15,5 +15,6 @@ namespace HE.CRM.Common.Repositories.Interfaces
         List<invln_scheme> GetRecordsFromAhpApplicationsForAhpProject(Guid ahpProjectGuid, invln_Permission contactWebRole, Contact contact, Guid organisationGuid, bool isLeadPartner, bool IsSitePartner, bool isAllocation, string consortiumId = null);
         List<invln_scheme> GetByConsortiumId(Guid consortiumId);
         List<invln_scheme> GetListOfApplicationToSendReminder(string calculatedDate);
+        invln_scheme GetAllocation(Guid allocationId, Guid organisationId, Contact contact = null);
     }
 }

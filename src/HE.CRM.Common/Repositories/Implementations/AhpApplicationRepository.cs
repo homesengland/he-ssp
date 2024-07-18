@@ -175,5 +175,39 @@ namespace HE.CRM.Common.Repositories.Implementations
 
             return service.RetrieveMultiple(query).Entities.Select(x => x.ToEntity<invln_scheme>()).ToList();
         }
+
+
+        public invln_scheme GetAllocation(Guid allocationId, Guid organisationId, Contact contact = null)
+        {
+            invln_scheme allocation = null;
+
+            var query_invln_isallocation = true;
+            var query_invln_schemeid = allocationId.ToString();
+            var query_invln_organisationid = organisationId.ToString();
+
+            var query = new QueryExpression(invln_scheme.EntityLogicalName);
+            query.ColumnSet.AddColumns(
+                invln_scheme.Fields.invln_schemeId,
+                invln_scheme.Fields.invln_applicationid,
+                invln_scheme.Fields.invln_schemename,
+                invln_scheme.Fields.invln_HELocalAuthorityID,
+                invln_scheme.Fields.invln_programmelookup,
+                invln_scheme.Fields.invln_Tenure,
+                invln_scheme.Fields.invln_TotalGrantAllocated,
+                invln_scheme.Fields.invln_AmountPaid,
+                invln_scheme.Fields.invln_AmountRemaining);
+            query.Criteria.AddCondition(invln_scheme.Fields.invln_organisationid, ConditionOperator.Equal, query_invln_organisationid);
+            query.Criteria.AddCondition(invln_scheme.Fields.invln_isallocation, ConditionOperator.Equal, query_invln_isallocation);
+            query.Criteria.AddCondition(invln_scheme.Fields.invln_schemeId, ConditionOperator.Equal, query_invln_schemeid);
+
+            if (contact != null)
+            {
+                var query_invln_contactid = contact.Id.ToString();
+                query.Criteria.AddCondition(invln_scheme.Fields.invln_contactid, ConditionOperator.Equal, query_invln_contactid);
+            }
+
+            allocation = service.RetrieveMultiple(query).Entities.Select(x => x.ToEntity<invln_scheme>()).FirstOrDefault();
+            return allocation;
+        }
     }
 }

@@ -108,6 +108,7 @@
     <Compile Include="Handlers\AhpStatusChange\SendNotificationOnCreateHandler.cs" />
     <Compile Include="Handlers\ContactWebrole\SendNotificationOnAdminRoleGrantedPlugin.cs" />
     <Compile Include="Handlers\ContactWebrole\SendNotificationOnRoleModificationHandler.cs" />
+    <Compile Include="Handlers\CustomApi\Allocation\GetAllocationClaimsHandler.cs" />
     <Compile Include="Handlers\CustomApi\ChangeAhpApplicationHandler.cs" />
     <Compile Include="Handlers\CustomApi\CheckIfApplicationWithGivenNameExistsHandler.cs" />
     <Compile Include="Handlers\CustomApi\Consortium\GetConsortiumsByOrganisationHandler.cs" />
@@ -226,6 +227,7 @@
     <Compile Include="Plugins\AhpStatusChange\SendNotificationOnCreatePlugin.cs" />
     <Compile Include="Plugins\ContactWebrole\SendNotificationOnAdminRoleGrantedPlugin.cs" />
     <Compile Include="Plugins\ContactWebrole\SendNotificationOnRoleModificationPlugin.cs" />
+    <Compile Include="Plugins\CustomApi\Allocation\GetAllocationClaimsPlugin.cs" />
     <Compile Include="Plugins\CustomApi\ChangeAhpApplicationStatusPlugin.cs" />
     <Compile Include="Plugins\CustomApi\CheckIfApplicationWithGivenNameExistsPlugin.cs" />
     <Compile Include="Plugins\CustomApi\Consortium\GetConsortiumsByOrganisationPlugin.cs" />
@@ -282,8 +284,10 @@
     <Compile Include="Services\AhpProject\IAhpProjectService.cs" />
     <Compile Include="Services\AhpStatusChange\AhpStatusChangeService.cs" />
     <Compile Include="Services\AhpStatusChange\IAhpStatusChangeService.cs" />
+    <Compile Include="Services\Application\AllocationService.cs" />
     <Compile Include="Services\Application\ApplicationCalculationService.cs" />
     <Compile Include="Services\Application\ApplicationService.cs" />
+    <Compile Include="Services\Application\IAllocationService.cs" />
     <Compile Include="Services\Application\IApplicationService.cs" />
     <Compile Include="Services\Consortium\ConsortiumService.cs" />
     <Compile Include="Services\Consortium\IConsortiumService.cs" />

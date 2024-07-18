@@ -134,11 +134,17 @@ namespace HE.Investments.Common.CRM.Model
 			public const string invln_affordabilityevidence = "invln_affordabilityevidence";
 			public const string invln_ahpcontract_AHPApplication_invln_scheme = "invln_ahpcontract_AHPApplication_invln_scheme";
 			public const string invln_ahpstatuschange_AHPApplication_invln_sche = "invln_ahpstatuschange_AHPApplication_invln_sche";
+			public const string invln_AmountPaid = "invln_amountpaid";
+			public const string invln_amountpaid_Base = "invln_amountpaid_base";
+			public const string invln_AmountRemaining = "invln_amountremaining";
+			public const string invln_amountremaining_Base = "invln_amountremaining_base";
 			public const string invln_applicationid = "invln_applicationid";
 			public const string invln_AreaAverageDividedby2calc = "invln_areaaveragedividedby2calc";
 			public const string invln_AssessmentSummaryCommentsBox = "invln_assessmentsummarycommentsbox";
 			public const string invln_borrowingagainstrentalincome = "invln_borrowingagainstrentalincome";
 			public const string invln_borrowingagainstrentalincome_Base = "invln_borrowingagainstrentalincome_base";
+			public const string invln_claim_Allocation_invln_scheme = "invln_claim_Allocation_invln_scheme";
+			public const string invln_claim_Application_invln_scheme = "invln_claim_Application_invln_scheme";
 			public const string invln_Comments = "invln_comments";
 			public const string invln_CompScore = "invln_compscore";
 			public const string invln_contact_invln_scheme_contactid = "invln_contact_invln_scheme_contactid";
@@ -324,6 +330,8 @@ namespace HE.Investments.Common.CRM.Model
 			public const string invln_TenderScorecalc = "invln_tenderscorecalc";
 			public const string invln_Tenure = "invln_tenure";
 			public const string invln_tenureName = "invln_tenurename";
+			public const string invln_TotalGrantAllocated = "invln_totalgrantallocated";
+			public const string invln_totalgrantallocated_Base = "invln_totalgrantallocated_base";
 			public const string invln_Totalgrantsfromotherpublicbodies = "invln_totalgrantsfromotherpublicbodies";
 			public const string invln_totalgrantsfromotherpublicbodies_Base = "invln_totalgrantsfromotherpublicbodies_base";
 			public const string invln_totalhomes = "invln_totalhomes";
@@ -605,6 +613,66 @@ namespace HE.Investments.Common.CRM.Model
 				this.OnPropertyChanging("invln_affordabilityevidence");
 				this.SetAttributeValue("invln_affordabilityevidence", value);
 				this.OnPropertyChanged("invln_affordabilityevidence");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_amountpaid")]
+		public Microsoft.Xrm.Sdk.Money invln_AmountPaid
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_amountpaid");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_AmountPaid");
+				this.SetAttributeValue("invln_amountpaid", value);
+				this.OnPropertyChanged("invln_AmountPaid");
+			}
+		}
+		
+		/// <summary>
+		/// Value of the Amount Paid in base currency.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_amountpaid_base")]
+		public Microsoft.Xrm.Sdk.Money invln_amountpaid_Base
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_amountpaid_base");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_amountremaining")]
+		public Microsoft.Xrm.Sdk.Money invln_AmountRemaining
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_amountremaining");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_AmountRemaining");
+				this.SetAttributeValue("invln_amountremaining", value);
+				this.OnPropertyChanged("invln_AmountRemaining");
+			}
+		}
+		
+		/// <summary>
+		/// Value of the Amount Remaining in base currency.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_amountremaining_base")]
+		public Microsoft.Xrm.Sdk.Money invln_amountremaining_Base
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_amountremaining_base");
 			}
 		}
 		
@@ -3419,6 +3487,36 @@ namespace HE.Investments.Common.CRM.Model
 			}
 		}
 		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_totalgrantallocated")]
+		public Microsoft.Xrm.Sdk.Money invln_TotalGrantAllocated
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_totalgrantallocated");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_TotalGrantAllocated");
+				this.SetAttributeValue("invln_totalgrantallocated", value);
+				this.OnPropertyChanged("invln_TotalGrantAllocated");
+			}
+		}
+		
+		/// <summary>
+		/// Value of the Total Grant Allocated in base currency.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_totalgrantallocated_base")]
+		public Microsoft.Xrm.Sdk.Money invln_totalgrantallocated_Base
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_totalgrantallocated_base");
+			}
+		}
+		
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_totalgrantsfromotherpublicbodies")]
 		public Microsoft.Xrm.Sdk.Money invln_Totalgrantsfromotherpublicbodies
 		{
@@ -4061,6 +4159,46 @@ namespace HE.Investments.Common.CRM.Model
 				this.OnPropertyChanging("invln_ahpstatuschange_AHPApplication_invln_sche");
 				this.SetRelatedEntities<HE.Investments.Common.CRM.Model.invln_AHPStatusChange>("invln_ahpstatuschange_AHPApplication_invln_sche", null, value);
 				this.OnPropertyChanged("invln_ahpstatuschange_AHPApplication_invln_sche");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N invln_claim_Allocation_invln_scheme
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_claim_Allocation_invln_scheme")]
+		public System.Collections.Generic.IEnumerable<HE.Investments.Common.CRM.Model.invln_Claim> invln_claim_Allocation_invln_scheme
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<HE.Investments.Common.CRM.Model.invln_Claim>("invln_claim_Allocation_invln_scheme", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_claim_Allocation_invln_scheme");
+				this.SetRelatedEntities<HE.Investments.Common.CRM.Model.invln_Claim>("invln_claim_Allocation_invln_scheme", null, value);
+				this.OnPropertyChanged("invln_claim_Allocation_invln_scheme");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N invln_claim_Application_invln_scheme
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_claim_Application_invln_scheme")]
+		public System.Collections.Generic.IEnumerable<HE.Investments.Common.CRM.Model.invln_Claim> invln_claim_Application_invln_scheme
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<HE.Investments.Common.CRM.Model.invln_Claim>("invln_claim_Application_invln_scheme", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_claim_Application_invln_scheme");
+				this.SetRelatedEntities<HE.Investments.Common.CRM.Model.invln_Claim>("invln_claim_Application_invln_scheme", null, value);
+				this.OnPropertyChanged("invln_claim_Application_invln_scheme");
 			}
 		}
 		
