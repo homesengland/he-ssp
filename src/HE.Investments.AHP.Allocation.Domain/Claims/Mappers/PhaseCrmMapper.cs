@@ -50,8 +50,8 @@ public class PhaseCrmMapper : IPhaseCrmMapper
             AmountOfGrantApportioned = milestoneClaim.GrantApportioned.Amount,
             PercentageOfGrantApportioned = milestoneClaim.GrantApportioned.Percentage,
             ForecastClaimDate = milestoneClaim.ClaimDate.ForecastClaimDate,
-            AchivmentDate = milestoneClaim.ClaimDate.ActualClaimDate,
-            CostIncurred = milestoneClaim.CostIncurred,
+            AchievementDate = milestoneClaim.ClaimDate.ActualClaimDate,
+            CostIncurred = milestoneClaim.CostsIncurred,
             IsConfirmed = milestoneClaim.IsConfirmed,
         };
     }
@@ -62,7 +62,7 @@ public class PhaseCrmMapper : IPhaseCrmMapper
             type,
             MapMilestoneStatus(dto.Status),
             new GrantApportioned(dto.AmountOfGrantApportioned, dto.PercentageOfGrantApportioned / 100m),
-            new ClaimDate(dto.ForecastClaimDate, dto.AchivmentDate),
+            new ClaimDate(dto.ForecastClaimDate, dto.AchievementDate),
             dto.CostIncurred,
             dto.IsConfirmed);
     }
