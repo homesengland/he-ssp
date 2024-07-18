@@ -85,6 +85,16 @@ public class MilestoneClaim : ValueObject
             IsConfirmed);
     }
 
+    public CanceledMilestoneClaim Cancel()
+    {
+        if (Status != MilestoneStatus.Draft)
+        {
+            OperationResult.ThrowValidationError(nameof(MilestoneClaim), "Cannot cancel submitted claim");
+        }
+
+        return new CanceledMilestoneClaim(this);
+    }
+
     protected override IEnumerable<object?> GetAtomicValues()
     {
         yield return Type;

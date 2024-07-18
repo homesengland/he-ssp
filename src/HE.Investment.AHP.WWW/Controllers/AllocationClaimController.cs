@@ -185,6 +185,16 @@ public class AllocationClaimController : WorkflowController<AllocationClaimWorkf
         CancellationToken cancellationToken)
             where TCommand : IProvideClaimDetailsCommand
     {
+        if (Request.IsCancelAndReturnAction())
+        {
+            await _mediator.Send(new CancelClaimCommand(command.AllocationId, command.PhaseId, command.MilestoneType), cancellationToken);
+
+            return RedirectToAction(
+                "Overview",
+                "AllocationClaims",
+                new { allocationId = command.AllocationId.Value, phaseId = command.PhaseId.Value, organisationId = Request.GetOrganisationIdFromRoute() });
+        }
+
         return await this.ExecuteCommand<TCommand>(
             _mediator,
             command,
