@@ -95,15 +95,12 @@ namespace HE.CRM.AHP.Plugins.Handlers.CustomApi.FrontDoor
                         }
                     }
                 }
-                var applicationn = new List<invln_scheme>
-                    {
-                        app
-                    };
-                var applicationsDict = applicationn.ToDictionary(k => k.invln_contactid);
+                var application = new List<invln_scheme> { app };
+                var applicationsDict = application.ToDictionary(k => k.invln_contactid);
                 var webroleList = _contactWebroleRepository.GetListOfUsersWithoutLimitedRole(OrganizationId);
-                TracingService.Trace($"WebroleList count : {webroleList.Count}");
+
                 var webroleDict = webroleList.ToDictionary(k => k.invln_Contactid);
-                foreach (var ap in applicationn)
+                foreach (var ap in application)
                 {
                     if (webroleDict.ContainsKey(ap.invln_contactid) ||
                         _consortiumService.CheckAccess(ConsortiumService.Operation.Get, ConsortiumService.RecordType.Application,
