@@ -379,11 +379,9 @@ export class IspService {
       })
     };
     if (loanApplication != null) {
-      console.log(1);
       let loans = await Xrm.WebApi.retrieveRecord('invln_loanapplication', loanApplication.id)
       console.log(loans['_invln_account_value']);
       if (loans['_invln_account_value'] != null) {
-        console.log(3);
         Xrm.WebApi.retrieveRecord('account', loans['_invln_account_value']).then(result => {
           for (const [key, value] of dictionaryAccount) {
             try {
@@ -399,8 +397,8 @@ export class IspService {
       if (cashflowSubmition != null) {
         for (const [key, value] of dictionaryCashFlow) {
           try {
-
-            this.common.setAttributeValue(key, cashflowSubmition[value]);
+            this.common.setAttributeValue(key, cashflowSubmition.entities[0][value]);
+            console.log(key , cashflowSubmition.entities[0][value]);
           } catch (e) {
             console.log(e);
           }
