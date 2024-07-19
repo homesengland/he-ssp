@@ -9,4 +9,5 @@ public record ProjectDetailsModel(
     string ProgrammeName,
     string OrganisationName,
     PaginationResult<ApplicationProjectModel> Applications,
+    PaginationResult<AllocationProjectModel> Allocations,
     bool IsReadOnly);

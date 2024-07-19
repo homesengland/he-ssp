@@ -28,7 +28,7 @@ public class GetProjectApplicationsTests : TestBase<ProjectRepository>
             .BuildMockAndRegister(this);
 
         // when
-        var result = await TestCandidate.GetProjectApplications(
+        var result = await TestCandidate.GetProjectOverview(
             FrontDoorProjectId.From(ahpProjectDto.AhpProjectId),
             userAccount,
             CancellationToken.None);
@@ -57,7 +57,7 @@ public class GetProjectApplicationsTests : TestBase<ProjectRepository>
             .BuildMockAndRegister(this);
 
         // when
-        var result = await TestCandidate.GetProjectApplications(
+        var result = await TestCandidate.GetProjectOverview(
             FrontDoorProjectId.From(ahpProjectDto.AhpProjectId),
             userAccount,
             CancellationToken.None);
