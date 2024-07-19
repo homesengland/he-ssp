@@ -85,6 +85,22 @@ public class MilestoneClaim : ValueObject
             IsConfirmed);
     }
 
+    public MilestoneClaim WithConfirmation(bool? isConfirmed)
+    {
+        if (isConfirmed != true)
+        {
+            OperationResult.ThrowValidationError(nameof(IsConfirmed), "Confirm the declaration to continue");
+        }
+
+        return new MilestoneClaim(
+            Type,
+            Status,
+            GrantApportioned,
+            ClaimDate,
+            CostsIncurred,
+            isConfirmed);
+    }
+
     public CanceledMilestoneClaim Cancel()
     {
         if (Status != MilestoneStatus.Draft)

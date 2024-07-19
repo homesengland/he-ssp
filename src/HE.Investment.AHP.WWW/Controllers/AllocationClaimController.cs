@@ -113,12 +113,16 @@ public class AllocationClaimController : WorkflowController<AllocationClaimWorkf
     [HttpPost("confirmation")]
     [WorkflowState(AllocationClaimWorkflowState.Confirmation)]
     public async Task<IActionResult> Confirmation(
-        [FromRoute] string organisationId,
         [FromRoute] string allocationId,
         [FromRoute] string phaseId,
-        [FromRoute] MilestoneType claimType)
+        [FromRoute] MilestoneType claimType,
+        [FromForm] string isConfirmed,
+        CancellationToken cancellationToken)
     {
-        return await ContinueWithWorkflow(new { organisationId, allocationId, phaseId, claimType });
+        return await ExecuteClaimCommand(
+            new ProvideClaimConfirmationCommand(AllocationId.From(allocationId), PhaseId.From(phaseId), claimType, isConfirmed == "checked"),
+            nameof(Confirmation),
+            cancellationToken);
     }
 
     [HttpGet("check-answers")]
