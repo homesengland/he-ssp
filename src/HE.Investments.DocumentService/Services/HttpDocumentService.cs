@@ -39,6 +39,7 @@ public class HttpDocumentService : IDocumentService
             ListAlias = query.ListAlias,
             FolderPaths = [.. query.FolderPaths],
             PagingInfo = null,
+            PartitionId = query.PartitionId,
         };
 
         using var request = new HttpRequestMessage(HttpMethod.Post, uri.ToString());
@@ -63,6 +64,7 @@ public class HttpDocumentService : IDocumentService
         using var folderPathStringContent = new StringContent(location.FolderPath);
         using var metadataStringContent = new StringContent(JsonSerializer.Serialize(file.Metadata, _jsonSerializerOptions));
         using var overwriteStringContent = new StringContent(overwrite.ToString());
+        using var partitionIdStringContent = new StringContent(file.PartitionId);
 
         using var multipartContent = new MultipartFormDataContent
         {
@@ -70,6 +72,7 @@ public class HttpDocumentService : IDocumentService
             { folderPathStringContent, "FolderPath" },
             { metadataStringContent, "Metadata" },
             { overwriteStringContent, "Overwrite" },
+            { partitionIdStringContent, "PartitionId" },
         };
 
         using var fileContent = new StreamContent(file.Content);

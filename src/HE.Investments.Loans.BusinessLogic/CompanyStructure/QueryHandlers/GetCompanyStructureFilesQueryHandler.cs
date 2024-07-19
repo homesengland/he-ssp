@@ -1,7 +1,6 @@
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.WWW.Models;
 using HE.Investments.Loans.BusinessLogic.Files;
-using HE.Investments.Loans.Contract.Application.ValueObjects;
 using HE.Investments.Loans.Contract.CompanyStructure.Queries;
 using MediatR;
 
@@ -9,16 +8,16 @@ namespace HE.Investments.Loans.BusinessLogic.CompanyStructure.QueryHandlers;
 
 public class GetCompanyStructureFilesQueryHandler : IRequestHandler<GetCompanyStructureFilesQuery, IList<FileModel>>
 {
-    private readonly ILoansFileService<LoanApplicationId> _fileService;
+    private readonly ILoansFileService<CompanyStructureFileParams> _fileService;
 
-    public GetCompanyStructureFilesQueryHandler(ILoansFileService<LoanApplicationId> fileService)
+    public GetCompanyStructureFilesQueryHandler(ILoansFileService<CompanyStructureFileParams> fileService)
     {
         _fileService = fileService;
     }
 
     public async Task<IList<FileModel>> Handle(GetCompanyStructureFilesQuery request, CancellationToken cancellationToken)
     {
-        var result = await _fileService.GetFiles(request.LoanApplicationId, cancellationToken);
+        var result = await _fileService.GetFiles(new CompanyStructureFileParams(request.LoanApplicationId), cancellationToken);
 
         return result
             .OrderBy(x => x.UploadedOn)
