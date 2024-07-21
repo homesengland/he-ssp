@@ -76,7 +76,7 @@ public class AllocationCrmContext : IAllocationCrmContext
             [
                 new()
                 {
-                    Id = Guid.NewGuid().ToString(),
+                    Id = "d5fe3baa-eeae-ee11-a569-0022480041cf",
                     AllocationId = applicationDto.id,
                     Name = "Phase 1",
                     NumberOfHomes = 100,

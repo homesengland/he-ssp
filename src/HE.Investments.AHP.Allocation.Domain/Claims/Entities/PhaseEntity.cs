@@ -2,6 +2,7 @@ using HE.Investments.AHP.Allocation.Contract.Claims;
 using HE.Investments.AHP.Allocation.Contract.Claims.Enum;
 using HE.Investments.AHP.Allocation.Domain.Allocation.ValueObjects;
 using HE.Investments.AHP.Allocation.Domain.Claims.ValueObjects;
+using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Extensions;
@@ -119,5 +120,26 @@ public class PhaseEntity : DomainEntity
             default:
                 throw new InvalidOperationException("Cannot provide Unknown claim type.");
         }
+    }
+
+    public void ProvideMilestoneClaimAchievementDate(MilestoneClaim claim, Programme.Contract.Programme programme, DateDetails? achievementDate)
+    {
+        switch (claim.Type)
+        {
+            case MilestoneType.Acquisition:
+                claim.WithAchievementDate(achievementDate, programme, null);
+                break;
+            case MilestoneType.StartOnSite:
+                claim.WithAchievementDate(achievementDate, programme, AcquisitionMilestone?.ClaimDate.SubmissionDate);
+                break;
+            case MilestoneType.Completion:
+                claim.WithAchievementDate(achievementDate, programme, StartOnSiteMilestone?.ClaimDate.SubmissionDate);
+                break;
+            case MilestoneType.Undefined:
+            default:
+                throw new InvalidOperationException("Cannot provide Unknown claim type.");
+        }
+
+        ProvideMilestoneClaim(claim);
     }
 }
