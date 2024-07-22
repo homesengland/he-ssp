@@ -165,6 +165,7 @@
     <Compile Include="PwC.Base\Tests\Plugins\Handlers\CrmValidationHandlerTestBase.cs" />
     <Compile Include="PwC.Base\Tests\Plugins\Helpers\MetadataHelper.cs" />
     <Compile Include="PwC.Base\Tests\Services\CrmServiceTestBase.cs" />
+    <Compile Include="Services\AllocationServiceTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

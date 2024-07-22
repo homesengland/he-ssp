@@ -8,6 +8,7 @@ using HE.Base.Services;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.CRM.Common.DtoMapping;
 using HE.CRM.Common.Repositories.Interfaces;
+using Microsoft.Xrm.Sdk;
 
 namespace HE.CRM.AHP.Plugins.Services.Application
 {
@@ -33,6 +34,38 @@ namespace HE.CRM.AHP.Plugins.Services.Application
             _heLocalAuthorityRepository = CrmRepositoriesFactory.Get<IHeLocalAuthorityRepository>();
         }
 
+        public void CalculateGrantDetails(Guid allocationId, Guid organisationId)
+        {
+            Logger.Trace($"{nameof(AllocationService)}.{nameof(CalculateGrantDetails)}, allocationId: {allocationId}");
+            var onlyApprovedAllocation = true;
+
+            var claimColumns = new[]
+            {
+                invln_Claim.Fields.invln_Milestone,
+                invln_Claim.Fields.invln_AmountApportionedtoMilestone,
+                invln_Claim.Fields.invln_Milestone,
+            };
+            var allocation = _ahpApplicationRepository.GetAllocation(allocationId, organisationId);
+            var claims = _claimRepository.GetClaimsForAllocation(allocationId, onlyApprovedAllocation, claimColumns);
+
+            var totalGrantAllocated = allocation.invln_fundingrequired;
+            var amountPaid = default(decimal);
+
+            foreach (var claim in claims)
+            {
+                amountPaid += claim.invln_AmountApportionedtoMilestone?.Value ?? 0;
+            }
+            var amountRemaining = totalGrantAllocated.Value - amountPaid;
+
+            _ahpApplicationRepository.Update(
+                new invln_scheme()
+                {
+                    Id = allocation.Id,
+                    invln_TotalGrantAllocated = totalGrantAllocated,
+                    invln_AmountPaid = new Money(amountPaid),
+                    invln_AmountRemaining = new Money(amountRemaining)
+                });
+        }
 
         public AllocationClaimsDto GetAllocationWithClaims(string externalContactId, Guid accountId, Guid allocationId)
         {

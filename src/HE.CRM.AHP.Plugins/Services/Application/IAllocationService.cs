@@ -11,5 +11,7 @@ namespace HE.CRM.AHP.Plugins.Services.Application
     public interface IAllocationService : ICrmService
     {
         AllocationClaimsDto GetAllocationWithClaims(string externalContactId, Guid accountId, Guid allocationId);
+
+        void CalculateGrantDetails(Guid allocationId, Guid organisationId);
     }
 }

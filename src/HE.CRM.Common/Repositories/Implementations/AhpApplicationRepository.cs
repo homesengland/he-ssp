@@ -192,6 +192,7 @@ namespace HE.CRM.Common.Repositories.Implementations
                 invln_scheme.Fields.invln_schemename,
                 invln_scheme.Fields.invln_HELocalAuthorityID,
                 invln_scheme.Fields.invln_programmelookup,
+                invln_scheme.Fields.invln_fundingrequired,
                 invln_scheme.Fields.invln_Tenure,
                 invln_scheme.Fields.invln_TotalGrantAllocated,
                 invln_scheme.Fields.invln_AmountPaid,
