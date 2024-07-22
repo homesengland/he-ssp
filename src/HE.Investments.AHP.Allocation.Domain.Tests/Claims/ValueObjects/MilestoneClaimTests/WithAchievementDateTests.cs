@@ -59,10 +59,11 @@ public class WithAchievementDateTests
     public void ShouldThrowException_WhenAchievementDateIsInTheFuture()
     {
         // given
+        GetDateTimeProviderMock();
         var achievementDate = new DateDetails(
-            DateTime.Today.AddDays(1).Day.ToString(CultureInfo.InvariantCulture),
-            DateTime.Today.Month.ToString(CultureInfo.InvariantCulture),
-            DateTime.Today.Year.ToString(CultureInfo.InvariantCulture));
+            _dateTimeProvider.Now.AddDays(1).Day.ToString(CultureInfo.InvariantCulture),
+            _dateTimeProvider.Now.Month.ToString(CultureInfo.InvariantCulture),
+            _dateTimeProvider.Now.Year.ToString(CultureInfo.InvariantCulture));
         var testCandidate = MilestoneClaimTestBuilder.New()
             .WithType(MilestoneType.Acquisition)
             .Build();
