@@ -1,5 +1,6 @@
 using HE.Investments.AHP.Allocation.Contract.Claims.Enum;
 using HE.Investments.AHP.Allocation.Domain.Claims.ValueObjects;
+using HE.Investments.Common.Contract;
 using HE.Investments.TestsUtils;
 using HE.Investments.TestsUtils.TestFramework;
 using MilestoneStatus = HE.Investments.AHP.Allocation.Domain.Claims.Enums.MilestoneStatus;
@@ -21,7 +22,8 @@ public class MilestoneClaimTestBuilder : TestObjectBuilder<MilestoneClaimTestBui
         new GrantApportioned(100, 50),
         new ClaimDate(
             new DateTime(2021, 1, 1, 0, 0, 0, DateTimeKind.Utc),
-            new DateTime(2022, 12, 12, 0, 0, 0, DateTimeKind.Utc)),
+            DateDetails.FromDateTime(new DateTime(2022, 1, 1, 0, 0, 0, DateTimeKind.Utc)),
+            DateDetails.FromDateTime(new DateTime(2022, 12, 12, 0, 0, 0, DateTimeKind.Utc))),
         null,
         null));
 
@@ -45,9 +47,22 @@ public class MilestoneClaimTestBuilder : TestObjectBuilder<MilestoneClaimTestBui
         return this;
     }
 
-    public MilestoneClaimTestBuilder WithMilestoneAchievedDate(DateTime value)
+    public MilestoneClaimTestBuilder WithMilestoneAchievedDate(DateDetails value)
     {
-        PrivatePropertySetter.SetPropertyWithNoSetter(Item.ClaimDate, nameof(ClaimDate.ActualClaimDate), value);
+        PrivatePropertySetter.SetPropertyWithNoSetter(Item.ClaimDate, nameof(ClaimDate.AchievementDate), value);
+        return this;
+    }
+
+    public MilestoneClaimTestBuilder WithMilestoneSubmissionDate(DateDetails value)
+    {
+        PrivatePropertySetter.SetPropertyWithNoSetter(Item.ClaimDate, nameof(ClaimDate.SubmissionDate), value);
+        return this;
+    }
+
+    public MilestoneClaimTestBuilder WithGrantApportioned(decimal amount, decimal percentage)
+    {
+        PrivatePropertySetter.SetPropertyWithNoSetter(Item.GrantApportioned, nameof(GrantApportioned.Amount), amount);
+        PrivatePropertySetter.SetPropertyWithNoSetter(Item.GrantApportioned, nameof(GrantApportioned.Percentage), percentage);
         return this;
     }
 

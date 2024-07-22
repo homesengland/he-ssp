@@ -24,8 +24,8 @@ public sealed class MilestoneClaimContractMapper : IMilestoneClaimContractMapper
             milestoneClaim.GrantApportioned.Amount,
             milestoneClaim.GrantApportioned.Percentage,
             DateDetails.FromDateTime(milestoneClaim.ClaimDate.ForecastClaimDate)!,
-            DateDetails.FromDateTime(milestoneClaim.ClaimDate.ActualClaimDate),
-            null, // TODO: AB#85082 Map Submission date when available
+            milestoneClaim.ClaimDate.AchievementDate,
+            milestoneClaim.ClaimDate.SubmissionDate,
             phase.CanMilestoneBeClaimed(milestoneType),
             milestoneClaim.CostsIncurred,
             milestoneClaim.IsConfirmed);
