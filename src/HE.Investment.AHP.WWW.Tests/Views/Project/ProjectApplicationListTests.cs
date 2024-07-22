@@ -80,6 +80,4 @@ public class ProjectApplicationListTests : AhpViewTestBase
     private PaginationResult<ApplicationProjectModel> ApplicationsPaginationResult(IList<ApplicationProjectModel> items) => new(items, 1, 10, 100);
 
     private PaginationResult<AllocationProjectModel> AllocationsPaginationResult(IList<AllocationProjectModel> items) => new(items, 1, 10, 100);
-
-
 }
