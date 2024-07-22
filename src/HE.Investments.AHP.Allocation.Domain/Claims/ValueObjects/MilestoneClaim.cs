@@ -5,7 +5,6 @@ using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Messages;
-using HE.Investments.Common.Utils;
 using HE.Investments.Programme.Contract;
 using AhpProgramme = HE.Investments.Programme.Contract.Programme;
 using MilestoneStatus = HE.Investments.AHP.Allocation.Domain.Claims.Enums.MilestoneStatus;
@@ -75,11 +74,11 @@ public class MilestoneClaim : ValueObject
         DateDetails? achievementDate,
         AhpProgramme programme,
         DateDetails? previousSubmissionDate,
-        IDateTimeProvider dateTimeProvider)
+        DateTime currentDate)
     {
         var achievementDateTime = DateTimeExtensions.FromDateDetails(achievementDate);
         ValidateAchievementDate(achievementDate);
-        ValidateDateIsNotFuture(achievementDateTime, dateTimeProvider);
+        ValidateDateIsNotFuture(achievementDateTime, currentDate);
         ValidatePreviousSubmissionDate(previousSubmissionDate, achievementDateTime);
         ValidateProgrammeDates(programme, achievementDateTime!.Value);
 
@@ -150,9 +149,9 @@ public class MilestoneClaim : ValueObject
         }
     }
 
-    private void ValidateDateIsNotFuture(DateTime? achievementDateTime, IDateTimeProvider dateTimeProvider)
+    private void ValidateDateIsNotFuture(DateTime? achievementDateTime, DateTime currentDate)
     {
-        if (achievementDateTime!.Value.IsAfter(dateTimeProvider.Now))
+        if (achievementDateTime!.Value.IsAfter(currentDate))
         {
             OperationResult.ThrowValidationError(nameof(ClaimDate.AchievementDate), "The date must be today or in the past");
         }
@@ -174,10 +173,22 @@ public class MilestoneClaim : ValueObject
         var isAmountNonZero = GrantApportioned.Amount > 0;
         var isAmountZero = GrantApportioned.Amount == 0;
 
-        if ((isStartOnSite && !DateWithinRange(achievementDateTime, programme.StartOnSiteDates)) ||
-            (isCompletion && !DateWithinRange(achievementDateTime, programme.CompletionDates)) ||
-            (isAmountNonZero && !DateWithinProgrammeAndFundingDates(achievementDateTime, programme)) ||
-            (isAmountZero && !DateWithinProgrammeDates(achievementDateTime, programme)))
+        if (isStartOnSite && !DateWithinRange(achievementDateTime, programme.StartOnSiteDates))
+        {
+            OperationResult.ThrowValidationError(nameof(ClaimDate.AchievementDate), ValidationErrorMessage.DatesOutsideTheProgramme);
+        }
+
+        if (isCompletion && !DateWithinRange(achievementDateTime, programme.CompletionDates))
+        {
+            OperationResult.ThrowValidationError(nameof(ClaimDate.AchievementDate), ValidationErrorMessage.DatesOutsideTheProgramme);
+        }
+
+        if (isAmountNonZero && !DateWithinProgrammeAndFundingDates(achievementDateTime, programme))
+        {
+            OperationResult.ThrowValidationError(nameof(ClaimDate.AchievementDate), ValidationErrorMessage.DatesOutsideTheProgramme);
+        }
+
+        if (isAmountZero && !DateWithinProgrammeDates(achievementDateTime, programme))
         {
             OperationResult.ThrowValidationError(nameof(ClaimDate.AchievementDate), ValidationErrorMessage.DatesOutsideTheProgramme);
         }

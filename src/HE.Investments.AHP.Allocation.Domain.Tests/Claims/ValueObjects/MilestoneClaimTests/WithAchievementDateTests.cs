@@ -28,7 +28,7 @@ public class WithAchievementDateTests
             .Build();
 
         // when
-        var result = () => testCandidate.WithAchievementDate(null, CreateProgramme(), null, _dateTimeProvider);
+        var result = () => testCandidate.WithAchievementDate(null, CreateProgramme(), null, _dateTimeProvider.Now);
 
         // then
         result.Should()
@@ -49,7 +49,7 @@ public class WithAchievementDateTests
         var programme = CreateProgramme();
 
         // when
-        var result = testCandidate.WithAchievementDate(achievementDate, programme, null, _dateTimeProvider);
+        var result = testCandidate.WithAchievementDate(achievementDate, programme, null, _dateTimeProvider.Now);
 
         // then
         result.ClaimDate.AchievementDate.Should().Be(achievementDate);
@@ -70,7 +70,7 @@ public class WithAchievementDateTests
         var programme = CreateProgramme();
 
         // when
-        var result = () => testCandidate.WithAchievementDate(achievementDate, programme, null, _dateTimeProvider);
+        var result = () => testCandidate.WithAchievementDate(achievementDate, programme, null, _dateTimeProvider.Now);
 
         // then
         result.Should()
@@ -91,7 +91,7 @@ public class WithAchievementDateTests
         var programme = CreateProgramme();
 
         // when
-        var result = () => testCandidate.WithAchievementDate(achievementDate, programme, laterSubmissionDate, _dateTimeProvider);
+        var result = () => testCandidate.WithAchievementDate(achievementDate, programme, laterSubmissionDate, _dateTimeProvider.Now);
 
         // then
         result.Should()
@@ -111,7 +111,7 @@ public class WithAchievementDateTests
         var programme = CreateProgramme(new DateRange(new DateOnly(2021, 1, 1), new DateOnly(2024, 1, 1)));
 
         // when
-        var result = () => testCandidate.WithAchievementDate(achievementDate, programme, null, _dateTimeProvider);
+        var result = () => testCandidate.WithAchievementDate(achievementDate, programme, null, _dateTimeProvider.Now);
 
         // then
         result.Should()
@@ -131,7 +131,7 @@ public class WithAchievementDateTests
         var programme = CreateProgramme(new DateRange(new DateOnly(2021, 1, 1), new DateOnly(2023, 1, 1)));
 
         // when
-        var result = () => testCandidate.WithAchievementDate(achievementDate, programme, null, _dateTimeProvider);
+        var result = () => testCandidate.WithAchievementDate(achievementDate, programme, null, _dateTimeProvider.Now);
 
         // then
         result.Should()
@@ -152,7 +152,7 @@ public class WithAchievementDateTests
         var programme = CreateProgramme(fundingDates: new DateRange(new DateOnly(2022, 1, 1), new DateOnly(2024, 1, 1)));
 
         // when
-        var result = () => testCandidate.WithAchievementDate(achievementDate, programme, null, _dateTimeProvider);
+        var result = () => testCandidate.WithAchievementDate(achievementDate, programme, null, _dateTimeProvider.Now);
 
         // then
         result.Should()
@@ -173,7 +173,7 @@ public class WithAchievementDateTests
         var programme = CreateProgramme(fundingDates: new DateRange(new DateOnly(2022, 1, 1), new DateOnly(2024, 1, 1)));
 
         // when
-        var result = () => testCandidate.WithAchievementDate(achievementDate, programme, null, _dateTimeProvider);
+        var result = () => testCandidate.WithAchievementDate(achievementDate, programme, null, _dateTimeProvider.Now);
 
         // then
         result.Should().NotThrow();
@@ -192,7 +192,7 @@ public class WithAchievementDateTests
         var programme = CreateProgramme(fundingDates: new DateRange(new DateOnly(2022, 1, 1), new DateOnly(2023, 1, 1)));
 
         // when
-        var result = () => testCandidate.WithAchievementDate(achievementDate, programme, null, _dateTimeProvider);
+        var result = () => testCandidate.WithAchievementDate(achievementDate, programme, null, _dateTimeProvider.Now);
 
         // then
         result.Should()
@@ -213,7 +213,7 @@ public class WithAchievementDateTests
         var programme = CreateProgramme(fundingDates: new DateRange(new DateOnly(2022, 1, 1), new DateOnly(2023, 1, 1)));
 
         // when
-        var result = () => testCandidate.WithAchievementDate(achievementDate, programme, null, _dateTimeProvider);
+        var result = () => testCandidate.WithAchievementDate(achievementDate, programme, null, _dateTimeProvider.Now);
 
         // then
         result.Should().NotThrow();
@@ -231,7 +231,7 @@ public class WithAchievementDateTests
         var programme = CreateProgramme(startOnSiteDates: new DateRange(new DateOnly(2022, 1, 1), new DateOnly(2024, 1, 1)));
 
         // when
-        var result = () => testCandidate.WithAchievementDate(achievementDate, programme, null, _dateTimeProvider);
+        var result = () => testCandidate.WithAchievementDate(achievementDate, programme, null, _dateTimeProvider.Now);
 
         // then
         result.Should()
@@ -251,7 +251,7 @@ public class WithAchievementDateTests
         var programme = CreateProgramme(startOnSiteDates: new DateRange(new DateOnly(2022, 1, 1), new DateOnly(2024, 1, 1)));
 
         // when
-        var result = () => testCandidate.WithAchievementDate(achievementDate, programme, null, _dateTimeProvider);
+        var result = () => testCandidate.WithAchievementDate(achievementDate, programme, null, _dateTimeProvider.Now);
 
         // then
         result.Should().NotThrow();
@@ -269,7 +269,7 @@ public class WithAchievementDateTests
         var programme = CreateProgramme(startOnSiteDates: new DateRange(new DateOnly(2022, 1, 1), new DateOnly(2023, 1, 1)));
 
         // when
-        var result = () => testCandidate.WithAchievementDate(achievementDate, programme, null, _dateTimeProvider);
+        var result = () => testCandidate.WithAchievementDate(achievementDate, programme, null, _dateTimeProvider.Now);
 
         // then
         result.Should()
@@ -289,7 +289,7 @@ public class WithAchievementDateTests
         var programme = CreateProgramme(startOnSiteDates: new DateRange(new DateOnly(2022, 1, 1), new DateOnly(2023, 1, 1)));
 
         // when
-        var result = () => testCandidate.WithAchievementDate(achievementDate, programme, null, _dateTimeProvider);
+        var result = () => testCandidate.WithAchievementDate(achievementDate, programme, null, _dateTimeProvider.Now);
 
         // then
         result.Should().NotThrow();
@@ -307,7 +307,7 @@ public class WithAchievementDateTests
         var programme = CreateProgramme(completionDates: new DateRange(new DateOnly(2022, 1, 1), new DateOnly(2024, 1, 1)));
 
         // when
-        var result = () => testCandidate.WithAchievementDate(achievementDate, programme, null, _dateTimeProvider);
+        var result = () => testCandidate.WithAchievementDate(achievementDate, programme, null, _dateTimeProvider.Now);
 
         // then
         result.Should()
@@ -327,7 +327,7 @@ public class WithAchievementDateTests
         var programme = CreateProgramme(completionDates: new DateRange(new DateOnly(2022, 1, 1), new DateOnly(2024, 1, 1)));
 
         // when
-        var result = () => testCandidate.WithAchievementDate(achievementDate, programme, null, _dateTimeProvider);
+        var result = () => testCandidate.WithAchievementDate(achievementDate, programme, null, _dateTimeProvider.Now);
 
         // then
         result.Should().NotThrow();
@@ -345,7 +345,7 @@ public class WithAchievementDateTests
         var programme = CreateProgramme(completionDates: new DateRange(new DateOnly(2022, 1, 1), new DateOnly(2023, 1, 1)));
 
         // when
-        var result = () => testCandidate.WithAchievementDate(achievementDate, programme, null, _dateTimeProvider);
+        var result = () => testCandidate.WithAchievementDate(achievementDate, programme, null, _dateTimeProvider.Now);
 
         // then
         result.Should()
@@ -365,7 +365,7 @@ public class WithAchievementDateTests
         var programme = CreateProgramme(completionDates: new DateRange(new DateOnly(2022, 1, 1), new DateOnly(2023, 1, 1)));
 
         // when
-        var result = () => testCandidate.WithAchievementDate(achievementDate, programme, null, _dateTimeProvider);
+        var result = () => testCandidate.WithAchievementDate(achievementDate, programme, null, _dateTimeProvider.Now);
 
         // then
         result.Should().NotThrow();

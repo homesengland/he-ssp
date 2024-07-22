@@ -6,7 +6,6 @@ using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Extensions;
-using HE.Investments.Common.Utils;
 using MilestoneClaim = HE.Investments.AHP.Allocation.Domain.Claims.ValueObjects.MilestoneClaim;
 
 namespace HE.Investments.AHP.Allocation.Domain.Claims.Entities;
@@ -81,7 +80,7 @@ public class PhaseEntity : DomainEntity
             MilestoneType.Acquisition => AcquisitionMilestone,
             MilestoneType.StartOnSite => StartOnSiteMilestone,
             MilestoneType.Completion => CompletionMilestone,
-            _ => null,
+            _ => throw new ArgumentOutOfRangeException(nameof(milestoneType), milestoneType, null),
         };
     }
 
@@ -127,18 +126,18 @@ public class PhaseEntity : DomainEntity
         MilestoneClaim claim,
         Programme.Contract.Programme programme,
         DateDetails? achievementDate,
-        IDateTimeProvider dateTimeProvider)
+        DateTime currentDate)
     {
         switch (claim.Type)
         {
             case MilestoneType.Acquisition:
-                claim.WithAchievementDate(achievementDate, programme, null, dateTimeProvider);
+                claim.WithAchievementDate(achievementDate, programme, null, currentDate);
                 break;
             case MilestoneType.StartOnSite:
-                claim.WithAchievementDate(achievementDate, programme, AcquisitionMilestone?.ClaimDate.SubmissionDate, dateTimeProvider);
+                claim.WithAchievementDate(achievementDate, programme, AcquisitionMilestone?.ClaimDate.SubmissionDate, currentDate);
                 break;
             case MilestoneType.Completion:
-                claim.WithAchievementDate(achievementDate, programme, StartOnSiteMilestone?.ClaimDate.SubmissionDate, dateTimeProvider);
+                claim.WithAchievementDate(achievementDate, programme, StartOnSiteMilestone?.ClaimDate.SubmissionDate, currentDate);
                 break;
             case MilestoneType.Undefined:
             default:
