@@ -5,6 +5,7 @@ using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Messages;
+using HE.Investments.Common.Utils;
 using HE.Investments.Programme.Contract;
 using AhpProgramme = HE.Investments.Programme.Contract.Programme;
 using MilestoneStatus = HE.Investments.AHP.Allocation.Domain.Claims.Enums.MilestoneStatus;
@@ -70,11 +71,15 @@ public class MilestoneClaim : ValueObject
         return MilestoneDueStatus.Overdue;
     }
 
-    public MilestoneClaim WithAchievementDate(DateDetails? achievementDate, AhpProgramme programme, DateDetails? previousSubmissionDate)
+    public MilestoneClaim WithAchievementDate(
+        DateDetails? achievementDate,
+        AhpProgramme programme,
+        DateDetails? previousSubmissionDate,
+        IDateTimeProvider dateTimeProvider)
     {
         var achievementDateTime = DateTimeExtensions.FromDateDetails(achievementDate);
         ValidateAchievementDate(achievementDate);
-        ValidateDateIsNotFuture(achievementDateTime);
+        ValidateDateIsNotFuture(achievementDateTime, dateTimeProvider);
         ValidatePreviousSubmissionDate(previousSubmissionDate, achievementDateTime);
         ValidateProgrammeDates(programme, achievementDateTime!.Value);
 
@@ -145,9 +150,9 @@ public class MilestoneClaim : ValueObject
         }
     }
 
-    private void ValidateDateIsNotFuture(DateTime? achievementDateTime)
+    private void ValidateDateIsNotFuture(DateTime? achievementDateTime, IDateTimeProvider dateTimeProvider)
     {
-        if (achievementDateTime!.Value.IsAfter(DateTime.Today))
+        if (achievementDateTime!.Value.IsAfter(dateTimeProvider.Now))
         {
             OperationResult.ThrowValidationError(nameof(ClaimDate.AchievementDate), "The date must be today or in the past");
         }

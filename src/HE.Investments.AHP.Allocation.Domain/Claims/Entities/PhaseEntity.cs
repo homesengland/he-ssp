@@ -6,6 +6,7 @@ using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Extensions;
+using HE.Investments.Common.Utils;
 using MilestoneClaim = HE.Investments.AHP.Allocation.Domain.Claims.ValueObjects.MilestoneClaim;
 
 namespace HE.Investments.AHP.Allocation.Domain.Claims.Entities;
@@ -122,18 +123,22 @@ public class PhaseEntity : DomainEntity
         }
     }
 
-    public void ProvideMilestoneClaimAchievementDate(MilestoneClaim claim, Programme.Contract.Programme programme, DateDetails? achievementDate)
+    public void ProvideMilestoneClaimAchievementDate(
+        MilestoneClaim claim,
+        Programme.Contract.Programme programme,
+        DateDetails? achievementDate,
+        IDateTimeProvider dateTimeProvider)
     {
         switch (claim.Type)
         {
             case MilestoneType.Acquisition:
-                claim.WithAchievementDate(achievementDate, programme, null);
+                claim.WithAchievementDate(achievementDate, programme, null, dateTimeProvider);
                 break;
             case MilestoneType.StartOnSite:
-                claim.WithAchievementDate(achievementDate, programme, AcquisitionMilestone?.ClaimDate.SubmissionDate);
+                claim.WithAchievementDate(achievementDate, programme, AcquisitionMilestone?.ClaimDate.SubmissionDate, dateTimeProvider);
                 break;
             case MilestoneType.Completion:
-                claim.WithAchievementDate(achievementDate, programme, StartOnSiteMilestone?.ClaimDate.SubmissionDate);
+                claim.WithAchievementDate(achievementDate, programme, StartOnSiteMilestone?.ClaimDate.SubmissionDate, dateTimeProvider);
                 break;
             case MilestoneType.Undefined:
             default:

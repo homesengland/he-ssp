@@ -6,8 +6,10 @@ using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Messages;
 using HE.Investments.Common.Tests.FluentAssertions;
+using HE.Investments.Common.Utils;
 using HE.Investments.Programme.Contract;
 using HE.Investments.Programme.Contract.Enums;
+using Moq;
 using Xunit;
 using AhpProgramme = HE.Investments.Programme.Contract.Programme;
 
@@ -15,6 +17,8 @@ namespace HE.Investments.AHP.Allocation.Domain.Tests.Claims.ValueObjects.Milesto
 
 public class WithAchievementDateTests
 {
+    private readonly IDateTimeProvider _dateTimeProvider = Mock.Of<IDateTimeProvider>();
+
     [Fact]
     public void ShouldThrowException_WhenAchievementDateIsNotProvided()
     {
@@ -24,7 +28,7 @@ public class WithAchievementDateTests
             .Build();
 
         // when
-        var result = () => testCandidate.WithAchievementDate(null, CreateProgramme(), null);
+        var result = () => testCandidate.WithAchievementDate(null, CreateProgramme(), null, _dateTimeProvider);
 
         // then
         result.Should()
@@ -36,6 +40,7 @@ public class WithAchievementDateTests
     public void ShouldCreateNewMilestoneClaim_WhenAchievementDateIsProvided()
     {
         // given
+        GetDateTimeProviderMock();
         var achievementDate = new DateDetails("10", "07", "2023");
         var testCandidate = MilestoneClaimTestBuilder.New()
             .WithType(MilestoneType.Acquisition)
@@ -44,7 +49,7 @@ public class WithAchievementDateTests
         var programme = CreateProgramme();
 
         // when
-        var result = testCandidate.WithAchievementDate(achievementDate, programme, null);
+        var result = testCandidate.WithAchievementDate(achievementDate, programme, null, _dateTimeProvider);
 
         // then
         result.ClaimDate.AchievementDate.Should().Be(achievementDate);
@@ -64,7 +69,7 @@ public class WithAchievementDateTests
         var programme = CreateProgramme();
 
         // when
-        var result = () => testCandidate.WithAchievementDate(achievementDate, programme, null);
+        var result = () => testCandidate.WithAchievementDate(achievementDate, programme, null, _dateTimeProvider);
 
         // then
         result.Should()
@@ -76,6 +81,7 @@ public class WithAchievementDateTests
     public void ShouldThrowException_WhenPreviousSubmissionDateIsAfterAchievementDate()
     {
         // given
+        GetDateTimeProviderMock();
         var achievementDate = new DateDetails("10", "07", "2023");
         var laterSubmissionDate = new DateDetails("11", "07", "2023");
         var testCandidate = MilestoneClaimTestBuilder.New()
@@ -84,7 +90,7 @@ public class WithAchievementDateTests
         var programme = CreateProgramme();
 
         // when
-        var result = () => testCandidate.WithAchievementDate(achievementDate, programme, laterSubmissionDate);
+        var result = () => testCandidate.WithAchievementDate(achievementDate, programme, laterSubmissionDate, _dateTimeProvider);
 
         // then
         result.Should()
@@ -96,6 +102,7 @@ public class WithAchievementDateTests
     public void ShouldThrowException_WhenAchievementDateIsBeforeProgrammeStart()
     {
         // given
+        GetDateTimeProviderMock();
         var achievementDate = new DateDetails("01", "01", "2020");
         var testCandidate = MilestoneClaimTestBuilder.New()
             .WithType(MilestoneType.Acquisition)
@@ -103,7 +110,7 @@ public class WithAchievementDateTests
         var programme = CreateProgramme(new DateRange(new DateOnly(2021, 1, 1), new DateOnly(2024, 1, 1)));
 
         // when
-        var result = () => testCandidate.WithAchievementDate(achievementDate, programme, null);
+        var result = () => testCandidate.WithAchievementDate(achievementDate, programme, null, _dateTimeProvider);
 
         // then
         result.Should()
@@ -115,6 +122,7 @@ public class WithAchievementDateTests
     public void ShouldThrowException_WhenAchievementDateIsAfterProgrammeStart()
     {
         // given
+        GetDateTimeProviderMock();
         var achievementDate = new DateDetails("01", "01", "2024");
         var testCandidate = MilestoneClaimTestBuilder.New()
             .WithType(MilestoneType.Acquisition)
@@ -122,7 +130,7 @@ public class WithAchievementDateTests
         var programme = CreateProgramme(new DateRange(new DateOnly(2021, 1, 1), new DateOnly(2023, 1, 1)));
 
         // when
-        var result = () => testCandidate.WithAchievementDate(achievementDate, programme, null);
+        var result = () => testCandidate.WithAchievementDate(achievementDate, programme, null, _dateTimeProvider);
 
         // then
         result.Should()
@@ -134,6 +142,7 @@ public class WithAchievementDateTests
     public void ShouldThrowException_WhenAchievementDateIsBeforeFundingDateAndGrantAmountIsMoreThenZero()
     {
         // given
+        GetDateTimeProviderMock();
         var achievementDate = new DateDetails("01", "01", "2021");
         var testCandidate = MilestoneClaimTestBuilder.New()
             .WithType(MilestoneType.Acquisition)
@@ -142,7 +151,7 @@ public class WithAchievementDateTests
         var programme = CreateProgramme(fundingDates: new DateRange(new DateOnly(2022, 1, 1), new DateOnly(2024, 1, 1)));
 
         // when
-        var result = () => testCandidate.WithAchievementDate(achievementDate, programme, null);
+        var result = () => testCandidate.WithAchievementDate(achievementDate, programme, null, _dateTimeProvider);
 
         // then
         result.Should()
@@ -154,6 +163,7 @@ public class WithAchievementDateTests
     public void ShouldNotThrowException_WhenAchievementDateIsBeforeFundingDateAndGrantAmountIsZero()
     {
         // given
+        GetDateTimeProviderMock();
         var achievementDate = new DateDetails("01", "01", "2021");
         var testCandidate = MilestoneClaimTestBuilder.New()
             .WithType(MilestoneType.Acquisition)
@@ -162,7 +172,7 @@ public class WithAchievementDateTests
         var programme = CreateProgramme(fundingDates: new DateRange(new DateOnly(2022, 1, 1), new DateOnly(2024, 1, 1)));
 
         // when
-        var result = () => testCandidate.WithAchievementDate(achievementDate, programme, null);
+        var result = () => testCandidate.WithAchievementDate(achievementDate, programme, null, _dateTimeProvider);
 
         // then
         result.Should().NotThrow();
@@ -172,6 +182,7 @@ public class WithAchievementDateTests
     public void ShouldThrowException_WhenAchievementDateIsAfterFundingDateAndGrantAmountIsMoreThenZero()
     {
         // given
+        GetDateTimeProviderMock();
         var achievementDate = new DateDetails("01", "01", "2024");
         var testCandidate = MilestoneClaimTestBuilder.New()
             .WithType(MilestoneType.Acquisition)
@@ -180,7 +191,7 @@ public class WithAchievementDateTests
         var programme = CreateProgramme(fundingDates: new DateRange(new DateOnly(2022, 1, 1), new DateOnly(2023, 1, 1)));
 
         // when
-        var result = () => testCandidate.WithAchievementDate(achievementDate, programme, null);
+        var result = () => testCandidate.WithAchievementDate(achievementDate, programme, null, _dateTimeProvider);
 
         // then
         result.Should()
@@ -192,6 +203,7 @@ public class WithAchievementDateTests
     public void ShouldNotThrowException_WhenAchievementDateIsAfterFundingDateAndGrantAmountIsZero()
     {
         // given
+        GetDateTimeProviderMock();
         var achievementDate = new DateDetails("01", "01", "2024");
         var testCandidate = MilestoneClaimTestBuilder.New()
             .WithType(MilestoneType.Acquisition)
@@ -200,7 +212,7 @@ public class WithAchievementDateTests
         var programme = CreateProgramme(fundingDates: new DateRange(new DateOnly(2022, 1, 1), new DateOnly(2023, 1, 1)));
 
         // when
-        var result = () => testCandidate.WithAchievementDate(achievementDate, programme, null);
+        var result = () => testCandidate.WithAchievementDate(achievementDate, programme, null, _dateTimeProvider);
 
         // then
         result.Should().NotThrow();
@@ -210,6 +222,7 @@ public class WithAchievementDateTests
     public void ShouldThrowException_WhenMilestoneTypeIsStartOnSiteAndAchievementDateIsBeforeStartOnSiteDate()
     {
         // given
+        GetDateTimeProviderMock();
         var achievementDate = new DateDetails("01", "01", "2021");
         var testCandidate = MilestoneClaimTestBuilder.New()
             .WithType(MilestoneType.StartOnSite)
@@ -217,7 +230,7 @@ public class WithAchievementDateTests
         var programme = CreateProgramme(startOnSiteDates: new DateRange(new DateOnly(2022, 1, 1), new DateOnly(2024, 1, 1)));
 
         // when
-        var result = () => testCandidate.WithAchievementDate(achievementDate, programme, null);
+        var result = () => testCandidate.WithAchievementDate(achievementDate, programme, null, _dateTimeProvider);
 
         // then
         result.Should()
@@ -229,6 +242,7 @@ public class WithAchievementDateTests
     public void ShouldNotThrowException_WhenMilestoneTypeIsCompletionAndAchievementDateIsBeforeStartOnSiteDate()
     {
         // given
+        GetDateTimeProviderMock();
         var achievementDate = new DateDetails("01", "01", "2021");
         var testCandidate = MilestoneClaimTestBuilder.New()
             .WithType(MilestoneType.Completion)
@@ -236,7 +250,7 @@ public class WithAchievementDateTests
         var programme = CreateProgramme(startOnSiteDates: new DateRange(new DateOnly(2022, 1, 1), new DateOnly(2024, 1, 1)));
 
         // when
-        var result = () => testCandidate.WithAchievementDate(achievementDate, programme, null);
+        var result = () => testCandidate.WithAchievementDate(achievementDate, programme, null, _dateTimeProvider);
 
         // then
         result.Should().NotThrow();
@@ -246,6 +260,7 @@ public class WithAchievementDateTests
     public void ShouldThrowException_WhenMilestoneTypeIsStartOnSiteAndAchievementDateIsAfterStartOnSiteDate()
     {
         // given
+        GetDateTimeProviderMock();
         var achievementDate = new DateDetails("01", "01", "2024");
         var testCandidate = MilestoneClaimTestBuilder.New()
             .WithType(MilestoneType.StartOnSite)
@@ -253,7 +268,7 @@ public class WithAchievementDateTests
         var programme = CreateProgramme(startOnSiteDates: new DateRange(new DateOnly(2022, 1, 1), new DateOnly(2023, 1, 1)));
 
         // when
-        var result = () => testCandidate.WithAchievementDate(achievementDate, programme, null);
+        var result = () => testCandidate.WithAchievementDate(achievementDate, programme, null, _dateTimeProvider);
 
         // then
         result.Should()
@@ -265,6 +280,7 @@ public class WithAchievementDateTests
     public void ShouldNotThrowException_WhenMilestoneTypeIsCompletionAndAchievementDateIsAfterStartOnSiteDate()
     {
         // given
+        GetDateTimeProviderMock();
         var achievementDate = new DateDetails("01", "01", "2024");
         var testCandidate = MilestoneClaimTestBuilder.New()
             .WithType(MilestoneType.Completion)
@@ -272,7 +288,7 @@ public class WithAchievementDateTests
         var programme = CreateProgramme(startOnSiteDates: new DateRange(new DateOnly(2022, 1, 1), new DateOnly(2023, 1, 1)));
 
         // when
-        var result = () => testCandidate.WithAchievementDate(achievementDate, programme, null);
+        var result = () => testCandidate.WithAchievementDate(achievementDate, programme, null, _dateTimeProvider);
 
         // then
         result.Should().NotThrow();
@@ -282,6 +298,7 @@ public class WithAchievementDateTests
     public void ShouldThrowException_WhenMilestoneTypeIsCompletionAndAchievementDateIsBeforeCompletionDate()
     {
         // given
+        GetDateTimeProviderMock();
         var achievementDate = new DateDetails("01", "01", "2021");
         var testCandidate = MilestoneClaimTestBuilder.New()
             .WithType(MilestoneType.Completion)
@@ -289,7 +306,7 @@ public class WithAchievementDateTests
         var programme = CreateProgramme(completionDates: new DateRange(new DateOnly(2022, 1, 1), new DateOnly(2024, 1, 1)));
 
         // when
-        var result = () => testCandidate.WithAchievementDate(achievementDate, programme, null);
+        var result = () => testCandidate.WithAchievementDate(achievementDate, programme, null, _dateTimeProvider);
 
         // then
         result.Should()
@@ -301,6 +318,7 @@ public class WithAchievementDateTests
     public void ShouldNotThrowException_WhenMilestoneTypeIsStartOnSiteAndAchievementDateIsBeforeCompletionDate()
     {
         // given
+        GetDateTimeProviderMock();
         var achievementDate = new DateDetails("01", "01", "2021");
         var testCandidate = MilestoneClaimTestBuilder.New()
             .WithType(MilestoneType.StartOnSite)
@@ -308,7 +326,7 @@ public class WithAchievementDateTests
         var programme = CreateProgramme(completionDates: new DateRange(new DateOnly(2022, 1, 1), new DateOnly(2024, 1, 1)));
 
         // when
-        var result = () => testCandidate.WithAchievementDate(achievementDate, programme, null);
+        var result = () => testCandidate.WithAchievementDate(achievementDate, programme, null, _dateTimeProvider);
 
         // then
         result.Should().NotThrow();
@@ -318,6 +336,7 @@ public class WithAchievementDateTests
     public void ShouldThrowException_WhenMilestoneTypeIsCompletionAndAchievementDateIsAfterCompletionDate()
     {
         // given
+        GetDateTimeProviderMock();
         var achievementDate = new DateDetails("01", "01", "2024");
         var testCandidate = MilestoneClaimTestBuilder.New()
             .WithType(MilestoneType.Completion)
@@ -325,7 +344,7 @@ public class WithAchievementDateTests
         var programme = CreateProgramme(completionDates: new DateRange(new DateOnly(2022, 1, 1), new DateOnly(2023, 1, 1)));
 
         // when
-        var result = () => testCandidate.WithAchievementDate(achievementDate, programme, null);
+        var result = () => testCandidate.WithAchievementDate(achievementDate, programme, null, _dateTimeProvider);
 
         // then
         result.Should()
@@ -337,6 +356,7 @@ public class WithAchievementDateTests
     public void ShouldNotThrowException_WhenMilestoneTypeIsStartOnSiteAndAchievementDateIsAfterCompletionDate()
     {
         // given
+        GetDateTimeProviderMock();
         var achievementDate = new DateDetails("01", "01", "2024");
         var testCandidate = MilestoneClaimTestBuilder.New()
             .WithType(MilestoneType.StartOnSite)
@@ -344,7 +364,7 @@ public class WithAchievementDateTests
         var programme = CreateProgramme(completionDates: new DateRange(new DateOnly(2022, 1, 1), new DateOnly(2023, 1, 1)));
 
         // when
-        var result = () => testCandidate.WithAchievementDate(achievementDate, programme, null);
+        var result = () => testCandidate.WithAchievementDate(achievementDate, programme, null, _dateTimeProvider);
 
         // then
         result.Should().NotThrow();
@@ -366,5 +386,11 @@ public class WithAchievementDateTests
             fundingDates ?? new DateRange(DateOnly.MinValue, DateOnly.MaxValue),
             startOnSiteDates ?? new DateRange(DateOnly.MinValue, DateOnly.MaxValue),
             completionDates ?? new DateRange(DateOnly.MinValue, DateOnly.MaxValue));
+    }
+
+    private void GetDateTimeProviderMock()
+    {
+        Mock.Get(_dateTimeProvider)
+            .Setup(x => x.Now).Returns(new DateTime(2024, 07, 07, 12, 25, 0, DateTimeKind.Unspecified));
     }
 }
