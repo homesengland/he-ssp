@@ -4,13 +4,18 @@ using HE.Investments.FrontDoor.Shared.Project;
 
 namespace HE.Investment.AHP.Domain.Project.ValueObjects;
 
-public class AhpProjectApplications : ValueObject
+public class AhpProjectOverview : ValueObject
 {
-    public AhpProjectApplications(FrontDoorProjectId id, AhpProjectName name, IList<AhpProjectApplication>? applications = null)
+    public AhpProjectOverview(
+        FrontDoorProjectId id,
+        AhpProjectName name,
+        IList<AhpProjectApplication>? applications = null,
+        IList<AhpProjectAllocation>? allocations = null)
     {
         Id = id;
         Name = name;
         Applications.AddRange(applications);
+        Allocations.AddRange(allocations);
     }
 
     public FrontDoorProjectId Id { get; }
@@ -18,6 +23,8 @@ public class AhpProjectApplications : ValueObject
     public AhpProjectName Name { get; }
 
     public IList<AhpProjectApplication> Applications { get; } = [];
+
+    public IList<AhpProjectAllocation> Allocations { get; } = [];
 
     protected override IEnumerable<object?> GetAtomicValues()
     {

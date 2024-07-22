@@ -10,7 +10,7 @@ namespace HE.Investment.AHP.Domain.Project.Repositories;
 
 public interface IProjectRepository
 {
-    Task<AhpProjectApplications> GetProjectApplications(FrontDoorProjectId id, ConsortiumUserAccount userAccount, CancellationToken cancellationToken);
+    Task<AhpProjectOverview> GetProjectOverview(FrontDoorProjectId id, ConsortiumUserAccount userAccount, CancellationToken cancellationToken);
 
     Task<PaginationResult<AhpProjectSites>> GetProjects(PaginationRequest paginationRequest, ConsortiumUserAccount userAccount, CancellationToken cancellationToken);
 
