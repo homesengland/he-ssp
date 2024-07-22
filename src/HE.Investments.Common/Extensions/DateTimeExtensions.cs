@@ -29,6 +29,6 @@ public static class DateTimeExtensions
         var month = int.Parse(dateDetails.Month!, CultureInfo.InvariantCulture);
         var year = int.Parse(dateDetails.Year!, CultureInfo.InvariantCulture);
 
-        return new DateTime(year, month, day, 0, 0, 0, DateTimeKind.Utc);
+        return new DateTime(year, month, day, 0, 0, 0, DateTimeKind.Local);
     }
 }
