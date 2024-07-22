@@ -5,7 +5,6 @@ using HE.Investments.Loans.BusinessLogic.CompanyStructure.Notifications;
 using HE.Investments.Loans.BusinessLogic.CompanyStructure.Repositories;
 using HE.Investments.Loans.BusinessLogic.Files;
 using HE.Investments.Loans.BusinessLogic.LoanApplication.Repositories;
-using HE.Investments.Loans.Contract.Application.ValueObjects;
 using HE.Investments.Loans.Contract.CompanyStructure.Commands;
 using MediatR;
 using INotificationPublisher = HE.Investments.Common.Services.Notifications.INotificationPublisher;
@@ -15,13 +14,13 @@ namespace HE.Investments.Loans.BusinessLogic.CompanyStructure.CommandHandlers;
 public class RemoveMoreInformationAboutOrganizationFileCommandHandler : CompanyStructureBaseCommandHandler,
     IRequestHandler<RemoveMoreInformationAboutOrganizationFileCommand, OperationResult>
 {
-    private readonly ILoansFileService<LoanApplicationId> _companyStructureFileService;
+    private readonly ILoansFileService<CompanyStructureFileParams> _companyStructureFileService;
     private readonly INotificationPublisher _notificationPublisher;
 
     public RemoveMoreInformationAboutOrganizationFileCommandHandler(
                 ICompanyStructureRepository companyStructureRepository,
                 ILoanApplicationRepository loanApplicationRepository,
-                ILoansFileService<LoanApplicationId> companyStructureFileService,
+                ILoansFileService<CompanyStructureFileParams> companyStructureFileService,
                 IAccountUserContext loanUserContext,
                 INotificationPublisher notificationPublisher)
         : base(companyStructureRepository, loanApplicationRepository, loanUserContext)
@@ -35,7 +34,7 @@ public class RemoveMoreInformationAboutOrganizationFileCommandHandler : CompanyS
         return await Perform(
             async _ =>
             {
-                var removedFile = await _companyStructureFileService.RemoveFile(request.FileId, request.LoanApplicationId, cancellationToken);
+                var removedFile = await _companyStructureFileService.RemoveFile(request.FileId, new CompanyStructureFileParams(request.LoanApplicationId), cancellationToken);
                 if (removedFile.IsProvided())
                 {
                     await _notificationPublisher.Publish(new FileRemovedSuccessfullyNotification(removedFile!.Name));

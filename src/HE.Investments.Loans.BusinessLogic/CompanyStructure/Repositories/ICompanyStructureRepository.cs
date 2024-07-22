@@ -5,7 +5,7 @@ using HE.Investments.Loans.Contract.Application.ValueObjects;
 
 namespace HE.Investments.Loans.BusinessLogic.CompanyStructure.Repositories;
 
-public interface ICompanyStructureRepository : ILoansFileLocationProvider<LoanApplicationId>
+public interface ICompanyStructureRepository : ILoansFileLocationProvider<CompanyStructureFileParams>
 {
     Task<CompanyStructureEntity> GetAsync(LoanApplicationId loanApplicationId, UserAccount userAccount, CompanyStructureFieldsSet companyStructureFieldsSet, CancellationToken cancellationToken);
 
