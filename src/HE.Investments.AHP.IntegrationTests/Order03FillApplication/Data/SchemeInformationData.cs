@@ -59,6 +59,15 @@ public class SchemeInformationData
         StakeholderDiscussions = nameof(StakeholderDiscussions).WithTimestampPrefix();
     }
 
+    public void PopulateAllData()
+    {
+        GenerateFundingDetails();
+        GenerateAffordability();
+        GenerateSalesRisk();
+        GenerateHousingNeeds();
+        GenerateStakeholderDiscussions();
+    }
+
     private decimal GetDecimalValue(string fieldName)
     {
         return _dataSeed + 100_000 + (fieldName.Length * 1_000);

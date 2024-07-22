@@ -12,8 +12,9 @@ namespace HE.CRM.Common.Repositories.Interfaces
         bool ApplicationWithGivenNameExists(string name);
         bool ApplicationWithGivenIdExistsForOrganisation(Guid applicationId, Guid organisationId);
         bool ApplicationWithGivenNameAndOrganisationExists(string name, Guid organisationId);
-        List<invln_scheme> GetApplicationsForAhpProject(Guid ahpProjectGuid, invln_Permission contactWebRole, Contact contact, Guid organisationGuid, bool isLeadPartner, bool IsSitePartner, string consortiumId = null);
+        List<invln_scheme> GetRecordsFromAhpApplicationsForAhpProject(Guid ahpProjectGuid, invln_Permission contactWebRole, Contact contact, Guid organisationGuid, bool isLeadPartner, bool IsSitePartner, bool isAllocation, string consortiumId = null);
         List<invln_scheme> GetByConsortiumId(Guid consortiumId);
         List<invln_scheme> GetListOfApplicationToSendReminder(string calculatedDate);
+        invln_scheme GetAllocation(Guid allocationId, Guid organisationId, Contact contact = null);
     }
 }

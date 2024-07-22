@@ -1,0 +1,58 @@
+@using HE.Investments.Common.Extensions
+@using HE.Investments.Common.WWW.Helpers
+@model (HE.Investments.AHP.Allocation.Contract.Claims.MilestoneClaim Claim, bool CanClaimMilestone, string ClaimMilestoneUrl)
+
+<div class="govuk-summary-card govuk-!-margin-top-8 govuk-!-margin-bottom-8">
+    <div class="govuk-summary-card__title-wrapper">
+        <h2 class="govuk-summary-card__title">@Model.Claim.Type.GetDescription() milestone</h2>
+
+        <ul class="govuk-summary-card__actions">
+            <li class="govuk-summary-card__action">
+                <vc:claim-status-tag claim-status="@Model.Claim.Status"/>
+            </li>
+        </ul>
+    </div>
+    <div class="govuk-summary-card__content">
+        <dl class="govuk-summary-list">
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key govuk-!-width-one-half">Amount of grant apportioned to this milestone</dt>
+                <dd class="govuk-summary-list__value">@CurrencyHelper.DisplayPounds(Model.Claim.AmountOfGrantApportioned)</dd>
+            </div>
+
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key govuk-!-width-one-half">Percentage of grant apportioned to this milestone</dt>
+                <dd class="govuk-summary-list__value">@Model.Claim.PercentageOfGrantApportioned.ToWholePercentage()</dd>
+            </div>
+
+            @if (Model.Claim.AchievementDate.IsProvided())
+            {
+                <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key govuk-!-width-one-half">Achievement date</dt>
+                    <dd class="govuk-summary-list__value">@DateHelper.DisplayAsUkFormatDate(Model.Claim.AchievementDate)</dd>
+                </div>
+            }
+            else
+            {
+                <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key govuk-!-width-one-half">Forecast claim date</dt>
+                    <dd class="govuk-summary-list__value">@DateHelper.DisplayAsUkFormatDate(Model.Claim.ForecastClaimDate)</dd>
+                </div>
+            }
+
+            @if (Model.Claim.SubmissionDate.IsProvided())
+            {
+                <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key govuk-!-width-one-half">Claim submission date</dt>
+                    <dd class="govuk-summary-list__value">@DateHelper.DisplayAsUkFormatDate(Model.Claim.SubmissionDate)</dd>
+                </div>
+            }
+        </dl>
+    </div>
+
+    @if (Model is { CanClaimMilestone: true, Claim.CanBeClaimed: true })
+    {
+        <div class="govuk-summary-card__title-wrapper govuk-!-font-weight-bold govuk-!-font-size-19">
+            <gds-link class="govuk-!-margin-bottom-0" href="@Model.ClaimMilestoneUrl">Claim milestone</gds-link>
+        </div>
+    }
+</div>

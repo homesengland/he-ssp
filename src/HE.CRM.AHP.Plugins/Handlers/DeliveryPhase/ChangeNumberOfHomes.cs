@@ -38,7 +38,6 @@ namespace HE.CRM.AHP.Plugins.Handlers.DeliveryPhase
             var application = _applicationRepository.GetById(CurrentState.invln_Application.Id);
             var milestoneframeworks = _milestoneFrameworkRepository.GetMilestoneFrameworkItemByProgrammeId(application.invln_programmelookup.Id.ToString());
             var df = CrmServicesFactory.Get<IDeliveryPhaseService>().CalculateFunding(application, CurrentState, milestoneframeworks, resetMilestone, CurrentState);
-
             if (df == null)
             {
                 TracingService.Trace("df = null");

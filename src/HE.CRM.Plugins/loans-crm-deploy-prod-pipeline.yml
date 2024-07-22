@@ -5,10 +5,6 @@ pool:
   vmImage: windows-latest
 
 parameters:
-  - name: deployWithUpgrade
-    displayName: Upgrade Solutions?
-    type: boolean
-    default: true
   - name: deployEnvironmentVariables
     displayName: Deploy Environment Variables ?
     type: boolean
@@ -51,7 +47,6 @@ stages:
   - template: crm-deployment-pipelines/loans-crm-deploy-prod.yml@he-invst-deployment
     parameters:
       artifactLocationPipeline: BuildPipeline
-      deployWithUpgrade: "${{ parameters.deployWithUpgrade }}"
       deployEnvironmentVariables: "${{ parameters.deployEnvironmentVariables }}"
       deployMainSolution: "${{ parameters.deployMainSolution }}"
       deployFlowsSolution: "${{ parameters.deployFlowsSolution }}"

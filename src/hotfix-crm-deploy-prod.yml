@@ -31,6 +31,5 @@ stages:
   - template: crm-deployment-pipelines/hotfix-crm-deploy-prod.yml@he-invst-deployment
     parameters:
       artifactLocationPipeline: BuildPipeline
-      deployWithUpgrade: false
       deployMainSolution: true
       mainSolutionName: "${{ parameters.mainSolutionName }}"

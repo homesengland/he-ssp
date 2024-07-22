@@ -8,7 +8,7 @@ using HE.Investment.AHP.WWW.Models.Scheme.Factories;
 using HE.Investment.AHP.WWW.Models.Site.Factories;
 using HE.Investment.AHP.WWW.Notifications;
 using HE.Investment.AHP.WWW.Routing;
-using HE.Investments.Account.Shared.Authorization;
+using HE.Investments.AHP.Allocation.Domain.Config;
 using HE.Investments.AHP.Consortium.Domain.Config;
 using HE.Investments.Api.Config;
 using HE.Investments.Common;
@@ -42,6 +42,7 @@ public static class AhpWebModule
         services.AddHttpUserContext();
         services.AddDomainModule();
         services.AddConsortiumDomainModule();
+        services.AddAllocationDomainModule();
         services.AddProgrammeSubdomainModule();
         services.AddEventInfrastructure();
         services.AddNotificationPublisher(ApplicationType.Ahp);

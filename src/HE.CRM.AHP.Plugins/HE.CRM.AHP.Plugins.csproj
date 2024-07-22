@@ -108,6 +108,7 @@
     <Compile Include="Handlers\AhpStatusChange\SendNotificationOnCreateHandler.cs" />
     <Compile Include="Handlers\ContactWebrole\SendNotificationOnAdminRoleGrantedPlugin.cs" />
     <Compile Include="Handlers\ContactWebrole\SendNotificationOnRoleModificationHandler.cs" />
+    <Compile Include="Handlers\CustomApi\Allocation\GetAllocationClaimsHandler.cs" />
     <Compile Include="Handlers\CustomApi\ChangeAhpApplicationHandler.cs" />
     <Compile Include="Handlers\CustomApi\CheckIfApplicationWithGivenNameExistsHandler.cs" />
     <Compile Include="Handlers\CustomApi\Consortium\GetConsortiumsByOrganisationHandler.cs" />
@@ -150,7 +151,6 @@
     <Compile Include="Handlers\DeliveryPhase\AcceptOrRejectPaymentProportion.cs" />
     <Compile Include="Handlers\DeliveryPhase\ChangeNumberOfHomes.cs" />
     <Compile Include="Handlers\DeliveryPhase\PostUpdateDeliveryPhaseHandler.cs" />
-    <Compile Include="Handlers\DeliveryPhase\SendNotificationUrbWantsAdditionalPaymentsForPhaseHandler.cs" />
     <Compile Include="Handlers\HomesInDeliveryPhases\CalculateNumberOfHouseForDeliveryPhase.cs" />
     <Compile Include="Handlers\HomeType\CalculatePercentageValueOfNDSSStandardHandler.cs" />
     <Compile Include="Handlers\HomeType\CreateDocumentLocationOnCreateHandler.cs" />
@@ -227,6 +227,7 @@
     <Compile Include="Plugins\AhpStatusChange\SendNotificationOnCreatePlugin.cs" />
     <Compile Include="Plugins\ContactWebrole\SendNotificationOnAdminRoleGrantedPlugin.cs" />
     <Compile Include="Plugins\ContactWebrole\SendNotificationOnRoleModificationPlugin.cs" />
+    <Compile Include="Plugins\CustomApi\Allocation\GetAllocationClaimsPlugin.cs" />
     <Compile Include="Plugins\CustomApi\ChangeAhpApplicationStatusPlugin.cs" />
     <Compile Include="Plugins\CustomApi\CheckIfApplicationWithGivenNameExistsPlugin.cs" />
     <Compile Include="Plugins\CustomApi\Consortium\GetConsortiumsByOrganisationPlugin.cs" />
@@ -268,7 +269,6 @@
     <Compile Include="Plugins\CustomApi\Site\SetSitePlugin.cs" />
     <Compile Include="Plugins\DeliveryPhase\PostUpdateDeliveryPhasePlugin.cs" />
     <Compile Include="Plugins\DeliveryPhase\PreUpdateDeliveryPhase.cs" />
-    <Compile Include="Plugins\DeliveryPhase\SendNotificationUrbWantsAdditionalPaymentsForPhasePlugin.cs" />
     <Compile Include="Plugins\HomesInDeliveryPhase\PostCreate.cs" />
     <Compile Include="Plugins\HomesInDeliveryPhase\PostUpdate.cs" />
     <Compile Include="Plugins\HomeType\CreateDocumentLocationOnCreatePlugin.cs" />
@@ -284,8 +284,10 @@
     <Compile Include="Services\AhpProject\IAhpProjectService.cs" />
     <Compile Include="Services\AhpStatusChange\AhpStatusChangeService.cs" />
     <Compile Include="Services\AhpStatusChange\IAhpStatusChangeService.cs" />
+    <Compile Include="Services\Application\AllocationService.cs" />
     <Compile Include="Services\Application\ApplicationCalculationService.cs" />
     <Compile Include="Services\Application\ApplicationService.cs" />
+    <Compile Include="Services\Application\IAllocationService.cs" />
     <Compile Include="Services\Application\IApplicationService.cs" />
     <Compile Include="Services\Consortium\ConsortiumService.cs" />
     <Compile Include="Services\Consortium\IConsortiumService.cs" />

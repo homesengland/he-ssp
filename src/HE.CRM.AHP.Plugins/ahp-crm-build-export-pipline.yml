@@ -1,12 +1,12 @@
 trigger: none
 pr: none
 
-schedules:
-- cron: '0 0 * * *'
-  displayName: Daily midnight build
-  branches:
-    include:
-    - main
+# schedules:
+# - cron: '0 0 * * *'
+#   displayName: Daily midnight build
+#   branches:
+#     include:
+#     - development_R3
 
 pool:
   vmImage: windows-latest
@@ -20,10 +20,6 @@ parameters:
     displayName: Build & Update Webresources ?
     type: boolean
     default: true
-  - name: exportMigrationData
-    displayName: Export Migration Data ?
-    type: boolean
-    default: false
   - name: exportEnvironmentVariables
     displayName: Export Environment Variables ?
     type: boolean
@@ -45,21 +41,20 @@ variables:
   solution: "**/*.sln"
   buildPlatform: "Any CPU"
   buildConfiguration: "Release"
-  branch: "master"
+  branch: "main"
 
 resources:
   repositories:
     - repository: he-invst-deployment
       type: git
       name: "Investments Programme/he-invst-deployment"
-      ref: "main"
+      ref: "development_R3"
 
 stages:
   - template: crm-deployment-pipelines/ahp-crm-build-export.yml@he-invst-deployment
     parameters:
       buildAndUpdatePlugins: "${{ parameters.buildAndUpdatePlugins }}"
       buildAndUpdateWebResources: "${{ parameters.buildAndUpdateWebResources }}"
-      exportMigrationData: "${{ parameters.exportMigrationData }}"
       exportEnvironmentVariables: "${{ parameters.exportEnvironmentVariables }}"
       exportMainSolution: "${{ parameters.exportMainSolution }}"
       exportFlowsSolution: "${{ parameters.exportFlowsSolution }}"

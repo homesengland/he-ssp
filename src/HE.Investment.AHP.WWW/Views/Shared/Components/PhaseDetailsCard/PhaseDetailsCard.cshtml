@@ -1,0 +1,52 @@
+@using HE.Investments.Common.Extensions
+@using HE.Investments.Common.WWW.Helpers
+@model (HE.Investments.AHP.Allocation.Contract.Claims.Phase Phase, string PhaseUrl)
+
+<div class="govuk-summary-card govuk-!-margin-top-8 govuk-!-margin-bottom-8">
+    <div class="govuk-summary-card__title-wrapper">
+        <h2 class="govuk-summary-card__title">@Model.Phase.Name</h2>
+
+        <ul class="govuk-summary-card__actions">
+            <li class="govuk-summary-card__action">
+                <a class="govuk-link" href="@Model.PhaseUrl">View phase</a>
+            </li>
+        </ul>
+    </div>
+    <div class="govuk-summary-card__content">
+        <dl class="govuk-summary-list">
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key govuk-!-width-one-third">Number of homes</dt>
+                <dd class="govuk-summary-list__value">@Model.Phase.NumberOfHomes</dd>
+            </div>
+
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key govuk-!-width-one-third">Build activity type</dt>
+                <dd class="govuk-summary-list__value">@Model.Phase.BuildActivityType.GetDescription()</dd>
+            </div>
+
+            @foreach (var milestone in @Model.Phase.MilestoneClaims)
+            {
+                if (milestone.AchievementDate.IsProvided())
+                {
+                    <div class="govuk-summary-list__row">
+                        <dt class="govuk-summary-list__key govuk-!-width-one-third">@milestone.Type.GetDescription() achievement date</dt>
+                        <dd class="govuk-summary-list__value">@DateHelper.DisplayAsUkFormatDate(milestone.AchievementDate)</dd>
+                        <dd class="govuk-summary-list__actions">
+                            <vc:claim-status-tag claim-status="@milestone.Status"/>
+                        </dd>
+                    </div>
+                }
+                else
+                {
+                    <div class="govuk-summary-list__row">
+                        <dt class="govuk-summary-list__key govuk-!-width-one-third">@milestone.Type.GetDescription() forecast claim date</dt>
+                        <dd class="govuk-summary-list__value">@DateHelper.DisplayAsUkFormatDate(milestone.ForecastClaimDate)</dd>
+                        <dd class="govuk-summary-list__actions">
+                            <vc:claim-status-tag claim-status="@milestone.Status"/>
+                        </dd>
+                    </div>
+                }
+            }
+        </dl>
+    </div>
+</div>

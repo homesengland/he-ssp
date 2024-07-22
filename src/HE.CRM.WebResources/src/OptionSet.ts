@@ -54,6 +54,7 @@ export enum Securities {
   completionGuarantee = 858110007,
   interestShortfall = 858110008,
   other = 858110009,
+  collateralWarranty = 858110010,
 }
 
 export enum StatusReviewApproval {
@@ -63,3 +64,29 @@ export enum StatusReviewApproval {
   Approved = 858110003,
   Rejected = 858110004,
 }
+
+export enum LoanAppInternalStatus {
+  ApplicationDeclined = 858110014,
+  ApplicationSubmitted = 858110001,
+  ApplicationUnderReview = 858110003,
+  ApprovedSubjectToContract = 858110017,
+  ApprovedSubjecttoDueDiligence = 858110013,
+  AwaitingCPSatisfaction = 858110018,
+  CashflowRequested = 858110007,
+  CashflowUnderReview = 858110008,
+  CPsSatisfied = 858110019,
+  Draft = 1,
+  FeeIndemnitySigned = 858110022,
+  HoldRequested = 858110005,
+  Inactive = 2,
+  InDueDiligence = 858110015,
+  LoanAvailable = 858110020,
+  NotApproved = 858110012,
+  OnHold = 858110006,
+  ReferredBacktoApplicant = 858110009,
+  SentforApproval = 858110011,
+  SentforPreCompleteApproval = 858110016,
+  UnderReview = 858110010,
+  Withdrawn = 858110021,
+}
+

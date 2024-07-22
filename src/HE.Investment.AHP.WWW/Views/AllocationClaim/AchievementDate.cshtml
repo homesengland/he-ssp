@@ -1,0 +1,27 @@
+@using HE.Investment.AHP.WWW.Views.AllocationClaims.Const
+@using HE.Investments.AHP.Allocation.Contract.Claims.Enum
+@using HE.Investments.Common.Extensions
+@using HE.Investments.Common.WWW.Components.PageHeader
+@using HE.Investments.Common.WWW.Extensions
+@model HE.Investment.AHP.WWW.Models.AllocationClaim.PhaseClaimModel
+@{
+    var title = ClaimPageTitles.AchievementDate(Model.Name, Model.Claim.Type);
+    ViewData["Title"] = title;
+
+    var backUrl = Model.Claim.Type == MilestoneType.Acquisition
+        ? Url.OrganisationAction("CostsIncurred", "AllocationClaim", new { allocationId = Model.Allocation.Id.Value, phaseId = Model.Id, claimType = Model.Claim.Type })
+        : Url.OrganisationAction("Overview", "AllocationClaims", new { allocationId = Model.Allocation.Id.Value, phaseId = Model.Id });
+}
+
+<gds-div-grid-column-two-thirds>
+    <vc:back-link-with-callback url="@backUrl"/>
+    <vc:page-header caption="@Model.Allocation.Name - @Model.Allocation.Tenure.GetDescription()" title="@title"/>
+
+    <he-organisation-form asp-controller="AllocationClaim" asp-action="AchievementDate" asp-route-workflow="@Context.Request.Query["workflow"]" asp-method="post" novalidate>
+        <gds-p>
+            TODO: AB#85085 implement view
+        </gds-p>
+
+        <vc:form-button/>
+    </he-organisation-form>
+</gds-div-grid-column-two-thirds>

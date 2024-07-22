@@ -57,7 +57,7 @@ namespace HE.CRM.AHP.Plugins.Services.AhpProject
             return id.ToString();
         }
 
-        public AhpProjectDto GetAhpProjectWithApplicationsAndSites(string externalContactId, string organisationId, string ahpProjectId, string heProjectId, string consortiumId = null)
+        public AhpProjectDto GetAhpProjectWithApplicationsAndSitesAndAlloctions(string externalContactId, string organisationId, string ahpProjectId, string heProjectId, string consortiumId = null)
         {
             TracingService.Trace("GetAhpProjectWithApplicationsAndSites");
             AhpProjectDto result = null;
@@ -73,13 +73,17 @@ namespace HE.CRM.AHP.Plugins.Services.AhpProject
 
                 if (ahpProject != null)
                 {
-                    var listOfApps = _ahpApplicationRepository.GetApplicationsForAhpProject(ahpProject.Id, contactWebRole, contact, new Guid(organisationId), false, false, consortiumId);
+                    TracingService.Trace("Get listOfApps");
+                    var listOfApps = _ahpApplicationRepository.GetRecordsFromAhpApplicationsForAhpProject(ahpProject.Id, contactWebRole, contact, new Guid(organisationId), false, false, false, consortiumId);
                     var listOfAppsDto = listOfApps.Select(x => AhpApplicationMapper.MapRegularEntityToDto(x)).ToList();
-
+                    TracingService.Trace("Get listOfSites");
                     var listOfSites = _siteRepository.GetSitesForAhpProject(ahpProject.Id, contactWebRole, contact, new Guid(organisationId), consortiumId);
                     var listOfSitesDto = listOfSites.Select(x => SiteMapper.ToDto(x, GetHeLaForSite(x.invln_HeLocalAuthorityId?.Id.ToString()))).ToList();
-
-                    result = AhpProjectMapper.MapRegularEntityToDto(ahpProject, listOfSitesDto, listOfAppsDto);
+                    TracingService.Trace("Get listOfAlloctions");
+                    var listOfAlloctions = _ahpApplicationRepository.GetRecordsFromAhpApplicationsForAhpProject(ahpProject.Id, contactWebRole, contact, new Guid(organisationId), false, false, true, consortiumId);
+                    var listOfAlloctionsDto = listOfAlloctions.Select(x => AhpApplicationMapper.MapRegularEntityToAhpAlloctionDto(x, _heLocalAuthorityRepository.GetById(x.invln_HELocalAuthorityID.Id))).ToList();
+                    TracingService.Trace("Create result");
+                    result = AhpProjectMapper.MapRegularEntityToDto(ahpProject, listOfSitesDto, listOfAppsDto, listOfAlloctionsDto);
                 }
                 return result;
             }
@@ -107,7 +111,7 @@ namespace HE.CRM.AHP.Plugins.Services.AhpProject
                         }
                     }
 
-                    var listOfApps = _ahpApplicationRepository.GetApplicationsForAhpProject(ahpProject.Id, contactWebRole, contact, new Guid(organisationId), isALeadPartner, isSitePartner, consortiumId);
+                    var listOfApps = _ahpApplicationRepository.GetRecordsFromAhpApplicationsForAhpProject(ahpProject.Id, contactWebRole, contact, new Guid(organisationId), isALeadPartner, isSitePartner, false, consortiumId);
                     TracingService.Trace($"List of Application downloaded. no: {listOfApps.Count}");
 
                     var filteredList = listOfApps.Where(x => _consortiumService.CheckAccess(ConsortiumService.Operation.Get, ConsortiumService.RecordType.Application,
@@ -121,7 +125,19 @@ namespace HE.CRM.AHP.Plugins.Services.AhpProject
                     var listOfSitesDto = listOfSitesAfterChecked.Select(x => SiteMapper.ToDto(x, GetHeLaForSite(x.invln_HeLocalAuthorityId?.Id.ToString()))).ToList();
                     TracingService.Trace($"Records mapped.");
 
-                    result = AhpProjectMapper.MapRegularEntityToDto(ahpProject, listOfSitesDto, listOfAppsDto);
+
+                    var listOfAlloctions = _ahpApplicationRepository.GetRecordsFromAhpApplicationsForAhpProject(ahpProject.Id, contactWebRole, contact, new Guid(organisationId), isALeadPartner, isSitePartner, true, consortiumId);
+                    TracingService.Trace($"List of Alloctions downloaded. no: {listOfAlloctions.Count}");
+
+                    var filteredListOfAlloctions = listOfAlloctions.Where(x => _consortiumService.CheckAccess(ConsortiumService.Operation.Get, ConsortiumService.RecordType.Application,
+                        externalContactId, null, x.Id.ToString(), consortiumId, organisationId, null));
+
+                    var listOfAlloctionsDto = filteredListOfAlloctions.Select(x => AhpApplicationMapper.MapRegularEntityToAhpAlloctionDto(x, _heLocalAuthorityRepository.GetById(x.invln_HELocalAuthorityID.Id))).ToList();
+                    TracingService.Trace($"Records mapped.");
+
+
+
+                    result = AhpProjectMapper.MapRegularEntityToDto(ahpProject, listOfSitesDto, listOfAppsDto, listOfAlloctionsDto);
 
                 }
 

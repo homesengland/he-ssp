@@ -63,12 +63,9 @@ public class HomeTypeCrmContext : IHomeTypeCrmContext
 
     private readonly ICrmService _service;
 
-    private readonly IUserContext _userContext;
-
-    public HomeTypeCrmContext(ICrmService service, IUserContext userContext)
+    public HomeTypeCrmContext(ICrmService service)
     {
         _service = service;
-        _userContext = userContext;
     }
 
     public async Task<IList<HomeTypeDto>> GetAllOrganisationHomeTypes(
@@ -90,11 +87,12 @@ public class HomeTypeCrmContext : IHomeTypeCrmContext
     public async Task<IList<HomeTypeDto>> GetAllUserHomeTypes(
         string applicationId,
         string organisationId,
+        string userId,
         CancellationToken cancellationToken)
     {
         var request = new invln_gettypeofhomeslistRequest
         {
-            invln_userid = _userContext.UserGlobalId,
+            invln_userid = userId,
             invln_organisationid = organisationId.TryToGuidAsString(),
             invln_applicationid = applicationId.ToGuidAsString(),
             invln_fieldstoretrieve = HomeTypeCrmFields,
@@ -125,11 +123,12 @@ public class HomeTypeCrmContext : IHomeTypeCrmContext
         string applicationId,
         string homeTypeId,
         string organisationId,
+        string userId,
         CancellationToken cancellationToken)
     {
         var request = new invln_getsinglehometypeRequest
         {
-            invln_userid = _userContext.UserGlobalId,
+            invln_userid = userId,
             invln_organisationid = organisationId.TryToGuidAsString(),
             invln_applicationid = applicationId.ToGuidAsString(),
             invln_hometypeid = homeTypeId.ToGuidAsString(),
@@ -139,11 +138,11 @@ public class HomeTypeCrmContext : IHomeTypeCrmContext
         return await GetSingle(request, cancellationToken);
     }
 
-    public async Task Remove(string applicationId, string homeTypeId, string organisationId, CancellationToken cancellationToken)
+    public async Task Remove(string applicationId, string homeTypeId, string organisationId, string userId, CancellationToken cancellationToken)
     {
         var request = new invln_deletehometypeRequest
         {
-            invln_userid = _userContext.UserGlobalId,
+            invln_userid = userId,
             invln_organisationid = organisationId.TryToGuidAsString(),
             invln_applicationid = applicationId.ToGuidAsString(),
             invln_hometypeid = homeTypeId.ToGuidAsString(),
@@ -155,12 +154,12 @@ public class HomeTypeCrmContext : IHomeTypeCrmContext
             cancellationToken);
     }
 
-    public async Task<string> Save(HomeTypeDto homeType, string organisationId, CancellationToken cancellationToken)
+    public async Task<string> Save(HomeTypeDto homeType, string organisationId, string userId, CancellationToken cancellationToken)
     {
         var request = new invln_sethometypeRequest
         {
             invln_organisationid = organisationId.TryToGuidAsString(),
-            invln_userid = _userContext.UserGlobalId,
+            invln_userid = userId,
             invln_applicationid = homeType.applicationId.ToGuidAsString(),
             invln_hometype = JsonSerializer.Serialize(homeType, _serializerOptions),
             invln_fieldstoset = HomeTypeCrmFields,
