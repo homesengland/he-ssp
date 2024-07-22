@@ -18,13 +18,13 @@ public sealed class ProvideClaimAchievementDateCommandHandler : IRequestHandler<
 
     private readonly IAllocationRepository _allocationRepository;
 
-    private readonly DateTimeProvider _dateTimeProvider;
+    private readonly IDateTimeProvider _dateTimeProvider;
 
     public ProvideClaimAchievementDateCommandHandler(
         IPhaseRepository phaseRepository,
         IAccountUserContext accountUserContext,
         IAllocationRepository allocationRepository,
-        DateTimeProvider dateTimeProvider)
+        IDateTimeProvider dateTimeProvider)
     {
         _phaseRepository = phaseRepository;
         _accountUserContext = accountUserContext;
