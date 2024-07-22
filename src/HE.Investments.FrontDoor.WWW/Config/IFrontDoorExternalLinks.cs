@@ -2,7 +2,7 @@ namespace HE.Investments.FrontDoor.WWW.Config;
 
 public interface IFrontDoorExternalLinks
 {
-    string MailToHelpToBuildTechSupport { get; }
+    string MailToHomesEnglandTeam { get; }
 
     string HomesEnglandPrivacyNotice { get; }
 

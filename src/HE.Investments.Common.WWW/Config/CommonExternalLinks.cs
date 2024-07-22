@@ -13,9 +13,9 @@ public class CommonExternalLinks
 
     public string GovUk => GetExternalLink(nameof(GovUk), "https://www.gov.uk/");
 
-    public string MailToHelpToBuildTechSupport => GetExternalLink(
-        nameof(MailToHelpToBuildTechSupport),
-        "mailto:helptobuildtechsupport@homesengland.gov.uk");
+    public string MailToHomesEnglandTeam => GetExternalLink(
+        nameof(MailToHomesEnglandTeam),
+        "mailto:enquiries@homesengland.gov.uk");
 
     public string HomesEnglandPrivacyNotice => GetExternalLink(
         nameof(HomesEnglandPrivacyNotice),

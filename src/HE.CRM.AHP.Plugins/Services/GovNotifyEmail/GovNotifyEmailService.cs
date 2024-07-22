@@ -767,9 +767,14 @@ namespace HE.CRM.AHP.Plugins.Services.GovNotifyEmail
                         homesenglandfunding = decimal.Round(ahpApplication.invln_fundingrequired.Value, 2).ToString(),
                         homes = ahpApplication.invln_noofhomes.ToString(),
                         providermanagementlead = providerManagementLead.FullName,
-                        allocationofgrant = "This allocation of grant under the 21-26 Affordable Homes Programme is subject to entering in to an AHP 2021 to 2026 grant agreement with Homes England. We operate using standard, non-negotiable contracts. You are required to enter into this contract prior to any milestone payments being claimed.",
+                        allocationofgrant = "",
                     }
                 };
+
+                if (ahpStatusChange.invln_Changeto.Value == (int)invln_AHPInternalStatus.ApprovedSubjecttoContract)
+                {
+                    govNotParams.personalisation.allocationofgrant = "This allocation of grant under the 21-26 Affordable Homes Programme is subject to entering in to an AHP 2021 to 2026 grant agreement with Homes England. We operate using standard, non-negotiable contracts. You are required to enter into this contract prior to any milestone payments being claimed.";
+                }
 
                 TracingService.Trace("*** Parameters :");
                 TracingService.Trace($"govNotParams.templateId : {govNotParams.templateId}");

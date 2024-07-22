@@ -32,7 +32,9 @@ namespace HE.CRM.AHP.Plugins.Handlers.DeliveryPhase
 
         public override void DoWork()
         {
-            var resetMilestone = CurrentState.StatusCode.Value == (int)invln_DeliveryPhase_StatusCode.RejectedAdjustment;
+            var resetMilestone = CurrentState.StatusCode.Value == (int)invln_DeliveryPhase_StatusCode.RejectedAdjustment
+                || (ValueChanged(invln_DeliveryPhase.Fields.invln_rehabactivitytype) && ExecutionData.PreImage.invln_rehabactivitytype != null && ExecutionData.PreImage.invln_rehabactivitytype.Value == (int)invln_RehabActivityType.ExistingSatisfactory)
+                || (ValueChanged(invln_DeliveryPhase.Fields.invln_buildactivitytype) && ExecutionData.PreImage.invln_buildactivitytype != null && ExecutionData.PreImage.invln_buildactivitytype.Value == (int)invln_NewBuildActivityType.OffTheShelf);
             var application = _applicationRepository.GetById(CurrentState.invln_Application.Id);
             var milestoneframeworks = _milestoneFrameworkRepository.GetMilestoneFrameworkItemByProgrammeId(application.invln_programmelookup.Id.ToString());
             var df = CrmServicesFactory.Get<IDeliveryPhaseService>().CalculateFunding(application, CurrentState, milestoneframeworks, resetMilestone, CurrentState);
