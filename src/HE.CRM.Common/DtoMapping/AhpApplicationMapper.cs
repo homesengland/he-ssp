@@ -163,6 +163,7 @@ namespace HE.CRM.Common.DtoMapping
                 ownerOfTheHomesAfterCompletionId = application.invln_OwneroftheHomes?.Id.ToString(),
                 ownerOfTheHomesAfterCompletionName = application.invln_OwneroftheHomesName,
                 applicationPartnerConfirmation = application.invln_partnerconfirmation,
+                isAllocation = application.invln_isallocation,
             };
             if (ahpProject?.invln_HeProjectId != null)
             {
