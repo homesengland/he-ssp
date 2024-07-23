@@ -47,7 +47,7 @@ namespace HE.CRM.AHP.Plugins.Services.Application
             };
             var allocation = _ahpApplicationRepository.GetById(allocationId);
             var claims = _claimRepository.GetClaimsForAllocation(allocationId, onlyApprovedAllocation, claimColumns);
-
+            Logger.Trace($"Found {claims.Count()} claims.");
             var totalGrantAllocated = allocation.invln_fundingrequired;
             var amountPaid = default(decimal);
 

@@ -48,7 +48,7 @@ namespace HE.CRM.Common.Repositories.Implementations
 
             if (onlyApproved)
             {
-                query.Criteria.AddCondition(invln_Claim.Fields.invln_ExternalStatus, ConditionOperator.Equal, (int)invln_Claim_StatusCode.Approve);
+                query.Criteria.AddCondition(invln_Claim.Fields.StatusCode, ConditionOperator.Equal, (int)invln_Claim_StatusCode.Approve);
             }
 
             return service.RetrieveMultiple(query).Entities.Select(x => x.ToEntity<invln_Claim>());

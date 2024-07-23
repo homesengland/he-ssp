@@ -13,15 +13,18 @@ namespace HE.CRM.AHP.Plugins.Plugins.Claim
         StageEnum.PostOperation,
         ExecutionModeEnum.Asynchronous,
         "statuscode",
-        "HE.CRM.AHP.Plugins.Plugins.Claim.PostUpdate: Update of invln_claim",
+        "HE.CRM.AHP.Plugins.Plugins.Claim.PostUpdateAsync: Update of invln_claim",
         1,
         IsolationModeEnum.Sandbox,
         Id = "d12050e0-eb42-4dba-98f7-84610da60d63",
         Image1Name = "PreImage",
         Image1Attributes = "statuscode",
-        Image1Type = ImageTypeEnum.PreImage
+        Image1Type = ImageTypeEnum.PreImage,
+        Image2Name = "PostImage",
+        Image2Attributes = "invln_allocation, invln_application",
+        Image2Type = ImageTypeEnum.PostImage
     )]
-    public sealed class PostUpdate : PluginBase<DataverseContext>, IPlugin
+    public sealed class PostUpdateAsync : PluginBase<DataverseContext>, IPlugin
     {
         public override void RegisterHandlers(CrmHandlerFactory<DataverseContext> handlerFactory, IList<ICrmHandler> registeredHandlers)
         {

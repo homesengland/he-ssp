@@ -226,7 +226,7 @@
     <Compile Include="Plugins\AhpApplication\CreateDocumentLocationOnCreatePlugin.cs" />
     <Compile Include="Plugins\AhpApplication\PreUpdate.cs" />
     <Compile Include="Plugins\AhpStatusChange\SendNotificationOnCreatePlugin.cs" />
-    <Compile Include="Plugins\Claim\PostUpdate.cs" />
+    <Compile Include="Plugins\Claim\PostUpdateAsync.cs" />
     <Compile Include="Plugins\ContactWebrole\SendNotificationOnAdminRoleGrantedPlugin.cs" />
     <Compile Include="Plugins\ContactWebrole\SendNotificationOnRoleModificationPlugin.cs" />
     <Compile Include="Plugins\CustomApi\Allocation\GetAllocationClaimsPlugin.cs" />
