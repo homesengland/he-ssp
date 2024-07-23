@@ -8,8 +8,8 @@ namespace HE.Investment.AHP.WWW.Controllers;
 public class AllocationController : Controller
 {
     [HttpGet("overview")]
-    public IActionResult Overview()
+    public IActionResult Overview(string organisationId, string allocationId)
     {
-        return View();
+        return RedirectToAction("Summary", "AllocationClaims", new { organisationId, allocationId });
     }
 }

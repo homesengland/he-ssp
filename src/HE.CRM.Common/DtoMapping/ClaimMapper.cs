@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IdentityModel.Protocols.WSTrust;
 using System.Linq;
 using DataverseModel;
@@ -14,6 +15,26 @@ namespace HE.CRM.Common.DtoMapping
         public static MilestoneClaimDto MapToMilestoneClaimDto(invln_DeliveryPhase deliveryphase, int milestone, invln_Claim claim = null)
         {
             var result = new MilestoneClaimDto();
+
+            if (milestone == (int)invln_Milestone.Acquisition &&
+                deliveryphase.invln_acquisitiondate == null &&
+                deliveryphase.invln_acquisitionmilestoneclaimdate == null)
+            {
+                return null;
+            }
+            if (milestone == (int)invln_Milestone.SoS &&
+                deliveryphase.invln_startonsitedate == null &&
+                deliveryphase.invln_startonsitemilestoneclaimdate == null)
+            {
+                return null;
+            }
+            if (milestone == (int)invln_Milestone.PC &&
+                deliveryphase.invln_completiondate == null &&
+                deliveryphase.invln_completionmilestoneclaimdate == null)
+            {
+                return null;
+            }
+
             if (claim == null)
             {
                 result.Type = milestone;
