@@ -167,7 +167,7 @@ namespace HE.CRM.AHP.Plugins.Services.Application
                 CreateOrUpdateClaimForAllocationPhase(allocationId, deliveryPhaseId, startOnSiteMilestone, "StartOnSite", claimStartOnSite_invln_ClaimId, deliveryPhaseName);
             }
 
-            // ClaimStartOnSite
+            // ClaimCompletion
             var claimCompletion_invln_ClaimId = dataFromCrm.GetAliasedAttributeValue<Guid>("ClaimPC", invln_Claim.Fields.invln_ClaimId);
             var completionMilestone = phaseClaimsDto.CompletionMilestone;
             if (completionMilestone == null && claimCompletion_invln_ClaimId != Guid.Empty)
@@ -191,7 +191,7 @@ namespace HE.CRM.AHP.Plugins.Services.Application
             {
                 invln_Name = deliveryPhaseName + " " + typeOfMilestone + " Claim",
                 invln_Milestone = new OptionSetValue(milestone.Type),
-                StatusCode = new OptionSetValue((int)invln_Claim_StatusCode.Draft),
+                StatusCode = new OptionSetValue(milestone.Status),
                 invln_AmountApportionedtoMilestone = new Money(milestone.AmountOfGrantApportioned),
                 invln_PercentageofGrantApportionedtoThisMilestone = (double)milestone.PercentageOfGrantApportioned,
                 invln_MilestoneDate = milestone.AchievementDate ?? null,
