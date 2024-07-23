@@ -76,6 +76,14 @@ public class ProjectController : Controller
             await _mediator.Send(new GetProjectDetailsQuery(FrontDoorProjectId.From(projectId), new PaginationRequest(page ?? 1))));
     }
 
+    [HttpGet("{projectId}/allocations")]
+    public async Task<IActionResult> Allocations(string projectId, int? page)
+    {
+        return View(
+            "ListOfApplications",
+            await _mediator.Send(new GetProjectDetailsQuery(FrontDoorProjectId.From(projectId), new PaginationRequest(page ?? 1))));
+    }
+
     [HttpGet("{projectId}/sites")]
     public async Task<IActionResult> Sites(string projectId, [FromQuery] int? page)
     {

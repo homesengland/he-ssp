@@ -1,0 +1,55 @@
+@model HE.Investments.Common.WWW.Components.ListCard.ListCardModel
+@{
+    var hasPaging = !string.IsNullOrEmpty(Model.ViewAllUrl);
+    var itemsToDisplayCount = hasPaging ? Model.ItemsToDisplayCount : int.MaxValue;
+    var itemsToDisplay = Model.Items.Take(itemsToDisplayCount).ToList();
+    var restItemsCount = Model.Items.Count - itemsToDisplayCount;
+}
+
+<div>
+    @if (!string.IsNullOrEmpty(Model.Title))
+    {
+        <gds-h3 size="ControlSize.S">@Model.Title</gds-h3>
+    }
+
+    @if (!string.IsNullOrEmpty(Model.Description))
+    {
+        <gds-p>@Model.Description</gds-p>
+    }
+
+    <dl class="govuk-summary-list">
+        @foreach (var item in itemsToDisplay)
+        {
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    <strong>
+                        <a href="@item.Url">@item.Name</a>
+                    </strong>
+                </dt>
+                @if (@item.StatusComponent != null)
+                {
+                    <dd class="govuk-summary-list__actions">
+                        <vc:dynamic-component component="@item.StatusComponent"/>
+                    </dd>
+                }
+            </div>
+        }
+
+        @if (hasPaging)
+        {
+            <div class="govuk-!-padding-top-4 govuk-!-padding-bottom-4">
+                @if (restItemsCount > 0)
+                {
+                    <gds-p>
+                        @restItemsCount other(s)
+                    </gds-p>
+                }
+                <strong>
+                    <a class="govuk-!-margin-bottom-0" href="@Model.ViewAllUrl">
+                        @Model.ViewAllLabel
+                    </a>
+                </strong>
+            </div>
+        }
+    </dl>
+</div>
