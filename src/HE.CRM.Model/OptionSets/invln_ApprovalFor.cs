@@ -13,14 +13,17 @@ namespace DataverseModel
 	
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
-	public enum invln_BaseCaseType
+	public enum invln_ApprovalFor
 	{
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		BorrowerAdjustments = 391930001,
+		ISP = 858110000,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		BorrowerSubmission = 391930000,
+		Precomplete = 858110002,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		VfT = 858110001,
 	}
 }
 #pragma warning restore CS1591

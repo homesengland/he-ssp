@@ -13,14 +13,32 @@ namespace DataverseModel
 	
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
-	public enum invln_BaseCaseType
+	public enum invln_ClaimExternalStatus
 	{
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		BorrowerAdjustments = 391930001,
+		Approved = 858110006,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		BorrowerSubmission = 391930000,
+		Due = 858110001,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		DueSoon = 858110000,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Overdue = 858110002,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		RecallRequested = 858110004,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Rejected = 858110007,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Submitted = 858110003,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		UnderReview = 858110005,
 	}
 }
 #pragma warning restore CS1591

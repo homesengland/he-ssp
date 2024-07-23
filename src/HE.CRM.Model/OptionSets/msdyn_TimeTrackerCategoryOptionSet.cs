@@ -13,14 +13,17 @@ namespace DataverseModel
 	
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
-	public enum invln_BaseCaseType
+	public enum msdyn_TimeTrackerCategoryOptionSet
 	{
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		BorrowerAdjustments = 391930001,
+		Automatic = 100000001,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		BorrowerSubmission = 391930000,
+		Final = 100000002,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Manual = 100000000,
 	}
 }
 #pragma warning restore CS1591

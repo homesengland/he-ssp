@@ -58,6 +58,8 @@ namespace DataverseModel
 			public const string CreatedOnBehalfByName = "createdonbehalfbyname";
 			public const string CreatedOnBehalfByYomiName = "createdonbehalfbyyominame";
 			public const string ImportSequenceNumber = "importsequencenumber";
+			public const string invln_ApprovalFor = "invln_approvalfor";
+			public const string invln_approvalforName = "invln_approvalforname";
 			public const string invln_Description = "invln_description";
 			public const string invln_isp_invln_reviewapproval_ispid = "invln_isp_invln_reviewapproval_ispid";
 			public const string invln_ispid = "invln_ispid";
@@ -282,6 +284,40 @@ namespace DataverseModel
 				this.OnPropertyChanging("ImportSequenceNumber");
 				this.SetAttributeValue("importsequencenumber", value);
 				this.OnPropertyChanged("ImportSequenceNumber");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_approvalfor")]
+		public virtual Microsoft.Xrm.Sdk.OptionSetValue invln_ApprovalFor
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_approvalfor");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_ApprovalFor");
+				this.SetAttributeValue("invln_approvalfor", value);
+				this.OnPropertyChanged("invln_ApprovalFor");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_approvalforname")]
+		public string invln_approvalforName
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				if (this.FormattedValues.Contains("invln_approvalfor"))
+				{
+					return this.FormattedValues["invln_approvalfor"];
+				}
+				else
+				{
+					return default(string);
+				}
 			}
 		}
 		

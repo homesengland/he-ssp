@@ -12,15 +12,18 @@ namespace DataverseModel
 {
 	
 	
+	/// <summary>
+	/// Value indicating whether security role is auto-assigned based on user license
+	/// </summary>
 	[System.Runtime.Serialization.DataContractAttribute()]
-	public enum invln_BaseCaseType
+	public enum securityrole_IsAutoAssigned
 	{
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		BorrowerAdjustments = 391930001,
+		No = 0,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		BorrowerSubmission = 391930000,
+		Yes = 1,
 	}
 }
 #pragma warning restore CS1591

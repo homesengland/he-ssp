@@ -13,14 +13,20 @@ namespace DataverseModel
 	
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
-	public enum invln_BaseCaseType
+	public enum msdyn_ActionType
 	{
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		BorrowerAdjustments = 391930001,
+		EmailFollowup = 100000002,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		BorrowerSubmission = 391930000,
+		KnowledgeArticleDraftReview = 100000000,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		ReplyToCustomer = 100000003,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		ResolveCase = 100000001,
 	}
 }
 #pragma warning restore CS1591
