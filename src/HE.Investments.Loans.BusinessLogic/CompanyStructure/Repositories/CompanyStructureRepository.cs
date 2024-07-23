@@ -70,9 +70,9 @@ public class CompanyStructureRepository : ICompanyStructureRepository
             _eventDispatcher);
     }
 
-    public async Task<FileLocation> GetFilesLocationAsync(LoanApplicationId fileParams, CancellationToken cancellationToken)
+    public async Task<FileLocation> GetFilesLocationAsync(CompanyStructureFileParams fileParams, CancellationToken cancellationToken)
     {
-        var basePath = await _fileRepository.GetBaseFilePath(fileParams, cancellationToken);
+        var basePath = await _fileRepository.GetBaseFilePath(fileParams.LoanApplicationId, cancellationToken);
         return new FileLocation(
             _documentSettings.ListTitle,
             _documentSettings.ListAlias,

@@ -149,7 +149,7 @@ namespace HE.CRM.Common.Repositories.Implementations
             {
                 return default;
             }
-            logger.Trace($"Count: {contactIds.Count()}");
+
             var query = new QueryExpression(Contact.EntityLogicalName)
             {
                 ColumnSet = new ColumnSet(Contact.Fields.invln_externalid),
