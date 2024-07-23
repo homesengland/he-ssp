@@ -78,5 +78,7 @@ namespace HE.Common.IntegrationModel.PortalIntegrationModel
         public string ownerOfTheHomesAfterCompletionId { get; set; }
         public string ownerOfTheHomesAfterCompletionName { get; set; }
         public bool? applicationPartnerConfirmation { get; set; }
+
+        public bool? isAllocation { get; set; }
     }
 }
