@@ -3,8 +3,58 @@
 @using HE.Investments.Common.Extensions
 @using HE.Investments.Common.WWW.Components.ApplicationStatusTagComponent
 @using HE.Investments.Common.WWW.Components.ListCard
+@using HE.Investments.Common.WWW.Components.ListCardExtended
 @using HE.Investments.Common.WWW.Extensions
 @model HE.Investment.AHP.Contract.Project.ProjectDetailsModel
+
+@functions {
+
+    private ListCardModel CreateApplicationsListCardModel()
+    {
+        var applications = Model.Applications.Items.Select(x =>
+                new ListCardItemModel(
+                    x.Name,
+                    new DynamicComponentViewModel(nameof(ApplicationStatusTagComponent), new { applicationStatus = x.Status, additionalClasses = "application-status-project-list-govuk-tag" }),
+                    Url.OrganisationAction("TaskList", "Application", new { applicationId = x.Id.Value })!))
+            .ToList();
+
+        var description = applications.IsEmpty()
+            ? "Your applications will appear here once added."
+            : "This includes applications awaiting decision, not approved or pending approval.";
+
+        var applicationsListCardModel = new ListCardModel(
+            Model.ProgrammeName,
+            applications,
+            "Applications",
+            description,
+            "View all applications",
+            applications.Any() ? Url.OrganisationAction("Applications", "Project", new { projectId = Model.ProjectId }) : null,
+            3);
+        return applicationsListCardModel;
+    }
+
+    private ListCardModel CreateAllocationListCardModel()
+    {
+        var allocations = Model.Allocations.Items.Select(x =>
+                new ListCardItemModel(
+                    x.Name,
+                    null,
+                    Url.OrganisationAction("Overview", "Allocation", new { allocationId = x.Id })!))
+            .ToList();
+
+        var allocationListCardModel = new ListCardModel(
+            Model.ProgrammeName,
+            allocations,
+            "Allocations",
+            "This includes allocations that have been approved for funding or have received funding.",
+            "View all allocations",
+            allocations.Any() ? Url.OrganisationAction("Allocations", "Project", new { projectId = Model.ProjectId }) : null,
+            3);
+
+        return allocationListCardModel;
+    }
+}
+
 @{
     var title = Model.ProjectName;
     ViewData["Title"] = title;
@@ -24,27 +74,16 @@
 
     <gds-div-grid-column-two-thirds class="govuk-!-padding-left-0">
         @{
-            var applications = Model.Applications.Items.Select(x =>
-                new ListCardItemModel(
-                    x.Name,
-                    new DynamicComponentViewModel(nameof(ApplicationStatusTagComponent), new { applicationStatus = x.Status, additionalClasses = "application-status-project-list-govuk-tag" }),
-                    Url.OrganisationAction("TaskList", "Application", new { applicationId = x.Id.Value })!))
-                    .ToList();
+            var applicationsListCardModel = CreateApplicationsListCardModel();
+            var allocationListCardModel = CreateAllocationListCardModel();
+            var listModels = new List<ListCardModel> { applicationsListCardModel };
 
-            var description = applications.IsEmpty()
-                ? "Your applications will appear here once added."
-                : "This includes applications awaiting decision, not approved or pending approval.";
+            if (allocationListCardModel.Items.Count > 0)
+            {
+                listModels.Add(allocationListCardModel);
+            }
 
-            var items = new ListCardModel(
-                Model.ProgrammeName,
-                applications,
-                "Applications",
-                description,
-                "View all applications",
-                applications.Any() ? Url.OrganisationAction("Applications", "Project", new { projectId = Model.ProjectId }) : null,
-                3);
-
-            <vc:list-card model="@items"></vc:list-card>
+            <vc:list-card-extended model=@listModels></vc:list-card-extended>
         }
     </gds-div-grid-column-two-thirds>
 
