@@ -88,7 +88,11 @@ namespace HE.CRM.Common.Repositories.implementations
                 invln_DeliveryPhase.Fields.invln_Application,
                 invln_DeliveryPhase.Fields.invln_phasename,
                 invln_DeliveryPhase.Fields.invln_NoofHomes,
+
+                invln_DeliveryPhase.Fields.invln_nbrh,
                 invln_DeliveryPhase.Fields.invln_buildactivitytype,
+                invln_DeliveryPhase.Fields.invln_rehabactivitytype,
+
 
                 invln_DeliveryPhase.Fields.invln_acquisitiondate,
                 invln_DeliveryPhase.Fields.invln_AcquisitionValue,
