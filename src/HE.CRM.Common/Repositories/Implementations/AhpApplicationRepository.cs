@@ -65,7 +65,7 @@ namespace HE.CRM.Common.Repositories.Implementations
             return result.Entities.Select(x => x.ToEntity<invln_scheme>()).ToList();
         }
 
-        public List<invln_scheme> GetApplicationsForAhpProject(Guid ahpProjectGuid, invln_Permission contactWebRole, Contact contact, Guid organisationGuid, bool isLeadPartner, bool IsSitePartner, string consortiumId = null)
+        public List<invln_scheme> GetRecordsFromAhpApplicationsForAhpProject(Guid ahpProjectGuid, invln_Permission contactWebRole, Contact contact, Guid organisationGuid, bool isLeadPartner, bool IsSitePartner, bool isAllocation, string consortiumId = null)
         {
             var query_invln_sites_invln_ahpprojectid = ahpProjectGuid.ToString();
 
@@ -84,7 +84,9 @@ namespace HE.CRM.Common.Repositories.Implementations
                 invln_scheme.Fields.invln_DevelopingPartner,
                 invln_scheme.Fields.invln_OwneroftheLand,
                 invln_scheme.Fields.invln_OwneroftheHomes,
-                invln_scheme.Fields.invln_Site
+                invln_scheme.Fields.invln_Site,
+                invln_scheme.Fields.invln_programmelookup,
+                invln_scheme.Fields.invln_HELocalAuthorityID
                 );
 
             var query_invln_sites = query.AddLink(
@@ -93,6 +95,15 @@ namespace HE.CRM.Common.Repositories.Implementations
                 invln_Sites.Fields.invln_SitesId);
 
             query_invln_sites.LinkCriteria.AddCondition(invln_Sites.Fields.invln_AHPProjectId, ConditionOperator.Equal, query_invln_sites_invln_ahpprojectid);
+
+            if (isAllocation == true)
+            {
+                query.Criteria.AddCondition(invln_scheme.Fields.invln_isallocation, ConditionOperator.Equal, true);
+            }
+            else
+            {
+                query.Criteria.AddCondition(invln_scheme.Fields.invln_isallocation, ConditionOperator.NotEqual, true);
+            }
 
             if (consortiumId == null)
             {
@@ -163,6 +174,40 @@ namespace HE.CRM.Common.Repositories.Implementations
             query_Or.AddCondition(invln_scheme.Fields.invln_lastemailsenton, ConditionOperator.OnOrBefore, query_Or_invln_lastemailsenton);
 
             return service.RetrieveMultiple(query).Entities.Select(x => x.ToEntity<invln_scheme>()).ToList();
+        }
+
+
+        public invln_scheme GetAllocation(Guid allocationId, Guid organisationId, Contact contact = null)
+        {
+            invln_scheme allocation = null;
+
+            var query_invln_isallocation = true;
+            var query_invln_schemeid = allocationId.ToString();
+            var query_invln_organisationid = organisationId.ToString();
+
+            var query = new QueryExpression(invln_scheme.EntityLogicalName);
+            query.ColumnSet.AddColumns(
+                invln_scheme.Fields.invln_schemeId,
+                invln_scheme.Fields.invln_applicationid,
+                invln_scheme.Fields.invln_schemename,
+                invln_scheme.Fields.invln_HELocalAuthorityID,
+                invln_scheme.Fields.invln_programmelookup,
+                invln_scheme.Fields.invln_Tenure,
+                invln_scheme.Fields.invln_TotalGrantAllocated,
+                invln_scheme.Fields.invln_AmountPaid,
+                invln_scheme.Fields.invln_AmountRemaining);
+            query.Criteria.AddCondition(invln_scheme.Fields.invln_organisationid, ConditionOperator.Equal, query_invln_organisationid);
+            query.Criteria.AddCondition(invln_scheme.Fields.invln_isallocation, ConditionOperator.Equal, query_invln_isallocation);
+            query.Criteria.AddCondition(invln_scheme.Fields.invln_schemeId, ConditionOperator.Equal, query_invln_schemeid);
+
+            if (contact != null)
+            {
+                var query_invln_contactid = contact.Id.ToString();
+                query.Criteria.AddCondition(invln_scheme.Fields.invln_contactid, ConditionOperator.Equal, query_invln_contactid);
+            }
+
+            allocation = service.RetrieveMultiple(query).Entities.Select(x => x.ToEntity<invln_scheme>()).FirstOrDefault();
+            return allocation;
         }
     }
 }

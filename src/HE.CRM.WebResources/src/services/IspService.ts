@@ -1,6 +1,5 @@
 import { CommonLib } from '../Common'
-import { ExternalStatus, Securities } from "../OptionSet"
-
+import { Securities } from "../OptionSet"
 export class IspService {
   common: CommonLib
 
@@ -28,6 +27,8 @@ export class IspService {
   private static lessThan10MInformationValue: string = "You will not be able to send this ISP for approval until the DES and HoF reviews have taken place. It is policy that the following review / approve this ISP: Risk, CRO Delegated Authority";
   private static moreThan10MLessThan50InformationValue: string = "You will not be able to send this ISP for approval until the DES and HoF reviews have taken place. It is policy that the following review / approve this ISP: Risk, CRO, IPE";
   private static statictextaboveplots = "Please use this section to give an overview of the homes being delivered."
+  private static sensitivityanalysistablestatictext = "Please paste the sensitivity analysis table from the cashflow here";
+
   constructor(eCtx) {
     this.common = new CommonLib(eCtx)
   }
@@ -46,17 +47,6 @@ export class IspService {
     else {
       this.common.clearFormNotification("lessThan10MInformation");
       this.common.clearFormNotification("moreThan10MLessThan50Information");
-    }
-  }
-
-  public setFieldsAvailabilityOnLoad() {
-    var loanApplication = this.common.getLookupValue('invln_loanapplication')
-    if (loanApplication != null) {
-      Xrm.WebApi.retrieveRecord('invln_loanapplication', loanApplication.id).then(result => {
-        if (result.invln_externalstatus == ExternalStatus.sentForApproval) {
-          this.common.disableAllFields()
-        }
-      })
     }
   }
 
@@ -142,21 +132,32 @@ export class IspService {
     this.common.setAttributeValue('invln_staticrecommendation', IspService.recommendationValue)
     this.common.setAttributeValue('invln_staticstandardconditionstobewaived', IspService.standardConditionsToBeWaivedValue)
     this.common.setAttributeValue('invln_statictextaboveplots', IspService.statictextaboveplots)
+
+    this.common.setAttributeValue('invln_sensitivityanalysistablestatictext', IspService.sensitivityanalysistablestatictext);
   }
 
   public setFieldsRequirementBasedOnSendOnApproval() {
     var sendForApproval = this.common.getAttributeValue('invln_sendforapproval') ?? false;
-    this.common.setControlRequiredV2('invln_briefoutline', sendForApproval)
+    let list: Array<string>;
+    list = ['invln_briefoutline', 'invln_kycnarrative', 'invln_fundrecoveryrate', 'invln_approvallevelnew', 'invln_baserate', 'invln_aggregatelimitproposed',
+      'invln_expirydate', 'invln_nounitsdirectlyfundedbyinvestment', 'invln_loanrecycledincomeotherdebttocostscoven', 'invln_keyriskssummary',
+      'invln_compliance', 'invln_strategicrationale', 'invln_borrowingentityandrelationship', 'invln_borrowingentityandrelationshipcomments',
+      'invln_locationanddevelopment', 'invln_projectfundamentals', 'invln_securitycover', 'invln_renumeration', 'invln_reportfrequency',
+      'invln_financialsummary', 'invln_crranalysis', 'invln_sensitivityanalysiscomments', 'invln_summary', 'invln_strategicassessmentbanding',
+      'invln_newhomesbyscaleandtypemeasure', 'invln_achievementofwiderhousingobjectivesmeasure', 'invln_achievementofwidereconomicobjectivesmeasure',
+      'invln_vfmassessment', 'invln_economymeasure', 'invln_efficiencymeasure', 'invln_effectivenessmeasure', 'invln_additionalitymeasure', 'invln_totalpublicsectorexpendituremeasure',
+      'invln_deliverabilityassessment', 'invln_commercialmeasure', 'invln_financialmeasure', 'invln_managementmeasure', 'invln_legalrechargedfees',
+      'invln_legalnonrechargedfees', 'invln_propertyrechargedfees', 'invln_propertynonrechargedfees', 'invln_monitoringrechargedfees', 'invln_otherrechargedfees',
+      'invln_othernonrechargedfees', 'invln_totalrechargedfees', 'invln_totalnonrechargedfees', 'invln_recommendation', 'invln_tmname',
+      'invln_sensitivityanalysistable', 'invln_encouragingdiversityandinnovation'
+    ];
+
+    list.forEach(x => { this.common.setControlRequiredV2(x, sendForApproval) })
+
     this.common.setControlRequiredV2('invln_datesubmitted', sendForApproval)
-    this.common.setControlRequiredV2('invln_kycnarrative', sendForApproval)
-    this.common.setControlRequiredV2('invln_fundrecoveryrate', sendForApproval)
-    this.common.setControlRequiredV2('invln_approvallevel', sendForApproval)
     this.common.setControlRequiredV2('invln_interestmargin', sendForApproval)
-    this.common.setControlRequiredV2('invln_baserate', sendForApproval)
     this.common.setControlRequiredV2('invln_baseratepercent', sendForApproval)
-    this.common.setControlRequiredV2('invln_aggregatelimitproposed', sendForApproval)
     this.common.setControlRequiredV2('invln_sppimet', sendForApproval)
-    this.common.setControlRequiredV2('invln_expirydate', sendForApproval)
     this.common.setControlRequiredV2('invln_producttype', sendForApproval)
     this.common.setControlRequiredV2('invln_loanprincipalpercent', sendForApproval)
     this.common.setControlRequiredV2('invln_loanprincipalk', sendForApproval)
@@ -209,26 +210,15 @@ export class IspService {
     this.common.setControlRequiredV2('invln_totalcostspercent', sendForApproval)
     this.common.setControlRequiredV2('invln_totalcostsk', sendForApproval)
     this.common.setControlRequiredV2('invln_totalnounitstobedevelopedunlocked', sendForApproval)
-    this.common.setControlRequiredV2('invln_nounitsdirectlyfundedbyinvestment', sendForApproval)
     this.common.setControlRequiredV2('invln_grossdevelopmentvaluegdv', sendForApproval)
     this.common.setControlRequiredV2('invln_developersoverallprofit', sendForApproval)
     this.common.setControlRequiredV2('invln_returnonequityroe', sendForApproval)
     this.common.setControlRequiredV2('invln_peakfunding', sendForApproval)
     this.common.setControlRequiredV2('invln_loanrecycledincomeotherdebttocostspeak', sendForApproval)
     this.common.setControlRequiredV2('invln_loanrecycledincomeotherdebttogdvpeak', sendForApproval)
-    this.common.setControlRequiredV2('invln_loanrecycledincomeotherdebttocostscoven', sendForApproval)
     this.common.setControlRequiredV2('invln_loanrecycledincomeotherdebttogdvcovenan', sendForApproval)
-    this.common.setControlRequiredV2('invln_keyriskssummary', sendForApproval)
-    this.common.setControlRequiredV2('invln_compliance', sendForApproval)
-    this.common.setControlRequiredV2('invln_strategicrationale', sendForApproval)
-    this.common.setControlRequiredV2('invln_borrowingentityandrelationship', sendForApproval)
-    this.common.setControlRequiredV2('invln_borrowingentityandrelationshipcomments', sendForApproval)
-    this.common.setControlRequiredV2('invln_locationanddevelopment', sendForApproval)
-    this.common.setControlRequiredV2('invln_projectfundamentals', sendForApproval)
     this.common.setControlRequiredV2('invln_margin', sendForApproval)
-    this.common.setControlRequiredV2('invln_securitycover', sendForApproval)
     this.common.setControlRequiredV2('invln_arrangementfee', sendForApproval)
-    this.common.setControlRequiredV2('invln_renumeration', sendForApproval)
     this.common.setControlRequiredV2('invln_firstlegalchargedescription', sendForApproval)
     this.common.setControlRequiredV2('invln_subsequentchargedescription', sendForApproval)
     this.common.setControlRequiredV2('invln_debenturedescription', sendForApproval)
@@ -239,40 +229,215 @@ export class IspService {
     this.common.setControlRequiredV2('invln_completionguaranteedescription', sendForApproval)
     this.common.setControlRequiredV2('invln_interestshortfalldescription', sendForApproval)
     this.common.setControlRequiredV2('invln_otherdescription', sendForApproval)
-    this.common.setControlRequiredV2('invln_reportfrequency', sendForApproval)
-    this.common.setControlRequiredV2('invln_financialsummary', sendForApproval)
-    this.common.setControlRequiredV2('invln_crranalysis', sendForApproval)
-    this.common.setControlRequiredV2('invln_sensitivityanalysiscomments', sendForApproval)
-    this.common.setControlRequiredV2('invln_summary', sendForApproval)
-    this.common.setControlRequiredV2('invln_strategicassessmentbanding', sendForApproval)
-    this.common.setControlRequiredV2('invln_newhomesbyscaleandtypemeasure', sendForApproval)
     this.common.setControlRequiredV2('invln_encouragingdiversityandinnovation', sendForApproval)
-    this.common.setControlRequiredV2('invln_achievementofwiderhousingobjectivesmeasure', sendForApproval)
-    this.common.setControlRequiredV2('invln_achievementofwidereconomicobjectivesmeasure', sendForApproval)
-    this.common.setControlRequiredV2('invln_vfmassessment', sendForApproval)
-    this.common.setControlRequiredV2('invln_economymeasure', sendForApproval)
-    this.common.setControlRequiredV2('invln_efficiencymeasure', sendForApproval)
-    this.common.setControlRequiredV2('invln_effectivenessmeasure', sendForApproval)
-    this.common.setControlRequiredV2('invln_additionalitymeasure', sendForApproval)
-    this.common.setControlRequiredV2('invln_totalpublicsectorexpendituremeasure', sendForApproval)
-    this.common.setControlRequiredV2('invln_deliverabilityassessment', sendForApproval)
-    this.common.setControlRequiredV2('invln_commercialmeasure', sendForApproval)
-    this.common.setControlRequiredV2('invln_financialmeasure', sendForApproval)
-    this.common.setControlRequiredV2('invln_managementmeasure', sendForApproval)
-    this.common.setControlRequiredV2('invln_legalrechargedfees', sendForApproval)
-    this.common.setControlRequiredV2('invln_legalnonrechargedfees', sendForApproval)
-    this.common.setControlRequiredV2('invln_propertyrechargedfees', sendForApproval)
-    this.common.setControlRequiredV2('invln_propertynonrechargedfees', sendForApproval)
-    this.common.setControlRequiredV2('invln_monitoringrechargedfees', sendForApproval)
     this.common.setControlRequiredV2('invln_monitoringnonrechargedfees', sendForApproval)
-    this.common.setControlRequiredV2('invln_otherrechargedfees', sendForApproval)
-    this.common.setControlRequiredV2('invln_othernonrechargedfees', sendForApproval)
-    this.common.setControlRequiredV2('invln_totalrechargedfees', sendForApproval)
-    this.common.setControlRequiredV2('invln_totalnonrechargedfees', sendForApproval)
-    this.common.setControlRequiredV2('invln_recommendation', sendForApproval)
-    this.common.setControlRequiredV2('invln_tmname', sendForApproval)
     this.common.setControlRequiredV2('invln_datesentforapproval', sendForApproval)
   }
+
+  public async mapFieldOnLoad() {
+    if (this.common.getFormType() != XrmEnum.FormType.Create)
+      return;
+
+    const dictionaryLoans = new Map<string, string>([
+      ['invln_projectname', 'invln_projectname'],
+      ['invln_submitternew', '_ownerid'],
+      ['invln_heregion', 'invln_laregion'],
+      ['invln_programmenew', 'invln_programme'],
+      ['invln_sppimet', 'invln_assessedassppi'],//  SPPI Met ?
+      ['invln_firstlegalchargedescription', 'invln_firstlegalchargedescription'],//First Legal Charge Description
+      ['invln_firstlegalchargevaluek', 'invln_firstlegalchargevalue'],//First Legal Charge Value £
+      ['invln_firstlegalchargemarginedsecurityvalue', 'invln_firstlegalchargemarginedsecurityvalue'],//  First Legal Charge Margined Security Value
+      ['invln_subsequentchargedescription', 'invln_subsequentchargedescription'],//Subsequent Charge Description
+      ['invln_subsequentchargevaluek', 'invln_subsequentchargevalue'],//Subsequent Charge Value £
+      ['invln_subsequentchargemarginedsecurityvalue', 'invln_subsequentchargemarginedsecurityvalue'],//  Subsequent Charge Margined Security Value
+      ['invln_debenturedescription', 'invln_debenturedescription'],//Debenture Description
+      ['invln_debenturevaluek', 'invln_debenturevalue'],//Debenture Value £
+      ['invln_debenturemarginedsecurityk', 'invln_debenturemarginedsecurityvalue'],//  Debenture Margined Security Value
+      ['invln_personalguaranteedescription', 'invln_personalguaranteedescription'],//Personal Guarantee Description
+      ['invln_personalguaranteevaluek', 'invln_personalguaranteevalue'],//Personal Guarantee Value £
+      ['invln_personalguaranteemarginedsecurityk', 'invln_personalguaranteemarginedsecurityvalue'],//  Personal Guarantee Margined Security Value
+      ['invln_parentcompanyguaranteedescription', 'invln_parentcompanyguaranteedescription'],//Parent Company Guarantee Description
+      ['invln_parentcompanyguaranteevaluek', 'invln_parentcompanyguaranteevalue'],//Parent Company Guarantee Value £
+      ['invln_parentcompanyguaranteemarginedsecurityk', 'invln_parentcompanyguaranteemarginedsecurityvalue'],//  Parent Company Guarantee Margined Security Value
+      ['invln_subordinateddeeddescription', 'invln_subordinateddeeddescription'],//Subordinated Deed Description
+      ['invln_subordinateddeedvaluek', 'invln_subordinateddeedvalue'],//Subordinated Deed Value £
+      ['invln_subordinateddeedmarginedsecurityk', 'invln_subordinateddeedmarginedsecurityvalue'],//  Subordinated Deed Margined Security Value
+      ['invln_costoverrunguarantee', 'invln_costoverrunguarantee'],//Cost Overrun Guarantee
+      ['invln_costoverrunvaluek', 'invln_costoverrunvalue'],//Cost Overrun Value £
+      ['invln_costoverrunmarginedsecurityk', 'invln_costoverrunmarginedsecurityvalue'],//  Cost Overrun Margined Security Value
+      ['invln_completionguaranteedescription', 'invln_completionguaranteedescription'],//Completion Guarantee Description
+      ['invln_completionguaranteevaluek', 'invln_completionguaranteevalue'],//Completion Guarantee Value £
+      ['invln_completionguaranteemarginedsecurityk', 'invln_completionguaranteemarginedsecurityvalue'],//  Completion Guarantee Margined Security Value
+      ['invln_interestshortfalldescription', 'invln_interestshortfalldescription'],//Interest Shortfall Description
+      ['invln_interestshortfallvaluek', 'invln_interestshortfallvalue'],//Interest Shortfall Value £
+      ['invln_interestshortfallmarginedsecurityk', 'invln_interestshortfallmarginedsecurityvalue'],//  Interest Shortfall Margined Security Value
+      ['invln_collateralwarrantydescription', 'invln_collateralwarrantydescription'],//Collateral Warranty Description
+      ['invln_collateralwarrantyvalue', 'invln_collateralwarrantyvalue'],//Collateral Warranty Value £
+      ['invln_collateralwarrantymarginatedsecurityvalue', 'invln_collateralwarrantymarginatedsecurityvalue'],//  Collateral Warranty Marginated Security Value
+      ['invln_otherdescription', 'invln_otherdescription'],//Other Description
+      ['invln_othervaluek', 'invln_othervalue'],//Other Value £
+      ['invln_othermarginedsecurityk', 'invln_othermarginedsecurityvalue'],//  Other Margined Security Value
+      ['ownerid', '_ownerid'],
+      ['invln_organisation', '_invln_account'],
+      ['invln_borrowername', '_invln_contact'],
+    ]);
+
+    const dictionaryAccount = new Map<string, string>([
+      ['invln_crr', 'invln_currentcrr'],
+      ['invln_kycrating', 'invln_rating']
+    ]);
+
+    const dictionaryCashFlow = new Map<string, string>([
+      ['invln_loanprincipal', 'invln_loanprincipal'],//Loan(Principal)
+      ['invln_interestmargin', 'invln_interestmargin'],//Interest Margin Number
+      ['invln_interestmarginpercent', 'invln_interestmarginpercent'],//Interest Margin %
+      ['invln_interestmarginvalue', 'invln_interestvalue'], //Interest Value
+      ['invln_baseratenumber', 'invln_baseratenumber'],//Base Rate Number
+      ['invln_baseratepercent', 'invln_baseratepercent'],//Base Rate %
+      ['invln_loanprincipalpercent', 'invln_loanprincipalpercent'],//Loan(Principal) %
+      ['invln_interestandfeespercentage', 'invln_interestandfeespercent'],//Interest and Fees %
+      ['invln_interestandfees', 'invln_interestandfees'],//Interest and Fees £
+      ['invln_nonrechargedfeespercentage', 'invln_nonrechargedfeespercent'],//Non Recharged Fees %
+      ['invln_nonrechargedfees', 'invln_nonrechargedfees'],//Non Recharged Fees £
+      ['invln_totalexposurepercent', 'invln_totalexposurepercent'],//Total Exposure %
+      ['invln_totalexposurek', 'invln_totalexposure'],//Total Exposure £
+      ['invln_borrowerequitycashpercentage', 'invln_borrowerequitycashpercent'],//Borrower Equity Cash %
+      ['invln_borrowerequitycash', 'invln_borrowerequitycash'],//Borrower Equity Cash £
+      ['invln_borrowerequitylandpercent', 'invln_borrowerequitylandpercent'],//Borrower Equity Land %
+      ['invln_borrowerequitylandk', 'invln_borrowerequityland'],//Borrower Equity Land £
+      ['invln_recycledincomepercent', 'invln_recycledincomepercent'],//Recycled Income %
+      ['invln_recycledincomek', 'invln_recycledincome'],//Recycled Income £
+      ['invln_otherdebtpercent', 'invln_otherdebtpercent'],//      Other Debt %
+      ['invln_otherdebtk', 'invln_otherdebt'],//    Other Debt £
+      ['invln_totalfundspercent', 'invln_totalfundspercent'],//      Total Funds %
+      ['invln_totalfundsk', 'invln_totalfunds'],//Total Funds £
+      ['invln_landcostpaidpercent', 'invln_landcostpaidpercent'],//      Land Cost - Paid %
+      ['invln_landcostpaidk', 'invln_landcostpaid'],//      Land Cost - Paid £
+      ['invln_landcostdeferredpercent', 'invln_landcostdeferredpercent'],//      Land Cost - Deferred %
+      ['invln_landcostdeferredk', 'invln_landcostdeferred'],//      Land Cost - Deferred £
+      ['invln_landvaluationupliftpercentage', 'invln_landvaluationupliftpercent'],//     Land Valuation Uplift %
+      ['invln_landvaluationuplift', 'invln_landvaluationuplift'],//    Land Valuation Uplift £
+      ['invln_infrastructurecostspercent', 'invln_infrastructurecostspercent'],//      Infrastructure Costs %
+      ['invln_infrastructurecostsk', 'invln_infrastructurecosts'],//    Infrastructure Costs £
+      ['invln_constructioncostsk', 'invln_constructioncosts'],//   Construction Costs £
+      ['invln_constructioncostspercent', 'invln_constructioncostspercent'],//    Construction Costs %
+      ['invln_prelimcostspercentage', 'invln_prelimcostspercent'],//      Prelim Costs %
+      ['invln_prelimcosts', 'invln_prelimcosts'],//    Prelim Costs £
+      ['invln_s106costspercent', 'invln_s106costspercent'],//      S106 Costs %
+      ['invln_s106costsk', 'invln_s106costs'],//    S106 Costs £
+      ['invln_abnormalspercent', 'invln_abnormalspercent'],//      Abnormals %
+      ['invln_abnormalsk', 'invln_abnormals'],//      Abnormals £
+      ['invln_salescostspercentage', 'invln_salescostspercent'],//      Sales Costs %
+      ['invln_salescosts', 'invln_salescosts'],//    Sales Costs £
+      ['invln_professionalfeespercentage', 'invln_professionalfeespercent'],//      Professional Fees %
+      ['invln_professionalfees', 'invln_professionalfees'],//    Professional Fees £
+      ['invln_financepercent', 'invln_financepercent'],//      Finance %
+      ['invln_financek', 'invln_finance'],//      Finance £
+      ['invln_contingencypercent', 'invln_contingencypercent'],//      Contingency %
+      ['invln_contingencyk', 'invln_contingency'],//      Contingency £
+      ['invln_otherpercent', 'invln_othercostspercent'],//      Other Costs %
+      ['invln_otherk', 'invln_othercosts'],//    Other Costs £
+      ['invln_totalcostspercent', 'invln_totalcostspercent'],//      Total Costs %
+      ['invln_totalcostsk', 'invln_totalcosts'],//    Total Costs £
+      ['invln_totalnounitstobedevelopedunlocked', 'invln_totalnumberofhomes'],//      Total No.Units to be Developed / Unlocked
+      ['invln_grossdevelopmentvaluegdv', 'invln_grossdevelopmentvalue'],//Gross Development Value(GDV)
+      ['invln_developersoverallprofit', 'invln_developersoverallprofitvalue'],//Developer's Overall Profit
+      ['invln_returnonequityroe', 'invln_returnonequityroe'],//Return on Equity(ROE)
+      ['invln_peakfunding', 'invln_peakfunding'],//Peak Funding
+      ['invln_peakfundingdate', 'invln_peakfundingdate'],//Peak Funding Date
+      ['invln_loanrecycledincomeotherdebttocostspeak', 'invln_loanrecycledincomeotherdebttocostspeak'],//Loan + Recycled Income + Other Debt to Costs Peak
+      ['invln_loanrecycledincomeotherdebttocostsdate', 'invln_loanrecycledincomeotherdebttocostdate'],//Loan + Recycled Income + Other Debt to Cost Date
+      ['invln_loanrecycledincomeotherdebttogdvpeak', 'invln_loanotherdebttogdvpeak'],//Loan + Other Debt to GDV Peak
+      ['invln_loanotherdebttogdvpeakdate', 'invln_loanotherdebttogdvdate'],//Loan + Other Debt to GDV Date
+      ['invln_arrangementfee', 'invln_arrangementfee'],//Arrangement Fee
+      ['invln_arrangementfeevalue', 'invln_arrangementfeevalue'], //Arrangement Fee Value
+    ])
+
+    let loanApplication = this.common.getLookupValue('invln_loanapplication')
+    let accountId = null;
+    if (loanApplication != null) {
+      Xrm.WebApi.retrieveRecord('invln_loanapplication', loanApplication.id).then(result => {
+        for (const [key, value] of dictionaryLoans) {
+          try {
+            if (value.startsWith('_')) {
+              this.common.setLookUpValue(key,
+                result[value + "_value@Microsoft.Dynamics.CRM.lookuplogicalname"],
+                result[value + "_value"],
+                result[value + "_value@OData.Community.Display.V1.FormattedValue"]
+              )
+            } else {
+              this.common.setAttributeValue(key, result[value]);
+            }
+          } catch (e) {
+            console.log(e);
+          }
+        }
+
+        console.log(result['invln_securities']);
+        let values = result['invln_securities'].split(',')
+        let osv = values.map(function (x) {
+          return parseInt(x);
+        })
+        this.common.setAttributeValue('invln_securities', osv);
+      })
+    };
+    if (loanApplication != null) {
+      let loans = await Xrm.WebApi.retrieveRecord('invln_loanapplication', loanApplication.id)
+      console.log(loans['_invln_account_value']);
+      if (loans['_invln_account_value'] != null) {
+        Xrm.WebApi.retrieveRecord('account', loans['_invln_account_value']).then(result => {
+          for (const [key, value] of dictionaryAccount) {
+            try {
+              this.common.setAttributeValue(key, result[value]);
+            } catch (e) {
+              console.log(e);
+            }
+          }
+        })
+      }
+      let cashflowSubmition = await Xrm.WebApi.retrieveMultipleRecords("invln_cashflowsubmission",
+        "?$filter=(_invln_loanapplication_value eq " + loanApplication.id + ")&$orderby=invln_dateagreed desc&$top=1")
+      if (cashflowSubmition != null) {
+        for (const [key, value] of dictionaryCashFlow) {
+          try {
+            this.common.setAttributeValue(key, cashflowSubmition.entities[0][value]);
+            console.log(key , cashflowSubmition.entities[0][value]);
+          } catch (e) {
+            console.log(e);
+          }
+        }
+      }
+    }
+  }
+
+  public async blockFieldsForLoansReviewer() {
+    let isReviewer = false;
+    let isTrasactionMenager = false;
+    let reviewerRoleName = "[Loans] Reviewer";
+    let transactionMenagerRoleName = "[Loans] Transaction manager";
+
+    let securityRoles = this.common.getUserSecurityRoles();
+    securityRoles?.forEach(function (value) {
+      if (value.name == reviewerRoleName) isReviewer = true;
+      if (value.name == transactionMenagerRoleName) isTrasactionMenager = true
+      console.log(value.name);
+    });
+
+    let appLookup = <any>this.common.getAttributeValue("invln_loanapplication");
+    let application = await Xrm.WebApi.retrieveRecord("invln_loanapplication", appLookup[0].id);
+    console.log(application.invln_externalstatus)
+
+    if (isReviewer && application.invln_externalstatus != 858110010) { //send for aproval
+      this.common.disableAllFields();
+    };
+
+    var ispStatus = this.common.getAttributeValue("invln_approvalstatus");
+
+    if ((isReviewer || isTrasactionMenager) && application.invln_externalstatus != 858110010 && ispStatus == 858110001) {
+      this.common.disableAllFields();
+    };
+    console.log(ispStatus);
+  };
 
   private hideFirstLegalChargeFields(isDisabled: boolean) {
     this.common.hideControl('invln_firstlegalchargedescription', isDisabled);

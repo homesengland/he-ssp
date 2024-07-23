@@ -88,6 +88,20 @@ public class IntegrationTestBase<TProgram> : IAsyncLifetime
         _fixture.DataBag[key] = data;
     }
 
+    protected T ReturnSharedData<T>(Action<T>? action = null)
+        where T : class, new()
+    {
+        var data = GetSharedDataOrNull<T>(typeof(T).ToString());
+        if (data is null)
+        {
+            data = new T();
+            action?.Invoke(data);
+            SetSharedData(typeof(T).ToString(), data);
+        }
+
+        return data;
+    }
+
     protected T GetSharedData<T>(string key)
     {
         return (T)_fixture.DataBag[key];

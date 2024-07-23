@@ -35,7 +35,7 @@ public class CompleteHomeTypeCommandHandler : HomeTypeCommandHandlerBase, IReque
             return new OperationResult(errors);
         }
 
-        await _homeTypeRepository.Save(homeType, account.SelectedOrganisationId(), cancellationToken);
+        await _homeTypeRepository.Save(homeType, account, cancellationToken);
         return OperationResult.Success();
     }
 }

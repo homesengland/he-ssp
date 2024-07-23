@@ -11,8 +11,10 @@
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)Enums\AccountEnum.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)PortalIntegrationModel\AhgLocalAuthorityDto.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)PortalIntegrationModel\AhpApplicationDto.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)PortalIntegrationModel\AhpAllocationDto.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)PortalIntegrationModel\AhpProjectDto.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)PortalIntegrationModel\AllocationClaimsDto.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)PortalIntegrationModel\AhpApplicationDto.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)PortalIntegrationModel\AhpSiteApplicationDto.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)PortalIntegrationModel\ConsortiumDto.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)PortalIntegrationModel\ConsortiumMemberDto.cs" />
@@ -22,13 +24,16 @@
     <Compile Include="$(MSBuildThisFileDirectory)PortalIntegrationModel\AhpApplicationForSiteDto.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)PortalIntegrationModel\FrontDoorProjectDto.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)PortalIntegrationModel\FrontDoorProjectSiteDto.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)PortalIntegrationModel\GrantDetailsDto.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)PortalIntegrationModel\HomeTypeDto.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)PortalIntegrationModel\LoanApplicationDto.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)PortalIntegrationModel\LocalAuthorityDto.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)PortalIntegrationModel\MilestoneClaimDto.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)PortalIntegrationModel\MilestoneFrameworkItemDto.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)PortalIntegrationModel\OrganizationDetailsDto.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)PortalIntegrationModel\PagedResponseDto.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)PortalIntegrationModel\PagingRequestDto.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)PortalIntegrationModel\PhaseClaimsDto.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)PortalIntegrationModel\ProgrammeDto.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)PortalIntegrationModel\SiteDetailsDto.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)PortalIntegrationModel\SiteDto.cs" />

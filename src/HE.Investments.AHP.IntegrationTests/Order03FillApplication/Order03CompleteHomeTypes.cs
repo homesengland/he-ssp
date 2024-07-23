@@ -27,16 +27,9 @@ public class Order03CompleteHomeTypes : AhpApplicationIntegrationTest
     public Order03CompleteHomeTypes(AhpIntegrationTestFixture fixture, ITestOutputHelper output)
         : base(fixture, output)
     {
-        var homeTypesData = GetSharedDataOrNull<HomeTypesData>(nameof(_homeTypesData));
-        if (homeTypesData is null)
-        {
-            homeTypesData = new HomeTypesData();
-            SetSharedData(nameof(_homeTypesData), homeTypesData);
-        }
+        _homeTypesData = ReturnSharedData<HomeTypesData>();
 
-        _homeTypesData = homeTypesData;
-
-        var schemaInformationData = GetSharedDataOrNull<SchemeInformationData>(nameof(SchemeInformationData));
+        var schemaInformationData = ReturnSharedData<SchemeInformationData>();
         _numberOfHomesPerHomeType = (schemaInformationData?.HousesToDeliver ?? 10) / 2;
     }
 

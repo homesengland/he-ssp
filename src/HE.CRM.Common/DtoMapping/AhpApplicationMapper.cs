@@ -192,6 +192,53 @@ namespace HE.CRM.Common.DtoMapping
             return applicationDtoToReturn;
         }
 
+        public static AhpAllocationDto MapRegularEntityToAhpAlloctionDto(invln_scheme allocation, he_LocalAuthority localAuthority)
+        {
+            var ahpAllocationDtoToReturn = new AhpAllocationDto()
+            {
+                Id = allocation.invln_schemeId.ToString(),
+                Name = allocation.invln_schemename,
+                ReferenceNumber = allocation.invln_applicationid + " (allocationId in future)",
+                LocalAuthority = new LocalAuthorityDto()
+                {
+                    id = localAuthority.Id.ToString(),
+                    name = localAuthority.he_Name,
+                    code = localAuthority.he_GSSCode,
+                },
+                ProgrammeId = allocation.invln_programmelookup?.Id.ToString(),
+                Tenure = allocation.invln_Tenure.Value,
+                Homes = allocation.invln_noofhomes.Value,
+            };
+            return ahpAllocationDtoToReturn;
+        }
+
+        public static AllocationClaimsDto MapToAllocationClaimsDto(invln_scheme allocation, List<PhaseClaimsDto> listOfPhaseClaims, he_LocalAuthority localAuthority) {
+            var allocationClaimsDtoReturn = new AllocationClaimsDto()
+            {
+                Id = allocation.invln_schemeId.ToString(),
+                Name = allocation.invln_schemename,
+                ReferenceNumber = allocation.invln_applicationid + " (allocationId in future)",
+                LocalAuthority = new LocalAuthorityDto()
+                {
+                    id = localAuthority.Id.ToString(),
+                    name = localAuthority.he_Name,
+                    code = localAuthority.he_GSSCode,
+                },
+                ProgrammeId = allocation.invln_programmelookup?.Id.ToString(),
+                Tenure = allocation.invln_Tenure.Value,
+
+                GrantDetails = new GrantDetailsDto()
+                {
+                    TotalGrantAllocated = allocation.invln_TotalGrantAllocated?.Value ?? 0,
+                    AmountPaid = allocation.invln_AmountPaid?.Value ?? 0,
+                    AmountRemaining = allocation.invln_AmountRemaining?.Value ?? 0,
+                },
+
+                ListOfPhaseClaims = listOfPhaseClaims,
+            };
+            return allocationClaimsDtoReturn;
+        }
+
         private static OptionSetValue MapNullableIntToOptionSetValue(int? valueToMap)
         {
             if (valueToMap.HasValue)

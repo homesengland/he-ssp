@@ -39,7 +39,7 @@ namespace HE.CRM.Common.dtomapping
             return ahpProject;
         }
 
-        public static AhpProjectDto MapRegularEntityToDto(invln_ahpproject ahpproject, List<SiteDto> listOfSites = null, List<AhpApplicationDto> listOfApplications = null)
+        public static AhpProjectDto MapRegularEntityToDto(invln_ahpproject ahpproject, List<SiteDto> listOfSites = null, List<AhpApplicationDto> listOfApplications = null, List<AhpAllocationDto> listOfAhpAllocation = null)
         {
             return new AhpProjectDto()
             {
@@ -48,7 +48,8 @@ namespace HE.CRM.Common.dtomapping
                 FrontDoorProjectId = ahpproject.invln_HeProjectId?.Id.ToString(),
                 FrontDoorProjectName = ahpproject.invln_HeProjectId?.Name,
                 ListOfSites = listOfSites,
-                ListOfApplications = listOfApplications
+                ListOfApplications = listOfApplications,
+                ListOfAhpAllocations = listOfAhpAllocation
             };
         }
     }

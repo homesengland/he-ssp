@@ -1,0 +1,54 @@
+trigger: none
+pr: none
+
+pool:
+  vmImage: windows-latest
+
+parameters:
+  - name: deployEnvironmentVariables
+    displayName: Deploy Environment Variables ?
+    type: boolean
+    default: true
+  - name: deployMainSolution
+    displayName: Deploy Main Solution ?
+    type: boolean
+    default: true
+  - name: deployFlowsSolution
+    displayName: Deploy Flows Solution ?
+    type: boolean
+    default: true
+  - name: deployPluginsSolution
+    displayName: Deploy Plugins Solution ?
+    type: boolean
+    default: true
+  - name: deployDataMigration
+    displayName: Migrate Data ?
+    type: boolean
+    default: false
+
+variables:
+  solution: "**/*.sln"
+  buildPlatform: "Any CPU"
+  buildConfiguration: "Release"
+  branch: "master"
+
+resources:
+  repositories:
+    - repository: he-invst-deployment
+      type: git
+      name: "Investments Programme/he-invst-deployment"
+      ref: "development_R3"
+  pipelines:
+    - pipeline: BuildPipeline
+      source: "Invst - R3 - CRM - Build"
+      trigger: none
+
+stages:
+  - template: crm-deployment-pipelines/invst-R3-crm-deploy-nonprod.yml@he-invst-deployment
+    parameters:
+      artifactLocationPipeline: BuildPipeline
+      deployEnvironmentVariables: "${{ parameters.deployEnvironmentVariables }}"
+      deployMainSolution: "${{ parameters.deployMainSolution }}"
+      deployFlowsSolution: "${{ parameters.deployFlowsSolution }}"
+      deployPluginsSolution: "${{ parameters.deployPluginsSolution }}"
+      deployDataMigration: "${{ parameters.deployDataMigration }}"

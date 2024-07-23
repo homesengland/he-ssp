@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+<PropertyGroup>
+  <TargetFramework>net8.0</TargetFramework>
+</PropertyGroup>
+
+<ItemGroup>
+  <PackageReference Include="MediatR" Version="12.1.1"/>
+</ItemGroup>
+
+<ItemGroup>
+  <ProjectReference Include="..\HE.Investment.AHP.Contract\HE.Investment.AHP.Contract.csproj" />
+  <ProjectReference Include="..\HE.Investment.AHP.Domain\HE.Investment.AHP.Domain.csproj" />
+  <ProjectReference Include="..\HE.Investments.AHP.Allocation.Contract\HE.Investments.AHP.Allocation.Contract.csproj" />
+  <ProjectReference Include="..\HE.Investments.Account.Shared\HE.Investments.Account.Shared.csproj"/>
+  <ProjectReference Include="..\HE.Investments.Programme.Contract\HE.Investments.Programme.Contract.csproj" />
+</ItemGroup>
+
+
+</Project>

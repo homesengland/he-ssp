@@ -22,7 +22,8 @@ public class ProjectApplicationListTests : AhpViewTestBase
             "Carq's project",
             "Affordable Homes Programme Continuous Market Engagement 2021-2026",
             "Organisation Name",
-            PaginationResult([]),
+            ApplicationsPaginationResult([]),
+            AllocationsPaginationResult([]),
             false);
 
         // when
@@ -44,7 +45,8 @@ public class ProjectApplicationListTests : AhpViewTestBase
             "Carq's project",
             "Affordable Homes Programme Continuous Market Engagement 2021-2026",
             "Organisation Name",
-            PaginationResult([application1, application2,]),
+            ApplicationsPaginationResult([application1, application2,]),
+            AllocationsPaginationResult([]),
             false);
 
         // when
@@ -75,5 +77,7 @@ public class ProjectApplicationListTests : AhpViewTestBase
             .HasLinkButton("View");
     }
 
-    private PaginationResult<ApplicationProjectModel> PaginationResult(IList<ApplicationProjectModel> items) => new(items, 1, 10, 100);
+    private PaginationResult<ApplicationProjectModel> ApplicationsPaginationResult(IList<ApplicationProjectModel> items) => new(items, 1, 10, 100);
+
+    private PaginationResult<AllocationProjectModel> AllocationsPaginationResult(IList<AllocationProjectModel> items) => new(items, 1, 10, 100);
 }

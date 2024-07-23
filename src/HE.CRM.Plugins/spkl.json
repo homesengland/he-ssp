@@ -2,21 +2,21 @@
   "plugins": [
     {
       "profile": "register",
-      "solution": "InvestmentsLoansPlugins",
+      "solution": "InvestmentsPlugins_R3",
       "assemblypath": "bin\\Debug",
       "classRegex": "((public( sealed)? class (?'class'[\\w]*)[\\W]*?)((?'plugin':[\\W]*?((IPlugin)|(PluginBase)|(Plugin)))|(?'wf':[\\W]*?CodeActivity)))",
       "excludePluginSteps": false
     },
     {
       "profile": "release",
-      "solution": "InvestmentsLoansPlugins",
+      "solution": "InvestmentsPlugins_R3",
       "assemblypath": "bin\\Release",
       "classRegex": "((public( sealed)? class (?'class'[\\w]*)[\\W]*?)((?'plugin':[\\W]*?((IPlugin)|(PluginBase)|(Plugin)))|(?'wf':[\\W]*?CodeActivity)))",
       "excludePluginSteps": false
     },
     {
       "assemblypath": "bin\\Debug",
-      "solution": "InvestmentsLoansPlugins",
+      "solution": "InvestmentsPlugins_R3",
       "classRegex": "((public( sealed)? class (?'class'[\\w]*)[\\W]*?)((?'plugin':[\\W]*?((IPlugin)|(PluginBase)|(Plugin)))|(?'wf':[\\W]*?CodeActivity)))",
       "excludePluginSteps": true
     }

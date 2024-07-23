@@ -23,6 +23,11 @@ public static class HttpRequestExtensions
         return request.Form["action"] == GenericMessages.SaveAndReturn;
     }
 
+    public static bool IsCancelAndReturnAction(this HttpRequest request)
+    {
+        return request.Form["action"] == GenericMessages.CancelAndReturn;
+    }
+
     public static bool TryGetWorkflowQueryParameter(this HttpRequest httpRequest, out string workflow)
     {
         if (QueryHelpers.ParseQuery(httpRequest.QueryString.Value).TryGetValue("workflow", out var lastEncodedWorkflow))

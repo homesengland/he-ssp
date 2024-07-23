@@ -4,7 +4,6 @@ using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investments.Common.CRM.Model;
 using HE.Investments.Common.CRM.Services;
 using HE.Investments.Common.Extensions;
-using HE.Investments.Common.User;
 
 namespace HE.Investment.AHP.Domain.Delivery.Crm;
 
@@ -43,12 +42,9 @@ public class DeliveryPhaseCrmContext : IDeliveryPhaseCrmContext
 
     private readonly ICrmService _service;
 
-    private readonly IUserContext _userContext;
-
-    public DeliveryPhaseCrmContext(ICrmService service, IUserContext userContext)
+    public DeliveryPhaseCrmContext(ICrmService service)
     {
         _service = service;
-        _userContext = userContext;
     }
 
     public async Task<IList<DeliveryPhaseDto>> GetAllOrganisationDeliveryPhases(
@@ -70,11 +66,12 @@ public class DeliveryPhaseCrmContext : IDeliveryPhaseCrmContext
     public async Task<IList<DeliveryPhaseDto>> GetAllUserDeliveryPhases(
         string applicationId,
         string organisationId,
+        string userId,
         CancellationToken cancellationToken)
     {
         var request = new invln_getmultipledeliveryphaseRequest
         {
-            invln_userId = _userContext.UserGlobalId,
+            invln_userId = userId,
             invln_organisationId = organisationId.TryToGuidAsString(),
             invln_applicationId = applicationId.ToGuidAsString(),
             invln_fieldstoretrieve = DeliveryPhaseCrmFields,
@@ -105,11 +102,12 @@ public class DeliveryPhaseCrmContext : IDeliveryPhaseCrmContext
         string applicationId,
         string deliveryPhaseId,
         string organisationId,
+        string userId,
         CancellationToken cancellationToken)
     {
         var request = new invln_getsingledeliveryphaseRequest
         {
-            invln_userid = _userContext.UserGlobalId,
+            invln_userid = userId,
             invln_organisationId = organisationId.TryToGuidAsString(),
             invln_applicationId = applicationId.ToGuidAsString(),
             invln_deliveryPhaseId = deliveryPhaseId.ToGuidAsString(),
@@ -119,11 +117,11 @@ public class DeliveryPhaseCrmContext : IDeliveryPhaseCrmContext
         return await GetSingle(request, cancellationToken);
     }
 
-    public async Task Remove(string applicationId, string deliveryPhaseId, string organisationId, CancellationToken cancellationToken)
+    public async Task Remove(string applicationId, string deliveryPhaseId, string organisationId, string userId, CancellationToken cancellationToken)
     {
         var request = new invln_deletedeliveryphaseRequest
         {
-            invln_userId = _userContext.UserGlobalId,
+            invln_userId = userId,
             invln_organisationId = organisationId.TryToGuidAsString(),
             invln_applicationId = applicationId.ToGuidAsString(),
             invln_deliveryPhaseId = deliveryPhaseId.ToGuidAsString(),
@@ -135,12 +133,12 @@ public class DeliveryPhaseCrmContext : IDeliveryPhaseCrmContext
             cancellationToken);
     }
 
-    public async Task<string> Save(DeliveryPhaseDto deliveryPhase, string organisationId, CancellationToken cancellationToken)
+    public async Task<string> Save(DeliveryPhaseDto deliveryPhase, string organisationId, string userId, CancellationToken cancellationToken)
     {
         var request = new invln_setdeliveryphaseRequest
         {
             invln_organisationId = organisationId.TryToGuidAsString(),
-            invln_userId = _userContext.UserGlobalId,
+            invln_userId = userId,
             invln_applicationId = deliveryPhase.applicationId.ToGuidAsString(),
             invln_deliveryPhase = JsonSerializer.Serialize(deliveryPhase, _serializerOptions),
             invln_fieldstoset = DeliveryPhaseCrmFields,

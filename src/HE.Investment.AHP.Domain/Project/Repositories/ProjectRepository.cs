@@ -53,7 +53,7 @@ public class ProjectRepository : IProjectRepository
         }
     }
 
-    public async Task<AhpProjectApplications> GetProjectApplications(FrontDoorProjectId id, ConsortiumUserAccount userAccount, CancellationToken cancellationToken)
+    public async Task<AhpProjectOverview> GetProjectOverview(FrontDoorProjectId id, ConsortiumUserAccount userAccount, CancellationToken cancellationToken)
     {
         var project = await _projectCrmContext.GetProject(
             id.ToGuidAsString(),
@@ -62,22 +62,11 @@ public class ProjectRepository : IProjectRepository
             userAccount.Consortium.GetConsortiumIdAsString(),
             cancellationToken);
 
-        var applications = project.ListOfApplications?
-            .OrderByDescending(x => x.lastExternalModificationOn)
-            .Select(x => new AhpProjectApplication(
-                AhpApplicationId.From(x.id),
-                new ApplicationName(x.name),
-                AhpApplicationStatusMapper.MapToPortalStatus(x.applicationStatus),
-                new SchemeFunding((int?)x.fundingRequested, x.noOfHomes),
-                ApplicationTenureMapper.ToDomain(x.tenure)!.Value,
-                x.lastExternalModificationOn,
-                GetSiteLocalAuthority(x, project.ListOfSites)))
-            .ToList();
-
-        return new AhpProjectApplications(
+        return new AhpProjectOverview(
             id,
             new AhpProjectName(project.AhpProjectName),
-            applications);
+            MapAhpApplications(project),
+            MapAhpAllocation(project));
     }
 
     public async Task<AhpProjectSites> GetProjectSites(FrontDoorProjectId id, ConsortiumUserAccount userAccount, CancellationToken cancellationToken)
@@ -163,9 +152,37 @@ public class ProjectRepository : IProjectRepository
         }).ToList() ?? [];
     }
 
-    private string? GetSiteLocalAuthority(AhpApplicationDto application, List<SiteDto> sites)
+    private string? GetSiteLocalAuthority(string siteId, List<SiteDto> sites)
     {
-        var site = sites.Find(x => x.id == application.siteId);
+        var site = sites.Find(x => x.id == siteId);
         return site?.localAuthority.name;
+    }
+
+    private List<AhpProjectApplication>? MapAhpApplications(AhpProjectDto project)
+    {
+        return project.ListOfApplications?
+            .OrderByDescending(x => x.lastExternalModificationOn)
+            .Select(x => new AhpProjectApplication(
+                AhpApplicationId.From(x.id),
+                new ApplicationName(x.name),
+                AhpApplicationStatusMapper.MapToPortalStatus(x.applicationStatus),
+                new SchemeFunding((int?)x.fundingRequested, x.noOfHomes),
+                ApplicationTenureMapper.ToDomain(x.tenure)!.Value,
+                x.lastExternalModificationOn,
+                GetSiteLocalAuthority(x.siteId, project.ListOfSites)))
+            .ToList();
+    }
+
+    private List<AhpProjectAllocation>? MapAhpAllocation(AhpProjectDto project)
+    {
+        return project.ListOfAhpAllocations?
+            .Select(x => new AhpProjectAllocation(
+                x.Id,
+                x.Name,
+                x.Homes,
+                ApplicationTenureMapper.ToDomain(x.Tenure)!.Value,
+                x.LocalAuthority.name,
+                null))
+            .ToList();
     }
 }

@@ -26,6 +26,8 @@ COPY ["HE.Investments.Account.Contract/HE.Investments.Account.Contract.csproj", 
 COPY ["HE.Investments.Account.Shared/HE.Investments.Account.Shared.csproj", "HE.Investments.Account.Shared/"]
 COPY ["HE.Investments.AHP.Consortium.Contract/HE.Investments.AHP.Consortium.Contract.csproj", "HE.Investments.AHP.Consortium.Contract/"]
 COPY ["HE.Investments.AHP.Consortium.Domain/HE.Investments.AHP.Consortium.Domain.csproj", "HE.Investments.AHP.Consortium.Domain/"]
+COPY ["HE.Investments.AHP.Allocation.Contract/HE.Investments.AHP.Allocation.Contract.csproj", "HE.Investments.AHP.Allocation.Contract/"]
+COPY ["HE.Investments.AHP.Allocation.Domain/HE.Investments.AHP.Allocation.Domain.csproj", "HE.Investments.AHP.Allocation.Domain/"]
 COPY ["HE.Investments.Api/HE.Investments.Api.csproj", "HE.Investments.Api/"]
 COPY ["HE.Investments.Common/HE.Investments.Common.csproj", "HE.Investments.Common/"]
 COPY ["HE.Investments.Common.Contract/HE.Investments.Common.Contract.csproj", "HE.Investments.Common.Contract/"]

@@ -1,0 +1,38 @@
+trigger: none
+pr: none
+
+pool:
+  vmImage: windows-latest
+
+parameters:
+  - name: exportLoans
+    displayName: Export Loans data ?
+    type: boolean
+    default: false
+  - name: exportAhp
+    displayName: Export Ahp data ?
+    type: boolean
+    default: false
+  - name: exportInvstR3
+    displayName: Export Invst R3 data ?
+    type: boolean
+    default: false
+  - name: commitToRepo
+    displayName: Commit data files to repo ?
+    type: boolean
+    default: false
+
+resources:
+  repositories:
+    - repository: he-invst-deployment
+      type: git
+      name: "Investments Programme/he-invst-deployment"
+      ref: "development_R3"
+
+stages:
+  - template: crm-deployment-pipelines/crm-export-data.yml@he-invst-deployment
+    parameters:
+      exportLoans: "${{ parameters.exportLoans }}"
+      exportAhp: "${{ parameters.exportAhp }}"
+      exportInvstR3: "${{ parameters.exportInvstR3 }}"
+      commitToRepo: "${{ parameters.commitToRepo }}"

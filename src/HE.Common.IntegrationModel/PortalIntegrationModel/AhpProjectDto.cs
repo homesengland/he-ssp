@@ -11,5 +11,6 @@ namespace HE.Common.IntegrationModel.PortalIntegrationModel
         public string FrontDoorProjectName { get; set; }        
         public List<SiteDto> ListOfSites { get; set; }
         public List<AhpApplicationDto> ListOfApplications { get; set; }
+        public List<AhpAllocationDto> ListOfAhpAllocations { get; set; }
     }
 }

@@ -1,0 +1,56 @@
+using HE.Investment.AHP.Contract.Application;
+using HE.Investment.AHP.Contract.Delivery.Enums;
+using HE.Investments.AHP.Allocation.Contract;
+using HE.Investments.AHP.Allocation.Contract.Claims;
+using HE.Investments.AHP.Allocation.Contract.Claims.Enum;
+using HE.Investments.AHP.Allocation.Domain.Claims.Entities;
+using HE.Investments.AHP.Allocation.Domain.Claims.ValueObjects;
+using HE.Investments.Common.Tests.TestData;
+using HE.Investments.Programme.Contract;
+using HE.Investments.Programme.Contract.Enums;
+using HE.Investments.TestsUtils.TestFramework;
+using AllocationBasicInfo = HE.Investments.AHP.Allocation.Domain.Allocation.ValueObjects.AllocationBasicInfo;
+using MilestoneClaim = HE.Investments.AHP.Allocation.Domain.Claims.ValueObjects.MilestoneClaim;
+
+namespace HE.Investments.AHP.Allocation.Domain.Tests.TestObjectBuilders;
+
+public class PhaseEntityTestBuilder : TestObjectBuilder<PhaseEntityTestBuilder, PhaseEntity>
+{
+    private PhaseEntityTestBuilder(PhaseEntity item)
+        : base(item)
+    {
+    }
+
+    protected override PhaseEntityTestBuilder Builder => this;
+
+    public static PhaseEntityTestBuilder New() => new(new(
+        PhaseId.From(GuidTestData.GuidTwo.ToString()),
+        new AllocationBasicInfo(
+            AllocationId.From(GuidTestData.GuidOne.ToString()),
+            "Allocation",
+            "G00001",
+            "Reading",
+            new Programme.Contract.Programme(
+                ProgrammeId.From("d5fe3baa-eeae-ee11-a569-0022480041cf"),
+                "Ahp",
+                "ProgrammeType Ahp",
+                true,
+                ProgrammeType.Ahp,
+                new DateRange(new DateOnly(2021, 1, 1), new DateOnly(2022, 1, 1)),
+                new DateRange(new DateOnly(2021, 1, 1), new DateOnly(2022, 1, 1)),
+                new DateRange(new DateOnly(2021, 1, 1), new DateOnly(2022, 1, 1)),
+                new DateRange(new DateOnly(2021, 1, 1), new DateOnly(2022, 1, 1))),
+            Tenure.AffordableRent),
+        new PhaseName("Phase"),
+        new NumberOfHomes(100),
+        new BuildActivity(BuildActivityType.WorksOnly),
+        null,
+        null,
+        MilestoneClaimTestBuilder.New().WithType(MilestoneType.Completion).Build()));
+
+    public PhaseEntityTestBuilder WithAcquisitionMilestone(MilestoneClaim? value) => SetProperty(x => x.AcquisitionMilestone, value);
+
+    public PhaseEntityTestBuilder WithStartOnSiteMilestone(MilestoneClaim? value) => SetProperty(x => x.StartOnSiteMilestone, value);
+
+    public PhaseEntityTestBuilder WithCompletionMilestone(MilestoneClaim value) => SetProperty(x => x.CompletionMilestone, value);
+}
