@@ -2,7 +2,7 @@
   "plugins": [
     {
       "profile": "register",
-      "solution": "InvestmentsPlugins_R3",
+      "solution": "AHPPlugins",
       "assemblypath": "bin\\Debug",
       "classRegex": "((public( sealed)? class (?'class'[\\w]*)[\\W]*?)((?'plugin':[\\W]*?((IPlugin)|(PluginBase)|(Plugin)))|(?'wf':[\\W]*?CodeActivity)))",
       "excludePluginSteps": false
@@ -10,14 +10,14 @@
 
     {
       "profile": "release",
-      "solution": "InvestmentsPlugins_R3",
+      "solution": "AHPPlugins",
       "assemblypath": "bin\\Release",
       "classRegex": "((public( sealed)? class (?'class'[\\w]*)[\\W]*?)((?'plugin':[\\W]*?((IPlugin)|(PluginBase)|(Plugin)))|(?'wf':[\\W]*?CodeActivity)))",
       "excludePluginSteps": false
     },
     {
       "assemblypath": "bin\\Debug",
-      "solution": "InvestmentsPlugins_R3",
+      "solution": "AHPPlugins",
       "classRegex": "((public( sealed)? class (?'class'[\\w]*)[\\W]*?)((?'plugin':[\\W]*?((IPlugin)|(PluginBase)|(Plugin)))|(?'wf':[\\W]*?CodeActivity)))",
       "excludePluginSteps": true
     }
