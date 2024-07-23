@@ -1,6 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using HE.Investment.AHP.WWW.Views.AllocationClaims.Const;
 using HE.Investments.AHP.IntegrationTests.Framework;
+using HE.Investments.AHP.IntegrationTests.Order02FillSite.Data;
 using HE.Investments.AHP.IntegrationTests.Order03FillApplication.Data;
 using HE.Investments.AHP.IntegrationTests.Order03FillApplication.Data.DeliveryPhases;
 using HE.Investments.AHP.IntegrationTests.Order03FillApplication.Data.HomeTypes;
@@ -20,15 +21,12 @@ public class Order01PrepareAllocation : AhpIntegrationTest
         : base(fixture, output)
     {
         SchemeInformationData = ReturnSharedData<SchemeInformationData>();
-
         FinancialDetailsData = ReturnSharedData<FinancialDetailsData>(data =>
         {
             var schemeInformationData = GetSharedDataOrNull<SchemeInformationData>(nameof(SchemeInformationData));
             data.ProvideSchemeFunding(schemeInformationData?.RequiredFunding ?? 0m);
         });
-
         HomeTypesData = ReturnSharedData<HomeTypesData>();
-
         DeliveryPhasesData = ReturnSharedData<DeliveryPhasesData>();
     }
 
@@ -54,6 +52,7 @@ public class Order01PrepareAllocation : AhpIntegrationTest
         DeliveryPhasesData.OffTheShelfDeliveryPhase.PopulateAllData();
         var allocationId = await AhpDataManipulator.CreateAhpAllocation(
             LoginData,
+            SiteData,
             ApplicationData,
             FinancialDetailsData,
             SchemeInformationData,
