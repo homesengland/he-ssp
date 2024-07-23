@@ -12,6 +12,6 @@ namespace HE.CRM.AHP.Plugins.Services.Application
     {
         AllocationClaimsDto GetAllocationWithClaims(string externalContactId, Guid accountId, Guid allocationId);
 
-        void CalculateGrantDetails(Guid allocationId, Guid organisationId);
+        void CalculateGrantDetails(Guid allocationId);
     }
 }

@@ -34,7 +34,7 @@ namespace HE.CRM.AHP.Plugins.Services.Application
             _heLocalAuthorityRepository = CrmRepositoriesFactory.Get<IHeLocalAuthorityRepository>();
         }
 
-        public void CalculateGrantDetails(Guid allocationId, Guid organisationId)
+        public void CalculateGrantDetails(Guid allocationId)
         {
             Logger.Trace($"{nameof(AllocationService)}.{nameof(CalculateGrantDetails)}, allocationId: {allocationId}");
             var onlyApprovedAllocation = true;
@@ -45,7 +45,7 @@ namespace HE.CRM.AHP.Plugins.Services.Application
                 invln_Claim.Fields.invln_AmountApportionedtoMilestone,
                 invln_Claim.Fields.invln_Milestone,
             };
-            var allocation = _ahpApplicationRepository.GetAllocation(allocationId, organisationId);
+            var allocation = _ahpApplicationRepository.GetById(allocationId);
             var claims = _claimRepository.GetClaimsForAllocation(allocationId, onlyApprovedAllocation, claimColumns);
 
             var totalGrantAllocated = allocation.invln_fundingrequired;
