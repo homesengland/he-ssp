@@ -38,6 +38,38 @@ namespace HE.CRM.AHP.Plugins.Services.Application
             _heLocalAuthorityRepository = CrmRepositoriesFactory.Get<IHeLocalAuthorityRepository>();
         }
 
+        public void CalculateGrantDetails(Guid allocationId)
+        {
+            Logger.Trace($"{nameof(AllocationService)}.{nameof(CalculateGrantDetails)}, allocationId: {allocationId}");
+            var onlyApprovedAllocation = true;
+
+            var claimColumns = new[]
+            {
+                invln_Claim.Fields.invln_Milestone,
+                invln_Claim.Fields.invln_AmountApportionedtoMilestone,
+                invln_Claim.Fields.invln_Milestone,
+            };
+            var allocation = _ahpApplicationRepository.GetById(allocationId);
+            var claims = _claimRepository.GetClaimsForAllocation(allocationId, onlyApprovedAllocation, claimColumns);
+            Logger.Trace($"Found {claims.Count()} claims.");
+            var totalGrantAllocated = allocation.invln_fundingrequired;
+            var amountPaid = default(decimal);
+
+            foreach (var claim in claims)
+            {
+                amountPaid += claim.invln_AmountApportionedtoMilestone?.Value ?? 0;
+            }
+            var amountRemaining = totalGrantAllocated.Value - amountPaid;
+
+            _ahpApplicationRepository.Update(
+                new invln_scheme()
+                {
+                    Id = allocation.Id,
+                    invln_TotalGrantAllocated = totalGrantAllocated,
+                    invln_AmountPaid = new Money(amountPaid),
+                    invln_AmountRemaining = new Money(amountRemaining)
+                });
+        }
 
         public AllocationClaimsDto GetAllocationWithClaims(string externalContactId, Guid accountId, Guid allocationId)
         {
