@@ -233,6 +233,12 @@ namespace HE.CRM.Common.Repositories.Implementations
             DeliveryPhase.Columns.AddColumns(
                 invln_DeliveryPhase.Fields.invln_phasename,
                 invln_DeliveryPhase.Fields.invln_DeliveryPhaseId,
+                invln_DeliveryPhase.Fields.invln_Application,
+                invln_DeliveryPhase.Fields.invln_NoofHomes,
+                invln_DeliveryPhase.Fields.invln_nbrh,
+                invln_DeliveryPhase.Fields.invln_rehabactivitytype,
+                invln_DeliveryPhase.Fields.invln_buildactivitytype,
+
 
                 invln_DeliveryPhase.Fields.invln_acquisitiondate,
                 invln_DeliveryPhase.Fields.invln_AcquisitionValue,
@@ -250,7 +256,6 @@ namespace HE.CRM.Common.Repositories.Implementations
                 invln_DeliveryPhase.Fields.invln_completionmilestoneclaimdate
 
                 );
-            //DeliveryPhase.LinkCriteria.AddCondition(invln_DeliveryPhase.Fields.invln_DeliveryPhaseId, ConditionOperator.Equal, deliveryPhase_invln_deliveryphaseid);
             var ClaimAcquisition = DeliveryPhase.AddLink(
                 invln_Claim.EntityLogicalName,
                 invln_DeliveryPhase.Fields.invln_DeliveryPhaseId,
@@ -260,7 +265,15 @@ namespace HE.CRM.Common.Repositories.Implementations
             ClaimAcquisition.Columns.AddColumns(
                 invln_Claim.Fields.invln_ClaimId,
                 invln_Claim.Fields.invln_Milestone,
-                invln_Claim.Fields.invln_Name);
+                invln_Claim.Fields.invln_Name,
+                invln_Claim.Fields.StatusCode,
+                invln_Claim.Fields.invln_AmountApportionedtoMilestone,
+                invln_Claim.Fields.invln_PercentageofGrantApportionedtoThisMilestone,
+                invln_Claim.Fields.invln_MilestoneDate,
+                invln_Claim.Fields.invln_ClaimSubmissionDate,
+                invln_Claim.Fields.invln_IncurredCosts,
+                invln_Claim.Fields.invln_RequirementsConfirmation,
+                invln_Claim.Fields.invln_ExternalStatus);
             ClaimAcquisition.LinkCriteria.AddCondition(invln_Claim.Fields.invln_Milestone, ConditionOperator.Equal, (int)invln_Milestone.Acquisition);
             var ClaimSoS = DeliveryPhase.AddLink(
                 invln_Claim.EntityLogicalName,
@@ -271,7 +284,15 @@ namespace HE.CRM.Common.Repositories.Implementations
             ClaimSoS.Columns.AddColumns(
                 invln_Claim.Fields.invln_ClaimId,
                 invln_Claim.Fields.invln_Milestone,
-                invln_Claim.Fields.invln_Name);
+                invln_Claim.Fields.invln_Name,
+                invln_Claim.Fields.StatusCode,
+                invln_Claim.Fields.invln_AmountApportionedtoMilestone,
+                invln_Claim.Fields.invln_PercentageofGrantApportionedtoThisMilestone,
+                invln_Claim.Fields.invln_MilestoneDate,
+                invln_Claim.Fields.invln_ClaimSubmissionDate,
+                invln_Claim.Fields.invln_IncurredCosts,
+                invln_Claim.Fields.invln_RequirementsConfirmation,
+                invln_Claim.Fields.invln_ExternalStatus);
             ClaimSoS.LinkCriteria.AddCondition(invln_Claim.Fields.invln_Milestone, ConditionOperator.Equal, (int)invln_Milestone.SoS);
             var ClaimPC = DeliveryPhase.AddLink(
                 invln_Claim.EntityLogicalName,
@@ -282,7 +303,15 @@ namespace HE.CRM.Common.Repositories.Implementations
             ClaimPC.Columns.AddColumns(
                 invln_Claim.Fields.invln_ClaimId,
                 invln_Claim.Fields.invln_Milestone,
-                invln_Claim.Fields.invln_Name);
+                invln_Claim.Fields.invln_Name,
+                invln_Claim.Fields.StatusCode,
+                invln_Claim.Fields.invln_AmountApportionedtoMilestone,
+                invln_Claim.Fields.invln_PercentageofGrantApportionedtoThisMilestone,
+                invln_Claim.Fields.invln_MilestoneDate,
+                invln_Claim.Fields.invln_ClaimSubmissionDate,
+                invln_Claim.Fields.invln_IncurredCosts,
+                invln_Claim.Fields.invln_RequirementsConfirmation,
+                invln_Claim.Fields.invln_ExternalStatus);
             ClaimPC.LinkCriteria.AddCondition(invln_Claim.Fields.invln_Milestone, ConditionOperator.Equal, (int)invln_Milestone.PC);
             var con = query.AddLink(Contact.EntityLogicalName, invln_scheme.Fields.invln_contactid, Contact.Fields.ContactId);
             con.EntityAlias = "con";

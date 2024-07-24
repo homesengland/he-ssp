@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Xml.Linq;
 using DataverseModel;
+using HE.Base.Common.Extensions;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using Microsoft.Xrm.Sdk;
 
@@ -102,24 +104,31 @@ namespace HE.CRM.Common.DtoMapping
             return deliveryPhase;
         }
 
-
-        public static PhaseClaimsDto MapToPhaseClaimsDto(invln_DeliveryPhase deliveryPhase, MilestoneClaimDto AcquisitionDto, MilestoneClaimDto SoSDto, MilestoneClaimDto PCDto)
+        public static PhaseClaimsDto MapToPhaseClaimsDto(Entity recordData, MilestoneClaimDto AcquisitionDto, MilestoneClaimDto SoSDto, MilestoneClaimDto PCDto)
         {
             var result = new PhaseClaimsDto()
             {
-                Id = deliveryPhase.Id.ToString(),
-                AllocationId = deliveryPhase.invln_Application.Id.ToString(),
-                Name = deliveryPhase.invln_phasename,
-                NumberOfHomes = deliveryPhase.invln_NoofHomes.Value,
-                BuildActivityType = deliveryPhase.invln_nbrh.Value == true /*Rehab*/ ? deliveryPhase.invln_rehabactivitytype.Value : /*New*/deliveryPhase.invln_buildactivitytype.Value,
+                Id = recordData.GetAliasedAttributeValue<Guid>("DeliveryPhase", invln_DeliveryPhase.Fields.invln_DeliveryPhaseId).ToString(),
+                AllocationId = recordData.GetAliasedAttributeValue<EntityReference>("DeliveryPhase", invln_DeliveryPhase.Fields.invln_Application).Id.ToString(),
+                Name = recordData.GetAliasedAttributeValue<string>("DeliveryPhase", invln_DeliveryPhase.Fields.invln_phasename),
+                NumberOfHomes = recordData.GetAliasedAttributeValue<int?>("DeliveryPhase", invln_DeliveryPhase.Fields.invln_NoofHomes).Value,
                 AcquisitionMilestone = AcquisitionDto,
                 StartOnSiteMilestone = SoSDto,
                 CompletionMilestone = PCDto,
             };
+
+            if (recordData.GetAliasedAttributeValue<bool?>("DeliveryPhase", invln_DeliveryPhase.Fields.invln_nbrh).Value == true) /*Rehab*/
+            {
+                result.RehabBuildActivityType = recordData.GetAliasedAttributeValue<OptionSetValue>("DeliveryPhase", invln_DeliveryPhase.Fields.invln_rehabactivitytype).Value;
+            }
+            else /*New*/
+            {
+                result.NewBuildActivityType = recordData.GetAliasedAttributeValue<OptionSetValue>("DeliveryPhase", invln_DeliveryPhase.Fields.invln_buildactivitytype).Value;
+            }
+
+
             return result;
         }
-
-
 
         private static IList<invln_homesindeliveryphase> MapHomesInDeliveryPhase(DeliveryPhaseDto deliveryPhaseDto)
         {

@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.DirectoryServices.ActiveDirectory;
+using System.IdentityModel.Claims;
 using System.Linq;
+using System.Security.Claims;
 using System.Security.Cryptography.Xml;
 using System.Text;
 using System.Text.Json;
@@ -107,46 +109,54 @@ namespace HE.CRM.AHP.Plugins.Services.Application
             TracingService.Trace("Prepare listOfPhaseClaims");
             var listOfPhaseClaims = new List<PhaseClaimsDto>();
 
-            //Get List of DeliveryPhase for Allocation
-            TracingService.Trace("Get list of DeliveryPhase");
-            var listOfDeliveryPhase = _deliveryPhaseRepository.GetDeliveryPhasesForAllocation(allocation.Id);
+            //Get List of DeliveryPhase with Claims for Allocation
+            var dataFromCrm = _ahpApplicationRepository.GetAllocationWithDeliveryPhaseAndClaims(externalContactId, accountId, allocationId, Guid.Empty).Entities;
 
-            foreach ( var deliveryPhase in listOfDeliveryPhase)
+            foreach (var recordData in dataFromCrm)
             {
-                TracingService.Trace($"Delivery Phase ID : {deliveryPhase.Id}");
-                //Get Claims for DeliveryPhase
-                TracingService.Trace("Get claimAcquisition");
-                var claimAcquisition = _claimRepository.GetClaimForAllocationDeliveryPhase(deliveryPhase.Id, (int)invln_Milestone.Acquisition);
-                TracingService.Trace("Get claimSoS");
-                var claimSoS = _claimRepository.GetClaimForAllocationDeliveryPhase(deliveryPhase.Id, (int)invln_Milestone.SoS);
-                TracingService.Trace("Get claimPC");
-                var claimPC = _claimRepository.GetClaimForAllocationDeliveryPhase(deliveryPhase.Id, (int)invln_Milestone.PC);
+                var deliveryPhaseId = recordData.GetAliasedAttributeValue<Guid>("DeliveryPhase", invln_DeliveryPhase.Fields.invln_DeliveryPhaseId);
+                TracingService.Trace($"Delivery Phase ID : {deliveryPhaseId}");
 
-                if (claimAcquisition == null)
+                var claimAcquisitionId = recordData.GetAliasedAttributeValue<Guid>("ClaimAcquisition", invln_Claim.Fields.invln_ClaimId);
+                var claimSoSId = recordData.GetAliasedAttributeValue<Guid>("ClaimSoS", invln_Claim.Fields.invln_ClaimId);
+                var claimPCId = recordData.GetAliasedAttributeValue<Guid>("ClaimPC", invln_Claim.Fields.invln_ClaimId);
+
+                if (claimAcquisitionId == Guid.Empty)
                 {
                     TracingService.Trace("claimAcquisition is Null");
                 }
-                if (claimSoS == null)
+                else
+                {
+                    TracingService.Trace($"claimAcquisition is {claimAcquisitionId}");
+                }
+                if (claimSoSId == Guid.Empty)
                 {
                     TracingService.Trace("claimSoS is Null");
                 }
-                if (claimPC == null)
+                else
+                {
+                    TracingService.Trace($"claimSoSId is {claimSoSId}");
+                }
+                if (claimPCId == Guid.Empty)
                 {
                     TracingService.Trace("claimPC is Null");
                 }
-
+                else
+                {
+                    TracingService.Trace($"claimPCId is {claimPCId}");
+                }
 
                 //Mapp Claim
                 TracingService.Trace("Mapp to claimAcquisitionDto");
-                var claimAcquisitionDto = ClaimMapper.MapToMilestoneClaimDto(deliveryPhase, (int)invln_Milestone.Acquisition, claimAcquisition);
+                var claimAcquisitionDto = ClaimMapper.MapToMilestoneClaimDto(recordData, (int)invln_Milestone.Acquisition, claimAcquisitionId);
                 TracingService.Trace("Mapp to claimSoSDto");
-                var claimSoSDto = ClaimMapper.MapToMilestoneClaimDto(deliveryPhase, (int)invln_Milestone.SoS, claimSoS);
+                var claimSoSDto = ClaimMapper.MapToMilestoneClaimDto(recordData, (int)invln_Milestone.SoS, claimSoSId);
                 TracingService.Trace("Mapp to claimPCDto");
-                var claimPCDto = ClaimMapper.MapToMilestoneClaimDto(deliveryPhase, (int)invln_Milestone.PC, claimPC);
+                var claimPCDto = ClaimMapper.MapToMilestoneClaimDto(recordData, (int)invln_Milestone.PC, claimPCId);
 
                 //Mapp delivery phase
-                TracingService.Trace($"Mapp to PhaseClaimsDto : {deliveryPhase.Id}");
-                listOfPhaseClaims.Add(DeliveryPhaseMapper.MapToPhaseClaimsDto(deliveryPhase, claimAcquisitionDto, claimSoSDto, claimPCDto));
+                TracingService.Trace($"Mapp to PhaseClaimsDto : {deliveryPhaseId}");
+                listOfPhaseClaims.Add(DeliveryPhaseMapper.MapToPhaseClaimsDto(recordData, claimAcquisitionDto, claimSoSDto, claimPCDto));
             }
 
             // Mapp Allocation
@@ -223,7 +233,6 @@ namespace HE.CRM.AHP.Plugins.Services.Application
             {
                 invln_Name = deliveryPhaseName + " " + typeOfMilestone + " Claim",
                 invln_Milestone = new OptionSetValue(milestone.Type),
-                StatusCode = new OptionSetValue(milestone.Status),
                 invln_AmountApportionedtoMilestone = new Money(milestone.AmountOfGrantApportioned),
                 invln_PercentageofGrantApportionedtoThisMilestone = (double)milestone.PercentageOfGrantApportioned,
                 invln_MilestoneDate = milestone.AchievementDate ?? null,
@@ -241,11 +250,18 @@ namespace HE.CRM.AHP.Plugins.Services.Application
             {
                 // Create
                 TracingService.Trace($"Create in CRM");
+                newClaim.StatusCode = new OptionSetValue((int)invln_Claim_StatusCode.Draft);
+                newClaim.invln_ExternalStatus = new OptionSetValue((int)invln_ClaimExternalStatus.Draft);
                 _claimRepository.Create(newClaim);
             }
             else
             {
                 // Update
+                if (milestone.Status == (int)invln_ClaimExternalStatus.Submitted)
+                {
+                    newClaim.StatusCode = new OptionSetValue((int)invln_Claim_StatusCode.Submitted);
+                    newClaim.invln_ExternalStatus = new OptionSetValue((int)invln_ClaimExternalStatus.Submitted);
+                }
                 TracingService.Trace($"Update in CRM");
                 newClaim.Id = claimIdInCrm;
                 _claimRepository.Update(newClaim);

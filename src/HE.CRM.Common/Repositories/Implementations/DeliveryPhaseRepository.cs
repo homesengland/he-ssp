@@ -78,44 +78,6 @@ namespace HE.CRM.Common.Repositories.implementations
             return service.RetrieveMultiple(query).Entities.Select(x => x.ToEntity<invln_DeliveryPhase>()).ToList();
         }
 
-        public List<invln_DeliveryPhase> GetDeliveryPhasesForAllocation(Guid allocationId)
-        {
-            var query_invln_application = allocationId.ToString();
-
-            var query = new QueryExpression(invln_DeliveryPhase.EntityLogicalName);
-            query.ColumnSet.AddColumns(
-                invln_DeliveryPhase.Fields.invln_DeliveryPhaseId,
-                invln_DeliveryPhase.Fields.invln_Application,
-                invln_DeliveryPhase.Fields.invln_phasename,
-                invln_DeliveryPhase.Fields.invln_NoofHomes,
-
-                invln_DeliveryPhase.Fields.invln_nbrh,
-                invln_DeliveryPhase.Fields.invln_buildactivitytype,
-                invln_DeliveryPhase.Fields.invln_rehabactivitytype,
-
-
-                invln_DeliveryPhase.Fields.invln_acquisitiondate,
-                invln_DeliveryPhase.Fields.invln_AcquisitionValue,
-                invln_DeliveryPhase.Fields.invln_AcquisitionPercentageValue,
-                invln_DeliveryPhase.Fields.invln_acquisitionmilestoneclaimdate,
-
-                invln_DeliveryPhase.Fields.invln_startonsitedate,
-                invln_DeliveryPhase.Fields.invln_StartOnSiteValue,
-                invln_DeliveryPhase.Fields.invln_StartOnSitePercentageValue,
-                invln_DeliveryPhase.Fields.invln_startonsitemilestoneclaimdate,
-
-                invln_DeliveryPhase.Fields.invln_completiondate,
-                invln_DeliveryPhase.Fields.invln_CompletionValue,
-                invln_DeliveryPhase.Fields.invln_CompletionPercentageValue,
-                invln_DeliveryPhase.Fields.invln_completionmilestoneclaimdate
-
-
-                );
-            query.Criteria.AddCondition(invln_DeliveryPhase.Fields.invln_Application, ConditionOperator.Equal, query_invln_application);
-
-            return service.RetrieveMultiple(query).Entities.Select(x => x.ToEntity<invln_DeliveryPhase>()).ToList();
-        }
-
         private string GenerateContactFilter(string userId)
         {
             if (!string.IsNullOrEmpty(userId))
