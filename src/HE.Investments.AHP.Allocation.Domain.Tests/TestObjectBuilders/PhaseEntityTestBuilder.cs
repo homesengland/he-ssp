@@ -27,6 +27,10 @@ public class PhaseEntityTestBuilder : TestObjectBuilder<PhaseEntityTestBuilder, 
         null,
         MilestoneClaimTestBuilder.Draft().WithType(MilestoneType.Completion).Build()));
 
+    public PhaseEntityTestBuilder WithId(string value) => SetProperty(x => x.Id, new PhaseId(value));
+
+    public PhaseEntityTestBuilder WithName(string value) => SetProperty(x => x.Name, new PhaseName(value));
+
     public PhaseEntityTestBuilder WithAcquisitionMilestone(MilestoneClaimBase? value) => SetProperty(x => x.AcquisitionMilestone, value);
 
     public PhaseEntityTestBuilder WithStartOnSiteMilestone(MilestoneClaimBase? value) => SetProperty(x => x.StartOnSiteMilestone, value);

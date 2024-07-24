@@ -26,6 +26,11 @@ public class MilestoneClaimTestBuilder : TestObjectBuilder<MilestoneClaimTestBui
         null,
         null));
 
+    public MilestoneClaimTestBuilder WithoutClaim()
+    {
+        return new MilestoneClaimTestBuilder(new MilestoneWithoutClaim((DraftMilestoneClaim)Item));
+    }
+
     public MilestoneClaimTestBuilder Submitted(MilestoneStatus? status = null)
     {
         return new(new SubmittedMilestoneClaim(
@@ -48,6 +53,12 @@ public class MilestoneClaimTestBuilder : TestObjectBuilder<MilestoneClaimTestBui
     public MilestoneClaimTestBuilder WithMilestoneAchievedDate(DateDetails value)
     {
         PrivatePropertySetter.SetPropertyWithNoSetter(Item.ClaimDate, nameof(ClaimDate.AchievementDate), value);
+        return this;
+    }
+
+    public MilestoneClaimTestBuilder WithMilestoneSubmissionDate(DateDetails value)
+    {
+        PrivatePropertySetter.SetPropertyWithNoSetter(Item.ClaimDate, nameof(ClaimDate.SubmissionDate), value);
         return this;
     }
 

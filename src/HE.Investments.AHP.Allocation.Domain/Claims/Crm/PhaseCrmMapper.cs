@@ -55,9 +55,6 @@ public sealed class PhaseCrmMapper : IPhaseCrmMapper
             {
                 Type = _milestoneTypeMapper.ToDto(milestoneClaim.Type)!.Value,
                 Status = _milestoneStatusMapper.ToDto(milestoneClaim.Status)!.Value,
-                AmountOfGrantApportioned = milestoneClaim.GrantApportioned.Amount,
-                PercentageOfGrantApportioned = milestoneClaim.GrantApportioned.Percentage,
-                ForecastClaimDate = milestoneClaim.ClaimDate.ForecastClaimDate,
                 AchievementDate = DateTimeExtensions.FromDateDetails(milestoneClaim.ClaimDate.AchievementDate),
                 SubmissionDate = DateTimeExtensions.FromDateDetails(milestoneClaim.ClaimDate.SubmissionDate),
                 CostIncurred = milestoneClaim.CostsIncurred,
