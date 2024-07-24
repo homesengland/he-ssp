@@ -22,7 +22,8 @@ namespace HE.CRM.AHP.Plugins.Plugins.Claim
         Image1Type = ImageTypeEnum.PreImage,
         Image2Name = "PostImage",
         Image2Attributes = "invln_allocation, invln_application",
-        Image2Type = ImageTypeEnum.PostImage
+        Image2Type = ImageTypeEnum.PostImage,
+        DeleteAsyncOperation = true
     )]
     public sealed class PostUpdateAsync : PluginBase<DataverseContext>, IPlugin
     {
