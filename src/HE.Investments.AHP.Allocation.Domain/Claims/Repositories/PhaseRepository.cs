@@ -6,6 +6,7 @@ using HE.Investments.AHP.Allocation.Domain.Allocation.Mappers;
 using HE.Investments.AHP.Allocation.Domain.Claims.Entities;
 using HE.Investments.AHP.Allocation.Domain.Claims.Mappers;
 using HE.Investments.Common.Contract.Exceptions;
+using HE.Investments.Common.Infrastructure.Events;
 
 namespace HE.Investments.AHP.Allocation.Domain.Claims.Repositories;
 
@@ -17,14 +18,18 @@ public class PhaseRepository : IPhaseRepository
 
     private readonly IAllocationBasicInfoMapper _allocationBasicInfoMapper;
 
+    private readonly IEventDispatcher _eventDispatcher;
+
     public PhaseRepository(
         IAllocationCrmContext allocationCrmContext,
         IPhaseCrmMapper phaseCrmMapper,
-        IAllocationBasicInfoMapper allocationBasicInfoMapper)
+        IAllocationBasicInfoMapper allocationBasicInfoMapper,
+        IEventDispatcher eventDispatcher)
     {
         _allocationCrmContext = allocationCrmContext;
         _phaseCrmMapper = phaseCrmMapper;
         _allocationBasicInfoMapper = allocationBasicInfoMapper;
+        _eventDispatcher = eventDispatcher;
     }
 
     public async Task<PhaseEntity> GetById(PhaseId phaseId, AllocationId allocationId, UserAccount userAccount, CancellationToken cancellationToken)
@@ -39,13 +44,13 @@ public class PhaseRepository : IPhaseRepository
         return _phaseCrmMapper.MapToDomain(phase, allocationBasicInfo);
     }
 
-    public Task Save(PhaseEntity phaseEntity, UserAccount userAccount, CancellationToken cancellationToken)
+    public async Task Save(PhaseEntity phaseEntity, UserAccount userAccount, CancellationToken cancellationToken)
     {
         if (!phaseEntity.IsModified)
         {
-            return Task.CompletedTask;
+            return;
         }
 
-        return Task.CompletedTask; // todo implement when save milestones will be added
+        await _eventDispatcher.Publish(phaseEntity, cancellationToken);
     }
 }
