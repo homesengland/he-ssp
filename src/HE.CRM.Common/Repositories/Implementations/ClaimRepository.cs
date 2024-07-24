@@ -14,6 +14,20 @@ namespace HE.CRM.Common.Repositories.Implementations
         public ClaimRepository(CrmRepositoryArgs args) : base(args)
         {
         }
+
+        public IEnumerable<invln_Claim> GetClaimsForAllocation(Guid allocationId, bool onlyApproved, params string[] claimColumns)
+        {
+            var query = new QueryExpression(invln_Claim.EntityLogicalName);
+            query.ColumnSet.AddColumns(claimColumns);
+            query.Criteria.AddCondition(invln_Claim.Fields.invln_Allocation, ConditionOperator.Equal, allocationId);
+
+            if (onlyApproved)
+            {
+                query.Criteria.AddCondition(invln_Claim.Fields.StatusCode, ConditionOperator.Equal, (int)invln_Claim_StatusCode.Approve);
+            }
+
+            return service.RetrieveMultiple(query).Entities.Select(x => x.ToEntity<invln_Claim>());
+        }
     }
 }
 

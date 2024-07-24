@@ -2,6 +2,7 @@ using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investment.AHP.Domain.Application.Crm;
 using HE.Investment.AHP.Domain.Delivery.Crm;
 using HE.Investment.AHP.Domain.HomeTypes.Crm;
+using HE.Investment.AHP.Domain.Site.Crm;
 using HE.Investments.AHP.Consortium.Domain.Crm;
 using HE.Investments.Common.Contract;
 using HE.Investments.IntegrationTestsFramework.Auth;
@@ -11,6 +12,8 @@ namespace HE.Investments.AHP.IntegrationTests.Crm;
 
 public class AhpCrmContext
 {
+    private readonly ISiteCrmContext _siteCrmContext;
+
     private readonly IApplicationCrmContext _applicationCrmContext;
 
     private readonly IHomeTypeCrmContext _homeTypeCrmContext;
@@ -22,12 +25,14 @@ public class AhpCrmContext
     private readonly string _ahpProgrammeId;
 
     public AhpCrmContext(
+        ISiteCrmContext siteCrmContext,
         IApplicationCrmContext applicationCrmContext,
         IHomeTypeCrmContext homeTypeCrmContext,
         IDeliveryPhaseCrmContext deliveryPhaseCrmContext,
         IConsortiumCrmContext consortiumCrmContext,
         IProgrammeSettings programmeSettings)
     {
+        _siteCrmContext = siteCrmContext;
         _applicationCrmContext = applicationCrmContext;
         _homeTypeCrmContext = homeTypeCrmContext;
         _deliveryPhaseCrmContext = deliveryPhaseCrmContext;
@@ -58,6 +63,11 @@ public class AhpCrmContext
         }
 
         return (ConsortiumId.From(consortium.id), consortium.leadPartnerId == loginData.OrganisationId);
+    }
+
+    public async Task<string> SaveAhpSite(SiteDto dto, ILoginData loginData, CancellationToken cancellationToken)
+    {
+        return await _siteCrmContext.Save(loginData.OrganisationId, loginData.UserGlobalId, dto, cancellationToken);
     }
 
     public async Task<string> SaveAhpApplication(AhpApplicationDto dto, ILoginData loginData, CancellationToken cancellationToken)
