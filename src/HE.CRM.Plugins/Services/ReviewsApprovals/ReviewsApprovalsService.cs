@@ -18,8 +18,6 @@ namespace HE.CRM.Plugins.Services.ReviewsApprovals
         private readonly IReviewApprovalRepository _reviewApprovalRepository;
         private readonly IIspRepository _ispRepository;
 
-        #region Constructors
-
         public ReviewsApprovalsService(CrmServiceArgs args) : base(args)
         {
             _reviewApprovalRepository = CrmRepositoriesFactory.Get<IReviewApprovalRepository>();
@@ -28,6 +26,7 @@ namespace HE.CRM.Plugins.Services.ReviewsApprovals
 
         public void UpdateIspRelatedToApprovalsService(invln_reviewapproval target, invln_reviewapproval postImage)
         {
+            TracingService.Trace("UpdateIspRelatedToApprovalsService");
             if (postImage != null && postImage.invln_ispid != null && postImage.invln_status != null)
             {
                 var isp = _ispRepository.GetById(postImage.invln_ispid.Id, invln_ISP.Fields.invln_ApprovalLevelNew);
@@ -37,9 +36,6 @@ namespace HE.CRM.Plugins.Services.ReviewsApprovals
                     Id = postImage.invln_ispid.Id
                 };
                 var reviewApprovals = _reviewApprovalRepository.GetReviewApprovalsForIsp(postImage.invln_ispid, null)
-                    .ToList().Where(x =>
-                    x.invln_reviewedapprovedbyid != null
-                    && x.invln_reviewerapprovercomments != null)
                     .ToList();
                 if (reviewApprovals.Count == 0)
                 {
@@ -52,7 +48,7 @@ namespace HE.CRM.Plugins.Services.ReviewsApprovals
                     {
                         ispToUpdate.invln_ApprovalStatus = new OptionSetValue((int)invln_ApprovalStatus.Rejected);
                         ispToUpdate.invln_DateApproved = null;
-                        this._ispRepository.Update(ispToUpdate);
+                        _ispRepository.Update(ispToUpdate);
                         break;
                     }
                     case (int)invln_StatusReviewApprovalSet.Pending:
@@ -81,7 +77,7 @@ namespace HE.CRM.Plugins.Services.ReviewsApprovals
                         if (rejected.Any())
                         {
                             ispToUpdate.invln_ApprovalStatus = new OptionSetValue((int)invln_ApprovalStatus.Rejected);
-                            this._ispRepository.Update(ispToUpdate);
+                            _ispRepository.Update(ispToUpdate);
                             break;
                         }
                         var pendingOrSendBack = reviewApprovals.Where(x => x.invln_status.Value == (int)invln_StatusReviewApprovalSet.Pending ||
@@ -89,7 +85,7 @@ namespace HE.CRM.Plugins.Services.ReviewsApprovals
                         if (pendingOrSendBack.Any())
                         {
                             ispToUpdate.invln_ApprovalStatus = new OptionSetValue((int)invln_ApprovalStatus.Pending);
-                            this._ispRepository.Update(ispToUpdate);
+                            _ispRepository.Update(ispToUpdate);
                             break;
                         }
 
@@ -98,7 +94,7 @@ namespace HE.CRM.Plugins.Services.ReviewsApprovals
                         if (approved.Count == reviewApprovals.Count)
                         {
                             ispToUpdate.invln_ApprovalStatus = new OptionSetValue((int)invln_ApprovalStatus.Approved);
-                            this._ispRepository.Update(ispToUpdate);
+                            _ispRepository.Update(ispToUpdate);
                             break;
                         }
                         break;
@@ -109,41 +105,44 @@ namespace HE.CRM.Plugins.Services.ReviewsApprovals
 
         private void CheckAndChangeToAproved(List<invln_reviewapproval> reviewApprovals, invln_ISP ispToUpdate, invln_ISP isp)
         {
+            TracingService.Trace("CheckAndChangeToAproved");
             var mostRecentRAList = FindMostRecentReviewApprovalRecords(reviewApprovals);
 
+            TracingService.Trace("Check Rejected");
             var rejected = mostRecentRAList.Where(x => x.invln_status.Value == (int)invln_StatusReviewApprovalSet.Rejected);
             if (rejected.Any())
             {
                 ispToUpdate.invln_ApprovalStatus = new OptionSetValue((int)invln_ApprovalStatus.Rejected);
                 ispToUpdate.invln_DateApproved = null;
-                this._ispRepository.Update(ispToUpdate);
+                _ispRepository.Update(ispToUpdate);
                 return;
             }
+            TracingService.Trace("Check Send Back");
             var pendingOrSendBack = mostRecentRAList.Where(x => x.invln_status.Value == (int)invln_StatusReviewApprovalSet.Pending ||
                                                          x.invln_status.Value == (int)invln_StatusReviewApprovalSet.SentBack);
             if (pendingOrSendBack.Any())
             {
                 ispToUpdate.invln_ApprovalStatus = new OptionSetValue((int)invln_ApprovalStatus.Pending);
-                this._ispRepository.Update(ispToUpdate);
+                _ispRepository.Update(ispToUpdate);
                 return;
             }
-
+            TracingService.Trace("Get Teams");
             var teamRepository = CrmRepositoriesFactory.GetSystem<ITeamRepository>();
-            var desTeam = teamRepository.GetTeamByName("DES Team");
+            var desTeam = teamRepository.GetTeamByName("DES team");
             var hoFTeam = teamRepository.GetTeamByName("Hof Team");
 
             var lastDesApprowals = mostRecentRAList
             .Where(x => x.OwnerId.Id == desTeam.Id)
-            .OrderByDescending(x => x.CreatedOn).FirstOrDefault();
+            .OrderByDescending(x => x.CreatedOn.Value).FirstOrDefault();
 
             var lastHoFApprowals = mostRecentRAList
-                .FirstOrDefault(x => x.OwnerId.Id == hoFTeam.Id && x.CreatedOn >= lastDesApprowals.CreatedOn);
-
+                .FirstOrDefault(x => x.OwnerId.Id == hoFTeam.Id && x.CreatedOn.Value >= lastDesApprowals.CreatedOn.Value);
             if (lastHoFApprowals != null
                 && (lastDesApprowals.invln_status.Value == (int)invln_StatusReviewApprovalSet.Approved || lastDesApprowals.invln_status.Value == (int)invln_StatusReviewApprovalSet.Reviewed)
                 && (lastHoFApprowals.invln_status.Value == (int)invln_StatusReviewApprovalSet.Approved)
                 && isp.invln_ApprovalLevelNew.Value == (int)invln_ApprovalLevel.HoF)
             {
+                TracingService.Trace("Approved");
                 ispToUpdate.invln_DateApproved = DateTime.UtcNow;
                 ispToUpdate.invln_ApprovalStatus = new OptionSetValue((int)invln_ApprovalStatus.Approved);
                 _ispRepository.Update(ispToUpdate);
@@ -154,12 +153,15 @@ namespace HE.CRM.Plugins.Services.ReviewsApprovals
                 && (lastHoFApprowals.invln_status.Value == (int)invln_StatusReviewApprovalSet.Reviewed)
                 && isp.invln_ApprovalLevelNew.Value == (int)invln_ApprovalLevel.HoF)
             {
+                TracingService.Trace("Reviewed");
                 ispToUpdate.invln_DateApproved = DateTime.UtcNow;
                 ispToUpdate.invln_ApprovalStatus = new OptionSetValue((int)invln_ApprovalStatus.InReview);
                 _ispRepository.Update(ispToUpdate);
             }
+
             if (mostRecentRAList.All(x => x.invln_status.Value == (int)invln_StatusReviewApprovalSet.Approved || x.invln_status.Value == (int)invln_StatusReviewApprovalSet.NotRequired))
             {
+                TracingService.Trace("Approved or not Required");
                 ispToUpdate.invln_DateApproved = DateTime.UtcNow;
                 ispToUpdate.invln_ApprovalStatus = new OptionSetValue((int)invln_ApprovalStatus.Approved);
                 _ispRepository.Update(ispToUpdate);
@@ -186,34 +188,19 @@ namespace HE.CRM.Plugins.Services.ReviewsApprovals
             }
         }
 
-        private static List<invln_reviewapproval> FindMostRecentReviewApprovalRecords(List<invln_reviewapproval> reviewApprovals)
+        private List<invln_reviewapproval> FindMostRecentReviewApprovalRecords(List<invln_reviewapproval> reviewApprovals)
         {
+            TracingService.Trace(reviewApprovals.Count.ToString());
+
             var lastDesApprowals = reviewApprovals
-                    .Where(x => x.invln_reviewerapprover == new OptionSetValue((int)invln_reviewerapproverset.DESReview))
+                    .Where(x => x.invln_reviewerapprover.Value == (int)invln_reviewerapproverset.DESReview)
                     .OrderByDescending(x => x.CreatedOn).FirstOrDefault();
+            TracingService.Trace(lastDesApprowals.CreatedOn.ToString());
 
-            List<OptionSetValue> opsvList = new List<OptionSetValue>()
-            {
-                new OptionSetValue((int)invln_reviewerapproverset.DESReview),
-                new OptionSetValue((int)invln_reviewerapproverset.HoFReview),
-                new OptionSetValue((int)invln_reviewerapproverset.HoFApproval),
-                new OptionSetValue((int)invln_reviewerapproverset.RiskApproval),
-                new OptionSetValue((int)invln_reviewerapproverset.CRODelegatedAuthorityApproval),
-                new OptionSetValue((int)invln_reviewerapproverset.CROApproval),
-                new OptionSetValue((int)invln_reviewerapproverset.IPEApproval)
-            };
-
-            var mostRecentRAList = new List<invln_reviewapproval>();
-            foreach (var opsv in opsvList)
-            {
-                var ra = reviewApprovals.FirstOrDefault(x =>
-                x.CreatedOn >= lastDesApprowals.CreatedOn
-                && x.invln_reviewerapprover == opsv);
-                mostRecentRAList.Add(ra);
-            };
+            var mostRecentRAList = reviewApprovals.Where(x =>
+            x.CreatedOn.Value >= lastDesApprowals.CreatedOn.Value).ToList();
+            TracingService.Trace(mostRecentRAList.Count.ToString());
             return mostRecentRAList;
         }
-
-        #endregion Constructors
     }
 }

@@ -22,8 +22,11 @@ namespace HE.CRM.Common.Repositories.Implementations
             var qe = new QueryExpression(invln_reviewapproval.EntityLogicalName)
             {
                 ColumnSet = new ColumnSet(
-                    nameof(invln_reviewapproval.invln_reviewerapprover).ToLower(),
-                    nameof(invln_reviewapproval.invln_status).ToLower())
+                    invln_reviewapproval.Fields.invln_reviewerapprover,
+                    invln_reviewapproval.Fields.invln_status,
+                    invln_reviewapproval.Fields.CreatedOn,
+                    invln_reviewapproval.Fields.OwnerId
+                    )
             };
 
             qe.Criteria.AddCondition(nameof(invln_reviewapproval.invln_ispid).ToLower(), ConditionOperator.Equal, invln_isp.Id);
