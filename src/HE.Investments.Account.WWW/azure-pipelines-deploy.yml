@@ -8,6 +8,15 @@ pr: none
 
 pool: "vmss-ado-chs-nonprod-001"
 
+schedules:
+- cron: '0 5 * * 1-5'
+  displayName: '05:00 AM - Mon through Fri Portal deployment'
+  branches:
+    include:
+    - development_R3
+  always: true
+  batch: true
+
 resources:
   repositories:
   - repository: he-invst-deployment
