@@ -17,6 +17,9 @@ namespace DataverseModel
 	{
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
+		CollateralWarranty = 858110010,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
 		CompletionGuarantee = 858110007,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]

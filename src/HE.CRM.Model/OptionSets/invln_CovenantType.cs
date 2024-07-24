@@ -13,20 +13,14 @@ namespace DataverseModel
 	
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
-	public enum invln_ApprovalStatus
+	public enum invln_CovenantType
 	{
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Approved = 858110001,
+		NumberRatio = 858110000,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		InReview = 858110003,
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Pending = 858110000,
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Rejected = 858110002,
+		Percent = 858110001,
 	}
 }
 #pragma warning restore CS1591
