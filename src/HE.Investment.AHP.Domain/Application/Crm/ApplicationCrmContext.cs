@@ -63,7 +63,8 @@ public class ApplicationCrmContext : IApplicationCrmContext
                 nameof(invln_scheme.invln_OwneroftheLand),
                 nameof(invln_scheme.invln_OwneroftheHomes),
                 nameof(invln_scheme.invln_partnerconfirmation),
-                nameof(invln_scheme.invln_organisationid))
+                nameof(invln_scheme.invln_organisationid),
+                nameof(invln_scheme.invln_isallocation))
             .ToLowerInvariant();
 
     private readonly ICrmService _service;

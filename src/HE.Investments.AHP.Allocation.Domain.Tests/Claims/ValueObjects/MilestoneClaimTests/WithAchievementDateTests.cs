@@ -23,7 +23,7 @@ public class WithAchievementDateTests
     public void ShouldThrowException_WhenAchievementDateIsNotProvided()
     {
         // given
-        var testCandidate = MilestoneClaimTestBuilder.New()
+        var testCandidate = MilestoneClaimTestBuilder.Draft()
             .WithType(MilestoneType.Acquisition)
             .Build();
 
@@ -42,7 +42,7 @@ public class WithAchievementDateTests
         // given
         GetDateTimeProviderMock();
         var achievementDate = new DateDetails("10", "07", "2023");
-        var testCandidate = MilestoneClaimTestBuilder.New()
+        var testCandidate = MilestoneClaimTestBuilder.Draft()
             .WithType(MilestoneType.Acquisition)
             .WithMilestoneAchievedDate(achievementDate)
             .Build();
@@ -64,7 +64,7 @@ public class WithAchievementDateTests
             _dateTimeProvider.Now.AddDays(1).Day.ToString(CultureInfo.InvariantCulture),
             _dateTimeProvider.Now.Month.ToString(CultureInfo.InvariantCulture),
             _dateTimeProvider.Now.Year.ToString(CultureInfo.InvariantCulture));
-        var testCandidate = MilestoneClaimTestBuilder.New()
+        var testCandidate = MilestoneClaimTestBuilder.Draft()
             .WithType(MilestoneType.Acquisition)
             .Build();
         var programme = CreateProgramme();
@@ -85,7 +85,7 @@ public class WithAchievementDateTests
         GetDateTimeProviderMock();
         var achievementDate = new DateDetails("10", "07", "2023");
         var laterSubmissionDate = new DateDetails("11", "07", "2023");
-        var testCandidate = MilestoneClaimTestBuilder.New()
+        var testCandidate = MilestoneClaimTestBuilder.Draft()
             .WithType(MilestoneType.Acquisition)
             .Build();
         var programme = CreateProgramme();
@@ -105,7 +105,7 @@ public class WithAchievementDateTests
         // given
         GetDateTimeProviderMock();
         var achievementDate = new DateDetails("01", "01", "2020");
-        var testCandidate = MilestoneClaimTestBuilder.New()
+        var testCandidate = MilestoneClaimTestBuilder.Draft()
             .WithType(MilestoneType.Acquisition)
             .Build();
         var programme = CreateProgramme(new DateRange(new DateOnly(2021, 1, 1), new DateOnly(2024, 1, 1)));
@@ -125,7 +125,7 @@ public class WithAchievementDateTests
         // given
         GetDateTimeProviderMock();
         var achievementDate = new DateDetails("01", "01", "2024");
-        var testCandidate = MilestoneClaimTestBuilder.New()
+        var testCandidate = MilestoneClaimTestBuilder.Draft()
             .WithType(MilestoneType.Acquisition)
             .Build();
         var programme = CreateProgramme(new DateRange(new DateOnly(2021, 1, 1), new DateOnly(2023, 1, 1)));
@@ -145,7 +145,7 @@ public class WithAchievementDateTests
         // given
         GetDateTimeProviderMock();
         var achievementDate = new DateDetails("01", "01", "2021");
-        var testCandidate = MilestoneClaimTestBuilder.New()
+        var testCandidate = MilestoneClaimTestBuilder.Draft()
             .WithType(MilestoneType.Acquisition)
             .WithGrantApportioned(10000, 40)
             .Build();
@@ -166,7 +166,7 @@ public class WithAchievementDateTests
         // given
         GetDateTimeProviderMock();
         var achievementDate = new DateDetails("01", "01", "2021");
-        var testCandidate = MilestoneClaimTestBuilder.New()
+        var testCandidate = MilestoneClaimTestBuilder.Draft()
             .WithType(MilestoneType.Acquisition)
             .WithGrantApportioned(0, 40)
             .Build();
@@ -185,7 +185,7 @@ public class WithAchievementDateTests
         // given
         GetDateTimeProviderMock();
         var achievementDate = new DateDetails("01", "01", "2024");
-        var testCandidate = MilestoneClaimTestBuilder.New()
+        var testCandidate = MilestoneClaimTestBuilder.Draft()
             .WithType(MilestoneType.Acquisition)
             .WithGrantApportioned(10000, 40)
             .Build();
@@ -206,7 +206,7 @@ public class WithAchievementDateTests
         // given
         GetDateTimeProviderMock();
         var achievementDate = new DateDetails("01", "01", "2024");
-        var testCandidate = MilestoneClaimTestBuilder.New()
+        var testCandidate = MilestoneClaimTestBuilder.Draft()
             .WithType(MilestoneType.Acquisition)
             .WithGrantApportioned(0, 40)
             .Build();
@@ -225,7 +225,7 @@ public class WithAchievementDateTests
         // given
         GetDateTimeProviderMock();
         var achievementDate = new DateDetails("01", "01", "2021");
-        var testCandidate = MilestoneClaimTestBuilder.New()
+        var testCandidate = MilestoneClaimTestBuilder.Draft()
             .WithType(MilestoneType.StartOnSite)
             .Build();
         var programme = CreateProgramme(startOnSiteDates: new DateRange(new DateOnly(2022, 1, 1), new DateOnly(2024, 1, 1)));
@@ -245,7 +245,7 @@ public class WithAchievementDateTests
         // given
         GetDateTimeProviderMock();
         var achievementDate = new DateDetails("01", "01", "2021");
-        var testCandidate = MilestoneClaimTestBuilder.New()
+        var testCandidate = MilestoneClaimTestBuilder.Draft()
             .WithType(MilestoneType.Completion)
             .Build();
         var programme = CreateProgramme(startOnSiteDates: new DateRange(new DateOnly(2022, 1, 1), new DateOnly(2024, 1, 1)));
@@ -263,7 +263,7 @@ public class WithAchievementDateTests
         // given
         GetDateTimeProviderMock();
         var achievementDate = new DateDetails("01", "01", "2024");
-        var testCandidate = MilestoneClaimTestBuilder.New()
+        var testCandidate = MilestoneClaimTestBuilder.Draft()
             .WithType(MilestoneType.StartOnSite)
             .Build();
         var programme = CreateProgramme(startOnSiteDates: new DateRange(new DateOnly(2022, 1, 1), new DateOnly(2023, 1, 1)));
@@ -283,7 +283,7 @@ public class WithAchievementDateTests
         // given
         GetDateTimeProviderMock();
         var achievementDate = new DateDetails("01", "01", "2024");
-        var testCandidate = MilestoneClaimTestBuilder.New()
+        var testCandidate = MilestoneClaimTestBuilder.Draft()
             .WithType(MilestoneType.Completion)
             .Build();
         var programme = CreateProgramme(startOnSiteDates: new DateRange(new DateOnly(2022, 1, 1), new DateOnly(2023, 1, 1)));
@@ -301,7 +301,7 @@ public class WithAchievementDateTests
         // given
         GetDateTimeProviderMock();
         var achievementDate = new DateDetails("01", "01", "2021");
-        var testCandidate = MilestoneClaimTestBuilder.New()
+        var testCandidate = MilestoneClaimTestBuilder.Draft()
             .WithType(MilestoneType.Completion)
             .Build();
         var programme = CreateProgramme(completionDates: new DateRange(new DateOnly(2022, 1, 1), new DateOnly(2024, 1, 1)));
@@ -321,7 +321,7 @@ public class WithAchievementDateTests
         // given
         GetDateTimeProviderMock();
         var achievementDate = new DateDetails("01", "01", "2021");
-        var testCandidate = MilestoneClaimTestBuilder.New()
+        var testCandidate = MilestoneClaimTestBuilder.Draft()
             .WithType(MilestoneType.StartOnSite)
             .Build();
         var programme = CreateProgramme(completionDates: new DateRange(new DateOnly(2022, 1, 1), new DateOnly(2024, 1, 1)));
@@ -339,7 +339,7 @@ public class WithAchievementDateTests
         // given
         GetDateTimeProviderMock();
         var achievementDate = new DateDetails("01", "01", "2024");
-        var testCandidate = MilestoneClaimTestBuilder.New()
+        var testCandidate = MilestoneClaimTestBuilder.Draft()
             .WithType(MilestoneType.Completion)
             .Build();
         var programme = CreateProgramme(completionDates: new DateRange(new DateOnly(2022, 1, 1), new DateOnly(2023, 1, 1)));
@@ -359,7 +359,7 @@ public class WithAchievementDateTests
         // given
         GetDateTimeProviderMock();
         var achievementDate = new DateDetails("01", "01", "2024");
-        var testCandidate = MilestoneClaimTestBuilder.New()
+        var testCandidate = MilestoneClaimTestBuilder.Draft()
             .WithType(MilestoneType.StartOnSite)
             .Build();
         var programme = CreateProgramme(completionDates: new DateRange(new DateOnly(2022, 1, 1), new DateOnly(2023, 1, 1)));
@@ -370,6 +370,27 @@ public class WithAchievementDateTests
         // then
         result.Should().NotThrow();
     }
+
+    [Fact]
+    public void ShouldThrowException_WhenMilestoneClaimIsSubmitted()
+    {
+        // given
+        GetDateTimeProviderMock();
+        var achievementDate = new DateDetails("10", "07", "2023");
+        var testCandidate = MilestoneClaimTestBuilder.Draft()
+            .WithType(MilestoneType.Acquisition)
+            .WithMilestoneAchievedDate(achievementDate)
+            .Submitted()
+            .Build();
+        var programme = CreateProgramme();
+
+        // when
+        var result = () => testCandidate.WithAchievementDate(achievementDate, programme, null, _dateTimeProvider.Now);
+
+        // then
+        result.Should().Throw<DomainValidationException>().WithMessage("Providing achievement date is not allowed for Submitted Claim");
+    }
+
 
     private AhpProgramme CreateProgramme(
         DateRange? programmeDate = null,

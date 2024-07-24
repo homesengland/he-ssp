@@ -7,18 +7,17 @@ using MilestoneStatus = HE.Investments.AHP.Allocation.Domain.Claims.Enums.Milest
 
 namespace HE.Investments.AHP.Allocation.Domain.Tests.TestObjectBuilders;
 
-public class MilestoneClaimTestBuilder : TestObjectBuilder<MilestoneClaimTestBuilder, MilestoneClaim>
+public class MilestoneClaimTestBuilder : TestObjectBuilder<MilestoneClaimTestBuilder, MilestoneClaimBase>
 {
-    private MilestoneClaimTestBuilder(MilestoneClaim item)
+    private MilestoneClaimTestBuilder(MilestoneClaimBase item)
         : base(item)
     {
     }
 
     protected override MilestoneClaimTestBuilder Builder => this;
 
-    public static MilestoneClaimTestBuilder New() => new(new(
+    public static MilestoneClaimTestBuilder Draft() => new(new DraftMilestoneClaim(
         MilestoneType.Completion,
-        MilestoneStatus.Submitted,
         new GrantApportioned(100, 50),
         new ClaimDate(
             new DateTime(2021, 1, 1, 0, 0, 0, DateTimeKind.Utc),
@@ -27,17 +26,16 @@ public class MilestoneClaimTestBuilder : TestObjectBuilder<MilestoneClaimTestBui
         null,
         null));
 
-    public MilestoneClaimTestBuilder NotSubmitted()
+    public MilestoneClaimTestBuilder Submitted(MilestoneStatus? status = null)
     {
-        return WithStatus(MilestoneStatus.Draft);
+        return new(new SubmittedMilestoneClaim(
+            Item.Type,
+            status ?? MilestoneStatus.Approved,
+            Item.GrantApportioned,
+            Item.ClaimDate,
+            Item.CostsIncurred,
+            Item.IsConfirmed));
     }
-
-    public MilestoneClaimTestBuilder Submitted()
-    {
-        return WithStatus(MilestoneStatus.Approved);
-    }
-
-    public MilestoneClaimTestBuilder WithStatus(MilestoneStatus value) => SetProperty(x => x.Status, value);
 
     public MilestoneClaimTestBuilder WithType(MilestoneType value) => SetProperty(x => x.Type, value);
 
@@ -50,12 +48,6 @@ public class MilestoneClaimTestBuilder : TestObjectBuilder<MilestoneClaimTestBui
     public MilestoneClaimTestBuilder WithMilestoneAchievedDate(DateDetails value)
     {
         PrivatePropertySetter.SetPropertyWithNoSetter(Item.ClaimDate, nameof(ClaimDate.AchievementDate), value);
-        return this;
-    }
-
-    public MilestoneClaimTestBuilder WithMilestoneSubmissionDate(DateDetails value)
-    {
-        PrivatePropertySetter.SetPropertyWithNoSetter(Item.ClaimDate, nameof(ClaimDate.SubmissionDate), value);
         return this;
     }
 

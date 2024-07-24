@@ -1,4 +1,5 @@
 using HE.Investments.Account.Shared;
+using HE.Investments.AHP.Allocation.Contract.Claims;
 using HE.Investments.AHP.Allocation.Contract.Claims.Commands;
 using HE.Investments.AHP.Allocation.Domain.Allocation.Repositories;
 using HE.Investments.AHP.Allocation.Domain.Claims.Repositories;

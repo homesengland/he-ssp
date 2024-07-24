@@ -1,7 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using HE.Investment.AHP.WWW.Views.AllocationClaims.Const;
 using HE.Investments.AHP.IntegrationTests.Framework;
-using HE.Investments.AHP.IntegrationTests.Order02FillSite.Data;
 using HE.Investments.AHP.IntegrationTests.Order03FillApplication.Data;
 using HE.Investments.AHP.IntegrationTests.Order03FillApplication.Data.DeliveryPhases;
 using HE.Investments.AHP.IntegrationTests.Order03FillApplication.Data.HomeTypes;
@@ -43,7 +42,7 @@ public class Order01PrepareAllocation : AhpIntegrationTest
     public async Task Order01_AhpAllocationShouldBeCreated()
     {
         // given
-        ApplicationData.GenerateApplicationName();
+        ApplicationData.GenerateApplicationName("allocation");
         SchemeInformationData.PopulateAllData();
         FinancialDetailsData.PopulateAllData(SchemeInformationData.RequiredFunding);
         HomeTypesData.General.PopulateAllData();

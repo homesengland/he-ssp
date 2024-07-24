@@ -41,7 +41,7 @@ public sealed class MilestoneClaimContractMapper : IMilestoneClaimContractMapper
             Enums.MilestoneStatus.UnderReview => MilestoneStatus.UnderReview,
             Enums.MilestoneStatus.Approved => MilestoneStatus.Approved,
             Enums.MilestoneStatus.Rejected => MilestoneStatus.Rejected,
-            Enums.MilestoneStatus.Reclaimed => MilestoneStatus.Reclaimed,
+            Enums.MilestoneStatus.Paid => MilestoneStatus.Paid,
             _ => MilestoneStatus.Undefined,
         };
     }

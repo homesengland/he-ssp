@@ -14,7 +14,7 @@ public class WithCostsIncurredTests
     public void ShouldThrowException_WhenCostsIncurredAreNotProvided()
     {
         // given
-        var testCandidate = MilestoneClaimTestBuilder.New()
+        var testCandidate = MilestoneClaimTestBuilder.Draft()
             .WithType(MilestoneType.Acquisition)
             .Build();
 
@@ -33,7 +33,7 @@ public class WithCostsIncurredTests
     public void ShouldThrowException_WhenCostsIncurredAreProvidedForMilestone(MilestoneType milestoneType)
     {
         // given
-        var testCandidate = MilestoneClaimTestBuilder.New()
+        var testCandidate = MilestoneClaimTestBuilder.Draft()
             .WithType(milestoneType)
             .Build();
 
@@ -53,9 +53,8 @@ public class WithCostsIncurredTests
     {
         // given
         var forecastClaimDate = new DateTime(2025, 10, 11, 0, 0, 0, DateTimeKind.Local);
-        var testCandidate = MilestoneClaimTestBuilder.New()
+        var testCandidate = MilestoneClaimTestBuilder.Draft()
             .WithType(MilestoneType.Acquisition)
-            .WithStatus(MilestoneStatus.Draft)
             .WithForecastClaimDate(forecastClaimDate)
             .Build();
 
@@ -69,5 +68,23 @@ public class WithCostsIncurredTests
         result.ClaimDate.ForecastClaimDate.Should().Be(forecastClaimDate);
         result.CostsIncurred.Should().Be(costsIncurred);
         result.IsConfirmed.Should().BeNull();
+    }
+
+    [Fact]
+    public void ShouldThrowException_WhenMilestoneClaimIsSubmitted()
+    {
+        // given
+        var testCandidate = MilestoneClaimTestBuilder.Draft()
+            .WithType(MilestoneType.Acquisition)
+            .Submitted()
+            .Build();
+
+        // when
+        var withConfirmation = () => testCandidate.WithCostsIncurred(true);
+
+        // then
+        withConfirmation.Should()
+            .Throw<DomainValidationException>()
+            .WithSingleError("Providing costs incurred is not allowed for Submitted Claim");
     }
 }

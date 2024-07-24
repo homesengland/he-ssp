@@ -15,22 +15,21 @@ public class CancelTests
     public void ShouldThrowException_WhenClaimIsSubmitted()
     {
         // given
-        var testCandidate = MilestoneClaimTestBuilder.New().Submitted().Build();
+        var testCandidate = MilestoneClaimTestBuilder.Draft().Submitted().Build();
 
         // when
         var cancel = () => testCandidate.Cancel();
 
         // then
-        cancel.Should().Throw<DomainValidationException>().WithMessage("Cannot cancel submitted claim");
+        cancel.Should().Throw<DomainValidationException>().WithMessage("Cancellation is not allowed for Submitted Claim");
     }
 
     [Fact]
     public void ShouldReturnCancelledClaim_WhenClaimIsInDraftStatus()
     {
         // given
-        var testCandidate = MilestoneClaimTestBuilder.New()
+        var testCandidate = MilestoneClaimTestBuilder.Draft()
             .WithType(MilestoneType.Acquisition)
-            .NotSubmitted()
             .WithMilestoneAchievedDate(DateDetails.FromDateTime(DateTime.Today)!)
             .WithCostsIncurred(true)
             .WithConfirmation(true)
@@ -40,7 +39,7 @@ public class CancelTests
         var result = testCandidate.Cancel();
 
         // then
-        result.Should().BeOfType<CanceledMilestoneClaim>();
+        result.Should().BeOfType<MilestoneWithoutClaim>();
         result.Type.Should().Be(MilestoneType.Acquisition);
         result.Status.Should().Be(MilestoneStatus.Draft);
         result.ClaimDate.ForecastClaimDate.Should().Be(testCandidate.ClaimDate.ForecastClaimDate);
