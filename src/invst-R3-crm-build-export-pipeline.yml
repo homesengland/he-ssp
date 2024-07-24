@@ -10,6 +10,8 @@ schedules:
   branches:
     include:
     - development_R3
+  always: true
+  batch: true
 
 parameters:
   - name: buildAndUpdatePlugins
