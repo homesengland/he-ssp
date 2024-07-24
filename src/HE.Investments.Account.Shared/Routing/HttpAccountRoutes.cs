@@ -32,6 +32,11 @@ public class HttpAccountRoutes : IAccountRoutes
         return new RedirectResult($"{_config.Url}/{UserOrganisationAccountEndpoints.Dashboard}");
     }
 
+    public IActionResult OrganisationLandingPageForLoggedUser(string organisationId)
+    {
+        return new RedirectResult($"{_config.Url}/{UserOrganisationAccountEndpoints.OrganisationDashboard(organisationId)}");
+    }
+
     private static string? BuildCallbackQuery(string? callbackProgramme = null, string? callbackRoute = null)
     {
         if (string.IsNullOrEmpty(callbackRoute))
