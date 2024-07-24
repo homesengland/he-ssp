@@ -6,7 +6,6 @@ using HE.Investments.AHP.Allocation.Domain.Allocation.ValueObjects;
 using HE.Investments.AHP.Allocation.Domain.Claims.Entities;
 using HE.Investments.AHP.Allocation.Domain.Claims.ValueObjects;
 using HE.Investments.Common.Contract;
-using HE.Investments.Common.CRM.Model;
 using HE.Investments.Common.Extensions;
 using MilestoneClaim = HE.Investments.AHP.Allocation.Domain.Claims.ValueObjects.MilestoneClaim;
 using MilestoneStatus = HE.Investments.AHP.Allocation.Domain.Claims.Enums.MilestoneStatus;
@@ -22,7 +21,7 @@ public class PhaseCrmMapper : IPhaseCrmMapper
             allocation,
             new PhaseName(dto.Name),
             new NumberOfHomes(dto.NumberOfHomes),
-            new BuildActivity(MapBuildActivityType(dto.BuildActivityType)),
+            new BuildActivity(BuildActivityType.WorksOnly),
             dto.AcquisitionMilestone.IsProvided() ? ToMilestoneClaim(dto.AcquisitionMilestone, MilestoneType.Acquisition) : null,
             dto.StartOnSiteMilestone.IsProvided() ? ToMilestoneClaim(dto.StartOnSiteMilestone, MilestoneType.StartOnSite) : null,
             ToMilestoneClaim(dto.CompletionMilestone, MilestoneType.Completion));
@@ -35,7 +34,6 @@ public class PhaseCrmMapper : IPhaseCrmMapper
             Id = entity.Id.Value,
             Name = entity.Name.Value,
             NumberOfHomes = entity.NumberOfHomes.Value,
-            BuildActivityType = (int)entity.BuildActivityType.Value,
             AcquisitionMilestone = entity.AcquisitionMilestone != null ? ToMilestoneClaimDto(entity.AcquisitionMilestone) : null,
             StartOnSiteMilestone = entity.StartOnSiteMilestone != null ? ToMilestoneClaimDto(entity.StartOnSiteMilestone) : null,
             CompletionMilestone = ToMilestoneClaimDto(entity.CompletionMilestone),
@@ -67,17 +65,6 @@ public class PhaseCrmMapper : IPhaseCrmMapper
             new ClaimDate(dto.ForecastClaimDate, DateDetails.FromDateTime(dto.AchievementDate), DateDetails.FromDateTime(dto.SubmissionDate)),
             dto.CostIncurred,
             dto.IsConfirmed);
-    }
-
-    private static BuildActivityType MapBuildActivityType(int buildActivityType)
-    {
-        return buildActivityType switch
-        {
-            (int)invln_NewBuildActivityType.Regeneration => BuildActivityType.Regeneration,
-            _ => BuildActivityType.WorksOnly,
-
-            // _ => throw new ArgumentOutOfRangeException(nameof(buildActivityType), status, null), // todo: map build activity
-        };
     }
 
     private static MilestoneStatus MapMilestoneStatus(int milestoneStatus)
