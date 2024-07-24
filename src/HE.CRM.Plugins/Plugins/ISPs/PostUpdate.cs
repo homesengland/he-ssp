@@ -22,7 +22,7 @@ namespace HE.CRM.Plugins.Plugins.ISPs
         invln_ISP.Fields.invln_Loanapplication + "," +
         invln_ISP.Fields.invln_ApprovalLevelNew,
        Image1Type = ImageTypeEnum.PreImage)]
-    public class CreateRecordsOnSentForApprovalChangePlugin : PluginBase<DataverseContext>, IPlugin
+    public class PostUpdate : PluginBase<DataverseContext>, IPlugin
     {
         public override void RegisterHandlers(CrmHandlerFactory<DataverseContext> handlerFactory, IList<ICrmHandler> registeredHandlers)
         {

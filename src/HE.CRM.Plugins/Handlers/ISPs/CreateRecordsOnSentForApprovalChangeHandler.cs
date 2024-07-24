@@ -24,6 +24,14 @@ namespace HE.CRM.Plugins.Handlers.ISPs
 
         public override void DoWork()
         {
+            var oldRA = _reviewApprovalRepository.GetByAttribute(invln_reviewapproval.Fields.invln_ispid, CurrentState.invln_ISPId.Value, new string[] { invln_reviewapproval.Fields.Id });
+
+            foreach (var ra in oldRA)
+            {
+                ra.invln_status = new OptionSetValue((int)invln_StatusReviewApprovalSet.NotRequired);
+                _reviewApprovalRepository.Update(ra);
+            }
+
             TracingService.Trace("Create Team repo");
 
             var teamRepository = CrmRepositoriesFactory.GetSystem<ITeamRepository>();

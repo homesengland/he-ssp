@@ -209,7 +209,7 @@
     <Compile Include="Plugins\Accounts\OnCurrentCrrFieldUpdatePlugin.cs" />
     <Compile Include="Plugins\CustomApi\UpdateUserProfilePlugin.cs" />
     <Compile Include="Plugins\ISPs\CreateConditionRecordsOnCreate.cs" />
-    <Compile Include="Plugins\ISPs\CreateRecordsOnSentForApprovalChangePlugin.cs" />
+    <Compile Include="Plugins\ISPs\PostUpdate.cs" />
     <Compile Include="Plugins\ISPs\SetFieldsOnSentForApprovalChangePlugin.cs" />
     <Compile Include="Plugins\LoanApplications\AssignLoanToTmTeamOnCreatePlugin.cs" />
     <Compile Include="Plugins\LoanApplications\CreateDocumentLocationOnCreatePlugin.cs" />
