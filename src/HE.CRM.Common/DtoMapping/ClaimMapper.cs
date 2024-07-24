@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IdentityModel.Protocols.WSTrust;
 using System.Linq;
+using System.Linq.Expressions;
 using DataverseModel;
+using HE.Base.Common.Extensions;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using Microsoft.Xrm.Sdk;
 
@@ -11,73 +13,86 @@ namespace HE.CRM.Common.DtoMapping
 {
     public class ClaimMapper
     {
-
-        public static MilestoneClaimDto MapToMilestoneClaimDto(invln_DeliveryPhase deliveryphase, int milestone, invln_Claim claim = null)
+        public static MilestoneClaimDto MapToMilestoneClaimDto(Entity recordData, int milestone, Guid claimId)
         {
             var result = new MilestoneClaimDto();
 
             if (milestone == (int)invln_Milestone.Acquisition &&
-                deliveryphase.invln_acquisitiondate == null &&
-                deliveryphase.invln_acquisitionmilestoneclaimdate == null)
+                recordData.GetAliasedAttributeValue<DateTime?>("DeliveryPhase", invln_DeliveryPhase.Fields.invln_acquisitiondate) == null &&
+                recordData.GetAliasedAttributeValue<DateTime?>("DeliveryPhase", invln_DeliveryPhase.Fields.invln_acquisitionmilestoneclaimdate) == null)
             {
                 return null;
             }
             if (milestone == (int)invln_Milestone.SoS &&
-                deliveryphase.invln_startonsitedate == null &&
-                deliveryphase.invln_startonsitemilestoneclaimdate == null)
+                recordData.GetAliasedAttributeValue<DateTime?>("DeliveryPhase", invln_DeliveryPhase.Fields.invln_startonsitedate) == null &&
+                recordData.GetAliasedAttributeValue<DateTime?>("DeliveryPhase", invln_DeliveryPhase.Fields.invln_startonsitemilestoneclaimdate) == null)
             {
                 return null;
             }
             if (milestone == (int)invln_Milestone.PC &&
-                deliveryphase.invln_completiondate == null &&
-                deliveryphase.invln_completionmilestoneclaimdate == null)
+                recordData.GetAliasedAttributeValue<DateTime?>("DeliveryPhase", invln_DeliveryPhase.Fields.invln_completiondate) == null &&
+                recordData.GetAliasedAttributeValue<DateTime?>("DeliveryPhase", invln_DeliveryPhase.Fields.invln_completionmilestoneclaimdate) == null)
             {
                 return null;
             }
 
-            if (claim == null)
+            if (claimId == Guid.Empty)
             {
                 result.Type = milestone;
 
                 if (milestone == (int)invln_Milestone.Acquisition)
                 {
-                    result.AmountOfGrantApportioned = deliveryphase.invln_AcquisitionValue.Value;
-                    result.PercentageOfGrantApportioned = deliveryphase.invln_AcquisitionPercentageValue.Value;
+                    result.AmountOfGrantApportioned = recordData.GetAliasedAttributeValue<Money>("DeliveryPhase", invln_DeliveryPhase.Fields.invln_AcquisitionValue).Value;
+                    result.PercentageOfGrantApportioned = recordData.GetAliasedAttributeValue<decimal?>("DeliveryPhase", invln_DeliveryPhase.Fields.invln_AcquisitionValue).Value;
                 }
                 if (milestone == (int)invln_Milestone.SoS)
                 {
-                    result.AmountOfGrantApportioned = deliveryphase.invln_StartOnSiteValue.Value;
-                    result.PercentageOfGrantApportioned = deliveryphase.invln_StartOnSitePercentageValue.Value;
+                    result.AmountOfGrantApportioned = recordData.GetAliasedAttributeValue<Money>("DeliveryPhase", invln_DeliveryPhase.Fields.invln_StartOnSiteValue).Value;
+                    result.PercentageOfGrantApportioned = recordData.GetAliasedAttributeValue<decimal?>("DeliveryPhase", invln_DeliveryPhase.Fields.invln_StartOnSitePercentageValue).Value;
                 }
                 if (milestone == (int)invln_Milestone.PC)
                 {
-                    result.AmountOfGrantApportioned = deliveryphase.invln_CompletionValue.Value;
-                    result.PercentageOfGrantApportioned = deliveryphase.invln_CompletionPercentageValue.Value;
+                    result.AmountOfGrantApportioned = recordData.GetAliasedAttributeValue<Money>("DeliveryPhase", invln_DeliveryPhase.Fields.invln_CompletionValue).Value;
+                    result.PercentageOfGrantApportioned = recordData.GetAliasedAttributeValue<decimal?>("DeliveryPhase", invln_DeliveryPhase.Fields.invln_CompletionPercentageValue).Value;
                 }
             }
             else
             {
-                result.Type = claim.invln_Milestone.Value;
-                result.Status = claim.StatusCode.Value;
-                result.AmountOfGrantApportioned = claim.invln_AmountApportionedtoMilestone.Value;
-                result.PercentageOfGrantApportioned = claim.invln_PercentageofGrantApportionedtoThisMilestone.HasValue ? (decimal)claim.invln_PercentageofGrantApportionedtoThisMilestone.Value : 0;
-                result.AchievementDate = claim.invln_MilestoneDate ?? null;
-                result.SubmissionDate = claim.invln_ClaimSubmissionDate ?? null;
-                result.CostIncurred = claim.invln_IncurredCosts;
-                result.IsConfirmed = claim.invln_RequirementsConfirmation;
+                var aliasName = "";
+                switch (milestone)
+                {
+                    case (int)invln_Milestone.Acquisition:
+                        aliasName = "ClaimAcquisition";
+                        break;
+                    case (int)invln_Milestone.SoS:
+                        aliasName = "ClaimSoS";
+                        break;
+                    case (int)invln_Milestone.PC:
+                        aliasName = "ClaimPC";
+                        break;
+                }
+
+                result.Type = recordData.GetAliasedAttributeValue<OptionSetValue>(aliasName, invln_Claim.Fields.invln_Milestone).Value;
+                result.Status = recordData.GetAliasedAttributeValue<OptionSetValue>(aliasName, invln_Claim.Fields.invln_ExternalStatus).Value;
+                result.AmountOfGrantApportioned = recordData.GetAliasedAttributeValue<Money>(aliasName, invln_Claim.Fields.invln_AmountApportionedtoMilestone).Value;
+                result.PercentageOfGrantApportioned = recordData.GetAliasedAttributeValue<double?>(aliasName, invln_Claim.Fields.invln_PercentageofGrantApportionedtoThisMilestone).HasValue ? (decimal)recordData.GetAliasedAttributeValue<double?>(aliasName, invln_Claim.Fields.invln_PercentageofGrantApportionedtoThisMilestone).Value : 0;
+                result.AchievementDate = recordData.GetAliasedAttributeValue<DateTime?>(aliasName, invln_Claim.Fields.invln_MilestoneDate) ?? null;
+                result.SubmissionDate = recordData.GetAliasedAttributeValue<DateTime?>(aliasName, invln_Claim.Fields.invln_ClaimSubmissionDate) ?? null;
+                result.CostIncurred = recordData.GetAliasedAttributeValue<bool?>(aliasName, invln_Claim.Fields.invln_IncurredCosts);
+                result.IsConfirmed = recordData.GetAliasedAttributeValue<bool?>(aliasName, invln_Claim.Fields.invln_RequirementsConfirmation);
             }
 
             if (milestone == (int)invln_Milestone.Acquisition)
             {
-                result.ForecastClaimDate = deliveryphase.invln_acquisitionmilestoneclaimdate.Value;
+                result.ForecastClaimDate = recordData.GetAliasedAttributeValue<DateTime?>("DeliveryPhase", invln_DeliveryPhase.Fields.invln_acquisitionmilestoneclaimdate).Value;
             }
             if (milestone == (int)invln_Milestone.SoS)
             {
-                result.ForecastClaimDate = deliveryphase.invln_startonsitemilestoneclaimdate.Value;
+                result.ForecastClaimDate = recordData.GetAliasedAttributeValue<DateTime?>("DeliveryPhase", invln_DeliveryPhase.Fields.invln_startonsitemilestoneclaimdate).Value;
             }
             if (milestone == (int)invln_Milestone.PC)
             {
-                result.ForecastClaimDate = deliveryphase.invln_completionmilestoneclaimdate.Value;
+                result.ForecastClaimDate = recordData.GetAliasedAttributeValue<DateTime?>("DeliveryPhase", invln_DeliveryPhase.Fields.invln_completionmilestoneclaimdate).Value;
             }
 
             return result;
