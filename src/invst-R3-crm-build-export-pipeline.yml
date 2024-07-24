@@ -4,6 +4,13 @@ pr: none
 pool:
   vmImage: windows-latest
 
+schedules:
+- cron: '30 4 * * 1,3,5'
+  displayName: '04:30 AM - Mon, Wed, Fri Solution Export'
+  branches:
+    include:
+    - development_R3
+
 parameters:
   - name: buildAndUpdatePlugins
     displayName: Build & Update Plugins ?
