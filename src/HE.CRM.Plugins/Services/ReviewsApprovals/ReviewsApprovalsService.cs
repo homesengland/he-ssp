@@ -28,11 +28,6 @@ namespace HE.CRM.Plugins.Services.ReviewsApprovals
 
         public void UpdateIspRelatedToApprovalsService(invln_reviewapproval target, invln_reviewapproval postImage)
         {
-
-            //var teamRepository = CrmRepositoriesFactory.GetSystem<ITeamRepository>();
-            //TracingService.Trace("Get DES Team");
-            //var desTeam = teamRepository.GetTeamByName("DES Team");
-
             if (postImage != null && postImage.invln_ispid != null && postImage.invln_status != null)
             {
                 var isp = _ispRepository.GetById(postImage.invln_ispid.Id, invln_ISP.Fields.invln_ApprovalLevelNew);
@@ -181,13 +176,13 @@ namespace HE.CRM.Plugins.Services.ReviewsApprovals
             {
                 isp.invln_ApprovalStatus = new OptionSetValue((int)invln_ApprovalStatus.Rejected);
                 isp.invln_DateApproved = null;
-                this._ispRepository.Update(isp);
+                _ispRepository.Update(isp);
             }
             else
             {
                 isp.invln_DateApproved = null;
                 isp.invln_ApprovalStatus = new OptionSetValue((int)invln_ApprovalStatus.Pending);
-                this._ispRepository.Update(isp);
+                _ispRepository.Update(isp);
             }
         }
 
