@@ -6,6 +6,7 @@ using HE.Investments.AHP.IntegrationTests.Order02FillSite.Data;
 using HE.Investments.AHP.IntegrationTests.Order03FillApplication.Data;
 using HE.Investments.AHP.IntegrationTests.Order03FillApplication.Data.DeliveryPhases;
 using HE.Investments.AHP.IntegrationTests.Order03FillApplication.Data.HomeTypes;
+using HE.Investments.AHP.IntegrationTests.Order05ManageAllocation.Data.Allocation;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.CRM.Model;
 using HE.Investments.IntegrationTestsFramework.Auth;
@@ -24,11 +25,11 @@ public class AhpDataManipulator
     public async Task<string> CreateAhpAllocation(
         ILoginData loginData,
         SiteData siteData,
-        ApplicationData applicationData,
         FinancialDetailsData financialDetailsData,
         SchemeInformationData schemeInformationData,
         HomeTypesData homeTypesData,
-        DeliveryPhasesData deliveryPhasesData)
+        DeliveryPhasesData deliveryPhasesData,
+        AllocationData allocationData)
     {
         if (string.IsNullOrEmpty(siteData.SiteId))
         {
@@ -37,8 +38,7 @@ public class AhpDataManipulator
             siteData.SetSiteId(siteId);
         }
 
-        var allocationId = await CreateAllocation(loginData, siteData, applicationData, financialDetailsData, schemeInformationData);
-        applicationData.SetApplicationId(allocationId);
+        var allocationId = await CreateAllocation(loginData, siteData, financialDetailsData, schemeInformationData, allocationData.AllocationName);
         await AddHomeTypes(loginData, allocationId, homeTypesData, schemeInformationData);
         await AddDeliveryPhases(loginData, allocationId, deliveryPhasesData, homeTypesData, schemeInformationData);
 
@@ -64,9 +64,9 @@ public class AhpDataManipulator
     private async Task<string> CreateAllocation(
         ILoginData loginData,
         SiteData siteData,
-        ApplicationData applicationData,
         FinancialDetailsData financialDetailsData,
-        SchemeInformationData schemeInformationData)
+        SchemeInformationData schemeInformationData,
+        string allocationName)
     {
         var applicationDto = new AhpApplicationDto
         {
@@ -99,7 +99,7 @@ public class AhpDataManipulator
             isPublicLand = financialDetailsData.IsPublicLand,
             meetingLocalHousingNeed = schemeInformationData.HousingNeedsMeetingLocalHousingNeed,
             meetingLocalProrities = schemeInformationData.HousingNeedsMeetingLocalPriorities,
-            name = applicationData.ApplicationName,
+            name = allocationName,
             noOfHomes = schemeInformationData.HousesToDeliver,
             organisationId = loginData.OrganisationId,
             otherCapitalSources = financialDetailsData.ExpectedContributionsOtherCapitalSources,
@@ -282,17 +282,18 @@ public class AhpDataManipulator
         rehabDeliveryPhase.numberOfHomes =
             new Dictionary<string, int?>
             {
-                { homeTypesData.Disabled.Id, schemeInformationData.HousesToDeliver / 4 },
-                { homeTypesData.General.Id, schemeInformationData.HousesToDeliver / 4 },
+                { homeTypesData.Disabled.Id, schemeInformationData.HousesToDeliver / 2 },
+                //{ homeTypesData.General.Id, schemeInformationData.HousesToDeliver / 4 },
             };
         offTheShelfDeliveryPhase.id = offTheShelfDeliveryPhaseId;
         offTheShelfDeliveryPhase.numberOfHomes = new Dictionary<string, int?>
         {
-            { homeTypesData.General.Id, schemeInformationData.HousesToDeliver / 4 },
-            { homeTypesData.Disabled.Id, schemeInformationData.HousesToDeliver / 4 },
+            { homeTypesData.General.Id, schemeInformationData.HousesToDeliver / 2 },
+            //{ homeTypesData.Disabled.Id, schemeInformationData.HousesToDeliver / 4 },
         };
 
         await _ahpCrmContext.SaveAhpDeliveryPhase(rehabDeliveryPhase, loginData, CancellationToken.None);
         await _ahpCrmContext.SaveAhpDeliveryPhase(offTheShelfDeliveryPhase, loginData, CancellationToken.None);
+        deliveryPhasesData.RehabDeliveryPhase.SetDeliveryPhaseId(rehabDeliveryPhaseId);
     }
 }

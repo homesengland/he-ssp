@@ -4,6 +4,7 @@ using HE.Investments.AHP.IntegrationTests.Framework;
 using HE.Investments.AHP.IntegrationTests.Order03FillApplication.Data;
 using HE.Investments.AHP.IntegrationTests.Order03FillApplication.Data.DeliveryPhases;
 using HE.Investments.AHP.IntegrationTests.Order03FillApplication.Data.HomeTypes;
+using HE.Investments.AHP.IntegrationTests.Order05ManageAllocation.Data.Phase;
 using HE.Investments.AHP.IntegrationTests.Pages;
 using HE.Investments.TestsUtils.Extensions;
 using Xunit;
@@ -27,6 +28,7 @@ public class Order01PrepareAllocation : AhpIntegrationTest
         });
         HomeTypesData = ReturnSharedData<HomeTypesData>();
         DeliveryPhasesData = ReturnSharedData<DeliveryPhasesData>();
+        PhaseData = ReturnSharedData<PhaseData>();
     }
 
     public SchemeInformationData SchemeInformationData { get; }
@@ -37,12 +39,14 @@ public class Order01PrepareAllocation : AhpIntegrationTest
 
     public DeliveryPhasesData DeliveryPhasesData { get; }
 
+    public PhaseData PhaseData { get; }
+
     [Fact(Skip = AhpConfig.SkipTest)]
     [Order(1)]
     public async Task Order01_AhpAllocationShouldBeCreated()
     {
         // given
-        ApplicationData.GenerateApplicationName("allocation");
+        AllocationData.GenerateAllocationName();
         SchemeInformationData.PopulateAllData();
         FinancialDetailsData.PopulateAllData(SchemeInformationData.RequiredFunding);
         HomeTypesData.General.PopulateAllData();
@@ -52,12 +56,15 @@ public class Order01PrepareAllocation : AhpIntegrationTest
         var allocationId = await AhpDataManipulator.CreateAhpAllocation(
             LoginData,
             SiteData,
-            ApplicationData,
             FinancialDetailsData,
             SchemeInformationData,
             HomeTypesData,
-            DeliveryPhasesData);
+            DeliveryPhasesData,
+            AllocationData);
         AllocationData.SetAllocationId(allocationId);
+        AllocationData.SetFromApplicationData(ApplicationData, SchemeInformationData.RequiredFunding);
+        PhaseData.SetPhaseId(DeliveryPhasesData.RehabDeliveryPhase.Id);
+        PhaseData.SetDataFromDeliveryPhase(DeliveryPhasesData.RehabDeliveryPhase, SchemeInformationData.RequiredFunding, SchemeInformationData.HousesToDeliver / 2);
 
         // when
         var currentPage = await TestClient.NavigateTo(ClaimsPagesUrl.Summary(UserOrganisationData.OrganisationId, allocationId));

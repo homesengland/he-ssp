@@ -9,14 +9,14 @@
     </gds-h3>
     <div>
         <span>Total grant allocated:</span>
-        <span class="grant-details-value">@(CurrencyHelper.DisplayPounds(Model.TotalGrantAllocated))</span>
+        <span class="grant-details-value" data-testid="grant-details-total-grant-allocated">@(CurrencyHelper.DisplayPounds(Model.TotalGrantAllocated))</span>
     </div>
     <div>
         <span>Amount paid:</span>
-        <span class="grant-details-value">@(CurrencyHelper.DisplayPounds(Model.AmountPaid))</span>
+        <span class="grant-details-value" data-testid="grant-details-amount-paid">@(CurrencyHelper.DisplayPounds(Model.AmountPaid))</span>
     </div>
     <div>
         <span>Amount remaining: </span>
-        <span class="grant-details-value">@(CurrencyHelper.DisplayPounds(Model.AmountRemaining))</span>
+        <span class="grant-details-value" data-testid="grant-details-amount remaining">@(CurrencyHelper.DisplayPounds(Model.AmountRemaining))</span>
     </div>
 </div>
