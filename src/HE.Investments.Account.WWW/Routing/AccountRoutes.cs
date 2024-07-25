@@ -38,4 +38,12 @@ public class AccountRoutes : IAccountRoutes
             new ControllerName(nameof(UserOrganisationsController)).WithoutPrefix(),
             null);
     }
+
+    public IActionResult OrganisationLandingPageForLoggedUser(string organisationId)
+    {
+        return new RedirectToActionResult(
+            nameof(UserOrganisationController.Index),
+            new ControllerName(nameof(UserOrganisationController)).WithoutPrefix(),
+            new { organisationId });
+    }
 }
