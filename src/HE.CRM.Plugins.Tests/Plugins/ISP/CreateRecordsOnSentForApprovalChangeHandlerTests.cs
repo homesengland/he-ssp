@@ -17,11 +17,15 @@ namespace HE.CRM.Plugins.Tests.Plugins.ISP
         private readonly Guid _DESTeamId = Guid.NewGuid();
         private readonly Guid _HoFTeamId = Guid.NewGuid();
         private readonly Guid _CROTeamId = Guid.NewGuid();
+        private readonly Guid _DesApprovalId = Guid.NewGuid();
+        private readonly Guid _HoFApprovalId = Guid.NewGuid();
 
         private invln_ISP isp = new invln_ISP();
         private Team DesTeam = new Team();
         private Team HoFTeam = new Team();
         private Team CROTeam = new Team();
+        private invln_reviewapproval desApproval = new invln_reviewapproval();
+        private invln_reviewapproval hofApproval = new invln_reviewapproval();
 
         [TestInitialize]
         public void Initialize()
@@ -39,6 +43,15 @@ namespace HE.CRM.Plugins.Tests.Plugins.ISP
 
             CROTeam.Id = _CROTeamId;
             CROTeam.Name = "CRO Team";
+
+            desApproval.Id = _DesApprovalId;
+            desApproval.invln_ispid = isp.ToEntityReference();
+            desApproval.invln_reviewerapprover = new OptionSetValue((int)invln_reviewerapproverset.DESReview);
+            desApproval.invln_name = "DES team review of ISP";
+            hofApproval.Id = _HoFApprovalId;
+            hofApproval.invln_ispid = isp.ToEntityReference();
+            hofApproval.invln_reviewerapprover = new OptionSetValue((int)invln_reviewerapproverset.HoFApproval);
+            hofApproval.invln_name = "HoF team approval of ISP";
         }
 
         [TestMethod]
@@ -179,6 +192,53 @@ namespace HE.CRM.Plugins.Tests.Plugins.ISP
             Assert.AreEqual(2, result.Count);
             Assert.AreEqual("DES team review of ISP", result.Where(x => x.invln_reviewerapprover.Value == (int)invln_reviewerapproverset.DESReview).FirstOrDefault().invln_name);
             Assert.AreEqual("HoF team approval of ISP", result.Where(x => x.invln_reviewerapprover.Value == (int)invln_reviewerapproverset.HoFReview).FirstOrDefault().invln_name);
+        }
+
+        [TestMethod]
+        public void DoWork_NextApproval_HOF()
+        {
+            Target = new invln_ISP
+            {
+                Id = _IspId,
+                invln_SendforApproval = true,
+                invln_ISPId = _IspId
+            };
+
+            PreImage = new invln_ISP
+            {
+                Id = _IspId,
+                invln_SendforApproval = false,
+                invln_ApprovalLevelNew = new OptionSetValue((int)invln_ApprovalLevel.HoF)
+            };
+
+            PostImage = new invln_ISP
+            {
+                Id = _IspId,
+                invln_SendforApproval = true,
+                invln_ApprovalLevelNew = new OptionSetValue((int)invln_ApprovalLevel.HoF)
+            };
+
+            fakedContext.Initialize(
+                new List<Entity>()
+                {
+                    isp,
+                    DesTeam,
+                    HoFTeam,
+                    CROTeam,
+                    desApproval,
+                    hofApproval
+                }
+                );
+
+            Asset("Update", (int)StageEnum.PreOperation);
+            handler.DoWork();
+
+            var result = fakedContext.CreateQuery<invln_reviewapproval>().ToList();
+            var oldApprovals = fakedContext.CreateQuery<invln_reviewapproval>().Where(x => x.invln_status.Value == (int)invln_StatusReviewApprovalSet.NotRequired).ToList();
+            Assert.AreEqual(4, result.Count);
+            Assert.AreEqual(2, oldApprovals.Count);
+            Assert.AreEqual("DES team review of ISP", result.Where(x => x.invln_reviewerapprover.Value == (int)invln_reviewerapproverset.DESReview).FirstOrDefault().invln_name);
+            Assert.AreEqual("HoF team approval of ISP", result.Where(x => x.invln_reviewerapprover.Value == (int)invln_reviewerapproverset.HoFApproval).FirstOrDefault().invln_name);
         }
     }
 }
