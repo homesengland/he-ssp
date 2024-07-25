@@ -16,7 +16,7 @@ public class MapToDtoTests : TestBase<PhaseCrmMapper>
     {
         // given
         var entity = PhaseEntityTestBuilder.New()
-            .WithId("phase-123")
+            .WithId("hoDlTGbjXE2ZOfVuSF70Bw")
             .WithName("My first phase")
             .WithCompletionMilestone(MilestoneClaimTestBuilder.Draft().Build())
             .Build();
@@ -25,7 +25,7 @@ public class MapToDtoTests : TestBase<PhaseCrmMapper>
         var result = TestCandidate.MapToDto(entity);
 
         // then
-        result.Id.Should().Be("phase-123");
+        result.Id.Should().Be("4ce58086-e366-4d5c-9939-f56e485ef407");
         result.Name.Should().Be("My first phase");
         result.AcquisitionMilestone.Should().BeNull();
         result.StartOnSiteMilestone.Should().BeNull();

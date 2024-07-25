@@ -37,10 +37,16 @@ public sealed class PhaseCrmMapper : IPhaseCrmMapper
 
     public PhaseClaimsDto MapToDto(PhaseEntity entity)
     {
+        var (newBuildActivityType, rehabBuildActivityType) = BuildActivityTypeMapper.ToDto(entity.BuildActivityType);
+
         return new PhaseClaimsDto
         {
-            Id = entity.Id.Value,
+            Id = entity.Id.ToGuidAsString(),
+            AllocationId = entity.Allocation.Id.ToGuidAsString(),
             Name = entity.Name.Value,
+            NumberOfHomes = entity.NumberOfHomes.Value,
+            NewBuildActivityType = newBuildActivityType,
+            RehabBuildActivityType = rehabBuildActivityType,
             AcquisitionMilestone = entity.AcquisitionMilestone != null ? ToMilestoneClaimDto(entity.AcquisitionMilestone) : null,
             StartOnSiteMilestone = entity.StartOnSiteMilestone != null ? ToMilestoneClaimDto(entity.StartOnSiteMilestone) : null,
             CompletionMilestone = ToMilestoneClaimDto(entity.CompletionMilestone),
@@ -55,6 +61,9 @@ public sealed class PhaseCrmMapper : IPhaseCrmMapper
             {
                 Type = _milestoneTypeMapper.ToDto(milestoneClaim.Type)!.Value,
                 Status = _milestoneStatusMapper.ToDto(milestoneClaim.Status)!.Value,
+                AmountOfGrantApportioned = milestoneClaim.GrantApportioned.Amount,
+                PercentageOfGrantApportioned = milestoneClaim.GrantApportioned.Percentage * 100m,
+                ForecastClaimDate = milestoneClaim.ClaimDate.ForecastClaimDate,
                 AchievementDate = DateTimeExtensions.FromDateDetails(milestoneClaim.ClaimDate.AchievementDate),
                 SubmissionDate = DateTimeExtensions.FromDateDetails(milestoneClaim.ClaimDate.SubmissionDate),
                 CostIncurred = milestoneClaim.CostsIncurred,
