@@ -166,7 +166,6 @@ namespace HE.CRM.Plugins.Services.ReviewsApprovals
                 ispToUpdate.invln_ApprovalStatus = new OptionSetValue((int)invln_ApprovalStatus.Approved);
                 _ispRepository.Update(ispToUpdate);
             }
-
         }
 
         private void CheckAndChangeStatusToPending(invln_ISP isp, List<invln_reviewapproval> reviewApprovals)
