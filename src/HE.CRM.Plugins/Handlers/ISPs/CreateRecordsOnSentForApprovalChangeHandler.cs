@@ -42,10 +42,10 @@ namespace HE.CRM.Plugins.Handlers.ISPs
             _reviewApprovalRepository.Create(new invln_reviewapproval()
             {
                 invln_ApprovalFor = new OptionSetValue((int)invln_ApprovalFor.ISP),
-                invln_Description = "DES Review of ISP ",
+                invln_Description = "DES team review of ISP",
                 invln_reviewerapprover = new OptionSetValue((int)invln_reviewerapproverset.DESReview),
                 invln_status = new OptionSetValue((int)invln_StatusReviewApprovalSet.Pending),
-                invln_name = "DES Review of ISP ",
+                invln_name = "DES team review of ISP",
                 invln_ispid = CurrentState.Id.ToEntityReference<invln_ISP>(),
                 OwnerId = desTeam.ToEntityReference(),
             });
@@ -58,9 +58,9 @@ namespace HE.CRM.Plugins.Handlers.ISPs
                 {
                     invln_ApprovalFor = new OptionSetValue((int)invln_ApprovalFor.ISP),
                     invln_Description = "HoF team approval of ISP",
-                    invln_reviewerapprover = new OptionSetValue((int)invln_reviewerapproverset.HoFReview),
+                    invln_reviewerapprover = new OptionSetValue((int)invln_reviewerapproverset.HoFApproval),
                     invln_status = new OptionSetValue((int)invln_StatusReviewApprovalSet.Pending),
-                    invln_name = "HoF Review of ISP ",
+                    invln_name = "HoF team approval of ISP",
                     invln_ispid = CurrentState.Id.ToEntityReference<invln_ISP>(),
                     OwnerId = hofTeam.ToEntityReference(),
                 });
@@ -68,16 +68,16 @@ namespace HE.CRM.Plugins.Handlers.ISPs
             else if (CurrentState.invln_ApprovalLevelNew.Value == (int)invln_ApprovalLevel.CRODelegatedAuthority || CurrentState.invln_ApprovalLevelNew.Value == (int)invln_ApprovalLevel.CRO)
             {
                 TracingService.Trace("Create CRO Approval");
-                var croTeam = teamRepository.GetTeamByName("CRO Team");
+                var hoFTeam = teamRepository.GetTeamByName("HoF Team");
                 _reviewApprovalRepository.Create(new invln_reviewapproval()
                 {
                     invln_ApprovalFor = new OptionSetValue((int)invln_ApprovalFor.ISP),
-                    invln_Description = "CRO team approval of ISP",
-                    invln_reviewerapprover = new OptionSetValue((int)invln_reviewerapproverset.CROApproval),
+                    invln_Description = "HoF team approval of ISP",
+                    invln_reviewerapprover = new OptionSetValue((int)invln_reviewerapproverset.HoFReview),
                     invln_status = new OptionSetValue((int)invln_StatusReviewApprovalSet.Pending),
-                    invln_name = " CRO Review of ISP ",
+                    invln_name = "HoF team approval of ISP",
                     invln_ispid = CurrentState.Id.ToEntityReference<invln_ISP>(),
-                    OwnerId = croTeam.ToEntityReference(),
+                    OwnerId = hoFTeam.ToEntityReference(),
                 });
             }
         }
