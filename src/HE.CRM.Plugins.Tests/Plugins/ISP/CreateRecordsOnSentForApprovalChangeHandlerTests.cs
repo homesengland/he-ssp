@@ -13,45 +13,45 @@ namespace HE.CRM.Plugins.Tests.Plugins.ISP
     [TestClass]
     public class CreateRecordsOnSentForApprovalChangeHandlerTests : CrmEntityHandlerTestBase<invln_ISP, CreateRecordsOnSentForApprovalChangeHandler, DataverseContext>
     {
-        private readonly Guid _IspId = Guid.NewGuid();
-        private readonly Guid _DESTeamId = Guid.NewGuid();
-        private readonly Guid _HoFTeamId = Guid.NewGuid();
-        private readonly Guid _CROTeamId = Guid.NewGuid();
-        private readonly Guid _DesApprovalId = Guid.NewGuid();
-        private readonly Guid _HoFApprovalId = Guid.NewGuid();
+        private readonly Guid _ispId = Guid.NewGuid();
+        private readonly Guid _dESTeamId = Guid.NewGuid();
+        private readonly Guid _hoFTeamId = Guid.NewGuid();
+        private readonly Guid _cROTeamId = Guid.NewGuid();
+        private readonly Guid _desApprovalId = Guid.NewGuid();
+        private readonly Guid _hoFApprovalId = Guid.NewGuid();
 
-        private invln_ISP isp = new invln_ISP();
-        private Team DesTeam = new Team();
-        private Team HoFTeam = new Team();
-        private Team CROTeam = new Team();
-        private invln_reviewapproval desApproval = new invln_reviewapproval();
-        private invln_reviewapproval hofApproval = new invln_reviewapproval();
+        private invln_ISP _isp = new invln_ISP();
+        private Team _desTeam = new Team();
+        private Team _hoFTeam = new Team();
+        private Team _cROTeam = new Team();
+        private invln_reviewapproval _desApproval = new invln_reviewapproval();
+        private invln_reviewapproval _hofApproval = new invln_reviewapproval();
 
         [TestInitialize]
         public void Initialize()
         {
             base.InitializeTest();
 
-            isp.Id = _IspId;
-            isp.invln_ApprovalLevelNew = new OptionSetValue((int)invln_ApprovalLevel.HoF);
+            _isp.Id = _ispId;
+            _isp.invln_ApprovalLevelNew = new OptionSetValue((int)invln_ApprovalLevel.HoF);
 
-            DesTeam.Id = _DESTeamId;
-            DesTeam.Name = "DES Team";
+            _desTeam.Id = _dESTeamId;
+            _desTeam.Name = "DES Team";
 
-            HoFTeam.Id = _HoFTeamId;
-            HoFTeam.Name = "HoF Team";
+            _hoFTeam.Id = _hoFTeamId;
+            _hoFTeam.Name = "HoF Team";
 
-            CROTeam.Id = _CROTeamId;
-            CROTeam.Name = "CRO Team";
+            _cROTeam.Id = _cROTeamId;
+            _cROTeam.Name = "CRO Team";
 
-            desApproval.Id = _DesApprovalId;
-            desApproval.invln_ispid = isp.ToEntityReference();
-            desApproval.invln_reviewerapprover = new OptionSetValue((int)invln_reviewerapproverset.DESReview);
-            desApproval.invln_name = "DES team review of ISP";
-            hofApproval.Id = _HoFApprovalId;
-            hofApproval.invln_ispid = isp.ToEntityReference();
-            hofApproval.invln_reviewerapprover = new OptionSetValue((int)invln_reviewerapproverset.HoFApproval);
-            hofApproval.invln_name = "HoF team approval of ISP";
+            _desApproval.Id = _desApprovalId;
+            _desApproval.invln_ispid = _isp.ToEntityReference();
+            _desApproval.invln_reviewerapprover = new OptionSetValue((int)invln_reviewerapproverset.DESReview);
+            _desApproval.invln_name = "DES team review of ISP";
+            _hofApproval.Id = _hoFApprovalId;
+            _hofApproval.invln_ispid = _isp.ToEntityReference();
+            _hofApproval.invln_reviewerapprover = new OptionSetValue((int)invln_reviewerapproverset.HoFApproval);
+            _hofApproval.invln_name = "HoF team approval of ISP";
         }
 
         [TestMethod]
@@ -136,10 +136,10 @@ namespace HE.CRM.Plugins.Tests.Plugins.ISP
             fakedContext.Initialize(
                 new List<Entity>()
                 {
-                    isp,
-                    DesTeam,
-                    HoFTeam,
-                    CROTeam
+                    _isp,
+                    _desTeam,
+                    _hoFTeam,
+                    _cROTeam
                 }
                 );
 
@@ -178,10 +178,10 @@ namespace HE.CRM.Plugins.Tests.Plugins.ISP
             fakedContext.Initialize(
                 new List<Entity>()
                 {
-                    isp,
-                    DesTeam,
-                    HoFTeam,
-                    CROTeam
+                    _isp,
+                    _desTeam,
+                    _hoFTeam,
+                    _cROTeam
                 }
                 );
 
@@ -199,21 +199,21 @@ namespace HE.CRM.Plugins.Tests.Plugins.ISP
         {
             Target = new invln_ISP
             {
-                Id = _IspId,
+                Id = _ispId,
                 invln_SendforApproval = true,
-                invln_ISPId = _IspId
+                invln_ISPId = _ispId
             };
 
             PreImage = new invln_ISP
             {
-                Id = _IspId,
+                Id = _ispId,
                 invln_SendforApproval = false,
                 invln_ApprovalLevelNew = new OptionSetValue((int)invln_ApprovalLevel.HoF)
             };
 
             PostImage = new invln_ISP
             {
-                Id = _IspId,
+                Id = _ispId,
                 invln_SendforApproval = true,
                 invln_ApprovalLevelNew = new OptionSetValue((int)invln_ApprovalLevel.HoF)
             };
@@ -221,12 +221,12 @@ namespace HE.CRM.Plugins.Tests.Plugins.ISP
             fakedContext.Initialize(
                 new List<Entity>()
                 {
-                    isp,
-                    DesTeam,
-                    HoFTeam,
-                    CROTeam,
-                    desApproval,
-                    hofApproval
+                    _isp,
+                    _desTeam,
+                    _hoFTeam,
+                    _cROTeam,
+                    _desApproval,
+                    _hofApproval
                 }
                 );
 
