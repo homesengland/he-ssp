@@ -1,8 +1,6 @@
 using HE.Investments.AHP.Allocation.Contract.Claims.Enum;
-using HE.Investments.AHP.Allocation.Domain.Claims.Enums;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Validators;
-using HE.Investments.Common.Domain;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Messages;
 using HE.Investments.Programme.Contract;
@@ -11,66 +9,21 @@ using MilestoneStatus = HE.Investments.AHP.Allocation.Domain.Claims.Enums.Milest
 
 namespace HE.Investments.AHP.Allocation.Domain.Claims.ValueObjects;
 
-public class MilestoneClaim : ValueObject
+public class DraftMilestoneClaim : MilestoneClaimBase
 {
-    public MilestoneClaim(
+    public DraftMilestoneClaim(
         MilestoneType type,
-        MilestoneStatus status,
         GrantApportioned grantApportioned,
         ClaimDate claimDate,
         bool? costsIncurred,
         bool? isConfirmed)
+        : base(type, MilestoneStatus.Draft, grantApportioned, claimDate, costsIncurred, isConfirmed)
     {
-        if (type != MilestoneType.Acquisition && costsIncurred.IsProvided())
-        {
-            OperationResult.ThrowValidationError(
-                nameof(CostsIncurred),
-                "Costs incurred can be provided only for Acquisition milestone");
-        }
-
-        Type = type;
-        Status = status;
-        GrantApportioned = grantApportioned;
-        ClaimDate = claimDate;
-        CostsIncurred = costsIncurred;
-        IsConfirmed = isConfirmed;
     }
 
-    public MilestoneType Type { get; }
+    public override bool IsSubmitted => false;
 
-    public MilestoneStatus Status { get; }
-
-    public GrantApportioned GrantApportioned { get; }
-
-    public ClaimDate ClaimDate { get; }
-
-    public bool? CostsIncurred { get; }
-
-    public bool? IsConfirmed { get; }
-
-    public bool IsSubmitted => Status >= MilestoneStatus.Submitted;
-
-    public MilestoneDueStatus CalculateDueStatus(DateTime today)
-    {
-        if (ClaimDate.ForecastClaimDate.Date.IsAfter(today.AddDays(14)))
-        {
-            return MilestoneDueStatus.Undefined;
-        }
-
-        if (ClaimDate.ForecastClaimDate.Date.IsAfter(today.AddDays(6)))
-        {
-            return MilestoneDueStatus.DueSoon;
-        }
-
-        if (ClaimDate.ForecastClaimDate.Date.IsAfter(today.AddDays(-7)))
-        {
-            return MilestoneDueStatus.Due;
-        }
-
-        return MilestoneDueStatus.Overdue;
-    }
-
-    public MilestoneClaim WithAchievementDate(
+    public override MilestoneClaimBase WithAchievementDate(
         DateDetails? achievementDate,
         AhpProgramme programme,
         DateDetails? previousSubmissionDate,
@@ -82,11 +35,18 @@ public class MilestoneClaim : ValueObject
         ValidatePreviousSubmissionDate(previousSubmissionDate, achievementDateTime);
         ValidateProgrammeDates(programme, achievementDateTime!.Value);
 
-        return new MilestoneClaim(Type, Status, GrantApportioned, ClaimDate, CostsIncurred, IsConfirmed);
+        return new DraftMilestoneClaim(Type, GrantApportioned, ClaimDate, CostsIncurred, IsConfirmed);
     }
 
-    public MilestoneClaim WithCostsIncurred(bool? costsIncurred)
+    public override MilestoneClaimBase WithCostsIncurred(bool? costsIncurred)
     {
+        if (Type != MilestoneType.Acquisition)
+        {
+            OperationResult.ThrowValidationError(
+                nameof(CostsIncurred),
+                "Costs incurred can be provided only for Acquisition milestone");
+        }
+
         if (costsIncurred.IsNotProvided())
         {
             OperationResult.ThrowValidationError(
@@ -95,52 +55,30 @@ public class MilestoneClaim : ValueObject
                     "you have incurred costs and made payments to at least the level of the grant"));
         }
 
-        return new MilestoneClaim(
+        return new DraftMilestoneClaim(
             Type,
-            Status,
             GrantApportioned,
             ClaimDate,
             costsIncurred,
             IsConfirmed);
     }
 
-    public MilestoneClaim WithConfirmation(bool? isConfirmed)
+    public override MilestoneClaimBase WithConfirmation(bool? isConfirmed)
     {
         if (isConfirmed != true)
         {
             OperationResult.ThrowValidationError(nameof(IsConfirmed), "Confirm the declaration to continue");
         }
 
-        return new MilestoneClaim(
-            Type,
-            Status,
-            GrantApportioned,
-            ClaimDate,
-            CostsIncurred,
-            isConfirmed);
+        return new DraftMilestoneClaim(Type, GrantApportioned, ClaimDate, CostsIncurred, isConfirmed);
     }
 
-    public CanceledMilestoneClaim Cancel()
+    public override MilestoneWithoutClaim Cancel()
     {
-        if (Status != MilestoneStatus.Draft)
-        {
-            OperationResult.ThrowValidationError(nameof(MilestoneClaim), "Cannot cancel submitted claim");
-        }
-
-        return new CanceledMilestoneClaim(this);
+        return new MilestoneWithoutClaim(this);
     }
 
-    protected override IEnumerable<object?> GetAtomicValues()
-    {
-        yield return Type;
-        yield return Status;
-        yield return GrantApportioned;
-        yield return ClaimDate;
-        yield return CostsIncurred;
-        yield return IsConfirmed;
-    }
-
-    private void ValidateAchievementDate(DateDetails? achievementDate)
+    private static void ValidateAchievementDate(DateDetails? achievementDate)
     {
         if (achievementDate.IsNotProvided() || achievementDate!.Day.IsNotProvided() || achievementDate.Month.IsNotProvided() ||
             achievementDate.Year.IsNotProvided())
@@ -149,7 +87,7 @@ public class MilestoneClaim : ValueObject
         }
     }
 
-    private void ValidateDateIsNotFuture(DateTime? achievementDateTime, DateTime currentDate)
+    private static void ValidateDateIsNotFuture(DateTime? achievementDateTime, DateTime currentDate)
     {
         if (achievementDateTime!.Value.IsAfter(currentDate))
         {
@@ -157,7 +95,7 @@ public class MilestoneClaim : ValueObject
         }
     }
 
-    private void ValidatePreviousSubmissionDate(DateDetails? previousSubmissionDate, DateTime? achievementDateTime)
+    private static void ValidatePreviousSubmissionDate(DateDetails? previousSubmissionDate, DateTime? achievementDateTime)
     {
         var previousSubmissionDateTime = DateTimeExtensions.FromDateDetails(previousSubmissionDate);
         if (previousSubmissionDate.IsProvided() && achievementDateTime!.Value.IsBefore(previousSubmissionDateTime!.Value))
@@ -165,6 +103,13 @@ public class MilestoneClaim : ValueObject
             OperationResult.ThrowValidationError(nameof(ClaimDate.AchievementDate), ValidationErrorMessage.DatesOutsideTheProgramme);
         }
     }
+
+    private static bool DateWithinRange(DateTime date, DateRange range) => date.IsAfter(range.StartDate) && date.IsBeforeOrEqualTo(range.EndDate);
+
+    private static bool DateWithinProgrammeAndFundingDates(DateTime date, AhpProgramme programme) =>
+        DateWithinRange(date, programme.ProgrammeDates) && DateWithinRange(date, programme.FundingDates);
+
+    private static bool DateWithinProgrammeDates(DateTime date, AhpProgramme programme) => DateWithinRange(date, programme.ProgrammeDates);
 
     private void ValidateProgrammeDates(AhpProgramme programme, DateTime achievementDateTime)
     {
@@ -193,11 +138,4 @@ public class MilestoneClaim : ValueObject
             OperationResult.ThrowValidationError(nameof(ClaimDate.AchievementDate), ValidationErrorMessage.DatesOutsideTheProgramme);
         }
     }
-
-    private bool DateWithinRange(DateTime date, DateRange range) => date.IsAfter(range.StartDate) && date.IsBeforeOrEqualTo(range.EndDate);
-
-    private bool DateWithinProgrammeAndFundingDates(DateTime date, AhpProgramme programme) =>
-        DateWithinRange(date, programme.ProgrammeDates) && DateWithinRange(date, programme.FundingDates);
-
-    private bool DateWithinProgrammeDates(DateTime date, AhpProgramme programme) => DateWithinRange(date, programme.ProgrammeDates);
 }

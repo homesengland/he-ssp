@@ -12,7 +12,7 @@ internal sealed class ProvideClaimConfirmationCommandHandler : ProvideClaimDetai
     {
     }
 
-    protected override MilestoneClaim Provide(ProvideClaimConfirmationCommand request, MilestoneClaim claim)
+    protected override MilestoneClaimBase Provide(ProvideClaimConfirmationCommand request, MilestoneClaimBase claim)
     {
         return claim.WithConfirmation(request.IsConfirmed);
     }

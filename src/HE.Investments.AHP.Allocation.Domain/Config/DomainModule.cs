@@ -1,6 +1,7 @@
 using HE.Investments.AHP.Allocation.Domain.Allocation.Crm;
 using HE.Investments.AHP.Allocation.Domain.Allocation.Mappers;
 using HE.Investments.AHP.Allocation.Domain.Allocation.Repositories;
+using HE.Investments.AHP.Allocation.Domain.Claims.Crm;
 using HE.Investments.AHP.Allocation.Domain.Claims.Mappers;
 using HE.Investments.AHP.Allocation.Domain.Claims.Repositories;
 using Microsoft.Extensions.DependencyInjection;
@@ -27,5 +28,7 @@ public static class DomainModule
         services.AddScoped<IAllocationContractMapper, AllocationContractMapper>();
         services.AddScoped<IPhaseContractMapper, PhaseContractMapper>();
         services.AddSingleton<IMilestoneClaimContractMapper, MilestoneClaimContractMapper>();
+        services.AddSingleton<MilestoneStatusMapper>();
+        services.AddSingleton<MilestoneTypeMapper>();
     }
 }

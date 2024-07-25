@@ -7,13 +7,11 @@ namespace HE.Investments.AHP.Allocation.Domain.Tests.Claims.ValueObjects.Milesto
 
 public class IsSubmittedTests
 {
-    [Theory]
-    [InlineData(MilestoneStatus.Undefined)]
-    [InlineData(MilestoneStatus.Draft)]
-    public void ShouldReturnFalse_WhenStatusIs(MilestoneStatus status)
+    [Fact]
+    public void ShouldReturnFalse_WhenMilestoneClaimIsDraft()
     {
         // given
-        var testCandidate = MilestoneClaimTestBuilder.New().WithStatus(status).Build();
+        var testCandidate = MilestoneClaimTestBuilder.Draft().Build();
 
         // when
         var result = testCandidate.IsSubmitted;
@@ -27,11 +25,11 @@ public class IsSubmittedTests
     [InlineData(MilestoneStatus.UnderReview)]
     [InlineData(MilestoneStatus.Approved)]
     [InlineData(MilestoneStatus.Rejected)]
-    [InlineData(MilestoneStatus.Reclaimed)]
+    [InlineData(MilestoneStatus.Paid)]
     public void ShouldReturnTrue_WhenStatusIs(MilestoneStatus status)
     {
         // given
-        var testCandidate = MilestoneClaimTestBuilder.New().WithStatus(status).Build();
+        var testCandidate = MilestoneClaimTestBuilder.Draft().Submitted(status).Build();
 
         // when
         var result = testCandidate.IsSubmitted;

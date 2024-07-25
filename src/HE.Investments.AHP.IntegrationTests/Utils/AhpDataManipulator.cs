@@ -37,7 +37,7 @@ public class AhpDataManipulator
             siteData.SetSiteId(siteId);
         }
 
-        var allocationId = await CreateApplication(loginData, siteData, applicationData, financialDetailsData, schemeInformationData);
+        var allocationId = await CreateAllocation(loginData, siteData, applicationData, financialDetailsData, schemeInformationData);
         applicationData.SetApplicationId(allocationId);
         await AddHomeTypes(loginData, allocationId, homeTypesData, schemeInformationData);
         await AddDeliveryPhases(loginData, allocationId, deliveryPhasesData, homeTypesData, schemeInformationData);
@@ -61,7 +61,7 @@ public class AhpDataManipulator
         return await _ahpCrmContext.SaveAhpSite(dto, loginData, CancellationToken.None);
     }
 
-    private async Task<string> CreateApplication(
+    private async Task<string> CreateAllocation(
         ILoginData loginData,
         SiteData siteData,
         ApplicationData applicationData,
@@ -112,8 +112,7 @@ public class AhpDataManipulator
             representationsandwarranties = true,
             schemeInformationSectionCompletionStatus = (int)invln_Sectioncompletionstatus.Completed,
             tenure = (int)invln_Tenure.Affordablerent,
-
-            // todo set isAllocation flag
+            isAllocation = true,
         };
         var applicationId = await _ahpCrmContext.SaveAhpApplication(applicationDto, loginData, CancellationToken.None);
 
@@ -283,14 +282,14 @@ public class AhpDataManipulator
         rehabDeliveryPhase.numberOfHomes =
             new Dictionary<string, int?>
             {
-                { homeTypesData.Disabled.Id, schemeInformationData.HousesToDeliver / 2 },
-                { homeTypesData.General.Id, schemeInformationData.HousesToDeliver / 2 },
+                { homeTypesData.Disabled.Id, schemeInformationData.HousesToDeliver / 4 },
+                { homeTypesData.General.Id, schemeInformationData.HousesToDeliver / 4 },
             };
         offTheShelfDeliveryPhase.id = offTheShelfDeliveryPhaseId;
         offTheShelfDeliveryPhase.numberOfHomes = new Dictionary<string, int?>
         {
-            { homeTypesData.General.Id, schemeInformationData.HousesToDeliver / 2 },
-            { homeTypesData.Disabled.Id, schemeInformationData.HousesToDeliver / 2 },
+            { homeTypesData.General.Id, schemeInformationData.HousesToDeliver / 4 },
+            { homeTypesData.Disabled.Id, schemeInformationData.HousesToDeliver / 4 },
         };
 
         await _ahpCrmContext.SaveAhpDeliveryPhase(rehabDeliveryPhase, loginData, CancellationToken.None);

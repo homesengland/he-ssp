@@ -3,8 +3,8 @@ using HE.Investments.AHP.Allocation.Contract;
 using HE.Investments.AHP.Allocation.Contract.Claims;
 using HE.Investments.AHP.Allocation.Domain.Allocation.Crm;
 using HE.Investments.AHP.Allocation.Domain.Allocation.Mappers;
+using HE.Investments.AHP.Allocation.Domain.Claims.Crm;
 using HE.Investments.AHP.Allocation.Domain.Claims.Entities;
-using HE.Investments.AHP.Allocation.Domain.Claims.Mappers;
 using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Infrastructure.Events;
 
@@ -51,6 +51,13 @@ public class PhaseRepository : IPhaseRepository
             return;
         }
 
+        var dto = _phaseCrmMapper.MapToDto(phaseEntity);
+        await _allocationCrmContext.Save(
+            phaseEntity.Allocation.Id.Value,
+            dto,
+            userAccount.SelectedOrganisationId().Value,
+            userAccount.UserGlobalId.Value,
+            cancellationToken);
         await _eventDispatcher.Publish(phaseEntity, cancellationToken);
     }
 }

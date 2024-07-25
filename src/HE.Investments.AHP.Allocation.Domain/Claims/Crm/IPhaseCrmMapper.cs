@@ -2,7 +2,7 @@ using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investments.AHP.Allocation.Domain.Allocation.ValueObjects;
 using HE.Investments.AHP.Allocation.Domain.Claims.Entities;
 
-namespace HE.Investments.AHP.Allocation.Domain.Claims.Mappers;
+namespace HE.Investments.AHP.Allocation.Domain.Claims.Crm;
 
 public interface IPhaseCrmMapper
 {

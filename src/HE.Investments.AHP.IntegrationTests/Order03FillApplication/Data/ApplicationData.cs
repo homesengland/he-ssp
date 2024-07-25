@@ -17,9 +17,14 @@ public class ApplicationData
 
     public Tenure Tenure => Tenure.AffordableRent;
 
-    public ApplicationData GenerateApplicationName()
+    public ApplicationData GenerateApplicationName(string? customName = null)
     {
-        ApplicationName = $"IT_{DateTime.UtcNow.ToString(CultureInfo.InvariantCulture)}";
+        if (!string.IsNullOrEmpty(customName))
+        {
+            customName += "_";
+        }
+
+        ApplicationName = $"IT_{customName}{DateTime.UtcNow.ToString(CultureInfo.InvariantCulture)}";
         return this;
     }
 

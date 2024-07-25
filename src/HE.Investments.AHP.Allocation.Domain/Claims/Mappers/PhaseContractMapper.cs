@@ -34,7 +34,7 @@ public sealed class PhaseContractMapper : IPhaseContractMapper
             phase.Name.Value,
             MapAllocationInfo(phase.Allocation),
             phase.NumberOfHomes.Value.ToString(CultureInfo.InvariantCulture),
-            phase.BuildActivityType.Value,
+            phase.BuildActivityType,
             milestoneClaims);
     }
 

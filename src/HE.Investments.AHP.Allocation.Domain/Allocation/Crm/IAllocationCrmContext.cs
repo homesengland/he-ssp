@@ -5,4 +5,6 @@ namespace HE.Investments.AHP.Allocation.Domain.Allocation.Crm;
 public interface IAllocationCrmContext
 {
     Task<AllocationClaimsDto> GetById(string id, string organisationId, string userId, CancellationToken cancellationToken);
+
+    Task Save(string allocationId, PhaseClaimsDto dto, string organisationId, string userId, CancellationToken cancellationToken);
 }
