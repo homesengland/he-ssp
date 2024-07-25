@@ -52,9 +52,13 @@ namespace HE.CRM.Plugins.Handlers.ReviewsApprovals
                 _reviewApprovalRepository.Create(
                     new invln_reviewapproval()
                     {
-                        invln_ApprovalFor = new OptionSetValue((int)invln_app)
+                        invln_ApprovalFor = new OptionSetValue((int)invln_ApprovalFor.ISP),
+                        invln_Description = "CRO approval of ISP",
+                        invln_reviewerapprover = new OptionSetValue((int)invln_reviewerapproverset.CROApproval),
+                        invln_status = new OptionSetValue((int) )
+                        invln_name = "CRO approval of ISP"
                     }
-                    )
+                    );
             }
 
         }
