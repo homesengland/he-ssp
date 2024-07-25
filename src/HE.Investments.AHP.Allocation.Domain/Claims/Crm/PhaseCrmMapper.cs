@@ -64,7 +64,7 @@ public sealed class PhaseCrmMapper : IPhaseCrmMapper
                 AmountOfGrantApportioned = milestoneClaim.GrantApportioned.Amount,
                 PercentageOfGrantApportioned = milestoneClaim.GrantApportioned.Percentage * 100m,
                 ForecastClaimDate = milestoneClaim.ClaimDate.ForecastClaimDate,
-                AchievementDate = DateTimeExtensions.FromDateDetails(milestoneClaim.ClaimDate.AchievementDate),
+                AchievementDate = milestoneClaim.ClaimDate.AchievementDate?.Value,
                 SubmissionDate = DateTimeExtensions.FromDateDetails(milestoneClaim.ClaimDate.SubmissionDate),
                 CostIncurred = milestoneClaim.CostsIncurred,
                 IsConfirmed = milestoneClaim.IsConfirmed,
@@ -80,7 +80,10 @@ public sealed class PhaseCrmMapper : IPhaseCrmMapper
         }
 
         var status = _milestoneStatusMapper.ToDomain(dto.Status)!.Value;
-        var claimDate = new ClaimDate(dto.ForecastClaimDate, DateDetails.FromDateTime(dto.AchievementDate), DateDetails.FromDateTime(dto.SubmissionDate));
+        var claimDate = new ClaimDate(
+            dto.ForecastClaimDate,
+            dto.AchievementDate.IsProvided() ? new AchievementDate(dto.AchievementDate) : null,
+            DateDetails.FromDateTime(dto.SubmissionDate));
 
         return status >= MilestoneStatus.Submitted
             ? new SubmittedMilestoneClaim(type, status, grantApportioned, claimDate, dto.CostIncurred, dto.IsConfirmed)

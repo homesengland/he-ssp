@@ -27,7 +27,7 @@ public sealed class SubmittedMilestoneClaim : MilestoneClaimBase
     public override bool IsSubmitted => true;
 
     public override MilestoneClaimBase WithAchievementDate(
-        DateDetails? achievementDate,
+        AchievementDate achievementDate,
         Programme.Contract.Programme programme,
         DateDetails? previousSubmissionDate,
         DateTime currentDate)

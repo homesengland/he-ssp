@@ -24,16 +24,20 @@ public class DraftMilestoneClaim : MilestoneClaimBase
     public override bool IsSubmitted => false;
 
     public override MilestoneClaimBase WithAchievementDate(
-        DateDetails? achievementDate,
+        AchievementDate achievementDate,
         AhpProgramme programme,
         DateDetails? previousSubmissionDate,
         DateTime currentDate)
     {
-        var achievementDateTime = DateTimeExtensions.FromDateDetails(achievementDate);
         ValidateAchievementDate(achievementDate);
-        ValidateDateIsNotFuture(achievementDateTime, currentDate);
-        ValidatePreviousSubmissionDate(previousSubmissionDate, achievementDateTime);
-        ValidateProgrammeDates(programme, achievementDateTime!.Value);
+        ValidateDateIsNotFuture(achievementDate.Value, currentDate);
+        ValidatePreviousSubmissionDate(previousSubmissionDate, achievementDate.Value);
+        ValidateProgrammeDates(programme, achievementDate.Value!.Value);
+
+        _modificationTracker.Change(
+            ClaimDate.AchievementDate,
+            achievementDate,
+            () => ClaimDate.WithAchievementDate(achievementDate));
 
         return new DraftMilestoneClaim(Type, GrantApportioned, ClaimDate, CostsIncurred, IsConfirmed);
     }
@@ -78,10 +82,9 @@ public class DraftMilestoneClaim : MilestoneClaimBase
         return new MilestoneWithoutClaim(this);
     }
 
-    private static void ValidateAchievementDate(DateDetails? achievementDate)
+    private static void ValidateAchievementDate(AchievementDate achievementDate)
     {
-        if (achievementDate.IsNotProvided() || achievementDate!.Day.IsNotProvided() || achievementDate.Month.IsNotProvided() ||
-            achievementDate.Year.IsNotProvided())
+        if (achievementDate.IsNotProvided() || achievementDate.Value.IsNotProvided())
         {
             OperationResult.ThrowValidationError(nameof(ClaimDate.AchievementDate), ValidationErrorMessage.MustProvideRequiredField("achievement date"));
         }

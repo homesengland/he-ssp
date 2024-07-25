@@ -101,7 +101,8 @@ public class AllocationClaimController : WorkflowController<AllocationClaimWorkf
         return await ExecuteClaimCommand(
             new ProvideClaimAchievementDateCommand(AllocationId.From(allocationId), PhaseId.From(phaseId), claimType, achievementDate),
             nameof(AchievementDate),
-            cancellationToken);
+            cancellationToken,
+            achievementDate);
     }
 
     [HttpGet("confirmation")]
@@ -181,17 +182,32 @@ public class AllocationClaimController : WorkflowController<AllocationClaimWorkf
     {
         var phaseClaims = await GetPhaseClaims(allocationId, phaseId, cancellationToken);
 
+        var milestoneClaim = phaseClaims.MilestoneClaims.Single(x => x.Type == claimType);
+
+        var milestoneClaimModel = new MilestoneClaimModel(
+            milestoneClaim.Type,
+            milestoneClaim.Status,
+            milestoneClaim.AmountOfGrantApportioned,
+            milestoneClaim.PercentageOfGrantApportioned,
+            milestoneClaim.ForecastClaimDate,
+            milestoneClaim.AchievementDate,
+            milestoneClaim.SubmissionDate,
+            milestoneClaim.CanBeClaimed,
+            milestoneClaim.CostsIncurred,
+            milestoneClaim.IsConfirmed);
+
         return new PhaseClaimModel(
             phaseClaims.Id.Value,
             phaseClaims.Name,
             phaseClaims.Allocation,
-            phaseClaims.MilestoneClaims.Single(x => x.Type == claimType));
+            milestoneClaimModel);
     }
 
     private async Task<IActionResult> ExecuteClaimCommand<TCommand>(
         TCommand command,
         string viewName,
-        CancellationToken cancellationToken)
+        CancellationToken cancellationToken,
+        DateDetails? achievementDate = null)
             where TCommand : IProvideClaimDetailsCommand
     {
         if (Request.IsCancelAndReturnAction())
@@ -215,7 +231,12 @@ public class AllocationClaimController : WorkflowController<AllocationClaimWorkf
                     phaseId = command.PhaseId.Value,
                     claimType = command.MilestoneType,
                 }),
-            async () => View(viewName, await GetClaimModel(command.AllocationId.Value, command.PhaseId.Value, command.MilestoneType, cancellationToken)),
+            async () =>
+            {
+                var model = await GetClaimModel(command.AllocationId.Value, command.PhaseId.Value, command.MilestoneType, cancellationToken);
+                var modelWithError = new PhaseClaimModel(model.Id, model.Name, model.Allocation, model.Claim) { Claim = { AchievementDate = achievementDate } };
+                return View(viewName, modelWithError);
+            },
             cancellationToken);
     }
 }

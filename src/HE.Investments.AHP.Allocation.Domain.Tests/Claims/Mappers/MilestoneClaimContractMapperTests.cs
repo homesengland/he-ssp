@@ -28,9 +28,9 @@ public class MilestoneClaimContractMapperTests : TestBase<MilestoneClaimContract
         result.ForecastClaimDate.Day.Should().Be(milestoneClaim.ClaimDate.ForecastClaimDate.Day.ToString(CultureInfo.InvariantCulture));
         result.ForecastClaimDate.Month.Should().Be(milestoneClaim.ClaimDate.ForecastClaimDate.Month.ToString(CultureInfo.InvariantCulture));
         result.ForecastClaimDate.Year.Should().Be(milestoneClaim.ClaimDate.ForecastClaimDate.Year.ToString(CultureInfo.InvariantCulture));
-        result.AchievementDate!.Day.Should().Be(milestoneClaim.ClaimDate.AchievementDate!.Day!.ToString(CultureInfo.InvariantCulture));
-        result.AchievementDate!.Month.Should().Be(milestoneClaim.ClaimDate.AchievementDate!.Month!.ToString(CultureInfo.InvariantCulture));
-        result.AchievementDate!.Year.Should().Be(milestoneClaim.ClaimDate.AchievementDate!.Year!.ToString(CultureInfo.InvariantCulture));
+        result.AchievementDate!.Day.Should().Be(milestoneClaim.ClaimDate.AchievementDate!.Value!.Value.Day.ToString(CultureInfo.InvariantCulture));
+        result.AchievementDate!.Month.Should().Be(milestoneClaim.ClaimDate.AchievementDate!.Value!.Value.Month.ToString(CultureInfo.InvariantCulture));
+        result.AchievementDate!.Year.Should().Be(milestoneClaim.ClaimDate.AchievementDate!.Value!.Value.Year.ToString(CultureInfo.InvariantCulture));
     }
 
     [Fact]
