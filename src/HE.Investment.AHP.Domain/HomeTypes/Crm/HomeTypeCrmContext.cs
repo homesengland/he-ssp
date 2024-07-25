@@ -35,7 +35,7 @@ public class HomeTypeCrmContext : IHomeTypeCrmContext
                 nameof(invln_HomeType.invln_floorarea),
                 nameof(invln_HomeType.invln_doallhomesmeetNDSS),
                 nameof(invln_HomeType.invln_whichndssstandardshavebeenmet),
-                "invln_mmcapplied", // TODO: AB#86986 use nameof when earlybound will be provided
+                nameof(invln_HomeType.invln_mmcapplied),
                 nameof(invln_HomeType.invln_mmccategories),
                 nameof(invln_HomeType.invln_mmccategory1subcategories),
                 nameof(invln_HomeType.invln_mmccategory2subcategories),

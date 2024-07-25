@@ -1,0 +1,17 @@
+@model IList<HE.Investments.Common.WWW.Components.ListCard.ListCardModel>
+
+<div class="govuk-summary-card">
+    <div class="govuk-summary-card__title-wrapper">
+        <h2 class="govuk-summary-card__title">@Model.First().Header</h2>
+    </div>
+    <div class="govuk-summary-card__content">
+        @foreach (var listCardModel in Model)
+        {
+            <vc:list-card-content model="@listCardModel" />
+            if (listCardModel.Title != Model.Last().Title)
+            {
+                <hr class="govuk-section-break govuk-section-break--m" />
+            }
+        }
+    </div>
+</div>

@@ -1,8 +1,10 @@
+using System.Globalization;
 using System.Text;
 using System.Web;
 using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
 using FluentAssertions;
+using HE.Investments.Common.Extensions;
 using HE.Investments.TestsUtils.Helpers;
 
 namespace HE.Investments.TestsUtils.Extensions;
@@ -146,6 +148,7 @@ public static class HtmlDocumentExtensions
     {
         var summaryRows = htmlDocument.GetElementsByClassName("govuk-summary-list__row");
         var dictionary = new Dictionary<string, SummaryItem>();
+        var duplicateKeyCounter = 1;
         foreach (var summaryRow in summaryRows)
         {
             var key = summaryRow.GetElementsByClassName("govuk-summary-list__key").Single().InnerHtml.Trim();
@@ -156,7 +159,8 @@ public static class HtmlDocumentExtensions
 
             if (!dictionary.TryAdd(key, item))
             {
-                dictionary[$"{header} - {key}"] = item;
+                dictionary[$"{(header.IsProvided() ? header : duplicateKeyCounter.ToString(CultureInfo.InvariantCulture))} - {key}"] = item;
+                duplicateKeyCounter++;
             }
         }
 
@@ -288,6 +292,10 @@ public static class HtmlDocumentExtensions
         else if (valueRow?.Children.Length == 1)
         {
             valueBuilder.Append(valueRow.LastElementChild!.InnerHtml.Trim());
+        }
+        else if (!string.IsNullOrEmpty(valueRow?.InnerHtml))
+        {
+            valueBuilder.Append(valueRow!.InnerHtml);
         }
         else
         {

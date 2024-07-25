@@ -5,10 +5,10 @@ pool:
   vmImage: windows-latest
 
 parameters:
-  - name: mainSolutionName
-    displayName: Main Solution name
-    type: string
-    default: 'InvestmentsLoansReleaseFixesv1_2'
+- name: mainSolutionName
+  displayName: Main Solution name
+  type: string
+  default: 'InvestmentsLoansReleaseFixesv1_2'
 
 variables:
   solution: "**/*.sln"
@@ -18,18 +18,13 @@ variables:
 
 resources:
   repositories:
-    - repository: he-invst-deployment
-      type: git
-      name: "Investments Programme/he-invst-deployment"
-      ref: "main"
-  pipelines:
-    - pipeline: BuildPipeline
-      source: "Hotfix - CRM - Build"
-      trigger: none
+  - repository: he-invst-deployment
+    type: git
+    name: "Investments Programme/he-invst-deployment"
+    ref: "main"
 
 stages:
-  - template: crm-deployment-pipelines/hotfix-crm-deploy-prod.yml@he-invst-deployment
-    parameters:
-      artifactLocationPipeline: BuildPipeline
-      deployMainSolution: true
-      mainSolutionName: "${{ parameters.mainSolutionName }}"
+- template: crm-deployment-pipelines/hotfix-crm-deploy-prod.yml@he-invst-deployment
+  parameters:
+    deployMainSolution: true
+    mainSolutionName: "${{ parameters.mainSolutionName }}"

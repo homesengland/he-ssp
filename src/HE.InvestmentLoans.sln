@@ -146,15 +146,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HE.Investments.Consortium.S
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HE.CRM.AHP.Plugins.Tests", "HE.CRM.AHP.Plugins.Tests\HE.CRM.AHP.Plugins.Tests.csproj", "{0CD54056-E9DF-4A43-8A95-D7A64CF14780}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HE.Investments.Api", "HE.Investments.Api\HE.Investments.Api.csproj", "{DD8F0BC5-9B5D-4AA7-8561-893B8DD88762}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HE.Investments.Api", "HE.Investments.Api\HE.Investments.Api.csproj", "{DD8F0BC5-9B5D-4AA7-8561-893B8DD88762}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Allocation", "Allocation", "{C1F0382E-84D4-41C2-B420-F7ECDB7DECB9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HE.Investments.AHP.Allocation.Domain", "HE.Investments.AHP.Allocation.Domain\HE.Investments.AHP.Allocation.Domain.csproj", "{87511FA8-2F24-4455-A4F3-6E51554F5D67}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HE.Investments.AHP.Allocation.Domain", "HE.Investments.AHP.Allocation.Domain\HE.Investments.AHP.Allocation.Domain.csproj", "{87511FA8-2F24-4455-A4F3-6E51554F5D67}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HE.Investments.AHP.Allocation.Domain.Tests", "HE.Investments.AHP.Allocation.Domain.Tests\HE.Investments.AHP.Allocation.Domain.Tests.csproj", "{EE38C340-E71E-4DFD-807F-C084F32C8B05}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HE.Investments.AHP.Allocation.Domain.Tests", "HE.Investments.AHP.Allocation.Domain.Tests\HE.Investments.AHP.Allocation.Domain.Tests.csproj", "{EE38C340-E71E-4DFD-807F-C084F32C8B05}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HE.Investments.AHP.Allocation.Contract", "HE.Investments.AHP.Allocation.Contract\HE.Investments.AHP.Allocation.Contract.csproj", "{03A9950E-9877-4B4C-9109-7C12E09CF254}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HE.Investments.AHP.Allocation.Contract", "HE.Investments.AHP.Allocation.Contract\HE.Investments.AHP.Allocation.Contract.csproj", "{03A9950E-9877-4B4C-9109-7C12E09CF254}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -737,6 +737,7 @@ Global
 		SolutionGuid = {44D30F0B-F008-4D12-95FB-E893E3AFB749}
 	EndGlobalSection
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		HE.CRM.Model\HE.CRM.Model.projitems*{0cd54056-e9df-4a43-8a95-d7a64cf14780}*SharedItemsImports = 4
 		HE.Common.IntegrationModel\HE.Common.IntegrationModel.projitems*{0e5ab8b0-78b3-4550-8f4d-92073af4ac8d}*SharedItemsImports = 5
 		HE.Common.IntegrationModel\HE.Common.IntegrationModel.projitems*{3f31d22a-a2c7-4772-912e-b8b237bc88a9}*SharedItemsImports = 5
 		HE.Common.IntegrationModel\HE.Common.IntegrationModel.projitems*{464f5b11-c934-42c4-b544-40cfcee6c683}*SharedItemsImports = 4

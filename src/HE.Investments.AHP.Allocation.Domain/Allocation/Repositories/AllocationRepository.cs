@@ -1,12 +1,15 @@
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investments.Account.Shared.User;
 using HE.Investments.AHP.Allocation.Contract;
+using HE.Investments.AHP.Allocation.Contract.Overview;
 using HE.Investments.AHP.Allocation.Domain.Allocation.Crm;
 using HE.Investments.AHP.Allocation.Domain.Allocation.Entities;
 using HE.Investments.AHP.Allocation.Domain.Allocation.Mappers;
 using HE.Investments.AHP.Allocation.Domain.Allocation.ValueObjects;
+using HE.Investments.AHP.Allocation.Domain.Claims.Crm;
 using HE.Investments.AHP.Allocation.Domain.Claims.Mappers;
 using HE.Investments.Common.Contract;
+using HE.Investments.Consortium.Shared.UserContext;
 using HE.Investments.Programme.Contract;
 using HE.Investments.Programme.Contract.Queries;
 using MediatR;
@@ -38,6 +41,29 @@ public class AllocationRepository : IAllocationRepository
         var programme = await _mediator.Send(new GetProgrammeQuery(ProgrammeId.From(allocation.ProgrammeId)), cancellationToken);
 
         return CreateEntity(allocation, programme);
+    }
+
+    public async Task<AllocationOverview> GetOverview(AllocationId id, ConsortiumUserAccount userAccount, CancellationToken cancellationToken)
+    {
+        // TODO: Change method after #103595
+        var organisationId = userAccount.SelectedOrganisationId().ToGuidAsString();
+        var allocationDto = await _allocationCrmContext.GetById(id.ToGuidAsString(), organisationId, userAccount.UserGlobalId.ToString(), cancellationToken);
+
+        var programme = await _mediator.Send(new GetProgrammeQuery(ProgrammeId.From(allocationDto.ProgrammeId)), cancellationToken);
+        var allocationBasicInfo = new Contract.AllocationBasicInfo(
+            AllocationId.From(allocationDto.Id),
+            allocationDto.Name,
+            allocationDto.ReferenceNumber,
+            allocationDto.LocalAuthority.name,
+            programme.ShortName,
+            AllocationTenureMapper.ToDomain(allocationDto.Tenure).Value);
+
+        return new AllocationOverview(
+            allocationBasicInfo,
+            new ModificationDetails("Carq", "Power", DateTime.Now),
+            true,
+            userAccount.SelectedOrganisation().RegisteredCompanyName,
+            string.Empty);
     }
 
     private AllocationEntity CreateEntity(AllocationClaimsDto allocationDto, AhpProgramme programme)

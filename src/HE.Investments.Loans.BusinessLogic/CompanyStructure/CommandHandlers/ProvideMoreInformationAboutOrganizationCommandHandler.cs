@@ -14,12 +14,12 @@ namespace HE.Investments.Loans.BusinessLogic.CompanyStructure.CommandHandlers;
 public class ProvideMoreInformationAboutOrganizationCommandHandler : CompanyStructureBaseCommandHandler,
     IRequestHandler<ProvideMoreInformationAboutOrganizationCommand, OperationResult>
 {
-    private readonly ILoansFileService<LoanApplicationId> _fileService;
+    private readonly ILoansFileService<CompanyStructureFileParams> _fileService;
 
     private readonly ICompanyStructureFileFactory _fileFactory;
 
     public ProvideMoreInformationAboutOrganizationCommandHandler(
-        ILoansFileService<LoanApplicationId> fileService,
+        ILoansFileService<CompanyStructureFileParams> fileService,
         ICompanyStructureFileFactory fileFactory,
         ICompanyStructureRepository companyStructureRepository,
         ILoanApplicationRepository loanApplicationRepository,

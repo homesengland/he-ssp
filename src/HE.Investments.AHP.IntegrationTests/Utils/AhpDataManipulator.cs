@@ -2,9 +2,12 @@ using System.Globalization;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investment.AHP.Domain.Common.Mappers;
 using HE.Investments.AHP.IntegrationTests.Crm;
+using HE.Investments.AHP.IntegrationTests.Order02FillSite.Data;
 using HE.Investments.AHP.IntegrationTests.Order03FillApplication.Data;
 using HE.Investments.AHP.IntegrationTests.Order03FillApplication.Data.DeliveryPhases;
 using HE.Investments.AHP.IntegrationTests.Order03FillApplication.Data.HomeTypes;
+using HE.Investments.AHP.IntegrationTests.Order05ManageAllocation.Data.Allocation;
+using HE.Investments.Common.Contract;
 using HE.Investments.Common.CRM.Model;
 using HE.Investments.IntegrationTestsFramework.Auth;
 
@@ -21,28 +24,53 @@ public class AhpDataManipulator
 
     public async Task<string> CreateAhpAllocation(
         ILoginData loginData,
-        ApplicationData applicationData,
+        SiteData siteData,
         FinancialDetailsData financialDetailsData,
         SchemeInformationData schemeInformationData,
         HomeTypesData homeTypesData,
-        DeliveryPhasesData deliveryPhasesData)
+        DeliveryPhasesData deliveryPhasesData,
+        AllocationData allocationData)
     {
-        var allocationId = await CreateApplication(loginData, applicationData, financialDetailsData, schemeInformationData);
-        applicationData.SetApplicationId(allocationId);
+        if (string.IsNullOrEmpty(siteData.SiteId))
+        {
+            siteData.GenerateSiteName();
+            var siteId = await CreateSite(loginData, siteData);
+            siteData.SetSiteId(siteId);
+        }
+
+        var allocationId = await CreateAllocation(loginData, siteData, financialDetailsData, schemeInformationData, allocationData.AllocationName);
         await AddHomeTypes(loginData, allocationId, homeTypesData, schemeInformationData);
         await AddDeliveryPhases(loginData, allocationId, deliveryPhasesData, homeTypesData, schemeInformationData);
 
         return allocationId;
     }
 
-    private async Task<string> CreateApplication(
+    private async Task<string> CreateSite(ILoginData loginData, SiteData siteData)
+    {
+        var dto = new SiteDto
+        {
+            name = siteData.SiteName,
+            localAuthority = new SiteLocalAuthority
+            {
+                id = siteData.LocalAuthorityCode,
+                name = siteData.LocalAuthorityName,
+            },
+            status = (int)invln_Sitestatus.InProgress,
+        };
+
+        return await _ahpCrmContext.SaveAhpSite(dto, loginData, CancellationToken.None);
+    }
+
+    private async Task<string> CreateAllocation(
         ILoginData loginData,
-        ApplicationData applicationData,
+        SiteData siteData,
         FinancialDetailsData financialDetailsData,
-        SchemeInformationData schemeInformationData)
+        SchemeInformationData schemeInformationData,
+        string allocationName)
     {
         var applicationDto = new AhpApplicationDto
         {
+            siteId = ShortGuid.TryToGuidAsString(siteData.SiteId),
             applicationPartnerConfirmation = true,
             applicationStatus = (int)invln_scheme_StatusCode.Approved,
             borrowingAgainstRentalIncomeFromThisScheme = financialDetailsData.ExpectedContributionsRentalIncomeBorrowing,
@@ -71,7 +99,7 @@ public class AhpDataManipulator
             isPublicLand = financialDetailsData.IsPublicLand,
             meetingLocalHousingNeed = schemeInformationData.HousingNeedsMeetingLocalHousingNeed,
             meetingLocalProrities = schemeInformationData.HousingNeedsMeetingLocalPriorities,
-            name = applicationData.ApplicationName,
+            name = allocationName,
             noOfHomes = schemeInformationData.HousesToDeliver,
             organisationId = loginData.OrganisationId,
             otherCapitalSources = financialDetailsData.ExpectedContributionsOtherCapitalSources,
@@ -84,8 +112,7 @@ public class AhpDataManipulator
             representationsandwarranties = true,
             schemeInformationSectionCompletionStatus = (int)invln_Sectioncompletionstatus.Completed,
             tenure = (int)invln_Tenure.Affordablerent,
-
-            // todo set isAllocation flag
+            isAllocation = true,
         };
         var applicationId = await _ahpCrmContext.SaveAhpApplication(applicationDto, loginData, CancellationToken.None);
 
@@ -251,29 +278,20 @@ public class AhpDataManipulator
 
         var offTheShelfDeliveryPhaseId = await _ahpCrmContext.SaveAhpDeliveryPhase(offTheShelfDeliveryPhase, loginData, CancellationToken.None);
 
-        var rehabDeliveryPhaseNumberOfHomes = new DeliveryPhaseDto()
-        {
-            id = rehabDeliveryPhaseId,
-            applicationId = applicationId,
-            numberOfHomes =
-                new Dictionary<string, int?>
-                {
-                    { homeTypesData.Disabled.Id, schemeInformationData.HousesToDeliver / 2 },
-                    { homeTypesData.General.Id, schemeInformationData.HousesToDeliver / 2 },
-                },
-        };
-        var offTheShelfDeliveryPhaseNumberOfHomes = new DeliveryPhaseDto()
-        {
-            id = offTheShelfDeliveryPhaseId,
-            applicationId = applicationId,
-            numberOfHomes = new Dictionary<string, int?>
+        rehabDeliveryPhase.id = rehabDeliveryPhaseId;
+        rehabDeliveryPhase.numberOfHomes =
+            new Dictionary<string, int?>
             {
-                { homeTypesData.General.Id, schemeInformationData.HousesToDeliver / 2 },
                 { homeTypesData.Disabled.Id, schemeInformationData.HousesToDeliver / 2 },
-            },
+            };
+        offTheShelfDeliveryPhase.id = offTheShelfDeliveryPhaseId;
+        offTheShelfDeliveryPhase.numberOfHomes = new Dictionary<string, int?>
+        {
+            { homeTypesData.General.Id, schemeInformationData.HousesToDeliver / 2 },
         };
 
-        await _ahpCrmContext.SaveAhpDeliveryPhase(rehabDeliveryPhaseNumberOfHomes, loginData, CancellationToken.None);
-        await _ahpCrmContext.SaveAhpDeliveryPhase(offTheShelfDeliveryPhaseNumberOfHomes, loginData, CancellationToken.None);
+        await _ahpCrmContext.SaveAhpDeliveryPhase(rehabDeliveryPhase, loginData, CancellationToken.None);
+        await _ahpCrmContext.SaveAhpDeliveryPhase(offTheShelfDeliveryPhase, loginData, CancellationToken.None);
+        deliveryPhasesData.RehabDeliveryPhase.SetDeliveryPhaseId(rehabDeliveryPhaseId);
     }
 }

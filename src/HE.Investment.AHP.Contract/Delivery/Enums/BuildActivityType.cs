@@ -35,9 +35,6 @@ public enum BuildActivityType
 
     Regeneration,
 
-    [Description("Regeneration")]
-    RegenerationRehab,
-
     [Description("Re-improvement")]
     Reimprovement,
 

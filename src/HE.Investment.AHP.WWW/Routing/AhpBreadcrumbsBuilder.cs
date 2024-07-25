@@ -56,6 +56,13 @@ public class AhpBreadcrumbsBuilder : BreadcrumbsBuilderBase
         return this;
     }
 
+    public AhpBreadcrumbsBuilder WithProjectAllocations(string projectId)
+    {
+        AddBreadcrumb("AHP allocations", nameof(ProjectController.Allocations), GetControllerName(nameof(ProjectController)), new { organisationId = _organisationId, projectId });
+
+        return this;
+    }
+
     public AhpBreadcrumbsBuilder WithProjectApplications()
     {
         AddBreadcrumb("Applications", nameof(ProjectController.Applications), GetControllerName(nameof(ProjectController)), new { organisationId = _organisationId });
@@ -73,6 +80,13 @@ public class AhpBreadcrumbsBuilder : BreadcrumbsBuilderBase
     public AhpBreadcrumbsBuilder WithApplication(string applicationId, string applicationName)
     {
         AddBreadcrumb(applicationName, nameof(ApplicationController.TaskList), GetControllerName(nameof(ApplicationController)), new { applicationId, organisationId = _organisationId });
+
+        return this;
+    }
+
+    public AhpBreadcrumbsBuilder WithAllocation(string allocationId, string allocationName)
+    {
+        AddBreadcrumb(allocationName, nameof(AllocationController.Overview), GetControllerName(nameof(AllocationController)), new { allocationId, organisationId = _organisationId });
 
         return this;
     }

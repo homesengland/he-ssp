@@ -4,6 +4,7 @@ using HE.Investments.AHP.IntegrationTests.Framework;
 using HE.Investments.AHP.IntegrationTests.Order03FillApplication.Data;
 using HE.Investments.AHP.IntegrationTests.Order03FillApplication.Data.DeliveryPhases;
 using HE.Investments.AHP.IntegrationTests.Order03FillApplication.Data.HomeTypes;
+using HE.Investments.AHP.IntegrationTests.Order05ManageAllocation.Data.Phase;
 using HE.Investments.AHP.IntegrationTests.Pages;
 using HE.Investments.TestsUtils.Extensions;
 using Xunit;
@@ -20,16 +21,14 @@ public class Order01PrepareAllocation : AhpIntegrationTest
         : base(fixture, output)
     {
         SchemeInformationData = ReturnSharedData<SchemeInformationData>();
-
         FinancialDetailsData = ReturnSharedData<FinancialDetailsData>(data =>
         {
             var schemeInformationData = GetSharedDataOrNull<SchemeInformationData>(nameof(SchemeInformationData));
             data.ProvideSchemeFunding(schemeInformationData?.RequiredFunding ?? 0m);
         });
-
         HomeTypesData = ReturnSharedData<HomeTypesData>();
-
         DeliveryPhasesData = ReturnSharedData<DeliveryPhasesData>();
+        PhaseData = ReturnSharedData<PhaseData>();
     }
 
     public SchemeInformationData SchemeInformationData { get; }
@@ -40,12 +39,14 @@ public class Order01PrepareAllocation : AhpIntegrationTest
 
     public DeliveryPhasesData DeliveryPhasesData { get; }
 
+    public PhaseData PhaseData { get; }
+
     [Fact(Skip = AhpConfig.SkipTest)]
     [Order(1)]
     public async Task Order01_AhpAllocationShouldBeCreated()
     {
         // given
-        ApplicationData.GenerateApplicationName();
+        AllocationData.GenerateAllocationName();
         SchemeInformationData.PopulateAllData();
         FinancialDetailsData.PopulateAllData(SchemeInformationData.RequiredFunding);
         HomeTypesData.General.PopulateAllData();
@@ -54,12 +55,16 @@ public class Order01PrepareAllocation : AhpIntegrationTest
         DeliveryPhasesData.OffTheShelfDeliveryPhase.PopulateAllData();
         var allocationId = await AhpDataManipulator.CreateAhpAllocation(
             LoginData,
-            ApplicationData,
+            SiteData,
             FinancialDetailsData,
             SchemeInformationData,
             HomeTypesData,
-            DeliveryPhasesData);
+            DeliveryPhasesData,
+            AllocationData);
         AllocationData.SetAllocationId(allocationId);
+        AllocationData.SetFromApplicationData(ApplicationData, SchemeInformationData.RequiredFunding);
+        PhaseData.SetPhaseId(DeliveryPhasesData.RehabDeliveryPhase.Id);
+        PhaseData.SetDataFromDeliveryPhase(DeliveryPhasesData.RehabDeliveryPhase, SchemeInformationData.RequiredFunding, SchemeInformationData.HousesToDeliver / 2);
 
         // when
         var currentPage = await TestClient.NavigateTo(ClaimsPagesUrl.Summary(UserOrganisationData.OrganisationId, allocationId));

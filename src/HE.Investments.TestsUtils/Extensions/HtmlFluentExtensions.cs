@@ -91,6 +91,16 @@ public static class HtmlFluentExtensions
         return htmlDocument;
     }
 
+    public static IHtmlDocument HasElementWithTestIdAndText(this IHtmlDocument htmlDocument, string testId, string text)
+    {
+        var element = htmlDocument.GetElementByTestId(testId);
+
+        element.Should().NotBeNull($"Element with data-testId {testId} does not exist");
+        element.InnerHtml.Should().Contain(text, $"Element with data-testId {testId} is missing text \"{text}\"");
+
+        return htmlDocument;
+    }
+
     public static IHtmlDocument HasSuccessNotificationBanner(this IHtmlDocument htmlDocument, string bodyText)
     {
         htmlDocument.GetSuccessNotificationBannerBody().Should().Contain(bodyText);

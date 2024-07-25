@@ -1,8 +1,8 @@
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Exceptions;
+using HE.Investments.Loans.BusinessLogic.CompanyStructure;
 using HE.Investments.Loans.BusinessLogic.Tests.CompanyStructure.TestObjectBuilders;
 using HE.Investments.Loans.BusinessLogic.Tests.TestObjectBuilders;
-using HE.Investments.Loans.Contract.Application.ValueObjects;
 using HE.Investments.Loans.Contract.CompanyStructure.ValueObjects;
 using Xunit;
 
@@ -14,7 +14,7 @@ public class UploadFilesTests
     public async Task ShouldThrowException_WhenThereIsAlreadyTenFilesUploaded()
     {
         // given
-        var fileService = FileServiceMockTestBuilder.Build<LoanApplicationId>(10);
+        var fileService = FileServiceMockTestBuilder.Build<CompanyStructureFileParams>(10);
         var testCandidate = CompanyStructureEntityTestBuilder.New().Build();
 
         // when
@@ -31,7 +31,7 @@ public class UploadFilesTests
     public async Task ShouldThrowException_WhenFileWithTheSameNameIsAlreadyUploaded()
     {
         // given
-        var fileService = FileServiceMockTestBuilder.Build<LoanApplicationId>(5);
+        var fileService = FileServiceMockTestBuilder.Build<CompanyStructureFileParams>(5);
         var testCandidate = CompanyStructureEntityTestBuilder.New().Build();
 
         // when
@@ -48,7 +48,7 @@ public class UploadFilesTests
     public async Task ShouldUploadFile_WhenFileNameIsUnique()
     {
         // given
-        var fileService = FileServiceMockTestBuilder.Build<LoanApplicationId>(5);
+        var fileService = FileServiceMockTestBuilder.Build<CompanyStructureFileParams>(5);
         var testCandidate = CompanyStructureEntityTestBuilder.New().WithStatus(SectionStatus.Completed).Build();
         using var file = new OrganisationMoreInformationFile("new-test.pdf", 1000, 10, new MemoryStream());
 

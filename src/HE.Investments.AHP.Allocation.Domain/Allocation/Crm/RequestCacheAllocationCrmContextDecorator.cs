@@ -21,4 +21,11 @@ public class RequestCacheAllocationCrmContextDecorator : IAllocationCrmContext
             id.ToGuidAsString(),
             async () => await _decorated.GetById(id, organisationId, userId, cancellationToken)))!;
     }
+
+    public async Task Save(string allocationId, PhaseClaimsDto dto, string organisationId, string userId, CancellationToken cancellationToken)
+    {
+        _cache.Delete(allocationId.ToGuidAsString());
+
+        await _decorated.Save(allocationId, dto, organisationId, userId, cancellationToken);
+    }
 }

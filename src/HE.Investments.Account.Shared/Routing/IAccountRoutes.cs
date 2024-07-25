@@ -11,4 +11,6 @@ public interface IAccountRoutes
     IActionResult LandingPageForNotLoggedUser();
 
     IActionResult LandingPageForLoggedUser();
+
+    IActionResult OrganisationLandingPageForLoggedUser(string organisationId);
 }

@@ -6,6 +6,7 @@ using HE.Investments.AHP.Allocation.Contract.Claims;
 using HE.Investments.AHP.Allocation.Contract.Claims.Commands;
 using HE.Investments.AHP.Allocation.Contract.Claims.Enum;
 using HE.Investments.AHP.Allocation.Contract.Claims.Queries;
+using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.WWW.Controllers;
 using HE.Investments.Common.WWW.Extensions;
@@ -91,12 +92,16 @@ public class AllocationClaimController : WorkflowController<AllocationClaimWorkf
     [HttpPost("achievement-date")]
     [WorkflowState(AllocationClaimWorkflowState.AchievementDate)]
     public async Task<IActionResult> AchievementDate(
-        [FromRoute] string organisationId,
         [FromRoute] string allocationId,
         [FromRoute] string phaseId,
-        [FromRoute] MilestoneType claimType)
+        [FromRoute] MilestoneType claimType,
+        [FromForm] DateDetails? achievementDate,
+        CancellationToken cancellationToken)
     {
-        return await ContinueWithWorkflow(new { organisationId, allocationId, phaseId, claimType });
+        return await ExecuteClaimCommand(
+            new ProvideClaimAchievementDateCommand(AllocationId.From(allocationId), PhaseId.From(phaseId), claimType, achievementDate),
+            nameof(AchievementDate),
+            cancellationToken);
     }
 
     [HttpGet("confirmation")]

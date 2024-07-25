@@ -15,7 +15,7 @@ public class CalculateDueStatusTests
     public void ShouldReturnUndefinedStatus_WhenItIsMoreThan14DaysBeforeForecastClaimDate(int days)
     {
         // given
-        var testCandidate = MilestoneClaimTestBuilder.New().WithForecastClaimDate(_today.AddDays(days)).Build();
+        var testCandidate = MilestoneClaimTestBuilder.Draft().WithForecastClaimDate(_today.AddDays(days)).Build();
 
         // when
         var result = testCandidate.CalculateDueStatus(_today);
@@ -30,7 +30,7 @@ public class CalculateDueStatusTests
     public void ShouldReturnDueSoonStatus_WhenItIsBetween14And7DaysBeforeForecastClaimDate(int days)
     {
         // given
-        var testCandidate = MilestoneClaimTestBuilder.New().WithForecastClaimDate(_today.AddDays(days)).Build();
+        var testCandidate = MilestoneClaimTestBuilder.Draft().WithForecastClaimDate(_today.AddDays(days)).Build();
 
         // when
         var result = testCandidate.CalculateDueStatus(_today);
@@ -45,7 +45,7 @@ public class CalculateDueStatusTests
     public void ShouldReturnDueStatus_WhenItIsBetween6DaysBeforeAnd6DaysAfterForecastClaimDate(int days)
     {
         // given
-        var testCandidate = MilestoneClaimTestBuilder.New().WithForecastClaimDate(_today.AddDays(days)).Build();
+        var testCandidate = MilestoneClaimTestBuilder.Draft().WithForecastClaimDate(_today.AddDays(days)).Build();
 
         // when
         var result = testCandidate.CalculateDueStatus(_today);
@@ -60,7 +60,7 @@ public class CalculateDueStatusTests
     public void ShouldReturnOverdueStatus_WhenItIsMoreThan6DaysAfterForecastClaimDate(int days)
     {
         // given
-        var testCandidate = MilestoneClaimTestBuilder.New().WithForecastClaimDate(_today.AddDays(days)).Build();
+        var testCandidate = MilestoneClaimTestBuilder.Draft().WithForecastClaimDate(_today.AddDays(days)).Build();
 
         // when
         var result = testCandidate.CalculateDueStatus(_today);

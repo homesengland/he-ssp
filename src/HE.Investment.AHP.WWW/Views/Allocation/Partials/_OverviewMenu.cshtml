@@ -1,0 +1,18 @@
+@using HE.Investments.Common.WWW.Extensions
+
+@model (string Title, string MenuOption, string MenuOptionDescription, string MenuOptionUrl)
+
+<h3 class="govuk-heading-m">@Model.Title</h3>
+<hr class="govuk-section-break govuk-section-break--visible">
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-one-third">
+        <h4 class="govuk-heading-s govuk-!-padding-top-6">
+            <gds-link href="@Model.MenuOptionUrl">
+                @Model.MenuOption
+            </gds-link>
+        </h4>
+        <gds-p>
+            @Model.MenuOptionDescription
+        </gds-p>
+    </div>
+</div>

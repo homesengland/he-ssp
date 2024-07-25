@@ -192,6 +192,7 @@ namespace HE.CRM.Common.Repositories.Implementations
                 invln_scheme.Fields.invln_schemename,
                 invln_scheme.Fields.invln_HELocalAuthorityID,
                 invln_scheme.Fields.invln_programmelookup,
+                invln_scheme.Fields.invln_fundingrequired,
                 invln_scheme.Fields.invln_Tenure,
                 invln_scheme.Fields.invln_TotalGrantAllocated,
                 invln_scheme.Fields.invln_AmountPaid,
@@ -209,5 +210,122 @@ namespace HE.CRM.Common.Repositories.Implementations
             allocation = service.RetrieveMultiple(query).Entities.Select(x => x.ToEntity<invln_scheme>()).FirstOrDefault();
             return allocation;
         }
+
+        public EntityCollection GetAllocationWithDeliveryPhaseAndClaims(string externalContactId, Guid accountId, Guid allocationId, Guid deliveryPhaseId)
+        {
+            var query_invln_schemeid = allocationId.ToString();
+            var query_invln_organisationid = accountId.ToString();
+            var deliveryPhase_invln_deliveryphaseid = deliveryPhaseId.ToString();
+            var con_invln_externalid = externalContactId;
+
+            var query = new QueryExpression(invln_scheme.EntityLogicalName);
+            query.ColumnSet.AddColumns(
+                invln_scheme.Fields.invln_schemeId,
+                invln_scheme.Fields.invln_contactid,
+                invln_scheme.Fields.invln_organisationid);
+            query.Criteria.AddCondition(invln_scheme.Fields.invln_schemeId, ConditionOperator.Equal, query_invln_schemeid);
+            query.Criteria.AddCondition(invln_scheme.Fields.invln_organisationid, ConditionOperator.Equal, query_invln_organisationid);
+            var DeliveryPhase = query.AddLink(
+                invln_DeliveryPhase.EntityLogicalName,
+                invln_scheme.Fields.invln_schemeId,
+                invln_DeliveryPhase.Fields.invln_Application);
+            DeliveryPhase.EntityAlias = "DeliveryPhase";
+            DeliveryPhase.Columns.AddColumns(
+                invln_DeliveryPhase.Fields.invln_phasename,
+                invln_DeliveryPhase.Fields.invln_DeliveryPhaseId,
+                invln_DeliveryPhase.Fields.invln_Application,
+                invln_DeliveryPhase.Fields.invln_NoofHomes,
+                invln_DeliveryPhase.Fields.invln_nbrh,
+                invln_DeliveryPhase.Fields.invln_rehabactivitytype,
+                invln_DeliveryPhase.Fields.invln_buildactivitytype,
+
+
+                invln_DeliveryPhase.Fields.invln_acquisitiondate,
+                invln_DeliveryPhase.Fields.invln_AcquisitionValue,
+                invln_DeliveryPhase.Fields.invln_AcquisitionPercentageValue,
+                invln_DeliveryPhase.Fields.invln_acquisitionmilestoneclaimdate,
+
+                invln_DeliveryPhase.Fields.invln_startonsitedate,
+                invln_DeliveryPhase.Fields.invln_StartOnSiteValue,
+                invln_DeliveryPhase.Fields.invln_StartOnSitePercentageValue,
+                invln_DeliveryPhase.Fields.invln_startonsitemilestoneclaimdate,
+
+                invln_DeliveryPhase.Fields.invln_completiondate,
+                invln_DeliveryPhase.Fields.invln_CompletionValue,
+                invln_DeliveryPhase.Fields.invln_CompletionPercentageValue,
+                invln_DeliveryPhase.Fields.invln_completionmilestoneclaimdate
+
+                );
+            var ClaimAcquisition = DeliveryPhase.AddLink(
+                invln_Claim.EntityLogicalName,
+                invln_DeliveryPhase.Fields.invln_DeliveryPhaseId,
+                invln_Claim.Fields.invln_DeliveryPhase,
+                JoinOperator.LeftOuter);
+            ClaimAcquisition.EntityAlias = "ClaimAcquisition";
+            ClaimAcquisition.Columns.AddColumns(
+                invln_Claim.Fields.invln_ClaimId,
+                invln_Claim.Fields.invln_Milestone,
+                invln_Claim.Fields.invln_Name,
+                invln_Claim.Fields.StatusCode,
+                invln_Claim.Fields.invln_AmountApportionedtoMilestone,
+                invln_Claim.Fields.invln_PercentageofGrantApportionedtoThisMilestone,
+                invln_Claim.Fields.invln_MilestoneDate,
+                invln_Claim.Fields.invln_ClaimSubmissionDate,
+                invln_Claim.Fields.invln_IncurredCosts,
+                invln_Claim.Fields.invln_RequirementsConfirmation,
+                invln_Claim.Fields.invln_ExternalStatus);
+            ClaimAcquisition.LinkCriteria.AddCondition(invln_Claim.Fields.invln_Milestone, ConditionOperator.Equal, (int)invln_Milestone.Acquisition);
+            var ClaimSoS = DeliveryPhase.AddLink(
+                invln_Claim.EntityLogicalName,
+                invln_DeliveryPhase.Fields.invln_DeliveryPhaseId,
+                invln_Claim.Fields.invln_DeliveryPhase,
+                JoinOperator.LeftOuter);
+            ClaimSoS.EntityAlias = "ClaimSoS";
+            ClaimSoS.Columns.AddColumns(
+                invln_Claim.Fields.invln_ClaimId,
+                invln_Claim.Fields.invln_Milestone,
+                invln_Claim.Fields.invln_Name,
+                invln_Claim.Fields.StatusCode,
+                invln_Claim.Fields.invln_AmountApportionedtoMilestone,
+                invln_Claim.Fields.invln_PercentageofGrantApportionedtoThisMilestone,
+                invln_Claim.Fields.invln_MilestoneDate,
+                invln_Claim.Fields.invln_ClaimSubmissionDate,
+                invln_Claim.Fields.invln_IncurredCosts,
+                invln_Claim.Fields.invln_RequirementsConfirmation,
+                invln_Claim.Fields.invln_ExternalStatus);
+            ClaimSoS.LinkCriteria.AddCondition(invln_Claim.Fields.invln_Milestone, ConditionOperator.Equal, (int)invln_Milestone.SoS);
+            var ClaimPC = DeliveryPhase.AddLink(
+                invln_Claim.EntityLogicalName,
+                invln_DeliveryPhase.Fields.invln_DeliveryPhaseId,
+                invln_Claim.Fields.invln_DeliveryPhase,
+                JoinOperator.LeftOuter);
+            ClaimPC.EntityAlias = "ClaimPC";
+            ClaimPC.Columns.AddColumns(
+                invln_Claim.Fields.invln_ClaimId,
+                invln_Claim.Fields.invln_Milestone,
+                invln_Claim.Fields.invln_Name,
+                invln_Claim.Fields.StatusCode,
+                invln_Claim.Fields.invln_AmountApportionedtoMilestone,
+                invln_Claim.Fields.invln_PercentageofGrantApportionedtoThisMilestone,
+                invln_Claim.Fields.invln_MilestoneDate,
+                invln_Claim.Fields.invln_ClaimSubmissionDate,
+                invln_Claim.Fields.invln_IncurredCosts,
+                invln_Claim.Fields.invln_RequirementsConfirmation,
+                invln_Claim.Fields.invln_ExternalStatus);
+            ClaimPC.LinkCriteria.AddCondition(invln_Claim.Fields.invln_Milestone, ConditionOperator.Equal, (int)invln_Milestone.PC);
+            var con = query.AddLink(Contact.EntityLogicalName, invln_scheme.Fields.invln_contactid, Contact.Fields.ContactId);
+            con.EntityAlias = "con";
+
+            con.LinkCriteria.AddCondition(Contact.Fields.invln_externalid, ConditionOperator.Equal, con_invln_externalid);
+
+            if (deliveryPhaseId != Guid.Empty)
+            {
+                DeliveryPhase.LinkCriteria.AddCondition(invln_DeliveryPhase.Fields.invln_DeliveryPhaseId, ConditionOperator.Equal, deliveryPhase_invln_deliveryphaseid);
+            }
+
+            return service.RetrieveMultiple(query);
+        }
+
+
     }
 }
