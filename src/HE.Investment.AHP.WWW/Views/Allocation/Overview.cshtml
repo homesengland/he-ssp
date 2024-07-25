@@ -1,1 +1,38 @@
-<div>TODO Allocation Overview</div>
+@using HE.Investment.AHP.WWW.Routing
+@using HE.Investment.AHP.WWW.Views.Shared.Components.AllocationHeader
+@using HE.Investments.Common.WWW.Components.PageHeader
+@using HE.Investments.Common.WWW.Extensions
+@using HE.Investments.Common.WWW.Helpers
+@model HE.Investments.AHP.Allocation.Contract.Overview.AllocationOverview
+@{
+    var title = Model.BasicInfo.Name;
+    ViewData["Title"] = title;
+
+    var organisationId = Context.Request.RouteValues["organisationId"]?.ToString();
+    ViewBag.Breadcrumbs = AhpBreadcrumbsBuilder
+        .Empty(organisationId)
+        .WithOrganisations()
+        .WithOrganisation(Model.OrganisationName)
+        .WithProjectAllocations(Model.FdProjectId)
+        .WithAllocation(Model.BasicInfo.Id.Value, Model.BasicInfo.Name)
+        .Build();
+}
+
+<div class="govuk-grid-column-full govuk-!-padding-bottom-8">
+    <vc:page-header caption="@Model.OrganisationName" title="@title"/>
+    <vc:allocation-header allocation="@Model.BasicInfo"/>
+
+    <gds-p>
+        Last updated on @DateHelper.DisplayAsUkFormatDateTime(Model.ModificationDetails.ChangedOn) @(!string.IsNullOrWhiteSpace(Model.ModificationDetails.ChangedBy) ? $"by {Model.ModificationDetails.ChangedBy}" : string.Empty).
+    </gds-p>
+
+    @await Html.PartialAsync(
+        "Partials/_OverviewMenu",
+        ("Manage Allocation", "View and manage allocation", "View and change details for this allocation, or tell us if there is anything you are unable to deliver.", @Url.OrganisationAction("summary", "AllocationClaims", new { allocationId = Model.BasicInfo.Id.Value })))
+
+    <hr class="govuk-section-break govuk-section-break--m">
+
+    @await Html.PartialAsync(
+        "Partials/_OverviewMenu",
+        ("Make a Claim", "Manage claims", "View upcoming milestones, previous claims or make a claim on this allocation.", @Url.OrganisationAction("summary", "AllocationClaims", new { allocationId = Model.BasicInfo.Id.Value })))
+</div>
