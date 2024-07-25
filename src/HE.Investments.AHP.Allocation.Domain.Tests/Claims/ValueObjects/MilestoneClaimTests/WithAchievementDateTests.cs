@@ -391,8 +391,7 @@ public class WithAchievementDateTests
         result.Should().Throw<DomainValidationException>().WithMessage("Providing achievement date is not allowed for Submitted Claim");
     }
 
-
-    private AhpProgramme CreateProgramme(
+    private static AhpProgramme CreateProgramme(
         DateRange? programmeDate = null,
         DateRange? fundingDates = null,
         DateRange? startOnSiteDates = null,
