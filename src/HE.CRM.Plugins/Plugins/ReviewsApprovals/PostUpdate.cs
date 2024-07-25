@@ -17,13 +17,16 @@ namespace HE.CRM.Plugins.Plugins.ReviewsApprovals
       invln_reviewapproval.EntityLogicalName,
       StageEnum.PostOperation,
       ExecutionModeEnum.Synchronous,
-      "",
+      invln_reviewapproval.Fields.invln_status,
       "HE.CRM.Plugins.Plugins.ReviewsApprovals.SendNotificationOnCreatePlugin: Update of ReviewApproval",
       1,
       IsolationModeEnum.Sandbox,
       Image1Name = "PostImage",
-      Image1Attributes = "invln_ispid,invln_status,",
+      Image1Attributes = "invln_ispid,invln_status," + invln_reviewapproval.Fields.invln_ispid,
       Image1Type = ImageTypeEnum.PostImage,
+      Image2Name = "PreImage",
+      Image2Attributes = "invln_ispid,invln_status," + invln_reviewapproval.Fields.invln_ispid,
+      Image2Type = ImageTypeEnum.PostImage,
       Id = "CACFD0E5-91E5-4F00-8274-E14C2891DB99")]
     public class PostUpdate : PluginBase<DataverseContext>, IPlugin
     {
