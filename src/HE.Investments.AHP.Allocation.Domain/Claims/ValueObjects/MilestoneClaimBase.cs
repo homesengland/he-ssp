@@ -10,8 +10,6 @@ namespace HE.Investments.AHP.Allocation.Domain.Claims.ValueObjects;
 
 public abstract class MilestoneClaimBase : ValueObject
 {
-    protected readonly ModificationTracker _modificationTracker = new();
-
     protected MilestoneClaimBase(
         MilestoneType type,
         MilestoneStatus status,
@@ -35,7 +33,7 @@ public abstract class MilestoneClaimBase : ValueObject
         IsConfirmed = isConfirmed;
     }
 
-    public bool IsModified => _modificationTracker.IsModified;
+    public bool IsModified => ModificationTracker.IsModified;
 
     public MilestoneType Type { get; }
 
@@ -50,6 +48,8 @@ public abstract class MilestoneClaimBase : ValueObject
     public bool? IsConfirmed { get; }
 
     public abstract bool IsSubmitted { get; }
+
+    protected ModificationTracker ModificationTracker { get; } = new();
 
     public MilestoneDueStatus CalculateDueStatus(DateTime today)
     {

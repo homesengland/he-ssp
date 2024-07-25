@@ -34,7 +34,7 @@ public class DraftMilestoneClaim : MilestoneClaimBase
         ValidatePreviousSubmissionDate(previousSubmissionDate, achievementDate.Value);
         ValidateProgrammeDates(programme, achievementDate.Value!.Value);
 
-        _modificationTracker.Change(
+        ModificationTracker.Change(
             ClaimDate.AchievementDate,
             achievementDate,
             () => ClaimDate.WithAchievementDate(achievementDate));
