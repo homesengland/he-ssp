@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using DataverseModel;
@@ -137,36 +138,42 @@ namespace HE.CRM.Plugins.Services.ReviewsApprovals
 
             var lastHoFApprowals = mostRecentRAList
                 .FirstOrDefault(x => x.OwnerId.Id == hoFTeam.Id && x.CreatedOn.Value >= lastDesApprowals.CreatedOn.Value);
-            if (lastHoFApprowals != null
-                && (lastDesApprowals.invln_status.Value == (int)invln_StatusReviewApprovalSet.Approved || lastDesApprowals.invln_status.Value == (int)invln_StatusReviewApprovalSet.Reviewed)
-                && (lastHoFApprowals.invln_status.Value == (int)invln_StatusReviewApprovalSet.Approved)
-                && isp.invln_ApprovalLevelNew.Value == (int)invln_ApprovalLevel.HoF)
+            if (ChackConditionForHoFApprovalLevelToApproved(isp, lastDesApprowals, lastHoFApprowals))
             {
-                TracingService.Trace("Approved");
-                ispToUpdate.invln_DateApproved = DateTime.UtcNow;
-                ispToUpdate.invln_ApprovalStatus = new OptionSetValue((int)invln_ApprovalStatus.Approved);
-                _ispRepository.Update(ispToUpdate);
+                UpdateISPStatus(ispToUpdate, new OptionSetValue((int)invln_ApprovalStatus.Approved));
             }
-
-            if (lastHoFApprowals != null
-                && (lastDesApprowals.invln_status.Value == (int)invln_StatusReviewApprovalSet.Approved || lastDesApprowals.invln_status.Value == (int)invln_StatusReviewApprovalSet.Reviewed)
-                && (lastHoFApprowals.invln_status.Value == (int)invln_StatusReviewApprovalSet.Reviewed)
-                && isp.invln_ApprovalLevelNew.Value == (int)invln_ApprovalLevel.HoF)
+            if (ChackConditionForHoFApprovalLevelToInReview(isp, lastDesApprowals, lastHoFApprowals))
             {
-                TracingService.Trace("Reviewed");
-                ispToUpdate.invln_DateApproved = DateTime.UtcNow;
-                ispToUpdate.invln_ApprovalStatus = new OptionSetValue((int)invln_ApprovalStatus.InReview);
-                _ispRepository.Update(ispToUpdate);
+                UpdateISPStatus(ispToUpdate, new OptionSetValue((int)invln_ApprovalStatus.InReview));
             }
 
             if (mostRecentRAList.All(x => x.invln_status.Value == (int)invln_StatusReviewApprovalSet.Approved || x.invln_status.Value == (int)invln_StatusReviewApprovalSet.NotRequired))
             {
-                TracingService.Trace("Approved or not Required");
-                ispToUpdate.invln_DateApproved = DateTime.UtcNow;
-                ispToUpdate.invln_ApprovalStatus = new OptionSetValue((int)invln_ApprovalStatus.Approved);
-                _ispRepository.Update(ispToUpdate);
+                UpdateISPStatus(ispToUpdate, new OptionSetValue((int)invln_ApprovalStatus.Approved));
             }
+        }
 
+        private bool ChackConditionForHoFApprovalLevelToApproved(invln_ISP isp, invln_reviewapproval des, invln_reviewapproval hof)
+        {
+            return (hof != null
+                && (des.invln_status.Value == (int)invln_StatusReviewApprovalSet.Approved || des.invln_status.Value == (int)invln_StatusReviewApprovalSet.Reviewed)
+                && (hof.invln_status.Value == (int)invln_StatusReviewApprovalSet.Approved)
+                && isp.invln_ApprovalLevelNew.Value == (int)invln_ApprovalLevel.HoF);
+        }
+
+        private bool ChackConditionForHoFApprovalLevelToInReview(invln_ISP isp, invln_reviewapproval des, invln_reviewapproval hof)
+        {
+            return (hof != null
+                && (des.invln_status.Value == (int)invln_StatusReviewApprovalSet.Approved || des.invln_status.Value == (int)invln_StatusReviewApprovalSet.Reviewed)
+                && (hof.invln_status.Value == (int)invln_StatusReviewApprovalSet.Reviewed)
+                && isp.invln_ApprovalLevelNew.Value == (int)invln_ApprovalLevel.HoF);
+        }
+
+        private void UpdateISPStatus(invln_ISP ispToUpdate, OptionSetValue value)
+        {
+            ispToUpdate.invln_DateApproved = DateTime.UtcNow;
+            ispToUpdate.invln_ApprovalStatus = value;
+            _ispRepository.Update(ispToUpdate);
         }
 
         private void CheckAndChangeStatusToPending(invln_ISP isp, List<invln_reviewapproval> reviewApprovals)
