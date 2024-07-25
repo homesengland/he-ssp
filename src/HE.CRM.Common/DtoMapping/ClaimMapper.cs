@@ -43,7 +43,7 @@ namespace HE.CRM.Common.DtoMapping
                 if (milestone == (int)invln_Milestone.Acquisition)
                 {
                     result.AmountOfGrantApportioned = recordData.GetAliasedAttributeValue<Money>("DeliveryPhase", invln_DeliveryPhase.Fields.invln_AcquisitionValue).Value;
-                    result.PercentageOfGrantApportioned = recordData.GetAliasedAttributeValue<decimal?>("DeliveryPhase", invln_DeliveryPhase.Fields.invln_AcquisitionValue).Value;
+                    result.PercentageOfGrantApportioned = recordData.GetAliasedAttributeValue<decimal?>("DeliveryPhase", invln_DeliveryPhase.Fields.invln_AcquisitionPercentageValue).Value;
                 }
                 if (milestone == (int)invln_Milestone.SoS)
                 {
