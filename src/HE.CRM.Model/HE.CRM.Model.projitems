@@ -274,6 +274,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_BuildType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_CashflowIssueTypes.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_ChangesourceSet.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_ClaimExternalStatus.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_ClaimInternalStatus.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_Clientgroup.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_compliantnoncompliant.cs" />
