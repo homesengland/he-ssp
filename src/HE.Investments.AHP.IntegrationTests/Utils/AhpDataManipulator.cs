@@ -283,13 +283,11 @@ public class AhpDataManipulator
             new Dictionary<string, int?>
             {
                 { homeTypesData.Disabled.Id, schemeInformationData.HousesToDeliver / 2 },
-                //{ homeTypesData.General.Id, schemeInformationData.HousesToDeliver / 4 },
             };
         offTheShelfDeliveryPhase.id = offTheShelfDeliveryPhaseId;
         offTheShelfDeliveryPhase.numberOfHomes = new Dictionary<string, int?>
         {
             { homeTypesData.General.Id, schemeInformationData.HousesToDeliver / 2 },
-            //{ homeTypesData.Disabled.Id, schemeInformationData.HousesToDeliver / 4 },
         };
 
         await _ahpCrmContext.SaveAhpDeliveryPhase(rehabDeliveryPhase, loginData, CancellationToken.None);
