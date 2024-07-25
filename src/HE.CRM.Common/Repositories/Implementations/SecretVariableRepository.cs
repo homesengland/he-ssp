@@ -42,13 +42,17 @@ namespace HE.CRM.Common.Repositories.Implementations
             };
 
             var result = RetrieveAll(query).Entities.Select(e => e.ToEntity<invln_SecretVariable>());
-            foreach (var entity in result)
+
+            if (variableNames.Length != result.Count())
             {
-                if (!entity.invln_Name.ToLower().Contains("secret"))
-                logger.Trace($"{entity.invln_Name}: {entity.invln_Value}");
+                logger.Warn("Not all requested variables were returned");
+                foreach (var entity in result)
+                {
+                    if (!entity.invln_Name.ToLower().Contains("secret"))
+                        logger.Trace($"{entity.invln_Name}: {entity.invln_Value}");
+                }
             }
 
-            logger.Trace($"Return {result.Count()} elements.");
             return result;
         }
 

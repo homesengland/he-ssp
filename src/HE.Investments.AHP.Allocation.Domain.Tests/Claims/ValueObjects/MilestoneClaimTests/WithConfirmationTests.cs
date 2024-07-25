@@ -16,7 +16,7 @@ public class WithConfirmationTests
     public void ShouldThrowException_WhenConfirmationIsNotProvided(bool? isConfirmed)
     {
         // given
-        var testCandidate = MilestoneClaimTestBuilder.New()
+        var testCandidate = MilestoneClaimTestBuilder.Draft()
             .WithType(MilestoneType.Acquisition)
             .Build();
 
@@ -34,9 +34,8 @@ public class WithConfirmationTests
     {
         // given
         var forecastClaimDate = new DateTime(2025, 10, 11, 0, 0, 0, DateTimeKind.Local);
-        var testCandidate = MilestoneClaimTestBuilder.New()
+        var testCandidate = MilestoneClaimTestBuilder.Draft()
             .WithType(MilestoneType.Acquisition)
-            .WithStatus(MilestoneStatus.Draft)
             .WithForecastClaimDate(forecastClaimDate)
             .WithCostsIncurred(true)
             .Build();
@@ -51,5 +50,23 @@ public class WithConfirmationTests
         result.ClaimDate.ForecastClaimDate.Should().Be(forecastClaimDate);
         result.CostsIncurred.Should().BeTrue();
         result.IsConfirmed.Should().BeTrue();
+    }
+
+    [Fact]
+    public void ShouldThrowException_WhenMilestoneClaimIsSubmitted()
+    {
+        // given
+        var testCandidate = MilestoneClaimTestBuilder.Draft()
+            .WithType(MilestoneType.Acquisition)
+            .Submitted()
+            .Build();
+
+        // when
+        var withConfirmation = () => testCandidate.WithConfirmation(true);
+
+        // then
+        withConfirmation.Should()
+            .Throw<DomainValidationException>()
+            .WithSingleError("Providing confirmation is not allowed for Submitted Claim");
     }
 }

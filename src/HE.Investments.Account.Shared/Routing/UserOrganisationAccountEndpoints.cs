@@ -7,4 +7,6 @@ public static class UserOrganisationAccountEndpoints
     public const string Dashboard = $"{Controller}/{DashboardSuffix}";
 
     public const string DashboardSuffix = "";
+
+    public static string OrganisationDashboard(string organisationId) => $"{organisationId}/{Controller}/{DashboardSuffix}";
 }

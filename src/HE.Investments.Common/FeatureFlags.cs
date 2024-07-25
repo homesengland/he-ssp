@@ -11,4 +11,6 @@ public static class FeatureFlags
     public const string WebRoleAuditFieldsImplemented = nameof(WebRoleAuditFieldsImplemented);
 
     public const string UseFrontDoorApi = nameof(UseFrontDoorApi);
+
+    public const string AhpAllocation = nameof(AhpAllocation);
 }

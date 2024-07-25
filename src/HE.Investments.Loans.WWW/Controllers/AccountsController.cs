@@ -41,9 +41,9 @@ public class AccountsController : Controller
         return _accountRoutes.NotCompleteProfile("Loans", callback);
     }
 
-    [Route("/organisation-dashboard")]
-    public IActionResult OrganisationDashboard()
+    [Route("organisation-dashboard")]
+    public IActionResult OrganisationDashboard([FromRoute] string organisationId)
     {
-        return _accountRoutes.LandingPageForLoggedUser();
+        return _accountRoutes.OrganisationLandingPageForLoggedUser(organisationId);
     }
 }

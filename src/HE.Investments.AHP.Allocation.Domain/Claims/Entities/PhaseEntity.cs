@@ -1,15 +1,17 @@
+using HE.Investment.AHP.Contract.Delivery.Enums;
 using HE.Investments.AHP.Allocation.Contract.Claims;
 using HE.Investments.AHP.Allocation.Contract.Claims.Enum;
 using HE.Investments.AHP.Allocation.Domain.Allocation.ValueObjects;
 using HE.Investments.AHP.Allocation.Domain.Claims.ValueObjects;
+using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Exceptions;
+using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Extensions;
-using MilestoneClaim = HE.Investments.AHP.Allocation.Domain.Claims.ValueObjects.MilestoneClaim;
 
 namespace HE.Investments.AHP.Allocation.Domain.Claims.Entities;
 
-public class PhaseEntity : DomainEntity
+public sealed class PhaseEntity : DomainEntity
 {
     private readonly ModificationTracker _modificationTracker = new();
 
@@ -18,10 +20,10 @@ public class PhaseEntity : DomainEntity
         AllocationBasicInfo allocation,
         PhaseName name,
         NumberOfHomes numberOfHomes,
-        BuildActivity buildActivityType,
-        MilestoneClaim? acquisitionMilestone,
-        MilestoneClaim? startOnSiteMilestone,
-        MilestoneClaim completionMilestone)
+        BuildActivityType buildActivityType,
+        MilestoneClaimBase? acquisitionMilestone,
+        MilestoneClaimBase? startOnSiteMilestone,
+        MilestoneClaimBase completionMilestone)
     {
         Id = id;
         Allocation = allocation;
@@ -41,45 +43,24 @@ public class PhaseEntity : DomainEntity
 
     public NumberOfHomes NumberOfHomes { get; }
 
-    public BuildActivity BuildActivityType { get; }
+    public BuildActivityType BuildActivityType { get; }
 
-    public MilestoneClaim? AcquisitionMilestone { get; private set; }
+    public MilestoneClaimBase? AcquisitionMilestone { get; private set; }
 
-    public MilestoneClaim? StartOnSiteMilestone { get; private set; }
+    public MilestoneClaimBase? StartOnSiteMilestone { get; private set; }
 
-    public MilestoneClaim CompletionMilestone { get; private set; }
+    public MilestoneClaimBase CompletionMilestone { get; private set; }
 
     public bool IsModified => _modificationTracker.IsModified;
 
-    public static PhaseEntity New(
-        PhaseId id,
-        AllocationBasicInfo allocation,
-        PhaseName name,
-        NumberOfHomes numberOfHomes,
-        BuildActivity buildActivityType,
-        MilestoneClaim? acquisitionMilestone,
-        MilestoneClaim? startOnSiteMilestone,
-        MilestoneClaim completionMilestone)
-    {
-        return new PhaseEntity(
-            id,
-            allocation,
-            name,
-            numberOfHomes,
-            buildActivityType,
-            acquisitionMilestone,
-            startOnSiteMilestone,
-            completionMilestone);
-    }
-
-    public MilestoneClaim? GetMilestoneClaim(MilestoneType milestoneType)
+    public MilestoneClaimBase? GetMilestoneClaim(MilestoneType milestoneType)
     {
         return milestoneType switch
         {
             MilestoneType.Acquisition => AcquisitionMilestone,
             MilestoneType.StartOnSite => StartOnSiteMilestone,
             MilestoneType.Completion => CompletionMilestone,
-            _ => null,
+            _ => throw new ArgumentOutOfRangeException(nameof(milestoneType), milestoneType, null),
         };
     }
 
@@ -102,8 +83,13 @@ public class PhaseEntity : DomainEntity
         };
     }
 
-    public void ProvideMilestoneClaim(MilestoneClaim claim)
+    public void ProvideMilestoneClaim(MilestoneClaimBase claim)
     {
+        if (!CanMilestoneBeClaimed(claim.Type))
+        {
+            OperationResult.ThrowValidationError(nameof(MilestoneClaim), $"{claim.Type.GetDescription()} milestone cannot be claimed right now.");
+        }
+
         switch (claim.Type)
         {
             case MilestoneType.Acquisition:
@@ -119,5 +105,22 @@ public class PhaseEntity : DomainEntity
             default:
                 throw new InvalidOperationException("Cannot provide Unknown claim type.");
         }
+    }
+
+    public void ProvideMilestoneClaimAchievementDate(
+        MilestoneClaimBase claim,
+        Programme.Contract.Programme programme,
+        DateDetails? achievementDate,
+        DateTime currentDate)
+    {
+        var previousMilestoneSubmissionDate = claim.Type switch
+        {
+            MilestoneType.Acquisition => null,
+            MilestoneType.StartOnSite => AcquisitionMilestone?.ClaimDate.SubmissionDate,
+            MilestoneType.Completion => StartOnSiteMilestone?.ClaimDate.SubmissionDate,
+            _ => throw new InvalidOperationException("Cannot provide Unknown claim type."),
+        };
+
+        ProvideMilestoneClaim(claim.WithAchievementDate(achievementDate, programme, previousMilestoneSubmissionDate, currentDate));
     }
 }

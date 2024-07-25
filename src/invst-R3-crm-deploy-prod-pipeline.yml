@@ -38,15 +38,10 @@ resources:
       type: git
       name: "Investments Programme/he-invst-deployment"
       ref: "development_R3"
-  pipelines:
-    - pipeline: BuildPipeline
-      source: "Loans - CRM - Build"
-      trigger: none
 
 stages:
   - template: crm-deployment-pipelines/invst-R3-crm-deploy-prod.yml@he-invst-deployment
     parameters:
-      artifactLocationPipeline: BuildPipeline
       deployEnvironmentVariables: "${{ parameters.deployEnvironmentVariables }}"
       deployMainSolution: "${{ parameters.deployMainSolution }}"
       deployFlowsSolution: "${{ parameters.deployFlowsSolution }}"

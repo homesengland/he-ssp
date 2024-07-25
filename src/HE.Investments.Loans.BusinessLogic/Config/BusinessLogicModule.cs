@@ -17,7 +17,6 @@ using HE.Investments.Loans.BusinessLogic.PrefillData.Crm;
 using HE.Investments.Loans.BusinessLogic.PrefillData.Repositories;
 using HE.Investments.Loans.BusinessLogic.Projects.Repositories;
 using HE.Investments.Loans.BusinessLogic.Security.Repositories;
-using HE.Investments.Loans.Contract.Application.ValueObjects;
 using HE.Investments.Organisation.LocalAuthorities;
 using HE.Investments.Organisation.LocalAuthorities.Repositories;
 using MediatR.Pipeline;
@@ -66,8 +65,8 @@ public static class BusinessLogicModule
     private static void AddCompanyStructureSubmodule(this IServiceCollection services)
     {
         services.AddScoped<ICompanyStructureRepository, CompanyStructureRepository>();
-        services.AddScoped<ILoansFileLocationProvider<LoanApplicationId>>(x => x.GetRequiredService<ICompanyStructureRepository>());
-        services.AddScoped<ILoansFileService<LoanApplicationId>, LoansFileService<LoanApplicationId>>();
+        services.AddScoped<ILoansFileLocationProvider<CompanyStructureFileParams>>(x => x.GetRequiredService<ICompanyStructureRepository>());
+        services.AddScoped<ILoansFileService<CompanyStructureFileParams>, LoansFileService<CompanyStructureFileParams>>();
         services.AddSingleton<ICompanyStructureFileFactory, CompanyStructureFileFactory>();
     }
 

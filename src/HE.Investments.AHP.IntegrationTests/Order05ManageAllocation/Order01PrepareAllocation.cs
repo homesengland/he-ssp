@@ -20,15 +20,12 @@ public class Order01PrepareAllocation : AhpIntegrationTest
         : base(fixture, output)
     {
         SchemeInformationData = ReturnSharedData<SchemeInformationData>();
-
         FinancialDetailsData = ReturnSharedData<FinancialDetailsData>(data =>
         {
             var schemeInformationData = GetSharedDataOrNull<SchemeInformationData>(nameof(SchemeInformationData));
             data.ProvideSchemeFunding(schemeInformationData?.RequiredFunding ?? 0m);
         });
-
         HomeTypesData = ReturnSharedData<HomeTypesData>();
-
         DeliveryPhasesData = ReturnSharedData<DeliveryPhasesData>();
     }
 
@@ -45,7 +42,7 @@ public class Order01PrepareAllocation : AhpIntegrationTest
     public async Task Order01_AhpAllocationShouldBeCreated()
     {
         // given
-        ApplicationData.GenerateApplicationName();
+        ApplicationData.GenerateApplicationName("allocation");
         SchemeInformationData.PopulateAllData();
         FinancialDetailsData.PopulateAllData(SchemeInformationData.RequiredFunding);
         HomeTypesData.General.PopulateAllData();
@@ -54,6 +51,7 @@ public class Order01PrepareAllocation : AhpIntegrationTest
         DeliveryPhasesData.OffTheShelfDeliveryPhase.PopulateAllData();
         var allocationId = await AhpDataManipulator.CreateAhpAllocation(
             LoginData,
+            SiteData,
             ApplicationData,
             FinancialDetailsData,
             SchemeInformationData,

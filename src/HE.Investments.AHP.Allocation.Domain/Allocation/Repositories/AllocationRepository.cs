@@ -5,6 +5,7 @@ using HE.Investments.AHP.Allocation.Domain.Allocation.Crm;
 using HE.Investments.AHP.Allocation.Domain.Allocation.Entities;
 using HE.Investments.AHP.Allocation.Domain.Allocation.Mappers;
 using HE.Investments.AHP.Allocation.Domain.Allocation.ValueObjects;
+using HE.Investments.AHP.Allocation.Domain.Claims.Crm;
 using HE.Investments.AHP.Allocation.Domain.Claims.Mappers;
 using HE.Investments.Common.Contract;
 using HE.Investments.Programme.Contract;

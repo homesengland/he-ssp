@@ -40,7 +40,7 @@ public class GetProjectDetailsQueryHandler : IRequestHandler<GetProjectDetailsQu
     public async Task<ProjectDetailsModel> Handle(GetProjectDetailsQuery request, CancellationToken cancellationToken)
     {
         var userAccount = await _userContext.GetSelectedAccount();
-        var project = await _projectRepository.GetProjectApplications(request.ProjectId, userAccount, cancellationToken);
+        var project = await _projectRepository.GetProjectOverview(request.ProjectId, userAccount, cancellationToken);
         var programme = await _mediator.Send(new GetProgrammeQuery(ProgrammeId.From(_programmeSettings.AhpProgrammeId)), cancellationToken);
 
         var applications = project.Applications
@@ -54,6 +54,16 @@ public class GetProjectDetailsQueryHandler : IRequestHandler<GetProjectDetailsQu
                 x.LocalAuthorityName))
             .ToList();
 
+        var allocations = project.Allocations
+            .OrderByDescending(x => x.LastModificationOn)
+            .Select(x => new AllocationProjectModel(
+                x.Id,
+                x.Name,
+                x.Tenure,
+                x.HousesToDeliver,
+                x.LocalAuthorityName))
+            .ToList();
+
         return new ProjectDetailsModel(
             project.Id,
             project.Name.Value,
@@ -64,6 +74,11 @@ public class GetProjectDetailsQueryHandler : IRequestHandler<GetProjectDetailsQu
                 request.ApplicationPaginationRequest.Page,
                 request.ApplicationPaginationRequest.ItemsPerPage,
                 applications.Count),
+            new PaginationResult<AllocationProjectModel>(
+                allocations.TakePage(request.ApplicationPaginationRequest).ToList(),
+                request.ApplicationPaginationRequest.Page,
+                request.ApplicationPaginationRequest.ItemsPerPage,
+                allocations.Count),
             !await _accessContext.CanEditApplication());
     }
 }

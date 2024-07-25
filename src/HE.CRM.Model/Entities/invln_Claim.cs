@@ -23,19 +23,13 @@ namespace DataverseModel
 		Approve = 858110003,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Draft = 858110005,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Inactive = 2,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		OnHold = 858110002,
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		RecakkRequested = 858110005,
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		RecallApprove = 858110006,
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		RecallReject = 858110007,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Reject = 858110004,

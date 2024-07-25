@@ -16,11 +16,7 @@ parameters:
   - name: exportInvstR3
     displayName: Export Invst R3 data ?
     type: boolean
-    default: false
-  - name: commitToRepo
-    displayName: Commit data files to repo ?
-    type: boolean
-    default: false
+    default: true
 
 resources:
   repositories:
@@ -35,4 +31,3 @@ stages:
       exportLoans: "${{ parameters.exportLoans }}"
       exportAhp: "${{ parameters.exportAhp }}"
       exportInvstR3: "${{ parameters.exportInvstR3 }}"
-      commitToRepo: "${{ parameters.commitToRepo }}"
