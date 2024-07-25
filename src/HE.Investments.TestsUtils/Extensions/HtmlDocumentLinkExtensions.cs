@@ -56,6 +56,17 @@ public static class HtmlDocumentLinkExtensions
         return htmlDocument;
     }
 
+    public static IHtmlDocument HasReturnToAllocationLink(this IHtmlDocument htmlDocument)
+    {
+        var links = GetLinks(htmlDocument);
+
+        links = HtmlElementFilters.WithText(links, "Return to allocation");
+
+        links.SingleOrDefault().Should().NotBeNull("There is no single LinkButton element on page");
+
+        return htmlDocument;
+    }
+
     public static IHtmlDocument HasSaveAndReturnToSiteListButton(this IHtmlDocument htmlDocument)
     {
         return htmlDocument.HasSaveAndReturnToSiteListButton(out _);

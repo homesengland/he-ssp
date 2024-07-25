@@ -4,7 +4,7 @@ using HE.Investments.AHP.IntegrationTests.Crm;
 using HE.Investments.AHP.IntegrationTests.Order01StartAhpProjectWithSite.Data;
 using HE.Investments.AHP.IntegrationTests.Order02FillSite.Data;
 using HE.Investments.AHP.IntegrationTests.Order03FillApplication.Data;
-using HE.Investments.AHP.IntegrationTests.Order03FillApplication.Data.Allocation;
+using HE.Investments.AHP.IntegrationTests.Order05ManageAllocation.Data.Allocation;
 using HE.Investments.AHP.IntegrationTests.Utils;
 using HE.Investments.Common.Contract;
 using HE.Investments.FrontDoor.IntegrationTests.Utils;
