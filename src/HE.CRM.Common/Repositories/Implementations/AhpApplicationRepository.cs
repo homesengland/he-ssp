@@ -65,7 +65,7 @@ namespace HE.CRM.Common.Repositories.Implementations
             return result.Entities.Select(x => x.ToEntity<invln_scheme>()).ToList();
         }
 
-        public List<invln_scheme> GetRecordsFromAhpApplicationsForAhpProject(Guid ahpProjectGuid, invln_Permission contactWebRole, Contact contact, Guid organisationGuid, bool isLeadPartner, bool IsSitePartner, bool isAllocation, string consortiumId = null)
+        public List<invln_scheme> GetRecordsFromAhpApplicationsForAhpProject(Guid ahpProjectGuid, invln_Permission contactWebRole, Contact contact, Guid organisationGuid, bool isLeadPartner, bool IsSitePartner, bool isAllocation, bool useV2Version, string consortiumId = null)
         {
             var query_invln_sites_invln_ahpprojectid = ahpProjectGuid.ToString();
 
@@ -96,13 +96,16 @@ namespace HE.CRM.Common.Repositories.Implementations
 
             query_invln_sites.LinkCriteria.AddCondition(invln_Sites.Fields.invln_AHPProjectId, ConditionOperator.Equal, query_invln_sites_invln_ahpprojectid);
 
-            if (isAllocation == true)
+            if (useV2Version)
             {
-                query.Criteria.AddCondition(invln_scheme.Fields.invln_isallocation, ConditionOperator.Equal, true);
-            }
-            else
-            {
-                query.Criteria.AddCondition(invln_scheme.Fields.invln_isallocation, ConditionOperator.NotEqual, true);
+                if (isAllocation == true)
+                {
+                    query.Criteria.AddCondition(invln_scheme.Fields.invln_isallocation, ConditionOperator.Equal, true);
+                }
+                else
+                {
+                    query.Criteria.AddCondition(invln_scheme.Fields.invln_isallocation, ConditionOperator.NotEqual, true);
+                }
             }
 
             if (consortiumId == null)
