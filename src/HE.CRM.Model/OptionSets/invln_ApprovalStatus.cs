@@ -20,6 +20,9 @@ namespace DataverseModel
 		Approved = 858110001,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
+		InReview = 858110003,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Pending = 858110000,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]

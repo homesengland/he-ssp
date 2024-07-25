@@ -20,16 +20,10 @@ namespace DataverseModel
 		Approved = 858110006,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Due = 858110001,
+		Draft = 858110008,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		DueSoon = 858110000,
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Overdue = 858110002,
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		RecallRequested = 858110004,
+		Paid = 858110009,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Rejected = 858110007,
