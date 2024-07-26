@@ -19,7 +19,7 @@ public class PhaseContractMapperTests : TestBase<PhaseContractMapper>
         var phase = PhaseEntityTestBuilder.New()
             .WithAcquisitionMilestone(null)
             .WithStartOnSiteMilestone(null)
-            .WithCompletionMilestone(MilestoneClaimTestBuilder.New().Build())
+            .WithCompletionMilestone(MilestoneClaimTestBuilder.Draft().Build())
             .Build();
 
         var claimMapper = CreateAndRegisterDependencyMock<IMilestoneClaimContractMapper>();

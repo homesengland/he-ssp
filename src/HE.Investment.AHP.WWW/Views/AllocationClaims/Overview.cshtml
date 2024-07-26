@@ -14,6 +14,7 @@
 
 <gds-div-grid-column-two-thirds>
     <gds-back-link href="@Url.OrganisationAction("Summary", "AllocationClaims",  new { allocationId = Model.Phase.Allocation.Id.Value })"></gds-back-link>
+    <vc:notification />
     <vc:page-header caption="@Model.Phase.Allocation.Name" title="@title"/>
     <vc:allocation-header allocation="@Model.Phase.Allocation"/>
 

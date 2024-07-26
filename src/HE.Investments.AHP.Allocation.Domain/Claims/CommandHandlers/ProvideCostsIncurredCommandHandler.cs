@@ -13,7 +13,7 @@ internal sealed class ProvideCostsIncurredCommandHandler :
     {
     }
 
-    protected override MilestoneClaim Provide(ProvideCostsIncurredCommand request, MilestoneClaim claim)
+    protected override MilestoneClaimBase Provide(ProvideCostsIncurredCommand request, MilestoneClaimBase claim)
     {
         return claim.WithCostsIncurred(request.CostsIncurred);
     }

@@ -75,7 +75,7 @@ public class CompanyStructureEntity : DomainEntity
     }
 
     public async Task<IReadOnlyCollection<UploadedFile>> UploadFiles(
-        ILoansFileService<LoanApplicationId> fileService,
+        ILoansFileService<CompanyStructureFileParams> fileService,
         IList<OrganisationMoreInformationFile> filesToUpload,
         CancellationToken cancellationToken)
     {
@@ -84,7 +84,7 @@ public class CompanyStructureEntity : DomainEntity
             return [];
         }
 
-        _files ??= (await fileService.GetFiles(LoanApplicationId, cancellationToken)).ToList();
+        _files ??= (await fileService.GetFiles(new CompanyStructureFileParams(LoanApplicationId), cancellationToken)).ToList();
         if (_files.Count + filesToUpload.Count > AllowedFilesCount)
         {
             OperationResult.ThrowValidationError(nameof(OrganisationMoreInformationFile), ValidationErrorMessage.FilesMaxCount(AllowedFilesCount));
@@ -102,7 +102,7 @@ public class CompanyStructureEntity : DomainEntity
         var result = new List<UploadedFile>();
         foreach (var fileToUpload in filesToUpload)
         {
-            result.Add(await fileService.UploadFile(fileToUpload.FileName, fileToUpload.FileContent, LoanApplicationId, cancellationToken));
+            result.Add(await fileService.UploadFile(fileToUpload.FileName, fileToUpload.FileContent, new CompanyStructureFileParams(LoanApplicationId), cancellationToken));
         }
 
         UnCompleteSection();

@@ -2,6 +2,7 @@ using HE.Base.Repositories;
 using DataverseModel;
 using System.Collections.Generic;
 using System;
+using Microsoft.Xrm.Sdk;
 
 namespace HE.CRM.Common.Repositories.Interfaces
 {
@@ -16,5 +17,6 @@ namespace HE.CRM.Common.Repositories.Interfaces
         List<invln_scheme> GetByConsortiumId(Guid consortiumId);
         List<invln_scheme> GetListOfApplicationToSendReminder(string calculatedDate);
         invln_scheme GetAllocation(Guid allocationId, Guid organisationId, Contact contact = null);
+        EntityCollection GetAllocationWithDeliveryPhaseAndClaims(string externalContactId, Guid accountId, Guid allocationId, Guid deliveryPhaseId);
     }
 }

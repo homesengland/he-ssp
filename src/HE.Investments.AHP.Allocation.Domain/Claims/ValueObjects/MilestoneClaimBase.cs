@@ -1,16 +1,16 @@
 using HE.Investments.AHP.Allocation.Contract.Claims.Enum;
 using HE.Investments.AHP.Allocation.Domain.Claims.Enums;
+using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Extensions;
-using HE.Investments.Common.Messages;
 using MilestoneStatus = HE.Investments.AHP.Allocation.Domain.Claims.Enums.MilestoneStatus;
 
 namespace HE.Investments.AHP.Allocation.Domain.Claims.ValueObjects;
 
-public class MilestoneClaim : ValueObject
+public abstract class MilestoneClaimBase : ValueObject
 {
-    public MilestoneClaim(
+    protected MilestoneClaimBase(
         MilestoneType type,
         MilestoneStatus status,
         GrantApportioned grantApportioned,
@@ -21,7 +21,8 @@ public class MilestoneClaim : ValueObject
         if (type != MilestoneType.Acquisition && costsIncurred.IsProvided())
         {
             OperationResult.ThrowValidationError(
-                nameof(CostsIncurred), "Costs incurred can be provided only for Acquisition milestone");
+                nameof(CostsIncurred),
+                "Costs incurred can be provided only for Acquisition milestone");
         }
 
         Type = type;
@@ -44,7 +45,7 @@ public class MilestoneClaim : ValueObject
 
     public bool? IsConfirmed { get; }
 
-    public bool IsSubmitted => Status >= MilestoneStatus.Submitted;
+    public abstract bool IsSubmitted { get; }
 
     public MilestoneDueStatus CalculateDueStatus(DateTime today)
     {
@@ -66,50 +67,17 @@ public class MilestoneClaim : ValueObject
         return MilestoneDueStatus.Overdue;
     }
 
-    public MilestoneClaim WithCostsIncurred(bool? costsIncurred)
-    {
-        if (costsIncurred.IsNotProvided())
-        {
-            OperationResult.ThrowValidationError(
-                nameof(CostsIncurred),
-                ValidationErrorMessage.MustBeSelectedYes(
-                    "you have incurred costs and made payments to at least the level of the grant"));
-        }
+    public abstract MilestoneClaimBase WithAchievementDate(
+        DateDetails? achievementDate,
+        Programme.Contract.Programme programme,
+        DateDetails? previousSubmissionDate,
+        DateTime currentDate);
 
-        return new MilestoneClaim(
-            Type,
-            Status,
-            GrantApportioned,
-            ClaimDate,
-            costsIncurred,
-            IsConfirmed);
-    }
+    public abstract MilestoneClaimBase WithCostsIncurred(bool? costsIncurred);
 
-    public MilestoneClaim WithConfirmation(bool? isConfirmed)
-    {
-        if (isConfirmed != true)
-        {
-            OperationResult.ThrowValidationError(nameof(IsConfirmed), "Confirm the declaration to continue");
-        }
+    public abstract MilestoneClaimBase WithConfirmation(bool? isConfirmed);
 
-        return new MilestoneClaim(
-            Type,
-            Status,
-            GrantApportioned,
-            ClaimDate,
-            CostsIncurred,
-            isConfirmed);
-    }
-
-    public CanceledMilestoneClaim Cancel()
-    {
-        if (Status != MilestoneStatus.Draft)
-        {
-            OperationResult.ThrowValidationError(nameof(MilestoneClaim), "Cannot cancel submitted claim");
-        }
-
-        return new CanceledMilestoneClaim(this);
-    }
+    public abstract MilestoneWithoutClaim Cancel();
 
     protected override IEnumerable<object?> GetAtomicValues()
     {

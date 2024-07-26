@@ -22,7 +22,7 @@ public class ClaimStatusTag : ViewComponent
             MilestoneStatus.UnderReview => TagColour.Yellow,
             MilestoneStatus.Approved => TagColour.Green,
             MilestoneStatus.Rejected => TagColour.Red,
-            MilestoneStatus.Reclaimed => TagColour.Orange,
+            MilestoneStatus.Paid => TagColour.Green,
             _ => TagColour.Grey,
         };
     }

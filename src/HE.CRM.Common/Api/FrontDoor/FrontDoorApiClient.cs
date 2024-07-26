@@ -16,14 +16,14 @@ namespace HE.CRM.Common.Api.FrontDoor
 {
     public sealed class FrontDoorApiClient : CrmService, IFrontDoorApiClient
     {
-        private readonly ApiHttpClient _httpClient;
+        private readonly Lazy<ApiHttpClient> _httpClient;
 
         public FrontDoorApiClient(CrmServiceArgs args)
             : base(args)
         {
-            _httpClient = CreateHttpClient(
+            _httpClient = new Lazy<ApiHttpClient>(() => CreateHttpClient(
                 CrmRepositoriesFactory.Get<ISecretVariableRepository>(),
-                CrmServicesFactory.Get<IAzureAdTokenProviderFactory>());
+                CrmServicesFactory.Get<IAzureAdTokenProviderFactory>()));
         }
 
         public bool CheckProjectExists(Guid organisationId, string projectName)
@@ -38,16 +38,20 @@ namespace HE.CRM.Common.Api.FrontDoor
 
             try
             {
-                var response = _httpClient.Send<CheckProjectExistsRequest, CheckProjectExistsResponse>(
+                var response = _httpClient.Value.Send<CheckProjectExistsRequest, CheckProjectExistsResponse>(
                     request,
                     FrontDoorApiUrls.CheckProjectExists,
                     HttpMethod.Post);
 
                 return response.Result;
             }
-            catch (ApiException apiEx)
+            catch (ApiSerializationException ex)
             {
-                throw new InvalidPluginExecutionException(apiEx.Message);
+                throw new InvalidPluginExecutionException(ex.ToString());
+            }
+            catch (ApiException ex)
+            {
+                throw new InvalidPluginExecutionException(ex.ToString());
             }
         }
 
@@ -59,16 +63,20 @@ namespace HE.CRM.Common.Api.FrontDoor
 
             try
             {
-                var response = _httpClient.Send<DeactivateProjectRequest, DeactivateProjectResponse>(
+                var response = _httpClient.Value.Send<DeactivateProjectRequest, DeactivateProjectResponse>(
                     request,
                     FrontDoorApiUrls.DeactivateProject,
                     HttpMethod.Post);
 
                 return response.Result;
             }
-            catch (ApiException apiEx)
+            catch (ApiSerializationException ex)
             {
-                throw new InvalidPluginExecutionException(apiEx.Message);
+                throw new InvalidPluginExecutionException(ex.ToString());
+            }
+            catch (ApiException ex)
+            {
+                throw new InvalidPluginExecutionException(ex.ToString());
             }
         }
 
@@ -80,14 +88,18 @@ namespace HE.CRM.Common.Api.FrontDoor
 
             try
             {
-                _httpClient.Send<RemoveSiteRequest, RemoveSiteResponse>(
+                _httpClient.Value.Send<RemoveSiteRequest, RemoveSiteResponse>(
                     request,
                     FrontDoorApiUrls.RemoveSite,
                     HttpMethod.Post);
             }
-            catch (ApiException apiEx)
+            catch (ApiSerializationException ex)
             {
-                throw new InvalidPluginExecutionException(apiEx.Message);
+                throw new InvalidPluginExecutionException(ex.ToString());
+            }
+            catch (ApiException ex)
+            {
+                throw new InvalidPluginExecutionException(ex.ToString());
             }
         }
 
@@ -97,15 +109,19 @@ namespace HE.CRM.Common.Api.FrontDoor
 
             try
             {
-                var baseResponse = _httpClient.Send<GetProjectsResponse>(
+                var baseResponse = _httpClient.Value.Send<GetProjectsResponse>(
                     FrontDoorApiUrls.GetProjects(organisationId),
                     HttpMethod.Get);
 
                 return baseResponse;
             }
-            catch (ApiException apiEx)
+            catch (ApiSerializationException ex)
             {
-                throw new InvalidPluginExecutionException(apiEx.Message);
+                throw new InvalidPluginExecutionException(ex.ToString());
+            }
+            catch (ApiException ex)
+            {
+                throw new InvalidPluginExecutionException(ex.ToString());
             }
         }
 
@@ -115,7 +131,7 @@ namespace HE.CRM.Common.Api.FrontDoor
 
             try
             {
-                var response = _httpClient.Send<GetMultipleSitesResponse>(
+                var response = _httpClient.Value.Send<GetMultipleSitesResponse>(
                 FrontDoorApiUrls.GetSites(projectId),
                 HttpMethod.Get);
 
@@ -133,15 +149,19 @@ namespace HE.CRM.Common.Api.FrontDoor
 
             try
             {
-                var response = _httpClient.Send<GetProjectResponse>(
+                var response = _httpClient.Value.Send<GetProjectResponse>(
                 FrontDoorApiUrls.GetProject(projectId),
                 HttpMethod.Get);
 
                 return response;
             }
-            catch (ApiException apiEx)
+            catch (ApiSerializationException ex)
             {
-                throw new InvalidPluginExecutionException(apiEx.Message);
+                throw new InvalidPluginExecutionException(ex.ToString());
+            }
+            catch (ApiException ex)
+            {
+                throw new InvalidPluginExecutionException(ex.ToString());
             }
         }
 
@@ -151,15 +171,19 @@ namespace HE.CRM.Common.Api.FrontDoor
 
             try
             {
-                var response = _httpClient.Send<GetSiteResponse>(
+                var response = _httpClient.Value.Send<GetSiteResponse>(
                         FrontDoorApiUrls.GetSite(siteId),
                         HttpMethod.Get);
 
                 return response;
             }
-            catch (ApiException apiEx)
+            catch (ApiSerializationException ex)
             {
-                throw new InvalidPluginExecutionException(apiEx.Message);
+                throw new InvalidPluginExecutionException(ex.ToString());
+            }
+            catch (ApiException ex)
+            {
+                throw new InvalidPluginExecutionException(ex.ToString());
             }
         }
 
@@ -170,16 +194,20 @@ namespace HE.CRM.Common.Api.FrontDoor
             try
             {
                 var request = SaveProjectRequestMapper.Map(dto, userId);
-                var response = _httpClient.Send<SaveProjectRequest, SaveProjectResponse>(
+                var response = _httpClient.Value.Send<SaveProjectRequest, SaveProjectResponse>(
                     request,
                     FrontDoorApiUrls.SaveProject,
                     HttpMethod.Post);
 
                 return response;
             }
-            catch (ApiException apiEx)
+            catch (ApiSerializationException ex)
             {
-                throw new InvalidPluginExecutionException(apiEx.Message);
+                throw new InvalidPluginExecutionException(ex.ToString());
+            }
+            catch (ApiException ex)
+            {
+                throw new InvalidPluginExecutionException(ex.ToString());
             }
         }
 
@@ -190,22 +218,26 @@ namespace HE.CRM.Common.Api.FrontDoor
             try
             {
                 var request = SaveSiteRequestMapper.Map(dto, projectId);
-                var response = _httpClient.Send<SaveSiteRequest, SaveSiteResponse>(
+                var response = _httpClient.Value.Send<SaveSiteRequest, SaveSiteResponse>(
                     request,
                     FrontDoorApiUrls.SaveSite,
                     HttpMethod.Post);
 
                 return response;
             }
-            catch (ApiException apiEx)
+            catch (ApiSerializationException ex)
             {
-                throw new InvalidPluginExecutionException(apiEx.Message);
+                throw new InvalidPluginExecutionException(ex.ToString());
+            }
+            catch (ApiException ex)
+            {
+                throw new InvalidPluginExecutionException(ex.ToString());
             }
         }
 
         public void Dispose()
         {
-            _httpClient?.Dispose();
+            _httpClient?.Value?.Dispose();
         }
 
         private static ApiHttpClient CreateHttpClient(
@@ -230,10 +262,13 @@ namespace HE.CRM.Common.Api.FrontDoor
 
             var tokenProvider = tokenProviderFactory.Create(azureAdAuthConfig);
             var frontDoorApiUrl = secrets.First(x => x.invln_Name == EnvironmentVariables.FrontDoorApiBaseUrl).invln_Value;
+
             var httpClient = new HttpClient(new BearerTokenAuthorizationHandler(tokenProvider))
             {
-                BaseAddress = new Uri(frontDoorApiUrl)
+                BaseAddress = new Uri(frontDoorApiUrl),
+                Timeout = TimeSpan.FromMilliseconds(15000), //15 seconds
             };
+            httpClient.DefaultRequestHeaders.ConnectionClose = true; //Set KeepAlive to false
 
             return new ApiHttpClient(httpClient);
         }

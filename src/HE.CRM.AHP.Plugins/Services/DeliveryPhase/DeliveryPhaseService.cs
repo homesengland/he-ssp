@@ -245,7 +245,6 @@ namespace HE.CRM.AHP.Plugins.Services.DeliveryPhase
             CalculateFieldValue(deliveryPhase.invln_AcquisitionValue.Value, deliveryPhase.invln_StartOnSiteValue.Value, deliveryPhase.invln_CompletionValue.Value,
                                 acquisitionPercentageValue, startOnSitePercentageValue, completionPercentageValue,
                                 deliveryPhase, fundingForPhase);
-            TracingService.Trace("0");
             int noOfHomesChange = 0;
             if (df.invln_NoofHomes != null)
             {
@@ -258,20 +257,15 @@ namespace HE.CRM.AHP.Plugins.Services.DeliveryPhase
 
         private void ValidateGrantRequest(Guid aplicationId, decimal grandRequested, int noOfHomesChange, int numberOfHouseApplication)
         {
-            TracingService.Trace("1");
             var deliveryPhases = _deliveryPhaseRepository.GetByAttribute(invln_DeliveryPhase.Fields.invln_Application, aplicationId,
                 new string[] { invln_DeliveryPhase.Fields.invln_sumofcalculatedfounds, invln_DeliveryPhase.Fields.invln_CompletionValue,
                 invln_DeliveryPhase.Fields.invln_NoofHomes, invln_DeliveryPhase.Fields.invln_completionmilestoneclaimdate});
-            TracingService.Trace("1");
             var sumOfHomes = deliveryPhases.Where(x => x.invln_NoofHomes != null).Sum(x => x.invln_NoofHomes.Value) + noOfHomesChange;
-            TracingService.Trace("1");
             if (sumOfHomes < numberOfHouseApplication)
             {
                 return;
             }
-            TracingService.Trace("1");
             var sumOfFounds = deliveryPhases.Where(x => x.invln_sumofcalculatedfounds != null).Sum(x => x.invln_sumofcalculatedfounds.Value);
-            TracingService.Trace("1");
             if (sumOfFounds != grandRequested)
             {
                 TracingService.Trace("Adjust last deliveryphase");

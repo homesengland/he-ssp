@@ -73,6 +73,8 @@ public static class ValidationErrorMessage
 
     public const string ProvideAllSiteAnswers = "To submit, you have to provide all answers for sites";
 
+    public const string DatesOutsideTheProgramme = "Dates fall outside of the programme requirements. Check your dates against the published funding requirements";
+
     public static string FilesMaxCount(int numberOfFiles) => $"You can only select up to {numberOfFiles} files";
 
     public static string EstimatedPoundInput(string name) => PoundInput($"estimated {name}");

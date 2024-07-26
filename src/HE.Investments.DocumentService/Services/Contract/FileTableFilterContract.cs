@@ -9,4 +9,6 @@ internal sealed class FileTableFilterContract
     public List<string> FolderPaths { get; set; }
 
     public string? PagingInfo { get; set; }
+
+    public string? PartitionId { get; set; }
 }

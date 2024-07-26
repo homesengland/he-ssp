@@ -51,7 +51,8 @@ namespace HE.CRM.Common.DtoMapping
                 invln_grantsfromdhscnhsorotherhealth = MapNullableDecimalToMoney(applicationDto.howMuchReceivedFromDepartmentOfHealth),
                 invln_grantsfromthelottery = MapNullableDecimalToMoney(applicationDto.howMuchReceivedFromLotteryFunding),
                 invln_grantsfromotherpublicbodies = MapNullableDecimalToMoney(applicationDto.howMuchReceivedFromOtherPublicBodies),
-                invln_partnerconfirmation = applicationDto.applicationPartnerConfirmation
+                invln_partnerconfirmation = applicationDto.applicationPartnerConfirmation,
+                invln_isallocation = applicationDto.isAllocation
             };
 
             if (applicationDto.representationsandwarranties != null)
@@ -162,7 +163,7 @@ namespace HE.CRM.Common.DtoMapping
                 ownerOfTheLandDuringDevelopmentName = application.invln_OwneroftheLandName,
                 ownerOfTheHomesAfterCompletionId = application.invln_OwneroftheHomes?.Id.ToString(),
                 ownerOfTheHomesAfterCompletionName = application.invln_OwneroftheHomesName,
-                applicationPartnerConfirmation = application.invln_partnerconfirmation,
+                applicationPartnerConfirmation = application.invln_partnerconfirmation
             };
             if (ahpProject?.invln_HeProjectId != null)
             {

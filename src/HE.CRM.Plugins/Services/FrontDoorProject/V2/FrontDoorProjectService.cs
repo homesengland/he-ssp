@@ -80,8 +80,6 @@ namespace HE.CRM.Plugins.Services.FrontDoorProject.V2
 
             var baseProjects = _frontDoorApiClient.GetProjects(organisationId);
 
-            Logger.Trace($"GetProjectsResponse contains {baseProjects?.Count} records.");
-
             if (baseProjects == null || !baseProjects.Any())
             {
                 return new List<FrontDoorProjectDto>();
@@ -96,17 +94,14 @@ namespace HE.CRM.Plugins.Services.FrontDoorProject.V2
             {
                 var currentUser = _contactRepository.GetContactViaExternalId(externalContactId, new string[] { Contact.Fields.Id });
                 projects = projects.Where(x => x.PortalOwnerId == currentUser.Id);
-                Logger.Trace($"Projects count : {projects.Count()}");
             }
 
             if (string.IsNullOrWhiteSpace(externalContactId))
             {
                 Logger.Trace("Excluding records from the list, which are for a Limited User.");
-                Logger.Trace($"Projects count : {projects.Count()}");
-                var filteredProjects = new List<GetProjectResponse>();
 
+                var filteredProjects = new List<GetProjectResponse>();
                 var webroleList = _contactWebroleRepository.GetListOfUsersWithoutLimitedRole(organisationId.ToString());
-                Logger.Trace($"WebroleList count : {webroleList.Count}");
 
                 foreach (var projectResponse in projects)
                 {
@@ -115,7 +110,7 @@ namespace HE.CRM.Plugins.Services.FrontDoorProject.V2
                         filteredProjects.Add(projectResponse);
                     }
                 }
-                Logger.Trace($"Filtered Projects count : {filteredProjects.Count()}");
+
                 projects = filteredProjects;
             }
 

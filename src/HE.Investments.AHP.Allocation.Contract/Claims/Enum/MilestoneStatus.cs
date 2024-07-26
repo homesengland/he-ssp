@@ -14,5 +14,5 @@ public enum MilestoneStatus
     UnderReview,
     Approved,
     Rejected,
-    Reclaimed,
+    Paid,
 }

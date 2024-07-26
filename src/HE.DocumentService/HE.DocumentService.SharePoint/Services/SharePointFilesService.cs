@@ -166,6 +166,7 @@ public class SharePointFilesService : ISharePointFilesService
             var fileFields = file.ListItemAllFields;
 
             fileFields["_ModerationComments"] = item.Metadata;
+            fileFields["_PartitionId"] = item.PartitionId;
             fileFields.Update();
             await _spContext.ExecuteQueryRetryAsync(_spConfig.RetryCount);
         }

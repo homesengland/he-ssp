@@ -9,6 +9,7 @@ using HE.Investments.Loans.Contract.Documents;
 namespace HE.Investments.Loans.BusinessLogic.Files;
 
 public class LoansFileService<TFileParams> : ILoansFileService<TFileParams>
+    where TFileParams : ILoansFileParams
 {
     private readonly IDocumentService _documentService;
 
@@ -33,7 +34,7 @@ public class LoansFileService<TFileParams> : ILoansFileService<TFileParams>
     public async Task<IReadOnlyCollection<UploadedFile>> GetFiles(TFileParams fileParams, CancellationToken cancellationToken)
     {
         var fileLocation = await _fileLocationProvider.GetFilesLocationAsync(fileParams, cancellationToken);
-        return await GetFiles(fileLocation, cancellationToken);
+        return await GetFiles(fileLocation, fileParams.PartitionId, cancellationToken);
     }
 
     public async Task<UploadedFile> UploadFile(string name, Stream content, TFileParams fileParams, CancellationToken cancellationToken)
@@ -41,7 +42,7 @@ public class LoansFileService<TFileParams> : ILoansFileService<TFileParams>
         var fileId = FileId.GenerateNew();
         var profileDetails = await _userContext.GetProfileDetails();
         var createdBy = $"{profileDetails.FirstName} {profileDetails.LastName}";
-        var fileData = new UploadFileData<LoansFileMetadata>(name, new LoansFileMetadata(fileId.Value, createdBy), content);
+        var fileData = new UploadFileData<LoansFileMetadata>(name, new LoansFileMetadata(fileId.Value, createdBy), content, fileParams.PartitionId);
         var fileLocation = await _fileLocationProvider.GetFilesLocationAsync(fileParams, cancellationToken);
 
         await _documentService.UploadAsync(fileLocation, fileData, false, cancellationToken);
@@ -52,7 +53,7 @@ public class LoansFileService<TFileParams> : ILoansFileService<TFileParams>
     public async Task<UploadedFile?> RemoveFile(FileId fileId, TFileParams fileParams, CancellationToken cancellationToken)
     {
         var fileLocation = await _fileLocationProvider.GetFilesLocationAsync(fileParams, cancellationToken);
-        var files = await GetFiles(fileLocation, cancellationToken);
+        var files = await GetFiles(fileLocation, fileParams.PartitionId, cancellationToken);
         var file = files.FirstOrDefault(x => x.Id == fileId);
         if (file != null)
         {
@@ -65,7 +66,7 @@ public class LoansFileService<TFileParams> : ILoansFileService<TFileParams>
     public async Task<DownloadFileData> DownloadFile(FileId fileId, TFileParams fileParams, CancellationToken cancellationToken)
     {
         var fileLocation = await _fileLocationProvider.GetFilesLocationAsync(fileParams, cancellationToken);
-        var files = await GetFiles(fileLocation, cancellationToken);
+        var files = await GetFiles(fileLocation, fileParams.PartitionId, cancellationToken);
         var file = files.FirstOrDefault(x => x.Id == fileId) ?? throw new NotFoundException("File", fileId);
 
         return await _documentService.DownloadAsync(fileLocation, file.Name, cancellationToken);
@@ -80,9 +81,9 @@ public class LoansFileService<TFileParams> : ILoansFileService<TFileParams>
             file.Metadata?.Creator ?? string.Empty);
     }
 
-    private async Task<IReadOnlyCollection<UploadedFile>> GetFiles(FileLocation fileLocation, CancellationToken cancellationToken)
+    private async Task<IReadOnlyCollection<UploadedFile>> GetFiles(FileLocation fileLocation, string partitionId, CancellationToken cancellationToken)
     {
-        var query = new GetFilesQuery(fileLocation.ListTitle, fileLocation.ListAlias, [fileLocation.FolderPath]);
+        var query = new GetFilesQuery(fileLocation.ListTitle, fileLocation.ListAlias, [fileLocation.FolderPath], partitionId);
         var files = await _documentService.GetFilesAsync<LoansFileMetadata>(query, cancellationToken);
 
         return files.Select(MapToUploadedFile).ToList();

@@ -1,4 +1,5 @@
 using HE.Investments.Account.Shared;
+using HE.Investments.AHP.Allocation.Contract.Claims;
 using HE.Investments.AHP.Allocation.Contract.Claims.Commands;
 using HE.Investments.AHP.Allocation.Domain.Claims.Repositories;
 using HE.Investments.AHP.Allocation.Domain.Claims.ValueObjects;
@@ -34,5 +35,5 @@ internal abstract class ProvideClaimDetailsBaseCommandHandler<TCommand> : IReque
         return OperationResult.Success();
     }
 
-    protected abstract MilestoneClaim Provide(TCommand request, MilestoneClaim claim);
+    protected abstract MilestoneClaimBase Provide(TCommand request, MilestoneClaimBase claim);
 }

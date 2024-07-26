@@ -16,7 +16,7 @@ public class MilestoneClaimContractMapperTests : TestBase<MilestoneClaimContract
     public void ShouldReturnCorrectDateDetails_WhenForecastAndActualDatesAreProvided()
     {
         // given
-        var milestoneClaim = MilestoneClaimTestBuilder.New().Build();
+        var milestoneClaim = MilestoneClaimTestBuilder.Draft().Build();
         var phase = PhaseEntityTestBuilder.New().WithCompletionMilestone(milestoneClaim).Build();
 
         // when
@@ -28,9 +28,9 @@ public class MilestoneClaimContractMapperTests : TestBase<MilestoneClaimContract
         result.ForecastClaimDate.Day.Should().Be(milestoneClaim.ClaimDate.ForecastClaimDate.Day.ToString(CultureInfo.InvariantCulture));
         result.ForecastClaimDate.Month.Should().Be(milestoneClaim.ClaimDate.ForecastClaimDate.Month.ToString(CultureInfo.InvariantCulture));
         result.ForecastClaimDate.Year.Should().Be(milestoneClaim.ClaimDate.ForecastClaimDate.Year.ToString(CultureInfo.InvariantCulture));
-        result.AchievementDate!.Day.Should().Be(milestoneClaim.ClaimDate.ActualClaimDate!.Value.Day.ToString(CultureInfo.InvariantCulture));
-        result.AchievementDate!.Month.Should().Be(milestoneClaim.ClaimDate.ActualClaimDate!.Value.Month.ToString(CultureInfo.InvariantCulture));
-        result.AchievementDate!.Year.Should().Be(milestoneClaim.ClaimDate.ActualClaimDate!.Value.Year.ToString(CultureInfo.InvariantCulture));
+        result.AchievementDate!.Day.Should().Be(milestoneClaim.ClaimDate.AchievementDate!.Day!.ToString(CultureInfo.InvariantCulture));
+        result.AchievementDate!.Month.Should().Be(milestoneClaim.ClaimDate.AchievementDate!.Month!.ToString(CultureInfo.InvariantCulture));
+        result.AchievementDate!.Year.Should().Be(milestoneClaim.ClaimDate.AchievementDate!.Year!.ToString(CultureInfo.InvariantCulture));
     }
 
     [Fact]
@@ -51,12 +51,12 @@ public class MilestoneClaimContractMapperTests : TestBase<MilestoneClaimContract
     [InlineData(DomainMilestoneStatus.UnderReview, ContractMilestoneStatus.UnderReview)]
     [InlineData(DomainMilestoneStatus.Approved, ContractMilestoneStatus.Approved)]
     [InlineData(DomainMilestoneStatus.Rejected, ContractMilestoneStatus.Rejected)]
-    [InlineData(DomainMilestoneStatus.Reclaimed, ContractMilestoneStatus.Reclaimed)]
+    [InlineData(DomainMilestoneStatus.Paid, ContractMilestoneStatus.Paid)]
     public void ShouldMapToTheSameStatus_WhenStatusCanBeMappedDirectly(DomainMilestoneStatus domainStatus, ContractMilestoneStatus expectedStatus)
     {
         // given
         var today = new DateTime(2024, 07, 12, 0, 0, 0, DateTimeKind.Local);
-        var milestone = MilestoneClaimTestBuilder.New().WithStatus(domainStatus).Build();
+        var milestone = MilestoneClaimTestBuilder.Draft().Submitted(domainStatus).Build();
         var phase = PhaseEntityTestBuilder.New()
             .WithCompletionMilestone(milestone)
             .Build();
@@ -69,15 +69,12 @@ public class MilestoneClaimContractMapperTests : TestBase<MilestoneClaimContract
         result!.Status.Should().Be(expectedStatus);
     }
 
-    [Theory]
-    [InlineData(DomainMilestoneStatus.Undefined)]
-    [InlineData(DomainMilestoneStatus.Draft)]
-    public void ShouldMapToDueStatus_WhenStatusIs(DomainMilestoneStatus domainStatus)
+    [Fact]
+    public void ShouldMapToDueStatus_WhenMilestoneClaimIsDraft()
     {
         // given
         var today = new DateTime(2024, 07, 12, 0, 0, 0, DateTimeKind.Local);
-        var milestone = MilestoneClaimTestBuilder.New()
-            .WithStatus(domainStatus)
+        var milestone = MilestoneClaimTestBuilder.Draft()
             .WithForecastClaimDate(today.AddDays(-50))
             .Build();
         var phase = PhaseEntityTestBuilder.New()

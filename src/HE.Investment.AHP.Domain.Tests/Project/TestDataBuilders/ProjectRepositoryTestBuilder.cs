@@ -25,9 +25,9 @@ public class ProjectRepositoryTestBuilder
     public ProjectRepositoryTestBuilder ReturnProjectApplications(
         FrontDoorProjectId fdProjectId,
         ConsortiumUserAccount userAccount,
-        AhpProjectApplications ahpProjectApplications)
+        AhpProjectOverview ahpProjectApplications)
     {
-        _mock.Setup(x => x.GetProjectApplications(fdProjectId, userAccount, CancellationToken.None)).ReturnsAsync(ahpProjectApplications);
+        _mock.Setup(x => x.GetProjectOverview(fdProjectId, userAccount, CancellationToken.None)).ReturnsAsync(ahpProjectApplications);
         return this;
     }
 
