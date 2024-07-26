@@ -1,10 +1,12 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
+using HE.Investments.Common;
 using HE.Investments.Common.CRM.Model;
 using HE.Investments.Common.CRM.Serialization;
 using HE.Investments.Common.CRM.Services;
 using HE.Investments.Common.Extensions;
+using Microsoft.FeatureManagement;
 
 namespace HE.Investment.AHP.Domain.Project.Crm;
 
@@ -14,9 +16,12 @@ public class ProjectCrmContext : IProjectCrmContext
 
     private readonly JsonSerializerOptions _serializerOptions = new() { DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull };
 
-    public ProjectCrmContext(ICrmService service)
+    private readonly IFeatureManager _featureManager;
+
+    public ProjectCrmContext(ICrmService service, IFeatureManager featureManager)
     {
         _service = service;
+        _featureManager = featureManager;
     }
 
     public async Task<AhpProjectDto> GetProject(
@@ -26,16 +31,28 @@ public class ProjectCrmContext : IProjectCrmContext
         string? consortiumId,
         CancellationToken cancellationToken)
     {
-        var request = new invln_getahpprojectRequest
+        if (await _featureManager.IsEnabledAsync(FeatureFlags.TurnOffAhpAllocation, cancellationToken))
         {
-            invln_userid = userId,
-            invln_accountid = organisationId.TryToGuidAsString(),
-            invln_consortiumid = consortiumId?.ToGuidAsString()!,
-            invln_heprojectid = projectId.TryToGuidAsString(),
-        };
+            return await _service.ExecuteAsync<invln_getahpprojectRequest, invln_getahpprojectResponse, AhpProjectDto>(
+                new invln_getahpprojectRequest
+                {
+                    invln_userid = userId,
+                    invln_accountid = organisationId.TryToGuidAsString(),
+                    invln_consortiumid = consortiumId?.ToGuidAsString()!,
+                    invln_heprojectid = projectId.TryToGuidAsString(),
+                },
+                r => r.invln_ahpProjectApplications,
+                cancellationToken);
+        }
 
-        return await _service.ExecuteAsync<invln_getahpprojectRequest, invln_getahpprojectResponse, AhpProjectDto>(
-            request,
+        return await _service.ExecuteAsync<invln_getahpproject_v2Request, invln_getahpproject_v2Response, AhpProjectDto>(
+            new invln_getahpproject_v2Request
+            {
+                invln_userid = userId,
+                invln_accountid = organisationId.TryToGuidAsString(),
+                invln_consortiumid = consortiumId?.ToGuidAsString()!,
+                invln_heprojectid = projectId.TryToGuidAsString(),
+            },
             r => r.invln_ahpProjectApplications,
             cancellationToken);
     }
