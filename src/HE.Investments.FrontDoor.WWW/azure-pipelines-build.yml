@@ -7,38 +7,38 @@ trigger:
   batch: true
   branches:
     include:
-      - development_R3
+    - development_R3
   paths:
     include:
-      - src/HE.InvestmentLoans.sln
-      - src/HE.Investments.FrontDoor.*/*
-      - src/HE.Investments.Account.Shared/*
-      - src/HE.Investments.Account.Api.Contract/*
-      - src/HE.Investments.Common*/*
-      - src/HE.Common.*/*
-      - src/HE.Investments.IntegrationTestsFramework/*
-      - src/HE.Investments.Organisation/*
-      - src/HE.Investments.TestsUtils/*
-      - src/HE.Investments.Api/*
-      - src/HE.Investments.Programme.*/*
+    - src/HE.InvestmentLoans.sln
+    - src/HE.Investments.FrontDoor.*/*
+    - src/HE.Investments.Account.Shared/*
+    - src/HE.Investments.Account.Api.Contract/*
+    - src/HE.Investments.Common*/*
+    - src/HE.Common.*/*
+    - src/HE.Investments.IntegrationTestsFramework/*
+    - src/HE.Investments.Organisation/*
+    - src/HE.Investments.TestsUtils/*
+    - src/HE.Investments.Api/*
+    - src/HE.Investments.Programme.*/*
 
 pr:
   branches:
     include:
-      - development_R3
+    - development_R3
   paths:
     include:
-      - src/HE.InvestmentLoans.sln
-      - src/HE.Investments.FrontDoor.*/*
-      - src/HE.Investments.Account.Shared/*
-      - src/HE.Investments.Account.Api.Contract/*
-      - src/HE.Investments.Common*/*
-      - src/HE.Common.*/*
-      - src/HE.Investments.IntegrationTestsFramework/*
-      - src/HE.Investments.Organisation/*
-      - src/HE.Investments.TestsUtils/*
-      - src/HE.Investments.Api/*
-      - src/HE.Investments.Programme.*/*
+    - src/HE.InvestmentLoans.sln
+    - src/HE.Investments.FrontDoor.*/*
+    - src/HE.Investments.Account.Shared/*
+    - src/HE.Investments.Account.Api.Contract/*
+    - src/HE.Investments.Common*/*
+    - src/HE.Common.*/*
+    - src/HE.Investments.IntegrationTestsFramework/*
+    - src/HE.Investments.Organisation/*
+    - src/HE.Investments.TestsUtils/*
+    - src/HE.Investments.Api/*
+    - src/HE.Investments.Programme.*/*
 
 pool:
   vmImage: 'ubuntu-22.04'
@@ -55,4 +55,4 @@ resources:
     ref: 'master'
 
 stages:
-- template: azure-pipelines-frontdoor-portal-build.yml@he-invst-deployment
+- template: portal-deployment-pipelines/azure-pipelines-frontdoor-portal-build.yml@he-invst-deployment
