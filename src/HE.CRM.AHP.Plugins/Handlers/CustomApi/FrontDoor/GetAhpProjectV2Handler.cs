@@ -11,13 +11,13 @@ using HE.CRM.AHP.Plugins.Services.AhpProject;
 
 namespace HE.CRM.AHP.Plugins.Handlers.CustomApi.FrontDoor
 {
-    public class GetAhpProjectHandler : CrmActionHandlerBase<invln_getahpprojectRequest, DataverseContext>
+    public class GetAhpProjectV2Handler : CrmActionHandlerBase<invln_getahpproject_v2Request, DataverseContext>
     {
-        private string externalContactId => ExecutionData.GetInputParameter<string>(invln_getahpprojectRequest.Fields.invln_userid);
-        private string organisationId => ExecutionData.GetInputParameter<string>(invln_getahpprojectRequest.Fields.invln_accountid);
-        private string ahpProjectId => ExecutionData.GetInputParameter<string>(invln_getahpprojectRequest.Fields.invln_ahpprojectid);
-        private string heProjectId => ExecutionData.GetInputParameter<string>(invln_getahpprojectRequest.Fields.invln_heprojectid);
-        private string consortiumId => ExecutionData.GetInputParameter<string>(invln_getahpprojectRequest.Fields.invln_consortiumid);
+        private string externalContactId => ExecutionData.GetInputParameter<string>(invln_getahpproject_v2Request.Fields.invln_userid);
+        private string organisationId => ExecutionData.GetInputParameter<string>(invln_getahpproject_v2Request.Fields.invln_accountid);
+        private string ahpProjectId => ExecutionData.GetInputParameter<string>(invln_getahpproject_v2Request.Fields.invln_ahpprojectid);
+        private string heProjectId => ExecutionData.GetInputParameter<string>(invln_getahpproject_v2Request.Fields.invln_heprojectid);
+        private string consortiumId => ExecutionData.GetInputParameter<string>(invln_getahpproject_v2Request.Fields.invln_consortiumid);
 
         public override bool CanWork()
         {
@@ -74,11 +74,11 @@ namespace HE.CRM.AHP.Plugins.Handlers.CustomApi.FrontDoor
                 TracingService.Trace($"* consortiumId: {consortiumId}");
             };
 
-            var useV2Version = false; // Version contain Allocations
+            var useV2Version = true; // Version contain Allocations
             AhpProjectDto ahpProjectDto = CrmServicesFactory.Get<IAhpProjectService>().GetAhpProjectWithApplicationsAndSitesAndAlloctions(useV2Version, externalContactId, organisationId, ahpProjectId, heProjectId, consortiumId);
 
             this.TracingService.Trace("Send Response");
-            ExecutionData.SetOutputParameter(invln_getahpprojectResponse.Fields.invln_ahpProjectApplications, JsonSerializer.Serialize(ahpProjectDto));
+            ExecutionData.SetOutputParameter(invln_getahpproject_v2Response.Fields.invln_ahpProjectApplications, JsonSerializer.Serialize(ahpProjectDto));
         }
     }
 }

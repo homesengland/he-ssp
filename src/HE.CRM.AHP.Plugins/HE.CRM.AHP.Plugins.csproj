@@ -126,6 +126,7 @@
     <Compile Include="Handlers\CustomApi\DeleteHomeTypeHandler.cs" />
     <Compile Include="Handlers\CustomApi\FrontDoor\GetAhpProjectHandler.cs" />
     <Compile Include="Handlers\CustomApi\FrontDoor\GetAhpProjectsHandler.cs" />
+    <Compile Include="Handlers\CustomApi\FrontDoor\GetAhpProjectV2Handler.cs" />
     <Compile Include="Handlers\CustomApi\FrontDoor\SetAhpProjectHandler.cs" />
     <Compile Include="Handlers\CustomApi\FrontDoor\GetSiteApplicationHandler.cs" />
     <Compile Include="Handlers\CustomApi\GetAbsoluteAhpApplicationFileLocationHandler.cs" />
@@ -247,6 +248,7 @@
     <Compile Include="Plugins\CustomApi\DeleteHomeTypePlugin.cs" />
     <Compile Include="Plugins\CustomApi\FrontDoor\GetAhpProjectPlugin.cs" />
     <Compile Include="Plugins\CustomApi\FrontDoor\GetAhpProjectsPlugin.cs" />
+    <Compile Include="Plugins\CustomApi\FrontDoor\GetAhpProjectV2Plugin.cs" />
     <Compile Include="Plugins\CustomApi\FrontDoor\SetAhpProjectPlugin.cs" />
     <Compile Include="Plugins\CustomApi\FrontDoor\GetSiteApplicationPlugin.cs" />
     <Compile Include="Plugins\CustomApi\GetMultipleDeliveryPhasePlugin.cs" />
