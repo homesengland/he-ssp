@@ -28,7 +28,7 @@
 
     @await Html.PartialAsync(
         "Partials/_OverviewMenu",
-        ("Manage Allocation", "View and manage allocation", "View and change details for this allocation, or tell us if there is anything you are unable to deliver.", @Url.OrganisationAction("summary", "AllocationClaims", new { allocationId = Model.BasicInfo.Id.Value })))
+        ("Manage Allocation", "View and manage allocation", "View and change details for this allocation, or tell us if there is anything you are unable to deliver.", @Url.OrganisationAction("Manage", "Allocation", new { allocationId = Model.BasicInfo.Id.Value })))
 
     <hr class="govuk-section-break govuk-section-break--m">
 
