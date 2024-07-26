@@ -41,7 +41,10 @@ public sealed class ProvideClaimAchievementDateCommandHandler : IRequestHandler<
 
         var claim = phase.GetMilestoneClaim(request.MilestoneType)
                     ?? throw new NotFoundException(nameof(MilestoneClaim), request.MilestoneType);
-        phase.ProvideMilestoneClaimAchievementDate(claim, allocation.Programme, request.AchievementDate, _dateTimeProvider.Now);
+        var operationResult = OperationResult.New();
+        var achievementDate = operationResult.Aggregate(() => AchievementDate.FromDateDetails(request.AchievementDate));
+        operationResult.CheckErrors();
+        phase.ProvideMilestoneClaimAchievementDate(claim, allocation.Programme, achievementDate, _dateTimeProvider.Now);
         await _phaseRepository.Save(phase, userAccount, cancellationToken);
 
         return OperationResult.Success();

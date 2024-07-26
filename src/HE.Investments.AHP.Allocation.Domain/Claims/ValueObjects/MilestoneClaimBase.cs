@@ -68,7 +68,7 @@ public abstract class MilestoneClaimBase : ValueObject
     }
 
     public abstract MilestoneClaimBase WithAchievementDate(
-        DateDetails? achievementDate,
+        AchievementDate achievementDate,
         Programme.Contract.Programme programme,
         DateDetails? previousSubmissionDate,
         DateTime currentDate);
