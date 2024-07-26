@@ -1,3 +1,4 @@
+using HE.Investments.Common.Extensions;
 using HE.Investments.Common.WWW.Components;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -7,6 +8,14 @@ public class ExtendedSelectListItem : SelectListItem
 {
     public ExtendedSelectListItem(string text, string value, bool selected, string? hint = null, DynamicComponentViewModel? itemContent = null, DynamicComponentViewModel? expandableChild = null)
         : base(text, value, selected)
+    {
+        Hint = hint;
+        ExpandableChild = expandableChild;
+        ItemContent = itemContent;
+    }
+
+    public ExtendedSelectListItem(Enum value, bool selected, string? hint = null, DynamicComponentViewModel? itemContent = null, DynamicComponentViewModel? expandableChild = null)
+        : base(value.GetDescription(), value.ToString(), selected)
     {
         Hint = hint;
         ExpandableChild = expandableChild;

@@ -62,7 +62,8 @@ public class AllocationRepository : IAllocationRepository
             new ModificationDetails("Carq", "Power", DateTime.Now),
             true,
             userAccount.SelectedOrganisation().RegisteredCompanyName,
-            string.Empty);
+            string.Empty,
+            false);
     }
 
     private AllocationEntity CreateEntity(AllocationClaimsDto allocationDto, AhpProgramme programme)

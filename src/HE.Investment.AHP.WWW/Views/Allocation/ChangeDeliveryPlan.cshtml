@@ -1,0 +1,36 @@
+@using HE.Investment.AHP.WWW.Views.Allocation.Const
+@using HE.Investments.AHP.Allocation.Contract.Enums
+@using HE.Investments.Common.WWW.Components.BackLinkWithCallback
+@using HE.Investments.Common.WWW.Components.FormButton
+@using HE.Investments.Common.WWW.Components.PageHeader
+@using HE.Investments.Common.WWW.Components.RadioList
+@using HE.Investments.Common.WWW.Components.Text
+@using HE.Investments.Common.WWW.Extensions
+@using HE.Investments.Common.WWW.Models
+@using HE.Investments.Common.WWW.TagHelpers
+@model HE.Investments.AHP.Allocation.Contract.Overview.AllocationOverview
+@{
+    ViewData["Title"] = AllocationPageTitles.ChangeDeliveryPlan;
+
+    var options = new[]
+    {
+        new ExtendedSelectListItem(ChangeDeliveryPlanType.SchemeChange, false),
+        new ExtendedSelectListItem(ChangeDeliveryPlanType.DeliverPartially, false, itemContent: new DynamicComponentViewModel(nameof(Text), "If you are unable to deliver part of scheme, you should speak to your Provider Manager about your options before submitting any changes")),
+        new ExtendedSelectListItem(ChangeDeliveryPlanType.NoDelivery, false, itemContent: new DynamicComponentViewModel(nameof(Text), "If you are unable to deliver any of the scheme, you should speak to your Provider Manager about your options before submitting any changes")),
+    };
+}
+
+<gds-div-grid-column-two-thirds>
+    <vc:back-link-with-callback url="@Url.OrganisationAction("Overview", "Allocation", new { allocationId = Model.BasicInfo.Id.Value })"/>
+    <vc:page-header caption="@Model.BasicInfo.Name"/>
+
+    <he-organisation-form asp-controller="Allocation" asp-action="ChangeDeliveryPlan" asp-method="post" novalidate>
+        <vc:radio-list
+            title="@AllocationPageTitles.ChangeDeliveryPlan"
+            title-type="InputTitleType.PageHeader"
+            field-name="ChangeDeliveryPlan"
+            available-options="@options"/>
+
+        <vc:form-button text="Continue" is-disabled="true"/>
+    </he-organisation-form>
+</gds-div-grid-column-two-thirds>

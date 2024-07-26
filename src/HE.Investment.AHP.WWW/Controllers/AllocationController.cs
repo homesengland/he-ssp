@@ -19,8 +19,28 @@ public class AllocationController : Controller
 
     [HttpGet("overview")]
     [HttpGet("")]
-    public async Task<IActionResult> Overview(string allocationId)
+    public async Task<IActionResult> Overview(string allocationId, CancellationToken cancellationToken)
     {
-        return View("Overview", await _mediator.Send(new GetAllocationOverviewQuery(AllocationId.From(allocationId))));
+        return View(await _mediator.Send(new GetAllocationOverviewQuery(AllocationId.From(allocationId)), cancellationToken));
+    }
+
+    [HttpGet("manage")]
+    public async Task<IActionResult> Manage(string organisationId, string allocationId, CancellationToken cancellationToken)
+    {
+        var allocation = await _mediator.Send(new GetAllocationOverviewQuery(AllocationId.From(allocationId)), cancellationToken);
+
+        return RedirectToAction(allocation.IsDraft ? "TaskList" : nameof(ChangeDeliveryPlan), new { organisationId, allocationId });
+    }
+
+    [HttpGet("change-delivery-plan")]
+    public async Task<IActionResult> ChangeDeliveryPlan(string allocationId, CancellationToken cancellationToken)
+    {
+        return View(await _mediator.Send(new GetAllocationOverviewQuery(AllocationId.From(allocationId)), cancellationToken));
+    }
+
+    [HttpGet("task-list")]
+    public IActionResult TaskList()
+    {
+        return View(nameof(TaskList));
     }
 }
