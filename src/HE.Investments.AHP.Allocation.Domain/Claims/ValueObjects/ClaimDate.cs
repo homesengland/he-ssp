@@ -18,8 +18,6 @@ public class ClaimDate : ValueObject
 
     public DateDetails? SubmissionDate { get; }
 
-    public void WithAchievementDate(AchievementDate? achievementDate) => AchievementDate = achievementDate;
-
     protected override IEnumerable<object?> GetAtomicValues()
     {
         yield return ForecastClaimDate;

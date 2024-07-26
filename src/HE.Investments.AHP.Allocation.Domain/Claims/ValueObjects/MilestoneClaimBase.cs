@@ -33,8 +33,6 @@ public abstract class MilestoneClaimBase : ValueObject
         IsConfirmed = isConfirmed;
     }
 
-    public bool IsModified => ModificationTracker.IsModified;
-
     public MilestoneType Type { get; }
 
     public MilestoneStatus Status { get; }
@@ -48,8 +46,6 @@ public abstract class MilestoneClaimBase : ValueObject
     public bool? IsConfirmed { get; }
 
     public abstract bool IsSubmitted { get; }
-
-    protected ModificationTracker ModificationTracker { get; } = new();
 
     public MilestoneDueStatus CalculateDueStatus(DateTime today)
     {

@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using HE.Investments.AHP.Allocation.Contract.Claims.Enum;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Validators;
@@ -34,12 +35,9 @@ public class DraftMilestoneClaim : MilestoneClaimBase
         ValidatePreviousSubmissionDate(previousSubmissionDate, achievementDate.Value);
         ValidateProgrammeDates(programme, achievementDate.Value!.Value);
 
-        ModificationTracker.Change(
-            ClaimDate.AchievementDate,
-            achievementDate,
-            () => ClaimDate.WithAchievementDate(achievementDate));
+        var newClaimDate = new ClaimDate(ClaimDate.ForecastClaimDate, achievementDate);
 
-        return new DraftMilestoneClaim(Type, GrantApportioned, ClaimDate, CostsIncurred, IsConfirmed);
+        return new DraftMilestoneClaim(Type, GrantApportioned, newClaimDate, CostsIncurred, IsConfirmed);
     }
 
     public override MilestoneClaimBase WithCostsIncurred(bool? costsIncurred)

@@ -50,7 +50,7 @@ public sealed class PhaseEntity : DomainEntity
 
     public MilestoneClaimBase CompletionMilestone { get; private set; }
 
-    public bool IsModified => _modificationTracker.IsModified || CheckIfMilestoneIsModified();
+    public bool IsModified => _modificationTracker.IsModified;
 
     public MilestoneClaimBase? GetMilestoneClaim(MilestoneType milestoneType)
     {
@@ -121,12 +121,5 @@ public sealed class PhaseEntity : DomainEntity
         };
 
         ProvideMilestoneClaim(claim.WithAchievementDate(achievementDate, programme, previousMilestoneSubmissionDate, currentDate));
-    }
-
-    private bool CheckIfMilestoneIsModified()
-    {
-        return (AcquisitionMilestone.IsProvided() && AcquisitionMilestone!.IsModified) ||
-               (StartOnSiteMilestone.IsProvided() && StartOnSiteMilestone!.IsModified) ||
-               CompletionMilestone.IsModified;
     }
 }
