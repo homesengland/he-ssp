@@ -49,7 +49,7 @@ public class AllocationClaimController : WorkflowController<AllocationClaimWorkf
         [FromRoute] MilestoneType claimType)
     {
         // TODO: AB#103021 Continue section answering
-        return RedirectToAction(claimType == MilestoneType.Acquisition ? "CostsIncurred" : "MilestoneDate", new { organisationId, allocationId, phaseId, claimType });
+        return RedirectToAction(claimType == MilestoneType.Acquisition ? nameof(CostsIncurred) : nameof(AchievementDate), new { organisationId, allocationId, phaseId, claimType });
     }
 
     [HttpGet("costs-incurred")]
@@ -102,7 +102,7 @@ public class AllocationClaimController : WorkflowController<AllocationClaimWorkf
             new ProvideClaimAchievementDateCommand(AllocationId.From(allocationId), PhaseId.From(phaseId), claimType, achievementDate),
             nameof(AchievementDate),
             cancellationToken,
-            achievementDate);
+            phaseClaim => phaseClaim with { Claim = phaseClaim.Claim with { AchievementDate = achievementDate } });
     }
 
     [HttpGet("confirmation")]
@@ -128,7 +128,8 @@ public class AllocationClaimController : WorkflowController<AllocationClaimWorkf
         return await ExecuteClaimCommand(
             new ProvideClaimConfirmationCommand(AllocationId.From(allocationId), PhaseId.From(phaseId), claimType, isConfirmed == "checked"),
             nameof(Confirmation),
-            cancellationToken);
+            cancellationToken,
+            phaseClaim => phaseClaim with { Claim = phaseClaim.Claim with { IsConfirmed = isConfirmed == "checked" } });
     }
 
     [HttpGet("check-answers")]
@@ -182,32 +183,18 @@ public class AllocationClaimController : WorkflowController<AllocationClaimWorkf
     {
         var phaseClaims = await GetPhaseClaims(allocationId, phaseId, cancellationToken);
 
-        var milestoneClaim = phaseClaims.MilestoneClaims.Single(x => x.Type == claimType);
-
-        var milestoneClaimModel = new MilestoneClaimModel(
-            milestoneClaim.Type,
-            milestoneClaim.Status,
-            milestoneClaim.AmountOfGrantApportioned,
-            milestoneClaim.PercentageOfGrantApportioned,
-            milestoneClaim.ForecastClaimDate,
-            milestoneClaim.AchievementDate,
-            milestoneClaim.SubmissionDate,
-            milestoneClaim.CanBeClaimed,
-            milestoneClaim.CostsIncurred,
-            milestoneClaim.IsConfirmed);
-
         return new PhaseClaimModel(
             phaseClaims.Id.Value,
             phaseClaims.Name,
             phaseClaims.Allocation,
-            milestoneClaimModel);
+            phaseClaims.MilestoneClaims.Single(x => x.Type == claimType));
     }
 
     private async Task<IActionResult> ExecuteClaimCommand<TCommand>(
         TCommand command,
         string viewName,
         CancellationToken cancellationToken,
-        DateDetails? achievementDate = null)
+        Func<PhaseClaimModel, PhaseClaimModel>? createViewModelForError = null)
             where TCommand : IProvideClaimDetailsCommand
     {
         if (Request.IsCancelAndReturnAction())
@@ -234,7 +221,7 @@ public class AllocationClaimController : WorkflowController<AllocationClaimWorkf
             async () =>
             {
                 var model = await GetClaimModel(command.AllocationId.Value, command.PhaseId.Value, command.MilestoneType, cancellationToken);
-                var modelWithError = new PhaseClaimModel(model.Id, model.Name, model.Allocation, model.Claim) { Claim = { AchievementDate = achievementDate } };
+                var modelWithError = createViewModelForError != null ? createViewModelForError(model) : model;
                 return View(viewName, modelWithError);
             },
             cancellationToken);

@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using FluentAssertions;
 using HE.Investment.AHP.WWW.Views.AllocationClaims.Const;
 using HE.Investments.AHP.IntegrationTests.Framework;
@@ -46,7 +47,7 @@ public class Order02ManageClaims : AhpIntegrationTest
             .HasElementWithTestIdAndText("grant-details-amount-paid", CurrencyHelper.DisplayPounds(AllocationData.AmountPaid))
             .HasElementWithTestIdAndText("grant-details-amount remaining", CurrencyHelper.DisplayPounds(AllocationData.AmountRemaining));
 
-        phaseSummary[PhaseFields.NumberOfHomes].Value.Should().Be(PhaseData.NumberOfHomes.ToString());
+        phaseSummary[PhaseFields.NumberOfHomes].Value.Should().Be(PhaseData.NumberOfHomes.ToString(CultureInfo.InvariantCulture));
         phaseSummary[PhaseFields.BuildActivityType].Value.Should().Be(PhaseData.BuildActivityType.GetDescription());
         phaseSummary[PhaseFields.AcquisitionForecastClaimDate].Value.Should().Be(PhaseData.AcquisitionForecastClaimDate.ToFormattedDateString());
         phaseSummary[PhaseFields.StartOnSiteForecastClaimDate].Value.Should().Be(PhaseData.StartOnSiteForecastClaimDate.ToFormattedDateString());
