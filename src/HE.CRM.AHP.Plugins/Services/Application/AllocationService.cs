@@ -13,8 +13,11 @@ using HE.Base.Common.Extensions;
 using HE.Base.Services;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.CRM.Common.DtoMapping;
+using HE.CRM.Common.Extensions.Entities;
 using HE.CRM.Common.Repositories.Interfaces;
+using HE.CRM.Model.CrmSerialiedParameters;
 using Microsoft.Xrm.Sdk;
+using Microsoft.Xrm.Sdk.Messages;
 
 namespace HE.CRM.AHP.Plugins.Services.Application
 {
@@ -38,6 +41,91 @@ namespace HE.CRM.AHP.Plugins.Services.Application
             _deliveryPhaseRepository = CrmRepositoriesFactory.Get<IDeliveryPhaseRepository>();
             _claimRepository = CrmRepositoriesFactory.Get<IClaimRepository>();
             _heLocalAuthorityRepository = CrmRepositoriesFactory.Get<IHeLocalAuthorityRepository>();
+        }
+
+        public Guid CreateAllocation(Guid schemeId, bool isVariation = false)
+        {
+            var application = _ahpApplicationRepository.GetById(schemeId);
+
+            var allocation = application.CloneWithoutSystemFields();
+            allocation.Id = Guid.NewGuid();
+            allocation.invln_applicationid = "";
+
+            var allocationId = _ahpApplicationRepository.Create(allocation);
+
+            var deliveryPhaseList = _deliveryPhaseRepository.GetByAttribute(invln_DeliveryPhase.Fields.invln_Application, application.Id);
+            foreach (var deliveryPhase in deliveryPhaseList)
+            {
+                var deliveryPhaseAllocation = deliveryPhase.CloneWithoutSystemFields();
+                deliveryPhaseAllocation.Id = Guid.NewGuid();
+                deliveryPhaseAllocation.invln_Application = new EntityReference(invln_scheme.EntityLogicalName, allocationId);
+                _deliveryPhaseRepository.Create(deliveryPhaseAllocation);
+            }
+
+
+
+            return allocationId;
+            /*
+            var allocation = new invln_scheme()
+            {
+                invln_schemename = application.invln_schemename,
+                invln_Site = application.invln_Site,
+                invln_applicationid = application.invln_applicationid,
+                invln_DevelopingPartner = application.invln_DevelopingPartner,
+                invln_totalhomes = application.invln_totalhomes,
+                invln_programmelookup = application.invln_programmelookup,
+                invln_organisationid = application.invln_organisationid,
+                invln_isallocation = true,
+
+                invln_HELocalAuthorityID = application.invln_HELocalAuthorityID,
+                invln_LocalAuthority = application.invln_LocalAuthority,
+                invln_Tenure = application.invln_Tenure,
+                invln_fundingrequired = application.invln_fundingrequired,
+                invln_noofhomes = application.invln_noofhomes,
+                invln_GrowthManager = application.invln_GrowthManager,
+                invln_GrowthTeam = application.invln_GrowthTeam,
+
+                invln_actualacquisitioncost = application.invln_actualacquisitioncost,
+
+
+                invln_TotalGrantAllocated = application.invln_TotalGrantAllocated,
+                invln_AmountPaid = application.invln_AmountPaid,
+                invln_AmountRemaining = application.invln_AmountRemaining,
+
+                invln_schemeinformationsectioncompletionstatus = application.invln_schemeinformationsectioncompletionstatus,
+                invln_hometypessectioncompletionstatus = application.invln_hometypessectioncompletionstatus,
+                invln_financialdetailssectioncompletionstatus = application.invln_financialdetailssectioncompletionstatus,
+                invln_deliveryphasessectioncompletionstatus = application.invln_deliveryphasessectioncompletionstatus,
+
+                invln_borrowingagainstrentalincome = application.invln_borrowingagainstrentalincome,
+                invln_fundingfromopenmarkethomesonthisscheme = application.invln_fundingfromopenmarkethomesonthisscheme,
+                invln_fundingfromopenmarkethomesnotonthisscheme = application.invln_fundingfromopenmarkethomesnotonthisscheme,
+                invln_fundinggeneratedfromothersources = application.invln_fundinggeneratedfromothersources,
+                invln_recycledcapitalgrantfund = application.invln_recycledcapitalgrantfund,
+                invln_transfervalue = application.invln_transfervalue,
+                invln_totalinitialsalesincome = application.invln_totalinitialsalesincome,
+                invln_othercapitalsources = application.invln_othercapitalsources,
+
+            };
+
+            if (!isVariation)
+            {
+                allocation.invln_DateSubmitted = application.invln_DateSubmitted;
+                allocation.invln_submitedby = application.invln_submitedby;
+            }
+
+            var newAllocationId = _ahpApplicationRepository.Create(
+                allocation
+            );
+
+            var deliveryPhaseList = _deliveryPhaseRepository.GetByAttribute(invln_DeliveryPhase.Fields.invln_Application, schemeId);
+            foreach (var deliveryPhase in deliveryPhaseList)
+            {
+                //deliveryPhase.invln_Application = new EntityReference(invln_scheme.EntityLogicalName, newAllocationId);
+                
+            }
+            */
+
         }
 
         public void CalculateGrantDetails(Guid allocationId)
@@ -268,5 +356,10 @@ namespace HE.CRM.AHP.Plugins.Services.Application
             }
             TracingService.Trace($"Created or Updated in CRM");
         }
+
+        //private IEnumerable<invln_DeliveryPhase> GetCopyDeliveryPhases(Guid allocationId)
+        //{
+        //    _deliveryPhaseRepository.GetDeliveryPhasesForNullableUserAndOrganisationRelatedToApplication
+        //}
     }
 }

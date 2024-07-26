@@ -15,5 +15,7 @@ namespace HE.CRM.AHP.Plugins.Services.Application
         void SetAllocationPhase(string externalContactId, Guid accountId, Guid allocationId, Guid deliveryPhaseId, string phaseClaimsDtoData);
 
         void CalculateGrantDetails(Guid allocationId);
+
+        Guid CreateAllocation(Guid schemeId, bool isVariation = false);
     }
 }
