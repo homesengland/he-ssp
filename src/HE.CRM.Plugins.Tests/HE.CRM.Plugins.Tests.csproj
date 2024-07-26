@@ -135,7 +135,8 @@
     <Compile Include="CustomApis\SendInvestmentsLoanDataToCrm.cs" />
     <Compile Include="CustomApis\UpdateSingleLoanApplicationTest.cs" />
     <Compile Include="CustomApis\UpdateSingleSiteDetailsTest.cs" />
-    <Compile Include="Plugins\ISP\CreateRecordsOnSentForApprovalChangeHandlerTests.cs" />
+    <Compile Include="Handlers\ISP\CreateRecordsOnSentForApprovalChangeHandlerTests.cs" />
+    <Compile Include="Handlers\ReviewsApprovals\IspStatusOnReviewApprovalStatusChangeHandlerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PwC.Base\Tests\CrmLogicTestBase.cs" />
     <Compile Include="PwC.Base\Tests\Plugins\Handlers\CrmEntityHandlerTestBase.cs" />
@@ -148,7 +149,9 @@
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Plugins\ISP\" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\HE.CRM.Plugins\HE.CRM.Plugins.csproj">
       <Project>{464f5b11-c934-42c4-b544-40cfcee6c683}</Project>

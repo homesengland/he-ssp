@@ -8,7 +8,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Microsoft.Xrm.Sdk;
 using PwC.Base.Tests.Plugins.Handlers;
 
-namespace HE.CRM.Plugins.Tests.Plugins.ISP
+namespace HE.CRM.Plugins.Tests.Handlers.ISP
 {
     [TestClass]
     public class CreateRecordsOnSentForApprovalChangeHandlerTests : CrmEntityHandlerTestBase<invln_ISP, CreateRecordsOnSentForApprovalChangeHandler, DataverseContext>
@@ -226,7 +226,10 @@ namespace HE.CRM.Plugins.Tests.Plugins.ISP
                     _hoFTeam,
                     _cROTeam,
                     _desApproval,
-                    _hofApproval
+                    _hofApproval,
+                    _desTeam,
+                    _hoFTeam,
+                    _cROTeam,
                 }
                 );
 
