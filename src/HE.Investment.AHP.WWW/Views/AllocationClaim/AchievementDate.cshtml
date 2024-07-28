@@ -24,7 +24,7 @@
 
     <vc:achievement-date-summary-details milestone-type="@Model.Claim.Type"/>
 
-    <he-organisation-form asp-controller="AllocationClaim" asp-action="AchievementDate" asp-route-workflow="@Context.Request.Query["workflow"]" asp-method="post" novalidate>
+    <he-organisation-form asp-controller="AllocationClaim" asp-action="AchievementDate" asp-route-redirect="@Context.Request.Query["redirect"]" asp-method="post" novalidate>
         <vc:date-input
             title="Enter the date you met all of the requirements for this milestone"
             description="You cannot enter a date in the future. Enter a date that is today or in the past."

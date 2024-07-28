@@ -219,7 +219,7 @@ public class ProjectEntity : DomainEntity
         if (!IsAnswered())
         {
             OperationResult.New()
-                .AddValidationError("IsSectionCompleted", ValidationErrorMessage.ProvideAllProjectAnswers)
+                .AddValidationError("IsSectionCompleted", ValidationErrorMessage.ProvideAllAnswers)
                 .CheckErrors();
         }
     }

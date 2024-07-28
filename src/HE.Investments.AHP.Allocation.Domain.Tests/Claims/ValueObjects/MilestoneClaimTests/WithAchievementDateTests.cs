@@ -85,7 +85,7 @@ public class WithAchievementDateTests
         // given
         GetDateTimeProviderMock();
         var achievementDate = new AchievementDate(true, "10", "07", "2023");
-        var laterSubmissionDate = new DateDetails("11", "07", "2023");
+        var laterSubmissionDate = new DateTime(2023, 07, 11, 0, 0, 0, DateTimeKind.Unspecified);
         var testCandidate = MilestoneClaimTestBuilder.Draft()
             .WithType(MilestoneType.Acquisition)
             .Build();
