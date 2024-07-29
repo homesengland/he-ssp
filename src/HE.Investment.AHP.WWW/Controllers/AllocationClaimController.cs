@@ -1,3 +1,4 @@
+using HE.Investment.AHP.WWW.Extensions;
 using HE.Investment.AHP.WWW.Models.AllocationClaim;
 using HE.Investment.AHP.WWW.Models.AllocationClaim.Factories;
 using HE.Investment.AHP.WWW.Workflows;
@@ -46,14 +47,20 @@ public class AllocationClaimController : WorkflowController<AllocationClaimWorkf
     }
 
     [HttpGet("continue-answering")]
-    public IActionResult ContinueAnswering(
-        [FromRoute] string organisationId,
+    public async Task<IActionResult> ContinueAnswering(
         [FromRoute] string allocationId,
         [FromRoute] string phaseId,
         [FromRoute] MilestoneType claimType)
     {
-        // TODO: AB#103021 Continue section answering
-        return RedirectToAction(claimType == MilestoneType.Acquisition ? nameof(CostsIncurred) : nameof(AchievementDate), new { organisationId, allocationId, phaseId, claimType });
+        var summary = await GetAllocationClaimAndCreateSummary(
+            AllocationId.From(allocationId),
+            PhaseId.From(phaseId),
+            claimType,
+            CancellationToken.None);
+
+        return this.ContinueSectionAnswering(
+            summary,
+            () => this.OrganisationRedirectToAction("CheckAnswers", routeValues: new { allocationId, phaseId, claimType }));
     }
 
     [HttpGet("costs-incurred")]
@@ -275,7 +282,6 @@ public class AllocationClaimController : WorkflowController<AllocationClaimWorkf
             allocationId,
             phaseId,
             phaseClaim.Allocation.Name,
-            phaseClaim.Allocation.Tenure,
             claimType,
             [claimSection],
             phaseClaim.Claim.IsEditable);

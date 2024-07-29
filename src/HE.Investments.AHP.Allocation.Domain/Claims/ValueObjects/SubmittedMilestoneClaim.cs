@@ -26,6 +26,8 @@ public sealed class SubmittedMilestoneClaim : MilestoneClaimBase
 
     public override bool IsSubmitted => true;
 
+    public override bool IsEditable => false;
+
     public override MilestoneClaimBase WithAchievementDate(
         AchievementDate achievementDate,
         Programme.Contract.Programme programme,
