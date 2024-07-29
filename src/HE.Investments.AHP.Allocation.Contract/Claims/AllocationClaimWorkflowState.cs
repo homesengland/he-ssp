@@ -6,4 +6,5 @@ public enum AllocationClaimWorkflowState
     AchievementDate,
     Confirmation,
     CheckAnswers,
+    Overview,
 }

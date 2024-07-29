@@ -1,11 +1,11 @@
-using HE.Investments.Common.Contract;
 using HE.Investments.Common.Domain;
+using HE.Investments.Common.Extensions;
 
 namespace HE.Investments.AHP.Allocation.Domain.Claims.ValueObjects;
 
 public class ClaimDate : ValueObject
 {
-    public ClaimDate(DateTime forecastClaimDate, AchievementDate? achievementDate = null, DateDetails? submissionDate = null)
+    public ClaimDate(DateTime forecastClaimDate, AchievementDate? achievementDate = null, DateTime? submissionDate = null)
     {
         ForecastClaimDate = forecastClaimDate;
         AchievementDate = achievementDate;
@@ -14,9 +14,14 @@ public class ClaimDate : ValueObject
 
     public DateTime ForecastClaimDate { get; }
 
-    public AchievementDate? AchievementDate { get; private set; }
+    public AchievementDate? AchievementDate { get; }
 
-    public DateDetails? SubmissionDate { get; }
+    public DateTime? SubmissionDate { get; }
+
+    public bool IsAnswered()
+    {
+        return ForecastClaimDate.IsProvided() && AchievementDate.IsProvided();
+    }
 
     protected override IEnumerable<object?> GetAtomicValues()
     {

@@ -4,7 +4,6 @@ using HE.Investments.AHP.Allocation.Contract.Claims.Enum;
 using HE.Investments.AHP.Allocation.Domain.Allocation.ValueObjects;
 using HE.Investments.AHP.Allocation.Domain.Claims.Entities;
 using HE.Investments.AHP.Allocation.Domain.Claims.ValueObjects;
-using HE.Investments.Common.Contract;
 using HE.Investments.Common.Extensions;
 using MilestoneStatus = HE.Investments.AHP.Allocation.Domain.Claims.Enums.MilestoneStatus;
 
@@ -65,7 +64,7 @@ public sealed class PhaseCrmMapper : IPhaseCrmMapper
                 PercentageOfGrantApportioned = milestoneClaim.GrantApportioned.Percentage * 100m,
                 ForecastClaimDate = milestoneClaim.ClaimDate.ForecastClaimDate,
                 AchievementDate = milestoneClaim.ClaimDate.AchievementDate?.Value,
-                SubmissionDate = DateTimeExtensions.FromDateDetails(milestoneClaim.ClaimDate.SubmissionDate),
+                SubmissionDate = milestoneClaim.ClaimDate.SubmissionDate,
                 CostIncurred = milestoneClaim.CostsIncurred,
                 IsConfirmed = milestoneClaim.IsConfirmed,
             };
@@ -83,7 +82,7 @@ public sealed class PhaseCrmMapper : IPhaseCrmMapper
         var claimDate = new ClaimDate(
             dto.ForecastClaimDate,
             dto.AchievementDate.IsProvided() ? new AchievementDate(dto.AchievementDate) : null,
-            DateDetails.FromDateTime(dto.SubmissionDate));
+            dto.SubmissionDate);
 
         return status >= MilestoneStatus.Submitted
             ? new SubmittedMilestoneClaim(type, status, grantApportioned, claimDate, dto.CostIncurred, dto.IsConfirmed)

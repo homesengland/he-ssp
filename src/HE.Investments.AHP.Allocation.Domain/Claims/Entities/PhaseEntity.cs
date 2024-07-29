@@ -1,6 +1,7 @@
 using HE.Investment.AHP.Contract.Delivery.Enums;
 using HE.Investments.AHP.Allocation.Contract.Claims;
 using HE.Investments.AHP.Allocation.Contract.Claims.Enum;
+using HE.Investments.AHP.Allocation.Contract.Claims.Events;
 using HE.Investments.AHP.Allocation.Domain.Allocation.ValueObjects;
 using HE.Investments.AHP.Allocation.Domain.Claims.ValueObjects;
 using HE.Investments.Common.Contract.Exceptions;
@@ -69,6 +70,15 @@ public sealed class PhaseEntity : DomainEntity
                     ?? throw new NotFoundException(nameof(MilestoneClaim), milestoneType);
 
         ProvideMilestoneClaim(claim.Cancel());
+    }
+
+    public void SubmitMilestoneClaim(MilestoneType milestoneType, DateTime currentDate)
+    {
+        var claim = GetMilestoneClaim(milestoneType)
+                    ?? throw new NotFoundException(nameof(MilestoneClaim), milestoneType);
+
+        ProvideMilestoneClaim(claim.Submit(currentDate));
+        Publish(new ClaimHasBeenSubmittedEvent(Allocation.Id, milestoneType));
     }
 
     public bool CanMilestoneBeClaimed(MilestoneType milestoneType)

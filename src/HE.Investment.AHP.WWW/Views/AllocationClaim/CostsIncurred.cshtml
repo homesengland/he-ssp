@@ -29,7 +29,7 @@
     <gds-p>If you have not, you can still record the achievement of the milestone, but the grant apportioned to the milestone will be reduced to £0. The grant apportioned to this milestone will be added to the start on site milestone.</gds-p>
     <gds-p>If you are unsure about any of the above, contact your Provider Manager.</gds-p>
 
-    <he-organisation-form asp-controller="AllocationClaim" asp-action="CostsIncurred" asp-route-workflow="@Context.Request.Query["workflow"]" asp-method="post" novalidate>
+    <he-organisation-form asp-controller="AllocationClaim" asp-action="CostsIncurred" asp-route-redirect="@Context.Request.Query["redirect"]" asp-method="post" novalidate>
         <vc:radio-yes-no title="Have you incurred costs and made payments to at least the level of the grant in the milestone amount?"
                          title-type="InputTitleType.InputTitle"
                          field-name="@nameof(Model.Claim.CostsIncurred)"

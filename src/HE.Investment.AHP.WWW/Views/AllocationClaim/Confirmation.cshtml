@@ -22,7 +22,7 @@
 
     <gds-p class="govuk-label--m govuk-!-font-weight-regular govuk-!-margin-bottom-6">You cannot submit your claim until you have read and confirmed the following.</gds-p>
 
-    <he-organisation-form asp-controller="AllocationClaim" asp-action="Confirmation" asp-route-workflow="@Context.Request.Query["workflow"]" asp-method="post" novalidate>
+    <he-organisation-form asp-controller="AllocationClaim" asp-action="Confirmation" asp-route-redirect="@Context.Request.Query["redirect"]" asp-method="post" novalidate>
         <vc:confirmation-checkbox
             content-component="@(new DynamicComponentViewModel(nameof(ClaimConfirmationText)))"
             field-name="@nameof(Model.IsConfirmed)"

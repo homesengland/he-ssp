@@ -1,8 +1,13 @@
 @using HE.Investment.AHP.WWW.Views.AllocationClaims.Const
+@using HE.Investment.AHP.WWW.Views.Shared.Components.AhpWorkflowBackButton
+@using HE.Investment.AHP.WWW.Views.Shared.Components.ReturnToAllocationLink
 @using HE.Investments.AHP.Allocation.Contract.Claims
 @using HE.Investments.Common.Extensions
+@using HE.Investments.Common.WWW.Components.FormButton
 @using HE.Investments.Common.WWW.Components.PageHeader
-@model HE.Investment.AHP.WWW.Models.AllocationClaim.PhaseClaimModel
+@using HE.Investments.Common.WWW.Extensions
+@using HE.Investments.Common.WWW.TagHelpers
+@model HE.Investment.AHP.WWW.Models.AllocationClaim.AllocationClaimSummaryViewModel
 @{
     var title = ClaimPageTitles.CheckAnswers;
     ViewData["Title"] = title;
@@ -10,13 +15,23 @@
 
 <gds-div-grid-column-two-thirds>
     <vc:ahp-workflow-back-button current-page="@AllocationClaimWorkflowState.CheckAnswers"/>
-    <vc:page-header caption="@Model.Allocation.Name - @Model.Allocation.Tenure.GetDescription()" title="@title"/>
 
-    <he-organisation-form asp-controller="AllocationClaim" asp-action="CheckAnswers" asp-route-workflow="@Context.Request.Query["workflow"]" asp-method="post" novalidate>
-        <gds-p>
-            TODO: AB#85087 implement view
-        </gds-p>
+    @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
 
-        <vc:form-button/>
+    <vc:page-header caption="@Model.AllocationName - @Model.AllocationTenure.GetDescription()" title="@title"/>
+
+    @foreach (var summarySection in Model.Sections)
+    {
+    <vc:section-summary title="@summarySection.Title" items="@summarySection.Items" name="@summarySection.Title.ToPascalCase()"/>
+    }
+
+    <he-organisation-form asp-controller="AllocationClaim" asp-action="Submit" asp-route-allocationId="@Model.AllocationId" asp-route-phaseId="@Model.PhaseId" asp-route-claimType="@Model.ClaimType" asp-method="post" novalidate>
+        <vc:form-button text="Submit claim"/>
+
+        <a href="@Url.OrganisationAction("Overview", "AllocationClaims", new { Model.AllocationId, Model.PhaseId })" class="govuk-button govuk-button--secondary govuk-!-margin-left-3" role="button">
+            Save as draft
+        </a>
+
+        <vc:return-to-allocation-link allocation-id="@Model.AllocationId"/>
     </he-organisation-form>
 </gds-div-grid-column-two-thirds>

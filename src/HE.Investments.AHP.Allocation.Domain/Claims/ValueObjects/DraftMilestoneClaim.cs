@@ -1,6 +1,4 @@
-using System.Security.Claims;
 using HE.Investments.AHP.Allocation.Contract.Claims.Enum;
-using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Messages;
@@ -27,7 +25,7 @@ public class DraftMilestoneClaim : MilestoneClaimBase
     public override MilestoneClaimBase WithAchievementDate(
         AchievementDate achievementDate,
         AhpProgramme programme,
-        DateDetails? previousSubmissionDate,
+        DateTime? previousSubmissionDate,
         DateTime currentDate)
     {
         ValidateAchievementDate(achievementDate);
@@ -80,6 +78,17 @@ public class DraftMilestoneClaim : MilestoneClaimBase
         return new MilestoneWithoutClaim(this);
     }
 
+    public override SubmittedMilestoneClaim Submit(DateTime currentDate)
+    {
+        if (!IsAnswered())
+        {
+            OperationResult.ThrowValidationError("Submit", ValidationErrorMessage.ProvideAllAnswers);
+        }
+
+        var newClaimDate = new ClaimDate(ClaimDate.ForecastClaimDate, ClaimDate.AchievementDate, currentDate);
+        return new SubmittedMilestoneClaim(Type, MilestoneStatus.Submitted, GrantApportioned, newClaimDate, CostsIncurred, IsConfirmed);
+    }
+
     private static void ValidateAchievementDate(AchievementDate achievementDate)
     {
         if (achievementDate.IsNotProvided() || achievementDate.Value.IsNotProvided())
@@ -96,10 +105,9 @@ public class DraftMilestoneClaim : MilestoneClaimBase
         }
     }
 
-    private static void ValidatePreviousSubmissionDate(DateDetails? previousSubmissionDate, DateTime? achievementDateTime)
+    private static void ValidatePreviousSubmissionDate(DateTime? previousSubmissionDate, DateTime? achievementDateTime)
     {
-        var previousSubmissionDateTime = DateTimeExtensions.FromDateDetails(previousSubmissionDate);
-        if (previousSubmissionDate.IsProvided() && achievementDateTime!.Value.IsBefore(previousSubmissionDateTime!.Value))
+        if (previousSubmissionDate.IsProvided() && achievementDateTime!.Value.IsBefore(previousSubmissionDate!.Value))
         {
             OperationResult.ThrowValidationError(nameof(ClaimDate.AchievementDate), ValidationErrorMessage.DatesOutsideTheProgramme);
         }
@@ -138,5 +146,19 @@ public class DraftMilestoneClaim : MilestoneClaimBase
         {
             OperationResult.ThrowValidationError(nameof(ClaimDate.AchievementDate), ValidationErrorMessage.DatesOutsideTheProgramme);
         }
+    }
+
+    private bool IsAnswered()
+    {
+        var isAnswered = ClaimDate.IsAnswered() &&
+                         GrantApportioned.IsProvided() &&
+                         IsConfirmed.IsProvided();
+
+        if (Type == MilestoneType.Acquisition)
+        {
+            isAnswered = isAnswered && CostsIncurred.IsProvided();
+        }
+
+        return isAnswered;
     }
 }
