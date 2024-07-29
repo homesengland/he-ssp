@@ -84,8 +84,8 @@ export class ReviewApprovalService {
 
     let approvalType = this.common.getAttribute("invln_reviewerapprover").getValue();
     let status = this.common.getAttribute("invln_status").getValue();
-    if (isTrasactionMenager && status == 858110000 && (approvalType == 858110001 || approvalType == 858110002)) {
-      this.common.enableAllFields()
+    if (!(isTrasactionMenager && status == 858110000 && (approvalType == 858110001 || approvalType == 858110002))) {
+      this.common.hideControl("invln_hofindividual", true)
     }
   }
 
