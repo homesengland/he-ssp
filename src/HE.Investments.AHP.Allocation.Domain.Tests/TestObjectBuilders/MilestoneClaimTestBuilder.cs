@@ -1,6 +1,5 @@
 using HE.Investments.AHP.Allocation.Contract.Claims.Enum;
 using HE.Investments.AHP.Allocation.Domain.Claims.ValueObjects;
-using HE.Investments.Common.Contract;
 using HE.Investments.TestsUtils;
 using HE.Investments.TestsUtils.TestFramework;
 using MilestoneStatus = HE.Investments.AHP.Allocation.Domain.Claims.Enums.MilestoneStatus;
@@ -50,13 +49,13 @@ public class MilestoneClaimTestBuilder : TestObjectBuilder<MilestoneClaimTestBui
         return this;
     }
 
-    public MilestoneClaimTestBuilder WithMilestoneAchievedDate(AchievementDate value)
+    public MilestoneClaimTestBuilder WithMilestoneAchievedDate(AchievementDate? value)
     {
         PrivatePropertySetter.SetPropertyWithNoSetter(Item.ClaimDate, nameof(ClaimDate.AchievementDate), value);
         return this;
     }
 
-    public MilestoneClaimTestBuilder WithMilestoneSubmissionDate(DateTime value)
+    public MilestoneClaimTestBuilder WithMilestoneSubmissionDate(DateTime? value)
     {
         PrivatePropertySetter.SetPropertyWithNoSetter(Item.ClaimDate, nameof(ClaimDate.SubmissionDate), value);
         return this;
@@ -69,7 +68,7 @@ public class MilestoneClaimTestBuilder : TestObjectBuilder<MilestoneClaimTestBui
         return this;
     }
 
-    public MilestoneClaimTestBuilder WithCostsIncurred(bool value) => SetProperty(x => x.CostsIncurred, value);
+    public MilestoneClaimTestBuilder WithCostsIncurred(bool? value) => SetProperty(x => x.CostsIncurred, value);
 
-    public MilestoneClaimTestBuilder WithConfirmation(bool value) => SetProperty(x => x.IsConfirmed, value);
+    public MilestoneClaimTestBuilder WithConfirmation(bool? value) => SetProperty(x => x.IsConfirmed, value);
 }
