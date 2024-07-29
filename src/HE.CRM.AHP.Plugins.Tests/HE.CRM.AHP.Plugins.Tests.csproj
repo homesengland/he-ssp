@@ -180,7 +180,6 @@
       <Name>HE.CRM.AHP.Plugins</Name>
     </ProjectReference>
   </ItemGroup>
-  <Import Project="..\HE.CRM.Model\HE.CRM.Model.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
