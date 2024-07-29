@@ -4,6 +4,7 @@ using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading;
+using System.Threading.Tasks;
 using HE.CRM.Common.Api.Exceptions;
 
 namespace HE.CRM.Common.Api
@@ -61,37 +62,44 @@ namespace HE.CRM.Common.Api
         private TResponse Send<TResponse>(HttpRequestMessage httpRequest, CancellationToken cancellationToken = default)
             where TResponse : class
         {
-            using (var httpResponse = _httpClient.SendAsync(httpRequest, cancellationToken).GetAwaiter().GetResult())
+            try
             {
-                if (!httpResponse.IsSuccessStatusCode)
+                using (var httpResponse = _httpClient.SendAsync(httpRequest, cancellationToken).GetAwaiter().GetResult())
                 {
-                    var errorContent = httpResponse.Content.ReadAsStringAsync().GetAwaiter().GetResult();
-                    throw new ApiCommunicationException(httpResponse.StatusCode, errorContent: errorContent);
-                }
+                    if (!httpResponse.IsSuccessStatusCode)
+                    {
+                        var errorContent = httpResponse.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+                        throw new ApiCommunicationException(httpResponse.StatusCode, errorContent: errorContent);
+                    }
 
-                var responseContent = httpResponse.Content.ReadAsStringAsync().GetAwaiter().GetResult();
-                if (string.IsNullOrEmpty(responseContent))
-                {
-                    throw new ApiSerializationException(responseContent: responseContent);
-                }
+                    var responseContent = httpResponse.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+                    if (string.IsNullOrEmpty(responseContent))
+                    {
+                        throw new ApiSerializationException(responseContent: responseContent);
+                    }
 
-                try
-                {
-                    return JsonSerializer.Deserialize<TResponse>(responseContent, _jsonSerializerOptions)
-                           ?? throw new ApiSerializationException(responseContent: responseContent);
+                    try
+                    {
+                        return JsonSerializer.Deserialize<TResponse>(responseContent, _jsonSerializerOptions)
+                               ?? throw new ApiSerializationException(responseContent: responseContent);
+                    }
+                    catch (JsonException ex)
+                    {
+                        throw new ApiSerializationException(ex, responseContent);
+                    }
+                    catch (NotSupportedException ex)
+                    {
+                        throw new ApiSerializationException(ex, responseContent);
+                    }
+                    catch (ArgumentNullException ex)
+                    {
+                        throw new ApiSerializationException(ex, responseContent);
+                    }
                 }
-                catch (JsonException ex)
-                {
-                    throw new ApiSerializationException(ex, responseContent);
-                }
-                catch (NotSupportedException ex)
-                {
-                    throw new ApiSerializationException(ex, responseContent);
-                }
-                catch (ArgumentNullException ex)
-                {
-                    throw new ApiSerializationException(ex, responseContent);
-                }
+            }
+            catch (TaskCanceledException)
+            {
+                throw new ApiCommunicationException(System.Net.HttpStatusCode.RequestTimeout, errorContent: $"Timeout occured ({_httpClient.Timeout})");
             }
         }
 
