@@ -49,7 +49,7 @@ public class AllocationClaimController : WorkflowController<AllocationClaimWorkf
         [FromRoute] MilestoneType claimType)
     {
         // TODO: AB#103021 Continue section answering
-        return RedirectToAction(claimType == MilestoneType.Acquisition ? "CostsIncurred" : "MilestoneDate", new { organisationId, allocationId, phaseId, claimType });
+        return RedirectToAction(claimType == MilestoneType.Acquisition ? nameof(CostsIncurred) : nameof(AchievementDate), new { organisationId, allocationId, phaseId, claimType });
     }
 
     [HttpGet("costs-incurred")]
@@ -101,7 +101,8 @@ public class AllocationClaimController : WorkflowController<AllocationClaimWorkf
         return await ExecuteClaimCommand(
             new ProvideClaimAchievementDateCommand(AllocationId.From(allocationId), PhaseId.From(phaseId), claimType, achievementDate),
             nameof(AchievementDate),
-            cancellationToken);
+            cancellationToken,
+            phaseClaim => phaseClaim with { Claim = phaseClaim.Claim with { AchievementDate = achievementDate } });
     }
 
     [HttpGet("confirmation")]
@@ -127,7 +128,8 @@ public class AllocationClaimController : WorkflowController<AllocationClaimWorkf
         return await ExecuteClaimCommand(
             new ProvideClaimConfirmationCommand(AllocationId.From(allocationId), PhaseId.From(phaseId), claimType, isConfirmed == "checked"),
             nameof(Confirmation),
-            cancellationToken);
+            cancellationToken,
+            phaseClaim => phaseClaim with { Claim = phaseClaim.Claim with { IsConfirmed = isConfirmed == "checked" } });
     }
 
     [HttpGet("check-answers")]
@@ -191,7 +193,8 @@ public class AllocationClaimController : WorkflowController<AllocationClaimWorkf
     private async Task<IActionResult> ExecuteClaimCommand<TCommand>(
         TCommand command,
         string viewName,
-        CancellationToken cancellationToken)
+        CancellationToken cancellationToken,
+        Func<PhaseClaimModel, PhaseClaimModel>? createViewModelForError = null)
             where TCommand : IProvideClaimDetailsCommand
     {
         if (Request.IsCancelAndReturnAction())
@@ -215,7 +218,12 @@ public class AllocationClaimController : WorkflowController<AllocationClaimWorkf
                     phaseId = command.PhaseId.Value,
                     claimType = command.MilestoneType,
                 }),
-            async () => View(viewName, await GetClaimModel(command.AllocationId.Value, command.PhaseId.Value, command.MilestoneType, cancellationToken)),
+            async () =>
+            {
+                var model = await GetClaimModel(command.AllocationId.Value, command.PhaseId.Value, command.MilestoneType, cancellationToken);
+                var modelWithError = createViewModelForError != null ? createViewModelForError(model) : model;
+                return View(viewName, modelWithError);
+            },
             cancellationToken);
     }
 }

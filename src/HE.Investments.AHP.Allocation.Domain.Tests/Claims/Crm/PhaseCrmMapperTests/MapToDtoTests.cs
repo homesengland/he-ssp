@@ -1,6 +1,7 @@
 using FluentAssertions;
 using HE.Investments.AHP.Allocation.Contract.Claims.Enum;
 using HE.Investments.AHP.Allocation.Domain.Claims.Crm;
+using HE.Investments.AHP.Allocation.Domain.Claims.ValueObjects;
 using HE.Investments.AHP.Allocation.Domain.Tests.TestObjectBuilders;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.CRM.Model;
@@ -74,7 +75,7 @@ public class MapToDtoTests : TestBase<PhaseCrmMapper>
             .WithGrantApportioned(100000, 0.1m)
             .WithCostsIncurred(true)
             .WithConfirmation(true)
-            .WithMilestoneAchievedDate(new DateDetails("01", "01", "2020"))
+            .WithMilestoneAchievedDate(AchievementDate.FromDateDetails(new DateDetails("01", "01", "2020")))
             .WithMilestoneSubmissionDate(new DateDetails("02", "02", "2020"))
             .Build();
         var entity = PhaseEntityTestBuilder.New().WithAcquisitionMilestone(milestone).Build();

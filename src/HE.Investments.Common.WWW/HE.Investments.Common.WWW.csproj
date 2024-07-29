@@ -23,6 +23,7 @@
     <EmbeddedResource Include="Components\ListCardContent\ListCardContent.cshtml" />
     <EmbeddedResource Include="Components\ListCardExtended\ListCardExtended.cshtml" />
     <EmbeddedResource Include="Components\SelectListConfirmationHeader\SelectListConfirmationHeader.cshtml" />
+    <EmbeddedResource Include="Components\Text\Text.cshtml" />
     <EmbeddedResource Include="_ViewImports.cshtml" />
     <EmbeddedResource Include="Partials\Errors\_ErrorSummaryPartial.cshtml" />
     <EmbeddedResource Include="Partials\Cookies\_AdditionalCookies.cshtml" />

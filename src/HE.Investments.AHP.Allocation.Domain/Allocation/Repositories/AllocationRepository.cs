@@ -7,7 +7,6 @@ using HE.Investments.AHP.Allocation.Domain.Allocation.Entities;
 using HE.Investments.AHP.Allocation.Domain.Allocation.Mappers;
 using HE.Investments.AHP.Allocation.Domain.Allocation.ValueObjects;
 using HE.Investments.AHP.Allocation.Domain.Claims.Crm;
-using HE.Investments.AHP.Allocation.Domain.Claims.Mappers;
 using HE.Investments.Common.Contract;
 using HE.Investments.Consortium.Shared.UserContext;
 using HE.Investments.Programme.Contract;
@@ -63,7 +62,8 @@ public class AllocationRepository : IAllocationRepository
             new ModificationDetails("Carq", "Power", DateTime.Now),
             true,
             userAccount.SelectedOrganisation().RegisteredCompanyName,
-            string.Empty);
+            string.Empty,
+            false);
     }
 
     private AllocationEntity CreateEntity(AllocationClaimsDto allocationDto, AhpProgramme programme)

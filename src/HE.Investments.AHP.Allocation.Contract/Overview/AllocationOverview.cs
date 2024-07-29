@@ -7,4 +7,5 @@ public record AllocationOverview(
     ModificationDetails ModificationDetails,
     bool IsInContract,
     string OrganisationName,
-    string FdProjectId);
+    string FdProjectId,
+    bool IsDraft);
