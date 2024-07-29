@@ -16,7 +16,7 @@ namespace HE.CRM.Common.Api.FrontDoor
 {
     public sealed class FrontDoorApiClient : CrmService, IFrontDoorApiClient
     {
-        private static readonly TimeSpan TimeOutParameter = TimeSpan.FromMilliseconds(200);
+        private static readonly TimeSpan TimeOutParameter = TimeSpan.FromSeconds(20);
         private readonly Lazy<ApiHttpClient> _httpClient;
 
         public FrontDoorApiClient(CrmServiceArgs args)
