@@ -29,7 +29,7 @@ public sealed class SubmittedMilestoneClaim : MilestoneClaimBase
     public override MilestoneClaimBase WithAchievementDate(
         AchievementDate achievementDate,
         Programme.Contract.Programme programme,
-        DateDetails? previousSubmissionDate,
+        DateTime? previousSubmissionDate,
         DateTime currentDate)
     {
         throw new DomainValidationException(OperationNotAllowedResult("Providing achievement date"));
@@ -48,6 +48,11 @@ public sealed class SubmittedMilestoneClaim : MilestoneClaimBase
     public override MilestoneWithoutClaim Cancel()
     {
         throw new DomainValidationException(OperationNotAllowedResult("Cancellation"));
+    }
+
+    public override SubmittedMilestoneClaim Submit(DateTime currentDate)
+    {
+        throw new DomainValidationException(OperationNotAllowedResult("Submission"));
     }
 
     private static OperationResult OperationNotAllowedResult(string operationName)

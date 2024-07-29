@@ -22,7 +22,7 @@ public class MilestoneClaimTestBuilder : TestObjectBuilder<MilestoneClaimTestBui
         new ClaimDate(
             new DateTime(2021, 1, 1, 0, 0, 0, DateTimeKind.Utc),
             new AchievementDate(new DateTime(2022, 1, 1, 0, 0, 0, DateTimeKind.Utc)),
-            DateDetails.FromDateTime(new DateTime(2022, 12, 12, 0, 0, 0, DateTimeKind.Utc))),
+            new DateTime(2022, 12, 12, 0, 0, 0, DateTimeKind.Utc)),
         null,
         null));
 
@@ -56,7 +56,7 @@ public class MilestoneClaimTestBuilder : TestObjectBuilder<MilestoneClaimTestBui
         return this;
     }
 
-    public MilestoneClaimTestBuilder WithMilestoneSubmissionDate(DateDetails value)
+    public MilestoneClaimTestBuilder WithMilestoneSubmissionDate(DateTime value)
     {
         PrivatePropertySetter.SetPropertyWithNoSetter(Item.ClaimDate, nameof(ClaimDate.SubmissionDate), value);
         return this;

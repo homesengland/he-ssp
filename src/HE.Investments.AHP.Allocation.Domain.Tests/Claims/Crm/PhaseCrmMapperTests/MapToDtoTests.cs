@@ -76,7 +76,7 @@ public class MapToDtoTests : TestBase<PhaseCrmMapper>
             .WithCostsIncurred(true)
             .WithConfirmation(true)
             .WithMilestoneAchievedDate(AchievementDate.FromDateDetails(new DateDetails("01", "01", "2020")))
-            .WithMilestoneSubmissionDate(new DateDetails("02", "02", "2020"))
+            .WithMilestoneSubmissionDate(new DateTime(2020, 2, 2, 0, 0, 0, DateTimeKind.Local))
             .Build();
         var entity = PhaseEntityTestBuilder.New().WithAcquisitionMilestone(milestone).Build();
 

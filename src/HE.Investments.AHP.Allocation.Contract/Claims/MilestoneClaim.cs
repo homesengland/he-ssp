@@ -13,4 +13,5 @@ public record MilestoneClaim(
     DateDetails? SubmissionDate,
     bool CanBeClaimed,
     bool? CostsIncurred,
-    bool? IsConfirmed);
+    bool? IsConfirmed,
+    bool IsEditable);

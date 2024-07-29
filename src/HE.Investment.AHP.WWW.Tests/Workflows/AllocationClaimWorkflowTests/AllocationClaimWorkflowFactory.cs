@@ -22,7 +22,8 @@ internal static class AllocationClaimWorkflowFactory
             null,
             canBeClaimed,
             null,
-            null);
+            null,
+            true);
 
         return new AllocationClaimWorkflow(state, model);
     }
