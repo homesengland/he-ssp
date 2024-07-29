@@ -3,6 +3,7 @@ using HE.Investments.AHP.Allocation.Contract;
 using HE.Investments.AHP.Allocation.Contract.Claims;
 using HE.Investments.AHP.Allocation.Contract.Claims.Queries;
 using HE.Investments.Common.Contract.Pagination;
+using HE.Investments.Common.WWW.Routing;
 using HE.Investments.Consortium.Shared.UserContext;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -34,6 +35,7 @@ public class AllocationClaimsController : Controller
     }
 
     [HttpGet("{phaseId}/overview")]
+    [WorkflowState(AllocationClaimWorkflowState.Overview)]
     public async Task<IActionResult> Overview(string allocationId, string phaseId, CancellationToken cancellationToken)
     {
         var canClaimMilestone = await _accountAccessContext.CanEditApplication();

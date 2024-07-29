@@ -46,6 +46,6 @@ public class CanBeCompletedTests
         var action = () => projectEntity.CanBeCompleted();
 
         // then
-        action.Should().Throw<DomainValidationException>().WithMessage(ValidationErrorMessage.ProvideAllProjectAnswers);
+        action.Should().Throw<DomainValidationException>().WithMessage(ValidationErrorMessage.ProvideAllAnswers);
     }
 }
