@@ -2,7 +2,7 @@ using System.Globalization;
 using HE.Investment.AHP.Contract.Application;
 using HE.Investments.AHP.IntegrationTests.AreaTests.O01Application.Order03FillApplication.Data;
 
-namespace HE.Investments.AHP.IntegrationTests.AreaTests.O02Allocation.Order01ManageAllocation.Data.Allocation;
+namespace HE.Investments.AHP.IntegrationTests.AreaTests.O02Allocation.Data.Allocation;
 
 public class AllocationData
 {

@@ -2,7 +2,7 @@ using HE.Investment.AHP.Contract.Delivery.Enums;
 using HE.Investments.AHP.IntegrationTests.AreaTests.O01Application.Order03FillApplication.Data.DeliveryPhases;
 using HE.Investments.Common.Contract;
 
-namespace HE.Investments.AHP.IntegrationTests.AreaTests.O02Allocation.Order01ManageAllocation.Data.Phase;
+namespace HE.Investments.AHP.IntegrationTests.AreaTests.O02Allocation.Data.Phase;
 
 public class PhaseData
 {

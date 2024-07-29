@@ -5,7 +5,7 @@ using HE.Investments.AHP.IntegrationTests.AreaTests.O01Application.Order02FillSi
 using HE.Investments.AHP.IntegrationTests.AreaTests.O01Application.Order03FillApplication.Data;
 using HE.Investments.AHP.IntegrationTests.AreaTests.O01Application.Order03FillApplication.Data.DeliveryPhases;
 using HE.Investments.AHP.IntegrationTests.AreaTests.O01Application.Order03FillApplication.Data.HomeTypes;
-using HE.Investments.AHP.IntegrationTests.AreaTests.O02Allocation.Order01ManageAllocation.Data.Allocation;
+using HE.Investments.AHP.IntegrationTests.AreaTests.O02Allocation.Data.Allocation;
 using HE.Investments.AHP.IntegrationTests.Framework.Crm;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.CRM.Model;

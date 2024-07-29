@@ -1,4 +1,4 @@
-namespace HE.Investments.AHP.IntegrationTests.AreaTests.O02Allocation.Order01ManageAllocation.Consts;
+namespace HE.Investments.AHP.IntegrationTests.AreaTests.O02Allocation.Consts;
 
 public static class PhaseFields
 {

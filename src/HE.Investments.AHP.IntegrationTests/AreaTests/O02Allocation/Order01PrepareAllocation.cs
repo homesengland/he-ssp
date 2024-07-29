@@ -3,7 +3,7 @@ using HE.Investment.AHP.WWW.Views.AllocationClaims.Const;
 using HE.Investments.AHP.IntegrationTests.AreaTests.O01Application.Order03FillApplication.Data;
 using HE.Investments.AHP.IntegrationTests.AreaTests.O01Application.Order03FillApplication.Data.DeliveryPhases;
 using HE.Investments.AHP.IntegrationTests.AreaTests.O01Application.Order03FillApplication.Data.HomeTypes;
-using HE.Investments.AHP.IntegrationTests.AreaTests.O02Allocation.Order01ManageAllocation.Data.Phase;
+using HE.Investments.AHP.IntegrationTests.AreaTests.O02Allocation.Data.Phase;
 using HE.Investments.AHP.IntegrationTests.AreaTests.O02Allocation.Pages;
 using HE.Investments.AHP.IntegrationTests.Framework;
 using HE.Investments.TestsUtils.Extensions;
@@ -11,7 +11,7 @@ using Xunit;
 using Xunit.Abstractions;
 using Xunit.Extensions.Ordering;
 
-namespace HE.Investments.AHP.IntegrationTests.AreaTests.O02Allocation.Order01ManageAllocation;
+namespace HE.Investments.AHP.IntegrationTests.AreaTests.O02Allocation;
 
 [Order(501)]
 [SuppressMessage("xUnit", "xUnit1004", Justification = "Waits for DevOps configuration - #76791")]

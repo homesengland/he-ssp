@@ -3,7 +3,7 @@ using HE.Investment.AHP.WWW;
 using HE.Investments.AHP.IntegrationTests.AreaTests.O01Application.Order01StartAhpProjectWithSite.Data;
 using HE.Investments.AHP.IntegrationTests.AreaTests.O01Application.Order02FillSite.Data;
 using HE.Investments.AHP.IntegrationTests.AreaTests.O01Application.Order03FillApplication.Data;
-using HE.Investments.AHP.IntegrationTests.AreaTests.O02Allocation.Order01ManageAllocation.Data.Allocation;
+using HE.Investments.AHP.IntegrationTests.AreaTests.O02Allocation.Data.Allocation;
 using HE.Investments.AHP.IntegrationTests.Framework.Crm;
 using HE.Investments.AHP.IntegrationTests.Framework.Utils;
 using HE.Investments.Common.Contract;
