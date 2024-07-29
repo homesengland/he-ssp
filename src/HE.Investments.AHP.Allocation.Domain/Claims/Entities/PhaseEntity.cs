@@ -3,7 +3,6 @@ using HE.Investments.AHP.Allocation.Contract.Claims;
 using HE.Investments.AHP.Allocation.Contract.Claims.Enum;
 using HE.Investments.AHP.Allocation.Domain.Allocation.ValueObjects;
 using HE.Investments.AHP.Allocation.Domain.Claims.ValueObjects;
-using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Domain;
@@ -110,7 +109,7 @@ public sealed class PhaseEntity : DomainEntity
     public void ProvideMilestoneClaimAchievementDate(
         MilestoneClaimBase claim,
         Programme.Contract.Programme programme,
-        DateDetails? achievementDate,
+        AchievementDate achievementDate,
         DateTime currentDate)
     {
         var previousMilestoneSubmissionDate = claim.Type switch

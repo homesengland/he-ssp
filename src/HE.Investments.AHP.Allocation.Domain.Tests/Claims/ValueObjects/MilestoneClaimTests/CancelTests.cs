@@ -2,7 +2,6 @@ using FluentAssertions;
 using HE.Investments.AHP.Allocation.Contract.Claims.Enum;
 using HE.Investments.AHP.Allocation.Domain.Claims.ValueObjects;
 using HE.Investments.AHP.Allocation.Domain.Tests.TestObjectBuilders;
-using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Exceptions;
 using Xunit;
 using MilestoneStatus = HE.Investments.AHP.Allocation.Domain.Claims.Enums.MilestoneStatus;
@@ -30,7 +29,7 @@ public class CancelTests
         // given
         var testCandidate = MilestoneClaimTestBuilder.Draft()
             .WithType(MilestoneType.Acquisition)
-            .WithMilestoneAchievedDate(DateDetails.FromDateTime(DateTime.Today)!)
+            .WithMilestoneAchievedDate(new AchievementDate(DateTime.Today))
             .WithCostsIncurred(true)
             .WithConfirmation(true)
             .Build();
