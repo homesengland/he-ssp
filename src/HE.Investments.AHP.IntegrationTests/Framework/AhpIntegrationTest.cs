@@ -1,11 +1,11 @@
 using System.Diagnostics;
 using HE.Investment.AHP.WWW;
-using HE.Investments.AHP.IntegrationTests.Crm;
-using HE.Investments.AHP.IntegrationTests.Order01StartAhpProjectWithSite.Data;
-using HE.Investments.AHP.IntegrationTests.Order02FillSite.Data;
-using HE.Investments.AHP.IntegrationTests.Order03FillApplication.Data;
-using HE.Investments.AHP.IntegrationTests.Order05ManageAllocation.Data.Allocation;
-using HE.Investments.AHP.IntegrationTests.Utils;
+using HE.Investments.AHP.IntegrationTests.AreaTests.O01Application.Order01StartAhpProjectWithSite.Data;
+using HE.Investments.AHP.IntegrationTests.AreaTests.O01Application.Order02FillSite.Data;
+using HE.Investments.AHP.IntegrationTests.AreaTests.O01Application.Order03FillApplication.Data;
+using HE.Investments.AHP.IntegrationTests.AreaTests.O02Allocation.Order01ManageAllocation.Data.Allocation;
+using HE.Investments.AHP.IntegrationTests.Framework.Crm;
+using HE.Investments.AHP.IntegrationTests.Framework.Utils;
 using HE.Investments.Common.Contract;
 using HE.Investments.FrontDoor.IntegrationTests.Utils;
 using HE.Investments.IntegrationTestsFramework;
