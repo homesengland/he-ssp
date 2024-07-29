@@ -20,6 +20,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_checkifloanapplicationwithgivennameexists.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_checkifsitewithgivennameexists.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_checkifsitewithstrategicsitenameexists.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_createahpallocation.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_createahpproject.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_createsinglesitedetail.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_deactivatefrontdoorproject.cs" />
@@ -263,6 +264,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_AHPInternalStatus.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_AHPPartnerType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_AHPSectioncompletionstatusSet.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_ApprovalFor.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_ApprovalLevel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_ApprovalStatus.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_AssessedforBHL.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_BaseCaseType.cs" />
@@ -275,6 +278,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_CashflowIssueTypes.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_ChangesourceSet.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_ClaimExternalStatus.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_ClaimInternalStatus.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_Clientgroup.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_compliantnoncompliant.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_ConditionSource.cs" />
@@ -283,6 +287,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_consortiumsingleentity.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_ConstructionMethod.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_ContractVersion.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_CovenantType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_CreditRatingAgency.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_CRRStatus.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_DefineTenure.cs" />
@@ -397,6 +402,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\msdynmkt_Messagedesignation.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\msdynmkt_Picklistsupportedlanguages.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\msdynmkt_PlaceholderType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OptionSets\msdyn_ActionType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\msdyn_Activitylinktype.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\msdyn_adjustmentstatus.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\msdyn_AgentDisplayName.cs" />
@@ -631,6 +637,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\msdyn_TimeRangeType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\msdyn_TimeScale.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\msdyn_TimestampFrequency.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OptionSets\msdyn_TimeTrackerCategoryOptionSet.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\msdyn_TransactionClassification.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\msdyn_TransactionRole.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\msdyn_TransactionTypeCode.cs" />
@@ -691,6 +698,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\sameweekDay_options.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\sameweekweek_options.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\SearchEntity.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OptionSets\securityrole_IsAutoAssigned.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\selection_rule_criteria.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\selection_rule_quantity.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\selection_rule_Sites.cs" />

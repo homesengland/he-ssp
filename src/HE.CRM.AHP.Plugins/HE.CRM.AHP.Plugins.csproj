@@ -99,6 +99,7 @@
   <ItemGroup>
     <Compile Include="Common\AHPConst.cs" />
     <Compile Include="CrmPluginRegistrationAttribute.cs" />
+    <Compile Include="Handlers\AHPApplication\CheckUniqueApplicationNameHandler.cs" />
     <Compile Include="Handlers\AHPApplication\PopulateFieldsForApplicationReportHandler.cs" />
     <Compile Include="Handlers\AHPApplication\ChangeExternalStatusOnInternalStatusChangeHandler.cs" />
     <Compile Include="Handlers\AHPApplication\CheckIfApplicationWithNewNameExistsHandler.cs" />
@@ -111,6 +112,7 @@
     <Compile Include="Handlers\Claims\GrantDetailsCalculateHandler.cs" />
     <Compile Include="Handlers\ContactWebrole\SendNotificationOnAdminRoleGrantedPlugin.cs" />
     <Compile Include="Handlers\ContactWebrole\SendNotificationOnRoleModificationHandler.cs" />
+    <Compile Include="Handlers\CustomApi\Allocation\CreateAllocationHandler.cs" />
     <Compile Include="Handlers\CustomApi\Allocation\GetAllocationClaimsHandler.cs" />
     <Compile Include="Handlers\CustomApi\Allocation\SetAllocationPhaseHandler.cs" />
     <Compile Include="Handlers\CustomApi\ChangeAhpApplicationHandler.cs" />
@@ -229,11 +231,13 @@
     <Compile Include="Plugins\AhpApplication\PostUpdate.cs" />
     <Compile Include="Plugins\AhpApplication\CreateDocumentLocationOnCreatePlugin.cs" />
     <Compile Include="Plugins\AhpApplication\PreUpdate.cs" />
+    <Compile Include="Plugins\AhpApplication\PreValidation.cs" />
     <Compile Include="Plugins\AhpStatusChange\SendNotificationOnCreatePlugin.cs" />
     <Compile Include="Plugins\Claim\PostUpdateAsync.cs" />
     <Compile Include="Plugins\ContactWebrole\SendNotificationOnAdminRoleGrantedPlugin.cs" />
     <Compile Include="Plugins\ContactWebrole\SendNotificationOnRoleModificationPlugin.cs" />
     <Compile Include="Plugins\CustomApi\Allocation\GetAllocationClaimsPlugin.cs" />
+    <Compile Include="Plugins\CustomApi\Allocation\CreateAllocationPlugin.cs" />
     <Compile Include="Plugins\CustomApi\Allocation\SetAllocationPhasePlugin.cs" />
     <Compile Include="Plugins\CustomApi\ChangeAhpApplicationStatusPlugin.cs" />
     <Compile Include="Plugins\CustomApi\CheckIfApplicationWithGivenNameExistsPlugin.cs" />

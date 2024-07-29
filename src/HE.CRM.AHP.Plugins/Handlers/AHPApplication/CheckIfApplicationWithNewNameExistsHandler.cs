@@ -1,6 +1,7 @@
 using DataverseModel;
 using HE.Base.Plugins.Handlers;
 using HE.CRM.AHP.Plugins.Services.Application;
+using HE.Base.Plugins.Common.Constants;
 
 namespace HE.CRM.AHP.Plugins.Handlers.AHPApplication
 {
@@ -15,7 +16,8 @@ namespace HE.CRM.AHP.Plugins.Handlers.AHPApplication
         #region Base Methods Overrides
         public override bool CanWork()
         {
-            return target != null;
+            return target != null &&
+                !(ExecutionData.IsMessage(CrmMessage.Create) && target.invln_isallocation != true);
         }
 
         public override void DoWork()

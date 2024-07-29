@@ -456,6 +456,7 @@ namespace DataverseModel
 			public const string invln_account_ProviderManagementLead_systemuser = "invln_account_ProviderManagementLead_systemuser";
 			public const string invln_ahglocalauthorities_GrowthManager_systemu = "invln_ahglocalauthorities_GrowthManager_systemu";
 			public const string invln_ahpcontract_ContractLead_systemuser = "invln_ahpcontract_ContractLead_systemuser";
+			public const string invln_ahpstatuschange_CreatedByInternal_systemuser = "invln_ahpstatuschange_CreatedByInternal_systemuser";
 			public const string invln_deliveryphase_Approvedby_systemuser = "invln_deliveryphase_Approvedby_systemuser";
 			public const string invln_externalcomms_systemuser_createdby = "invln_externalcomms_systemuser_createdby";
 			public const string invln_externalcomms_systemuser_createdonbehalfby = "invln_externalcomms_systemuser_createdonbehalfby";
@@ -467,7 +468,10 @@ namespace DataverseModel
 			public const string invln_govnotifyemail_systemuser_modifiedby = "invln_govnotifyemail_systemuser_modifiedby";
 			public const string invln_govnotifyemail_systemuser_modifiedonbehalfby = "invln_govnotifyemail_systemuser_modifiedonbehalfby";
 			public const string invln_govnotifyemail_systemuser_owninguser = "invln_govnotifyemail_systemuser_owninguser";
+			public const string invln_isp_Submitternew_systemuser = "invln_isp_Submitternew_systemuser";
+			public const string invln_reviewapproval_HoFIndividual_systemuser = "invln_reviewapproval_HoFIndividual_systemuser";
 			public const string invln_scheme_GrowthManager_systemuser = "invln_scheme_GrowthManager_systemuser";
+			public const string invln_scheme_ProviderManager_systemuser = "invln_scheme_ProviderManager_systemuser";
 			public const string invln_sitedetails_systemuser = "invln_sitedetails_systemuser";
 			public const string invln_systemuser_invln_loanstatuschange_changedbyuserid = "invln_systemuser_invln_loanstatuschange_changedbyuserid";
 			public const string invln_systemuser_invln_reviewapproval_reviewedapprovedbyid = "invln_systemuser_invln_reviewapproval_reviewedapprovedbyid";
@@ -4529,6 +4533,26 @@ namespace DataverseModel
 		}
 		
 		/// <summary>
+		/// 1:N invln_ahpstatuschange_CreatedByInternal_systemuser
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_ahpstatuschange_CreatedByInternal_systemuser")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_AHPStatusChange> invln_ahpstatuschange_CreatedByInternal_systemuser
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_AHPStatusChange>("invln_ahpstatuschange_CreatedByInternal_systemuser", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_ahpstatuschange_CreatedByInternal_systemuser");
+				this.SetRelatedEntities<DataverseModel.invln_AHPStatusChange>("invln_ahpstatuschange_CreatedByInternal_systemuser", null, value);
+				this.OnPropertyChanged("invln_ahpstatuschange_CreatedByInternal_systemuser");
+			}
+		}
+		
+		/// <summary>
 		/// 1:N invln_deliveryphase_Approvedby_systemuser
 		/// </summary>
 		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_deliveryphase_Approvedby_systemuser")]
@@ -4749,6 +4773,46 @@ namespace DataverseModel
 		}
 		
 		/// <summary>
+		/// 1:N invln_isp_Submitternew_systemuser
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_isp_Submitternew_systemuser")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_ISP> invln_isp_Submitternew_systemuser
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_ISP>("invln_isp_Submitternew_systemuser", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_isp_Submitternew_systemuser");
+				this.SetRelatedEntities<DataverseModel.invln_ISP>("invln_isp_Submitternew_systemuser", null, value);
+				this.OnPropertyChanged("invln_isp_Submitternew_systemuser");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N invln_reviewapproval_HoFIndividual_systemuser
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_reviewapproval_HoFIndividual_systemuser")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_reviewapproval> invln_reviewapproval_HoFIndividual_systemuser
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_reviewapproval>("invln_reviewapproval_HoFIndividual_systemuser", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_reviewapproval_HoFIndividual_systemuser");
+				this.SetRelatedEntities<DataverseModel.invln_reviewapproval>("invln_reviewapproval_HoFIndividual_systemuser", null, value);
+				this.OnPropertyChanged("invln_reviewapproval_HoFIndividual_systemuser");
+			}
+		}
+		
+		/// <summary>
 		/// 1:N invln_scheme_GrowthManager_systemuser
 		/// </summary>
 		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_scheme_GrowthManager_systemuser")]
@@ -4765,6 +4829,26 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_scheme_GrowthManager_systemuser");
 				this.SetRelatedEntities<DataverseModel.invln_scheme>("invln_scheme_GrowthManager_systemuser", null, value);
 				this.OnPropertyChanged("invln_scheme_GrowthManager_systemuser");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N invln_scheme_ProviderManager_systemuser
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_scheme_ProviderManager_systemuser")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_scheme> invln_scheme_ProviderManager_systemuser
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_scheme>("invln_scheme_ProviderManager_systemuser", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_scheme_ProviderManager_systemuser");
+				this.SetRelatedEntities<DataverseModel.invln_scheme>("invln_scheme_ProviderManager_systemuser", null, value);
+				this.OnPropertyChanged("invln_scheme_ProviderManager_systemuser");
 			}
 		}
 		

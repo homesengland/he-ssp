@@ -138,6 +138,26 @@ namespace HE.Base.Repositories
             }
         }
 
+        public virtual Guid[] CreateMultiple(List<Entity> recordsToCreate)
+        {
+            using (TraceExecution(recordsToCreate))
+            {
+                var entities = new EntityCollection(recordsToCreate)
+                {
+                    EntityName = recordsToCreate[0].LogicalName
+                };
+
+                var createMultipleRequest = new CreateMultipleRequest()
+                {
+                    Targets = entities,
+                };
+
+                var createMultipleResponse = (CreateMultipleResponse)service.Execute(createMultipleRequest);
+                return createMultipleResponse.Ids;
+            }
+        }
+
+
         /// <summary>
         /// Deletes the specified entity object from crm organization.
         /// </summary>

@@ -13,20 +13,20 @@ namespace DataverseModel
 	
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
-	public enum invln_ApprovalStatus
+	public enum msdyn_ActionType
 	{
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Approved = 858110001,
+		EmailFollowup = 100000002,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		InReview = 858110003,
+		KnowledgeArticleDraftReview = 100000000,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Pending = 858110000,
+		ReplyToCustomer = 100000003,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Rejected = 858110002,
+		ResolveCase = 100000001,
 	}
 }
 #pragma warning restore CS1591
