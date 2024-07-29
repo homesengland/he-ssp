@@ -132,6 +132,11 @@ namespace DataverseModel
 			public const string invln_CashflowReceived = "invln_cashflowreceived";
 			public const string invln_cashflowreceivedName = "invln_cashflowreceivedname";
 			public const string invln_CashflowRequested = "invln_cashflowrequested";
+			public const string invln_CollateralWarrantyDescription = "invln_collateralwarrantydescription";
+			public const string invln_CollateralWarrantyMarginatedSecurityValue = "invln_collateralwarrantymarginatedsecurityvalue";
+			public const string invln_collateralwarrantymarginatedsecurityvalue_Base = "invln_collateralwarrantymarginatedsecurityvalue_base";
+			public const string invln_CollateralWarrantyValue = "invln_collateralwarrantyvalue";
+			public const string invln_collateralwarrantyvalue_Base = "invln_collateralwarrantyvalue_base";
 			public const string invln_CommerciallySensitive = "invln_commerciallysensitive";
 			public const string invln_commerciallysensitiveName = "invln_commerciallysensitivename";
 			public const string invln_CompanyExperience = "invln_companyexperience";
@@ -140,6 +145,11 @@ namespace DataverseModel
 			public const string invln_companystructureandexperiencecompletionst = "invln_companystructureandexperiencecompletionst";
 			public const string invln_companystructureandexperiencecompletionstName = "invln_companystructureandexperiencecompletionstname";
 			public const string invln_Companystructureinformation = "invln_companystructureinformation";
+			public const string invln_CompletionGuaranteeDescription = "invln_completionguaranteedescription";
+			public const string invln_CompletionGuaranteeMarginedSecurityValue = "invln_completionguaranteemarginedsecurityvalue";
+			public const string invln_completionguaranteemarginedsecurityvalue_Base = "invln_completionguaranteemarginedsecurityvalue_base";
+			public const string invln_CompletionGuaranteeValue = "invln_completionguaranteevalue";
+			public const string invln_completionguaranteevalue_Base = "invln_completionguaranteevalue_base";
 			public const string invln_Conditions_invln_Loanapplication_in = "invln_Conditions_invln_Loanapplication_in";
 			public const string invln_Confirmationdirectorloanscanbesubordinated = "invln_confirmationdirectorloanscanbesubordinated";
 			public const string invln_confirmationdirectorloanscanbesubordinatedName = "invln_confirmationdirectorloanscanbesubordinatedname";
@@ -150,12 +160,22 @@ namespace DataverseModel
 			public const string invln_ContactYomiName = "invln_contactyominame";
 			public const string invln_CostGuarantee = "invln_costguarantee";
 			public const string invln_costguaranteeName = "invln_costguaranteename";
+			public const string invln_CostOverrunGuarantee = "invln_costoverrunguarantee";
+			public const string invln_CostOverrunMarginedSecurityValue = "invln_costoverrunmarginedsecurityvalue";
+			public const string invln_costoverrunmarginedsecurityvalue_Base = "invln_costoverrunmarginedsecurityvalue_base";
+			public const string invln_CostOverrunValue = "invln_costoverrunvalue";
+			public const string invln_costoverrunvalue_Base = "invln_costoverrunvalue_base";
 			public const string invln_CustomSecurity = "invln_customsecurity";
 			public const string invln_Dateapproved = "invln_dateapproved";
 			public const string invln_DateStatusChangedtoCashflowRequested = "invln_datestatuschangedtocashflowrequested";
 			public const string invln_Datesubmitted = "invln_datesubmitted";
 			public const string invln_DaysSinceCashflowRequested = "invln_dayssincecashflowrequested";
+			public const string invln_DebentureDescription = "invln_debenturedescription";
 			public const string invln_DebentureHolder = "invln_debentureholder";
+			public const string invln_DebentureMarginedSecurityValue = "invln_debenturemarginedsecurityvalue";
+			public const string invln_debenturemarginedsecurityvalue_Base = "invln_debenturemarginedsecurityvalue_base";
+			public const string invln_DebentureValue = "invln_debenturevalue";
+			public const string invln_debenturevalue_Base = "invln_debenturevalue_base";
 			public const string invln_Developmenttype = "invln_developmenttype";
 			public const string invln_developmenttypeName = "invln_developmenttypename";
 			public const string invln_Directorloans = "invln_directorloans";
@@ -167,6 +187,11 @@ namespace DataverseModel
 			public const string invln_FDProjectId = "invln_fdprojectid";
 			public const string invln_FDProjectIdName = "invln_fdprojectidname";
 			public const string invln_FinalConclusion = "invln_finalconclusion";
+			public const string invln_FirstLegalChargeDescription = "invln_firstlegalchargedescription";
+			public const string invln_FirstLegalChargeMarginedSecurityValue = "invln_firstlegalchargemarginedsecurityvalue";
+			public const string invln_firstlegalchargemarginedsecurityvalue_Base = "invln_firstlegalchargemarginedsecurityvalue_base";
+			public const string invln_FirstLegalChargeValue = "invln_firstlegalchargevalue";
+			public const string invln_firstlegalchargevalue_Base = "invln_firstlegalchargevalue_base";
 			public const string invln_fundingdetailscompletionstatus = "invln_fundingdetailscompletionstatus";
 			public const string invln_fundingdetailscompletionstatusName = "invln_fundingdetailscompletionstatusname";
 			public const string invln_FundingReason = "invln_fundingreason";
@@ -175,6 +200,11 @@ namespace DataverseModel
 			public const string invln_HeProjectIdName = "invln_heprojectidname";
 			public const string invln_InterestGuarantee = "invln_interestguarantee";
 			public const string invln_interestguaranteeName = "invln_interestguaranteename";
+			public const string invln_InterestShortfallDescription = "invln_interestshortfalldescription";
+			public const string invln_InterestShortfallMarginedSecurityValue = "invln_interestshortfallmarginedsecurityvalue";
+			public const string invln_interestshortfallmarginedsecurityvalue_Base = "invln_interestshortfallmarginedsecurityvalue_base";
+			public const string invln_InterestShortfallValue = "invln_interestshortfallvalue";
+			public const string invln_interestshortfallvalue_Base = "invln_interestshortfallvalue_base";
 			public const string invln_InvestedbyBorrower = "invln_investedbyborrower";
 			public const string invln_investedbyborrowerName = "invln_investedbyborrowername";
 			public const string invln_invln_emailnotification_Regarding_invln_l = "invln_invln_emailnotification_Regarding_invln_l";
@@ -209,13 +239,30 @@ namespace DataverseModel
 			public const string invln_Name = "invln_name";
 			public const string invln_numberofhomes = "invln_numberofhomes";
 			public const string invln_NumberofSites = "invln_numberofsites";
+			public const string invln_OtherDescription = "invln_otherdescription";
+			public const string invln_OtherMarginedSecurityValue = "invln_othermarginedsecurityvalue";
+			public const string invln_othermarginedsecurityvalue_Base = "invln_othermarginedsecurityvalue_base";
+			public const string invln_OtherValue = "invln_othervalue";
+			public const string invln_othervalue_Base = "invln_othervalue_base";
 			public const string invln_Outstandinglegalchargesordebt = "invln_outstandinglegalchargesordebt";
 			public const string invln_outstandinglegalchargesordebtName = "invln_outstandinglegalchargesordebtname";
+			public const string invln_ParentCompanyGuaranteeDescription = "invln_parentcompanyguaranteedescription";
+			public const string invln_ParentCompanyGuaranteeMarginedSecurityValue = "invln_parentcompanyguaranteemarginedsecurityvalue";
+			public const string invln_parentcompanyguaranteemarginedsecurityvalue_Base = "invln_parentcompanyguaranteemarginedsecurityvalue_base";
+			public const string invln_ParentCompanyGuaranteeValue = "invln_parentcompanyguaranteevalue";
+			public const string invln_parentcompanyguaranteevalue_Base = "invln_parentcompanyguaranteevalue_base";
+			public const string invln_PersonalGuaranteeDescription = "invln_personalguaranteedescription";
+			public const string invln_PersonalGuaranteeMarginedSecurityValue = "invln_personalguaranteemarginedsecurityvalue";
+			public const string invln_personalguaranteemarginedsecurityvalue_Base = "invln_personalguaranteemarginedsecurityvalue_base";
+			public const string invln_PersonalGuaranteeValue = "invln_personalguaranteevalue";
+			public const string invln_personalguaranteevalue_Base = "invln_personalguaranteevalue_base";
 			public const string invln_planningpermissionstatus = "invln_planningpermissionstatus";
 			public const string invln_planningpermissionstatusName = "invln_planningpermissionstatusname";
 			public const string invln_Privatesectorapproach = "invln_privatesectorapproach";
 			public const string invln_Privatesectorapproachinformation = "invln_privatesectorapproachinformation";
 			public const string invln_privatesectorapproachName = "invln_privatesectorapproachname";
+			public const string invln_Programme = "invln_programme";
+			public const string invln_programmeName = "invln_programmename";
 			public const string invln_Projectabnormalcosts = "invln_projectabnormalcosts";
 			public const string invln_Projectabnormalcostsinformation = "invln_projectabnormalcostsinformation";
 			public const string invln_projectabnormalcostsName = "invln_projectabnormalcostsname";
@@ -253,6 +300,16 @@ namespace DataverseModel
 			public const string invln_specialpurposevehicleprovidedName = "invln_specialpurposevehicleprovidedname";
 			public const string invln_startdate = "invln_startdate";
 			public const string invln_statuschangereason = "invln_statuschangereason";
+			public const string invln_SubordinatedDeedDescription = "invln_subordinateddeeddescription";
+			public const string invln_SubordinatedDeedMarginedSecurityValue = "invln_subordinateddeedmarginedsecurityvalue";
+			public const string invln_subordinateddeedmarginedsecurityvalue_Base = "invln_subordinateddeedmarginedsecurityvalue_base";
+			public const string invln_SubordinatedDeedValue = "invln_subordinateddeedvalue";
+			public const string invln_subordinateddeedvalue_Base = "invln_subordinateddeedvalue_base";
+			public const string invln_SubsequentChargeDescription = "invln_subsequentchargedescription";
+			public const string invln_SubsequentChargeMarginedSecurityValue = "invln_subsequentchargemarginedsecurityvalue";
+			public const string invln_subsequentchargemarginedsecurityvalue_Base = "invln_subsequentchargemarginedsecurityvalue_base";
+			public const string invln_SubsequentChargeValue = "invln_subsequentchargevalue";
+			public const string invln_subsequentchargevalue_Base = "invln_subsequentchargevalue_base";
 			public const string invln_Warranty = "invln_warranty";
 			public const string invln_warrantyName = "invln_warrantyname";
 			public const string lk_invln_loanapplication_createdby = "lk_invln_loanapplication_createdby";
@@ -707,6 +764,83 @@ namespace DataverseModel
 			}
 		}
 		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_collateralwarrantydescription")]
+		public string invln_CollateralWarrantyDescription
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<string>("invln_collateralwarrantydescription");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_CollateralWarrantyDescription");
+				this.SetAttributeValue("invln_collateralwarrantydescription", value);
+				this.OnPropertyChanged("invln_CollateralWarrantyDescription");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_collateralwarrantymarginatedsecurityvalue")]
+		public Microsoft.Xrm.Sdk.Money invln_CollateralWarrantyMarginatedSecurityValue
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_collateralwarrantymarginatedsecurityvalue");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_CollateralWarrantyMarginatedSecurityValue");
+				this.SetAttributeValue("invln_collateralwarrantymarginatedsecurityvalue", value);
+				this.OnPropertyChanged("invln_CollateralWarrantyMarginatedSecurityValue");
+			}
+		}
+		
+		/// <summary>
+		/// Value of the Collateral Warranty Marginated Security Value in base currency.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_collateralwarrantymarginatedsecurityvalue_base")]
+		public Microsoft.Xrm.Sdk.Money invln_collateralwarrantymarginatedsecurityvalue_Base
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_collateralwarrantymarginatedsecurityvalue_base");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_collateralwarrantyvalue")]
+		public Microsoft.Xrm.Sdk.Money invln_CollateralWarrantyValue
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_collateralwarrantyvalue");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_CollateralWarrantyValue");
+				this.SetAttributeValue("invln_collateralwarrantyvalue", value);
+				this.OnPropertyChanged("invln_CollateralWarrantyValue");
+			}
+		}
+		
+		/// <summary>
+		/// Value of the Collateral Warranty Value £	 in base currency.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_collateralwarrantyvalue_base")]
+		public Microsoft.Xrm.Sdk.Money invln_collateralwarrantyvalue_Base
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_collateralwarrantyvalue_base");
+			}
+		}
+		
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_commerciallysensitive")]
 		public System.Nullable<bool> invln_CommerciallySensitive
 		{
@@ -843,6 +977,83 @@ namespace DataverseModel
 			}
 		}
 		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_completionguaranteedescription")]
+		public string invln_CompletionGuaranteeDescription
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<string>("invln_completionguaranteedescription");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_CompletionGuaranteeDescription");
+				this.SetAttributeValue("invln_completionguaranteedescription", value);
+				this.OnPropertyChanged("invln_CompletionGuaranteeDescription");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_completionguaranteemarginedsecurityvalue")]
+		public Microsoft.Xrm.Sdk.Money invln_CompletionGuaranteeMarginedSecurityValue
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_completionguaranteemarginedsecurityvalue");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_CompletionGuaranteeMarginedSecurityValue");
+				this.SetAttributeValue("invln_completionguaranteemarginedsecurityvalue", value);
+				this.OnPropertyChanged("invln_CompletionGuaranteeMarginedSecurityValue");
+			}
+		}
+		
+		/// <summary>
+		/// Value of the Completion Guarantee Margined Security Value in base currency.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_completionguaranteemarginedsecurityvalue_base")]
+		public Microsoft.Xrm.Sdk.Money invln_completionguaranteemarginedsecurityvalue_Base
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_completionguaranteemarginedsecurityvalue_base");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_completionguaranteevalue")]
+		public Microsoft.Xrm.Sdk.Money invln_CompletionGuaranteeValue
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_completionguaranteevalue");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_CompletionGuaranteeValue");
+				this.SetAttributeValue("invln_completionguaranteevalue", value);
+				this.OnPropertyChanged("invln_CompletionGuaranteeValue");
+			}
+		}
+		
+		/// <summary>
+		/// Value of the Completion Guarantee Value £ in base currency.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_completionguaranteevalue_base")]
+		public Microsoft.Xrm.Sdk.Money invln_completionguaranteevalue_Base
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_completionguaranteevalue_base");
+			}
+		}
+		
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_confirmationdirectorloanscanbesubordinated")]
 		public System.Nullable<bool> invln_Confirmationdirectorloanscanbesubordinated
 		{
@@ -962,6 +1173,83 @@ namespace DataverseModel
 			}
 		}
 		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_costoverrunguarantee")]
+		public string invln_CostOverrunGuarantee
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<string>("invln_costoverrunguarantee");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_CostOverrunGuarantee");
+				this.SetAttributeValue("invln_costoverrunguarantee", value);
+				this.OnPropertyChanged("invln_CostOverrunGuarantee");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_costoverrunmarginedsecurityvalue")]
+		public Microsoft.Xrm.Sdk.Money invln_CostOverrunMarginedSecurityValue
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_costoverrunmarginedsecurityvalue");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_CostOverrunMarginedSecurityValue");
+				this.SetAttributeValue("invln_costoverrunmarginedsecurityvalue", value);
+				this.OnPropertyChanged("invln_CostOverrunMarginedSecurityValue");
+			}
+		}
+		
+		/// <summary>
+		/// Value of the Cost Overrun Margined Security Value in base currency.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_costoverrunmarginedsecurityvalue_base")]
+		public Microsoft.Xrm.Sdk.Money invln_costoverrunmarginedsecurityvalue_Base
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_costoverrunmarginedsecurityvalue_base");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_costoverrunvalue")]
+		public Microsoft.Xrm.Sdk.Money invln_CostOverrunValue
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_costoverrunvalue");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_CostOverrunValue");
+				this.SetAttributeValue("invln_costoverrunvalue", value);
+				this.OnPropertyChanged("invln_CostOverrunValue");
+			}
+		}
+		
+		/// <summary>
+		/// Value of the Cost Overrun Value £ in base currency.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_costoverrunvalue_base")]
+		public Microsoft.Xrm.Sdk.Money invln_costoverrunvalue_Base
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_costoverrunvalue_base");
+			}
+		}
+		
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_customsecurity")]
 		public string invln_CustomSecurity
 		{
@@ -1046,6 +1334,23 @@ namespace DataverseModel
 			}
 		}
 		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_debenturedescription")]
+		public string invln_DebentureDescription
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<string>("invln_debenturedescription");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_DebentureDescription");
+				this.SetAttributeValue("invln_debenturedescription", value);
+				this.OnPropertyChanged("invln_DebentureDescription");
+			}
+		}
+		
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_debentureholder")]
 		public string invln_DebentureHolder
 		{
@@ -1060,6 +1365,66 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_DebentureHolder");
 				this.SetAttributeValue("invln_debentureholder", value);
 				this.OnPropertyChanged("invln_DebentureHolder");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_debenturemarginedsecurityvalue")]
+		public Microsoft.Xrm.Sdk.Money invln_DebentureMarginedSecurityValue
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_debenturemarginedsecurityvalue");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_DebentureMarginedSecurityValue");
+				this.SetAttributeValue("invln_debenturemarginedsecurityvalue", value);
+				this.OnPropertyChanged("invln_DebentureMarginedSecurityValue");
+			}
+		}
+		
+		/// <summary>
+		/// Value of the Debenture Margined Security Value in base currency.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_debenturemarginedsecurityvalue_base")]
+		public Microsoft.Xrm.Sdk.Money invln_debenturemarginedsecurityvalue_Base
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_debenturemarginedsecurityvalue_base");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_debenturevalue")]
+		public Microsoft.Xrm.Sdk.Money invln_DebentureValue
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_debenturevalue");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_DebentureValue");
+				this.SetAttributeValue("invln_debenturevalue", value);
+				this.OnPropertyChanged("invln_DebentureValue");
+			}
+		}
+		
+		/// <summary>
+		/// Value of the Debenture Value £ in base currency.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_debenturevalue_base")]
+		public Microsoft.Xrm.Sdk.Money invln_debenturevalue_Base
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_debenturevalue_base");
 			}
 		}
 		
@@ -1253,6 +1618,83 @@ namespace DataverseModel
 			}
 		}
 		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_firstlegalchargedescription")]
+		public string invln_FirstLegalChargeDescription
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<string>("invln_firstlegalchargedescription");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_FirstLegalChargeDescription");
+				this.SetAttributeValue("invln_firstlegalchargedescription", value);
+				this.OnPropertyChanged("invln_FirstLegalChargeDescription");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_firstlegalchargemarginedsecurityvalue")]
+		public Microsoft.Xrm.Sdk.Money invln_FirstLegalChargeMarginedSecurityValue
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_firstlegalchargemarginedsecurityvalue");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_FirstLegalChargeMarginedSecurityValue");
+				this.SetAttributeValue("invln_firstlegalchargemarginedsecurityvalue", value);
+				this.OnPropertyChanged("invln_FirstLegalChargeMarginedSecurityValue");
+			}
+		}
+		
+		/// <summary>
+		/// Value of the First Legal Charge Margined Security Value in base currency.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_firstlegalchargemarginedsecurityvalue_base")]
+		public Microsoft.Xrm.Sdk.Money invln_firstlegalchargemarginedsecurityvalue_Base
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_firstlegalchargemarginedsecurityvalue_base");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_firstlegalchargevalue")]
+		public Microsoft.Xrm.Sdk.Money invln_FirstLegalChargeValue
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_firstlegalchargevalue");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_FirstLegalChargeValue");
+				this.SetAttributeValue("invln_firstlegalchargevalue", value);
+				this.OnPropertyChanged("invln_FirstLegalChargeValue");
+			}
+		}
+		
+		/// <summary>
+		/// Value of the First Legal Charge Value £ in base currency.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_firstlegalchargevalue_base")]
+		public Microsoft.Xrm.Sdk.Money invln_firstlegalchargevalue_Base
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_firstlegalchargevalue_base");
+			}
+		}
+		
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_fundingdetailscompletionstatus")]
 		public virtual Microsoft.Xrm.Sdk.OptionSetValue invln_fundingdetailscompletionstatus
 		{
@@ -1389,6 +1831,83 @@ namespace DataverseModel
 				{
 					return default(string);
 				}
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_interestshortfalldescription")]
+		public string invln_InterestShortfallDescription
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<string>("invln_interestshortfalldescription");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_InterestShortfallDescription");
+				this.SetAttributeValue("invln_interestshortfalldescription", value);
+				this.OnPropertyChanged("invln_InterestShortfallDescription");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_interestshortfallmarginedsecurityvalue")]
+		public Microsoft.Xrm.Sdk.Money invln_InterestShortfallMarginedSecurityValue
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_interestshortfallmarginedsecurityvalue");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_InterestShortfallMarginedSecurityValue");
+				this.SetAttributeValue("invln_interestshortfallmarginedsecurityvalue", value);
+				this.OnPropertyChanged("invln_InterestShortfallMarginedSecurityValue");
+			}
+		}
+		
+		/// <summary>
+		/// Value of the Interest Shortfall Margined Security Value in base currency.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_interestshortfallmarginedsecurityvalue_base")]
+		public Microsoft.Xrm.Sdk.Money invln_interestshortfallmarginedsecurityvalue_Base
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_interestshortfallmarginedsecurityvalue_base");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_interestshortfallvalue")]
+		public Microsoft.Xrm.Sdk.Money invln_InterestShortfallValue
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_interestshortfallvalue");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_InterestShortfallValue");
+				this.SetAttributeValue("invln_interestshortfallvalue", value);
+				this.OnPropertyChanged("invln_InterestShortfallValue");
+			}
+		}
+		
+		/// <summary>
+		/// Value of the Interest Shortfall Value £ in base currency.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_interestshortfallvalue_base")]
+		public Microsoft.Xrm.Sdk.Money invln_interestshortfallvalue_Base
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_interestshortfallvalue_base");
 			}
 		}
 		
@@ -1763,6 +2282,83 @@ namespace DataverseModel
 			}
 		}
 		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_otherdescription")]
+		public string invln_OtherDescription
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<string>("invln_otherdescription");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_OtherDescription");
+				this.SetAttributeValue("invln_otherdescription", value);
+				this.OnPropertyChanged("invln_OtherDescription");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_othermarginedsecurityvalue")]
+		public Microsoft.Xrm.Sdk.Money invln_OtherMarginedSecurityValue
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_othermarginedsecurityvalue");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_OtherMarginedSecurityValue");
+				this.SetAttributeValue("invln_othermarginedsecurityvalue", value);
+				this.OnPropertyChanged("invln_OtherMarginedSecurityValue");
+			}
+		}
+		
+		/// <summary>
+		/// Value of the Other Margined Security Value in base currency.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_othermarginedsecurityvalue_base")]
+		public Microsoft.Xrm.Sdk.Money invln_othermarginedsecurityvalue_Base
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_othermarginedsecurityvalue_base");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_othervalue")]
+		public Microsoft.Xrm.Sdk.Money invln_OtherValue
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_othervalue");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_OtherValue");
+				this.SetAttributeValue("invln_othervalue", value);
+				this.OnPropertyChanged("invln_OtherValue");
+			}
+		}
+		
+		/// <summary>
+		/// Value of the Other Value £ in base currency.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_othervalue_base")]
+		public Microsoft.Xrm.Sdk.Money invln_othervalue_Base
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_othervalue_base");
+			}
+		}
+		
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_outstandinglegalchargesordebt")]
 		public System.Nullable<bool> invln_Outstandinglegalchargesordebt
 		{
@@ -1794,6 +2390,160 @@ namespace DataverseModel
 				{
 					return default(string);
 				}
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_parentcompanyguaranteedescription")]
+		public string invln_ParentCompanyGuaranteeDescription
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<string>("invln_parentcompanyguaranteedescription");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_ParentCompanyGuaranteeDescription");
+				this.SetAttributeValue("invln_parentcompanyguaranteedescription", value);
+				this.OnPropertyChanged("invln_ParentCompanyGuaranteeDescription");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_parentcompanyguaranteemarginedsecurityvalue")]
+		public Microsoft.Xrm.Sdk.Money invln_ParentCompanyGuaranteeMarginedSecurityValue
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_parentcompanyguaranteemarginedsecurityvalue");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_ParentCompanyGuaranteeMarginedSecurityValue");
+				this.SetAttributeValue("invln_parentcompanyguaranteemarginedsecurityvalue", value);
+				this.OnPropertyChanged("invln_ParentCompanyGuaranteeMarginedSecurityValue");
+			}
+		}
+		
+		/// <summary>
+		/// Value of the Parent Company Guarantee Margined Security Value in base currency.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_parentcompanyguaranteemarginedsecurityvalue_base")]
+		public Microsoft.Xrm.Sdk.Money invln_parentcompanyguaranteemarginedsecurityvalue_Base
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_parentcompanyguaranteemarginedsecurityvalue_base");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_parentcompanyguaranteevalue")]
+		public Microsoft.Xrm.Sdk.Money invln_ParentCompanyGuaranteeValue
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_parentcompanyguaranteevalue");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_ParentCompanyGuaranteeValue");
+				this.SetAttributeValue("invln_parentcompanyguaranteevalue", value);
+				this.OnPropertyChanged("invln_ParentCompanyGuaranteeValue");
+			}
+		}
+		
+		/// <summary>
+		/// Value of the Parent Company Guarantee Value £ in base currency.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_parentcompanyguaranteevalue_base")]
+		public Microsoft.Xrm.Sdk.Money invln_parentcompanyguaranteevalue_Base
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_parentcompanyguaranteevalue_base");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_personalguaranteedescription")]
+		public string invln_PersonalGuaranteeDescription
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<string>("invln_personalguaranteedescription");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_PersonalGuaranteeDescription");
+				this.SetAttributeValue("invln_personalguaranteedescription", value);
+				this.OnPropertyChanged("invln_PersonalGuaranteeDescription");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_personalguaranteemarginedsecurityvalue")]
+		public Microsoft.Xrm.Sdk.Money invln_PersonalGuaranteeMarginedSecurityValue
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_personalguaranteemarginedsecurityvalue");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_PersonalGuaranteeMarginedSecurityValue");
+				this.SetAttributeValue("invln_personalguaranteemarginedsecurityvalue", value);
+				this.OnPropertyChanged("invln_PersonalGuaranteeMarginedSecurityValue");
+			}
+		}
+		
+		/// <summary>
+		/// Value of the Personal Guarantee Margined Security Value in base currency.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_personalguaranteemarginedsecurityvalue_base")]
+		public Microsoft.Xrm.Sdk.Money invln_personalguaranteemarginedsecurityvalue_Base
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_personalguaranteemarginedsecurityvalue_base");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_personalguaranteevalue")]
+		public Microsoft.Xrm.Sdk.Money invln_PersonalGuaranteeValue
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_personalguaranteevalue");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_PersonalGuaranteeValue");
+				this.SetAttributeValue("invln_personalguaranteevalue", value);
+				this.OnPropertyChanged("invln_PersonalGuaranteeValue");
+			}
+		}
+		
+		/// <summary>
+		/// Value of the Personal Guarantee Value £ in base currency.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_personalguaranteevalue_base")]
+		public Microsoft.Xrm.Sdk.Money invln_personalguaranteevalue_Base
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_personalguaranteevalue_base");
 			}
 		}
 		
@@ -1874,6 +2624,40 @@ namespace DataverseModel
 				if (this.FormattedValues.Contains("invln_privatesectorapproach"))
 				{
 					return this.FormattedValues["invln_privatesectorapproach"];
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_programme")]
+		public virtual Microsoft.Xrm.Sdk.OptionSetValue invln_Programme
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_programme");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_Programme");
+				this.SetAttributeValue("invln_programme", value);
+				this.OnPropertyChanged("invln_Programme");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_programmename")]
+		public string invln_programmeName
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				if (this.FormattedValues.Contains("invln_programme"))
+				{
+					return this.FormattedValues["invln_programme"];
 				}
 				else
 				{
@@ -2475,6 +3259,160 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_statuschangereason");
 				this.SetAttributeValue("invln_statuschangereason", value);
 				this.OnPropertyChanged("invln_statuschangereason");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_subordinateddeeddescription")]
+		public string invln_SubordinatedDeedDescription
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<string>("invln_subordinateddeeddescription");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_SubordinatedDeedDescription");
+				this.SetAttributeValue("invln_subordinateddeeddescription", value);
+				this.OnPropertyChanged("invln_SubordinatedDeedDescription");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_subordinateddeedmarginedsecurityvalue")]
+		public Microsoft.Xrm.Sdk.Money invln_SubordinatedDeedMarginedSecurityValue
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_subordinateddeedmarginedsecurityvalue");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_SubordinatedDeedMarginedSecurityValue");
+				this.SetAttributeValue("invln_subordinateddeedmarginedsecurityvalue", value);
+				this.OnPropertyChanged("invln_SubordinatedDeedMarginedSecurityValue");
+			}
+		}
+		
+		/// <summary>
+		/// Value of the Subordinated Deed Margined Security Value in base currency.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_subordinateddeedmarginedsecurityvalue_base")]
+		public Microsoft.Xrm.Sdk.Money invln_subordinateddeedmarginedsecurityvalue_Base
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_subordinateddeedmarginedsecurityvalue_base");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_subordinateddeedvalue")]
+		public Microsoft.Xrm.Sdk.Money invln_SubordinatedDeedValue
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_subordinateddeedvalue");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_SubordinatedDeedValue");
+				this.SetAttributeValue("invln_subordinateddeedvalue", value);
+				this.OnPropertyChanged("invln_SubordinatedDeedValue");
+			}
+		}
+		
+		/// <summary>
+		/// Value of the Subordinated Deed Value £ in base currency.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_subordinateddeedvalue_base")]
+		public Microsoft.Xrm.Sdk.Money invln_subordinateddeedvalue_Base
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_subordinateddeedvalue_base");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_subsequentchargedescription")]
+		public string invln_SubsequentChargeDescription
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<string>("invln_subsequentchargedescription");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_SubsequentChargeDescription");
+				this.SetAttributeValue("invln_subsequentchargedescription", value);
+				this.OnPropertyChanged("invln_SubsequentChargeDescription");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_subsequentchargemarginedsecurityvalue")]
+		public Microsoft.Xrm.Sdk.Money invln_SubsequentChargeMarginedSecurityValue
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_subsequentchargemarginedsecurityvalue");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_SubsequentChargeMarginedSecurityValue");
+				this.SetAttributeValue("invln_subsequentchargemarginedsecurityvalue", value);
+				this.OnPropertyChanged("invln_SubsequentChargeMarginedSecurityValue");
+			}
+		}
+		
+		/// <summary>
+		/// Value of the Subsequent Charge Margined Security Value in base currency.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_subsequentchargemarginedsecurityvalue_base")]
+		public Microsoft.Xrm.Sdk.Money invln_subsequentchargemarginedsecurityvalue_Base
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_subsequentchargemarginedsecurityvalue_base");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_subsequentchargevalue")]
+		public Microsoft.Xrm.Sdk.Money invln_SubsequentChargeValue
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_subsequentchargevalue");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_SubsequentChargeValue");
+				this.SetAttributeValue("invln_subsequentchargevalue", value);
+				this.OnPropertyChanged("invln_SubsequentChargeValue");
+			}
+		}
+		
+		/// <summary>
+		/// Value of the Subsequent Charge Value £ in base currency.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_subsequentchargevalue_base")]
+		public Microsoft.Xrm.Sdk.Money invln_subsequentchargevalue_Base
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_subsequentchargevalue_base");
 			}
 		}
 		

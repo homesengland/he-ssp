@@ -17,7 +17,7 @@ namespace DataverseModel
 	{
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		LevellingUpHomeBuildFund = 858110000,
+		LevellingUpHomeBuildingFund = 858110000,
 	}
 }
 #pragma warning restore CS1591

@@ -105,6 +105,12 @@ namespace DataverseModel
 			public const string invln_reconfiguringexistingpropertiesName = "invln_reconfiguringexistingpropertiesname";
 			public const string invln_rehabactivitytype = "invln_rehabactivitytype";
 			public const string invln_rehabactivitytypeName = "invln_rehabactivitytypename";
+			public const string invln_RiskAdjustedAcquisitionComments = "invln_riskadjustedacquisitioncomments";
+			public const string invln_RiskAdjustedAcquisitionDate = "invln_riskadjustedacquisitiondate";
+			public const string invln_RiskAdjustedCompletionComments = "invln_riskadjustedcompletioncomments";
+			public const string invln_RiskAdjustedCompletionDate = "invln_riskadjustedcompletiondate";
+			public const string invln_RiskAdjustedStartonSiteComments = "invln_riskadjustedstartonsitecomments";
+			public const string invln_RiskAdjustedStartonSiteDate = "invln_riskadjustedstartonsitedate";
 			public const string invln_startonsitedate = "invln_startonsitedate";
 			public const string invln_startonsitemilestoneclaimdate = "invln_startonsitemilestoneclaimdate";
 			public const string invln_StartOnSitePercentageValue = "invln_startonsitepercentagevalue";
@@ -920,6 +926,108 @@ namespace DataverseModel
 				{
 					return default(string);
 				}
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_riskadjustedacquisitioncomments")]
+		public string invln_RiskAdjustedAcquisitionComments
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<string>("invln_riskadjustedacquisitioncomments");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_RiskAdjustedAcquisitionComments");
+				this.SetAttributeValue("invln_riskadjustedacquisitioncomments", value);
+				this.OnPropertyChanged("invln_RiskAdjustedAcquisitionComments");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_riskadjustedacquisitiondate")]
+		public System.Nullable<System.DateTime> invln_RiskAdjustedAcquisitionDate
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("invln_riskadjustedacquisitiondate");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_RiskAdjustedAcquisitionDate");
+				this.SetAttributeValue("invln_riskadjustedacquisitiondate", value);
+				this.OnPropertyChanged("invln_RiskAdjustedAcquisitionDate");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_riskadjustedcompletioncomments")]
+		public string invln_RiskAdjustedCompletionComments
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<string>("invln_riskadjustedcompletioncomments");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_RiskAdjustedCompletionComments");
+				this.SetAttributeValue("invln_riskadjustedcompletioncomments", value);
+				this.OnPropertyChanged("invln_RiskAdjustedCompletionComments");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_riskadjustedcompletiondate")]
+		public System.Nullable<System.DateTime> invln_RiskAdjustedCompletionDate
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("invln_riskadjustedcompletiondate");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_RiskAdjustedCompletionDate");
+				this.SetAttributeValue("invln_riskadjustedcompletiondate", value);
+				this.OnPropertyChanged("invln_RiskAdjustedCompletionDate");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_riskadjustedstartonsitecomments")]
+		public string invln_RiskAdjustedStartonSiteComments
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<string>("invln_riskadjustedstartonsitecomments");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_RiskAdjustedStartonSiteComments");
+				this.SetAttributeValue("invln_riskadjustedstartonsitecomments", value);
+				this.OnPropertyChanged("invln_RiskAdjustedStartonSiteComments");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_riskadjustedstartonsitedate")]
+		public System.Nullable<System.DateTime> invln_RiskAdjustedStartonSiteDate
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("invln_riskadjustedstartonsitedate");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_RiskAdjustedStartonSiteDate");
+				this.SetAttributeValue("invln_riskadjustedstartonsitedate", value);
+				this.OnPropertyChanged("invln_RiskAdjustedStartonSiteDate");
 			}
 		}
 		

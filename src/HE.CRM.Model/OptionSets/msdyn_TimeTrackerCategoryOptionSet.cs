@@ -13,20 +13,17 @@ namespace DataverseModel
 	
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
-	public enum invln_ApprovalStatus
+	public enum msdyn_TimeTrackerCategoryOptionSet
 	{
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Approved = 858110001,
+		Automatic = 100000001,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		InReview = 858110003,
+		Final = 100000002,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Pending = 858110000,
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Rejected = 858110002,
+		Manual = 100000000,
 	}
 }
 #pragma warning restore CS1591

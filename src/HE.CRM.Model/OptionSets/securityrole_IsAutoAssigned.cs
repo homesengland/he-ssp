@@ -12,21 +12,18 @@ namespace DataverseModel
 {
 	
 	
+	/// <summary>
+	/// Value indicating whether security role is auto-assigned based on user license
+	/// </summary>
 	[System.Runtime.Serialization.DataContractAttribute()]
-	public enum invln_ApprovalStatus
+	public enum securityrole_IsAutoAssigned
 	{
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Approved = 858110001,
+		No = 0,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		InReview = 858110003,
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Pending = 858110000,
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Rejected = 858110002,
+		Yes = 1,
 	}
 }
 #pragma warning restore CS1591

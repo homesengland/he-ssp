@@ -13,20 +13,26 @@ namespace DataverseModel
 	
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
-	public enum invln_ApprovalStatus
+	public enum invln_ClaimInternalStatus
 	{
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Approved = 858110001,
+		Approved = 858110003,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		InReview = 858110003,
+		Draft = 858110005,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Pending = 858110000,
+		OnHold = 858110002,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Rejected = 858110002,
+		Rejected = 858110004,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Submitted = 1,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		UnderReview = 858110001,
 	}
 }
 #pragma warning restore CS1591

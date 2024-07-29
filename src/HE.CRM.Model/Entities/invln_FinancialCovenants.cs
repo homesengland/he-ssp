@@ -59,10 +59,13 @@ namespace DataverseModel
 			public const string CreatedOnBehalfByYomiName = "createdonbehalfbyyominame";
 			public const string ImportSequenceNumber = "importsequencenumber";
 			public const string invln_CovenantLevel = "invln_covenantlevel";
+			public const string invln_CovenantType = "invln_covenanttype";
+			public const string invln_covenanttypeName = "invln_covenanttypename";
 			public const string invln_FinancialCovenant = "invln_financialcovenant";
 			public const string invln_FinancialCovenantsId = "invln_financialcovenantsid";
 			public const string Id = "invln_financialcovenantsid";
 			public const string invln_ForecastLevel = "invln_forecastlevel";
+			public const string invln_ForecastLevelPercent = "invln_forecastlevelpercent";
 			public const string invln_invln_financialcovenants_ISP_invln_isp = "invln_invln_financialcovenants_ISP_invln_isp";
 			public const string invln_ISP = "invln_isp";
 			public const string invln_ISPName = "invln_ispname";
@@ -292,6 +295,40 @@ namespace DataverseModel
 			}
 		}
 		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_covenanttype")]
+		public virtual Microsoft.Xrm.Sdk.OptionSetValue invln_CovenantType
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_covenanttype");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_CovenantType");
+				this.SetAttributeValue("invln_covenanttype", value);
+				this.OnPropertyChanged("invln_CovenantType");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_covenanttypename")]
+		public string invln_covenanttypeName
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				if (this.FormattedValues.Contains("invln_covenanttype"))
+				{
+					return this.FormattedValues["invln_covenanttype"];
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+		}
+		
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_financialcovenant")]
 		public string invln_FinancialCovenant
 		{
@@ -366,6 +403,23 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_ForecastLevel");
 				this.SetAttributeValue("invln_forecastlevel", value);
 				this.OnPropertyChanged("invln_ForecastLevel");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_forecastlevelpercent")]
+		public System.Nullable<double> invln_ForecastLevelPercent
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<double>>("invln_forecastlevelpercent");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_ForecastLevelPercent");
+				this.SetAttributeValue("invln_forecastlevelpercent", value);
+				this.OnPropertyChanged("invln_ForecastLevelPercent");
 			}
 		}
 		

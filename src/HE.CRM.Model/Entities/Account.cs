@@ -802,6 +802,7 @@ namespace DataverseModel
 			public const string invln_InternalStatus = "invln_internalstatus";
 			public const string invln_internalstatusName = "invln_internalstatusname";
 			public const string invln_IPRestrictions = "invln_iprestrictions";
+			public const string invln_isp_Organisation_account = "invln_isp_Organisation_account";
 			public const string invln_KYCExpiry = "invln_kycexpiry";
 			public const string invln_KYCReviewDate = "invln_kycreviewdate";
 			public const string invln_KYCStatus = "invln_kycstatus";
@@ -7533,6 +7534,26 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_frontdoorprojectpoc_AccountId_account");
 				this.SetRelatedEntities<DataverseModel.invln_FrontDoorProjectPOC>("invln_frontdoorprojectpoc_AccountId_account", null, value);
 				this.OnPropertyChanged("invln_frontdoorprojectpoc_AccountId_account");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N invln_isp_Organisation_account
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_isp_Organisation_account")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_ISP> invln_isp_Organisation_account
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_ISP>("invln_isp_Organisation_account", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_isp_Organisation_account");
+				this.SetRelatedEntities<DataverseModel.invln_ISP>("invln_isp_Organisation_account", null, value);
+				this.OnPropertyChanged("invln_isp_Organisation_account");
 			}
 		}
 		

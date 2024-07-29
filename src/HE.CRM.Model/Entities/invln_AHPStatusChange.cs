@@ -64,6 +64,7 @@ namespace DataverseModel
 			public const string invln_AHPApplicationName = "invln_ahpapplicationname";
 			public const string invln_ahpstatuschange_AHPApplication_invln_sche = "invln_ahpstatuschange_AHPApplication_invln_sche";
 			public const string invln_ahpstatuschange_changedby_contact = "invln_ahpstatuschange_changedby_contact";
+			public const string invln_ahpstatuschange_CreatedByInternal_systemuser = "invln_ahpstatuschange_CreatedByInternal_systemuser";
 			public const string invln_AHPStatusChangeId = "invln_ahpstatuschangeid";
 			public const string Id = "invln_ahpstatuschangeid";
 			public const string invln_changedby = "invln_changedby";
@@ -76,6 +77,9 @@ namespace DataverseModel
 			public const string invln_Changeto = "invln_changeto";
 			public const string invln_changetoName = "invln_changetoname";
 			public const string invln_Comment = "invln_comment";
+			public const string invln_CreatedByInternal = "invln_createdbyinternal";
+			public const string invln_CreatedByInternalName = "invln_createdbyinternalname";
+			public const string invln_CreatedByInternalYomiName = "invln_createdbyinternalyominame";
 			public const string invln_Name = "invln_name";
 			public const string lk_invln_ahpstatuschange_createdby = "lk_invln_ahpstatuschange_createdby";
 			public const string lk_invln_ahpstatuschange_createdonbehalfby = "lk_invln_ahpstatuschange_createdonbehalfby";
@@ -150,9 +154,6 @@ namespace DataverseModel
 			}
 		}
 		
-		/// <summary>
-		/// Unique identifier of the user who created the record.
-		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdby")]
 		public Microsoft.Xrm.Sdk.EntityReference CreatedBy
 		{
@@ -562,6 +563,60 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_Comment");
 				this.SetAttributeValue("invln_comment", value);
 				this.OnPropertyChanged("invln_Comment");
+			}
+		}
+		
+		/// <summary>
+		/// Unique identifier of the User who Internally triggered creation of the record
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_createdbyinternal")]
+		public Microsoft.Xrm.Sdk.EntityReference invln_CreatedByInternal
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("invln_createdbyinternal");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_CreatedByInternal");
+				this.SetAttributeValue("invln_createdbyinternal", value);
+				this.OnPropertyChanged("invln_CreatedByInternal");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_createdbyinternalname")]
+		public string invln_CreatedByInternalName
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				if (this.FormattedValues.Contains("invln_createdbyinternal"))
+				{
+					return this.FormattedValues["invln_createdbyinternal"];
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_createdbyinternalyominame")]
+		public string invln_CreatedByInternalYomiName
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				if (this.FormattedValues.Contains("invln_createdbyinternal"))
+				{
+					return this.FormattedValues["invln_createdbyinternal"];
+				}
+				else
+				{
+					return default(string);
+				}
 			}
 		}
 		
@@ -1005,6 +1060,27 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_ahpstatuschange_changedby_contact");
 				this.SetRelatedEntity<DataverseModel.Contact>("invln_ahpstatuschange_changedby_contact", null, value);
 				this.OnPropertyChanged("invln_ahpstatuschange_changedby_contact");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 invln_ahpstatuschange_CreatedByInternal_systemuser
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_createdbyinternal")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_ahpstatuschange_CreatedByInternal_systemuser")]
+		public DataverseModel.SystemUser invln_ahpstatuschange_CreatedByInternal_systemuser
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<DataverseModel.SystemUser>("invln_ahpstatuschange_CreatedByInternal_systemuser", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_ahpstatuschange_CreatedByInternal_systemuser");
+				this.SetRelatedEntity<DataverseModel.SystemUser>("invln_ahpstatuschange_CreatedByInternal_systemuser", null, value);
+				this.OnPropertyChanged("invln_ahpstatuschange_CreatedByInternal_systemuser");
 			}
 		}
 		

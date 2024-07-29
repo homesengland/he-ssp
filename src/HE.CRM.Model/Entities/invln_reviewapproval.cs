@@ -58,13 +58,19 @@ namespace DataverseModel
 			public const string CreatedOnBehalfByName = "createdonbehalfbyname";
 			public const string CreatedOnBehalfByYomiName = "createdonbehalfbyyominame";
 			public const string ImportSequenceNumber = "importsequencenumber";
+			public const string invln_ApprovalFor = "invln_approvalfor";
+			public const string invln_approvalforName = "invln_approvalforname";
 			public const string invln_Description = "invln_description";
+			public const string invln_HoFIndividual = "invln_hofindividual";
+			public const string invln_HoFIndividualName = "invln_hofindividualname";
+			public const string invln_HoFIndividualYomiName = "invln_hofindividualyominame";
 			public const string invln_isp_invln_reviewapproval_ispid = "invln_isp_invln_reviewapproval_ispid";
 			public const string invln_ispid = "invln_ispid";
 			public const string invln_ispidName = "invln_ispidname";
 			public const string invln_ISPOwner = "invln_ispowner";
 			public const string invln_ISPOwnerName = "invln_ispownername";
 			public const string invln_name = "invln_name";
+			public const string invln_reviewapproval_HoFIndividual_systemuser = "invln_reviewapproval_HoFIndividual_systemuser";
 			public const string invln_reviewapproval_ISPOwner_invln_isp = "invln_reviewapproval_ISPOwner_invln_isp";
 			public const string invln_reviewapprovaldate = "invln_reviewapprovaldate";
 			public const string invln_reviewapprovalId = "invln_reviewapprovalid";
@@ -285,6 +291,40 @@ namespace DataverseModel
 			}
 		}
 		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_approvalfor")]
+		public virtual Microsoft.Xrm.Sdk.OptionSetValue invln_ApprovalFor
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_approvalfor");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_ApprovalFor");
+				this.SetAttributeValue("invln_approvalfor", value);
+				this.OnPropertyChanged("invln_ApprovalFor");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_approvalforname")]
+		public string invln_approvalforName
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				if (this.FormattedValues.Contains("invln_approvalfor"))
+				{
+					return this.FormattedValues["invln_approvalfor"];
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+		}
+		
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_description")]
 		public string invln_Description
 		{
@@ -299,6 +339,57 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_Description");
 				this.SetAttributeValue("invln_description", value);
 				this.OnPropertyChanged("invln_Description");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_hofindividual")]
+		public Microsoft.Xrm.Sdk.EntityReference invln_HoFIndividual
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("invln_hofindividual");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_HoFIndividual");
+				this.SetAttributeValue("invln_hofindividual", value);
+				this.OnPropertyChanged("invln_HoFIndividual");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_hofindividualname")]
+		public string invln_HoFIndividualName
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				if (this.FormattedValues.Contains("invln_hofindividual"))
+				{
+					return this.FormattedValues["invln_hofindividual"];
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_hofindividualyominame")]
+		public string invln_HoFIndividualYomiName
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				if (this.FormattedValues.Contains("invln_hofindividual"))
+				{
+					return this.FormattedValues["invln_hofindividual"];
+				}
+				else
+				{
+					return default(string);
+				}
 			}
 		}
 		
@@ -988,6 +1079,27 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_isp_invln_reviewapproval_ispid");
 				this.SetRelatedEntity<DataverseModel.invln_ISP>("invln_isp_invln_reviewapproval_ispid", null, value);
 				this.OnPropertyChanged("invln_isp_invln_reviewapproval_ispid");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 invln_reviewapproval_HoFIndividual_systemuser
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_hofindividual")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_reviewapproval_HoFIndividual_systemuser")]
+		public DataverseModel.SystemUser invln_reviewapproval_HoFIndividual_systemuser
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<DataverseModel.SystemUser>("invln_reviewapproval_HoFIndividual_systemuser", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_reviewapproval_HoFIndividual_systemuser");
+				this.SetRelatedEntity<DataverseModel.SystemUser>("invln_reviewapproval_HoFIndividual_systemuser", null, value);
+				this.OnPropertyChanged("invln_reviewapproval_HoFIndividual_systemuser");
 			}
 		}
 		

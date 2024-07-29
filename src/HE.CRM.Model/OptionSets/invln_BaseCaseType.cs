@@ -20,7 +20,7 @@ namespace DataverseModel
 		BorrowerAdjustments = 391930001,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		InitialBorrowerSubmission = 391930000,
+		BorrowerSubmission = 391930000,
 	}
 }
 #pragma warning restore CS1591
