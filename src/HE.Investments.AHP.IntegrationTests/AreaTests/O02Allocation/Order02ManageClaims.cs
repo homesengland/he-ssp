@@ -4,11 +4,11 @@ using FluentAssertions;
 using HE.Investment.AHP.WWW.Views.AllocationClaims.Const;
 using HE.Investments.AHP.IntegrationTests.AreaTests.O02Allocation.Consts;
 using HE.Investments.AHP.IntegrationTests.AreaTests.O02Allocation.Data.Phase;
+using HE.Investments.AHP.IntegrationTests.AreaTests.O02Allocation.Helpers;
 using HE.Investments.AHP.IntegrationTests.AreaTests.O02Allocation.Pages;
 using HE.Investments.AHP.IntegrationTests.Framework;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Extensions;
-using HE.Investments.Common.WWW.Helpers;
 using HE.Investments.TestsUtils.Extensions;
 using Xunit;
 using Xunit.Abstractions;
@@ -43,9 +43,7 @@ public class Order02ManageClaims : AhpIntegrationTest
             .HasTitleCaption(AllocationData.AllocationName)
             .HasReturnToAllocationLink()
             .HasSummaryCardWithTitle(PhaseData.PhaseName)
-            // .HasElementWithTestIdAndText("grant-details-total-grant-allocated", CurrencyHelper.DisplayPounds(AllocationData.TotalGrantAllocated)) TODO after crm implementation
-            .HasElementWithTestIdAndText("grant-details-amount-paid", CurrencyHelper.DisplayPounds(AllocationData.AmountPaid))
-            .HasElementWithTestIdAndText("grant-details-amount remaining", CurrencyHelper.DisplayPounds(AllocationData.AmountRemaining));
+            .HasGrantDetails(AllocationData.TotalGrantAllocated, AllocationData.AmountPaid, AllocationData.AmountRemaining);
 
         phaseSummary[PhaseFields.NumberOfHomes].Value.Should().Be(PhaseData.NumberOfHomes.ToString(CultureInfo.InvariantCulture));
         phaseSummary[PhaseFields.BuildActivityType].Value.Should().Be(PhaseData.BuildActivityType.GetDescription());
@@ -74,7 +72,8 @@ public class Order02ManageClaims : AhpIntegrationTest
 
         // then
         overviewPage
-            .UrlEndWith(ClaimsPagesUrl.Overview(UserOrganisationData.OrganisationId,
+            .UrlEndWith(ClaimsPagesUrl.Overview(
+                UserOrganisationData.OrganisationId,
                 ShortGuid.FromString(AllocationData.AllocationId).Value,
                 ShortGuid.FromString(PhaseData.PhaseId).Value))
             .HasTitle(ClaimPageTitles.MilestoneOverview(PhaseData.PhaseName))
