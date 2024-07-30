@@ -1,5 +1,4 @@
 using HE.Investments.AHP.Allocation.Contract.Claims.Enum;
-using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Messages;
@@ -23,19 +22,22 @@ public class DraftMilestoneClaim : MilestoneClaimBase
 
     public override bool IsSubmitted => false;
 
+    public override bool IsEditable => true;
+
     public override MilestoneClaimBase WithAchievementDate(
-        DateDetails? achievementDate,
+        AchievementDate achievementDate,
         AhpProgramme programme,
-        DateDetails? previousSubmissionDate,
+        DateTime? previousSubmissionDate,
         DateTime currentDate)
     {
-        var achievementDateTime = DateTimeExtensions.FromDateDetails(achievementDate);
         ValidateAchievementDate(achievementDate);
-        ValidateDateIsNotFuture(achievementDateTime, currentDate);
-        ValidatePreviousSubmissionDate(previousSubmissionDate, achievementDateTime);
-        ValidateProgrammeDates(programme, achievementDateTime!.Value);
+        ValidateDateIsNotFuture(achievementDate.Value, currentDate);
+        ValidatePreviousSubmissionDate(previousSubmissionDate, achievementDate.Value);
+        ValidateProgrammeDates(programme, achievementDate.Value!.Value);
 
-        return new DraftMilestoneClaim(Type, GrantApportioned, ClaimDate, CostsIncurred, IsConfirmed);
+        var newClaimDate = new ClaimDate(ClaimDate.ForecastClaimDate, achievementDate);
+
+        return new DraftMilestoneClaim(Type, GrantApportioned, newClaimDate, CostsIncurred, IsConfirmed);
     }
 
     public override MilestoneClaimBase WithCostsIncurred(bool? costsIncurred)
@@ -78,10 +80,20 @@ public class DraftMilestoneClaim : MilestoneClaimBase
         return new MilestoneWithoutClaim(this);
     }
 
-    private static void ValidateAchievementDate(DateDetails? achievementDate)
+    public override SubmittedMilestoneClaim Submit(DateTime currentDate)
     {
-        if (achievementDate.IsNotProvided() || achievementDate!.Day.IsNotProvided() || achievementDate.Month.IsNotProvided() ||
-            achievementDate.Year.IsNotProvided())
+        if (!IsAnswered())
+        {
+            OperationResult.ThrowValidationError("Submit", ValidationErrorMessage.ProvideAllAnswers);
+        }
+
+        var newClaimDate = new ClaimDate(ClaimDate.ForecastClaimDate, ClaimDate.AchievementDate, currentDate);
+        return new SubmittedMilestoneClaim(Type, MilestoneStatus.Submitted, GrantApportioned, newClaimDate, CostsIncurred, IsConfirmed);
+    }
+
+    private static void ValidateAchievementDate(AchievementDate achievementDate)
+    {
+        if (achievementDate.IsNotProvided() || achievementDate.Value.IsNotProvided())
         {
             OperationResult.ThrowValidationError(nameof(ClaimDate.AchievementDate), ValidationErrorMessage.MustProvideRequiredField("achievement date"));
         }
@@ -95,10 +107,9 @@ public class DraftMilestoneClaim : MilestoneClaimBase
         }
     }
 
-    private static void ValidatePreviousSubmissionDate(DateDetails? previousSubmissionDate, DateTime? achievementDateTime)
+    private static void ValidatePreviousSubmissionDate(DateTime? previousSubmissionDate, DateTime? achievementDateTime)
     {
-        var previousSubmissionDateTime = DateTimeExtensions.FromDateDetails(previousSubmissionDate);
-        if (previousSubmissionDate.IsProvided() && achievementDateTime!.Value.IsBefore(previousSubmissionDateTime!.Value))
+        if (previousSubmissionDate.IsProvided() && achievementDateTime!.Value.IsBefore(previousSubmissionDate!.Value))
         {
             OperationResult.ThrowValidationError(nameof(ClaimDate.AchievementDate), ValidationErrorMessage.DatesOutsideTheProgramme);
         }
@@ -137,5 +148,19 @@ public class DraftMilestoneClaim : MilestoneClaimBase
         {
             OperationResult.ThrowValidationError(nameof(ClaimDate.AchievementDate), ValidationErrorMessage.DatesOutsideTheProgramme);
         }
+    }
+
+    private bool IsAnswered()
+    {
+        var isAnswered = ClaimDate.IsAnswered() &&
+                         GrantApportioned.IsProvided() &&
+                         IsConfirmed.IsProvided();
+
+        if (Type == MilestoneType.Acquisition)
+        {
+            isAnswered = isAnswered && CostsIncurred.IsProvided();
+        }
+
+        return isAnswered;
     }
 }

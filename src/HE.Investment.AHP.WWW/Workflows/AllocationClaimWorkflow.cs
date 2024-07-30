@@ -46,6 +46,7 @@ public class AllocationClaimWorkflow : EncodedStateRouting<AllocationClaimWorkfl
             .Permit(Trigger.Back, AllocationClaimWorkflowState.AchievementDate);
 
         Machine.Configure(AllocationClaimWorkflowState.CheckAnswers)
+            .Permit(Trigger.Continue, AllocationClaimWorkflowState.Overview)
             .Permit(Trigger.Back, AllocationClaimWorkflowState.Confirmation);
     }
 }

@@ -1,6 +1,5 @@
 using HE.Investments.AHP.Allocation.Contract.Claims.Enum;
 using HE.Investments.AHP.Allocation.Domain.Claims.Enums;
-using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Extensions;
@@ -45,6 +44,8 @@ public abstract class MilestoneClaimBase : ValueObject
 
     public bool? IsConfirmed { get; }
 
+    public abstract bool IsEditable { get; }
+
     public abstract bool IsSubmitted { get; }
 
     public MilestoneDueStatus CalculateDueStatus(DateTime today)
@@ -68,9 +69,9 @@ public abstract class MilestoneClaimBase : ValueObject
     }
 
     public abstract MilestoneClaimBase WithAchievementDate(
-        DateDetails? achievementDate,
+        AchievementDate achievementDate,
         Programme.Contract.Programme programme,
-        DateDetails? previousSubmissionDate,
+        DateTime? previousSubmissionDate,
         DateTime currentDate);
 
     public abstract MilestoneClaimBase WithCostsIncurred(bool? costsIncurred);
@@ -78,6 +79,8 @@ public abstract class MilestoneClaimBase : ValueObject
     public abstract MilestoneClaimBase WithConfirmation(bool? isConfirmed);
 
     public abstract MilestoneWithoutClaim Cancel();
+
+    public abstract SubmittedMilestoneClaim Submit(DateTime currentDate);
 
     protected override IEnumerable<object?> GetAtomicValues()
     {

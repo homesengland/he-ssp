@@ -1,6 +1,7 @@
 using System.Globalization;
 using FluentAssertions;
 using HE.Investments.AHP.Allocation.Contract.Claims.Enum;
+using HE.Investments.AHP.Allocation.Domain.Claims.ValueObjects;
 using HE.Investments.AHP.Allocation.Domain.Tests.TestObjectBuilders;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Exceptions;
@@ -28,7 +29,7 @@ public class WithAchievementDateTests
             .Build();
 
         // when
-        var result = () => testCandidate.WithAchievementDate(null, CreateProgramme(), null, _dateTimeProvider.Now);
+        var result = () => testCandidate.WithAchievementDate(new AchievementDate(false, null, null, null), CreateProgramme(), null, _dateTimeProvider.Now);
 
         // then
         result.Should()
@@ -41,7 +42,7 @@ public class WithAchievementDateTests
     {
         // given
         GetDateTimeProviderMock();
-        var achievementDate = new DateDetails("10", "07", "2023");
+        var achievementDate = new AchievementDate(true, "10", "07", "2023");
         var testCandidate = MilestoneClaimTestBuilder.Draft()
             .WithType(MilestoneType.Acquisition)
             .WithMilestoneAchievedDate(achievementDate)
@@ -70,7 +71,7 @@ public class WithAchievementDateTests
         var programme = CreateProgramme();
 
         // when
-        var result = () => testCandidate.WithAchievementDate(achievementDate, programme, null, _dateTimeProvider.Now);
+        var result = () => testCandidate.WithAchievementDate(AchievementDate.FromDateDetails(achievementDate), programme, null, _dateTimeProvider.Now);
 
         // then
         result.Should()
@@ -83,8 +84,8 @@ public class WithAchievementDateTests
     {
         // given
         GetDateTimeProviderMock();
-        var achievementDate = new DateDetails("10", "07", "2023");
-        var laterSubmissionDate = new DateDetails("11", "07", "2023");
+        var achievementDate = new AchievementDate(true, "10", "07", "2023");
+        var laterSubmissionDate = new DateTime(2023, 07, 11, 0, 0, 0, DateTimeKind.Unspecified);
         var testCandidate = MilestoneClaimTestBuilder.Draft()
             .WithType(MilestoneType.Acquisition)
             .Build();
@@ -104,7 +105,7 @@ public class WithAchievementDateTests
     {
         // given
         GetDateTimeProviderMock();
-        var achievementDate = new DateDetails("01", "01", "2020");
+        var achievementDate = new AchievementDate(true, "01", "01", "2020");
         var testCandidate = MilestoneClaimTestBuilder.Draft()
             .WithType(MilestoneType.Acquisition)
             .Build();
@@ -124,7 +125,7 @@ public class WithAchievementDateTests
     {
         // given
         GetDateTimeProviderMock();
-        var achievementDate = new DateDetails("01", "01", "2024");
+        var achievementDate = new AchievementDate(true, "01", "01", "2024");
         var testCandidate = MilestoneClaimTestBuilder.Draft()
             .WithType(MilestoneType.Acquisition)
             .Build();
@@ -144,7 +145,7 @@ public class WithAchievementDateTests
     {
         // given
         GetDateTimeProviderMock();
-        var achievementDate = new DateDetails("01", "01", "2021");
+        var achievementDate = new AchievementDate(true, "01", "01", "2021");
         var testCandidate = MilestoneClaimTestBuilder.Draft()
             .WithType(MilestoneType.Acquisition)
             .WithGrantApportioned(10000, 40)
@@ -165,7 +166,7 @@ public class WithAchievementDateTests
     {
         // given
         GetDateTimeProviderMock();
-        var achievementDate = new DateDetails("01", "01", "2021");
+        var achievementDate = new AchievementDate(true, "01", "01", "2021");
         var testCandidate = MilestoneClaimTestBuilder.Draft()
             .WithType(MilestoneType.Acquisition)
             .WithGrantApportioned(0, 40)
@@ -184,7 +185,7 @@ public class WithAchievementDateTests
     {
         // given
         GetDateTimeProviderMock();
-        var achievementDate = new DateDetails("01", "01", "2024");
+        var achievementDate = new AchievementDate(true, "01", "01", "2024");
         var testCandidate = MilestoneClaimTestBuilder.Draft()
             .WithType(MilestoneType.Acquisition)
             .WithGrantApportioned(10000, 40)
@@ -205,7 +206,7 @@ public class WithAchievementDateTests
     {
         // given
         GetDateTimeProviderMock();
-        var achievementDate = new DateDetails("01", "01", "2024");
+        var achievementDate = new AchievementDate(true, "01", "01", "2024");
         var testCandidate = MilestoneClaimTestBuilder.Draft()
             .WithType(MilestoneType.Acquisition)
             .WithGrantApportioned(0, 40)
@@ -224,7 +225,7 @@ public class WithAchievementDateTests
     {
         // given
         GetDateTimeProviderMock();
-        var achievementDate = new DateDetails("01", "01", "2021");
+        var achievementDate = new AchievementDate(true, "01", "01", "2021");
         var testCandidate = MilestoneClaimTestBuilder.Draft()
             .WithType(MilestoneType.StartOnSite)
             .Build();
@@ -244,7 +245,7 @@ public class WithAchievementDateTests
     {
         // given
         GetDateTimeProviderMock();
-        var achievementDate = new DateDetails("01", "01", "2021");
+        var achievementDate = new AchievementDate(true, "01", "01", "2021");
         var testCandidate = MilestoneClaimTestBuilder.Draft()
             .WithType(MilestoneType.Completion)
             .Build();
@@ -262,7 +263,7 @@ public class WithAchievementDateTests
     {
         // given
         GetDateTimeProviderMock();
-        var achievementDate = new DateDetails("01", "01", "2024");
+        var achievementDate = new AchievementDate(true, "01", "01", "2024");
         var testCandidate = MilestoneClaimTestBuilder.Draft()
             .WithType(MilestoneType.StartOnSite)
             .Build();
@@ -282,7 +283,7 @@ public class WithAchievementDateTests
     {
         // given
         GetDateTimeProviderMock();
-        var achievementDate = new DateDetails("01", "01", "2024");
+        var achievementDate = new AchievementDate(true, "01", "01", "2024");
         var testCandidate = MilestoneClaimTestBuilder.Draft()
             .WithType(MilestoneType.Completion)
             .Build();
@@ -300,7 +301,7 @@ public class WithAchievementDateTests
     {
         // given
         GetDateTimeProviderMock();
-        var achievementDate = new DateDetails("01", "01", "2021");
+        var achievementDate = new AchievementDate(true, "01", "01", "2021");
         var testCandidate = MilestoneClaimTestBuilder.Draft()
             .WithType(MilestoneType.Completion)
             .Build();
@@ -320,7 +321,7 @@ public class WithAchievementDateTests
     {
         // given
         GetDateTimeProviderMock();
-        var achievementDate = new DateDetails("01", "01", "2021");
+        var achievementDate = new AchievementDate(true, "01", "01", "2021");
         var testCandidate = MilestoneClaimTestBuilder.Draft()
             .WithType(MilestoneType.StartOnSite)
             .Build();
@@ -338,7 +339,7 @@ public class WithAchievementDateTests
     {
         // given
         GetDateTimeProviderMock();
-        var achievementDate = new DateDetails("01", "01", "2024");
+        var achievementDate = new AchievementDate(true, "01", "01", "2024");
         var testCandidate = MilestoneClaimTestBuilder.Draft()
             .WithType(MilestoneType.Completion)
             .Build();
@@ -358,7 +359,7 @@ public class WithAchievementDateTests
     {
         // given
         GetDateTimeProviderMock();
-        var achievementDate = new DateDetails("01", "01", "2024");
+        var achievementDate = new AchievementDate(true, "01", "01", "2024");
         var testCandidate = MilestoneClaimTestBuilder.Draft()
             .WithType(MilestoneType.StartOnSite)
             .Build();
@@ -376,7 +377,7 @@ public class WithAchievementDateTests
     {
         // given
         GetDateTimeProviderMock();
-        var achievementDate = new DateDetails("10", "07", "2023");
+        var achievementDate = new AchievementDate(true, "10", "07", "2023");
         var testCandidate = MilestoneClaimTestBuilder.Draft()
             .WithType(MilestoneType.Acquisition)
             .WithMilestoneAchievedDate(achievementDate)

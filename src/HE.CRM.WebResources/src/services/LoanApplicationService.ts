@@ -2,7 +2,6 @@ import { CommonLib } from '../Common'
 import { Securities } from "../OptionSet"
 import { LoanAppInternalStatus } from "../OptionSet"
 
-
 export class LoanApplicationService {
   common: CommonLib
 
@@ -18,8 +17,7 @@ export class LoanApplicationService {
     let status = this.common.getAttribute("statuscode").getValue();
 
     if (status == LoanAppInternalStatus.Draft
-      || status == LoanAppInternalStatus.ApplicationSubmitted)
-    {
+      || status == LoanAppInternalStatus.ApplicationSubmitted) {
       this.common.setControlRequiredV2('invln_securities', false);
     } else {
       this.common.setControlRequiredV2('invln_securities', true);
@@ -106,8 +104,9 @@ export class LoanApplicationService {
       || status == LoanAppInternalStatus.ApprovedSubjectToContract
       || status == LoanAppInternalStatus.AwaitingCPSatisfaction
       || status == LoanAppInternalStatus.CPsSatisfied
-      || status == LoanAppInternalStatus.LoanAvailable)
-    {
+      || status == LoanAppInternalStatus.LoanAvailable
+      || status == LoanAppInternalStatus.CashflowRequested
+      || status == LoanAppInternalStatus.CashflowUnderReview) {
       var securities: any = this.common.getAttributeValue('invln_securities')
       if (securities != null) {
         if (securities.includes(Securities.debenture)) {

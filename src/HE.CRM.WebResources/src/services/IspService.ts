@@ -373,6 +373,8 @@ export class IspService {
           }
         }
 
+        this.common.setAttributeDateValue('invln_datesubmitted', result['invln_datesubmitted'])
+
         console.log(result['invln_securities']);
         let values = result['invln_securities'].split(',')
         let osv = values.map(function (x) {
@@ -401,7 +403,7 @@ export class IspService {
         for (const [key, value] of dictionaryCashFlow) {
           try {
             this.common.setAttributeValue(key, cashflowSubmition.entities[0][value]);
-            console.log(key , cashflowSubmition.entities[0][value]);
+            console.log(key, cashflowSubmition.entities[0][value]);
           } catch (e) {
             console.log(e);
           }

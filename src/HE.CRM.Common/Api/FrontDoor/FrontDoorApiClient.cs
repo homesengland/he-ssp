@@ -16,6 +16,7 @@ namespace HE.CRM.Common.Api.FrontDoor
 {
     public sealed class FrontDoorApiClient : CrmService, IFrontDoorApiClient
     {
+        private static readonly TimeSpan TimeOutParameter = TimeSpan.FromSeconds(20);
         private readonly Lazy<ApiHttpClient> _httpClient;
 
         public FrontDoorApiClient(CrmServiceArgs args)
@@ -45,14 +46,11 @@ namespace HE.CRM.Common.Api.FrontDoor
 
                 return response.Result;
             }
-            catch (ApiSerializationException ex)
-            {
-                throw new InvalidPluginExecutionException(ex.ToString());
-            }
             catch (ApiException ex)
             {
-                throw new InvalidPluginExecutionException(ex.ToString());
+                HandleApiException(ex);
             }
+            return false;
         }
 
         public string DeactivateProject(Guid projectId)
@@ -70,14 +68,11 @@ namespace HE.CRM.Common.Api.FrontDoor
 
                 return response.Result;
             }
-            catch (ApiSerializationException ex)
-            {
-                throw new InvalidPluginExecutionException(ex.ToString());
-            }
             catch (ApiException ex)
             {
-                throw new InvalidPluginExecutionException(ex.ToString());
+                HandleApiException(ex);
             }
+            return null;
         }
 
         public void RemoveSite(Guid siteId)
@@ -93,13 +88,9 @@ namespace HE.CRM.Common.Api.FrontDoor
                     FrontDoorApiUrls.RemoveSite,
                     HttpMethod.Post);
             }
-            catch (ApiSerializationException ex)
-            {
-                throw new InvalidPluginExecutionException(ex.ToString());
-            }
             catch (ApiException ex)
             {
-                throw new InvalidPluginExecutionException(ex.ToString());
+                HandleApiException(ex);
             }
         }
 
@@ -115,14 +106,11 @@ namespace HE.CRM.Common.Api.FrontDoor
 
                 return baseResponse;
             }
-            catch (ApiSerializationException ex)
-            {
-                throw new InvalidPluginExecutionException(ex.ToString());
-            }
             catch (ApiException ex)
             {
-                throw new InvalidPluginExecutionException(ex.ToString());
+                HandleApiException(ex);
             }
+            return null;
         }
 
         public GetMultipleSitesResponse GetSites(Guid projectId)
@@ -137,10 +125,11 @@ namespace HE.CRM.Common.Api.FrontDoor
 
                 return response;
             }
-            catch (ApiException apiEx)
+            catch (ApiException ex)
             {
-                throw new InvalidPluginExecutionException(apiEx.Message);
+                HandleApiException(ex);
             }
+            return null;
         }
 
         public GetProjectResponse GetProject(Guid projectId)
@@ -155,14 +144,11 @@ namespace HE.CRM.Common.Api.FrontDoor
 
                 return response;
             }
-            catch (ApiSerializationException ex)
-            {
-                throw new InvalidPluginExecutionException(ex.ToString());
-            }
             catch (ApiException ex)
             {
-                throw new InvalidPluginExecutionException(ex.ToString());
+                HandleApiException(ex);
             }
+            return null;
         }
 
         public GetSiteResponse GetSite(Guid siteId)
@@ -177,14 +163,11 @@ namespace HE.CRM.Common.Api.FrontDoor
 
                 return response;
             }
-            catch (ApiSerializationException ex)
-            {
-                throw new InvalidPluginExecutionException(ex.ToString());
-            }
             catch (ApiException ex)
             {
-                throw new InvalidPluginExecutionException(ex.ToString());
+                HandleApiException(ex);
             }
+            return null;
         }
 
         public SaveProjectResponse SaveProject(FrontDoorProjectDto dto, Guid userId)
@@ -201,14 +184,11 @@ namespace HE.CRM.Common.Api.FrontDoor
 
                 return response;
             }
-            catch (ApiSerializationException ex)
-            {
-                throw new InvalidPluginExecutionException(ex.ToString());
-            }
             catch (ApiException ex)
             {
-                throw new InvalidPluginExecutionException(ex.ToString());
+                HandleApiException(ex);
             }
+            return null;
         }
 
         public SaveSiteResponse SaveSite(FrontDoorProjectSiteDto dto, Guid projectId)
@@ -225,14 +205,11 @@ namespace HE.CRM.Common.Api.FrontDoor
 
                 return response;
             }
-            catch (ApiSerializationException ex)
-            {
-                throw new InvalidPluginExecutionException(ex.ToString());
-            }
             catch (ApiException ex)
             {
-                throw new InvalidPluginExecutionException(ex.ToString());
+                HandleApiException(ex);
             }
+            return null;
         }
 
         public void Dispose()
@@ -266,11 +243,44 @@ namespace HE.CRM.Common.Api.FrontDoor
             var httpClient = new HttpClient(new BearerTokenAuthorizationHandler(tokenProvider))
             {
                 BaseAddress = new Uri(frontDoorApiUrl),
-                Timeout = TimeSpan.FromMilliseconds(15000), //15 seconds
+                Timeout = TimeOutParameter,
             };
             httpClient.DefaultRequestHeaders.ConnectionClose = true; //Set KeepAlive to false
 
             return new ApiHttpClient(httpClient);
         }
+
+        private void HandleApiException(ApiException ex)
+        {
+            if (ex is ApiCommunicationException exception)
+            {
+                var message = ex.Message;
+                var errorContent = exception.ErrorContent;
+
+                if (!string.IsNullOrEmpty(errorContent))
+                {
+                    message += Environment.NewLine + $"  --> {errorContent}";
+                }
+                Logger.Warn(message);
+                throw new InvalidPluginExecutionException(ex.Message, PluginHttpStatusCode.RequestTimeout);
+            }
+            else if (ex is ApiSerializationException serializationException)
+            {
+                var message = ex.Message;
+                var errorContent = serializationException.ResponseContent;
+
+                if (!string.IsNullOrEmpty(errorContent))
+                {
+                    message += Environment.NewLine + $"  --> Response content: {errorContent}";
+                }
+                Logger.Warn(message);
+                throw new InvalidPluginExecutionException(serializationException.ToString(), PluginHttpStatusCode.InternalServerError);
+            }
+            else if (ex is ApiException apiException)
+            {
+                throw new InvalidPluginExecutionException(apiException.ToString(), PluginHttpStatusCode.InternalServerError);
+            }
+        }
     }
+
 }

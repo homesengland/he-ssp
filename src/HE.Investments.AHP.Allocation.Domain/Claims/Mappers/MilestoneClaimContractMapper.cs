@@ -24,11 +24,12 @@ public sealed class MilestoneClaimContractMapper : IMilestoneClaimContractMapper
             milestoneClaim.GrantApportioned.Amount,
             milestoneClaim.GrantApportioned.Percentage,
             DateDetails.FromDateTime(milestoneClaim.ClaimDate.ForecastClaimDate)!,
-            milestoneClaim.ClaimDate.AchievementDate,
-            milestoneClaim.ClaimDate.SubmissionDate,
+            DateDetails.FromDateTime(milestoneClaim.ClaimDate.AchievementDate?.Value),
+            DateDetails.FromDateTime(milestoneClaim.ClaimDate.SubmissionDate),
             phase.CanMilestoneBeClaimed(milestoneType),
             milestoneClaim.CostsIncurred,
-            milestoneClaim.IsConfirmed);
+            milestoneClaim.IsConfirmed,
+            milestoneClaim.IsEditable);
     }
 
     private static MilestoneStatus MapStatus(Enums.MilestoneStatus status, MilestoneDueStatus dueStatus)

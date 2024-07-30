@@ -1,4 +1,6 @@
+using HE.Investment.AHP.WWW.Extensions;
 using HE.Investment.AHP.WWW.Models.AllocationClaim;
+using HE.Investment.AHP.WWW.Models.AllocationClaim.Factories;
 using HE.Investment.AHP.WWW.Workflows;
 using HE.Investments.Account.Shared.Authorization.Attributes;
 using HE.Investments.AHP.Allocation.Contract;
@@ -25,9 +27,12 @@ public class AllocationClaimController : WorkflowController<AllocationClaimWorkf
 {
     private readonly IMediator _mediator;
 
-    public AllocationClaimController(IMediator mediator)
+    private readonly IAllocationClaimCheckAnswersViewModelFactory _allocationClaimCheckAnswersViewModelFactory;
+
+    public AllocationClaimController(IMediator mediator, IAllocationClaimCheckAnswersViewModelFactory allocationClaimCheckAnswersViewModelFactory)
     {
         _mediator = mediator;
+        _allocationClaimCheckAnswersViewModelFactory = allocationClaimCheckAnswersViewModelFactory;
     }
 
     [HttpGet("back")]
@@ -42,14 +47,20 @@ public class AllocationClaimController : WorkflowController<AllocationClaimWorkf
     }
 
     [HttpGet("continue-answering")]
-    public IActionResult ContinueAnswering(
-        [FromRoute] string organisationId,
+    public async Task<IActionResult> ContinueAnswering(
         [FromRoute] string allocationId,
         [FromRoute] string phaseId,
         [FromRoute] MilestoneType claimType)
     {
-        // TODO: AB#103021 Continue section answering
-        return RedirectToAction(claimType == MilestoneType.Acquisition ? "CostsIncurred" : "MilestoneDate", new { organisationId, allocationId, phaseId, claimType });
+        var summary = await GetAllocationClaimAndCreateSummary(
+            AllocationId.From(allocationId),
+            PhaseId.From(phaseId),
+            claimType,
+            CancellationToken.None);
+
+        return this.ContinueSectionAnswering(
+            summary,
+            () => this.OrganisationRedirectToAction("CheckAnswers", routeValues: new { allocationId, phaseId, claimType }));
     }
 
     [HttpGet("costs-incurred")]
@@ -101,7 +112,8 @@ public class AllocationClaimController : WorkflowController<AllocationClaimWorkf
         return await ExecuteClaimCommand(
             new ProvideClaimAchievementDateCommand(AllocationId.From(allocationId), PhaseId.From(phaseId), claimType, achievementDate),
             nameof(AchievementDate),
-            cancellationToken);
+            cancellationToken,
+            phaseClaim => phaseClaim with { Claim = phaseClaim.Claim with { AchievementDate = achievementDate } });
     }
 
     [HttpGet("confirmation")]
@@ -127,7 +139,8 @@ public class AllocationClaimController : WorkflowController<AllocationClaimWorkf
         return await ExecuteClaimCommand(
             new ProvideClaimConfirmationCommand(AllocationId.From(allocationId), PhaseId.From(phaseId), claimType, isConfirmed == "checked"),
             nameof(Confirmation),
-            cancellationToken);
+            cancellationToken,
+            phaseClaim => phaseClaim with { Claim = phaseClaim.Claim with { IsConfirmed = isConfirmed == "checked" } });
     }
 
     [HttpGet("check-answers")]
@@ -138,17 +151,49 @@ public class AllocationClaimController : WorkflowController<AllocationClaimWorkf
         [FromRoute] MilestoneType claimType,
         CancellationToken cancellationToken)
     {
-        return View(await GetClaimModel(allocationId, phaseId, claimType, cancellationToken));
+        return View(await GetAllocationClaimAndCreateSummary(
+            AllocationId.From(allocationId),
+            PhaseId.From(phaseId),
+            claimType,
+            cancellationToken));
     }
 
-    [HttpPost("check-answers")]
+    [HttpPost("submit")]
     [WorkflowState(AllocationClaimWorkflowState.CheckAnswers)]
-    public IActionResult CheckAnswers(
-        [FromRoute] string organisationId,
+    public async Task<IActionResult> Submit(
         [FromRoute] string allocationId,
-        [FromRoute] string phaseId)
+        [FromRoute] string phaseId,
+        [FromRoute] MilestoneType claimType,
+        CancellationToken cancellationToken)
     {
-        return RedirectToAction("Overview", "AllocationClaims", new { organisationId, allocationId, phaseId });
+        var command = new SubmitClaimCommand(AllocationId.From(allocationId), PhaseId.From(phaseId), claimType);
+
+        if (Request.IsCancelAndReturnAction())
+        {
+            return await HandleCancelAndReturnAction(command, cancellationToken);
+        }
+
+        return await this.ExecuteCommand<AllocationClaimSummaryViewModel>(
+            _mediator,
+            command,
+            async () => await Continue(
+                new
+                {
+                    organisationId = Request.GetOrganisationIdFromRoute()?.Value,
+                    allocationId,
+                    phaseId,
+                }),
+            async () =>
+            {
+                var summary = await GetAllocationClaimAndCreateSummary(
+                    AllocationId.From(allocationId),
+                    PhaseId.From(phaseId),
+                    claimType,
+                    cancellationToken);
+
+                return View(nameof(CheckAnswers), summary);
+            },
+            cancellationToken);
     }
 
     protected override async Task<IStateRouting<AllocationClaimWorkflowState>> Routing(AllocationClaimWorkflowState currentState, object? routeData = null)
@@ -191,23 +236,19 @@ public class AllocationClaimController : WorkflowController<AllocationClaimWorkf
     private async Task<IActionResult> ExecuteClaimCommand<TCommand>(
         TCommand command,
         string viewName,
-        CancellationToken cancellationToken)
+        CancellationToken cancellationToken,
+        Func<PhaseClaimModel, PhaseClaimModel>? createViewModelForError = null)
             where TCommand : IProvideClaimDetailsCommand
     {
         if (Request.IsCancelAndReturnAction())
         {
-            await _mediator.Send(new CancelClaimCommand(command.AllocationId, command.PhaseId, command.MilestoneType), cancellationToken);
-
-            return RedirectToAction(
-                "Overview",
-                "AllocationClaims",
-                new { allocationId = command.AllocationId.Value, phaseId = command.PhaseId.Value, organisationId = Request.GetOrganisationIdFromRoute() });
+            return await HandleCancelAndReturnAction(command, cancellationToken);
         }
 
         return await this.ExecuteCommand<TCommand>(
             _mediator,
             command,
-            async () => await ContinueWithWorkflow(
+            async () => await ContinueWithRedirect(
                 new
                 {
                     organisationId = Request.GetOrganisationIdFromRoute()?.Value,
@@ -215,7 +256,45 @@ public class AllocationClaimController : WorkflowController<AllocationClaimWorkf
                     phaseId = command.PhaseId.Value,
                     claimType = command.MilestoneType,
                 }),
-            async () => View(viewName, await GetClaimModel(command.AllocationId.Value, command.PhaseId.Value, command.MilestoneType, cancellationToken)),
+            async () =>
+            {
+                var model = await GetClaimModel(command.AllocationId.Value, command.PhaseId.Value, command.MilestoneType, cancellationToken);
+                var modelWithError = createViewModelForError != null ? createViewModelForError(model) : model;
+                return View(viewName, modelWithError);
+            },
             cancellationToken);
+    }
+
+    private async Task<AllocationClaimSummaryViewModel> GetAllocationClaimAndCreateSummary(
+        AllocationId allocationId,
+        PhaseId phaseId,
+        MilestoneType claimType,
+        CancellationToken cancellationToken)
+    {
+        var phaseClaim = await GetClaimModel(allocationId.Value, phaseId.Value, claimType, cancellationToken);
+        var claimSection = _allocationClaimCheckAnswersViewModelFactory.CreateSummary(
+            allocationId,
+            phaseId,
+            phaseClaim.Claim,
+            Url);
+
+        return new AllocationClaimSummaryViewModel(
+            allocationId,
+            phaseId,
+            phaseClaim.Allocation.Name,
+            claimType,
+            [claimSection],
+            phaseClaim.Claim.IsEditable);
+    }
+
+    private async Task<IActionResult> HandleCancelAndReturnAction<TCommand>(TCommand command, CancellationToken cancellationToken)
+        where TCommand : IProvideClaimDetailsCommand
+    {
+        await _mediator.Send(new CancelClaimCommand(command.AllocationId, command.PhaseId, command.MilestoneType), cancellationToken);
+
+        return RedirectToAction(
+            "Overview",
+            "AllocationClaims",
+            new { allocationId = command.AllocationId.Value, phaseId = command.PhaseId.Value, organisationId = Request.GetOrganisationIdFromRoute() });
     }
 }

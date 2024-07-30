@@ -1,4 +1,5 @@
 @using HE.Investments.Common.Extensions
+@using HE.Investments.Common.WWW.Extensions
 @using HE.Investments.Common.WWW.Helpers
 @model (HE.Investments.AHP.Allocation.Contract.Claims.MilestoneClaim Claim, bool CanClaimMilestone, string ClaimMilestoneUrl)
 
@@ -52,7 +53,7 @@
     @if (Model is { CanClaimMilestone: true, Claim.CanBeClaimed: true })
     {
         <div class="govuk-summary-card__title-wrapper govuk-!-font-weight-bold govuk-!-font-size-19">
-            <gds-link class="govuk-!-margin-bottom-0" href="@Model.ClaimMilestoneUrl">Claim milestone</gds-link>
+            <gds-link class="govuk-!-margin-bottom-0" data-testId="claim-@Model.Claim.Type.ToString().ToIdTag()-milestone" href="@Model.ClaimMilestoneUrl">Claim milestone</gds-link>
         </div>
     }
 </div>
