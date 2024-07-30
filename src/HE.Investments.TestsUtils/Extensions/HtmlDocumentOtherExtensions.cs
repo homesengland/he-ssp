@@ -174,6 +174,22 @@ public static class HtmlDocumentOtherExtensions
         return htmlDocument;
     }
 
+    public static IHtmlDocument HasNoValidationErrors(this IHtmlDocument htmlDocument)
+    {
+        var fieldValidationElements = htmlDocument
+            .GetElementsByClassName(CssConstants.GovUkFormGroupError)
+            .SelectMany(e => e.GetElementsByClassName(CssConstants.GovUkErrorMessage));
+
+        var fieldValidationErrors = fieldValidationElements
+            .Select(x => x.TextContent.Replace("Error:", string.Empty).Trim())
+            .Where(x => !string.IsNullOrEmpty(x))
+            .ToArray();
+
+        fieldValidationErrors.Should().BeEmpty();
+
+        return htmlDocument;
+    }
+
     public static IHtmlDocument HasSummaryErrorMessage(this IHtmlDocument htmlDocument, string fieldName, string? text = null, bool exist = true)
     {
         var filtered = htmlDocument.GetNavigationAnchors(fieldName);
