@@ -7,8 +7,7 @@
     var applicationId = this.GetApplicationIdFromRoute();
 }
 <gds-div-grid-column-two-thirds>
-    <gds-back-link href="@Url.OrganisationAction("TaskList", "Application", new { applicationId })" text="Back" class="govuk-!-margin-bottom-8">
-    </gds-back-link>
+    <vc:back-link-with-callback url="@Url.OrganisationAction("TaskList", "Application", new { applicationId })"/>
     <vc:page-header caption="@Model" title="@SchemeInformationPageTitles.SchemeDetails"/>
     <div class="govuk-!-padding-bottom-8">
         <gds-p>In this section, you’ll need to provide information about your schemes. This includes:</gds-p>
