@@ -375,7 +375,6 @@ export class IspService {
 
         this.common.setAttributeDateValue('invln_datesubmitted', result['invln_datesubmitted'])
 
-        console.log(result['invln_securities']);
         let values = result['invln_securities'].split(',')
         let osv = values.map(function (x) {
           return parseInt(x);
@@ -408,6 +407,10 @@ export class IspService {
             console.log(e);
           }
         }
+
+        this.common.setAttributeDateValue('invln_peakfundingdate', cashflowSubmition.entities[0]['invln_peakfundingdate'])
+        this.common.setAttributeDateValue('invln_loanrecycledincomeotherdebttocostsdate', cashflowSubmition.entities[0]['invln_loanrecycledincomeotherdebttocostdate'])
+        this.common.setAttributeDateValue('invln_loanotherdebttogdvpeakdate', cashflowSubmition.entities[0]['invln_loanotherdebttogdvdate'])
       }
     }
   }
