@@ -44,7 +44,7 @@ public abstract class MilestoneClaimBase : ValueObject
 
     public bool? IsConfirmed { get; }
 
-    public bool IsEditable => Status == MilestoneStatus.Draft;
+    public abstract bool IsEditable { get; }
 
     public abstract bool IsSubmitted { get; }
 

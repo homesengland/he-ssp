@@ -59,6 +59,13 @@ public class AllocationClaimCheckAnswersViewModelFactory : IAllocationClaimCheck
             createAction(nameof(AllocationClaimController.AchievementDate)),
             IsEditable: isEditable));
 
+        items.Add(new SectionSummaryItemModel(
+            $"{claim.Type.GetDescription()} is confirmed",
+            claim.IsConfirmed.MapToYesNo().ToOneElementList(),
+            createAction(nameof(AllocationClaimController.Confirmation)),
+            IsEditable: isEditable,
+            IsVisible: false));
+
         return new SectionSummaryViewModel("Claim summary", items);
     }
 

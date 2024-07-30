@@ -1,4 +1,3 @@
-using HE.Investment.AHP.Contract.Application;
 using HE.Investments.AHP.Allocation.Contract;
 using HE.Investments.AHP.Allocation.Contract.Claims;
 using HE.Investments.AHP.Allocation.Contract.Claims.Enum;
@@ -12,7 +11,6 @@ public class AllocationClaimSummaryViewModel : ISummaryViewModel
         AllocationId allocationId,
         PhaseId phaseId,
         string allocationName,
-        Tenure allocationTenure,
         MilestoneType claimType,
         IList<SectionSummaryViewModel> sections,
         bool isEditable)
@@ -20,7 +18,6 @@ public class AllocationClaimSummaryViewModel : ISummaryViewModel
         AllocationId = allocationId;
         PhaseId = phaseId;
         AllocationName = allocationName;
-        AllocationTenure = allocationTenure;
         ClaimType = claimType;
         Sections = sections;
         IsEditable = isEditable;
@@ -31,8 +28,6 @@ public class AllocationClaimSummaryViewModel : ISummaryViewModel
     public PhaseId PhaseId { get; }
 
     public string AllocationName { get; }
-
-    public Tenure AllocationTenure { get; }
 
     public MilestoneType ClaimType { get; }
 

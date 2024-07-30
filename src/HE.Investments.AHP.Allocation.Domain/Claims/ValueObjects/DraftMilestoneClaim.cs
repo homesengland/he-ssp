@@ -22,6 +22,8 @@ public class DraftMilestoneClaim : MilestoneClaimBase
 
     public override bool IsSubmitted => false;
 
+    public override bool IsEditable => true;
+
     public override MilestoneClaimBase WithAchievementDate(
         AchievementDate achievementDate,
         AhpProgramme programme,

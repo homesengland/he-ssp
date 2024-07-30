@@ -86,7 +86,7 @@ public static class ControllerExtensions
             .FirstOrDefault(x => x is { HasAnswer: false, HasRedirectAction: true });
 
         return firstNotAnsweredQuestion != null
-            ? controller.Redirect(firstNotAnsweredQuestion.ActionUrl!)
+            ? controller.Redirect(RemoveRedirectQueryParameter(firstNotAnsweredQuestion.ActionUrl!))
             : checkAnswersRedirectFactory();
     }
 
@@ -101,5 +101,10 @@ public static class ControllerExtensions
         }
 
         return await onContinue();
+    }
+
+    private static string RemoveRedirectQueryParameter(string url)
+    {
+        return url.Replace("?redirect=CheckAnswers", string.Empty);
     }
 }
