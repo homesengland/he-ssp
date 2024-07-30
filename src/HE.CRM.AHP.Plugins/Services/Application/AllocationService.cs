@@ -176,97 +176,108 @@ namespace HE.CRM.AHP.Plugins.Services.Application
 
             TracingService.Trace("Get data from Crm");
             var dataFromCrm = _ahpApplicationRepository.GetAllocationWithDeliveryPhaseAndClaims(externalContactId, accountId, allocationId, deliveryPhaseId).Entities.First();
-            var deliveryPhaseName = dataFromCrm.GetAliasedAttributeValue<string>("DeliveryPhase", invln_DeliveryPhase.Fields.invln_phasename);
 
+            TracingService.Trace("Claim Acquisition");
+            CreateOrUpdateOrDeleteClaimForAllocationPhase(allocationId, deliveryPhaseId, phaseClaimsDto, "Acquisition", dataFromCrm);
 
-            // ClaimAcquisition
-            var claimAcquisition_invln_ClaimId = dataFromCrm.GetAliasedAttributeValue<Guid>("ClaimAcquisition", invln_Claim.Fields.invln_ClaimId);
-            var acquisitionMilestone = phaseClaimsDto.AcquisitionMilestone;
-            if (acquisitionMilestone == null && claimAcquisition_invln_ClaimId != Guid.Empty)
-            {
-                _claimRepository.Delete(new invln_Claim()
-                {
-                    Id = claimAcquisition_invln_ClaimId
-                });
-            }
-            else if (acquisitionMilestone != null)
-            {
-                CreateOrUpdateClaimForAllocationPhase(allocationId, deliveryPhaseId, acquisitionMilestone, "Acquisition", claimAcquisition_invln_ClaimId, deliveryPhaseName);
-            }
+            TracingService.Trace("Claim StartOnSite");
+            CreateOrUpdateOrDeleteClaimForAllocationPhase(allocationId, deliveryPhaseId, phaseClaimsDto, "StartOnSite", dataFromCrm);
 
-            // ClaimStartOnSite
-            var claimStartOnSite_invln_ClaimId = dataFromCrm.GetAliasedAttributeValue<Guid>("ClaimSoS", invln_Claim.Fields.invln_ClaimId);
-            var startOnSiteMilestone = phaseClaimsDto.StartOnSiteMilestone;
-            if (startOnSiteMilestone == null && claimStartOnSite_invln_ClaimId != Guid.Empty)
-            {
-                _claimRepository.Delete(new invln_Claim()
-                {
-                    Id = claimStartOnSite_invln_ClaimId
-                });
-            }
-            else if (startOnSiteMilestone != null)
-            {
-                CreateOrUpdateClaimForAllocationPhase(allocationId, deliveryPhaseId, startOnSiteMilestone, "StartOnSite", claimStartOnSite_invln_ClaimId, deliveryPhaseName);
-            }
-
-            // ClaimCompletion
-            var claimCompletion_invln_ClaimId = dataFromCrm.GetAliasedAttributeValue<Guid>("ClaimPC", invln_Claim.Fields.invln_ClaimId);
-            var completionMilestone = phaseClaimsDto.CompletionMilestone;
-            if (completionMilestone == null && claimCompletion_invln_ClaimId != Guid.Empty)
-            {
-                _claimRepository.Delete(new invln_Claim()
-                {
-                    Id = claimCompletion_invln_ClaimId
-                });
-            }
-            else if (completionMilestone != null)
-            {
-                CreateOrUpdateClaimForAllocationPhase(allocationId, deliveryPhaseId, completionMilestone, "Completion", claimCompletion_invln_ClaimId, deliveryPhaseName);
-            }
+            TracingService.Trace("Claim Completion"); 
+            CreateOrUpdateOrDeleteClaimForAllocationPhase(allocationId, deliveryPhaseId, phaseClaimsDto, "Completion", dataFromCrm);
         }
 
 
-        private void CreateOrUpdateClaimForAllocationPhase(Guid allocationId, Guid deliveryPhaseId, MilestoneClaimDto milestone, string typeOfMilestone, Guid claimIdInCrm, string deliveryPhaseName)
+        private void CreateOrUpdateOrDeleteClaimForAllocationPhase(Guid allocationId, Guid deliveryPhaseId, PhaseClaimsDto phaseClaimsDto, string typeOfMilestone, Entity dataFromCrm)
         {
-            TracingService.Trace($"Create new object invln_Claim for {typeOfMilestone} Milestone");
-            var newClaim = new invln_Claim()
+            var claimId = Guid.Empty;
+            var milestone = new MilestoneClaimDto();
+            switch (typeOfMilestone)
             {
-                invln_Name = deliveryPhaseName + " " + typeOfMilestone + " Claim",
-                invln_Milestone = new OptionSetValue(milestone.Type),
-                invln_AmountApportionedtoMilestone = new Money(milestone.AmountOfGrantApportioned),
-                invln_PercentageofGrantApportionedtoThisMilestone = (double)milestone.PercentageOfGrantApportioned,
-                invln_MilestoneDate = milestone.AchievementDate ?? null,
-
-                invln_ClaimSubmissionDate = milestone.SubmissionDate ?? null,
-                invln_IncurredCosts = milestone.CostIncurred ?? null,
-                invln_RequirementsConfirmation = milestone.IsConfirmed ?? null,
-
-                invln_Allocation = new EntityReference(invln_scheme.EntityLogicalName, allocationId),
-                invln_DeliveryPhase = new EntityReference(invln_DeliveryPhase.EntityLogicalName, deliveryPhaseId)
-            };
-
-            TracingService.Trace($"Create or Update in CRM");
-            if (claimIdInCrm == Guid.Empty)
-            {
-                // Create
-                TracingService.Trace($"Create in CRM");
-                newClaim.StatusCode = new OptionSetValue((int)invln_Claim_StatusCode.Draft);
-                newClaim.invln_ExternalStatus = new OptionSetValue((int)invln_ClaimExternalStatus.Draft);
-                _claimRepository.Create(newClaim);
+                case "Acquisition":
+                    claimId = dataFromCrm.GetAliasedAttributeValue<Guid>("ClaimAcquisition", invln_Claim.Fields.invln_ClaimId);
+                    milestone = phaseClaimsDto.AcquisitionMilestone;
+                    break;
+                case "StartOnSite":
+                    claimId = dataFromCrm.GetAliasedAttributeValue<Guid>("ClaimSoS", invln_Claim.Fields.invln_ClaimId);
+                    milestone = phaseClaimsDto.StartOnSiteMilestone;
+                    break;
+                case "Completion":
+                    claimId = dataFromCrm.GetAliasedAttributeValue<Guid>("ClaimPC", invln_Claim.Fields.invln_ClaimId);
+                    milestone = phaseClaimsDto.CompletionMilestone;
+                    break;
+                default:
+                    break;
             }
-            else
+
+            if (milestone == null && claimId != Guid.Empty)
             {
-                // Update
-                if (milestone.Status == (int)invln_ClaimExternalStatus.Submitted)
+                TracingService.Trace($"Delete Claim for {typeOfMilestone} Milestone");
+                _claimRepository.Delete(new invln_Claim()
                 {
-                    newClaim.StatusCode = new OptionSetValue((int)invln_Claim_StatusCode.Submitted);
-                    newClaim.invln_ExternalStatus = new OptionSetValue((int)invln_ClaimExternalStatus.Submitted);
-                }
-                TracingService.Trace($"Update in CRM");
-                newClaim.Id = claimIdInCrm;
-                _claimRepository.Update(newClaim);
+                    Id = claimId
+                });
             }
-            TracingService.Trace($"Created or Updated in CRM");
+            else if (milestone != null)
+            {
+                TracingService.Trace($"Create or Update in CRM");
+                if (claimId == Guid.Empty)
+                {
+                    // Create
+                    TracingService.Trace($"Create in CRM");
+
+                    TracingService.Trace($"Create new object invln_Claim for {typeOfMilestone} Milestone");
+                    var newClaim = new invln_Claim()
+                    {
+                        invln_Name = dataFromCrm.GetAliasedAttributeValue<string>("DeliveryPhase", invln_DeliveryPhase.Fields.invln_phasename) + " " + typeOfMilestone + " Claim",
+                        invln_Milestone = new OptionSetValue(milestone.Type),
+                        invln_AmountApportionedtoMilestone = new Money(milestone.AmountOfGrantApportioned),
+                        invln_PercentageofGrantApportionedtoThisMilestone = (double)milestone.PercentageOfGrantApportioned,
+                        invln_MilestoneDate = milestone.AchievementDate ?? null,
+
+                        invln_ClaimSubmissionDate = milestone.SubmissionDate ?? null,
+                        invln_IncurredCosts = milestone.CostIncurred ?? null,
+                        invln_RequirementsConfirmation = milestone.IsConfirmed ?? null,
+
+                        StatusCode = new OptionSetValue((int)invln_Claim_StatusCode.Draft),
+                        invln_ExternalStatus = new OptionSetValue((int)invln_ClaimExternalStatus.Draft),
+
+                        invln_Allocation = new EntityReference(invln_scheme.EntityLogicalName, allocationId),
+                        invln_DeliveryPhase = new EntityReference(invln_DeliveryPhase.EntityLogicalName, deliveryPhaseId)
+                    };
+
+                    TracingService.Trace($"Exception check for StartOnSite Milestone");
+                    if (typeOfMilestone == "StartOnSite" && phaseClaimsDto.AcquisitionMilestone != null)
+                    {
+                        if (phaseClaimsDto.AcquisitionMilestone.CostIncurred == false)
+                        {
+                            newClaim.invln_AmountApportionedtoMilestone = new Money(milestone.AmountOfGrantApportioned + phaseClaimsDto.AcquisitionMilestone.AmountOfGrantApportioned);
+
+                            var totalAmount = ((double)milestone.AmountOfGrantApportioned * 100) / (double)milestone.PercentageOfGrantApportioned;
+                            newClaim.invln_PercentageofGrantApportionedtoThisMilestone = (double)(newClaim.invln_AmountApportionedtoMilestone.Value * 100) / totalAmount;
+                        }
+                    }
+
+                    _claimRepository.Create(newClaim);
+                }
+                else
+                {
+                    // Update
+                    if (milestone.Status == (int)invln_ClaimExternalStatus.Submitted)
+                    {
+                        TracingService.Trace($"Change status of claim to Submitted");
+                        var newClaim = new invln_Claim()
+                        {
+                            Id = claimId,
+                            StatusCode = new OptionSetValue((int)invln_Claim_StatusCode.Submitted),
+                            invln_ExternalStatus = new OptionSetValue((int)invln_ClaimExternalStatus.Submitted)
+                        };
+
+                        _claimRepository.Update(newClaim);
+                    }
+                }
+                TracingService.Trace($"Created or Updated in CRM");
+            }
         }
     }
 }
