@@ -2,6 +2,7 @@ using System.Globalization;
 using System.Text;
 using AngleSharp.Html.Dom;
 using HE.Investments.IntegrationTestsFramework.Config;
+using HE.Investments.IntegrationTestsFramework.Utils;
 using HE.Investments.TestsUtils.Extensions;
 using Microsoft.FeatureManagement;
 using Xunit;
@@ -22,6 +23,8 @@ public class IntegrationTestBase<TProgram> : IAsyncLifetime
     protected IntegrationTestClient TestClient { get; }
 
     protected IFeatureManager FeatureManager => _fixture.FeatureManager;
+
+    protected DateTimeManipulator DateTimeManipulator => _fixture.DateTimeManipulator;
 
     public virtual async Task InitializeAsync()
     {
@@ -44,6 +47,8 @@ public class IntegrationTestBase<TProgram> : IAsyncLifetime
 
     public virtual Task DisposeAsync()
     {
+        DateTimeManipulator.ResetTimeTravel();
+
         return Task.CompletedTask;
     }
 

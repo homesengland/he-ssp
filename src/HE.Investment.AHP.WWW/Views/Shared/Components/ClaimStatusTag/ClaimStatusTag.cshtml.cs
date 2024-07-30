@@ -18,7 +18,7 @@ public class ClaimStatusTag : ViewComponent
             MilestoneStatus.DueSoon => TagColour.Pink,
             MilestoneStatus.Due => TagColour.Pink,
             MilestoneStatus.Overdue => TagColour.Pink,
-            MilestoneStatus.Submitted => TagColour.Pink,
+            MilestoneStatus.Submitted => TagColour.Purple,
             MilestoneStatus.UnderReview => TagColour.Yellow,
             MilestoneStatus.Approved => TagColour.Green,
             MilestoneStatus.Rejected => TagColour.Red,
