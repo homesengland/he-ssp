@@ -199,7 +199,9 @@ namespace HE.CRM.Common.Repositories.Implementations
                 invln_scheme.Fields.invln_Tenure,
                 invln_scheme.Fields.invln_TotalGrantAllocated,
                 invln_scheme.Fields.invln_AmountPaid,
-                invln_scheme.Fields.invln_AmountRemaining);
+                invln_scheme.Fields.invln_AmountRemaining,
+                invln_scheme.Fields.invln_BaseApplication
+                );
             query.Criteria.AddCondition(invln_scheme.Fields.invln_organisationid, ConditionOperator.Equal, query_invln_organisationid);
             query.Criteria.AddCondition(invln_scheme.Fields.invln_isallocation, ConditionOperator.Equal, query_invln_isallocation);
             query.Criteria.AddCondition(invln_scheme.Fields.invln_schemeId, ConditionOperator.Equal, query_invln_schemeid);

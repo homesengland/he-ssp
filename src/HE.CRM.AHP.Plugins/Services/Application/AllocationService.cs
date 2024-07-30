@@ -226,6 +226,49 @@ namespace HE.CRM.AHP.Plugins.Services.Application
         }
 
 
+        public AllocationDto GetAllocation(string externalContactId, Guid accountId, Guid allocationId)
+        {
+            TracingService.Trace("GetAllocation");
+            AllocationDto result = null;
+            Contact contact = null;
+            contact = _contactRepository.GetContactViaExternalId(externalContactId);
+
+            TracingService.Trace("Starting WebRole check");
+            var webroleList = _contactWebroleRepository.GetListOfUsersWithoutLimitedRole(accountId.ToString());
+            var isOtherThanLimitedUser = webroleList.Exists(x => x.invln_Contactid.Id == contact.Id);
+            var isLimitedUser = _contactWebroleRepository.IsContactHaveSelectedWebRoleForOrganisation(contact.Id, accountId, invln_Permission.Limiteduser);
+
+            TracingService.Trace($"isOtherThanLimitedUser : {isOtherThanLimitedUser}  isLimitedUser : {isLimitedUser}  ");
+            TracingService.Trace("WebRole checked");
+
+            invln_scheme allocation = null;
+            if (isLimitedUser == true && isOtherThanLimitedUser == false)
+            {
+                TracingService.Trace("Get allocation for isLimitedUser");
+                allocation = _ahpApplicationRepository.GetAllocation(allocationId, accountId, contact);
+            }
+            if (isOtherThanLimitedUser == true)
+            {
+                TracingService.Trace("Get allocation for isOtherThanLimitedUser");
+                allocation = _ahpApplicationRepository.GetAllocation(allocationId, accountId);
+            }
+
+            if (allocation == null)
+            {
+                TracingService.Trace("allocation == null");
+                return result;
+            }
+
+            TracingService.Trace("Get data from Crm");
+            //var dataFromCrm = _ahpApplicationRepository.GetAllocationV2(allocation.invln_BaseApplication.Id,  externalContactId, accountId, allocationId, Guid.Empty).Entities;
+
+
+
+
+            return result;
+        }
+
+
         private void CreateOrUpdateClaimForAllocationPhase(Guid allocationId, Guid deliveryPhaseId, MilestoneClaimDto milestone, string typeOfMilestone, Guid claimIdInCrm, string deliveryPhaseName)
         {
             TracingService.Trace($"Create new object invln_Claim for {typeOfMilestone} Milestone");
