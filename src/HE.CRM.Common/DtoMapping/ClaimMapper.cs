@@ -49,6 +49,18 @@ namespace HE.CRM.Common.DtoMapping
                 {
                     result.AmountOfGrantApportioned = recordData.GetAliasedAttributeValue<Money>("DeliveryPhase", invln_DeliveryPhase.Fields.invln_StartOnSiteValue).Value;
                     result.PercentageOfGrantApportioned = recordData.GetAliasedAttributeValue<decimal?>("DeliveryPhase", invln_DeliveryPhase.Fields.invln_StartOnSitePercentageValue).Value;
+
+                    var claimAcquisitionId = recordData.GetAliasedAttributeValue<Guid>("ClaimAcquisition", invln_Claim.Fields.invln_ClaimId);
+                    if (claimAcquisitionId != Guid.Empty)
+                    {
+                        if (recordData.GetAliasedAttributeValue<bool?>("ClaimAcquisition", invln_Claim.Fields.invln_IncurredCosts).Value == false)
+                        {
+                            result.AmountOfGrantApportioned = recordData.GetAliasedAttributeValue<Money>("DeliveryPhase", invln_DeliveryPhase.Fields.invln_StartOnSiteValue).Value + recordData.GetAliasedAttributeValue<Money>("DeliveryPhase", invln_DeliveryPhase.Fields.invln_AcquisitionValue).Value;
+
+                            var sumofcalculatedfounds = recordData.GetAliasedAttributeValue<Money>("DeliveryPhase", invln_DeliveryPhase.Fields.invln_sumofcalculatedfounds).Value;
+                            result.PercentageOfGrantApportioned = (result.AmountOfGrantApportioned * 100) / sumofcalculatedfounds;
+                        }
+                    }
                 }
                 if (milestone == (int)invln_Milestone.PC)
                 {
