@@ -123,7 +123,7 @@ public static class HtmlDocumentLinkExtensions
         return htmlDocument;
     }
 
-    private static List<IElement> GetLinkButtons(this IHtmlDocument htmlDocument)
+    public static List<IElement> GetLinkButtons(this IHtmlDocument htmlDocument)
     {
         return htmlDocument
             .QuerySelectorAll("button.govuk-button-link")

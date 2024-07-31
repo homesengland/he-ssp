@@ -6,9 +6,9 @@ namespace HE.Investment.AHP.WWW.Views.Shared.Components.ClaimStatusTag;
 
 public class ClaimStatusTag : ViewComponent
 {
-    public IViewComponentResult Invoke(MilestoneStatus claimStatus)
+    public IViewComponentResult Invoke(MilestoneType claimType, MilestoneStatus claimStatus)
     {
-        return View("ClaimStatusTag", (claimStatus, GetColorBaseOnStatus(claimStatus)));
+        return View("ClaimStatusTag", (claimType, claimStatus, GetColorBaseOnStatus(claimStatus)));
     }
 
     private static TagColour GetColorBaseOnStatus(MilestoneStatus claimStatus)

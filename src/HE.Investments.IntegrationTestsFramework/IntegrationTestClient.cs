@@ -114,6 +114,12 @@ public class IntegrationTestClient
             throw new ProblemWithTheServiceException(errorMessage ?? "Error page without content");
         }
 
+        if (CurrentPage.GetPageTitle() == "Page not found")
+        {
+            var errorMessage = CurrentPage.GetElementsByClassName("govuk-body").LastOrDefault()?.Text();
+            throw new ProblemWithTheServiceException(errorMessage ?? "Page not found without content");
+        }
+
         return CurrentPage;
     }
 
