@@ -6,6 +6,7 @@ using HE.Investments.AHP.IntegrationTests.Framework;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.WWW.Extensions;
 using HE.Investments.IntegrationTestsFramework.Assertions;
+using HE.Investments.TestsUtils.Extensions;
 using HE.Investments.TestsUtils.Helpers;
 using Xunit.Abstractions;
 using Xunit.Extensions.Ordering;
@@ -32,7 +33,10 @@ public class Order03ClaimAcquisitionMilestone : ClaimMilestoneTestBase
     protected override void AssertClaimSummary(IDictionary<string, SummaryItem> summary)
     {
         summary.Should().ContainKey("Cost incurred").WithValue(ClaimData.CostsIncurred!.Value.MapToCommonResponse());
-        summary.Should().ContainKey("Amount of grant apportioned to acquisition milestone"); // TODO: AB#104059 Assert milestone tranche amount
+        summary.Should()
+            .ContainKey("Amount of grant apportioned to acquisition milestone")
+            .WhoseValue.Value.Should()
+            .BePoundsOnly(PhaseData.AcquisitionAmountOfGrantApportioned);
         summary.Should().ContainKey("Acquisition achievement date").WithValue("10 May 2024");
     }
 }

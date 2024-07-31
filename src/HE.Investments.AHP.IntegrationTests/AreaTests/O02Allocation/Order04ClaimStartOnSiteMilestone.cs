@@ -5,6 +5,7 @@ using HE.Investments.AHP.IntegrationTests.AreaTests.O02Allocation.Data;
 using HE.Investments.AHP.IntegrationTests.Framework;
 using HE.Investments.Common.Contract;
 using HE.Investments.IntegrationTestsFramework.Assertions;
+using HE.Investments.TestsUtils.Extensions;
 using HE.Investments.TestsUtils.Helpers;
 using Xunit.Abstractions;
 using Xunit.Extensions.Ordering;
@@ -30,7 +31,10 @@ public class Order04ClaimStartOnSiteMilestone : ClaimMilestoneTestBase
     protected override void AssertClaimSummary(IDictionary<string, SummaryItem> summary)
     {
         summary.Should().NotContainKey("Cost incurred");
-        summary.Should().ContainKey("Amount of grant apportioned to start on site milestone"); // TODO: AB#104059 Assert milestone tranche amount
+        summary.Should()
+            .ContainKey("Amount of grant apportioned to start on site milestone")
+            .WhoseValue.Value.Should()
+            .BePoundsOnly(PhaseData.StartOnSiteAmountOfGrantApportioned);
         summary.Should().ContainKey("Start on site achievement date").WithValue("20 May 2025");
     }
 }

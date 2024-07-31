@@ -129,8 +129,6 @@ public abstract class ClaimMilestoneTestBase : AhpIntegrationTest
         overviewPage.HasNoElementWithTestId(ClaimMilestoneLinkTestId())
             .HasMilestoneStatusTag(ClaimData.MilestoneType, MilestoneStatus.Submitted);
         SaveCurrentPage();
-
-        // TODO: AB#104059 redirect to summary page and verify paid/remaining grant amount
     }
 
     protected abstract void AssertClaimSummary(IDictionary<string, SummaryItem> summary);
