@@ -288,7 +288,6 @@ namespace HE.CRM.Plugins.Services.GovNotifyEmail
             }
         }
 
-
         public void SendNotifications_COMMON_REQUEST_TO_ASSIGN_CONTACT_TO_EXISTING_ORGANISATION(EntityReference contactId, EntityReference associatingContactId)
         {
             if (contactId != null && associatingContactId != null)
@@ -324,6 +323,41 @@ namespace HE.CRM.Plugins.Services.GovNotifyEmail
             }
         }
 
+        public void SendNotifications_COMMON_REQUEST_TO_ASSIGN_ISP_TO_USER(EntityReference contactId, EntityReference associatingContactId, invln_Loanapplication application, invln_ISP isp)
+        {
+            if (contactId != null && associatingContactId != null)
+            {
+                var contact = _contactRepositoryAdmin.GetById(contactId.Id, nameof(Contact.OwnerId).ToLower(), nameof(Contact.FullName).ToLower(), nameof(Contact.EMailAddress1).ToLower());
+                var associatingContact = _contactRepositoryAdmin.GetById(associatingContactId.Id, nameof(Contact.FullName).ToLower());
+
+                if (contact != null && contact.OwnerId != null && associatingContact != null)
+                {
+                    this.TracingService.Trace("COMMON_REQUEST_TO_ASSIGN_ISP_TO_USER");
+                    var emailTemplate = _notificationSettingRepositoryAdmin.GetTemplateViaTypeName("COMMON_REQUEST_TO_ASSIGN_ISP_TO_USER");
+                    var govNotParams = new COMMON_REQUEST_TO_ASSIGN_ISP_TO_USER()
+                    {
+                        templateId = emailTemplate?.invln_templateid,
+                        personalisation = new parameters_COMMON_REQUEST_TO_ASSIGN_ISP_TO_USER()
+                        {
+                            recipientEmail = contact.EMailAddress1,
+                            username = contact.FullName ?? "NO NAME",
+                            subject = $"Application {application.invln_Name} has been assigned to you for review/approval",
+                            applicationId = application.invln_Name,
+                            applictionUrl = GetLoanApplicationUrl(application.ToEntityReference())
+                        }
+                    };
+
+                    var options = new JsonSerializerOptions
+                    {
+                        Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+                        WriteIndented = true
+                    };
+
+                    var parameters = JsonSerializer.Serialize(govNotParams, options);
+                    this.SendGovNotifyEmail(contact.OwnerId, contact.ToEntityReference(), emailTemplate.invln_subject, parameters, emailTemplate);
+                }
+            }
+        }
 
     }
 }

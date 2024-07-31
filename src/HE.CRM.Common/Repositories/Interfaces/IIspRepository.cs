@@ -10,5 +10,6 @@ namespace HE.CRM.Common.Repositories.Interfaces
 {
     public interface IIspRepository : ICrmEntityRepository<invln_ISP, DataverseContext>
     {
+        invln_sendinternalcrmnotificationResponse ExecuteNotificatioRequest(invln_sendinternalcrmnotificationRequest request);
     }
 }

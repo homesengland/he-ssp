@@ -35,8 +35,6 @@ namespace HE.CRM.Plugins.Services.ISPs
 
         #endregion Fields
 
-        #region Constructors
-
         public IspService(CrmServiceArgs args) : base(args)
         {
             _loanApplicationRepository = CrmRepositoriesFactory.Get<ILoanApplicationRepository>();
@@ -76,12 +74,5 @@ namespace HE.CRM.Plugins.Services.ISPs
                 }
             }
         }
-
-        public void CreateDesAndHofRecords(invln_ISP preImage, invln_ISP target)
-        {
-
-        }
-
-        #endregion Constructors
     }
 }
