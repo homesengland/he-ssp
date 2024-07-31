@@ -1,5 +1,6 @@
 using System.Text.Encodings.Web;
 using System.Text.Json;
+using System.Windows.Forms;
 using DataverseModel;
 using HE.Base.Services;
 using HE.CRM.Common.Repositories.Interfaces;
@@ -323,14 +324,13 @@ namespace HE.CRM.Plugins.Services.GovNotifyEmail
             }
         }
 
-        public void SendNotifications_COMMON_REQUEST_TO_ASSIGN_ISP_TO_USER(EntityReference contactId, EntityReference associatingContactId, invln_Loanapplication application, invln_ISP isp)
+        public void SendNotifications_COMMON_REQUEST_TO_ASSIGN_ISP_TO_USER(EntityReference user, invln_Loanapplication application)
         {
-            if (contactId != null && associatingContactId != null)
+            if (user != null)
             {
-                var contact = _contactRepositoryAdmin.GetById(contactId.Id, nameof(Contact.OwnerId).ToLower(), nameof(Contact.FullName).ToLower(), nameof(Contact.EMailAddress1).ToLower());
-                var associatingContact = _contactRepositoryAdmin.GetById(associatingContactId.Id, nameof(Contact.FullName).ToLower());
+                var systemUser = _systemUserRepositoryAdmin.GetById(user.Id, SystemUser.Fields.FullName, SystemUser.Fields.InternalEMailAddress);
 
-                if (contact != null && contact.OwnerId != null && associatingContact != null)
+                if (systemUser != null)
                 {
                     this.TracingService.Trace("COMMON_REQUEST_TO_ASSIGN_ISP_TO_USER");
                     var emailTemplate = _notificationSettingRepositoryAdmin.GetTemplateViaTypeName("COMMON_REQUEST_TO_ASSIGN_ISP_TO_USER");
@@ -339,8 +339,8 @@ namespace HE.CRM.Plugins.Services.GovNotifyEmail
                         templateId = emailTemplate?.invln_templateid,
                         personalisation = new parameters_COMMON_REQUEST_TO_ASSIGN_ISP_TO_USER()
                         {
-                            recipientEmail = contact.EMailAddress1,
-                            username = contact.FullName ?? "NO NAME",
+                            recipientEmail = systemUser.InternalEMailAddress,
+                            username = systemUser.FullName ?? "NO NAME",
                             subject = $"Application {application.invln_Name} has been assigned to you for review/approval",
                             applicationId = application.invln_Name,
                             applictionUrl = GetLoanApplicationUrl(application.ToEntityReference())
@@ -354,8 +354,42 @@ namespace HE.CRM.Plugins.Services.GovNotifyEmail
                     };
 
                     var parameters = JsonSerializer.Serialize(govNotParams, options);
-                    this.SendGovNotifyEmail(contact.OwnerId, contact.ToEntityReference(), emailTemplate.invln_subject, parameters, emailTemplate);
+                    this.SendGovNotifyEmail(application.ToEntityReference(), systemUser.ToEntityReference(),
+                        $"Application {application.invln_Name} has been assigned to you for review/approval", parameters, emailTemplate);
                 }
+            }
+        }
+
+        public void SendNotifications_INTERNAL_SENT_FOR_APPROVAL_NOTIFICATION(invln_Loanapplication loanApplication)
+        {
+            if (loanApplication.OwnerId.LogicalName == SystemUser.EntityLogicalName)
+            {
+                this.TracingService.Trace("INTERNAL_SENT_FOR_APPROVAL_NOTIFICATION");
+                var emailTemplate = _notificationSettingRepositoryAdmin.GetTemplateViaTypeName("INTERNAL_SENT_FOR_APPROVAL_NOTIFICATION");
+                var ownerData = _systemUserRepositoryAdmin.GetById(loanApplication.OwnerId.Id, nameof(SystemUser.InternalEMailAddress).ToLower(), nameof(SystemUser.FullName).ToLower());
+                var govNotParams = new INTERNAL_SENT_FOR_APPROVAL_NOTIFICATION()
+                {
+                    templateId = emailTemplate?.invln_templateid,
+                    personalisation = new parameters_INTERNAL_SENT_FOR_APPROVAL_NOTIFICATION()
+                    {
+                        recipientEmail = ownerData.InternalEMailAddress,
+                        username = ownerData.FullName ?? "NO NAME",
+                        applicationId = loanApplication.invln_Name,
+                        applicationUrl = GetLoanApplicationUrl(loanApplication.ToEntityReference()),
+                        subject = $"Application ref no {loanApplication.invln_Name} ISP Reviewed"
+,
+                    }
+                };
+
+                var options = new JsonSerializerOptions
+                {
+                    Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+                    WriteIndented = true
+                };
+
+                var parameters = JsonSerializer.Serialize(govNotParams, options);
+                this.SendGovNotifyEmail(loanApplication.OwnerId, loanApplication.ToEntityReference(), $"Application ref no {loanApplication.invln_Name} ISP Reviewed", parameters, emailTemplate);
+
             }
         }
 

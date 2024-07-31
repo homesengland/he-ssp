@@ -22,6 +22,8 @@ namespace HE.CRM.Plugins.Services.GovNotifyEmail
 
         void SendNotifications_COMMON_REQUEST_TO_ASSIGN_CONTACT_TO_EXISTING_ORGANISATION(EntityReference contactId, EntityReference associatingContactId);
 
-        void SendNotifications_COMMON_REQUEST_TO_ASSIGN_ISP_TO_USER(EntityReference contactId, EntityReference associatingContactId);
+        void SendNotifications_COMMON_REQUEST_TO_ASSIGN_ISP_TO_USER(EntityReference contactId, invln_Loanapplication application);
+
+        void SendNotifications_INTERNAL_SENT_FOR_APPROVAL_NOTIFICATION(invln_Loanapplication loanApplication);
     }
 }

@@ -123,6 +123,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)CrmSerialiedParameters\EXTERNAL_KYC_STATUS_CHANGE.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CrmSerialiedParameters\INTERNAL_LOAN_APP_OWNER_CHANGE.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CrmSerialiedParameters\INTERNAL_LOAN_APP_STATUS_CHANGE.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)crmserialiedparameters\INTERNAL_SENT_FOR_APPROVAL_NOTIFICATION.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\Account.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\ActivityParty.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\ActivityPointer.cs" />

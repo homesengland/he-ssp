@@ -34,7 +34,7 @@ namespace HE.CRM.Plugins.Handlers.ISPs
             var application = _loanApplicationRepository.GetById(ExecutionData.PostImage.invln_Loanapplication.Id);
             SendInternalCrmNotification(application, ExecutionData.PostImage.OwnerId);
 
-            _govNotifyEmailService.SendNotifications_AHP_INTERNAL_REQUEST_TO_WITHDRAW(ahpStatusChange, ahpApplication);
+            _govNotifyEmailService.SendNotifications_COMMON_REQUEST_TO_ASSIGN_ISP_TO_USER(ExecutionData.PostImage.OwnerId, application);
         }
 
         public void SendInternalCrmNotification(invln_Loanapplication application, EntityReference owner)
