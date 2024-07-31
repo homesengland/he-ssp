@@ -256,7 +256,9 @@ namespace HE.CRM.Common.Repositories.Implementations
                 invln_DeliveryPhase.Fields.invln_completiondate,
                 invln_DeliveryPhase.Fields.invln_CompletionValue,
                 invln_DeliveryPhase.Fields.invln_CompletionPercentageValue,
-                invln_DeliveryPhase.Fields.invln_completionmilestoneclaimdate
+                invln_DeliveryPhase.Fields.invln_completionmilestoneclaimdate,
+
+                invln_DeliveryPhase.Fields.invln_sumofcalculatedfounds
 
                 );
             var ClaimAcquisition = DeliveryPhase.AddLink(
