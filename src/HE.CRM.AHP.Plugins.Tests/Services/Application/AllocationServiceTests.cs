@@ -1,5 +1,4 @@
 using System;
-using System.Activities;
 using System.Collections.Generic;
 using System.Linq;
 using DataverseModel;
@@ -107,43 +106,6 @@ namespace HE.CRM.AHP.Plugins.Tests.Services.Application
             Assert.AreEqual(200_000, allocationUpdated.invln_TotalGrantAllocated.Value, "Wrong invln_TotalGrantAllocated value.");
             Assert.AreEqual(10_000, allocationUpdated.invln_AmountPaid.Value, "Wrong invln_AmountPaid value.");
             Assert.AreEqual(190_000, allocationUpdated.invln_AmountRemaining.Value, "Wrong invln_AmountRemaining value.");
-        }
-
-        [TestMethod]
-        public void Clone()
-        {
-            var contact = new Contact()
-            {
-                Id = Guid.NewGuid()
-            };
-
-            var organisation = new Account()
-            {
-                Id = Guid.NewGuid()
-            };
-
-            var application = new invln_scheme()
-            {
-                Id = Guid.NewGuid(),
-                invln_organisationid = organisation.ToEntityReference(),
-                invln_contactid = contact.ToEntityReference(),
-                invln_fundingrequired = new Money(200_000)
-            };
-
-#pragma warning disable CS0618 // Type or member is obsolete
-            fakedContext.Initialize(new List<Entity>()
-            {
-                contact,
-                organisation,
-                application,
-            });
-#pragma warning restore CS0618 // Type or member is obsolete
-
-            this.Asset();
-
-            service.CreateAllocation(application.Id);
-
-            var applications = fakedContext.CreateQuery<invln_scheme>().ToList();
         }
     }
 }
