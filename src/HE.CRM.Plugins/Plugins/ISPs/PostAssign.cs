@@ -17,10 +17,10 @@ namespace HE.CRM.Plugins.Plugins.ISPs
    StageEnum.PostOperation,
    ExecutionModeEnum.Synchronous,
    "",
-   "HE.CRM.Plugins.Plugins.Isps.PostUpdate: Update of Isp",
+   "HE.CRM.Plugins.Plugins.Isps.PostAssign: Assign of Isp",
    1,
    IsolationModeEnum.Sandbox,
-   Id = "7ed40632-bc2e-4013-a4ad-dfc52858417e",
+   Id = "9404d9e5-cdf5-4045-b8ae-b57c681b6a3a",
    Image1Name = "PreImage",
    Image1Attributes =
     invln_ISP.Fields.OwnerId + "," +
