@@ -62,6 +62,8 @@ export class IspService {
     this.hideSubordinatedDeedFields(true);
     this.hideCompletionGuaranteeFields(true);
     let security = <any>this.common.getAttribute("invln_securities");
+    if (security == null || security.getSelectedOption() == null)
+      return;
     for (var i = 0; i < security.getSelectedOption().length; i++) {
       switch (security.getSelectedOption()[i].value) {
         case Securities.debenture:
