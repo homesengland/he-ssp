@@ -1,4 +1,7 @@
 using HE.Investment.AHP.Contract.Delivery.Enums;
+using HE.Investment.AHP.Domain.Delivery.Policies;
+using HE.Investment.AHP.Domain.Delivery.ValueObjects;
+using HE.Investments.Account.Shared;
 using HE.Investments.AHP.Allocation.Contract.Claims;
 using HE.Investments.AHP.Allocation.Contract.Claims.Enum;
 using HE.Investments.AHP.Allocation.Contract.Claims.Events;
@@ -15,29 +18,37 @@ public sealed class PhaseEntity : DomainEntity
 {
     private readonly ModificationTracker _modificationTracker = new();
 
+    private readonly IOnlyCompletionMilestonePolicy _onlyCompletionMilestonePolicy;
+
     public PhaseEntity(
         PhaseId id,
         AllocationBasicInfo allocation,
+        OrganisationBasicInfo organisation,
         PhaseName name,
         NumberOfHomes numberOfHomes,
         BuildActivityType buildActivityType,
         MilestoneClaimBase? acquisitionMilestone,
         MilestoneClaimBase? startOnSiteMilestone,
-        MilestoneClaimBase completionMilestone)
+        MilestoneClaimBase completionMilestone,
+        IOnlyCompletionMilestonePolicy onlyCompletionMilestonePolicy)
     {
         Id = id;
         Allocation = allocation;
+        Organisation = organisation;
         Name = name;
         NumberOfHomes = numberOfHomes;
         BuildActivityType = buildActivityType;
         AcquisitionMilestone = acquisitionMilestone;
         StartOnSiteMilestone = startOnSiteMilestone;
         CompletionMilestone = completionMilestone;
+        _onlyCompletionMilestonePolicy = onlyCompletionMilestonePolicy;
     }
 
     public PhaseId Id { get; }
 
     public AllocationBasicInfo Allocation { get; }
+
+    public OrganisationBasicInfo Organisation { get; }
 
     public PhaseName Name { get; }
 
@@ -50,6 +61,9 @@ public sealed class PhaseEntity : DomainEntity
     public MilestoneClaimBase? StartOnSiteMilestone { get; private set; }
 
     public MilestoneClaimBase CompletionMilestone { get; private set; }
+
+    public bool IsOnlyCompletionMilestone =>
+        _onlyCompletionMilestonePolicy.Validate(Organisation.IsUnregisteredBody, new BuildActivity(Allocation.Tenure, type: BuildActivityType));
 
     public bool IsModified => _modificationTracker.IsModified;
 

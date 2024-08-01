@@ -1,12 +1,16 @@
 using FluentAssertions;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investment.AHP.Contract.Delivery.Enums;
+using HE.Investment.AHP.Domain.Delivery.Policies;
+using HE.Investment.AHP.Domain.Delivery.ValueObjects;
 using HE.Investments.AHP.Allocation.Contract.Claims.Enum;
 using HE.Investments.AHP.Allocation.Domain.Claims.Crm;
 using HE.Investments.AHP.Allocation.Domain.Claims.ValueObjects;
 using HE.Investments.AHP.Allocation.Domain.Tests.TestObjectBuilders;
 using HE.Investments.Common.CRM.Model;
+using HE.Investments.Common.Tests.TestData;
 using HE.Investments.TestsUtils.TestFramework;
+using Moq;
 using Xunit;
 using MilestoneStatus = HE.Investments.AHP.Allocation.Domain.Claims.Enums.MilestoneStatus;
 
@@ -18,6 +22,8 @@ public class MapToDomainTests : TestBase<PhaseCrmMapper>
     public void ShouldMapPhase_WhenOnlyCompletionMilestoneIsProvided()
     {
         // given
+        var onlyCompletionMilestonePolicy = WithOnlyCompletionMilestonePolicy();
+        var organisation = UserAccountTestData.UserAccountOne.Organisation!;
         var allocation = new AllocationBasicInfoBuilder().Build();
         var forecastClaimDate = new DateTime(2024, 07, 10, 0, 0, 0, DateTimeKind.Utc);
         var completionClaim = new MilestoneClaimDto
@@ -42,7 +48,7 @@ public class MapToDomainTests : TestBase<PhaseCrmMapper>
         };
 
         // when
-        var result = TestCandidate.MapToDomain(dto, allocation);
+        var result = TestCandidate.MapToDomain(dto, allocation, organisation, onlyCompletionMilestonePolicy);
 
         // then
         result.Should().NotBeNull();
@@ -65,6 +71,8 @@ public class MapToDomainTests : TestBase<PhaseCrmMapper>
     public void ShouldMapPhase_WhenAllMilestonesAreProvided()
     {
         // given
+        var onlyCompletionMilestonePolicy = WithOnlyCompletionMilestonePolicy();
+        var organisation = UserAccountTestData.UserAccountOne.Organisation!;
         var allocation = new AllocationBasicInfoBuilder().Build();
         var forecastClaimDate = new DateTime(2024, 07, 10, 0, 0, 0, DateTimeKind.Utc);
         var dto = new PhaseClaimsDto
@@ -81,7 +89,7 @@ public class MapToDomainTests : TestBase<PhaseCrmMapper>
         };
 
         // when
-        var result = TestCandidate.MapToDomain(dto, allocation);
+        var result = TestCandidate.MapToDomain(dto, allocation, organisation, onlyCompletionMilestonePolicy);
 
         // then
         result.Should().NotBeNull();
@@ -118,6 +126,8 @@ public class MapToDomainTests : TestBase<PhaseCrmMapper>
     public void ShouldMapMilestoneWithoutClaim_WhenStatusIsZero()
     {
         // given
+        var onlyCompletionMilestonePolicy = WithOnlyCompletionMilestonePolicy();
+        var organisation = UserAccountTestData.UserAccountOne.Organisation!;
         var allocation = new AllocationBasicInfoBuilder().Build();
         var forecastClaimDate = new DateTime(2024, 07, 10, 0, 0, 0, DateTimeKind.Utc);
         var completionClaim = new MilestoneClaimDto
@@ -139,7 +149,7 @@ public class MapToDomainTests : TestBase<PhaseCrmMapper>
         };
 
         // when
-        var result = TestCandidate.MapToDomain(dto, allocation);
+        var result = TestCandidate.MapToDomain(dto, allocation, organisation, onlyCompletionMilestonePolicy);
 
         // then
         result.CompletionMilestone.Should().BeOfType<MilestoneWithoutClaim>();
@@ -157,6 +167,8 @@ public class MapToDomainTests : TestBase<PhaseCrmMapper>
     public void ShouldMapSubmittedMilestone_WhenStatusIs(int status, MilestoneStatus expectedStatus)
     {
         // given
+        var onlyCompletionMilestonePolicy = WithOnlyCompletionMilestonePolicy();
+        var organisation = UserAccountTestData.UserAccountOne.Organisation!;
         var allocation = new AllocationBasicInfoBuilder().Build();
         var forecastClaimDate = new DateTime(2024, 07, 10, 0, 0, 0, DateTimeKind.Utc);
         var completionClaim = new MilestoneClaimDto
@@ -178,12 +190,20 @@ public class MapToDomainTests : TestBase<PhaseCrmMapper>
         };
 
         // when
-        var result = TestCandidate.MapToDomain(dto, allocation);
+        var result = TestCandidate.MapToDomain(dto, allocation, organisation, onlyCompletionMilestonePolicy);
 
         // then
         result.CompletionMilestone.Should().BeOfType<SubmittedMilestoneClaim>();
         result.CompletionMilestone.Status.Should().Be(expectedStatus);
         result.CompletionMilestone.GrantApportioned.Should().Be(new GrantApportioned(1000000, 0.01m));
         result.CompletionMilestone.ClaimDate.Should().Be(new ClaimDate(forecastClaimDate));
+    }
+
+    private IOnlyCompletionMilestonePolicy WithOnlyCompletionMilestonePolicy(bool? returnValue = null)
+    {
+        var onlyCompletionMilestonePolicy = new Mock<IOnlyCompletionMilestonePolicy>();
+        onlyCompletionMilestonePolicy
+            .Setup(x => x.Validate(It.IsAny<bool>(), It.IsAny<BuildActivity>())).Returns(returnValue ?? false);
+        return onlyCompletionMilestonePolicy.Object;
     }
 }
