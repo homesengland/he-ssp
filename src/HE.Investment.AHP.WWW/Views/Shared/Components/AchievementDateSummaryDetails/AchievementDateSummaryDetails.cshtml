@@ -15,14 +15,18 @@
 }
 else if (Model == MilestoneType.StartOnSite)
 {
+    var listItems = new[]
+    {
+        "the provider and the building contractor have entered in to a building contract",
+        "the building contractor takes possession of the site or property",
+        "the works have commenced",
+    };
+
     <gds-details>
         <gds-summary-details>What is the start on site milestone?</gds-summary-details>
         <gds-div-details-text>
             The start on site milestone applies as a payment event only to eligible schemes where start on site is achieved, and is triggered when:
-            <gds-ul>
-                <gds-li>the provider and the building contractor have entered in to a building contract</gds-li>
-                <gds-li>the building contractor takes possession of the site or property</gds-li>
-                <gds-li>the works have commenced</gds-li>
+            <gds-ul asp-lists="@listItems">
             </gds-ul>
             For full details of the requirements for claiming this milestone, read the
             <a href="@ExternalLinks.CapitalFundingGuideProgrammeManagement" target="_blank">Capital Funding Guide, under 4.1 onwards (opens in a new tab).</a>
