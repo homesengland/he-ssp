@@ -23,10 +23,12 @@ public class Order05ClaimCompletionMilestone : ClaimMilestoneTestBase
 
     protected override ClaimData ClaimData => new(
         MilestoneType.Completion,
-        new DateDetails("10", "01", "2026"),
+        new DateDetails("15", "04", "2025"),
         Confirmation: true);
 
-    protected override DateTime ClaimSubmissionDate => new(2026, 01, 11, 12, 00, 00, DateTimeKind.Local);
+    protected override DateTime ClaimSubmissionDate => new(2025, 04, 30, 12, 00, 00, DateTimeKind.Local);
+
+    protected override MilestoneStatus? StatusOnSubmission => MilestoneStatus.Overdue;
 
     protected override void AssertClaimSummary(IDictionary<string, SummaryItem> summary)
     {
@@ -35,6 +37,6 @@ public class Order05ClaimCompletionMilestone : ClaimMilestoneTestBase
             .ContainKey("Amount of grant apportioned to practical completion milestone")
             .WhoseValue.Value.Should()
             .BePoundsOnly(PhaseData.CompletionAmountOfGrantApportioned);
-        summary.Should().ContainKey("Practical completion achievement date").WithValue("10 January 2026");
+        summary.Should().ContainKey("Practical completion achievement date").WithValue("15 April 2025");
     }
 }

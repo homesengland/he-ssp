@@ -31,6 +31,8 @@ public abstract class ClaimMilestoneTestBase : AhpIntegrationTest
 
     protected abstract DateTime ClaimSubmissionDate { get; }
 
+    protected abstract MilestoneStatus? StatusOnSubmission { get; }
+
     protected PhaseData PhaseData { get; }
 
     protected ClaimPagesUrl ClaimPagesUrl => new(UserOrganisationData.OrganisationId, AllocationData.AllocationId, PhaseData.PhaseId, ClaimData.MilestoneType);
@@ -40,7 +42,14 @@ public abstract class ClaimMilestoneTestBase : AhpIntegrationTest
     public async Task Order01_ShouldClickClaimMilestoneLink()
     {
         // given
+        DateTimeManipulator.TravelInTimeTo(ClaimSubmissionDate);
+
         var overviewPage = await GetCurrentPage(ClaimsPagesUrl.Overview(UserOrganisationData.OrganisationId, AllocationData.AllocationId, PhaseData.PhaseId));
+        if (StatusOnSubmission.HasValue)
+        {
+            overviewPage.HasMilestoneStatusTag(ClaimData.MilestoneType, StatusOnSubmission.Value);
+        }
+
         overviewPage.HasLinkWithTestId(ClaimMilestoneLinkTestId(), out var claimMilestoneLink);
 
         // when
@@ -83,7 +92,26 @@ public abstract class ClaimMilestoneTestBase : AhpIntegrationTest
 
     [Fact(Skip = AhpConfig.SkipTest)]
     [Order(4)]
-    public async Task Order04_ShouldProvideConfirmation()
+    public async Task Order04_ShouldChangeClaimStatusToDraft()
+    {
+        // given
+        var overviewPage = await TestClient.NavigateTo(ClaimsPagesUrl.Overview(UserOrganisationData.OrganisationId, AllocationData.AllocationId, PhaseData.PhaseId));
+        overviewPage.HasMilestoneStatusTag(ClaimData.MilestoneType, MilestoneStatus.Draft)
+            .HasLinkWithTestId(ClaimMilestoneLinkTestId(), out var claimMilestoneLink);
+
+        // when
+        var confirmationPage = await TestClient.NavigateTo(claimMilestoneLink);
+
+        // then
+        confirmationPage
+            .UrlEndWith(ClaimPagesUrl.Confirmation)
+            .HasTitle(ClaimPageTitles.Confirmation);
+        SaveCurrentPage();
+    }
+
+    [Fact(Skip = AhpConfig.SkipTest)]
+    [Order(5)]
+    public async Task Order05_ShouldProvideConfirmation()
     {
         await TestClaimQuestionPage(
             ClaimPagesUrl.Confirmation,
@@ -93,8 +121,8 @@ public abstract class ClaimMilestoneTestBase : AhpIntegrationTest
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
-    [Order(5)]
-    public async Task Order05_ShouldDisplayCorrectSummary()
+    [Order(6)]
+    public async Task Order06_ShouldDisplayCorrectSummary()
     {
         // given
         var checkAnswersPage = await GetCurrentPage(ClaimPagesUrl.CheckAnswers);
@@ -112,8 +140,8 @@ public abstract class ClaimMilestoneTestBase : AhpIntegrationTest
     }
 
     [Fact(Skip = AhpConfig.SkipTest)]
-    [Order(6)]
-    public async Task Order06_ShouldSubmitClaim()
+    [Order(7)]
+    public async Task Order07_ShouldSubmitClaim()
     {
         // given
         var checkAnswersPage = await GetCurrentPage(ClaimPagesUrl.CheckAnswers);

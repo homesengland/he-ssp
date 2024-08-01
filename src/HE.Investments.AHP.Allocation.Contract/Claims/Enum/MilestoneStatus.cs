@@ -9,6 +9,7 @@ public enum MilestoneStatus
     DueSoon,
     Due,
     Overdue,
+    Draft,
     Submitted,
     [Description("Under review")]
     UnderReview,

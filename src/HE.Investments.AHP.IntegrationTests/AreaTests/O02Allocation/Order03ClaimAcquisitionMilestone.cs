@@ -28,7 +28,9 @@ public class Order03ClaimAcquisitionMilestone : ClaimMilestoneTestBase
         Confirmation: true,
         CostsIncurred: true);
 
-    protected override DateTime ClaimSubmissionDate => new(2024, 05, 11, 12, 00, 00, DateTimeKind.Local);
+    protected override DateTime ClaimSubmissionDate => new(2025, 01, 01, 12, 00, 00, DateTimeKind.Local);
+
+    protected override MilestoneStatus? StatusOnSubmission => null;
 
     protected override void AssertClaimSummary(IDictionary<string, SummaryItem> summary)
     {

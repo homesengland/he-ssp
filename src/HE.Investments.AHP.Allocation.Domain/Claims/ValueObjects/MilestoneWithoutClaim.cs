@@ -1,4 +1,5 @@
 using HE.Investments.AHP.Allocation.Contract.Claims.Enum;
+using MilestoneStatus = HE.Investments.AHP.Allocation.Domain.Claims.Enums.MilestoneStatus;
 
 namespace HE.Investments.AHP.Allocation.Domain.Claims.ValueObjects;
 
@@ -13,4 +14,6 @@ public sealed class MilestoneWithoutClaim : DraftMilestoneClaim
         : base(claim.Type, claim.GrantApportioned, new ClaimDate(claim.ClaimDate.ForecastClaimDate), null, null)
     {
     }
+
+    public override MilestoneStatus Status => MilestoneStatus.ClaimDoesNotExist;
 }

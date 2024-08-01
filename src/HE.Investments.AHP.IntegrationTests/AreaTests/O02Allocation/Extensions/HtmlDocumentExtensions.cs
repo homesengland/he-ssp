@@ -19,6 +19,11 @@ public static class HtmlDocumentExtensions
         return htmlDocument;
     }
 
+    public static IHtmlDocument HasNoMilestoneStatusTag(this IHtmlDocument htmlDocument, MilestoneType milestoneType)
+    {
+        return htmlDocument.HasNoElementWithTestId($"{milestoneType.ToString().ToIdTag()}-milestone-status");
+    }
+
     public static IHtmlDocument HasMilestoneStatusTag(this IHtmlDocument htmlDocument, MilestoneType milestoneType, MilestoneStatus status)
     {
         return htmlDocument.HasStatusTagByTestId(status.GetDescription(), $"{milestoneType.ToString().ToIdTag()}-milestone-status");
