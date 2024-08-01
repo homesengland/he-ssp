@@ -31,8 +31,7 @@ export class ReviewApprovalService {
     let status = this.common.getAttribute("invln_status").getValue()
     if (status == StatusReviewApproval.Approved) {
       this.common.setAttributeValue("invln_reviewapprovaldate", new Date(Date.now()));
-    } else
-    {
+    } else {
       this.common.setAttributeValue("invln_reviewapprovaldate", null);
     }
 
@@ -48,4 +47,46 @@ export class ReviewApprovalService {
       this.common.setControlRequiredV2("invln_reviewerapprovercomments", false);
     }
   }
+
+  public addFilterToHoFIndividualField() {
+
+    var fetchXml =
+      "<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='true'>" +
+      "  <entity name='systemuser'>" +
+      "    <link-entity name='teammembership' from='systemuserid' to='systemuserid' intersect='true'>" +
+      "      <filter>" +
+      "       <condition attribute='teamid' operator='eq' value='009544c2-477a-ee11-8179-002248004a06' />" +
+      "      </filter>" +
+      "    </link-entity>" +
+      "  </entity>" +
+      "</fetch>";
+
+    var layoutXml = "<grid name='resultset' object='1' jump='systemuserid' select='1' icon='1' preview='1'>" +
+      "<row name='result' id='systemuserid'>" +
+      "<cell name='fullname' width='150' />" +
+      "</row></grid>";
+
+    var viewId = "{00000000-0000-0000-0000-000000000003}";
+    var viewDisplayName = "Hof Team Users";
+
+    this.common.addCustomViewToLookup("invln_hofindividual", viewId, "systemuser", viewDisplayName, fetchXml, layoutXml);
+  };
+
+  public addAccessToTransactionManager() {
+    let isTrasactionManager = false;
+    let transactionMenagerRoleName = "[Loans] Transaction manager";
+
+    let securityRoles = this.common.getUserSecurityRoles();
+    securityRoles?.forEach(function (value) {
+      if (value.name == transactionMenagerRoleName) isTrasactionManager = true;
+      console.log(value.name);
+    });
+
+    let approvalType = this.common.getAttribute("invln_reviewerapprover").getValue();
+    let status = this.common.getAttribute("invln_status").getValue();
+    if (!(isTrasactionManager && status == 858110000 && (approvalType == 858110001 || approvalType == 858110002))) {
+      this.common.hideControl("invln_hofindividual", true)
+    }
+  }
+
 }

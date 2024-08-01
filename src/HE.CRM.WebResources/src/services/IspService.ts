@@ -51,7 +51,6 @@ export class IspService {
   }
 
   public setFieldsVisibilityBasedOnSecurity() {
-    var loanApplication = this.common.getLookupValue('invln_loanapplication')
     this.hideFirstLegalChargeFields(true);
     this.hideSubsequentChargeFields(true);
     this.hideDebentureFields(true);
@@ -62,46 +61,40 @@ export class IspService {
     this.hideParentCompanyGuaranteeFields(true);
     this.hideSubordinatedDeedFields(true);
     this.hideCompletionGuaranteeFields(true);
-    if (loanApplication != null) {
-      Xrm.WebApi.retrieveRecord('invln_loanapplication', loanApplication.id).then(result => {
-        if (result != null && result.invln_securities != null) {
-          var securitiesArray: string[] = result.invln_securities.split(",");
-          securitiesArray.forEach(element => {
-            switch (element) {
-              case Securities.debenture.toString():
-                this.hideDebentureFields(false);
-                break;
-              case Securities.firstLegalCharge.toString():
-                this.hideFirstLegalChargeFields(false);
-                break;
-              case Securities.subsequentCharge.toString():
-                this.hideSubsequentChargeFields(false);
-                break;
-              case Securities.personalGuarantee.toString():
-                this.hidePersonalGuaranteeFields(false);
-                break;
-              case Securities.parentCompanyGuarantee.toString():
-                this.hideParentCompanyGuaranteeFields(false);
-                break;
-              case Securities.subordinatedDeed.toString():
-                this.hideSubordinatedDeedFields(false);
-                break;
-              case Securities.costOverrunGuarantee.toString():
-                this.hideCostOverrunGuaranteeFields(false);
-                break;
-              case Securities.completionGuarantee.toString():
-                this.hideCompletionGuaranteeFields(false);
-                break;
-              case Securities.interestShortfall.toString():
-                this.hideInterestShortfallFields(false);
-                break;
-              case Securities.other.toString():
-                this.hideOtherFields(false);
-                break;
-            }
-          })
-        }
-      })
+    let security = <any>this.common.getAttribute("invln_securities");
+    for (var i = 0; i < security.getSelectedOption().length; i++) {
+      switch (security.getSelectedOption()[i].value) {
+        case Securities.debenture:
+          this.hideDebentureFields(false);
+          break;
+        case Securities.firstLegalCharge:
+          this.hideFirstLegalChargeFields(false);
+          break;
+        case Securities.subsequentCharge:
+          this.hideSubsequentChargeFields(false);
+          break;
+        case Securities.personalGuarantee:
+          this.hidePersonalGuaranteeFields(false);
+          break;
+        case Securities.parentCompanyGuarantee:
+          this.hideParentCompanyGuaranteeFields(false);
+          break;
+        case Securities.subordinatedDeed:
+          this.hideSubordinatedDeedFields(false);
+          break;
+        case Securities.costOverrunGuarantee:
+          this.hideCostOverrunGuaranteeFields(false);
+          break;
+        case Securities.completionGuarantee:
+          this.hideCompletionGuaranteeFields(false);
+          break;
+        case Securities.interestShortfall:
+          this.hideInterestShortfallFields(false);
+          break;
+        case Securities.other:
+          this.hideOtherFields(false);
+          break;
+      }
     }
   }
 
@@ -375,7 +368,6 @@ export class IspService {
 
         this.common.setAttributeDateValue('invln_datesubmitted', result['invln_datesubmitted'])
 
-        console.log(result['invln_securities']);
         let values = result['invln_securities'].split(',')
         let osv = values.map(function (x) {
           return parseInt(x);
@@ -408,6 +400,10 @@ export class IspService {
             console.log(e);
           }
         }
+
+        this.common.setAttributeDateValue('invln_peakfundingdate', cashflowSubmition.entities[0]['invln_peakfundingdate'])
+        this.common.setAttributeDateValue('invln_loanrecycledincomeotherdebttocostsdate', cashflowSubmition.entities[0]['invln_loanrecycledincomeotherdebttocostdate'])
+        this.common.setAttributeDateValue('invln_loanotherdebttogdvpeakdate', cashflowSubmition.entities[0]['invln_loanotherdebttogdvdate'])
       }
     }
   }

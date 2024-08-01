@@ -491,7 +491,7 @@ namespace HE.CRM.Plugins.Services.LoanApplication
                         break;
 
                     case (int)invln_Loanapplication_StatusCode.NotApproved:
-                        target.invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatus.SentforApproval);
+                        target.invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatus.UnderReview);
                         break;
 
                     case (int)invln_Loanapplication_StatusCode.ApprovedSubjecttoDueDiligence:

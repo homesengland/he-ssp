@@ -556,6 +556,18 @@ export class CommonLib {
     }
   }
 
+  public addCustomViewToLookup(
+    lookupCtrlName: string,
+    viewId: string,
+    entityName: string,
+    viewDisplayName: string,
+    fetchXml: string,
+    layoutXml: string
+  ) {
+    let ctrl = this.getControl<Xrm.Controls.LookupControl>(lookupCtrlName);
+    ctrl.addCustomView(viewId, entityName, viewDisplayName, fetchXml, layoutXml, true);
+  }
+
   public addCustomFilter(
     lookupCtrlName: string,
     filter: string,
@@ -635,6 +647,14 @@ export class CommonLib {
     this.formContext.ui.controls.forEach((control, i) => {
       if (control && (control as Xrm.Controls.StandardControl).getDisabled && !(control as Xrm.Controls.StandardControl).getDisabled()) {
         (control as Xrm.Controls.StandardControl).setDisabled(true)
+      }
+    });
+  }
+
+  public enableAllFields() {
+    this.formContext.ui.controls.forEach((control, i) => {
+      if (control && (control as Xrm.Controls.StandardControl).getDisabled && !(control as Xrm.Controls.StandardControl).getDisabled()) {
+        (control as Xrm.Controls.StandardControl).setDisabled(false)
       }
     });
   }

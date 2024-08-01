@@ -1,10 +1,11 @@
 @using HE.Investments.AHP.Allocation.Contract.Claims.Enum
 @using HE.Investments.Common.Extensions
-@model (HE.Investments.AHP.Allocation.Contract.Claims.Enum.MilestoneStatus Status, HE.Investments.Common.Gds.TagColour TagColour)
+@using HE.Investments.Common.WWW.Extensions
+@model (MilestoneType ClaimType, HE.Investments.AHP.Allocation.Contract.Claims.Enum.MilestoneStatus Status, HE.Investments.Common.Gds.TagColour TagColour)
 
 @if (Model.Status != MilestoneStatus.Undefined)
 {
-    <strong class="govuk-tag govuk-tag--@Model.TagColour.GetDescription().ToLowerInvariant()">
+    <strong data-testid="@Model.ClaimType.ToString().ToIdTag()-milestone-status" class="govuk-tag govuk-tag--@Model.TagColour.GetDescription().ToLowerInvariant()">
         @Model.Status.GetDescription()
     </strong>
 }

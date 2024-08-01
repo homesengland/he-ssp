@@ -39,14 +39,16 @@ public class PhaseData
 
     public void SetDataFromDeliveryPhase(RehabDeliveryPhase deliveryPhaseData, decimal requiredFunding, int numberOfHomes)
     {
+        var phaseFunding = requiredFunding / 2;
+
         PhaseName = deliveryPhaseData.Name;
         NumberOfHomes = numberOfHomes;
         BuildActivityType = deliveryPhaseData.BuildActivityType;
         AcquisitionForecastClaimDate = deliveryPhaseData.AcquisitionMilestonePaymentDate;
         StartOnSiteForecastClaimDate = deliveryPhaseData.StartOnSiteMilestonePaymentDate;
         CompletionForecastClaimDate = deliveryPhaseData.CompletionMilestonePaymentDate;
-        AcquisitionAmountOfGrantApportioned = requiredFunding / 2 * 0.4m;
-        StartOnSiteAmountOfGrantApportioned = requiredFunding / 2 * 0.35m;
-        CompletionAmountOfGrantApportioned = requiredFunding / 2 * 0.25m;
+        AcquisitionAmountOfGrantApportioned = phaseFunding * 0.4m;
+        StartOnSiteAmountOfGrantApportioned = phaseFunding * 0.35m;
+        CompletionAmountOfGrantApportioned = phaseFunding - AcquisitionAmountOfGrantApportioned - StartOnSiteAmountOfGrantApportioned;
     }
 }
