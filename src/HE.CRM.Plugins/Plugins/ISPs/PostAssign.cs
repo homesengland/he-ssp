@@ -12,7 +12,7 @@ using Microsoft.Xrm.Sdk;
 namespace HE.CRM.Plugins.Plugins.ISPs
 {
     [CrmPluginRegistration(
-   MessageNameEnum.Update,
+   MessageNameEnum.Assign,
    invln_ISP.EntityLogicalName,
    StageEnum.PostOperation,
    ExecutionModeEnum.Synchronous,
@@ -21,11 +21,11 @@ namespace HE.CRM.Plugins.Plugins.ISPs
    1,
    IsolationModeEnum.Sandbox,
    Id = "9404d9e5-cdf5-4045-b8ae-b57c681b6a3a",
-   Image1Name = "PreImage",
+   Image1Name = "PostImage",
    Image1Attributes =
     invln_ISP.Fields.OwnerId + "," +
     invln_ISP.Fields.invln_Loanapplication,
-   Image1Type = ImageTypeEnum.PreImage)]
+   Image1Type = ImageTypeEnum.PostImage)]
     public class PostAssign : PluginBase<DataverseContext>, IPlugin
     {
         public override void RegisterHandlers(CrmHandlerFactory<DataverseContext> handlerFactory, IList<ICrmHandler> registeredHandlers)

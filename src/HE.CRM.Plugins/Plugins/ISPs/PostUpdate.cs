@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace HE.CRM.Plugins.Plugins.ISPs
 {
     [CrmPluginRegistration(
-    MessageNameEnum.Assign,
+    MessageNameEnum.Update,
     invln_ISP.EntityLogicalName,
     StageEnum.PostOperation,
     ExecutionModeEnum.Synchronous,
