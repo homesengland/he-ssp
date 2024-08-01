@@ -57,6 +57,7 @@ public class DeliveryPhaseEntity : DomainEntity, IDeliveryPhaseEntity
         ReconfiguringExisting = reconfiguringExisting;
         Status = status;
         CreatedOn = createdOn;
+        _onlyCompletionMilestonePolicy = onlyCompletionMilestonePolicy;
         DeliveryPhaseMilestones = new DeliveryPhaseMilestones(IsOnlyCompletionMilestone, acquisitionMilestone, startOnSiteMilestone, completionMilestone);
         IsAdditionalPaymentRequested = isAdditionalPaymentRequested;
         _homesToDeliver = homesToDeliver?.ToList() ?? [];
@@ -70,7 +71,6 @@ public class DeliveryPhaseEntity : DomainEntity, IDeliveryPhaseEntity
             IsOnlyCompletionMilestone);
 
         Tranches.TranchesAmended += MarkAsNotCompleted;
-        _onlyCompletionMilestonePolicy = onlyCompletionMilestonePolicy;
     }
 
     public ApplicationBasicInfo Application { get; }
