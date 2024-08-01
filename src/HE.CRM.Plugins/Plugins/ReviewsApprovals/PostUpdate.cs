@@ -26,7 +26,7 @@ namespace HE.CRM.Plugins.Plugins.ReviewsApprovals
       Image1Type = ImageTypeEnum.PostImage,
       Image2Name = "PreImage",
       Image2Attributes = "invln_ispid,invln_status," + invln_reviewapproval.Fields.invln_ispid,
-      Image2Type = ImageTypeEnum.PostImage,
+      Image2Type = ImageTypeEnum.PreImage,
       Id = "CACFD0E5-91E5-4F00-8274-E14C2891DB99")]
     public class PostUpdate : PluginBase<DataverseContext>, IPlugin
     {

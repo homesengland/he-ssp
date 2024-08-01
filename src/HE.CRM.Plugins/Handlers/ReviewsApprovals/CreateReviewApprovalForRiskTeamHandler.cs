@@ -33,7 +33,7 @@ namespace HE.CRM.Plugins.Handlers.ReviewsApprovals
             var teamRepository = CrmRepositoriesFactory.GetSystem<ITeamRepository>();
             TracingService.Trace("Get ISP");
             var isp = _ispRepository.GetById(CurrentState.invln_ispid, new string[] { invln_ISP.Fields.invln_ApprovalLevelNew });
-            if (isp.invln_ApprovalLevelNew.Value != (int)invln_ApprovalLevel.CRO && isp.invln_ApprovalLevelNew.Value != (int)invln_ApprovalLevel.CRODelegatedAuthority)
+            if (isp.invln_ApprovalLevelNew != null && isp.invln_ApprovalLevelNew.Value != (int)invln_ApprovalLevel.CRO && isp.invln_ApprovalLevelNew.Value != (int)invln_ApprovalLevel.CRODelegatedAuthority)
             {
                 return;
             }
@@ -87,14 +87,14 @@ namespace HE.CRM.Plugins.Handlers.ReviewsApprovals
 
         private static bool ConditionForCRODelegatedApproval(invln_ISP isp, invln_reviewapproval latestDesApproval, invln_reviewapproval hoFra)
         {
-            return isp.invln_ApprovalLevelNew.Value == (int)invln_ApprovalLevel.CRODelegatedAuthority &&
+            return isp.invln_ApprovalLevelNew != null && isp.invln_ApprovalLevelNew.Value == (int)invln_ApprovalLevel.CRODelegatedAuthority &&
                             ((hoFra.invln_status.Value == (int)invln_StatusReviewApprovalSet.Approved || hoFra.invln_status.Value == (int)invln_StatusReviewApprovalSet.Reviewed)
                             || (latestDesApproval.invln_status.Value == (int)invln_StatusReviewApprovalSet.Approved || latestDesApproval.invln_status.Value == (int)invln_StatusReviewApprovalSet.Reviewed));
         }
 
         private static bool ConditionForCROApproval(invln_ISP isp, invln_reviewapproval latestDesApproval, invln_reviewapproval hoFra)
         {
-            return isp.invln_ApprovalLevelNew.Value == (int)invln_ApprovalLevel.CRO &&
+            return isp.invln_ApprovalLevelNew != null && isp.invln_ApprovalLevelNew.Value == (int)invln_ApprovalLevel.CRO &&
                             ((hoFra.invln_status.Value == (int)invln_StatusReviewApprovalSet.Approved || hoFra.invln_status.Value == (int)invln_StatusReviewApprovalSet.Reviewed)
                             || (latestDesApproval.invln_status.Value == (int)invln_StatusReviewApprovalSet.Approved || latestDesApproval.invln_status.Value == (int)invln_StatusReviewApprovalSet.Reviewed));
         }

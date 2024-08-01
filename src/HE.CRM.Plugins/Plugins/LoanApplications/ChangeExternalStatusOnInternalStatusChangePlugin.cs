@@ -22,16 +22,20 @@ namespace HE.CRM.Plugins.Plugins.LoanApplications
     public class ChangeExternalStatusOnInternalStatusChangePlugin : PluginBase<DataverseContext>, IPlugin
     {
         #region Constructors
+
         public ChangeExternalStatusOnInternalStatusChangePlugin(string unsecureConfig, string secureConfig) : base(unsecureConfig, secureConfig)
         {
         }
-        #endregion
+
+        #endregion Constructors
 
         #region Base Methods Overrides
+
         public override void RegisterHandlers(CrmHandlerFactory<DataverseContext> handlerFactory, IList<ICrmHandler> registeredHandlers)
         {
             registeredHandlers.Add(handlerFactory.GetHandler<ChangeExternalStatusOnInternalStatusChangeHandler>());
         }
-        #endregion
+
+        #endregion Base Methods Overrides
     }
 }

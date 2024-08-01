@@ -15,6 +15,11 @@ namespace HE.CRM.Common.Repositories.Implementations
         public IspRepository(CrmRepositoryArgs args) : base(args)
         {
         }
+        public invln_sendinternalcrmnotificationResponse ExecuteNotificatioRequest(invln_sendinternalcrmnotificationRequest request)
+        {
+            logger.Trace("ExecuteNotificationRequest");
+            return (invln_sendinternalcrmnotificationResponse)service.Execute(request);
+        }
 
     }
 }

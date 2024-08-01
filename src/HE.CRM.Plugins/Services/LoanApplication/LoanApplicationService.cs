@@ -484,6 +484,10 @@ namespace HE.CRM.Plugins.Services.LoanApplication
 
                     case (int)invln_Loanapplication_StatusCode.SentforApproval:
                         target.invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatus.SentforApproval);
+
+                        SendInternalCrmNotificationOnSentForApproval(preImage);
+                        _govNotifyEmailService.SendNotifications_INTERNAL_SENT_FOR_APPROVAL_NOTIFICATION(preImage);
+
                         break;
 
                     case (int)invln_Loanapplication_StatusCode.NotApproved:
@@ -632,6 +636,17 @@ namespace HE.CRM.Plugins.Services.LoanApplication
                     break;
             }
             return loanApplication;
+        }
+
+        public void SendInternalCrmNotificationOnSentForApproval(invln_Loanapplication loanApplication)
+        {
+            var internalNotification = new invln_sendinternalcrmnotificationRequest()
+            {
+                invln_notificationbody = $" Application ref no {loanApplication.invln_Name} Reviewed",
+                invln_notificationowner = loanApplication.OwnerId.Id.ToString(),
+                invln_notificationtitle = "Information",
+            };
+            _ = _loanApplicationRepositoryAdmin.ExecuteNotificatioRequest(internalNotification);
         }
 
         public void SendEmailToNewOwner(invln_Loanapplication target, invln_Loanapplication preImage)
