@@ -41,7 +41,7 @@ resources:
   - repository: he-invst-deployment
     type: git
     name: "Investments Programme/he-invst-deployment"
-    ref: "ahp_main_solution_as_option_for_r3"
+    ref: "development_R3"
 
 stages:
 - template: crm-deployment-pipelines/invst-R3-crm-deploy-nonprod.yml@he-invst-deployment
