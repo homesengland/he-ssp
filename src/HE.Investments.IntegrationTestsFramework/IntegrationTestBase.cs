@@ -168,7 +168,8 @@ public class IntegrationTestBase<TProgram> : IAsyncLifetime
 
     protected void ThenTestQuestionPage(IHtmlDocument nextPage, string expectedPageUrlAfterContinue)
     {
-        nextPage.UrlWithoutQueryEndsWith(expectedPageUrlAfterContinue);
+        nextPage.HasNoValidationErrors()
+            .UrlWithoutQueryEndsWith(expectedPageUrlAfterContinue);
 
         SaveCurrentPage();
     }

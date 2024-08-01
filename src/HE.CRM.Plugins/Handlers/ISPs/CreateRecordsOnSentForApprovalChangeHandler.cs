@@ -1,6 +1,8 @@
+using System.Net.Http.Headers;
 using DataverseModel;
 using HE.Base.Common.Extensions;
 using HE.Base.Plugins.Handlers;
+using HE.CRM.Common.Repositories.Implementations;
 using HE.CRM.Common.Repositories.Interfaces;
 using HE.CRM.Plugins.Services.ISPs;
 using Microsoft.Xrm.Sdk;
@@ -10,10 +12,12 @@ namespace HE.CRM.Plugins.Handlers.ISPs
     public class CreateRecordsOnSentForApprovalChangeHandler : CrmEntityHandlerBase<invln_ISP, DataverseContext>
     {
         private readonly IReviewApprovalRepository _reviewApprovalRepository;
+        private readonly IIspRepository _ispRepository;
 
-        public CreateRecordsOnSentForApprovalChangeHandler(IReviewApprovalRepository reviewApprovalRepository)
+        public CreateRecordsOnSentForApprovalChangeHandler(IReviewApprovalRepository reviewApprovalRepository, IIspRepository ispRepository)
         {
             _reviewApprovalRepository = reviewApprovalRepository;
+            _ispRepository = ispRepository;
         }
 
         public override bool CanWork()
@@ -32,6 +36,10 @@ namespace HE.CRM.Plugins.Handlers.ISPs
                 _reviewApprovalRepository.Update(ra);
             }
 
+            invln_ISP toUpdate = new invln_ISP();
+            toUpdate.invln_ApprovalStatus = new OptionSetValue((int)invln_ApprovalStatus.Pending);
+            toUpdate.Id = CurrentState.Id;
+            _ispRepository.Update(toUpdate);
             TracingService.Trace("Create Team repo");
 
             var teamRepository = CrmRepositoriesFactory.GetSystem<ITeamRepository>();
@@ -49,6 +57,11 @@ namespace HE.CRM.Plugins.Handlers.ISPs
                 invln_ispid = CurrentState.Id.ToEntityReference<invln_ISP>(),
                 OwnerId = desTeam.ToEntityReference(),
             });
+
+            if (CurrentState.invln_ApprovalLevelNew == null)
+            {
+                return;
+            }
 
             if (CurrentState.invln_ApprovalLevelNew.Value == (int)invln_ApprovalLevel.HoF)
             {

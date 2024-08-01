@@ -37,7 +37,8 @@ public sealed class MilestoneClaimContractMapper : IMilestoneClaimContractMapper
         return status switch
         {
             Enums.MilestoneStatus.Undefined => MapDueStatus(dueStatus),
-            Enums.MilestoneStatus.Draft => MapDueStatus(dueStatus),
+            Enums.MilestoneStatus.ClaimDoesNotExist => MapDueStatus(dueStatus),
+            Enums.MilestoneStatus.Draft => MilestoneStatus.Draft,
             Enums.MilestoneStatus.Submitted => MilestoneStatus.Submitted,
             Enums.MilestoneStatus.UnderReview => MilestoneStatus.UnderReview,
             Enums.MilestoneStatus.Approved => MilestoneStatus.Approved,

@@ -160,6 +160,7 @@
     <Compile Include="Handlers\CustomApi\UpdateUserProfileHandler.cs" />
     <Compile Include="Handlers\ISPs\CreateConditionRecordsOnHandler.cs" />
     <Compile Include="Handlers\ISPs\CreateRecordsOnSentForApprovalChangeHandler.cs" />
+    <Compile Include="Handlers\ISPs\SendEmailEndAddNotificationOnOwnerChangeHandler.cs" />
     <Compile Include="Handlers\ISPs\SetFieldsOnSentForApprovalChangeHandler.cs" />
     <Compile Include="Handlers\LoanApplications\AssignLoanToTmTeamOnCreateHandler.cs" />
     <Compile Include="Handlers\LoanApplications\ChangeApplicationStatusOnOwnerChangeHandler.cs" />
@@ -170,6 +171,7 @@
     <Compile Include="Handlers\LoanApplications\ChangeExternalStatusOnInternalStatusChangeHandler.cs" />
     <Compile Include="Handlers\LoanApplications\SetFieldsWhenChangingStatusFromDraftHandler.cs" />
     <Compile Include="Handlers\LoanStatusChange\SendNotificationOnCreateHandler.cs" />
+    <Compile Include="Handlers\ReviewsApprovals\CreateReviewApprovalForRiskTeamHandler.cs" />
     <Compile Include="Handlers\ReviewsApprovals\IspStatusOnReviewApprovalStatusChangeHandler.cs" />
     <Compile Include="Handlers\SiteDetails\FulfillRegionOnLocalAuthorityChangeHandler.cs" />
     <Compile Include="Handlers\SiteDetails\UpdateLoansApplicationAfterStatusChange.cs" />
@@ -209,6 +211,7 @@
     <Compile Include="Plugins\Accounts\OnCurrentCrrFieldUpdatePlugin.cs" />
     <Compile Include="Plugins\CustomApi\UpdateUserProfilePlugin.cs" />
     <Compile Include="Plugins\ISPs\CreateConditionRecordsOnCreate.cs" />
+    <Compile Include="Plugins\ISPs\PostAssign.cs" />
     <Compile Include="Plugins\ISPs\PostUpdate.cs" />
     <Compile Include="Plugins\ISPs\SetFieldsOnSentForApprovalChangePlugin.cs" />
     <Compile Include="Plugins\LoanApplications\AssignLoanToTmTeamOnCreatePlugin.cs" />
@@ -220,7 +223,7 @@
     <Compile Include="Plugins\LoanApplications\SendEmailToNewOwnerPlugin.cs" />
     <Compile Include="Plugins\LoanApplications\ChangeExternalStatusOnInternalStatusChangePlugin.cs" />
     <Compile Include="Plugins\LoanApplications\SetFieldsWhenChangingStatusFromDraftPlugin.cs" />
-    <Compile Include="Plugins\ReviewsApprovals\IspStatusOnReviewApprovalStatusChangePlugin.cs" />
+    <Compile Include="Plugins\ReviewsApprovals\PostUpdate.cs" />
     <Compile Include="Plugins\SiteDetails\PreUpdate.cs" />
     <Compile Include="Services\Accounts\AccountService.cs" />
     <Compile Include="Services\Accounts\IAccountService.cs" />

@@ -227,7 +227,8 @@
     "invln_updateuserprofile*",
     "retrieveenvironmentvariables*",
     "retrieveenvironmentvariablesecretvalue*",
-    "retrieveenvironmentvariablevalue*"
+    "retrieveenvironmentvariablevalue*",
+    "sendappnotification*"
   ],
   "messagesTypesFolder": "..\\Actions",
   "metadataProviderService": "DLaB.ModelBuilderExtensions.MetadataProviderService,DLaB.ModelBuilderExtensions",

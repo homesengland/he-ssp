@@ -143,7 +143,7 @@ public class MapToDomainTests : TestBase<PhaseCrmMapper>
 
         // then
         result.CompletionMilestone.Should().BeOfType<MilestoneWithoutClaim>();
-        result.CompletionMilestone.Status.Should().Be(MilestoneStatus.Draft);
+        result.CompletionMilestone.Status.Should().Be(MilestoneStatus.ClaimDoesNotExist);
         result.CompletionMilestone.GrantApportioned.Should().Be(new GrantApportioned(1000000, 0.01m));
         result.CompletionMilestone.ClaimDate.Should().Be(new ClaimDate(forecastClaimDate));
     }

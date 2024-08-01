@@ -7,43 +7,43 @@ trigger:
   batch: true
   branches:
     include:
-      - development_R3
+    - development_R3
   paths:
     include:
-      - src/HE.InvestmentLoans.sln
-      - src/HE.Investments.Loans.*/*
-      - src/HE.Investments.FrontDoor.Shared/*
-      - src/HE.Investments.Account.Shared/*
-      - src/HE.Investments.Account.Api.Contract/*
-      - src/HE.Investments.Common*/*
-      - src/HE.Common.*/*
-      - src/HE.Investments.DocumentService/*
-      - src/HE.Investments.IntegrationTestsFramework/*
-      - src/HE.Investments.Organisation/*
-      - src/HE.Investments.TestsUtils/*
-      - src/He.AspNetCore.Mvc.Gds.Components/*
-      - src/HE.Investments.FrontDoor.Shared/*
-      - src/HE.Investments.Api/*
+    - src/HE.InvestmentLoans.sln
+    - src/HE.Investments.Loans.*/*
+    - src/HE.Investments.FrontDoor.Shared/*
+    - src/HE.Investments.Account.Shared/*
+    - src/HE.Investments.Account.Api.Contract/*
+    - src/HE.Investments.Common*/*
+    - src/HE.Common.*/*
+    - src/HE.Investments.DocumentService/*
+    - src/HE.Investments.IntegrationTestsFramework/*
+    - src/HE.Investments.Organisation/*
+    - src/HE.Investments.TestsUtils/*
+    - src/He.AspNetCore.Mvc.Gds.Components/*
+    - src/HE.Investments.FrontDoor.Shared/*
+    - src/HE.Investments.Api/*
 
 pr:
   branches:
     include:
-      - development_R3
+    - development_R3
   paths:
     include:
-      - src/HE.InvestmentLoans.sln
-      - src/HE.Investments.Loans.*/*
-      - src/HE.Investments.Account.Shared/*
-      - src/HE.Investments.Account.Api.Contract/*
-      - src/HE.Investments.Common*/*
-      - src/HE.Common.*/*
-      - src/HE.Investments.DocumentService/*
-      - src/HE.Investments.IntegrationTestsFramework/*
-      - src/HE.Investments.Organisation/*
-      - src/HE.Investments.TestsUtils/*
-      - src/He.AspNetCore.Mvc.Gds.Components/*
-      - src/HE.Investments.FrontDoor.Shared/*
-      - src/HE.Investments.Api/*
+    - src/HE.InvestmentLoans.sln
+    - src/HE.Investments.Loans.*/*
+    - src/HE.Investments.Account.Shared/*
+    - src/HE.Investments.Account.Api.Contract/*
+    - src/HE.Investments.Common*/*
+    - src/HE.Common.*/*
+    - src/HE.Investments.DocumentService/*
+    - src/HE.Investments.IntegrationTestsFramework/*
+    - src/HE.Investments.Organisation/*
+    - src/HE.Investments.TestsUtils/*
+    - src/He.AspNetCore.Mvc.Gds.Components/*
+    - src/HE.Investments.FrontDoor.Shared/*
+    - src/HE.Investments.Api/*
 
 pool:
   vmImage: 'ubuntu-22.04'
@@ -60,4 +60,4 @@ resources:
     ref: 'master'
 
 stages:
-- template: azure-pipelines-loans-portal-build.yml@he-invst-deployment
+- template: portal-deployment-pipelines/azure-pipelines-loans-portal-build.yml@he-invst-deployment

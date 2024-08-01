@@ -236,6 +236,8 @@ namespace DataverseModel
 			public const string invln_invln_scheme_Site_invln_sites = "invln_invln_scheme_Site_invln_sites";
 			public const string invln_isallocation = "invln_isallocation";
 			public const string invln_isallocationName = "invln_isallocationname";
+			public const string invln_isvariation = "invln_isvariation";
+			public const string invln_isvariationName = "invln_isvariationname";
 			public const string invln_LAApproval = "invln_laapproval";
 			public const string invln_laapprovalName = "invln_laapprovalname";
 			public const string invln_LandScorecalc = "invln_landscorecalc";
@@ -2145,6 +2147,40 @@ namespace DataverseModel
 				if (this.FormattedValues.Contains("invln_isallocation"))
 				{
 					return this.FormattedValues["invln_isallocation"];
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_isvariation")]
+		public System.Nullable<bool> invln_isvariation
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("invln_isvariation");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_isvariation");
+				this.SetAttributeValue("invln_isvariation", value);
+				this.OnPropertyChanged("invln_isvariation");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_isvariationname")]
+		public string invln_isvariationName
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				if (this.FormattedValues.Contains("invln_isvariation"))
+				{
+					return this.FormattedValues["invln_isvariation"];
 				}
 				else
 				{
