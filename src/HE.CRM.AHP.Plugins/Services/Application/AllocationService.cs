@@ -19,6 +19,7 @@ using HE.CRM.Model.CrmSerialiedParameters;
 using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Messages;
 using Microsoft.Xrm.Sdk.Query;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace HE.CRM.AHP.Plugins.Services.Application
 {
@@ -60,95 +61,124 @@ namespace HE.CRM.AHP.Plugins.Services.Application
                 return Guid.Empty;
             }
 
-            var allocation = application.CloneWithoutSystemFields();
+            var requestCollection = new OrganizationRequestCollection();
+
+            Logger.Trace($"Trying copy an Application with ID: {application.Id}");
+            var allocation = application.CloneToCreate();
             allocation.Id = Guid.NewGuid();
             allocation.invln_isallocation = true;
             allocation.invln_BaseApplication = new EntityReference(invln_scheme.EntityLogicalName, schemeId);
-            allocation.StatusCode = application.StatusCode;
-            allocation.StateCode = application.StateCode;
-            allocation.invln_schemename = $"{application.invln_schemename} 1";
-            allocation.invln_AllocationID = "123";
+            allocation.invln_AllocationID = "1";
 
-            var allocationId = _ahpApplicationRepository.Create(allocation);
+            var request = new CreateRequest()
+            {
+                Target = allocation
+            };
+            requestCollection.Add(request);
 
-            MoveDocumentsToAllocation(schemeId, allocationId);
+            var deliveryPhaseMap = CloneDeliveryHomes(requestCollection, application.Id, allocation);
+            var homeTypeMap = CloneHomeTypes(requestCollection, application.Id, allocation);
+            CloneHomesInDeliveryPhase(requestCollection, application.Id, deliveryPhaseMap, homeTypeMap);
 
-            //foreach (var deliveryPhase in deliveryPhaseList)
-            //{
-            //    var deliveryPhaseAllocation = deliveryPhase.CloneWithoutSystemFields();
-            //    deliveryPhaseAllocation.Id = Guid.NewGuid();
-            //    deliveryPhaseAllocation.invln_Application = new EntityReference(invln_scheme.EntityLogicalName, allocationId);
-            //    _deliveryPhaseRepository.Create(deliveryPhaseAllocation);
-            //}
+            _ahpApplicationRepository.ExecuteAllRequestsInTransactionalBatches(requestCollection);
 
-            var homeTypeList = _homeTypeRepository.GetByAttribute(invln_HomeType.Fields.invln_application, application.Id);
-            var homeTypeListForAllocation = homeTypeList
-                .Select(ht =>
-                {
-                    ht.Id = Guid.NewGuid();
-                    ht.invln_application = new EntityReference(invln_scheme.EntityLogicalName, allocationId);
-                    return (Entity)ht;
-                })
-                .ToList();
-
-            _homeTypeRepository.CreateMultiple(homeTypeListForAllocation);
-
-            var deliveryPhaseList = _deliveryPhaseRepository.GetByAttribute(invln_DeliveryPhase.Fields.invln_Application, application.Id);
-            var deliveryPhaseForAllocation = deliveryPhaseList
-                .Select(df =>
-                {
-                    df.Id = Guid.NewGuid();
-                    df.invln_Application = new EntityReference(invln_scheme.EntityLogicalName, allocationId);
-                    return (Entity)df;
-                }
-                )
-                .ToList();
-            _ahpApplicationRepository.CreateMultiple(deliveryPhaseForAllocation);
-
-            //_homesInDeliveryPhaseRepository.Create()
-
-            return allocationId;
+            return allocation.Id;
         }
 
-        private void MoveDocumentsToAllocation(Guid fromApplicationId, Guid toApplicationId)
+        private Dictionary<Guid, Guid> CloneDeliveryHomes(OrganizationRequestCollection requestCollection, Guid sourceApplicationId, invln_scheme targetAllocation)
         {
-            var query = new QueryExpression(SharePointDocumentLocation.EntityLogicalName)
+            Logger.Trace("CloneDeliveryHomes");
+
+            var deliveryPhaseMap = new Dictionary<Guid, Guid>();
+            var deliveryPhaseList = _deliveryPhaseRepository.GetByAttribute(invln_DeliveryPhase.Fields.invln_Application, sourceApplicationId);
+
+            foreach (var deliveryPhase in deliveryPhaseList)
             {
-                ColumnSet = new ColumnSet(true),
-                LinkEntities =
+                var deliveryPhaseAllocation = deliveryPhase.CloneToCreate();
+                deliveryPhaseAllocation.Id = Guid.NewGuid();
+                deliveryPhaseAllocation.invln_Application = targetAllocation.ToEntityReference();
+
+                var request = new CreateRequest()
                 {
-                    new LinkEntity()
-                    {
-                        LinkFromEntityName = SharePointDocumentLocation.EntityLogicalName,
-                        LinkFromAttributeName = SharePointDocumentLocation.Fields.RegardingObjectId,
-                        LinkToEntityName = invln_scheme.EntityLogicalName,
-                        LinkToAttributeName = invln_scheme.PrimaryIdAttribute,
-                        JoinOperator = JoinOperator.Inner,
-                        LinkCriteria = new FilterExpression()
-                        {
-                            Conditions =
-                            {
-                                new ConditionExpression(invln_scheme.PrimaryIdAttribute, ConditionOperator.Equal, fromApplicationId)
-                            }
-                        }
-                    }
-                }
+                    Target = deliveryPhaseAllocation
+                };
+                requestCollection.Add(request);
+
+                deliveryPhaseMap.Add(deliveryPhase.Id, deliveryPhaseAllocation.Id);
+            }
+
+            return deliveryPhaseMap;
+        }
+
+        private Dictionary<Guid, Guid> CloneHomeTypes(OrganizationRequestCollection requestCollection, Guid sourceApplicationId, invln_scheme targetAllocation)
+        {
+            Logger.Trace("CloneHomeTypes");
+
+            var homeTypeMap = new Dictionary<Guid, Guid>();
+            var homeTypeList = _homeTypeRepository.GetByAttribute(invln_HomeType.Fields.invln_application, sourceApplicationId);
+            foreach (var homeType in homeTypeList)
+            {
+                var homeTypeAllocation = homeType.CloneToCreate();
+                homeTypeAllocation.Id = Guid.NewGuid();
+                homeTypeAllocation.invln_application = targetAllocation.ToEntityReference();
+
+                var request = new CreateRequest()
+                {
+                    Target = homeTypeAllocation
+                };
+                requestCollection.Add(request);
+
+                homeTypeMap.Add(homeType.Id, homeTypeAllocation.Id);
+            }
+
+            return homeTypeMap;
+        }
+
+        private void CloneHomesInDeliveryPhase(OrganizationRequestCollection requestCollection,
+            Guid sourceApplicationId,
+            Dictionary<Guid, Guid> deliveryPhaseMap,
+            Dictionary<Guid, Guid> homeTypeMap)
+        {
+            Logger.Trace("CloneHomesInDeliveryPhase");
+
+            var copyHomesInDeliveryPhaseToCreate = new List<Entity>();
+            var homesInDeliveryPhaseList = _homesInDeliveryPhaseRepository.GetHomesInDeliveryPhaseForApplication(sourceApplicationId);
+            foreach (var homesInDeliveryPhase in homesInDeliveryPhaseList)
+            {
+                var copyHomesInDeliveryPhase = homesInDeliveryPhase.CloneToCreate(
+                    invln_homesindeliveryphase.Fields.invln_deliveryphaselookup,
+                    invln_homesindeliveryphase.Fields.invln_hometypelookup
+                );
+
+                var cloneDeliveryPhaseId = deliveryPhaseMap[homesInDeliveryPhase.invln_deliveryphaselookup.Id];
+                var cloneHomeTypeId = homeTypeMap[homesInDeliveryPhase.invln_hometypelookup.Id];
+
+                copyHomesInDeliveryPhase.Id = Guid.NewGuid();
+                copyHomesInDeliveryPhase.invln_deliveryphaselookup = new EntityReference(invln_DeliveryPhase.EntityLogicalName, cloneDeliveryPhaseId);
+                copyHomesInDeliveryPhase.invln_hometypelookup = new EntityReference(invln_HomeType.EntityLogicalName, cloneHomeTypeId);
+
+                copyHomesInDeliveryPhaseToCreate.Add(copyHomesInDeliveryPhase);
+            }
+
+            if (!copyHomesInDeliveryPhaseToCreate.Any())
+            {
+                return;
+            }
+
+            var entities = new EntityCollection(copyHomesInDeliveryPhaseToCreate)
+            {
+                EntityName = copyHomesInDeliveryPhaseToCreate[0].LogicalName
             };
 
-            var documentLocations = _sharepointDocumentLocationRepository
-                .RetrieveAll(query).Entities
-                .Select(e => e.ToEntity<SharePointDocumentLocation>());
-
-            foreach (var documentLocation in documentLocations)
+            var createMultipleRequest = new CreateMultipleRequest()
             {
-                var updateDocumentLocation = new SharePointDocumentLocation()
-                {
-                    Id = documentLocation.Id,
-                    RegardingObjectId = new EntityReference(invln_scheme.EntityLogicalName, toApplicationId)
-                };
-                _sharepointDocumentLocationRepository.Update(updateDocumentLocation);
-            }
+                Targets = entities
+            };
+            createMultipleRequest["tag"] = "Cloning";
+
+            requestCollection.Add(createMultipleRequest);
         }
+
 
         public void CalculateGrantDetails(Guid allocationId)
         {

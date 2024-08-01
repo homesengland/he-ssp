@@ -26,11 +26,9 @@ namespace HE.CRM.AHP.Plugins.Handlers.CustomApi.Allocation
         public override void DoWork()
         {
             Logger.Trace($"{nameof(CreateAllocationHandler)}.{nameof(DoWork)}");
-
             Logger.Trace($"ApplicationId: {ApplicationId}");
 
             var allocationId = CrmServicesFactory.Get<IAllocationService>().CreateAllocation(ApplicationId);
-
             ExecutionData.SetOutputParameter(invln_createahpallocationResponse.Fields.invln_allocationid, allocationId);
         }
     }

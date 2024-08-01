@@ -16,8 +16,7 @@ namespace HE.CRM.AHP.Plugins.Handlers.AHPApplication
         #region Base Methods Overrides
         public override bool CanWork()
         {
-            return target != null &&
-                !(ExecutionData.IsMessage(CrmMessage.Create) && target.invln_isallocation != true);
+            return target != null && target.invln_isallocation != true;
         }
 
         public override void DoWork()
