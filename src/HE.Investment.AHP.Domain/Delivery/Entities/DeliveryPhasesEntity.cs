@@ -111,7 +111,8 @@ public class DeliveryPhasesEntity : IHomeTypeConsumer
             SectionStatus.InProgress,
             MilestonesPercentageTranches.NotProvided,
             MilestonesCalculatedTranches.NotCalculated,
-            false);
+            false,
+            organisationBasicInfo.IsUnregisteredBody);
 
         _deliveryPhases.Add(deliveryPhase);
         return deliveryPhase;

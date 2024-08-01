@@ -25,7 +25,8 @@ public class PhaseEntityTestBuilder : TestObjectBuilder<PhaseEntityTestBuilder, 
         BuildActivityType.WorksOnly,
         null,
         null,
-        MilestoneClaimTestBuilder.Draft().WithType(MilestoneType.Completion).Build()));
+        MilestoneClaimTestBuilder.Draft().WithType(MilestoneType.Completion).Build(),
+        false));
 
     public PhaseEntityTestBuilder WithId(string value) => SetProperty(x => x.Id, new PhaseId(value));
 
@@ -36,4 +37,6 @@ public class PhaseEntityTestBuilder : TestObjectBuilder<PhaseEntityTestBuilder, 
     public PhaseEntityTestBuilder WithStartOnSiteMilestone(MilestoneClaimBase? value) => SetProperty(x => x.StartOnSiteMilestone, value);
 
     public PhaseEntityTestBuilder WithCompletionMilestone(MilestoneClaimBase value) => SetProperty(x => x.CompletionMilestone, value);
+
+    public PhaseEntityTestBuilder WithIsOnlyCompletionMilestone(bool value) => SetProperty(x => x.IsOnlyCompletionMilestone, value);
 }

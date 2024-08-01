@@ -1,4 +1,6 @@
 using HE.Common.IntegrationModel.PortalIntegrationModel;
+using HE.Investment.AHP.Domain.Delivery.Strategies;
+using HE.Investment.AHP.Domain.Delivery.ValueObjects;
 using HE.Investments.AHP.Allocation.Contract.Claims;
 using HE.Investments.AHP.Allocation.Contract.Claims.Enum;
 using HE.Investments.AHP.Allocation.Domain.Allocation.ValueObjects;
@@ -21,17 +23,21 @@ public sealed class PhaseCrmMapper : IPhaseCrmMapper
         _milestoneTypeMapper = milestoneTypeMapper;
     }
 
-    public PhaseEntity MapToDomain(PhaseClaimsDto dto, AllocationBasicInfo allocation)
+    public PhaseEntity MapToDomain(PhaseClaimsDto dto, AllocationBasicInfo allocation, bool isUnregisteredBody, IMilestoneAvailabilityStrategy strategy)
     {
+        var buildActivity = BuildActivityTypeMapper.ToDomain(dto.NewBuildActivityType, dto.RehabBuildActivityType);
+        var onlyCompletionMilestone = strategy.OnlyCompletionMilestone(isUnregisteredBody, new BuildActivity(allocation.Tenure, type: buildActivity));
+
         return new PhaseEntity(
             PhaseId.From(dto.Id),
             allocation,
             new PhaseName(dto.Name),
             new NumberOfHomes(dto.NumberOfHomes),
-            BuildActivityTypeMapper.ToDomain(dto.NewBuildActivityType, dto.RehabBuildActivityType),
-            dto.AcquisitionMilestone.IsProvided() ? ToMilestoneClaim(dto.AcquisitionMilestone, MilestoneType.Acquisition) : null,
-            dto.StartOnSiteMilestone.IsProvided() ? ToMilestoneClaim(dto.StartOnSiteMilestone, MilestoneType.StartOnSite) : null,
-            ToMilestoneClaim(dto.CompletionMilestone, MilestoneType.Completion));
+            buildActivity,
+            !onlyCompletionMilestone ? ToMilestoneClaim(dto.AcquisitionMilestone, MilestoneType.Acquisition) : null,
+            !onlyCompletionMilestone ? ToMilestoneClaim(dto.StartOnSiteMilestone, MilestoneType.StartOnSite) : null,
+            ToMilestoneClaim(dto.CompletionMilestone, MilestoneType.Completion),
+            onlyCompletionMilestone);
     }
 
     public PhaseClaimsDto MapToDto(PhaseEntity entity)

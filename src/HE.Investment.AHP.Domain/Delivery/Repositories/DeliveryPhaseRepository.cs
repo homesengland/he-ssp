@@ -4,6 +4,7 @@ using HE.Investment.AHP.Contract.Delivery.Events;
 using HE.Investment.AHP.Domain.Application.Repositories;
 using HE.Investment.AHP.Domain.Delivery.Crm;
 using HE.Investment.AHP.Domain.Delivery.Entities;
+using HE.Investment.AHP.Domain.Delivery.Strategies;
 using HE.Investment.AHP.Domain.Delivery.ValueObjects;
 using HE.Investment.AHP.Domain.HomeTypes.Repositories;
 using HE.Investments.Account.Shared.User;
@@ -27,13 +28,16 @@ public class DeliveryPhaseRepository : IDeliveryPhaseRepository
 
     private readonly IEventDispatcher _eventDispatcher;
 
+    private readonly IMilestoneAvailabilityStrategy _milestoneAvailabilityStrategy;
+
     public DeliveryPhaseRepository(
         IDeliveryPhaseCrmContext crmContext,
         IDeliveryPhaseCrmMapper crmMapper,
         IApplicationRepository applicationRepository,
         IHomeTypeRepository homeTypeRepository,
         IApplicationSectionStatusChanger sectionStatusChanger,
-        IEventDispatcher eventDispatcher)
+        IEventDispatcher eventDispatcher,
+        IMilestoneAvailabilityStrategy milestoneAvailabilityStrategy)
     {
         _applicationRepository = applicationRepository;
         _homeTypeRepository = homeTypeRepository;
@@ -41,6 +45,7 @@ public class DeliveryPhaseRepository : IDeliveryPhaseRepository
         _sectionStatusChanger = sectionStatusChanger;
         _crmContext = crmContext;
         _crmMapper = crmMapper;
+        _milestoneAvailabilityStrategy = milestoneAvailabilityStrategy;
     }
 
     public async Task<DeliveryPhasesEntity> GetByApplicationId(
@@ -58,7 +63,7 @@ public class DeliveryPhaseRepository : IDeliveryPhaseRepository
 
         return new DeliveryPhasesEntity(
             application,
-            deliveryPhases.Select(x => _crmMapper.MapToDomain(application, organisation, x)).ToList(),
+            deliveryPhases.Select(x => _crmMapper.MapToDomain(application, organisation, x, _milestoneAvailabilityStrategy)).ToList(),
             homesToDeliver,
             application.Sections.DeliveryStatus);
     }
@@ -83,7 +88,7 @@ public class DeliveryPhaseRepository : IDeliveryPhaseRepository
 
         if (deliveryPhase != null)
         {
-            return _crmMapper.MapToDomain(application, organisation, deliveryPhase);
+            return _crmMapper.MapToDomain(application, organisation, deliveryPhase, _milestoneAvailabilityStrategy);
         }
 
         throw new NotFoundException(nameof(DeliveryPhaseEntity), deliveryPhaseId);

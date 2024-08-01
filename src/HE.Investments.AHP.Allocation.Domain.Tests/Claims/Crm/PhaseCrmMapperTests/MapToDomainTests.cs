@@ -1,12 +1,15 @@
 using FluentAssertions;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investment.AHP.Contract.Delivery.Enums;
+using HE.Investment.AHP.Domain.Delivery.Strategies;
+using HE.Investment.AHP.Domain.Delivery.ValueObjects;
 using HE.Investments.AHP.Allocation.Contract.Claims.Enum;
 using HE.Investments.AHP.Allocation.Domain.Claims.Crm;
 using HE.Investments.AHP.Allocation.Domain.Claims.ValueObjects;
 using HE.Investments.AHP.Allocation.Domain.Tests.TestObjectBuilders;
 using HE.Investments.Common.CRM.Model;
 using HE.Investments.TestsUtils.TestFramework;
+using Moq;
 using Xunit;
 using MilestoneStatus = HE.Investments.AHP.Allocation.Domain.Claims.Enums.MilestoneStatus;
 
@@ -40,9 +43,10 @@ public class MapToDomainTests : TestBase<PhaseCrmMapper>
             StartOnSiteMilestone = null,
             CompletionMilestone = completionClaim,
         };
+        var milestoneAvailabilityStrategy = CreateMilestoneAvailabilityStrategyMock(true);
 
         // when
-        var result = TestCandidate.MapToDomain(dto, allocation);
+        var result = TestCandidate.MapToDomain(dto, allocation, false, milestoneAvailabilityStrategy);
 
         // then
         result.Should().NotBeNull();
@@ -59,6 +63,7 @@ public class MapToDomainTests : TestBase<PhaseCrmMapper>
         result.CompletionMilestone.Status.Should().Be(MilestoneStatus.Draft);
         result.CompletionMilestone.GrantApportioned.Should().Be(new GrantApportioned(1000000, 0.01m));
         result.CompletionMilestone.ClaimDate.Should().Be(new ClaimDate(forecastClaimDate));
+        result.IsOnlyCompletionMilestone.Should().BeTrue();
     }
 
     [Fact]
@@ -79,9 +84,10 @@ public class MapToDomainTests : TestBase<PhaseCrmMapper>
             StartOnSiteMilestone = MilestoneFactory((int)invln_Milestone.SoS),
             CompletionMilestone = MilestoneFactory((int)invln_Milestone.PC),
         };
+        var milestoneAvailabilityStrategy = CreateMilestoneAvailabilityStrategyMock();
 
         // when
-        var result = TestCandidate.MapToDomain(dto, allocation);
+        var result = TestCandidate.MapToDomain(dto, allocation, false, milestoneAvailabilityStrategy);
 
         // then
         result.Should().NotBeNull();
@@ -93,6 +99,7 @@ public class MapToDomainTests : TestBase<PhaseCrmMapper>
         AssertClaim(MilestoneType.Acquisition, result.AcquisitionMilestone);
         AssertClaim(MilestoneType.StartOnSite, result.StartOnSiteMilestone);
         AssertClaim(MilestoneType.Completion, result.CompletionMilestone);
+        result.IsOnlyCompletionMilestone.Should().BeFalse();
 
         MilestoneClaimDto MilestoneFactory(int type) =>
             new()
@@ -137,15 +144,17 @@ public class MapToDomainTests : TestBase<PhaseCrmMapper>
             NewBuildActivityType = (int)invln_NewBuildActivityType.WorksOnly,
             CompletionMilestone = completionClaim,
         };
+        var milestoneAvailabilityStrategy = CreateMilestoneAvailabilityStrategyMock(true);
 
         // when
-        var result = TestCandidate.MapToDomain(dto, allocation);
+        var result = TestCandidate.MapToDomain(dto, allocation, false, milestoneAvailabilityStrategy);
 
         // then
         result.CompletionMilestone.Should().BeOfType<MilestoneWithoutClaim>();
         result.CompletionMilestone.Status.Should().Be(MilestoneStatus.Draft);
         result.CompletionMilestone.GrantApportioned.Should().Be(new GrantApportioned(1000000, 0.01m));
         result.CompletionMilestone.ClaimDate.Should().Be(new ClaimDate(forecastClaimDate));
+        result.IsOnlyCompletionMilestone.Should().BeTrue();
     }
 
     [Theory]
@@ -176,14 +185,24 @@ public class MapToDomainTests : TestBase<PhaseCrmMapper>
             NewBuildActivityType = (int)invln_NewBuildActivityType.WorksOnly,
             CompletionMilestone = completionClaim,
         };
+        var milestoneAvailabilityStrategy = CreateMilestoneAvailabilityStrategyMock(true);
 
         // when
-        var result = TestCandidate.MapToDomain(dto, allocation);
+        var result = TestCandidate.MapToDomain(dto, allocation, false, milestoneAvailabilityStrategy);
 
         // then
         result.CompletionMilestone.Should().BeOfType<SubmittedMilestoneClaim>();
         result.CompletionMilestone.Status.Should().Be(expectedStatus);
         result.CompletionMilestone.GrantApportioned.Should().Be(new GrantApportioned(1000000, 0.01m));
         result.CompletionMilestone.ClaimDate.Should().Be(new ClaimDate(forecastClaimDate));
+        result.IsOnlyCompletionMilestone.Should().BeTrue();
+    }
+
+    private IMilestoneAvailabilityStrategy CreateMilestoneAvailabilityStrategyMock(bool? returnValue = null)
+    {
+        var mock = new Mock<IMilestoneAvailabilityStrategy>();
+        mock.Setup(m =>
+            m.OnlyCompletionMilestone(It.IsAny<bool>(), It.IsAny<BuildActivity>())).Returns(returnValue ?? false);
+        return mock.Object;
     }
 }

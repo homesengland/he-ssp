@@ -5,6 +5,7 @@ using HE.Investment.AHP.Contract.Delivery.Enums;
 using HE.Investment.AHP.Contract.HomeTypes;
 using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.Delivery.Crm;
+using HE.Investment.AHP.Domain.Delivery.Strategies;
 using HE.Investment.AHP.Domain.Delivery.ValueObjects;
 using HE.Investment.AHP.Domain.Tests.Application.TestData;
 using HE.Investment.AHP.Domain.Tests.Delivery.Entities.TestDataBuilders;
@@ -12,6 +13,7 @@ using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract;
 using HE.Investments.TestsUtils.TestData;
 using HE.Investments.TestsUtils.TestFramework;
+using Moq;
 
 namespace HE.Investment.AHP.Domain.Tests.Delivery.Crm.DeliveryPhaseCrmMapperTests;
 
@@ -32,9 +34,10 @@ public class MapToDomainTests : TestBase<DeliveryPhaseCrmMapper>
             createdOn = DateTimeTestData.SeptemberDay20Year2023At0736,
             isReconfigurationOfExistingProperties = true,
         };
+        var milestoneAvailabilityStrategy = CreateMilestoneAvailabilityStrategyMock(true);
 
         // when
-        var result = TestCandidate.MapToDomain(Application, Organisation, dto);
+        var result = TestCandidate.MapToDomain(Application, Organisation, dto, milestoneAvailabilityStrategy);
 
         // then
         result.Id.Should().Be(new DeliveryPhaseId("dp-id-1"));
@@ -50,6 +53,7 @@ public class MapToDomainTests : TestBase<DeliveryPhaseCrmMapper>
         result.DeliveryPhaseMilestones.StartOnSiteMilestone.Should().BeNull();
         result.DeliveryPhaseMilestones.CompletionMilestone.Should().BeNull();
         result.IsAdditionalPaymentRequested.Should().BeNull();
+        result.IsOnlyCompletionMilestone.Should().BeTrue();
     }
 
     [Theory]
@@ -59,15 +63,11 @@ public class MapToDomainTests : TestBase<DeliveryPhaseCrmMapper>
     public void ShouldMapDeliveryPhaseStatus(bool? isCompleted, SectionStatus expectedStatus)
     {
         // given
-        var dto = new DeliveryPhaseDto
-        {
-            id = "dp-id-1",
-            name = "my name",
-            isCompleted = isCompleted,
-        };
+        var dto = new DeliveryPhaseDto { id = "dp-id-1", name = "my name", isCompleted = isCompleted, };
+        var milestoneAvailabilityStrategy = CreateMilestoneAvailabilityStrategyMock();
 
         // when
-        var result = TestCandidate.MapToDomain(Application, Organisation, dto);
+        var result = TestCandidate.MapToDomain(Application, Organisation, dto, milestoneAvailabilityStrategy);
 
         // then
         result.Status.Should().Be(expectedStatus);
@@ -86,9 +86,10 @@ public class MapToDomainTests : TestBase<DeliveryPhaseCrmMapper>
             name = "my name",
             typeOfHomes = typeOfHomes,
         };
+        var milestoneAvailabilityStrategy = CreateMilestoneAvailabilityStrategyMock();
 
         // when
-        var result = TestCandidate.MapToDomain(Application, Organisation, dto);
+        var result = TestCandidate.MapToDomain(Application, Organisation, dto, milestoneAvailabilityStrategy);
 
         // then
         result.TypeOfHomes.Should().Be(expectedTypeOfHomes);
@@ -113,9 +114,10 @@ public class MapToDomainTests : TestBase<DeliveryPhaseCrmMapper>
             rehabBuildActivityType = rehabBuildActivityType,
             newBuildActivityType = null,
         };
+        var milestoneAvailabilityStrategy = CreateMilestoneAvailabilityStrategyMock();
 
         // when
-        var result = TestCandidate.MapToDomain(Application, Organisation, dto);
+        var result = TestCandidate.MapToDomain(Application, Organisation, dto, milestoneAvailabilityStrategy);
 
         // then
         result.BuildActivity.Should().NotBeNull();
@@ -139,9 +141,10 @@ public class MapToDomainTests : TestBase<DeliveryPhaseCrmMapper>
             rehabBuildActivityType = null,
             newBuildActivityType = newBuildActivityType,
         };
+        var milestoneAvailabilityStrategy = CreateMilestoneAvailabilityStrategyMock();
 
         // when
-        var result = TestCandidate.MapToDomain(Application, Organisation, dto);
+        var result = TestCandidate.MapToDomain(Application, Organisation, dto, milestoneAvailabilityStrategy);
 
         // then
         result.BuildActivity.Should().NotBeNull();
@@ -156,16 +159,12 @@ public class MapToDomainTests : TestBase<DeliveryPhaseCrmMapper>
         {
             id = "dp-id-1",
             name = "my name",
-            numberOfHomes = new Dictionary<string, int?>
-            {
-                { "ht-1", null },
-                { "ht-2", 0 },
-                { "ht-3", 12 },
-            },
+            numberOfHomes = new Dictionary<string, int?> { { "ht-1", null }, { "ht-2", 0 }, { "ht-3", 12 }, },
         };
+        var milestoneAvailabilityStrategy = CreateMilestoneAvailabilityStrategyMock();
 
         // when
-        var result = TestCandidate.MapToDomain(Application, Organisation, dto).HomesToDeliver.ToList();
+        var result = TestCandidate.MapToDomain(Application, Organisation, dto, milestoneAvailabilityStrategy).HomesToDeliver.ToList();
 
         // then
         result.Should().HaveCount(2);
@@ -189,9 +188,10 @@ public class MapToDomainTests : TestBase<DeliveryPhaseCrmMapper>
             completionDate = today.AddDays(4),
             completionPaymentDate = today.AddDays(5),
         };
+        var milestoneAvailabilityStrategy = CreateMilestoneAvailabilityStrategyMock();
 
         // when
-        var result = TestCandidate.MapToDomain(Application, Organisation, dto);
+        var result = TestCandidate.MapToDomain(Application, Organisation, dto, milestoneAvailabilityStrategy);
 
         // then
         result.DeliveryPhaseMilestones.AcquisitionMilestone.Should().NotBeNull();
@@ -215,12 +215,21 @@ public class MapToDomainTests : TestBase<DeliveryPhaseCrmMapper>
             name = "my name",
             requiresAdditionalPayments = requiresAdditionalPayments,
         };
+        var milestoneAvailabilityStrategy = CreateMilestoneAvailabilityStrategyMock();
 
         // when
-        var result = TestCandidate.MapToDomain(Application, Organisation, dto);
+        var result = TestCandidate.MapToDomain(Application, Organisation, dto, milestoneAvailabilityStrategy);
 
         // then
         result.IsAdditionalPaymentRequested.Should().NotBeNull();
         result.IsAdditionalPaymentRequested!.IsRequested.Should().Be(expectedResult);
+    }
+
+    private IMilestoneAvailabilityStrategy CreateMilestoneAvailabilityStrategyMock(bool? returnValue = null)
+    {
+        var mock = new Mock<IMilestoneAvailabilityStrategy>();
+        mock.Setup(m =>
+            m.OnlyCompletionMilestone(It.IsAny<bool>(), It.IsAny<BuildActivity>())).Returns(returnValue ?? false);
+        return mock.Object;
     }
 }

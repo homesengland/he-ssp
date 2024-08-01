@@ -32,6 +32,7 @@ public class DeliveryPhaseEntity : DomainEntity, IDeliveryPhaseEntity
         MilestonesPercentageTranches milestonesPercentageTranches,
         MilestonesCalculatedTranches milestonesCalculatedTranches,
         bool milestoneTranchesAmendRequested,
+        bool isOnlyCompletionMilestone,
         TypeOfHomes? typeOfHomes = null,
         BuildActivity? buildActivity = null,
         bool? reconfiguringExisting = null,
@@ -49,6 +50,7 @@ public class DeliveryPhaseEntity : DomainEntity, IDeliveryPhaseEntity
         Name = name;
         Organisation = organisation;
         TypeOfHomes = typeOfHomes;
+        IsOnlyCompletionMilestone = isOnlyCompletionMilestone;
         BuildActivity = buildActivity ?? new BuildActivity(application.Tenure);
         ReconfiguringExisting = reconfiguringExisting;
         Status = status;
@@ -92,7 +94,7 @@ public class DeliveryPhaseEntity : DomainEntity, IDeliveryPhaseEntity
 
     public bool IsModified => _modificationTracker.IsModified || Tranches.IsModified;
 
-    public bool IsOnlyCompletionMilestone => OnlyCompletionMilestone(Organisation, BuildActivity);
+    public bool IsOnlyCompletionMilestone { get; private set; }
 
     public IEnumerable<HomesToDeliverInPhase> HomesToDeliver => _homesToDeliver;
 
@@ -208,8 +210,6 @@ public class DeliveryPhaseEntity : DomainEntity, IDeliveryPhaseEntity
         return TypeOfHomes is Contract.Delivery.Enums.TypeOfHomes.Rehab && BuildActivity.Type != BuildActivityType.ExistingSatisfactory;
     }
 
-    private static bool OnlyCompletionMilestone(OrganisationBasicInfo organisation, BuildActivity buildActivity) => organisation.IsUnregisteredBody || buildActivity.IsOffTheShelfOrExistingSatisfactory;
-
     private bool IsAnswered()
     {
         var reconfigureExistingValid = !IsReconfiguringExistingNeeded() || ReconfiguringExisting.HasValue;
@@ -243,7 +243,13 @@ public class DeliveryPhaseEntity : DomainEntity, IDeliveryPhaseEntity
 
     private void ResetBuildActivityDependencies(BuildActivity newBuildActivity)
     {
-        var milestones = new DeliveryPhaseMilestones(OnlyCompletionMilestone(Organisation, newBuildActivity), DeliveryPhaseMilestones);
+        ResetIsOnlyCompletionMilestone(Organisation, newBuildActivity);
+        var milestones = new DeliveryPhaseMilestones(IsOnlyCompletionMilestone, DeliveryPhaseMilestones);
         DeliveryPhaseMilestones = _modificationTracker.Change(DeliveryPhaseMilestones, milestones, MarkAsNotCompleted);
+    }
+
+    private void ResetIsOnlyCompletionMilestone(OrganisationBasicInfo organisation, BuildActivity buildActivity)
+    {
+        IsOnlyCompletionMilestone = organisation.IsUnregisteredBody || buildActivity.IsOffTheShelfOrExistingSatisfactory;
     }
 }

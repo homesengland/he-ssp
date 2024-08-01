@@ -16,6 +16,7 @@ public class ProvideBuildActivityTests
             .WithRehabBuildActivity(BuildActivityType.Reimprovement)
             .WithAcquisitionMilestone(new AcquisitionMilestoneDetailsBuilder().Build())
             .WithStartOnSiteMilestone(new StartOnSiteMilestoneDetailsBuilder().Build())
+            .WithIsOnlyCompletionMilestone(false)
             .Build();
 
         var newBuildActivity = new BuildActivity(testCandidate.Application.Tenure, TypeOfHomes.Rehab, BuildActivityType.ExistingSatisfactory);

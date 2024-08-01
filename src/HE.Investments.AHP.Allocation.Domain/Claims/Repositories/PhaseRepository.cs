@@ -1,3 +1,4 @@
+using HE.Investment.AHP.Domain.Delivery.Strategies;
 using HE.Investments.Account.Shared.User;
 using HE.Investments.AHP.Allocation.Contract;
 using HE.Investments.AHP.Allocation.Contract.Claims;
@@ -20,16 +21,20 @@ public class PhaseRepository : IPhaseRepository
 
     private readonly IEventDispatcher _eventDispatcher;
 
+    private readonly IMilestoneAvailabilityStrategy _milestoneAvailabilityStrategy;
+
     public PhaseRepository(
         IAllocationCrmContext allocationCrmContext,
         IPhaseCrmMapper phaseCrmMapper,
         IAllocationBasicInfoMapper allocationBasicInfoMapper,
-        IEventDispatcher eventDispatcher)
+        IEventDispatcher eventDispatcher,
+        IMilestoneAvailabilityStrategy milestoneAvailabilityStrategy)
     {
         _allocationCrmContext = allocationCrmContext;
         _phaseCrmMapper = phaseCrmMapper;
         _allocationBasicInfoMapper = allocationBasicInfoMapper;
         _eventDispatcher = eventDispatcher;
+        _milestoneAvailabilityStrategy = milestoneAvailabilityStrategy;
     }
 
     public async Task<PhaseEntity> GetById(PhaseId phaseId, AllocationId allocationId, UserAccount userAccount, CancellationToken cancellationToken)
@@ -41,7 +46,7 @@ public class PhaseRepository : IPhaseRepository
                     ?? throw new NotFoundException(nameof(PhaseEntity), phaseId);
         var allocationBasicInfo = await _allocationBasicInfoMapper.Map(allocation, cancellationToken);
 
-        return _phaseCrmMapper.MapToDomain(phase, allocationBasicInfo);
+        return _phaseCrmMapper.MapToDomain(phase, allocationBasicInfo, organisation.IsUnregisteredBody, _milestoneAvailabilityStrategy);
     }
 
     public async Task Save(PhaseEntity phaseEntity, UserAccount userAccount, CancellationToken cancellationToken)

@@ -4,6 +4,7 @@ using HE.Investment.AHP.Domain.Application.Repositories;
 using HE.Investment.AHP.Domain.Delivery.Crm;
 using HE.Investment.AHP.Domain.Delivery.Policies;
 using HE.Investment.AHP.Domain.Delivery.Repositories;
+using HE.Investment.AHP.Domain.Delivery.Strategies;
 using HE.Investment.AHP.Domain.Documents.Config;
 using HE.Investment.AHP.Domain.Documents.Crm;
 using HE.Investment.AHP.Domain.Documents.Services;
@@ -136,6 +137,7 @@ public static class DomainModule
         services.Decorate<IDeliveryPhaseCrmContext, RequestCacheDeliverPhaseCrmContextDecorator>();
         services.AddSingleton<IDeliveryPhaseCrmMapper, DeliveryPhaseCrmMapper>();
         services.AddScoped<IMilestoneDatesInProgrammeDateRangePolicy, MilestoneDatesInProgrammeDateRangePolicy>();
+        services.AddScoped<IMilestoneAvailabilityStrategy, MilestoneAvailabilityStrategy>();
 
         return services;
     }

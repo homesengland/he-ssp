@@ -44,6 +44,8 @@ public class DeliveryPhaseEntityBuilder
 
     private CompletionMilestoneDetails? _completionMilestone = new CompletionMilestoneDetailsBuilder().Build();
 
+    private bool _isOnlyCompletionMilestone;
+
     public DeliveryPhaseEntityBuilder WithId(string id)
     {
         _id = id;
@@ -168,6 +170,12 @@ public class DeliveryPhaseEntityBuilder
         return this;
     }
 
+    public DeliveryPhaseEntityBuilder WithIsOnlyCompletionMilestone(bool isOnlyCompletionMilestone)
+    {
+        _isOnlyCompletionMilestone = isOnlyCompletionMilestone;
+        return this;
+    }
+
     public DeliveryPhaseEntity Build()
     {
         return new DeliveryPhaseEntity(
@@ -178,6 +186,7 @@ public class DeliveryPhaseEntityBuilder
             MilestonesPercentageTranches.NotProvided,
             _milestonesCalculatedTranches,
             false,
+            _isOnlyCompletionMilestone,
             _typeOfHomes,
             _buildActivity,
             _reconfigureExisting,

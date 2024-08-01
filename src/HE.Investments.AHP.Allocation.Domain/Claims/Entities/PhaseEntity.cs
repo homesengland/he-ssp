@@ -23,7 +23,8 @@ public sealed class PhaseEntity : DomainEntity
         BuildActivityType buildActivityType,
         MilestoneClaimBase? acquisitionMilestone,
         MilestoneClaimBase? startOnSiteMilestone,
-        MilestoneClaimBase completionMilestone)
+        MilestoneClaimBase completionMilestone,
+        bool isOnlyCompletionMilestone)
     {
         Id = id;
         Allocation = allocation;
@@ -33,6 +34,7 @@ public sealed class PhaseEntity : DomainEntity
         AcquisitionMilestone = acquisitionMilestone;
         StartOnSiteMilestone = startOnSiteMilestone;
         CompletionMilestone = completionMilestone;
+        IsOnlyCompletionMilestone = isOnlyCompletionMilestone;
     }
 
     public PhaseId Id { get; }
@@ -51,17 +53,25 @@ public sealed class PhaseEntity : DomainEntity
 
     public MilestoneClaimBase CompletionMilestone { get; private set; }
 
+    public bool IsOnlyCompletionMilestone { get; }
+
     public bool IsModified => _modificationTracker.IsModified;
 
     public MilestoneClaimBase? GetMilestoneClaim(MilestoneType milestoneType)
     {
-        return milestoneType switch
-        {
-            MilestoneType.Acquisition => AcquisitionMilestone,
-            MilestoneType.StartOnSite => StartOnSiteMilestone,
-            MilestoneType.Completion => CompletionMilestone,
-            _ => throw new ArgumentOutOfRangeException(nameof(milestoneType), milestoneType, null),
-        };
+        return IsOnlyCompletionMilestone
+            ? milestoneType switch
+            {
+                MilestoneType.Completion => CompletionMilestone,
+                _ => throw new ArgumentOutOfRangeException(nameof(milestoneType), milestoneType, null),
+            }
+            : milestoneType switch
+            {
+                MilestoneType.Acquisition => AcquisitionMilestone,
+                MilestoneType.StartOnSite => StartOnSiteMilestone,
+                MilestoneType.Completion => CompletionMilestone,
+                _ => throw new ArgumentOutOfRangeException(nameof(milestoneType), milestoneType, null),
+            };
     }
 
     public void CancelMilestoneClaim(MilestoneType milestoneType)
