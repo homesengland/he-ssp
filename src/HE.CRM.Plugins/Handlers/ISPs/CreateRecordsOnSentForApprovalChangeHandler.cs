@@ -50,6 +50,11 @@ namespace HE.CRM.Plugins.Handlers.ISPs
                 OwnerId = desTeam.ToEntityReference(),
             });
 
+            if (CurrentState.invln_ApprovalLevelNew == null)
+            {
+                return;
+            }
+
             if (CurrentState.invln_ApprovalLevelNew.Value == (int)invln_ApprovalLevel.HoF)
             {
                 TracingService.Trace("Create HoF Approval");
