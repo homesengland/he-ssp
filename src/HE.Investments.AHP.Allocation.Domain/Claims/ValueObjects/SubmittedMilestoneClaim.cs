@@ -1,5 +1,4 @@
 using HE.Investments.AHP.Allocation.Contract.Claims.Enum;
-using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Extensions;
@@ -16,17 +15,21 @@ public sealed class SubmittedMilestoneClaim : MilestoneClaimBase
         ClaimDate claimDate,
         bool? costsIncurred,
         bool? isConfirmed)
-        : base(type, status, grantApportioned, claimDate, costsIncurred, isConfirmed)
+        : base(type, grantApportioned, claimDate, costsIncurred, isConfirmed)
     {
         if (status.IsNotIn(MilestoneStatus.Submitted, MilestoneStatus.UnderReview, MilestoneStatus.Approved, MilestoneStatus.Rejected, MilestoneStatus.Paid))
         {
             OperationResult.ThrowValidationError(nameof(status), "Invalid status for Submitted Claim");
         }
+
+        Status = status;
     }
 
     public override bool IsSubmitted => true;
 
     public override bool IsEditable => false;
+
+    public override MilestoneStatus Status { get; }
 
     public override MilestoneClaimBase WithAchievementDate(
         AchievementDate achievementDate,

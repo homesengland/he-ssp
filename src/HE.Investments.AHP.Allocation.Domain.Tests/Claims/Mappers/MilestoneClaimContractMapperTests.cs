@@ -70,11 +70,12 @@ public class MilestoneClaimContractMapperTests : TestBase<MilestoneClaimContract
     }
 
     [Fact]
-    public void ShouldMapToDueStatus_WhenMilestoneClaimIsDraft()
+    public void ShouldMapToDueStatus_WhenMilestoneClaimDoesNotExist()
     {
         // given
         var today = new DateTime(2024, 07, 12, 0, 0, 0, DateTimeKind.Local);
         var milestone = MilestoneClaimTestBuilder.Draft()
+            .WithoutClaim()
             .WithForecastClaimDate(today.AddDays(-50))
             .Build();
         var phase = PhaseEntityTestBuilder.New()

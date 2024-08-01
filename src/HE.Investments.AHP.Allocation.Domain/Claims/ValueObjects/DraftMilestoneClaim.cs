@@ -16,13 +16,15 @@ public class DraftMilestoneClaim : MilestoneClaimBase
         ClaimDate claimDate,
         bool? costsIncurred,
         bool? isConfirmed)
-        : base(type, MilestoneStatus.Draft, grantApportioned, claimDate, costsIncurred, isConfirmed)
+        : base(type, grantApportioned, claimDate, costsIncurred, isConfirmed)
     {
     }
 
     public override bool IsSubmitted => false;
 
     public override bool IsEditable => true;
+
+    public override MilestoneStatus Status => MilestoneStatus.Draft;
 
     public override MilestoneClaimBase WithAchievementDate(
         AchievementDate achievementDate,

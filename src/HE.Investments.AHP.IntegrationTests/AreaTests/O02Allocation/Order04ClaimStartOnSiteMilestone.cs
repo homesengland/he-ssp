@@ -23,10 +23,12 @@ public class Order04ClaimStartOnSiteMilestone : ClaimMilestoneTestBase
 
     protected override ClaimData ClaimData => new(
         MilestoneType.StartOnSite,
-        new DateDetails("20", "05", "2025"),
+        new DateDetails("01", "03", "2025"),
         Confirmation: true);
 
-    protected override DateTime ClaimSubmissionDate => new(2025, 05, 21, 12, 00, 00, DateTimeKind.Local);
+    protected override DateTime ClaimSubmissionDate => new(2025, 03, 03, 12, 00, 00, DateTimeKind.Local);
+
+    protected override MilestoneStatus? StatusOnSubmission => MilestoneStatus.DueSoon;
 
     protected override void AssertClaimSummary(IDictionary<string, SummaryItem> summary)
     {
@@ -35,6 +37,6 @@ public class Order04ClaimStartOnSiteMilestone : ClaimMilestoneTestBase
             .ContainKey("Amount of grant apportioned to start on site milestone")
             .WhoseValue.Value.Should()
             .BePoundsOnly(PhaseData.StartOnSiteAmountOfGrantApportioned);
-        summary.Should().ContainKey("Start on site achievement date").WithValue("20 May 2025");
+        summary.Should().ContainKey("Start on site achievement date").WithValue("1 March 2025");
     }
 }
