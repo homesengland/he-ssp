@@ -72,19 +72,19 @@ export class ReviewApprovalService {
     this.common.addCustomViewToLookup("invln_hofindividual", viewId, "systemuser", viewDisplayName, fetchXml, layoutXml);
   };
 
-  public addAccessToTransactionMenager() {
-    let isTrasactionMenager = false;
+  public addAccessToTransactionManager() {
+    let isTrasactionManager = false;
     let transactionMenagerRoleName = "[Loans] Transaction manager";
 
     let securityRoles = this.common.getUserSecurityRoles();
     securityRoles?.forEach(function (value) {
-      if (value.name == transactionMenagerRoleName) isTrasactionMenager = true;
+      if (value.name == transactionMenagerRoleName) isTrasactionManager = true;
       console.log(value.name);
     });
 
     let approvalType = this.common.getAttribute("invln_reviewerapprover").getValue();
     let status = this.common.getAttribute("invln_status").getValue();
-    if (!(isTrasactionMenager && status == 858110000 && (approvalType == 858110001 || approvalType == 858110002))) {
+    if (!(isTrasactionManager && status == 858110000 && (approvalType == 858110001 || approvalType == 858110002))) {
       this.common.hideControl("invln_hofindividual", true)
     }
   }

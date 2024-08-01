@@ -21,7 +21,7 @@ export class ReviewApproval {
     eventLogic.registerEvents()
     eventLogic.reviewApprovalService.setStatusRequired()
     eventLogic.reviewApprovalService.addFilterToHoFIndividualField();
-    eventLogic.reviewApprovalService.addAccessToTransactionMenager();
+    eventLogic.reviewApprovalService.addAccessToTransactionManager();
   }
 
   public static onStateChange(eCtx) {
