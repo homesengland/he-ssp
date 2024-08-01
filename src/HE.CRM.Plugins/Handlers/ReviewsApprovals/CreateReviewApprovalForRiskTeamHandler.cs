@@ -33,7 +33,7 @@ namespace HE.CRM.Plugins.Handlers.ReviewsApprovals
             var teamRepository = CrmRepositoriesFactory.GetSystem<ITeamRepository>();
             TracingService.Trace("Get ISP");
             var isp = _ispRepository.GetById(CurrentState.invln_ispid, new string[] { invln_ISP.Fields.invln_ApprovalLevelNew });
-            if (isp.invln_ApprovalLevelNew.Value != (int)invln_ApprovalLevel.CRO && isp.invln_ApprovalLevelNew.Value != (int)invln_ApprovalLevel.CRODelegatedAuthority)
+            if (isp.invln_ApprovalLevelNew != null && isp.invln_ApprovalLevelNew.Value != (int)invln_ApprovalLevel.CRO && isp.invln_ApprovalLevelNew.Value != (int)invln_ApprovalLevel.CRODelegatedAuthority)
             {
                 return;
             }
