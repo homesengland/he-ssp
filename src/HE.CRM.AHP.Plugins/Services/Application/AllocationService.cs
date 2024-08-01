@@ -435,10 +435,5 @@ namespace HE.CRM.AHP.Plugins.Services.Application
                 TracingService.Trace($"End of Created or Updated in CRM");
             }
         }
-
-        //private IEnumerable<invln_DeliveryPhase> GetCopyDeliveryPhases(Guid allocationId)
-        //{
-        //    _deliveryPhaseRepository.GetDeliveryPhasesForNullableUserAndOrganisationRelatedToApplication
-        //}
     }
 }

@@ -14,7 +14,7 @@ namespace HE.CRM.AHP.Plugins.Handlers.AHPApplication
         #region Base Methods Overrides
         public override bool CanWork()
         {
-            return target != null && target.invln_isallocation == false;
+            return target != null;
         }
 
         public override void DoWork()

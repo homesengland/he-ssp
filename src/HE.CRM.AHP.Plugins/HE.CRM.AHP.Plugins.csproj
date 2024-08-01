@@ -99,7 +99,6 @@
   <ItemGroup>
     <Compile Include="Common\AHPConst.cs" />
     <Compile Include="CrmPluginRegistrationAttribute.cs" />
-    <Compile Include="Handlers\AHPApplication\CheckUniqueApplicationNameHandler.cs" />
     <Compile Include="Handlers\AHPApplication\PopulateFieldsForApplicationReportHandler.cs" />
     <Compile Include="Handlers\AHPApplication\ChangeExternalStatusOnInternalStatusChangeHandler.cs" />
     <Compile Include="Handlers\AHPApplication\CheckIfApplicationWithNewNameExistsHandler.cs" />
@@ -231,7 +230,6 @@
     <Compile Include="Plugins\AhpApplication\PostUpdate.cs" />
     <Compile Include="Plugins\AhpApplication\CreateDocumentLocationOnCreatePlugin.cs" />
     <Compile Include="Plugins\AhpApplication\PreUpdate.cs" />
-    <Compile Include="Plugins\AhpApplication\PreValidation.cs" />
     <Compile Include="Plugins\AhpStatusChange\SendNotificationOnCreatePlugin.cs" />
     <Compile Include="Plugins\Claim\PostUpdateAsync.cs" />
     <Compile Include="Plugins\ContactWebrole\SendNotificationOnAdminRoleGrantedPlugin.cs" />

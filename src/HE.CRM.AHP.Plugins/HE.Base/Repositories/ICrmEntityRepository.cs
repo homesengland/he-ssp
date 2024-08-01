@@ -57,8 +57,6 @@ namespace HE.Base.Repositories
         /// <returns>Id of newly generated entity.</returns>
         Guid Create(TEntity entity);
 
-        Guid[] CreateMultiple(List<Entity> recordsToCreate);
-
         /// <summary>
         /// Deletes the specified entity object from crm organization.
         /// </summary>
