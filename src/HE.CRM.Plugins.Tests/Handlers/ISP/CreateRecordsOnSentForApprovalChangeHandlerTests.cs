@@ -59,19 +59,19 @@ namespace HE.CRM.Plugins.Tests.Handlers.ISP
         {
             Target = new invln_ISP
             {
-                Id = Guid.NewGuid(),
+                Id = _ispId,
                 invln_SendforApproval = true
             };
 
             PreImage = new invln_ISP
             {
-                Id = Guid.NewGuid(),
+                Id = _ispId,
                 invln_SendforApproval = false
             };
 
             PostImage = new invln_ISP
             {
-                Id = Guid.NewGuid(),
+                Id = _ispId,
                 invln_SendforApproval = true
             };
 
@@ -87,19 +87,19 @@ namespace HE.CRM.Plugins.Tests.Handlers.ISP
         {
             Target = new invln_ISP
             {
-                Id = Guid.NewGuid(),
+                Id = _ispId,
                 invln_SendforApproval = false
             };
 
             PreImage = new invln_ISP
             {
-                Id = Guid.NewGuid(),
+                Id = _ispId,
                 invln_SendforApproval = true
             };
 
             PostImage = new invln_ISP
             {
-                Id = Guid.NewGuid(),
+                Id = _ispId,
                 invln_SendforApproval = false
             };
 
@@ -115,20 +115,20 @@ namespace HE.CRM.Plugins.Tests.Handlers.ISP
         {
             Target = new invln_ISP
             {
-                Id = Guid.NewGuid(),
+                Id = _ispId,
                 invln_SendforApproval = true
             };
 
             PreImage = new invln_ISP
             {
-                Id = Guid.NewGuid(),
+                Id = _ispId,
                 invln_SendforApproval = false,
                 invln_ApprovalLevelNew = new OptionSetValue((int)invln_ApprovalLevel.HoF)
             };
 
             PostImage = new invln_ISP
             {
-                Id = Guid.NewGuid(),
+                Id = _ispId,
                 invln_SendforApproval = true,
                 invln_ApprovalLevelNew = new OptionSetValue((int)invln_ApprovalLevel.HoF)
             };
@@ -157,20 +157,20 @@ namespace HE.CRM.Plugins.Tests.Handlers.ISP
         {
             Target = new invln_ISP
             {
-                Id = Guid.NewGuid(),
+                Id = _ispId,
                 invln_SendforApproval = true
             };
 
             PreImage = new invln_ISP
             {
-                Id = Guid.NewGuid(),
+                Id = _ispId,
                 invln_SendforApproval = false,
                 invln_ApprovalLevelNew = new OptionSetValue((int)invln_ApprovalLevel.HoF)
             };
 
             PostImage = new invln_ISP
             {
-                Id = Guid.NewGuid(),
+                Id = _ispId,
                 invln_SendforApproval = true,
                 invln_ApprovalLevelNew = new OptionSetValue((int)invln_ApprovalLevel.CRO)
             };
