@@ -46,12 +46,12 @@ public class DeliveryPhaseEntityBuilder
 
     private CompletionMilestoneDetails? _completionMilestone = new CompletionMilestoneDetailsBuilder().Build();
 
-    public Mock<IOnlyCompletionMilestonePolicy> MockOnlyCompletionMilestonePolicy { get; private set; }
-
     public DeliveryPhaseEntityBuilder()
     {
         ReturnOnlyCompletionMilestonePolicy();
     }
+
+    public Mock<IOnlyCompletionMilestonePolicy> MockOnlyCompletionMilestonePolicy { get; private set; }
 
     public DeliveryPhaseEntityBuilder WithId(string id)
     {
