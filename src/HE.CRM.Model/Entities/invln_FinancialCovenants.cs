@@ -59,6 +59,7 @@ namespace DataverseModel
 			public const string CreatedOnBehalfByYomiName = "createdonbehalfbyyominame";
 			public const string ImportSequenceNumber = "importsequencenumber";
 			public const string invln_CovenantLevel = "invln_covenantlevel";
+			public const string invln_CovenantLevelPercentage = "invln_covenantlevelpercentage";
 			public const string invln_CovenantType = "invln_covenanttype";
 			public const string invln_covenanttypeName = "invln_covenanttypename";
 			public const string invln_FinancialCovenant = "invln_financialcovenant";
@@ -292,6 +293,23 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_CovenantLevel");
 				this.SetAttributeValue("invln_covenantlevel", value);
 				this.OnPropertyChanged("invln_CovenantLevel");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_covenantlevelpercentage")]
+		public System.Nullable<double> invln_CovenantLevelPercentage
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<double>>("invln_covenantlevelpercentage");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_CovenantLevelPercentage");
+				this.SetAttributeValue("invln_covenantlevelpercentage", value);
+				this.OnPropertyChanged("invln_CovenantLevelPercentage");
 			}
 		}
 		

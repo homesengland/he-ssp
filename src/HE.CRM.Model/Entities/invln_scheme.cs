@@ -347,6 +347,7 @@ namespace DataverseModel
 			public const string invln_totalinitialsalesincome_Base = "invln_totalinitialsalesincome_base";
 			public const string invln_transfervalue = "invln_transfervalue";
 			public const string invln_transfervalue_Base = "invln_transfervalue_base";
+			public const string invln_VersionNumber = "invln_versionnumber";
 			public const string invln_VLowGPU20AreaAveragecalc = "invln_vlowgpu20areaaveragecalc";
 			public const string invln_workscostsm2 = "invln_workscostsm2";
 			public const string invln_WorksCostsm2AsAPercentageOfThescorecalc = "invln_workscostsm2asapercentageofthescorecalc";
@@ -385,8 +386,6 @@ namespace DataverseModel
 			public const string UTCConversionTimeZoneCode = "utcconversiontimezonecode";
 			public const string VersionNumber = "versionnumber";
 		}
-		
-		public const string AlternateKeys = "invln_organisationid,invln_schemename";
 		
 		/// <summary>
 		/// Default Constructor.
@@ -3759,6 +3758,23 @@ namespace DataverseModel
 			get
 			{
 				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_transfervalue_base");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_versionnumber")]
+		public System.Nullable<int> invln_VersionNumber
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<int>>("invln_versionnumber");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_VersionNumber");
+				this.SetAttributeValue("invln_versionnumber", value);
+				this.OnPropertyChanged("invln_VersionNumber");
 			}
 		}
 		

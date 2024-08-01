@@ -1,13 +1,7 @@
 using System;
 using System.Collections.Generic;
-using System.DirectoryServices.ActiveDirectory;
-using System.IdentityModel.Claims;
 using System.Linq;
-using System.Security.Claims;
-using System.Security.Cryptography.Xml;
-using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
 using DataverseModel;
 using HE.Base.Common.Extensions;
 using HE.Base.Services;
@@ -15,11 +9,8 @@ using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.CRM.Common.DtoMapping;
 using HE.CRM.Common.Extensions.Entities;
 using HE.CRM.Common.Repositories.Interfaces;
-using HE.CRM.Model.CrmSerialiedParameters;
 using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Messages;
-using Microsoft.Xrm.Sdk.Query;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace HE.CRM.AHP.Plugins.Services.Application
 {
