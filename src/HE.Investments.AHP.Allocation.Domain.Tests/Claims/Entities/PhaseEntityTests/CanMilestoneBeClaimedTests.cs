@@ -178,4 +178,36 @@ public class CanMilestoneBeClaimedTests
         // then
         result.Should().BeFalse();
     }
+
+    [Fact]
+    public void ShouldCompletionMilestoneReturnTrue_WhenIsOnlyCompletionMilestoneSetToTrueAndCompletionMilestoneWasNotSubmitted()
+    {
+        // given
+        var completionMilestone = MilestoneClaimTestBuilder.Draft().Build();
+        var testCandidate = PhaseEntityTestBuilder.New(true)
+            .WithCompletionMilestone(completionMilestone)
+            .Build();
+
+        // when
+        var result = testCandidate.CanMilestoneBeClaimed(MilestoneType.Completion);
+
+        // then
+        result.Should().BeTrue();
+    }
+
+    [Fact]
+    public void ShouldCompletionMilestoneReturnFalse_WhenIsOnlyCompletionMilestoneSetToTrueAndCompletionMilestoneWasAlreadySubmitted()
+    {
+        // given
+        var completionMilestone = MilestoneClaimTestBuilder.Draft().Submitted().Build();
+        var testCandidate = PhaseEntityTestBuilder.New(true)
+            .WithCompletionMilestone(completionMilestone)
+            .Build();
+
+        // when
+        var result = testCandidate.CanMilestoneBeClaimed(MilestoneType.Completion);
+
+        // then
+        result.Should().BeFalse();
+    }
 }

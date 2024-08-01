@@ -22,9 +22,9 @@ public class PhaseEntityTestBuilder : TestObjectBuilder<PhaseEntityTestBuilder, 
 
     protected override PhaseEntityTestBuilder Builder => this;
 
-    public static PhaseEntityTestBuilder New()
+    public static PhaseEntityTestBuilder New(bool? isOnlyCompletionMilestone = null)
     {
-        ReturnOnlyCompletionMilestonePolicy();
+        ReturnOnlyCompletionMilestonePolicy(isOnlyCompletionMilestone);
         return new PhaseEntityTestBuilder(new(
             PhaseId.From(GuidTestData.GuidTwo.ToString()),
             new AllocationBasicInfoBuilder().Build(),
@@ -48,9 +48,10 @@ public class PhaseEntityTestBuilder : TestObjectBuilder<PhaseEntityTestBuilder, 
 
     public PhaseEntityTestBuilder WithCompletionMilestone(MilestoneClaimBase value) => SetProperty(x => x.CompletionMilestone, value);
 
-    private static void ReturnOnlyCompletionMilestonePolicy(bool? returnValue = null)
+    private static void ReturnOnlyCompletionMilestonePolicy(bool? returnValue)
     {
         _mockOnlyCompletionMilestonePolicy = new Mock<IOnlyCompletionMilestonePolicy>();
-        _mockOnlyCompletionMilestonePolicy.Setup(x => x.Validate(It.IsAny<bool>(), It.IsAny<BuildActivity>())).Returns(returnValue ?? false);
+        _mockOnlyCompletionMilestonePolicy
+            .Setup(x => x.Validate(It.IsAny<bool>(), It.IsAny<BuildActivity>())).Returns(returnValue ?? false);
     }
 }

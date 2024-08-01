@@ -69,6 +69,11 @@ public sealed class PhaseEntity : DomainEntity
 
     public MilestoneClaimBase? GetMilestoneClaim(MilestoneType milestoneType)
     {
+        if (IsOnlyCompletionMilestone && milestoneType != MilestoneType.Completion)
+        {
+            return null;
+        }
+
         return milestoneType switch
         {
             MilestoneType.Acquisition => AcquisitionMilestone,
@@ -97,6 +102,11 @@ public sealed class PhaseEntity : DomainEntity
 
     public bool CanMilestoneBeClaimed(MilestoneType milestoneType)
     {
+        if (IsOnlyCompletionMilestone)
+        {
+            return milestoneType == MilestoneType.Completion && !CompletionMilestone.IsSubmitted;
+        }
+
         return milestoneType switch
         {
             MilestoneType.Acquisition => AcquisitionMilestone?.IsSubmitted == false,
