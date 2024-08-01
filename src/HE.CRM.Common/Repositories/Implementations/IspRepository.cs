@@ -18,10 +18,7 @@ namespace HE.CRM.Common.Repositories.Implementations
         public invln_sendinternalcrmnotificationResponse ExecuteNotificatioRequest(invln_sendinternalcrmnotificationRequest request)
         {
             logger.Trace("ExecuteNotificationRequest");
-            using (var ctx = new OrganizationServiceContext(service))
-            {
-                return (invln_sendinternalcrmnotificationResponse)ctx.Execute(request);
-            }
+            return (invln_sendinternalcrmnotificationResponse)service.Execute(request);
         }
 
     }
