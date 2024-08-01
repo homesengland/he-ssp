@@ -1,3 +1,4 @@
+import { event } from 'jquery'
 import { CommonLib } from '../Common'
 import { ReviewApprovalService } from '../services/ReviewApprovalService'
 
@@ -19,6 +20,8 @@ export class ReviewApproval {
     const eventLogic = new ReviewApproval(eCtx)
     eventLogic.registerEvents()
     eventLogic.reviewApprovalService.setStatusRequired()
+    eventLogic.reviewApprovalService.addFilterToHoFIndividualField();
+    eventLogic.reviewApprovalService.addAccessToTransactionManager();
   }
 
   public static onStateChange(eCtx) {
