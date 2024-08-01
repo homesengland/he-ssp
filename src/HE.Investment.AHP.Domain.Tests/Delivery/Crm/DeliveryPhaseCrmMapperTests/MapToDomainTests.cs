@@ -5,6 +5,7 @@ using HE.Investment.AHP.Contract.Delivery.Enums;
 using HE.Investment.AHP.Contract.HomeTypes;
 using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.Delivery.Crm;
+using HE.Investment.AHP.Domain.Delivery.Policies;
 using HE.Investment.AHP.Domain.Delivery.ValueObjects;
 using HE.Investment.AHP.Domain.Tests.Application.TestData;
 using HE.Investment.AHP.Domain.Tests.Delivery.Entities.TestDataBuilders;
@@ -12,6 +13,7 @@ using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract;
 using HE.Investments.TestsUtils.TestData;
 using HE.Investments.TestsUtils.TestFramework;
+using Moq;
 
 namespace HE.Investment.AHP.Domain.Tests.Delivery.Crm.DeliveryPhaseCrmMapperTests;
 
@@ -32,9 +34,10 @@ public class MapToDomainTests : TestBase<DeliveryPhaseCrmMapper>
             createdOn = DateTimeTestData.SeptemberDay20Year2023At0736,
             isReconfigurationOfExistingProperties = true,
         };
+        var onlyCompletionMilestonePolicy = WithOnlyCompletionMilestonePolicy();
 
         // when
-        var result = TestCandidate.MapToDomain(Application, Organisation, dto);
+        var result = TestCandidate.MapToDomain(Application, Organisation, dto, onlyCompletionMilestonePolicy);
 
         // then
         result.Id.Should().Be(new DeliveryPhaseId("dp-id-1"));
@@ -65,9 +68,10 @@ public class MapToDomainTests : TestBase<DeliveryPhaseCrmMapper>
             name = "my name",
             isCompleted = isCompleted,
         };
+        var onlyCompletionMilestonePolicy = WithOnlyCompletionMilestonePolicy();
 
         // when
-        var result = TestCandidate.MapToDomain(Application, Organisation, dto);
+        var result = TestCandidate.MapToDomain(Application, Organisation, dto, onlyCompletionMilestonePolicy);
 
         // then
         result.Status.Should().Be(expectedStatus);
@@ -86,9 +90,10 @@ public class MapToDomainTests : TestBase<DeliveryPhaseCrmMapper>
             name = "my name",
             typeOfHomes = typeOfHomes,
         };
+        var onlyCompletionMilestonePolicy = WithOnlyCompletionMilestonePolicy();
 
         // when
-        var result = TestCandidate.MapToDomain(Application, Organisation, dto);
+        var result = TestCandidate.MapToDomain(Application, Organisation, dto, onlyCompletionMilestonePolicy);
 
         // then
         result.TypeOfHomes.Should().Be(expectedTypeOfHomes);
@@ -113,9 +118,10 @@ public class MapToDomainTests : TestBase<DeliveryPhaseCrmMapper>
             rehabBuildActivityType = rehabBuildActivityType,
             newBuildActivityType = null,
         };
+        var onlyCompletionMilestonePolicy = WithOnlyCompletionMilestonePolicy();
 
         // when
-        var result = TestCandidate.MapToDomain(Application, Organisation, dto);
+        var result = TestCandidate.MapToDomain(Application, Organisation, dto, onlyCompletionMilestonePolicy);
 
         // then
         result.BuildActivity.Should().NotBeNull();
@@ -139,9 +145,10 @@ public class MapToDomainTests : TestBase<DeliveryPhaseCrmMapper>
             rehabBuildActivityType = null,
             newBuildActivityType = newBuildActivityType,
         };
+        var onlyCompletionMilestonePolicy = WithOnlyCompletionMilestonePolicy();
 
         // when
-        var result = TestCandidate.MapToDomain(Application, Organisation, dto);
+        var result = TestCandidate.MapToDomain(Application, Organisation, dto, onlyCompletionMilestonePolicy);
 
         // then
         result.BuildActivity.Should().NotBeNull();
@@ -163,9 +170,10 @@ public class MapToDomainTests : TestBase<DeliveryPhaseCrmMapper>
                 { "ht-3", 12 },
             },
         };
+        var onlyCompletionMilestonePolicy = WithOnlyCompletionMilestonePolicy();
 
         // when
-        var result = TestCandidate.MapToDomain(Application, Organisation, dto).HomesToDeliver.ToList();
+        var result = TestCandidate.MapToDomain(Application, Organisation, dto, onlyCompletionMilestonePolicy).HomesToDeliver.ToList();
 
         // then
         result.Should().HaveCount(2);
@@ -189,9 +197,10 @@ public class MapToDomainTests : TestBase<DeliveryPhaseCrmMapper>
             completionDate = today.AddDays(4),
             completionPaymentDate = today.AddDays(5),
         };
+        var onlyCompletionMilestonePolicy = WithOnlyCompletionMilestonePolicy();
 
         // when
-        var result = TestCandidate.MapToDomain(Application, Organisation, dto);
+        var result = TestCandidate.MapToDomain(Application, Organisation, dto, onlyCompletionMilestonePolicy);
 
         // then
         result.DeliveryPhaseMilestones.AcquisitionMilestone.Should().NotBeNull();
@@ -215,12 +224,21 @@ public class MapToDomainTests : TestBase<DeliveryPhaseCrmMapper>
             name = "my name",
             requiresAdditionalPayments = requiresAdditionalPayments,
         };
+        var onlyCompletionMilestonePolicy = WithOnlyCompletionMilestonePolicy();
 
         // when
-        var result = TestCandidate.MapToDomain(Application, Organisation, dto);
+        var result = TestCandidate.MapToDomain(Application, Organisation, dto, onlyCompletionMilestonePolicy);
 
         // then
         result.IsAdditionalPaymentRequested.Should().NotBeNull();
         result.IsAdditionalPaymentRequested!.IsRequested.Should().Be(expectedResult);
+    }
+
+    private IOnlyCompletionMilestonePolicy WithOnlyCompletionMilestonePolicy(bool? returnValue = null)
+    {
+        var onlyCompletionMilestonePolicy = new Mock<IOnlyCompletionMilestonePolicy>();
+        onlyCompletionMilestonePolicy
+            .Setup(x => x.Validate(It.IsAny<bool>(), It.IsAny<BuildActivity>())).Returns(returnValue ?? false);
+        return onlyCompletionMilestonePolicy.Object;
     }
 }
