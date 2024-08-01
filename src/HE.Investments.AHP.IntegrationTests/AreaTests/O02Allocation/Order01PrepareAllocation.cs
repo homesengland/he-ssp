@@ -53,6 +53,9 @@ public class Order01PrepareAllocation : AhpIntegrationTest
         HomeTypesData.Disabled.PopulateAllData();
         DeliveryPhasesData.RehabDeliveryPhase.PopulateAllData();
         DeliveryPhasesData.OffTheShelfDeliveryPhase.PopulateAllData();
+
+        await AhpProjectShouldExist();
+
         var allocationId = await AhpDataManipulator.CreateAhpAllocation(
             LoginData,
             SiteData,
@@ -73,5 +76,23 @@ public class Order01PrepareAllocation : AhpIntegrationTest
         currentPage
             .UrlEndWith(ClaimsPagesUrl.Summary(UserOrganisationData.OrganisationId, allocationId))
             .HasTitle(ClaimPageTitles.Summary);
+    }
+
+    private async Task AhpProjectShouldExist()
+    {
+        if (ProjectData.IsProjectNotCreated())
+        {
+            var (projectId, siteId) =
+                await InFrontDoor.FrontDoorProjectEligibleForAhpExist(
+                    LoginData,
+                    ProjectData.GenerateProjectName("Only for Allocation"),
+                    SiteData.GenerateSiteName());
+
+            ProjectData.SetProjectId(projectId);
+            var consortiumId = await AhpCrmContext.GetAhpConsortium(LoginData);
+            await AhpProjectDataManipulator.CreateAhpProject(LoginData, ProjectData.ProjectId, ProjectData.ProjectName, siteId, SiteData.SiteName, consortiumId?.Id?.Value);
+            var ahpProject = await AhpProjectDataManipulator.GetAhpProject(LoginData, projectId);
+            SiteData.SetSiteId(ahpProject.ListOfSites.Single().id);
+        }
     }
 }

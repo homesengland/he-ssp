@@ -11,7 +11,7 @@ using HE.Investments.Common.Contract;
 using HE.Investments.Common.CRM.Model;
 using HE.Investments.IntegrationTestsFramework.Auth;
 
-namespace HE.Investments.AHP.IntegrationTests.Framework.Utils;
+namespace HE.Investments.AHP.IntegrationTests.Framework.Helpers;
 
 public class AhpDataManipulator
 {
@@ -31,34 +31,11 @@ public class AhpDataManipulator
         DeliveryPhasesData deliveryPhasesData,
         AllocationData allocationData)
     {
-        if (string.IsNullOrEmpty(siteData.SiteId))
-        {
-            siteData.GenerateSiteName();
-            var siteId = await CreateSite(loginData, siteData);
-            siteData.SetSiteId(siteId);
-        }
-
         var allocationId = await CreateAllocation(loginData, siteData, financialDetailsData, schemeInformationData, allocationData.AllocationName);
         await AddHomeTypes(loginData, allocationId, homeTypesData, schemeInformationData);
         await AddDeliveryPhases(loginData, allocationId, deliveryPhasesData, homeTypesData, schemeInformationData);
 
         return allocationId;
-    }
-
-    private async Task<string> CreateSite(ILoginData loginData, SiteData siteData)
-    {
-        var dto = new SiteDto
-        {
-            name = siteData.SiteName,
-            localAuthority = new SiteLocalAuthority
-            {
-                id = siteData.LocalAuthorityCode,
-                name = siteData.LocalAuthorityName,
-            },
-            status = (int)invln_Sitestatus.InProgress,
-        };
-
-        return await _ahpCrmContext.SaveAhpSite(dto, loginData, CancellationToken.None);
     }
 
     private async Task<string> CreateAllocation(
@@ -68,6 +45,7 @@ public class AhpDataManipulator
         SchemeInformationData schemeInformationData,
         string allocationName)
     {
+        await UpdateSite(loginData, siteData);
         var applicationDto = new AhpApplicationDto
         {
             siteId = ShortGuid.TryToGuidAsString(siteData.SiteId),
@@ -293,5 +271,22 @@ public class AhpDataManipulator
         await _ahpCrmContext.SaveAhpDeliveryPhase(rehabDeliveryPhase, loginData, CancellationToken.None);
         await _ahpCrmContext.SaveAhpDeliveryPhase(offTheShelfDeliveryPhase, loginData, CancellationToken.None);
         deliveryPhasesData.RehabDeliveryPhase.SetDeliveryPhaseId(rehabDeliveryPhaseId);
+    }
+
+    private async Task UpdateSite(ILoginData loginData, SiteData siteData)
+    {
+        var dto = new SiteDto
+        {
+            id = siteData.SiteId,
+            name = siteData.SiteName,
+            localAuthority = new SiteLocalAuthority
+            {
+                id = siteData.LocalAuthorityCode,
+                name = siteData.LocalAuthorityName,
+            },
+            status = (int)invln_Sitestatus.InProgress,
+        };
+
+        await _ahpCrmContext.SaveAhpSite(dto, loginData, CancellationToken.None);
     }
 }
