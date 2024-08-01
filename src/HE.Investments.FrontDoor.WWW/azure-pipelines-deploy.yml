@@ -29,4 +29,4 @@ resources:
     ref: 'master'
 
 stages:
-- template: azure-pipelines-frontdoor-portal-deploy.yml@he-invst-deployment
+- template: portal-deployment-pipelines/azure-pipelines-frontdoor-portal-deploy.yml@he-invst-deployment
