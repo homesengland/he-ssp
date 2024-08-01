@@ -2,6 +2,7 @@ using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Windows.Forms;
 using DataverseModel;
+using HE.Base.Common.Extensions;
 using HE.Base.Services;
 using HE.CRM.Common.Repositories.Interfaces;
 using HE.CRM.Model.CrmSerialiedParameters;
@@ -354,7 +355,7 @@ namespace HE.CRM.Plugins.Services.GovNotifyEmail
                     };
 
                     var parameters = JsonSerializer.Serialize(govNotParams, options);
-                    this.SendGovNotifyEmail(application.ToEntityReference(), systemUser.ToEntityReference(),
+                    this.SendGovNotifyEmail(user, application.ToEntityReference(),
                         $"Application {application.invln_Name} has been assigned to you for review/approval", parameters, emailTemplate);
                 }
             }
