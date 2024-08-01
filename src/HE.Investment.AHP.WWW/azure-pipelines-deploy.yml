@@ -22,7 +22,7 @@ resources:
   - repository: he-invst-deployment
     type: git
     name: 'Investments Programme/he-invst-deployment'
-    ref: 'r3_pipelines_reorder'
+    ref: 'development_R3'
   - repository: templates
     type: git
     name: 'Cloud Hosting Service/Templates'
