@@ -1,8 +1,10 @@
 using System.Diagnostics.CodeAnalysis;
+using FluentAssertions;
 using HE.Investment.AHP.WWW.Views.AllocationClaims.Const;
 using HE.Investments.AHP.IntegrationTests.AreaTests.O01Application.Order03FillApplication.Data;
 using HE.Investments.AHP.IntegrationTests.AreaTests.O01Application.Order03FillApplication.Data.DeliveryPhases;
 using HE.Investments.AHP.IntegrationTests.AreaTests.O01Application.Order03FillApplication.Data.HomeTypes;
+using HE.Investments.AHP.IntegrationTests.AreaTests.O01Application.Pages;
 using HE.Investments.AHP.IntegrationTests.AreaTests.O02Allocation.Data.Phase;
 using HE.Investments.AHP.IntegrationTests.AreaTests.O02Allocation.Pages;
 using HE.Investments.AHP.IntegrationTests.Framework;
@@ -78,6 +80,28 @@ public class Order01PrepareAllocation : AhpIntegrationTest
             .HasTitle(ClaimPageTitles.Summary);
     }
 
+    [Fact(Skip = AhpConfig.SkipTest)]
+    [Order(2)]
+    public async Task Order02_DisplayAllocationOnProjectDashboard()
+    {
+        // given
+        var currentPage = await TestClient.NavigateTo(ProjectPagesUrl.ProjectDetails(UserOrganisationData.OrganisationId, ProjectData.ProjectId));
+        currentPage
+            .HasTitle(ProjectData.ProjectName)
+            .UrlEndWith(ProjectPagesUrl.ProjectDetails(UserOrganisationData.OrganisationId, ProjectData.ProjectId));
+
+        // when
+        var projectCard = currentPage.GetFirstListCard();
+
+        // then
+        var allocationsCard
+            = projectCard.ContentList.SingleOrDefault(x => x.Title == "Allocations");
+        allocationsCard.Should().NotBeNull("Allocations should be displayed on the project dashboard");
+        allocationsCard!.Description.Should().NotBeNullOrEmpty("Allocations description should be displayed");
+        var allocation = allocationsCard.Items.SingleOrDefault(x => x.Name == AllocationData.AllocationName);
+        allocation.Should().NotBeNull("New allocation should be displayed on the project dashboard");
+    }
+
     private async Task AhpProjectShouldExist()
     {
         if (ProjectData.IsProjectNotCreated())
@@ -93,6 +117,7 @@ public class Order01PrepareAllocation : AhpIntegrationTest
             await AhpProjectDataManipulator.CreateAhpProject(LoginData, ProjectData.ProjectId, ProjectData.ProjectName, siteId, SiteData.SiteName, consortiumId?.Id?.Value);
             var ahpProject = await AhpProjectDataManipulator.GetAhpProject(LoginData, projectId);
             SiteData.SetSiteId(ahpProject.ListOfSites.Single().id);
+            await AhpDataManipulator.MakeSiteUsableForAllocation(LoginData, SiteData);
         }
     }
 }
