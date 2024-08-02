@@ -38,6 +38,23 @@ public class AhpDataManipulator
         return allocationId;
     }
 
+    public async Task MakeSiteUsableForAllocation(ILoginData loginData, SiteData siteData)
+    {
+        var dto = new SiteDto
+        {
+            id = siteData.SiteId,
+            name = siteData.SiteName,
+            localAuthority = new SiteLocalAuthority
+            {
+                id = siteData.LocalAuthorityCode,
+                name = siteData.LocalAuthorityName,
+            },
+            status = (int)invln_Sitestatus.InProgress,
+        };
+
+        await _ahpCrmContext.SaveAhpSite(dto, loginData, CancellationToken.None);
+    }
+
     private async Task<string> CreateAllocation(
         ILoginData loginData,
         SiteData siteData,
@@ -45,7 +62,6 @@ public class AhpDataManipulator
         SchemeInformationData schemeInformationData,
         string allocationName)
     {
-        await UpdateSite(loginData, siteData);
         var applicationDto = new AhpApplicationDto
         {
             siteId = ShortGuid.TryToGuidAsString(siteData.SiteId),
@@ -271,22 +287,5 @@ public class AhpDataManipulator
         await _ahpCrmContext.SaveAhpDeliveryPhase(rehabDeliveryPhase, loginData, CancellationToken.None);
         await _ahpCrmContext.SaveAhpDeliveryPhase(offTheShelfDeliveryPhase, loginData, CancellationToken.None);
         deliveryPhasesData.RehabDeliveryPhase.SetDeliveryPhaseId(rehabDeliveryPhaseId);
-    }
-
-    private async Task UpdateSite(ILoginData loginData, SiteData siteData)
-    {
-        var dto = new SiteDto
-        {
-            id = siteData.SiteId,
-            name = siteData.SiteName,
-            localAuthority = new SiteLocalAuthority
-            {
-                id = siteData.LocalAuthorityCode,
-                name = siteData.LocalAuthorityName,
-            },
-            status = (int)invln_Sitestatus.InProgress,
-        };
-
-        await _ahpCrmContext.SaveAhpSite(dto, loginData, CancellationToken.None);
     }
 }

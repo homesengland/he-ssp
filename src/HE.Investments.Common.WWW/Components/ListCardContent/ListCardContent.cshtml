@@ -6,7 +6,7 @@
     var restItemsCount = Model.Items.Count - itemsToDisplayCount;
 }
 
-<div>
+<div class="govuk-summary-card__content-item">
     @if (!string.IsNullOrEmpty(Model.Title))
     {
         <gds-h3 size="ControlSize.S">@Model.Title</gds-h3>
