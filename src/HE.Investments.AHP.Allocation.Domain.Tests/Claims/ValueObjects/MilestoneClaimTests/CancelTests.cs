@@ -40,7 +40,7 @@ public class CancelTests
         // then
         result.Should().BeOfType<MilestoneWithoutClaim>();
         result.Type.Should().Be(MilestoneType.Acquisition);
-        result.Status.Should().Be(MilestoneStatus.Draft);
+        result.Status.Should().Be(MilestoneStatus.ClaimDoesNotExist);
         result.ClaimDate.ForecastClaimDate.Should().Be(testCandidate.ClaimDate.ForecastClaimDate);
         result.ClaimDate.AchievementDate.Should().BeNull();
         result.CostsIncurred.Should().BeNull();

@@ -12,8 +12,7 @@ namespace HE.CRM.AHP.Plugins.Handlers.Claims
     {
         public override bool CanWork()
         {
-            if (ExecutionData.PostImage.invln_Application == null ||
-                ExecutionData.PostImage.invln_Allocation == null)
+            if (ExecutionData.PostImage.invln_Allocation == null)
             {
                 return false;
             }

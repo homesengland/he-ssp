@@ -11,7 +11,6 @@ public abstract class MilestoneClaimBase : ValueObject
 {
     protected MilestoneClaimBase(
         MilestoneType type,
-        MilestoneStatus status,
         GrantApportioned grantApportioned,
         ClaimDate claimDate,
         bool? costsIncurred,
@@ -25,7 +24,6 @@ public abstract class MilestoneClaimBase : ValueObject
         }
 
         Type = type;
-        Status = status;
         GrantApportioned = grantApportioned;
         ClaimDate = claimDate;
         CostsIncurred = costsIncurred;
@@ -34,7 +32,7 @@ public abstract class MilestoneClaimBase : ValueObject
 
     public MilestoneType Type { get; }
 
-    public MilestoneStatus Status { get; }
+    public abstract MilestoneStatus Status { get; }
 
     public GrantApportioned GrantApportioned { get; }
 
@@ -44,7 +42,7 @@ public abstract class MilestoneClaimBase : ValueObject
 
     public bool? IsConfirmed { get; }
 
-    public bool IsEditable => Status == MilestoneStatus.Draft;
+    public abstract bool IsEditable { get; }
 
     public abstract bool IsSubmitted { get; }
 

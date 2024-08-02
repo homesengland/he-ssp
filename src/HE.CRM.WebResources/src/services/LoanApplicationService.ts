@@ -93,124 +93,110 @@ export class LoanApplicationService {
     this.common.hideControl('invln_collateralwarrantyvalue', true);
     this.common.hideControl('invln_collateralwarrantymarginatedsecurityvalue', true);
 
-    if (status == LoanAppInternalStatus.ReferredBacktoApplicant
-      || status == LoanAppInternalStatus.UnderReview
-      || status == LoanAppInternalStatus.SentforApproval
-      || status == LoanAppInternalStatus.NotApproved
-      || status == LoanAppInternalStatus.ApprovedSubjecttoDueDiligence
-      || status == LoanAppInternalStatus.ApplicationDeclined
-      || status == LoanAppInternalStatus.InDueDiligence
-      || status == LoanAppInternalStatus.SentforPreCompleteApproval
-      || status == LoanAppInternalStatus.ApprovedSubjectToContract
-      || status == LoanAppInternalStatus.AwaitingCPSatisfaction
-      || status == LoanAppInternalStatus.CPsSatisfied
-      || status == LoanAppInternalStatus.LoanAvailable
-      || status == LoanAppInternalStatus.CashflowRequested
-      || status == LoanAppInternalStatus.CashflowUnderReview) {
-      var securities: any = this.common.getAttributeValue('invln_securities')
-      if (securities != null) {
-        if (securities.includes(Securities.debenture)) {
-          this.common.hideControl('invln_debenturedescription', false)
-          this.common.hideControl('invln_debenturevalue', false)
-          this.common.hideControl('invln_debenturemarginedsecurityvalue', false)
+    var securities: any = this.common.getAttributeValue('invln_securities')
+    if (securities != null) {
+      if (securities.includes(Securities.debenture)) {
+        this.common.hideControl('invln_debenturedescription', false)
+        this.common.hideControl('invln_debenturevalue', false)
+        this.common.hideControl('invln_debenturemarginedsecurityvalue', false)
 
-          this.common.setControlRequiredV2('invln_debenturedescription', true);
-          this.common.setControlRequiredV2('invln_debenturevalue', true);
-          this.common.setControlRequiredV2('invln_debenturemarginedsecurityvalue', true);
-        }
-        if (securities.includes(Securities.firstLegalCharge)) {
-          this.common.hideControl('invln_firstlegalchargedescription', false)
-          this.common.hideControl('invln_firstlegalchargevalue', false)
-          this.common.hideControl('invln_firstlegalchargemarginedsecurityvalue', false)
-
-          this.common.setControlRequiredV2('invln_firstlegalchargedescription', true);
-          this.common.setControlRequiredV2('invln_firstlegalchargevalue', true);
-          this.common.setControlRequiredV2('invln_firstlegalchargemarginedsecurityvalue', true);
-        }
-        if (securities.includes(Securities.subsequentCharge)) {
-          this.common.hideControl('invln_subsequentchargedescription', false)
-          this.common.hideControl('invln_subsequentchargevalue', false)
-          this.common.hideControl('invln_subsequentchargemarginedsecurityvalue', false)
-
-          this.common.setControlRequiredV2('invln_subsequentchargedescription', true);
-          this.common.setControlRequiredV2('invln_subsequentchargevalue', true);
-          this.common.setControlRequiredV2('invln_subsequentchargemarginedsecurityvalue', true);
-        }
-        if (securities.includes(Securities.personalGuarantee)) {
-          this.common.hideControl('invln_personalguaranteedescription', false)
-          this.common.hideControl('invln_personalguaranteevalue', false)
-          this.common.hideControl('invln_personalguaranteemarginedsecurityvalue', false)
-
-          this.common.setControlRequiredV2('invln_personalguaranteedescription', true);
-          this.common.setControlRequiredV2('invln_personalguaranteevalue', true);
-          this.common.setControlRequiredV2('invln_personalguaranteemarginedsecurityvalue', true);
-        }
-        if (securities.includes(Securities.parentCompanyGuarantee)) {
-          this.common.hideControl('invln_parentcompanyguaranteedescription', false)
-          this.common.hideControl('invln_parentcompanyguaranteevalue', false)
-          this.common.hideControl('invln_parentcompanyguaranteemarginedsecurityvalue', false)
-
-          this.common.setControlRequiredV2('invln_parentcompanyguaranteedescription', true);
-          this.common.setControlRequiredV2('invln_parentcompanyguaranteevalue', true);
-          this.common.setControlRequiredV2('invln_parentcompanyguaranteemarginedsecurityvalue', true);
-        }
-        if (securities.includes(Securities.subordinatedDeed)) {
-          this.common.hideControl('invln_subordinateddeeddescription', false)
-          this.common.hideControl('invln_subordinateddeedvalue', false)
-          this.common.hideControl('invln_subordinateddeedmarginedsecurityvalue', false)
-
-          this.common.setControlRequiredV2('invln_subordinateddeeddescription', true);
-          this.common.setControlRequiredV2('invln_subordinateddeedvalue', true);
-          this.common.setControlRequiredV2('invln_subordinateddeedmarginedsecurityvalue', true);
-        }
-        if (securities.includes(Securities.costOverrunGuarantee)) {
-          this.common.hideControl('invln_costoverrunguarantee', false)
-          this.common.hideControl('invln_costoverrunvalue', false)
-          this.common.hideControl('invln_costoverrunmarginedsecurityvalue', false)
-
-          this.common.setControlRequiredV2('invln_costoverrunguarantee', true);
-          this.common.setControlRequiredV2('invln_costoverrunvalue', true);
-          this.common.setControlRequiredV2('invln_costoverrunmarginedsecurityvalue', true);
-        }
-        if (securities.includes(Securities.completionGuarantee)) {
-          this.common.hideControl('invln_completionguaranteedescription', false)
-          this.common.hideControl('invln_completionguaranteevalue', false)
-          this.common.hideControl('invln_completionguaranteemarginedsecurityvalue', false)
-
-          this.common.setControlRequiredV2('invln_completionguaranteedescription', true);
-          this.common.setControlRequiredV2('invln_completionguaranteevalue', true);
-          this.common.setControlRequiredV2('invln_completionguaranteemarginedsecurityvalue', true);
-        }
-        if (securities.includes(Securities.interestShortfall)) {
-          this.common.hideControl('invln_interestshortfalldescription', false)
-          this.common.hideControl('invln_interestshortfallvalue', false)
-          this.common.hideControl('invln_interestshortfallmarginedsecurityvalue', false)
-
-          this.common.setControlRequiredV2('invln_interestshortfalldescription', true);
-          this.common.setControlRequiredV2('invln_interestshortfallvalue', true);
-          this.common.setControlRequiredV2('invln_interestshortfallmarginedsecurityvalue', true);
-        }
-        if (securities.includes(Securities.other)) {
-          this.common.hideControl('invln_customsecurity', false)
-          this.common.hideControl('invln_otherdescription', false)
-          this.common.hideControl('invln_othervalue', false)
-          this.common.hideControl('invln_othermarginedsecurityvalue', false)
-
-          this.common.setControlRequiredV2('invln_customsecurity', true)
-          this.common.setControlRequiredV2('invln_otherdescription', true);
-          this.common.setControlRequiredV2('invln_othervalue', true);
-          this.common.setControlRequiredV2('invln_othermarginedsecurityvalue', true);
-        }
-        if (securities.includes(Securities.collateralWarranty)) {
-          this.common.hideControl('invln_collateralwarrantydescription', false)
-          this.common.hideControl('invln_collateralwarrantyvalue', false)
-          this.common.hideControl('invln_collateralwarrantymarginatedsecurityvalue', false)
-
-          this.common.setControlRequiredV2('invln_collateralwarrantydescription', true);
-          this.common.setControlRequiredV2('invln_collateralwarrantyvalue', true);
-          this.common.setControlRequiredV2('invln_collateralwarrantymarginatedsecurityvalue', true);
-        }
+        this.common.setControlRequiredV2('invln_debenturedescription', true);
+        this.common.setControlRequiredV2('invln_debenturevalue', true);
+        this.common.setControlRequiredV2('invln_debenturemarginedsecurityvalue', true);
       }
+      if (securities.includes(Securities.firstLegalCharge)) {
+        this.common.hideControl('invln_firstlegalchargedescription', false)
+        this.common.hideControl('invln_firstlegalchargevalue', false)
+        this.common.hideControl('invln_firstlegalchargemarginedsecurityvalue', false)
+
+        this.common.setControlRequiredV2('invln_firstlegalchargedescription', true);
+        this.common.setControlRequiredV2('invln_firstlegalchargevalue', true);
+        this.common.setControlRequiredV2('invln_firstlegalchargemarginedsecurityvalue', true);
+      }
+      if (securities.includes(Securities.subsequentCharge)) {
+        this.common.hideControl('invln_subsequentchargedescription', false)
+        this.common.hideControl('invln_subsequentchargevalue', false)
+        this.common.hideControl('invln_subsequentchargemarginedsecurityvalue', false)
+
+        this.common.setControlRequiredV2('invln_subsequentchargedescription', true);
+        this.common.setControlRequiredV2('invln_subsequentchargevalue', true);
+        this.common.setControlRequiredV2('invln_subsequentchargemarginedsecurityvalue', true);
+      }
+      if (securities.includes(Securities.personalGuarantee)) {
+        this.common.hideControl('invln_personalguaranteedescription', false)
+        this.common.hideControl('invln_personalguaranteevalue', false)
+        this.common.hideControl('invln_personalguaranteemarginedsecurityvalue', false)
+
+        this.common.setControlRequiredV2('invln_personalguaranteedescription', true);
+        this.common.setControlRequiredV2('invln_personalguaranteevalue', true);
+        this.common.setControlRequiredV2('invln_personalguaranteemarginedsecurityvalue', true);
+      }
+      if (securities.includes(Securities.parentCompanyGuarantee)) {
+        this.common.hideControl('invln_parentcompanyguaranteedescription', false)
+        this.common.hideControl('invln_parentcompanyguaranteevalue', false)
+        this.common.hideControl('invln_parentcompanyguaranteemarginedsecurityvalue', false)
+
+        this.common.setControlRequiredV2('invln_parentcompanyguaranteedescription', true);
+        this.common.setControlRequiredV2('invln_parentcompanyguaranteevalue', true);
+        this.common.setControlRequiredV2('invln_parentcompanyguaranteemarginedsecurityvalue', true);
+      }
+      if (securities.includes(Securities.subordinatedDeed)) {
+        this.common.hideControl('invln_subordinateddeeddescription', false)
+        this.common.hideControl('invln_subordinateddeedvalue', false)
+        this.common.hideControl('invln_subordinateddeedmarginedsecurityvalue', false)
+
+        this.common.setControlRequiredV2('invln_subordinateddeeddescription', true);
+        this.common.setControlRequiredV2('invln_subordinateddeedvalue', true);
+        this.common.setControlRequiredV2('invln_subordinateddeedmarginedsecurityvalue', true);
+      }
+      if (securities.includes(Securities.costOverrunGuarantee)) {
+        this.common.hideControl('invln_costoverrunguarantee', false)
+        this.common.hideControl('invln_costoverrunvalue', false)
+        this.common.hideControl('invln_costoverrunmarginedsecurityvalue', false)
+
+        this.common.setControlRequiredV2('invln_costoverrunguarantee', true);
+        this.common.setControlRequiredV2('invln_costoverrunvalue', true);
+        this.common.setControlRequiredV2('invln_costoverrunmarginedsecurityvalue', true);
+      }
+      if (securities.includes(Securities.completionGuarantee)) {
+        this.common.hideControl('invln_completionguaranteedescription', false)
+        this.common.hideControl('invln_completionguaranteevalue', false)
+        this.common.hideControl('invln_completionguaranteemarginedsecurityvalue', false)
+
+        this.common.setControlRequiredV2('invln_completionguaranteedescription', true);
+        this.common.setControlRequiredV2('invln_completionguaranteevalue', true);
+        this.common.setControlRequiredV2('invln_completionguaranteemarginedsecurityvalue', true);
+      }
+      if (securities.includes(Securities.interestShortfall)) {
+        this.common.hideControl('invln_interestshortfalldescription', false)
+        this.common.hideControl('invln_interestshortfallvalue', false)
+        this.common.hideControl('invln_interestshortfallmarginedsecurityvalue', false)
+
+        this.common.setControlRequiredV2('invln_interestshortfalldescription', true);
+        this.common.setControlRequiredV2('invln_interestshortfallvalue', true);
+        this.common.setControlRequiredV2('invln_interestshortfallmarginedsecurityvalue', true);
+      }
+      if (securities.includes(Securities.other)) {
+        this.common.hideControl('invln_customsecurity', false)
+        this.common.hideControl('invln_otherdescription', false)
+        this.common.hideControl('invln_othervalue', false)
+        this.common.hideControl('invln_othermarginedsecurityvalue', false)
+
+        this.common.setControlRequiredV2('invln_customsecurity', true)
+        this.common.setControlRequiredV2('invln_otherdescription', true);
+        this.common.setControlRequiredV2('invln_othervalue', true);
+        this.common.setControlRequiredV2('invln_othermarginedsecurityvalue', true);
+      }
+      if (securities.includes(Securities.collateralWarranty)) {
+        this.common.hideControl('invln_collateralwarrantydescription', false)
+        this.common.hideControl('invln_collateralwarrantyvalue', false)
+        this.common.hideControl('invln_collateralwarrantymarginatedsecurityvalue', false)
+
+        this.common.setControlRequiredV2('invln_collateralwarrantydescription', true);
+        this.common.setControlRequiredV2('invln_collateralwarrantyvalue', true);
+        this.common.setControlRequiredV2('invln_collateralwarrantymarginatedsecurityvalue', true);
+      }
+
     }
   }
 

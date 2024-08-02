@@ -26,4 +26,4 @@ resources:
     ref: 'master'
 
 stages:
-- template: azure-pipelines-document-service-build.yml@he-invst-deployment
+- template: portal-deployment-pipelines/azure-pipelines-document-service-build.yml@he-invst-deployment

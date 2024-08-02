@@ -59,20 +59,14 @@ namespace HE.CRM.Plugins.Tests.Handlers.ISP
         {
             Target = new invln_ISP
             {
-                Id = Guid.NewGuid(),
+                Id = _ispId,
                 invln_SendforApproval = true
             };
 
             PreImage = new invln_ISP
             {
-                Id = Guid.NewGuid(),
+                Id = _ispId,
                 invln_SendforApproval = false
-            };
-
-            PostImage = new invln_ISP
-            {
-                Id = Guid.NewGuid(),
-                invln_SendforApproval = true
             };
 
             Asset("Update", (int)StageEnum.PostOperation);
@@ -87,19 +81,19 @@ namespace HE.CRM.Plugins.Tests.Handlers.ISP
         {
             Target = new invln_ISP
             {
-                Id = Guid.NewGuid(),
+                Id = _ispId,
                 invln_SendforApproval = false
             };
 
             PreImage = new invln_ISP
             {
-                Id = Guid.NewGuid(),
+                Id = _ispId,
                 invln_SendforApproval = true
             };
 
             PostImage = new invln_ISP
             {
-                Id = Guid.NewGuid(),
+                Id = _ispId,
                 invln_SendforApproval = false
             };
 
@@ -115,24 +109,18 @@ namespace HE.CRM.Plugins.Tests.Handlers.ISP
         {
             Target = new invln_ISP
             {
-                Id = Guid.NewGuid(),
+                Id = _ispId,
                 invln_SendforApproval = true
             };
 
             PreImage = new invln_ISP
             {
-                Id = Guid.NewGuid(),
+                Id = _ispId,
                 invln_SendforApproval = false,
                 invln_ApprovalLevelNew = new OptionSetValue((int)invln_ApprovalLevel.HoF)
             };
 
-            PostImage = new invln_ISP
-            {
-                Id = Guid.NewGuid(),
-                invln_SendforApproval = true,
-                invln_ApprovalLevelNew = new OptionSetValue((int)invln_ApprovalLevel.HoF)
-            };
-
+#pragma warning disable CS0618 // Type or member is obsolete
             fakedContext.Initialize(
                 new List<Entity>()
                 {
@@ -142,6 +130,7 @@ namespace HE.CRM.Plugins.Tests.Handlers.ISP
                     _cROTeam
                 }
                 );
+#pragma warning restore CS0618 // Type or member is obsolete
 
             Asset("Update", (int)StageEnum.PreOperation);
             handler.DoWork();
@@ -157,24 +146,18 @@ namespace HE.CRM.Plugins.Tests.Handlers.ISP
         {
             Target = new invln_ISP
             {
-                Id = Guid.NewGuid(),
+                Id = _ispId,
                 invln_SendforApproval = true
             };
 
             PreImage = new invln_ISP
             {
-                Id = Guid.NewGuid(),
+                Id = _ispId,
                 invln_SendforApproval = false,
-                invln_ApprovalLevelNew = new OptionSetValue((int)invln_ApprovalLevel.HoF)
-            };
-
-            PostImage = new invln_ISP
-            {
-                Id = Guid.NewGuid(),
-                invln_SendforApproval = true,
                 invln_ApprovalLevelNew = new OptionSetValue((int)invln_ApprovalLevel.CRO)
             };
 
+#pragma warning disable CS0618 // Type or member is obsolete
             fakedContext.Initialize(
                 new List<Entity>()
                 {
@@ -184,6 +167,7 @@ namespace HE.CRM.Plugins.Tests.Handlers.ISP
                     _cROTeam
                 }
                 );
+#pragma warning restore CS0618 // Type or member is obsolete
 
             Asset("Update", (int)StageEnum.PreOperation);
             handler.DoWork();
@@ -211,13 +195,7 @@ namespace HE.CRM.Plugins.Tests.Handlers.ISP
                 invln_ApprovalLevelNew = new OptionSetValue((int)invln_ApprovalLevel.HoF)
             };
 
-            PostImage = new invln_ISP
-            {
-                Id = _ispId,
-                invln_SendforApproval = true,
-                invln_ApprovalLevelNew = new OptionSetValue((int)invln_ApprovalLevel.HoF)
-            };
-
+#pragma warning disable CS0618 // Type or member is obsolete
             fakedContext.Initialize(
                 new List<Entity>()
                 {
@@ -232,6 +210,7 @@ namespace HE.CRM.Plugins.Tests.Handlers.ISP
                     _cROTeam,
                 }
                 );
+#pragma warning restore CS0618 // Type or member is obsolete
 
             Asset("Update", (int)StageEnum.PreOperation);
             handler.DoWork();

@@ -32,7 +32,7 @@
                         <dt class="govuk-summary-list__key govuk-!-width-one-third">@milestone.Type.GetDescription() achievement date</dt>
                         <dd class="govuk-summary-list__value">@DateHelper.DisplayAsUkFormatDate(milestone.AchievementDate)</dd>
                         <dd class="govuk-summary-list__actions">
-                            <vc:claim-status-tag claim-status="@milestone.Status"/>
+                            <vc:claim-status-tag claim-type="@milestone.Type" claim-status="@milestone.Status"/>
                         </dd>
                     </div>
                 }
@@ -42,7 +42,7 @@
                         <dt class="govuk-summary-list__key govuk-!-width-one-third">@milestone.Type.GetDescription() forecast claim date</dt>
                         <dd class="govuk-summary-list__value">@DateHelper.DisplayAsUkFormatDate(milestone.ForecastClaimDate)</dd>
                         <dd class="govuk-summary-list__actions">
-                            <vc:claim-status-tag claim-status="@milestone.Status"/>
+                            <vc:claim-status-tag claim-type="@milestone.Type" claim-status="@milestone.Status"/>
                         </dd>
                     </div>
                 }

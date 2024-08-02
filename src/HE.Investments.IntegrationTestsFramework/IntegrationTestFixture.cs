@@ -1,7 +1,9 @@
 using HE.Investments.Account.Api.Contract.User;
+using HE.Investments.Common.Utils;
 using HE.Investments.DocumentService.Configs;
 using HE.Investments.IntegrationTestsFramework.Auth;
 using HE.Investments.IntegrationTestsFramework.Config;
+using HE.Investments.IntegrationTestsFramework.Utils;
 using HE.Investments.TestsUtils.TestData;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Hosting;
@@ -35,6 +37,8 @@ public class IntegrationTestFixture<TProgram> : WebApplicationFactory<TProgram>
     public IFeatureManager FeatureManager => ServiceProvider.GetRequiredService<IFeatureManager>();
 
     public IServiceProvider ServiceProvider => Scope.Value.ServiceProvider;
+
+    public DateTimeManipulator DateTimeManipulator => Scope.Value.ServiceProvider.GetRequiredService<DateTimeManipulator>();
 
     protected Lazy<IServiceScope> Scope { get; }
 
@@ -88,6 +92,8 @@ public class IntegrationTestFixture<TProgram> : WebApplicationFactory<TProgram>
 
             x.AddSingleton<IDocumentServiceSettings, MockedDocumentServiceSettings>();
             x.Decorate<IHttpClientFactory, IntegrationTestsHttpClientFactory>();
+            x.AddSingleton<DateTimeManipulator>();
+            x.AddSingleton<IDateTimeProvider>(x => x.GetRequiredService<DateTimeManipulator>());
             ConfigureTestServices(x);
         });
 
