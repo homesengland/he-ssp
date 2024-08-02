@@ -7,6 +7,7 @@ using HE.Base.Common.Extensions;
 using HE.Base.Services;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.CRM.Common.DtoMapping;
+using HE.CRM.Common.Extensions;
 using HE.CRM.Common.Extensions.Entities;
 using HE.CRM.Common.Repositories.Interfaces;
 using Microsoft.Xrm.Sdk;
@@ -45,7 +46,7 @@ namespace HE.CRM.AHP.Plugins.Services.Application
         {
             var application = _ahpApplicationRepository.GetById(schemeId);
 
-            if (application.StatusCode.Value != (int)invln_AHPInternalStatus.ApplicationSubmitted)
+            if (application.StatusCode.Value != (int)invln_AHPInternalStatus.Approved)
             {
                 var internalStatus = (invln_AHPInternalStatus)application.StatusCode.Value;
                 Logger.Warn($"Cannot create allocation from status {internalStatus}");
@@ -59,7 +60,10 @@ namespace HE.CRM.AHP.Plugins.Services.Application
             allocation.Id = Guid.NewGuid();
             allocation.invln_isallocation = true;
             allocation.invln_BaseApplication = new EntityReference(invln_scheme.EntityLogicalName, schemeId);
-            allocation.invln_AllocationID = "1";
+            allocation.invln_AllocationID = "G000001"; // TODO: implement autonumbering
+            allocation.invln_VersionNumber = 1;
+            allocation.invln_AllocationInternalStatus = new OptionSetValue((int)invln_AllocationInternalStatus.Approved);
+            allocation.invln_AllocationExternalStatus = new OptionSetValue((int)invln_AllocationExternalStatus.Approved);
 
             var request = new CreateRequest()
             {

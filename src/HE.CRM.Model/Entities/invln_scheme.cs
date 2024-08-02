@@ -134,7 +134,11 @@ namespace DataverseModel
 			public const string invln_affordabilityevidence = "invln_affordabilityevidence";
 			public const string invln_ahpcontract_AHPApplication_invln_scheme = "invln_ahpcontract_AHPApplication_invln_scheme";
 			public const string invln_ahpstatuschange_AHPApplication_invln_sche = "invln_ahpstatuschange_AHPApplication_invln_sche";
+			public const string invln_AllocationExternalStatus = "invln_allocationexternalstatus";
+			public const string invln_allocationexternalstatusName = "invln_allocationexternalstatusname";
 			public const string invln_AllocationID = "invln_allocationid";
+			public const string invln_AllocationInternalStatus = "invln_allocationinternalstatus";
+			public const string invln_allocationinternalstatusName = "invln_allocationinternalstatusname";
 			public const string invln_AmountPaid = "invln_amountpaid";
 			public const string invln_amountpaid_Base = "invln_amountpaid_base";
 			public const string invln_AmountRemaining = "invln_amountremaining";
@@ -624,6 +628,40 @@ namespace DataverseModel
 			}
 		}
 		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_allocationexternalstatus")]
+		public virtual Microsoft.Xrm.Sdk.OptionSetValue invln_AllocationExternalStatus
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_allocationexternalstatus");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_AllocationExternalStatus");
+				this.SetAttributeValue("invln_allocationexternalstatus", value);
+				this.OnPropertyChanged("invln_AllocationExternalStatus");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_allocationexternalstatusname")]
+		public string invln_allocationexternalstatusName
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				if (this.FormattedValues.Contains("invln_allocationexternalstatus"))
+				{
+					return this.FormattedValues["invln_allocationexternalstatus"];
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+		}
+		
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_allocationid")]
 		public string invln_AllocationID
 		{
@@ -638,6 +676,40 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_AllocationID");
 				this.SetAttributeValue("invln_allocationid", value);
 				this.OnPropertyChanged("invln_AllocationID");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_allocationinternalstatus")]
+		public virtual Microsoft.Xrm.Sdk.OptionSetValue invln_AllocationInternalStatus
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_allocationinternalstatus");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_AllocationInternalStatus");
+				this.SetAttributeValue("invln_allocationinternalstatus", value);
+				this.OnPropertyChanged("invln_AllocationInternalStatus");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_allocationinternalstatusname")]
+		public string invln_allocationinternalstatusName
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				if (this.FormattedValues.Contains("invln_allocationinternalstatus"))
+				{
+					return this.FormattedValues["invln_allocationinternalstatus"];
+				}
+				else
+				{
+					return default(string);
+				}
 			}
 		}
 		
