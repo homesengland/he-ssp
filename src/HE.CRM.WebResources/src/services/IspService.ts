@@ -61,6 +61,7 @@ export class IspService {
     this.hideParentCompanyGuaranteeFields(true);
     this.hideSubordinatedDeedFields(true);
     this.hideCompletionGuaranteeFields(true);
+    this.hideCollateralwarrantyFields(true);
     let security = <any>this.common.getAttribute("invln_securities");
     for (var i = 0; i < security.getSelectedOption().length; i++) {
       switch (security.getSelectedOption()[i].value) {
@@ -93,6 +94,9 @@ export class IspService {
           break;
         case Securities.other:
           this.hideOtherFields(false);
+          break;
+        case Securities.collateralWarranty:
+          this.hideCollateralwarrantyFields(false)
           break;
       }
     }
@@ -212,16 +216,6 @@ export class IspService {
     this.common.setControlRequiredV2('invln_loanrecycledincomeotherdebttogdvcovenan', sendForApproval)
     this.common.setControlRequiredV2('invln_margin', sendForApproval)
     this.common.setControlRequiredV2('invln_arrangementfee', sendForApproval)
-    this.common.setControlRequiredV2('invln_firstlegalchargedescription', sendForApproval)
-    this.common.setControlRequiredV2('invln_subsequentchargedescription', sendForApproval)
-    this.common.setControlRequiredV2('invln_debenturedescription', sendForApproval)
-    this.common.setControlRequiredV2('invln_personalguaranteedescription', sendForApproval)
-    this.common.setControlRequiredV2('invln_parentcompanyguaranteedescription', sendForApproval)
-    this.common.setControlRequiredV2('invln_subordinateddeeddescription', sendForApproval)
-    this.common.setControlRequiredV2('invln_costoverrunguarantee', sendForApproval)
-    this.common.setControlRequiredV2('invln_completionguaranteedescription', sendForApproval)
-    this.common.setControlRequiredV2('invln_interestshortfalldescription', sendForApproval)
-    this.common.setControlRequiredV2('invln_otherdescription', sendForApproval)
     this.common.setControlRequiredV2('invln_encouragingdiversityandinnovation', sendForApproval)
     this.common.setControlRequiredV2('invln_monitoringnonrechargedfees', sendForApproval)
     this.common.setControlRequiredV2('invln_datesentforapproval', sendForApproval)
@@ -495,5 +489,11 @@ export class IspService {
     this.common.hideControl('invln_completionguaranteedescription', isDisabled);
     this.common.hideControl('invln_completionguaranteevaluek', isDisabled);
     this.common.hideControl('invln_completionguaranteemarginedsecurityk', isDisabled);
+  }
+
+  private hideCollateralwarrantyFields(isDisabled: boolean) {
+    this.common.hideControl('invln_collateralwarrantydescription', isDisabled);
+    this.common.hideControl('invln_collateralwarrantyvalue', isDisabled);
+    this.common.hideControl('invln_collateralwarrantymarginatedsecurityvalue', isDisabled);
   }
 }
