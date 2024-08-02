@@ -806,6 +806,48 @@ namespace HE.CRM.AHP.Plugins.Services.GovNotifyEmail
             }
         }
 
+        public void SendNotifications_AHP_EXTERNAL_CLAIM_SUBMITTED(Guid allocationId)
+        {
+            TracingService.Trace("AHP_EXTERNAL_CLAIM_SUBMITTED");
+
+
+            TracingService.Trace($"allocationId : {allocationId}");
+            var ahpApplication = _ahpApplicationRepositoryAdmin.GetById(allocationId, nameof(invln_scheme.OwnerId).ToLower(), nameof(invln_scheme.invln_contactid).ToLower());
+            var contact = _contactRepositoryAdmin.GetById(ahpApplication.invln_contactid.Id, nameof(Contact.FullName).ToLower(), nameof(Contact.EMailAddress1).ToLower());
+            var emailTemplate = _notificationSettingRepositoryAdmin.GetTemplateViaTypeName("AHP_EXTERNAL_CLAIM_SUBMITTED");
+
+            TracingService.Trace($"ahpApplication.invln_contactid : {ahpApplication.invln_contactid.Id}");
+            TracingService.Trace($"ahpApplication.OwnerId : {ahpApplication.OwnerId.Id}");
+
+            if (contact != null && emailTemplate != null)
+            {
+                var subject = emailTemplate.invln_subject;
+                var govNotParams = new AHP_EXTERNAL_CLAIM_SUBMITTED()
+                {
+                    templateId = emailTemplate?.invln_templateid,
+                    personalisation = new parameters_AHP_EXTERNAL_CLAIM_SUBMITTED()
+                    {
+                        recipientEmail = contact.EMailAddress1,
+                        subject = subject,
+                        name = contact.FullName ?? "NO NAME",
+                    }
+                };
+
+                var options = new JsonSerializerOptions
+                {
+                    Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+                    WriteIndented = true
+                };
+
+                var parameters = JsonSerializer.Serialize(govNotParams, options);
+                this.SendGovNotifyEmail(ahpApplication.OwnerId, ahpApplication.ToEntityReference(), subject, parameters, emailTemplate);
+            }
+            else
+            {
+                TracingService.Trace("Probably there is no email template. Mail not sent.");
+            }
+        }
+
         private string GetAhpApplicationUrl(EntityReference ahpApplicationId)
         {
             if (ahpApplicationId != null)

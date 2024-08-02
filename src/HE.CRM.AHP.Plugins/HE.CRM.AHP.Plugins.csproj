@@ -109,6 +109,7 @@
     <Compile Include="Handlers\AHPApplication\RecalculateDeliveryphaseHandler.cs" />
     <Compile Include="Handlers\AhpStatusChange\SendNotificationOnCreateHandler.cs" />
     <Compile Include="Handlers\Claims\GrantDetailsCalculateHandler.cs" />
+    <Compile Include="Handlers\Claims\NotificationAfterChangingClaimStatusHandler.cs" />
     <Compile Include="Handlers\ContactWebrole\SendNotificationOnAdminRoleGrantedPlugin.cs" />
     <Compile Include="Handlers\ContactWebrole\SendNotificationOnRoleModificationHandler.cs" />
     <Compile Include="Handlers\CustomApi\Allocation\GetAllocationClaimsHandler.cs" />
