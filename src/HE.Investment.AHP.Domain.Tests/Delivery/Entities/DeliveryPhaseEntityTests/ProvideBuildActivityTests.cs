@@ -29,7 +29,7 @@ public class ProvideBuildActivityTests
         testCandidate.TypeOfHomes.Should().Be(TypeOfHomes.Rehab);
         testCandidate.BuildActivity.Should().Be(newBuildActivity);
         builder.MockOnlyCompletionMilestonePolicy
-            .Verify(x => x.Validate(It.IsAny<bool>(), It.IsAny<BuildActivity>()), Times.Exactly(3));
+            .Verify(x => x.IsOnlyCompletionMilestone(It.IsAny<bool>(), It.IsAny<BuildActivity>()), Times.Exactly(3));
     }
 
     [Fact]

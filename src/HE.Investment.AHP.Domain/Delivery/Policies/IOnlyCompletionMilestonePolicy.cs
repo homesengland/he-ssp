@@ -4,5 +4,5 @@ namespace HE.Investment.AHP.Domain.Delivery.Policies;
 
 public interface IOnlyCompletionMilestonePolicy
 {
-    bool Validate(bool isUnregisteredBody, BuildActivity buildActivity);
+    bool IsOnlyCompletionMilestone(bool isUnregisteredBody, BuildActivity buildActivity);
 }

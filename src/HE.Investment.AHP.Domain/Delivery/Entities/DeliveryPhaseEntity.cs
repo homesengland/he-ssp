@@ -97,7 +97,7 @@ public class DeliveryPhaseEntity : DomainEntity, IDeliveryPhaseEntity
 
     public bool IsModified => _modificationTracker.IsModified || Tranches.IsModified;
 
-    public bool IsOnlyCompletionMilestone => _onlyCompletionMilestonePolicy.Validate(Organisation.IsUnregisteredBody, BuildActivity);
+    public bool IsOnlyCompletionMilestone => _onlyCompletionMilestonePolicy.IsOnlyCompletionMilestone(Organisation.IsUnregisteredBody, BuildActivity);
 
     public IEnumerable<HomesToDeliverInPhase> HomesToDeliver => _homesToDeliver;
 
@@ -247,7 +247,7 @@ public class DeliveryPhaseEntity : DomainEntity, IDeliveryPhaseEntity
     private void ResetBuildActivityDependencies(BuildActivity newBuildActivity)
     {
         var milestones = new DeliveryPhaseMilestones(
-            _onlyCompletionMilestonePolicy.Validate(Organisation.IsUnregisteredBody, newBuildActivity),
+            _onlyCompletionMilestonePolicy.IsOnlyCompletionMilestone(Organisation.IsUnregisteredBody, newBuildActivity),
             DeliveryPhaseMilestones);
         DeliveryPhaseMilestones = _modificationTracker.Change(DeliveryPhaseMilestones, milestones, MarkAsNotCompleted);
     }

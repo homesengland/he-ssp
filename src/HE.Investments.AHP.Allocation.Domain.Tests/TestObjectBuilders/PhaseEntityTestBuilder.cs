@@ -52,6 +52,6 @@ public class PhaseEntityTestBuilder : TestObjectBuilder<PhaseEntityTestBuilder, 
     {
         _mockOnlyCompletionMilestonePolicy = new Mock<IOnlyCompletionMilestonePolicy>();
         _mockOnlyCompletionMilestonePolicy
-            .Setup(x => x.Validate(It.IsAny<bool>(), It.IsAny<BuildActivity>())).Returns(returnValue ?? false);
+            .Setup(x => x.IsOnlyCompletionMilestone(It.IsAny<bool>(), It.IsAny<BuildActivity>())).Returns(returnValue ?? false);
     }
 }

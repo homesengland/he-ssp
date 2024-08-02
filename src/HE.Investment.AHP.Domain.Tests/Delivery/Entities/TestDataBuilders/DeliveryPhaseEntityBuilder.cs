@@ -209,6 +209,6 @@ public class DeliveryPhaseEntityBuilder
     private void ReturnOnlyCompletionMilestonePolicy(bool? returnValue = null)
     {
         MockOnlyCompletionMilestonePolicy = new Mock<IOnlyCompletionMilestonePolicy>();
-        MockOnlyCompletionMilestonePolicy.Setup(x => x.Validate(It.IsAny<bool>(), It.IsAny<BuildActivity>())).Returns(returnValue ?? false);
+        MockOnlyCompletionMilestonePolicy.Setup(x => x.IsOnlyCompletionMilestone(It.IsAny<bool>(), It.IsAny<BuildActivity>())).Returns(returnValue ?? false);
     }
 }

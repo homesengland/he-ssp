@@ -63,7 +63,7 @@ public sealed class PhaseEntity : DomainEntity
     public MilestoneClaimBase CompletionMilestone { get; private set; }
 
     public bool IsOnlyCompletionMilestone =>
-        _onlyCompletionMilestonePolicy.Validate(Organisation.IsUnregisteredBody, new BuildActivity(Allocation.Tenure, type: BuildActivityType));
+        _onlyCompletionMilestonePolicy.IsOnlyCompletionMilestone(Organisation.IsUnregisteredBody, new BuildActivity(Allocation.Tenure, type: BuildActivityType));
 
     public bool IsModified => _modificationTracker.IsModified;
 

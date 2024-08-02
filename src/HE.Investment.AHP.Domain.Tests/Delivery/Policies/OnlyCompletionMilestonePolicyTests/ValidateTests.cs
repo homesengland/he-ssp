@@ -18,7 +18,7 @@ public class ValidateTests
         var testCandidate = new OnlyCompletionMilestonePolicy();
 
         // when
-        var result = testCandidate.Validate(isUnregisteredBody, new BuildActivity(Tenure.Undefined, type: buildActivity));
+        var result = testCandidate.IsOnlyCompletionMilestone(isUnregisteredBody, new BuildActivity(Tenure.Undefined, type: buildActivity));
 
         // then
         result.Should().BeTrue();
@@ -31,7 +31,7 @@ public class ValidateTests
         var testCandidate = new OnlyCompletionMilestonePolicy();
 
         // when
-        var result = testCandidate.Validate(false, new BuildActivity(Tenure.Undefined, type: BuildActivityType.WorksOnly));
+        var result = testCandidate.IsOnlyCompletionMilestone(false, new BuildActivity(Tenure.Undefined, type: BuildActivityType.WorksOnly));
 
         // then
         result.Should().BeFalse();

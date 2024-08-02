@@ -203,7 +203,7 @@ public class MapToDomainTests : TestBase<PhaseCrmMapper>
     {
         var onlyCompletionMilestonePolicy = new Mock<IOnlyCompletionMilestonePolicy>();
         onlyCompletionMilestonePolicy
-            .Setup(x => x.Validate(It.IsAny<bool>(), It.IsAny<BuildActivity>())).Returns(returnValue ?? false);
+            .Setup(x => x.IsOnlyCompletionMilestone(It.IsAny<bool>(), It.IsAny<BuildActivity>())).Returns(returnValue ?? false);
         return onlyCompletionMilestonePolicy.Object;
     }
 }
