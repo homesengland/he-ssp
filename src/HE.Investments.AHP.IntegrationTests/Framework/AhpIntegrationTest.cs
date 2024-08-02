@@ -5,7 +5,7 @@ using HE.Investments.AHP.IntegrationTests.AreaTests.O01Application.Order02FillSi
 using HE.Investments.AHP.IntegrationTests.AreaTests.O01Application.Order03FillApplication.Data;
 using HE.Investments.AHP.IntegrationTests.AreaTests.O02Allocation.Data.Allocation;
 using HE.Investments.AHP.IntegrationTests.Framework.Crm;
-using HE.Investments.AHP.IntegrationTests.Framework.Utils;
+using HE.Investments.AHP.IntegrationTests.Framework.Helpers;
 using HE.Investments.Common.Contract;
 using HE.Investments.FrontDoor.IntegrationTests.Utils;
 using HE.Investments.IntegrationTestsFramework;
@@ -57,6 +57,8 @@ public class AhpIntegrationTest : IntegrationTestBase<Program>
     protected UserOrganisationData UserOrganisationData { get; private set; }
 
     protected FrontDoorDataManipulator InFrontDoor { get; }
+
+    protected AhpProjectDataManipulator AhpProjectDataManipulator => _fixture.AhpProjectDataManipulator;
 
     protected AhpDataManipulator AhpDataManipulator => _fixture.AhpDataManipulator;
 

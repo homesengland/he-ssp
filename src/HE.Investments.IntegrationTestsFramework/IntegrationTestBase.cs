@@ -22,8 +22,6 @@ public class IntegrationTestBase<TProgram> : IAsyncLifetime
 
     protected IntegrationTestClient TestClient { get; }
 
-    protected IFeatureManager FeatureManager => _fixture.FeatureManager;
-
     protected DateTimeManipulator DateTimeManipulator => _fixture.DateTimeManipulator;
 
     public virtual async Task InitializeAsync()
