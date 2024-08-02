@@ -44,7 +44,7 @@ public class GetSiteQueryHandler : IRequestHandler<GetSiteQuery, SiteModel>
             : null;
         var localAuthority = LocalAuthorityMapper.Map(site.LocalAuthority);
         var siteApplications = await _siteRepository.GetSiteApplications(
-            siteId, userAccount, new PaginationRequest(1, 1000), cancellationToken);
+            siteId, userAccount, PaginationRequest.All, cancellationToken);
         var canSiteBeEdited = site.CanBeEdited(siteApplications.Items);
 
         return new SiteModel

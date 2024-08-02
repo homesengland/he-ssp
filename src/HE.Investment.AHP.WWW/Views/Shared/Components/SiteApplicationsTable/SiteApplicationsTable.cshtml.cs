@@ -1,8 +1,8 @@
 using System.Globalization;
 using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.WWW.Controllers;
+using HE.Investments.AHP.Allocation.Contract.Site;
 using HE.Investments.Common.Contract;
-using HE.Investments.Common.Contract.Pagination;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Messages;
 using HE.Investments.Common.WWW.Components;
@@ -17,7 +17,7 @@ namespace HE.Investment.AHP.WWW.Views.Shared.Components.SiteApplicationsTable;
 
 public class SiteApplicationsTable : ViewComponent
 {
-    public Task<IViewComponentResult> InvokeAsync(SiteId siteId, PaginationResult<ApplicationSiteModel> applications)
+    public Task<IViewComponentResult> InvokeAsync(SiteId siteId, IList<ApplicationSiteModel> applications)
     {
         var tableHeaders = new List<TableHeaderViewModel>
         {
@@ -28,7 +28,7 @@ public class SiteApplicationsTable : ViewComponent
         };
 
         var organisationId = Request.GetOrganisationIdFromRoute();
-        var applicationsPage = applications.Items.Select(x =>
+        var applicationRows = applications.Select(x =>
             {
                 var tableItems = new List<TableValueViewModel>
                 {
@@ -42,9 +42,7 @@ public class SiteApplicationsTable : ViewComponent
             })
             .ToList();
 
-        var rows = new PaginationResult<TableRowViewModel>(applicationsPage, applications.CurrentPage, applications.ItemsPerPage, applications.TotalItems);
-
-        return Task.FromResult<IViewComponentResult>(View("SiteApplicationsTable", (siteId, tableHeaders, rows)));
+        return Task.FromResult<IViewComponentResult>(View("SiteApplicationsTable", (siteId, tableHeaders, applicationRows)));
     }
 
     private static DynamicComponentViewModel CreateLinkComponent(OrganisationId? organisationId, ApplicationSiteModel application)

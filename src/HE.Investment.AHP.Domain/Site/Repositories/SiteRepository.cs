@@ -50,6 +50,7 @@ public class SiteRepository : ISiteRepository
             site.FrontDoorProjectId,
             site.FrontDoorSiteId,
             site.LandAcquisitionStatus,
+            site.LocalAuthority,
             site.ModernMethodsOfConstruction.SiteUsingModernMethodsOfConstruction ?? SiteUsingModernMethodsOfConstruction.OnlyForSomeHomes);
     }
 

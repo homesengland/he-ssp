@@ -26,6 +26,7 @@ public class FinancialDetailsEntityBuilder
                 null,
                 null,
                 new LandAcquisitionStatus(SiteLandAcquisitionStatus.FullOwnership),
+                null,
                 SiteUsingModernMethodsOfConstruction.Yes));
     }
 

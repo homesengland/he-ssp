@@ -15,6 +15,7 @@ using HE.Investment.AHP.WWW.Extensions;
 using HE.Investment.AHP.WWW.Models.Site;
 using HE.Investment.AHP.WWW.Models.Site.Factories;
 using HE.Investment.AHP.WWW.Workflows;
+using HE.Investments.AHP.Allocation.Contract.Site.Queries;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Constants;
 using HE.Investments.Common.Contract.Enum;
@@ -93,9 +94,9 @@ public class SiteController : SiteControllerBase<SiteWorkflowState>
 
     [ConsortiumAuthorize]
     [HttpGet("{siteId}")]
-    public async Task<IActionResult> Details(string siteId, [FromQuery] int? page, CancellationToken cancellationToken)
+    public async Task<IActionResult> Details(string siteId, CancellationToken cancellationToken)
     {
-        var response = await _mediator.Send(new GetSiteDetailsQuery(SiteId.From(siteId), new PaginationRequest(page ?? 1)), cancellationToken);
+        var response = await _mediator.Send(new GetSiteDetailsQuery(SiteId.From(siteId)), cancellationToken);
         return View("Details", response);
     }
 
