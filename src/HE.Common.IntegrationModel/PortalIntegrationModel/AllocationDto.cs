@@ -15,7 +15,7 @@ namespace HE.Common.IntegrationModel.PortalIntegrationModel
         public bool IsInContract { get; set; }
         public bool HasDraftAllocation { get; set;}
         public string OrganisationName { get; set; }
-        public DateTime LastExternalModificationOn { get; set; }
+        public DateTime? LastExternalModificationOn { get; set; }
         public ContactDto LastExternalModificationBy { get; set; }
     }
 }

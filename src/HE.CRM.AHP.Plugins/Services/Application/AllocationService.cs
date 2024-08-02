@@ -259,12 +259,29 @@ namespace HE.CRM.AHP.Plugins.Services.Application
                 return result;
             }
 
+            TracingService.Trace($"Allocation data:");
+            TracingService.Trace($"baseApplicationId : {allocation.invln_BaseApplication?.Id}");
+            TracingService.Trace($"allocation Id : {allocation.invln_schemeId}");
+            TracingService.Trace($"allocation PartnerId : {allocation.invln_organisationid?.Id}");
+            TracingService.Trace($"allocation ProgrammeId : {allocation.invln_programmelookup?.Id}");
+
+
             TracingService.Trace("Get data from Crm");
-            //var dataFromCrm = _ahpApplicationRepository.GetAllocationV2(allocation.invln_BaseApplication.Id,  externalContactId, accountId, allocationId, Guid.Empty).Entities;
+            var dataFromCrm = _ahpApplicationRepository.GetAllocationForAllocationDto(allocation.invln_BaseApplication.Id, allocation.Id, allocation.invln_organisationid.Id, allocation.invln_programmelookup.Id).Entities;
 
+            TracingService.Trace($"Was record found in CRM?  {dataFromCrm.Count > 0}");
+            if (dataFromCrm.Count == 0)
+            {
+                return result;
+            }
 
+            var recordDataFromCrm = dataFromCrm.FirstOrDefault();
 
+            // Mapp to AllocationDto
+            TracingService.Trace("Mapp to AllocationClaimsDto");
+            result = AhpApplicationMapper.MapToAllocationDto(recordDataFromCrm);
 
+            TracingService.Trace("Return Result");
             return result;
         }
 
