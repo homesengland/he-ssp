@@ -1,20 +1,17 @@
 using System;
 using System.Collections.Generic;
-using System.DirectoryServices.ActiveDirectory;
-using System.IdentityModel.Claims;
 using System.Linq;
-using System.Security.Claims;
-using System.Security.Cryptography.Xml;
-using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
 using DataverseModel;
 using HE.Base.Common.Extensions;
 using HE.Base.Services;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.CRM.Common.DtoMapping;
+using HE.CRM.Common.Extensions;
+using HE.CRM.Common.Extensions.Entities;
 using HE.CRM.Common.Repositories.Interfaces;
 using Microsoft.Xrm.Sdk;
+using Microsoft.Xrm.Sdk.Messages;
 
 namespace HE.CRM.AHP.Plugins.Services.Application
 {
@@ -27,7 +24,9 @@ namespace HE.CRM.AHP.Plugins.Services.Application
         private readonly IDeliveryPhaseRepository _deliveryPhaseRepository;
         private readonly IClaimRepository _claimRepository;
         private readonly IHeLocalAuthorityRepository _heLocalAuthorityRepository;
-
+        private readonly ISharepointDocumentLocationRepository _sharepointDocumentLocationRepository;
+        private readonly IHomeTypeRepository _homeTypeRepository;
+        private readonly IHomesInDeliveryPhaseRepository _homesInDeliveryPhaseRepository;
 
         public AllocationService(CrmServiceArgs args) : base(args)
         {
@@ -38,7 +37,144 @@ namespace HE.CRM.AHP.Plugins.Services.Application
             _deliveryPhaseRepository = CrmRepositoriesFactory.Get<IDeliveryPhaseRepository>();
             _claimRepository = CrmRepositoriesFactory.Get<IClaimRepository>();
             _heLocalAuthorityRepository = CrmRepositoriesFactory.Get<IHeLocalAuthorityRepository>();
+            _sharepointDocumentLocationRepository = CrmRepositoriesFactory.Get<ISharepointDocumentLocationRepository>();
+            _homeTypeRepository = CrmRepositoriesFactory.Get<IHomeTypeRepository>();
+            _homesInDeliveryPhaseRepository = CrmRepositoriesFactory.Get<IHomesInDeliveryPhaseRepository>();
         }
+
+        public Guid CreateAllocation(Guid schemeId, bool isVariation = false)
+        {
+            var application = _ahpApplicationRepository.GetById(schemeId);
+
+            if (application.StatusCode.Value != (int)invln_AHPInternalStatus.Approved)
+            {
+                var internalStatus = (invln_AHPInternalStatus)application.StatusCode.Value;
+                Logger.Warn($"Cannot create allocation from status {internalStatus}");
+                return Guid.Empty;
+            }
+
+            var requestCollection = new OrganizationRequestCollection();
+
+            Logger.Trace($"Trying copy an Application with ID: {application.Id}");
+            var allocation = application.CloneToCreate();
+            allocation.Id = Guid.NewGuid();
+            allocation.invln_isallocation = true;
+            allocation.invln_BaseApplication = new EntityReference(invln_scheme.EntityLogicalName, schemeId);
+            allocation.invln_AllocationID = "G000001"; // TODO: implement autonumbering
+            allocation.invln_VersionNumber = 1;
+            allocation.invln_AllocationInternalStatus = new OptionSetValue((int)invln_AllocationInternalStatus.Approved);
+            allocation.invln_AllocationExternalStatus = new OptionSetValue((int)invln_AllocationExternalStatus.Approved);
+            allocation.invln_IsLatestAllocation = true;
+
+            var request = new CreateRequest()
+            {
+                Target = allocation
+            };
+            requestCollection.Add(request);
+
+            var deliveryPhaseMap = CloneDeliveryHomes(requestCollection, application.Id, allocation);
+            var homeTypeMap = CloneHomeTypes(requestCollection, application.Id, allocation);
+            CloneHomesInDeliveryPhase(requestCollection, application.Id, deliveryPhaseMap, homeTypeMap);
+
+            _ahpApplicationRepository.ExecuteAllRequestsInTransactionalBatches(requestCollection);
+
+            return allocation.Id;
+        }
+
+        private Dictionary<Guid, Guid> CloneDeliveryHomes(OrganizationRequestCollection requestCollection, Guid sourceApplicationId, invln_scheme targetAllocation)
+        {
+            Logger.Trace("CloneDeliveryHomes");
+
+            var deliveryPhaseMap = new Dictionary<Guid, Guid>();
+            var deliveryPhaseList = _deliveryPhaseRepository.GetByAttribute(invln_DeliveryPhase.Fields.invln_Application, sourceApplicationId);
+
+            foreach (var deliveryPhase in deliveryPhaseList)
+            {
+                var deliveryPhaseAllocation = deliveryPhase.CloneToCreate();
+                deliveryPhaseAllocation.Id = Guid.NewGuid();
+                deliveryPhaseAllocation.invln_Application = targetAllocation.ToEntityReference();
+
+                var request = new CreateRequest()
+                {
+                    Target = deliveryPhaseAllocation
+                };
+                requestCollection.Add(request);
+
+                deliveryPhaseMap.Add(deliveryPhase.Id, deliveryPhaseAllocation.Id);
+            }
+
+            return deliveryPhaseMap;
+        }
+
+        private Dictionary<Guid, Guid> CloneHomeTypes(OrganizationRequestCollection requestCollection, Guid sourceApplicationId, invln_scheme targetAllocation)
+        {
+            Logger.Trace("CloneHomeTypes");
+
+            var homeTypeMap = new Dictionary<Guid, Guid>();
+            var homeTypeList = _homeTypeRepository.GetByAttribute(invln_HomeType.Fields.invln_application, sourceApplicationId);
+            foreach (var homeType in homeTypeList)
+            {
+                var homeTypeAllocation = homeType.CloneToCreate();
+                homeTypeAllocation.Id = Guid.NewGuid();
+                homeTypeAllocation.invln_application = targetAllocation.ToEntityReference();
+
+                var request = new CreateRequest()
+                {
+                    Target = homeTypeAllocation
+                };
+                requestCollection.Add(request);
+
+                homeTypeMap.Add(homeType.Id, homeTypeAllocation.Id);
+            }
+
+            return homeTypeMap;
+        }
+
+        private void CloneHomesInDeliveryPhase(OrganizationRequestCollection requestCollection,
+            Guid sourceApplicationId,
+            Dictionary<Guid, Guid> deliveryPhaseMap,
+            Dictionary<Guid, Guid> homeTypeMap)
+        {
+            Logger.Trace("CloneHomesInDeliveryPhase");
+
+            var copyHomesInDeliveryPhaseToCreate = new List<Entity>();
+            var homesInDeliveryPhaseList = _homesInDeliveryPhaseRepository.GetHomesInDeliveryPhaseForApplication(sourceApplicationId);
+            foreach (var homesInDeliveryPhase in homesInDeliveryPhaseList)
+            {
+                var copyHomesInDeliveryPhase = homesInDeliveryPhase.CloneToCreate(
+                    invln_homesindeliveryphase.Fields.invln_deliveryphaselookup,
+                    invln_homesindeliveryphase.Fields.invln_hometypelookup
+                );
+
+                var cloneDeliveryPhaseId = deliveryPhaseMap[homesInDeliveryPhase.invln_deliveryphaselookup.Id];
+                var cloneHomeTypeId = homeTypeMap[homesInDeliveryPhase.invln_hometypelookup.Id];
+
+                copyHomesInDeliveryPhase.Id = Guid.NewGuid();
+                copyHomesInDeliveryPhase.invln_deliveryphaselookup = new EntityReference(invln_DeliveryPhase.EntityLogicalName, cloneDeliveryPhaseId);
+                copyHomesInDeliveryPhase.invln_hometypelookup = new EntityReference(invln_HomeType.EntityLogicalName, cloneHomeTypeId);
+
+                copyHomesInDeliveryPhaseToCreate.Add(copyHomesInDeliveryPhase);
+            }
+
+            if (!copyHomesInDeliveryPhaseToCreate.Any())
+            {
+                return;
+            }
+
+            var entities = new EntityCollection(copyHomesInDeliveryPhaseToCreate)
+            {
+                EntityName = copyHomesInDeliveryPhaseToCreate[0].LogicalName
+            };
+
+            var createMultipleRequest = new CreateMultipleRequest()
+            {
+                Targets = entities
+            };
+            createMultipleRequest["tag"] = "Cloning";
+
+            requestCollection.Add(createMultipleRequest);
+        }
+
 
         public void CalculateGrantDetails(Guid allocationId)
         {

@@ -9,5 +9,7 @@ namespace HE.CRM.Common.Repositories.Interfaces
     public interface IHomesInDeliveryPhaseRepository : ICrmEntityRepository<invln_homesindeliveryphase, DataverseContext>
     {
         List<invln_homesindeliveryphase> GetHomesInDeliveryPhase(Guid deliveryPhaseId);
+
+        List<invln_homesindeliveryphase> GetHomesInDeliveryPhaseForApplication(Guid applicationId, params string[] homesInDeliveryPhaseColumns);
     }
 }

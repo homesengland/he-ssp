@@ -23,7 +23,15 @@ namespace HE.CRM.AHP.Plugins.Handlers.HomesInDeliveryPhases
 
         public override bool CanWork()
         {
-            TracingService.Trace("Can Work: CalculateNumberOfHouseForDeliveryPhase");
+            if (ExecutionData.Context.SharedVariables.Contains("tag"))
+            {
+                ExecutionData.Context.SharedVariables.TryGetValue("tag", out string tag);
+                if (tag == "Cloning")
+                {
+                    Logger.Info($"SharedVariables: tag={tag}");
+                    return false;
+                }
+            }
             return CurrentState.invln_numberofhomes != null;
         }
 

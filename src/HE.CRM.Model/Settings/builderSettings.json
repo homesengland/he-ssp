@@ -158,6 +158,7 @@
     "invln_checkifloanapplicationwithgivennameexists*",
     "invln_checkifsitewithgivennameexists*",
     "invln_checkifsitewithstrategicsitenameexists*",
+    "invln_createahpallocation*",
     "invln_createahpproject*",
     "invln_createsinglesitedetail*",
     "invln_deactivatefrontdoorproject*",
