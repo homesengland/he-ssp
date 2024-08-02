@@ -64,6 +64,7 @@ namespace HE.CRM.AHP.Plugins.Services.Application
             allocation.invln_VersionNumber = 1;
             allocation.invln_AllocationInternalStatus = new OptionSetValue((int)invln_AllocationInternalStatus.Approved);
             allocation.invln_AllocationExternalStatus = new OptionSetValue((int)invln_AllocationExternalStatus.Approved);
+            allocation.invln_IsLatestAllocation = true;
 
             var request = new CreateRequest()
             {
