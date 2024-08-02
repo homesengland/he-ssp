@@ -1,5 +1,6 @@
 using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.Site;
+using HE.Investments.AHP.Allocation.Contract.Site;
 using HE.Investments.Common.Contract;
 using HE.Investments.FrontDoor.Shared.Project;
 
@@ -19,7 +20,8 @@ public class DetailsTests : AhpViewTestBase
             "My new Site",
             "PwC Organisation",
             null,
-            new(Array.Empty<ApplicationSiteModel>(), 1, 10, 0));
+            [],
+            []);
 
         // when
         var document = await Render(_viewPath, model);
@@ -48,7 +50,8 @@ public class DetailsTests : AhpViewTestBase
             "My new Site",
             "PwC Organisation",
             "My local authority",
-            new([application], 1, 10, 1));
+            [application],
+            []);
 
         // when
         var document = await Render(_viewPath, model);

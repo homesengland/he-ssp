@@ -13,5 +13,6 @@ public static class SiteBasicInfoTestData
         null,
         null,
         new LandAcquisitionStatus(SiteLandAcquisitionStatus.FullOwnership),
+        null,
         SiteUsingModernMethodsOfConstruction.Yes);
 }
