@@ -4,6 +4,7 @@ using HE.Investment.AHP.Contract.Delivery.Enums;
 using HE.Investment.AHP.Contract.HomeTypes;
 using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.Delivery.Entities;
+using HE.Investment.AHP.Domain.Delivery.Policies;
 using HE.Investment.AHP.Domain.Delivery.Tranches;
 using HE.Investment.AHP.Domain.Delivery.ValueObjects;
 using HE.Investments.Account.Shared;
@@ -20,7 +21,8 @@ public class DeliveryPhaseCrmMapper : IDeliveryPhaseCrmMapper
     public DeliveryPhaseEntity MapToDomain(
         ApplicationBasicInfo application,
         OrganisationBasicInfo organisation,
-        DeliveryPhaseDto dto)
+        DeliveryPhaseDto dto,
+        IOnlyCompletionMilestonePolicy onlyCompletionMilestonePolicy)
     {
         var typeOfHomes = MapTypeOfHomes(dto.typeOfHomes);
         var buildActivityType = MapBuildActivityType(dto.newBuildActivityType, dto.rehabBuildActivityType);
@@ -41,6 +43,7 @@ public class DeliveryPhaseCrmMapper : IDeliveryPhaseCrmMapper
                 dto.startOnSiteValue,
                 dto.completionValue),
             MapStatusCode(dto.statusCode) == StatusCode.PendingAdjustment,
+            onlyCompletionMilestonePolicy,
             typeOfHomes,
             buildActivity,
             dto.isReconfigurationOfExistingProperties,

@@ -2,6 +2,7 @@ using FluentAssertions;
 using HE.Investment.AHP.Contract.Delivery.Enums;
 using HE.Investment.AHP.Domain.Delivery.ValueObjects;
 using HE.Investment.AHP.Domain.Tests.Delivery.Entities.TestDataBuilders;
+using Moq;
 
 namespace HE.Investment.AHP.Domain.Tests.Delivery.Entities.DeliveryPhaseEntityTests;
 
@@ -11,12 +12,13 @@ public class ProvideBuildActivityTests
     public void ShouldResetDependedValues_WhenBuildActivityIsChanged()
     {
         // given
-        var testCandidate = new DeliveryPhaseEntityBuilder()
+        var builder = new DeliveryPhaseEntityBuilder()
             .WithTypeOfHomes(TypeOfHomes.Rehab)
             .WithRehabBuildActivity(BuildActivityType.Reimprovement)
             .WithAcquisitionMilestone(new AcquisitionMilestoneDetailsBuilder().Build())
-            .WithStartOnSiteMilestone(new StartOnSiteMilestoneDetailsBuilder().Build())
-            .Build();
+            .WithStartOnSiteMilestone(new StartOnSiteMilestoneDetailsBuilder().Build());
+
+        var testCandidate = builder.Build();
 
         var newBuildActivity = new BuildActivity(testCandidate.Application.Tenure, TypeOfHomes.Rehab, BuildActivityType.ExistingSatisfactory);
 
@@ -26,8 +28,8 @@ public class ProvideBuildActivityTests
         // then
         testCandidate.TypeOfHomes.Should().Be(TypeOfHomes.Rehab);
         testCandidate.BuildActivity.Should().Be(newBuildActivity);
-        testCandidate.DeliveryPhaseMilestones.AcquisitionMilestone.Should().BeNull();
-        testCandidate.DeliveryPhaseMilestones.StartOnSiteMilestone.Should().BeNull();
+        builder.MockOnlyCompletionMilestonePolicy
+            .Verify(x => x.IsOnlyCompletionMilestone(It.IsAny<bool>(), It.IsAny<BuildActivity>()), Times.Exactly(3));
     }
 
     [Fact]

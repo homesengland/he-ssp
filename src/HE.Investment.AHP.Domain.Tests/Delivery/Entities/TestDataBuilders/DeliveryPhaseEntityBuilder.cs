@@ -4,6 +4,7 @@ using HE.Investment.AHP.Contract.Delivery.Enums;
 using HE.Investment.AHP.Contract.HomeTypes;
 using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.Delivery.Entities;
+using HE.Investment.AHP.Domain.Delivery.Policies;
 using HE.Investment.AHP.Domain.Delivery.Tranches;
 using HE.Investment.AHP.Domain.Delivery.ValueObjects;
 using HE.Investment.AHP.Domain.Tests.Application.TestData;
@@ -11,6 +12,7 @@ using HE.Investments.Account.Shared;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Tests.TestData;
 using HE.Investments.TestsUtils.TestData;
+using Moq;
 
 namespace HE.Investment.AHP.Domain.Tests.Delivery.Entities.TestDataBuilders;
 
@@ -43,6 +45,13 @@ public class DeliveryPhaseEntityBuilder
     private StartOnSiteMilestoneDetails? _startOnSiteMilestone = new StartOnSiteMilestoneDetailsBuilder().Build();
 
     private CompletionMilestoneDetails? _completionMilestone = new CompletionMilestoneDetailsBuilder().Build();
+
+    public DeliveryPhaseEntityBuilder()
+    {
+        ReturnOnlyCompletionMilestonePolicy();
+    }
+
+    public Mock<IOnlyCompletionMilestonePolicy> MockOnlyCompletionMilestonePolicy { get; private set; }
 
     public DeliveryPhaseEntityBuilder WithId(string id)
     {
@@ -168,6 +177,12 @@ public class DeliveryPhaseEntityBuilder
         return this;
     }
 
+    public DeliveryPhaseEntityBuilder WithIsOnlyCompletionMilestonePolicy(bool value)
+    {
+        ReturnOnlyCompletionMilestonePolicy(value);
+        return this;
+    }
+
     public DeliveryPhaseEntity Build()
     {
         return new DeliveryPhaseEntity(
@@ -178,6 +193,7 @@ public class DeliveryPhaseEntityBuilder
             MilestonesPercentageTranches.NotProvided,
             _milestonesCalculatedTranches,
             false,
+            MockOnlyCompletionMilestonePolicy.Object,
             _typeOfHomes,
             _buildActivity,
             _reconfigureExisting,
@@ -188,5 +204,11 @@ public class DeliveryPhaseEntityBuilder
             DeliveryPhaseId.From(_id),
             DateTimeTestData.OctoberDay05Year2023At0858,
             isAdditionalPaymentRequested: _isAdditionalPaymentRequested);
+    }
+
+    private void ReturnOnlyCompletionMilestonePolicy(bool? returnValue = null)
+    {
+        MockOnlyCompletionMilestonePolicy = new Mock<IOnlyCompletionMilestonePolicy>();
+        MockOnlyCompletionMilestonePolicy.Setup(x => x.IsOnlyCompletionMilestone(It.IsAny<bool>(), It.IsAny<BuildActivity>())).Returns(returnValue ?? false);
     }
 }
