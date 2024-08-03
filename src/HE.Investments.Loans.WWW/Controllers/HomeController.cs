@@ -76,4 +76,10 @@ public class HomeController : Controller
 
         return RedirectToAction("SignUp", "HeIdentity");
     }
+
+    [HttpGet("contact")]
+    public IActionResult Contact()
+    {
+        return View();
+    }
 }
