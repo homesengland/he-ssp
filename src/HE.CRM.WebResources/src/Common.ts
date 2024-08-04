@@ -934,4 +934,16 @@ export class CommonLib {
         })
     }
   }
+
+  public switchForm(formToSwichId: string) {
+    let listOfAvailableForms = this.formContext.ui.formSelector.items.get();
+    let currenForm = this.formContext.ui.formSelector.getCurrentItem().getId();
+    if (currenForm === formToSwichId) return;
+    listOfAvailableForms.forEach(element => {
+      console.log(element.getId());
+      if (element.getId() === formToSwichId) {
+        element.navigate();
+      }
+    });
+  }
 }

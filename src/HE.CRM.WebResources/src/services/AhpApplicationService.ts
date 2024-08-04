@@ -70,4 +70,13 @@ export class AhpApplicationService {
     })
   }
 
+  public swichAllocationForm() {
+    console.log("swichAllocationForm");
+
+    let isAllocation = this.common.getAttributeValue("invln_isallocation");
+    console.log(isAllocation);
+    if (isAllocation) {
+      this.common.switchForm("7300fc1a-ff48-ef11-a316-6045bd0cff9c");
+    }
+  }
 }

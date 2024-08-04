@@ -14,6 +14,7 @@ export class AhpApplication {
     const eventLogic = new AhpApplication(eCtx)
     eventLogic.registerEvents();
     eventLogic.ahpApplicationService.nDSSNotification()
+    eventLogic.ahpApplicationService.swichAllocationForm()
   }
 
   public static onChangeAhpApplicationStatusButtonClick(eCtx) {
