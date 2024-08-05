@@ -3,7 +3,7 @@ using HE.UtilsService.SharePoint.Models.File;
 using HE.UtilsService.SharePoint.Models.Table;
 using Xunit;
 
-namespace HE.DocumentService.Tests.SharePoint.Models;
+namespace HE.UtilsService.SharePoint.Tests.SharePoint.Models;
 
 public class TableResultTests
 {
