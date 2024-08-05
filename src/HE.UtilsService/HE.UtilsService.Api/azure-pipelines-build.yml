@@ -19,11 +19,11 @@ resources:
   - repository: he-invst-deployment
     type: git
     name: 'Investments Programme/he-invst-deployment'
-    ref: 'development_R3'
+    ref: 'doc_svc_rename'
   - repository: templates
     type: git
     name: 'Cloud Hosting Service/Templates'
     ref: 'master'
 
 stages:
-- template: portal-deployment-pipelines/azure-pipelines-document-service-build.yml@he-invst-deployment
+- template: portal-deployment-pipelines/azure-pipelines-utils-service-build.yml@he-invst-deployment
