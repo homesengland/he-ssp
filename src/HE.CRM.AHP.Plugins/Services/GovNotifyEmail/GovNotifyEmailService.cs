@@ -811,7 +811,7 @@ namespace HE.CRM.AHP.Plugins.Services.GovNotifyEmail
             TracingService.Trace("AHP_EXTERNAL_CLAIM_SUBMITTED");
 
 
-            TracingService.Trace($"allocationId : {allocationId}");
+            TracingService.Trace($"allocationId (invln_schemeid) : {allocationId}");
             var ahpApplication = _ahpApplicationRepositoryAdmin.GetById(allocationId, nameof(invln_scheme.OwnerId).ToLower(), nameof(invln_scheme.invln_contactid).ToLower());
             var contact = _contactRepositoryAdmin.GetById(ahpApplication.invln_contactid.Id, nameof(Contact.FullName).ToLower(), nameof(Contact.EMailAddress1).ToLower());
             var emailTemplate = _notificationSettingRepositoryAdmin.GetTemplateViaTypeName("AHP_EXTERNAL_CLAIM_SUBMITTED");
