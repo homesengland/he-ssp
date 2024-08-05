@@ -42,6 +42,6 @@ namespace HE.CRM.AHP.Plugins.Services.GovNotifyEmail
 
         void SendNotifications_AHP_EXTERNAL_APPLICATION_REJECTED(invln_AHPStatusChange ahpStatusChange, invln_scheme ahpApplication);
         void SendNotifications_AHP_EXTERNAL_APPLICATION_APPROVED_OUTCOME(invln_AHPStatusChange ahpStatusChange, invln_scheme ahpApplication);
-        
+        void SendNotifications_AHP_EXTERNAL_CLAIM_SUBMITTED(Guid allocationId);
     }
 }

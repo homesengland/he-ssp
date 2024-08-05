@@ -30,6 +30,7 @@ namespace HE.CRM.AHP.Plugins.Plugins.Claim
         public override void RegisterHandlers(CrmHandlerFactory<DataverseContext> handlerFactory, IList<ICrmHandler> registeredHandlers)
         {
             registeredHandlers.Add(handlerFactory.GetHandler<GrantDetailsCalculateHandler>());
+            registeredHandlers.Add(handlerFactory.GetHandler<NotificationAfterChangingClaimStatusHandler>());
         }
     }
 }
