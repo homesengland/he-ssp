@@ -1,7 +1,7 @@
-using HE.DocumentService.SharePoint.Models.File;
-using HE.DocumentService.SharePoint.Models.Table;
+using HE.UtilsService.SharePoint.Models.File;
+using HE.UtilsService.SharePoint.Models.Table;
 
-namespace HE.DocumentService.SharePoint.Interfaces;
+namespace HE.UtilsService.SharePoint.Interfaces;
 
 public interface ISharePointFilesService
 {

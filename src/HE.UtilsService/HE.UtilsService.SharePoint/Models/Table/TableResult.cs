@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace HE.DocumentService.SharePoint.Models.Table;
+namespace HE.UtilsService.SharePoint.Models.Table;
 
 public class TableResult<T>
 {

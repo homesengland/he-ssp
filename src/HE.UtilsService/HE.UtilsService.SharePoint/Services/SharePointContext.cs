@@ -1,9 +1,9 @@
-using HE.DocumentService.SharePoint.Configuration;
-using HE.DocumentService.SharePoint.Interfaces;
+using HE.UtilsService.SharePoint.Configuration;
+using HE.UtilsService.SharePoint.Interfaces;
 using Microsoft.SharePoint.Client;
 using PnP.Framework;
 
-namespace HE.DocumentService.SharePoint.Services;
+namespace HE.UtilsService.SharePoint.Services;
 
 public class SharePointContext : ISharePointContext, IDisposable
 {

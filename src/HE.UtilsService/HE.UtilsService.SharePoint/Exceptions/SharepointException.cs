@@ -1,6 +1,6 @@
 using System.Net;
 
-namespace HE.DocumentService.SharePoint.Exceptions;
+namespace HE.UtilsService.SharePoint.Exceptions;
 
 public class SharepointException : Exception
 {

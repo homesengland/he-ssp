@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Http;
 
-namespace HE.DocumentService.SharePoint.Models.File;
+namespace HE.UtilsService.SharePoint.Models.File;
 
 public class FileUploadModel
 {

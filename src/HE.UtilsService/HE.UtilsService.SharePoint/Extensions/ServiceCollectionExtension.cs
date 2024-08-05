@@ -1,8 +1,8 @@
-using HE.DocumentService.SharePoint.Interfaces;
-using HE.DocumentService.SharePoint.Services;
+using HE.UtilsService.SharePoint.Interfaces;
+using HE.UtilsService.SharePoint.Services;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace HE.DocumentService.SharePoint.Extensions;
+namespace HE.UtilsService.SharePoint.Extensions;
 
 public static class ServiceCollectionExtension
 {

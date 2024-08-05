@@ -1,4 +1,4 @@
-namespace HE.DocumentService.SharePoint.Constants;
+namespace HE.UtilsService.SharePoint.Constants;
 
 internal static class SPErrorCodes
 {

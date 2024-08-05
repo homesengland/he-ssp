@@ -1,14 +1,14 @@
 using AutoMapper;
-using HE.DocumentService.SharePoint.Configuration;
-using HE.DocumentService.SharePoint.Constants;
-using HE.DocumentService.SharePoint.Exceptions;
-using HE.DocumentService.SharePoint.Extensions;
-using HE.DocumentService.SharePoint.Interfaces;
-using HE.DocumentService.SharePoint.Models.File;
-using HE.DocumentService.SharePoint.Models.Table;
+using HE.UtilsService.SharePoint.Configuration;
+using HE.UtilsService.SharePoint.Constants;
+using HE.UtilsService.SharePoint.Exceptions;
+using HE.UtilsService.SharePoint.Extensions;
+using HE.UtilsService.SharePoint.Interfaces;
+using HE.UtilsService.SharePoint.Models.File;
+using HE.UtilsService.SharePoint.Models.Table;
 using Microsoft.SharePoint.Client;
 
-namespace HE.DocumentService.SharePoint.Services;
+namespace HE.UtilsService.SharePoint.Services;
 
 public class SharePointFilesService : ISharePointFilesService
 {

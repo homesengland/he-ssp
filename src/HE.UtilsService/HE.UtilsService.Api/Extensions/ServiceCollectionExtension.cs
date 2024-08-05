@@ -1,8 +1,8 @@
-using HE.DocumentService.Api.Configuration;
-using HE.DocumentService.SharePoint.Configuration;
+using HE.UtilsService.Api.Configuration;
+using HE.UtilsService.SharePoint.Configuration;
 using Microsoft.Extensions.Options;
 
-namespace HE.DocumentService.Api.Extensions;
+namespace HE.UtilsService.Api.Extensions;
 
 public static class ServiceCollectionExtension
 {

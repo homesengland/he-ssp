@@ -1,4 +1,4 @@
-namespace HE.DocumentService.SharePoint.Models.File;
+namespace HE.UtilsService.SharePoint.Models.File;
 
 public record FileTableRow
 {

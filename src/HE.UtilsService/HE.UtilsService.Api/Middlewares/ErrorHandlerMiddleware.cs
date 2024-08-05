@@ -1,8 +1,8 @@
 using System.Net;
 using System.Text.Json;
-using HE.DocumentService.SharePoint.Exceptions;
+using HE.UtilsService.SharePoint.Exceptions;
 
-namespace HE.DocumentService.Api.Middlewares;
+namespace HE.UtilsService.Api.Middlewares;
 
 public class ErrorHandlerMiddleware
 {

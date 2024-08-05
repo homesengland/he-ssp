@@ -1,9 +1,9 @@
-using HE.DocumentService.Api.Configuration;
-using HE.DocumentService.Api.Extensions;
-using HE.DocumentService.SharePoint.Configuration;
-using HE.DocumentService.SharePoint.Extensions;
-using HE.DocumentService.SharePoint.Interfaces;
-using HE.DocumentService.SharePoint.Models.File;
+using HE.UtilsService.Api.Configuration;
+using HE.UtilsService.Api.Extensions;
+using HE.UtilsService.SharePoint.Configuration;
+using HE.UtilsService.SharePoint.Extensions;
+using HE.UtilsService.SharePoint.Interfaces;
+using HE.UtilsService.SharePoint.Models.File;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

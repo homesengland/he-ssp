@@ -1,4 +1,4 @@
-namespace HE.DocumentService.SharePoint.Configuration;
+namespace HE.UtilsService.SharePoint.Configuration;
 
 public class SharePointConfiguration : ISharePointConfiguration
 {

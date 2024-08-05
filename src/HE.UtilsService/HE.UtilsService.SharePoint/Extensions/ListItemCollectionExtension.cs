@@ -2,7 +2,7 @@ using System.Data;
 using System.Globalization;
 using Microsoft.SharePoint.Client;
 
-namespace HE.DocumentService.SharePoint.Extensions;
+namespace HE.UtilsService.SharePoint.Extensions;
 
 public static class ListItemCollectionExtension
 {

@@ -1,6 +1,6 @@
-﻿using HE.DocumentService.SharePoint.Configuration;
+﻿using HE.UtilsService.SharePoint.Configuration;
 
-namespace HE.DocumentService.Api.Configuration;
+namespace HE.UtilsService.Api.Configuration;
 
 public interface IAppConfig
 {

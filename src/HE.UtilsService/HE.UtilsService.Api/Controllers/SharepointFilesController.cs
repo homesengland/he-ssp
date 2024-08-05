@@ -1,10 +1,10 @@
 using System.ComponentModel.DataAnnotations;
-using HE.DocumentService.SharePoint.Interfaces;
-using HE.DocumentService.SharePoint.Models.File;
-using HE.DocumentService.SharePoint.Models.Table;
+using HE.UtilsService.SharePoint.Interfaces;
+using HE.UtilsService.SharePoint.Models.File;
+using HE.UtilsService.SharePoint.Models.Table;
 using Microsoft.AspNetCore.Mvc;
 
-namespace HE.DocumentService.Api.Controllers;
+namespace HE.UtilsService.Api.Controllers;
 
 [ApiController]
 [Route("[controller]")]

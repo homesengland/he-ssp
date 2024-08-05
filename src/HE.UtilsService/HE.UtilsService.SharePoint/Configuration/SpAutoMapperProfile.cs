@@ -1,8 +1,8 @@
 using System.Data;
 using AutoMapper;
-using HE.DocumentService.SharePoint.Models.File;
+using HE.UtilsService.SharePoint.Models.File;
 
-namespace HE.DocumentService.SharePoint.Configuration;
+namespace HE.UtilsService.SharePoint.Configuration;
 
 public class SpAutoMapperProfile : Profile
 {

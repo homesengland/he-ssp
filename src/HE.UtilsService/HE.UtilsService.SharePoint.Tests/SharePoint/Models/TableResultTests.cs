@@ -1,6 +1,6 @@
 using FluentAssertions;
-using HE.DocumentService.SharePoint.Models.File;
-using HE.DocumentService.SharePoint.Models.Table;
+using HE.UtilsService.SharePoint.Models.File;
+using HE.UtilsService.SharePoint.Models.Table;
 using Xunit;
 
 namespace HE.DocumentService.Tests.SharePoint.Models;

@@ -1,10 +1,10 @@
-using HE.DocumentService.SharePoint.Configuration;
-using HE.DocumentService.SharePoint.Constants;
-using HE.DocumentService.SharePoint.Exceptions;
-using HE.DocumentService.SharePoint.Interfaces;
+using HE.UtilsService.SharePoint.Configuration;
+using HE.UtilsService.SharePoint.Constants;
+using HE.UtilsService.SharePoint.Exceptions;
+using HE.UtilsService.SharePoint.Interfaces;
 using Microsoft.SharePoint.Client;
 
-namespace HE.DocumentService.SharePoint.Services;
+namespace HE.UtilsService.SharePoint.Services;
 
 public class SharePointFolderService : ISharePointFolderService
 {

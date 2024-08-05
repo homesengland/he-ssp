@@ -1,8 +1,8 @@
-using HE.DocumentService.Api.Configuration;
-using HE.DocumentService.Api.Extensions;
-using HE.DocumentService.Api.Middlewares;
-using HE.DocumentService.SharePoint.Configuration;
-using HE.DocumentService.SharePoint.Extensions;
+using HE.UtilsService.Api.Configuration;
+using HE.UtilsService.Api.Extensions;
+using HE.UtilsService.Api.Middlewares;
+using HE.UtilsService.SharePoint.Configuration;
+using HE.UtilsService.SharePoint.Extensions;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 
 var builder = WebApplication.CreateBuilder(args);

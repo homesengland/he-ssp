@@ -1,6 +1,6 @@
 using Microsoft.SharePoint.Client;
 
-namespace HE.DocumentService.SharePoint.Interfaces;
+namespace HE.UtilsService.SharePoint.Interfaces;
 
 public interface ISharePointContext
 {
