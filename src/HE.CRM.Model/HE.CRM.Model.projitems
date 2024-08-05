@@ -36,6 +36,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getahpproject.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getahpprojects.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getahpproject_v2.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getallocation.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getallocationclaims.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getconsortium.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getconsortiums.cs" />
