@@ -20,6 +20,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_checkifloanapplicationwithgivennameexists.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_checkifsitewithgivennameexists.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_checkifsitewithstrategicsitenameexists.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_createahpallocation.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_createahpproject.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_createsinglesitedetail.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_deactivatefrontdoorproject.cs" />
@@ -267,6 +268,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_AHPInternalStatus.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_AHPPartnerType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_AHPSectioncompletionstatusSet.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_AllocationExternalStatus.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_AllocationInternalStatus.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_ApprovalFor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_ApprovalLevel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_ApprovalStatus.cs" />

@@ -1,4 +1,6 @@
 using HE.Common.IntegrationModel.PortalIntegrationModel;
+using HE.Investment.AHP.Domain.Delivery.Policies;
+using HE.Investments.Account.Shared;
 using HE.Investments.Account.Shared.User;
 using HE.Investments.AHP.Allocation.Contract;
 using HE.Investments.AHP.Allocation.Contract.Overview;
@@ -25,21 +27,29 @@ public class AllocationRepository : IAllocationRepository
 
     private readonly IPhaseCrmMapper _phaseCrmMapper;
 
-    public AllocationRepository(IAllocationCrmContext allocationCrmContext, IMediator mediator, IPhaseCrmMapper phaseCrmMapper)
+    private readonly IOnlyCompletionMilestonePolicy _onlyCompletionMilestonePolicy;
+
+    public AllocationRepository(
+        IAllocationCrmContext allocationCrmContext,
+        IMediator mediator,
+        IPhaseCrmMapper phaseCrmMapper,
+        IOnlyCompletionMilestonePolicy onlyCompletionMilestonePolicy)
     {
         _allocationCrmContext = allocationCrmContext;
         _mediator = mediator;
         _phaseCrmMapper = phaseCrmMapper;
+        _onlyCompletionMilestonePolicy = onlyCompletionMilestonePolicy;
     }
 
     public async Task<AllocationEntity> GetById(AllocationId id, UserAccount userAccount, CancellationToken cancellationToken)
     {
-        var organisationId = userAccount.SelectedOrganisationId().ToGuidAsString();
+        var organisation = userAccount.SelectedOrganisation();
+        var organisationId = organisation.OrganisationId.ToGuidAsString();
         var allocation = await _allocationCrmContext.GetById(id.ToGuidAsString(), organisationId, userAccount.UserGlobalId.ToString(), cancellationToken);
 
         var programme = await _mediator.Send(new GetProgrammeQuery(ProgrammeId.From(allocation.ProgrammeId)), cancellationToken);
 
-        return CreateEntity(allocation, programme);
+        return CreateEntity(allocation, programme, organisation);
     }
 
     public async Task<AllocationOverview> GetOverview(AllocationId id, ConsortiumUserAccount userAccount, CancellationToken cancellationToken)
@@ -66,7 +76,7 @@ public class AllocationRepository : IAllocationRepository
             false);
     }
 
-    private AllocationEntity CreateEntity(AllocationClaimsDto allocationDto, AhpProgramme programme)
+    private AllocationEntity CreateEntity(AllocationClaimsDto allocationDto, AhpProgramme programme, OrganisationBasicInfo organisation)
     {
         var allocationId = AllocationId.From(allocationDto.Id);
         var tenure = AllocationTenureMapper.ToDomain(allocationDto.Tenure);
@@ -86,6 +96,8 @@ public class AllocationRepository : IAllocationRepository
             programme,
             tenure,
             new GrantDetails(allocationDto.GrantDetails.TotalGrantAllocated, allocationDto.GrantDetails.AmountPaid, allocationDto.GrantDetails.AmountRemaining),
-            allocationDto.ListOfPhaseClaims.Select(x => _phaseCrmMapper.MapToDomain(x, allocationBasicInfo)).ToList());
+            allocationDto.ListOfPhaseClaims
+                .Select(x => _phaseCrmMapper.MapToDomain(x, allocationBasicInfo, organisation, _onlyCompletionMilestonePolicy))
+                .ToList());
     }
 }

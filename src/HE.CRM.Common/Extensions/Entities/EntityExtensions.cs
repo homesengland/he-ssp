@@ -98,6 +98,36 @@ namespace HE.CRM.Common.Extensions.Entities
             return entity?.ToEntityReference();
         }
 
+        public static TEntity CloneToCreate<TEntity>(this TEntity entity, params string[] exeptColumns) where TEntity : Entity
+        {
+            string[] systemFields = new[] {
+               "createdby",
+               "createdon",
+               "createdonbehalfby",
+               "importsequencenumber",
+               "modifiedby",
+               "modifiedon",
+               "modifiedonbehalfby",
+               "overriddencreatedon",
+               "timezoneruleversionnumber",
+               "versionnumber",
+            };
+
+            var clone = new Entity(entity.LogicalName);
+
+            var attributesToCopy = entity.Attributes.Keys
+                .Except(systemFields)
+                .Except(exeptColumns)
+                .ToList();
+
+            foreach (var attributeName in attributesToCopy)
+                clone[attributeName] = entity[attributeName];
+
+            clone.RemoveId();
+
+            return clone.ToEntity<TEntity>();
+        }
+
         public static T CloneWithoutSystemFields<T>(this T entity) where T : Entity
         {
             string[] systemFields = new[] {

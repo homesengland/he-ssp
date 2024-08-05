@@ -30,5 +30,47 @@ namespace HE.CRM.Common.Repositories.implementations
 
             return homesInDeliveryPhase;
         }
+
+        public List<invln_homesindeliveryphase> GetHomesInDeliveryPhaseForApplication(Guid applicationId, params string[] homesInDeliveryPhaseColumns)
+        {
+            var query = new QueryExpression(invln_homesindeliveryphase.EntityLogicalName)
+            {
+                ColumnSet = homesInDeliveryPhaseColumns != null && homesInDeliveryPhaseColumns.Any() ? new ColumnSet(homesInDeliveryPhaseColumns) : new ColumnSet(true),
+                LinkEntities =
+                {
+                    // Add link-entity invln_deliveryphase
+                    new LinkEntity()
+                    {
+                        LinkFromEntityName = invln_homesindeliveryphase.EntityLogicalName,
+                        LinkFromAttributeName = invln_homesindeliveryphase.Fields.invln_deliveryphaselookup,
+                        LinkToEntityName = invln_DeliveryPhase.EntityLogicalName,
+                        LinkToAttributeName = invln_DeliveryPhase.PrimaryIdAttribute,
+                        JoinOperator = JoinOperator.Inner,
+                        EntityAlias = invln_DeliveryPhase.EntityLogicalName,
+                        LinkCriteria =
+                        {
+                            Conditions =
+                            {
+                                new ConditionExpression(invln_DeliveryPhase.Fields.invln_Application, ConditionOperator.Equal, applicationId)
+                            }
+                        }
+                    },
+                    // Add link-entity invln_hometype
+                    new LinkEntity()
+                    {
+                        LinkFromEntityName = invln_homesindeliveryphase.EntityLogicalName,
+                        LinkFromAttributeName = invln_homesindeliveryphase.Fields.invln_hometypelookup,
+                        LinkToEntityName = invln_HomeType.EntityLogicalName,
+                        LinkToAttributeName = invln_HomeType.PrimaryIdAttribute,
+                        JoinOperator = JoinOperator.Inner,
+                        EntityAlias = invln_HomeType.EntityLogicalName
+                    }
+                }
+            };
+
+            return RetrieveAll(query).Entities
+                .Select(e => e.ToEntity<invln_homesindeliveryphase>())
+                .ToList();
+        }
     }
 }

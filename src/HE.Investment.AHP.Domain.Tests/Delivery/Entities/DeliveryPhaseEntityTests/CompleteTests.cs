@@ -42,6 +42,7 @@ public class CompleteTests
             .WithCompletionMilestone(new CompletionMilestoneDetailsBuilder().Build())
             .WithoutAcquisitionMilestone()
             .WithoutStartOnSiteMilestone()
+            .WithIsOnlyCompletionMilestonePolicy(true)
             .Build();
 
         // when

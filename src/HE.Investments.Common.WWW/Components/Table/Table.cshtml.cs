@@ -1,4 +1,3 @@
-using HE.Investments.Common.Contract;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HE.Investments.Common.WWW.Components.Table;

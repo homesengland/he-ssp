@@ -1,7 +1,7 @@
-using HE.Investments.Common.Contract.Pagination;
+using HE.Investment.AHP.Contract.Site;
 using HE.Investments.FrontDoor.Shared.Project;
 
-namespace HE.Investment.AHP.Contract.Site;
+namespace HE.Investments.AHP.Allocation.Contract.Site;
 
 public record SiteDetailsModel(
     SiteId SiteId,
@@ -9,4 +9,5 @@ public record SiteDetailsModel(
     string SiteName,
     string OrganisationName,
     string? LocalAuthorityName,
-    PaginationResult<ApplicationSiteModel> Applications);
+    IList<ApplicationSiteModel> Applications,
+    IList<AllocationSiteModel> Allocations);

@@ -3,7 +3,7 @@
 @using HE.Investments.Common.WWW.Components.PageHeader
 @using HE.Investments.Common.WWW.Components.SectionSummaryItem
 @using HE.Investments.Common.WWW.Extensions
-@model HE.Investment.AHP.Contract.Site.SiteDetailsModel
+@model HE.Investments.AHP.Allocation.Contract.Site.SiteDetailsModel
 @{
     ViewData["Title"] = Model.SiteName;
 }
@@ -24,7 +24,7 @@
         </div>
     }
 
-    @if (Model.Applications.TotalItems > 0)
+    @if (Model.Applications.Count > 0)
     {
         <gds-h2>Applications on this site</gds-h2>
         <gds-p>View or manage existing applications for this site.</gds-p>
@@ -34,6 +34,15 @@
     <gds-p>
         To begin a new application on this site, return to <gds-link data-testId="application-list" href="@Url.OrganisationAction("Applications", "Project", new { projectId = Model.ProjectId.Value })">your list of all applications</gds-link>.
     </gds-p>
+
+    @if (Model.Allocations.Count > 0)
+    {
+        <div class="govuk-!-margin-top-8">
+            <gds-h2>Allocations on this site</gds-h2>
+            <gds-p>View or manage existing allocations for this site.</gds-p>
+            <vc:site-allocations-table site-id="@Model.SiteId" allocations="@Model.Allocations"/>
+        </div>
+    }
 
     <div class="govuk-!-margin-top-8">
         <gds-h2>View details of this site</gds-h2>

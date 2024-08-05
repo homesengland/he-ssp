@@ -34,6 +34,7 @@ namespace HE.CRM.AHP.Plugins.Tests.Services.Application
             var application = new invln_scheme()
             {
                 Id = Guid.NewGuid(),
+                invln_applicationid = "000001",
                 invln_organisationid = organisation.ToEntityReference(),
                 invln_contactid = contact.ToEntityReference(),
                 invln_fundingrequired = new Money(200_000)

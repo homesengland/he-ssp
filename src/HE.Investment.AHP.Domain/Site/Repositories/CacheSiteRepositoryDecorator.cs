@@ -11,6 +11,7 @@ using HE.Investments.Common.Infrastructure.Cache;
 using HE.Investments.Common.Infrastructure.Cache.Interfaces;
 using HE.Investments.Consortium.Shared.UserContext;
 using HE.Investments.FrontDoor.Shared.Project;
+using HE.Investments.Organisation.LocalAuthorities.ValueObjects;
 
 namespace HE.Investment.AHP.Domain.Site.Repositories;
 
@@ -87,18 +88,25 @@ internal sealed class CacheSiteRepositoryDecorator : ISiteRepository
             ProjectId = entity.FrontDoorProjectId?.Value,
             SiteId = entity.FrontDoorSiteId?.Value,
             AcquisitionStatus = entity.LandAcquisitionStatus.Value,
+            LocalAuthorityCode = entity.LocalAuthority?.Code.Value,
+            LocalAuthorityName = entity.LocalAuthority?.Name,
             UsingMmc = entity.SiteUsingModernMethodsOfConstruction,
         };
     }
 
     private static SiteBasicInfo ToSiteBasicInfoEntity(SiteBasicInfoDto dto)
     {
+        var localAuthority = !string.IsNullOrEmpty(dto.LocalAuthorityCode) && !string.IsNullOrEmpty(dto.LocalAuthorityName)
+            ? new LocalAuthority(new LocalAuthorityCode(dto.LocalAuthorityCode), dto.LocalAuthorityName)
+            : null;
+
         return new SiteBasicInfo(
             SiteId.From(dto.Id),
             new SiteName(dto.Name),
             FrontDoorProjectId.Create(dto.ProjectId),
             FrontDoorSiteId.Create(dto.SiteId),
             new LandAcquisitionStatus(dto.AcquisitionStatus),
+            localAuthority,
             dto.UsingMmc);
     }
 
@@ -111,6 +119,10 @@ internal sealed class CacheSiteRepositoryDecorator : ISiteRepository
         public string? ProjectId { get; set; }
 
         public string? SiteId { get; set; }
+
+        public string? LocalAuthorityCode { get; set; }
+
+        public string? LocalAuthorityName { get; set; }
 
         public SiteLandAcquisitionStatus? AcquisitionStatus { get; set; }
 

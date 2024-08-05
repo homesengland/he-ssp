@@ -2,6 +2,7 @@ using HE.Investment.AHP.Contract.Delivery;
 using HE.Investment.AHP.Contract.Delivery.Enums;
 using HE.Investment.AHP.Contract.HomeTypes;
 using HE.Investment.AHP.Domain.Common;
+using HE.Investment.AHP.Domain.Delivery.Policies;
 using HE.Investment.AHP.Domain.Delivery.Tranches;
 using HE.Investment.AHP.Domain.Delivery.ValueObjects;
 using HE.Investment.AHP.Domain.HomeTypes.Entities;
@@ -102,7 +103,10 @@ public class DeliveryPhasesEntity : IHomeTypeConsumer
         MarkAsInProgress();
     }
 
-    public DeliveryPhaseEntity CreateDeliveryPhase(DeliveryPhaseName name, OrganisationBasicInfo organisationBasicInfo)
+    public DeliveryPhaseEntity CreateDeliveryPhase(
+        DeliveryPhaseName name,
+        OrganisationBasicInfo organisationBasicInfo,
+        IOnlyCompletionMilestonePolicy onlyCompletionMilestonePolicy)
     {
         var deliveryPhase = new DeliveryPhaseEntity(
             Application,
@@ -111,7 +115,8 @@ public class DeliveryPhasesEntity : IHomeTypeConsumer
             SectionStatus.InProgress,
             MilestonesPercentageTranches.NotProvided,
             MilestonesCalculatedTranches.NotCalculated,
-            false);
+            false,
+            onlyCompletionMilestonePolicy);
 
         _deliveryPhases.Add(deliveryPhase);
         return deliveryPhase;

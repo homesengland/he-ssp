@@ -310,6 +310,8 @@ namespace DataverseModel
 			public const string invln_Renumeration = "invln_renumeration";
 			public const string invln_ReportFrequency = "invln_reportfrequency";
 			public const string invln_reportfrequencyName = "invln_reportfrequencyname";
+			public const string invln_ReturnonEquityNew = "invln_returnonequitynew";
+			public const string invln_returnonequitynew_Base = "invln_returnonequitynew_base";
 			public const string invln_ReturnonEquityROE = "invln_returnonequityroe";
 			public const string invln_reviewapproval_ISPOwner_invln_isp = "invln_reviewapproval_ISPOwner_invln_isp";
 			public const string invln_S106Costsk = "invln_s106costsk";
@@ -383,6 +385,8 @@ namespace DataverseModel
 			public const string invln_TotalExposurepercent = "invln_totalexposurepercent";
 			public const string invln_TotalforApproval = "invln_totalforapproval";
 			public const string invln_totalforapproval_Base = "invln_totalforapproval_base";
+			public const string invln_TotalForApprovalNew = "invln_totalforapprovalnew";
+			public const string invln_totalforapprovalnew_Base = "invln_totalforapprovalnew_base";
 			public const string invln_TotalFundsk = "invln_totalfundsk";
 			public const string invln_totalfundsk_Base = "invln_totalfundsk_base";
 			public const string invln_TotalFundspercent = "invln_totalfundspercent";
@@ -4477,6 +4481,29 @@ namespace DataverseModel
 			}
 		}
 		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_returnonequitynew")]
+		public Microsoft.Xrm.Sdk.Money invln_ReturnonEquityNew
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_returnonequitynew");
+			}
+		}
+		
+		/// <summary>
+		/// Value of the Return on Equity in base currency.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_returnonequitynew_base")]
+		public Microsoft.Xrm.Sdk.Money invln_returnonequitynew_Base
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_returnonequitynew_base");
+			}
+		}
+		
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_returnonequityroe")]
 		public System.Nullable<double> invln_ReturnonEquityROE
 		{
@@ -5673,6 +5700,29 @@ namespace DataverseModel
 			get
 			{
 				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_totalforapproval_base");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_totalforapprovalnew")]
+		public Microsoft.Xrm.Sdk.Money invln_TotalForApprovalNew
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_totalforapprovalnew");
+			}
+		}
+		
+		/// <summary>
+		/// Value of the Total For Approval in base currency.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_totalforapprovalnew_base")]
+		public Microsoft.Xrm.Sdk.Money invln_totalforapprovalnew_Base
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_totalforapprovalnew_base");
 			}
 		}
 		

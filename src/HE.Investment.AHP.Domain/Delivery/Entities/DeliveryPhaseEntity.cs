@@ -3,6 +3,7 @@ using HE.Investment.AHP.Contract.Delivery;
 using HE.Investment.AHP.Contract.Delivery.Enums;
 using HE.Investment.AHP.Contract.HomeTypes;
 using HE.Investment.AHP.Domain.Common;
+using HE.Investment.AHP.Domain.Delivery.Policies;
 using HE.Investment.AHP.Domain.Delivery.Tranches;
 using HE.Investment.AHP.Domain.Delivery.ValueObjects;
 using HE.Investments.Account.Shared;
@@ -24,6 +25,8 @@ public class DeliveryPhaseEntity : DomainEntity, IDeliveryPhaseEntity
 
     private readonly ModificationTracker _modificationTracker = new();
 
+    private readonly IOnlyCompletionMilestonePolicy _onlyCompletionMilestonePolicy;
+
     public DeliveryPhaseEntity(
         ApplicationBasicInfo application,
         DeliveryPhaseName name,
@@ -32,6 +35,7 @@ public class DeliveryPhaseEntity : DomainEntity, IDeliveryPhaseEntity
         MilestonesPercentageTranches milestonesPercentageTranches,
         MilestonesCalculatedTranches milestonesCalculatedTranches,
         bool milestoneTranchesAmendRequested,
+        IOnlyCompletionMilestonePolicy onlyCompletionMilestonePolicy,
         TypeOfHomes? typeOfHomes = null,
         BuildActivity? buildActivity = null,
         bool? reconfiguringExisting = null,
@@ -53,6 +57,7 @@ public class DeliveryPhaseEntity : DomainEntity, IDeliveryPhaseEntity
         ReconfiguringExisting = reconfiguringExisting;
         Status = status;
         CreatedOn = createdOn;
+        _onlyCompletionMilestonePolicy = onlyCompletionMilestonePolicy;
         DeliveryPhaseMilestones = new DeliveryPhaseMilestones(IsOnlyCompletionMilestone, acquisitionMilestone, startOnSiteMilestone, completionMilestone);
         IsAdditionalPaymentRequested = isAdditionalPaymentRequested;
         _homesToDeliver = homesToDeliver?.ToList() ?? [];
@@ -92,7 +97,7 @@ public class DeliveryPhaseEntity : DomainEntity, IDeliveryPhaseEntity
 
     public bool IsModified => _modificationTracker.IsModified || Tranches.IsModified;
 
-    public bool IsOnlyCompletionMilestone => OnlyCompletionMilestone(Organisation, BuildActivity);
+    public bool IsOnlyCompletionMilestone => _onlyCompletionMilestonePolicy.IsOnlyCompletionMilestone(Organisation.IsUnregisteredBody, BuildActivity);
 
     public IEnumerable<HomesToDeliverInPhase> HomesToDeliver => _homesToDeliver;
 
@@ -208,8 +213,6 @@ public class DeliveryPhaseEntity : DomainEntity, IDeliveryPhaseEntity
         return TypeOfHomes is Contract.Delivery.Enums.TypeOfHomes.Rehab && BuildActivity.Type != BuildActivityType.ExistingSatisfactory;
     }
 
-    private static bool OnlyCompletionMilestone(OrganisationBasicInfo organisation, BuildActivity buildActivity) => organisation.IsUnregisteredBody || buildActivity.IsOffTheShelfOrExistingSatisfactory;
-
     private bool IsAnswered()
     {
         var reconfigureExistingValid = !IsReconfiguringExistingNeeded() || ReconfiguringExisting.HasValue;
@@ -243,7 +246,9 @@ public class DeliveryPhaseEntity : DomainEntity, IDeliveryPhaseEntity
 
     private void ResetBuildActivityDependencies(BuildActivity newBuildActivity)
     {
-        var milestones = new DeliveryPhaseMilestones(OnlyCompletionMilestone(Organisation, newBuildActivity), DeliveryPhaseMilestones);
+        var milestones = new DeliveryPhaseMilestones(
+            _onlyCompletionMilestonePolicy.IsOnlyCompletionMilestone(Organisation.IsUnregisteredBody, newBuildActivity),
+            DeliveryPhaseMilestones);
         DeliveryPhaseMilestones = _modificationTracker.Change(DeliveryPhaseMilestones, milestones, MarkAsNotCompleted);
     }
 }

@@ -32,7 +32,10 @@ namespace HE.CRM.Common.Repositories.Implementations
             using (var ctx = new OrganizationServiceContext(service))
             {
                 return ctx.CreateQuery<invln_scheme>()
-                    .Where(x => x.invln_schemename == name && x.invln_organisationid.Id == organisationId).AsEnumerable().Any();
+                    .Where(x => x.invln_schemename == name &&
+                        x.invln_organisationid.Id == organisationId &&
+                        x.invln_isallocation != true)
+                    .AsEnumerable().Any();
             }
         }
 

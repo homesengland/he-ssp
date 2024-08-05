@@ -17,5 +17,7 @@ namespace HE.CRM.AHP.Plugins.Services.Application
         void CalculateGrantDetails(Guid allocationId);
 
         AllocationDto GetAllocation(string externalContactId, Guid accountId, Guid allocationId);
+
+        Guid CreateAllocation(Guid schemeId, bool isVariation = false);
     }
 }

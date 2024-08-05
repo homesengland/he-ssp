@@ -1,4 +1,6 @@
 using HE.Common.IntegrationModel.PortalIntegrationModel;
+using HE.Investment.AHP.Domain.Delivery.Policies;
+using HE.Investments.Account.Shared;
 using HE.Investments.AHP.Allocation.Contract.Claims;
 using HE.Investments.AHP.Allocation.Contract.Claims.Enum;
 using HE.Investments.AHP.Allocation.Domain.Allocation.ValueObjects;
@@ -21,17 +23,23 @@ public sealed class PhaseCrmMapper : IPhaseCrmMapper
         _milestoneTypeMapper = milestoneTypeMapper;
     }
 
-    public PhaseEntity MapToDomain(PhaseClaimsDto dto, AllocationBasicInfo allocation)
+    public PhaseEntity MapToDomain(
+        PhaseClaimsDto dto,
+        AllocationBasicInfo allocation,
+        OrganisationBasicInfo organisation,
+        IOnlyCompletionMilestonePolicy onlyCompletionMilestonePolicy)
     {
         return new PhaseEntity(
             PhaseId.From(dto.Id),
             allocation,
+            organisation,
             new PhaseName(dto.Name),
             new NumberOfHomes(dto.NumberOfHomes),
             BuildActivityTypeMapper.ToDomain(dto.NewBuildActivityType, dto.RehabBuildActivityType),
             dto.AcquisitionMilestone.IsProvided() ? ToMilestoneClaim(dto.AcquisitionMilestone, MilestoneType.Acquisition) : null,
             dto.StartOnSiteMilestone.IsProvided() ? ToMilestoneClaim(dto.StartOnSiteMilestone, MilestoneType.StartOnSite) : null,
-            ToMilestoneClaim(dto.CompletionMilestone, MilestoneType.Completion));
+            ToMilestoneClaim(dto.CompletionMilestone, MilestoneType.Completion),
+            onlyCompletionMilestonePolicy);
     }
 
     public PhaseClaimsDto MapToDto(PhaseEntity entity)

@@ -136,6 +136,7 @@ public static class DomainModule
         services.Decorate<IDeliveryPhaseCrmContext, RequestCacheDeliverPhaseCrmContextDecorator>();
         services.AddSingleton<IDeliveryPhaseCrmMapper, DeliveryPhaseCrmMapper>();
         services.AddScoped<IMilestoneDatesInProgrammeDateRangePolicy, MilestoneDatesInProgrammeDateRangePolicy>();
+        services.AddScoped<IOnlyCompletionMilestonePolicy, OnlyCompletionMilestonePolicy>();
 
         return services;
     }
