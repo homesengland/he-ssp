@@ -12,7 +12,7 @@ public class HttpDocumentService : IDocumentService
 {
     private readonly IHttpClientFactory _httpClient;
 
-    private readonly IDocumentServiceSettings _settings;
+    private readonly IUtilsServiceSettings _settings;
 
     private readonly ILogger<HttpDocumentService> _logger;
 
@@ -22,7 +22,7 @@ public class HttpDocumentService : IDocumentService
         PropertyNameCaseInsensitive = true,
     };
 
-    public HttpDocumentService(IHttpClientFactory httpClient, IDocumentServiceSettings settings, ILogger<HttpDocumentService> logger)
+    public HttpDocumentService(IHttpClientFactory httpClient, IUtilsServiceSettings settings, ILogger<HttpDocumentService> logger)
     {
         _httpClient = httpClient;
         _settings = settings;

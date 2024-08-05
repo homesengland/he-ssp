@@ -2,15 +2,15 @@ using Microsoft.Extensions.Configuration;
 
 namespace HE.Investments.DocumentService.Configs;
 
-public class DocumentServiceSettings : IDocumentServiceSettings
+public class UtilsServiceSettings : IUtilsServiceSettings
 {
-    public DocumentServiceSettings(IConfiguration configuration)
+    public UtilsServiceSettings(IConfiguration configuration)
     {
         Url = configuration.GetValue<string>("AppConfiguration:UtilsService:Url") ?? string.Empty;
         UseMock = configuration.GetValue<bool>("AppConfiguration:UtilsService:UseMock");
         if (!UseMock && string.IsNullOrWhiteSpace(Url))
         {
-            throw new InvalidOperationException("Missing required Document Service Url.");
+            throw new InvalidOperationException("Missing required Utils Service Url.");
         }
     }
 

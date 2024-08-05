@@ -1,6 +1,6 @@
 namespace HE.Investments.DocumentService.Configs;
 
-public interface IDocumentServiceSettings
+public interface IUtilsServiceSettings
 {
     public string Url { get; }
 

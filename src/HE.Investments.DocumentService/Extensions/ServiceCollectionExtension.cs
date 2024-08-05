@@ -17,7 +17,7 @@ public static class ServiceCollectionExtension
                 onRetry: (_, _, _, _) => { });
 
         services.AddHttpClient("HE.Investments.DocumentService").AddPolicyHandler(retryPolicyNeedsTrueResponse);
-        services.AddSingleton<IDocumentServiceSettings, DocumentServiceSettings>();
+        services.AddSingleton<IUtilsServiceSettings, UtilsServiceSettings>();
         services.AddSingleton<HttpDocumentService>();
         services.AddSingleton<MockedDocumentService>();
 
@@ -31,7 +31,7 @@ public static class ServiceCollectionExtension
 
     private static IDocumentService GetDocumentService(IServiceProvider serviceProvider)
     {
-        var settings = serviceProvider.GetRequiredService<IDocumentServiceSettings>();
+        var settings = serviceProvider.GetRequiredService<IUtilsServiceSettings>();
         if (settings.UseMock)
         {
             return serviceProvider.GetRequiredService<MockedDocumentService>();
