@@ -7,6 +7,7 @@ using HE.Investments.AHP.IntegrationTests.AreaTests.O02Allocation.Data.Phase;
 using HE.Investments.AHP.IntegrationTests.AreaTests.O02Allocation.Extensions;
 using HE.Investments.AHP.IntegrationTests.AreaTests.O02Allocation.Pages;
 using HE.Investments.AHP.IntegrationTests.Framework;
+using HE.Investments.Common.Extensions;
 using HE.Investments.Common.WWW.Extensions;
 using HE.Investments.TestsUtils.Extensions;
 using HE.Investments.TestsUtils.Helpers;
@@ -154,8 +155,10 @@ public abstract class ClaimMilestoneTestBase : AhpIntegrationTest
         var overviewPage = await TestClient.SubmitButton(submitClaimButton);
 
         // then
-        overviewPage.HasNoElementWithTestId(ClaimMilestoneLinkTestId())
-            .HasMilestoneStatusTag(ClaimData.MilestoneType, MilestoneStatus.Submitted);
+        overviewPage
+            .HasNoElementWithTestId(ClaimMilestoneLinkTestId())
+            .HasMilestoneStatusTag(ClaimData.MilestoneType, MilestoneStatus.Submitted)
+            .HasSuccessNotificationBanner($"Your claim has been submitted against the {ClaimData.MilestoneType.GetDescription()} milestone.");
         SaveCurrentPage();
     }
 
