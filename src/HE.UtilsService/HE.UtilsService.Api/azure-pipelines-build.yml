@@ -9,7 +9,7 @@ pr:
     - development_R3
   paths:
     include:
-    - src/HE.DocumentService/*
+    - src/HE.UtilsService/*
 
 pool:
   vmImage: 'ubuntu-22.04'

@@ -4,6 +4,7 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <RootNamespace>HE.DocumentService.Api</RootNamespace>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -23,7 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\HE.DocumentService.SharePoint\HE.DocumentService.SharePoint.csproj"/>
+    <ProjectReference Include="..\HE.UtilsService.SharePoint\HE.UtilsService.SharePoint.csproj" />
   </ItemGroup>
 
 </Project>

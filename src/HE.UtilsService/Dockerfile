@@ -16,18 +16,18 @@ ENV VSS_NUGET_EXTERNAL_FEED_ENDPOINTS \
     "{\"endpointCredentials\": [{\"endpoint\":\"https://pkgs.dev.azure.com/homesengland/_packaging/homesengland/nuget/v3/index.json\", \"username\":\"docker\", \"password\":\"${INTERNAL_FEED_ACCESSTOKEN}\"}]}"
 
 WORKDIR /src
-COPY ["HE.DocumentService.Api/HE.DocumentService.Api.csproj", "HE.DocumentService.Api/"]
-COPY ["HE.DocumentService.SharePoint/HE.DocumentService.SharePoint.csproj", "HE.DocumentService.SharePoint/"]
-RUN dotnet restore "./HE.DocumentService.Api/HE.DocumentService.Api.csproj"
+COPY ["HE.UtilsService.Api/HE.UtilsService.Api.csproj", "HE.UtilsService.Api/"]
+COPY ["HE.UtilsService.SharePoint/HE.UtilsService.SharePoint.csproj", "HE.UtilsService.SharePoint/"]
+RUN dotnet restore "./HE.UtilsService.Api/HE.UtilsService.Api.csproj"
 COPY . .
-WORKDIR "/src/HE.DocumentService.Api"
-RUN dotnet build "./HE.DocumentService.Api.csproj" -c Release -o /app/build
+WORKDIR "/src/HE.UtilsService.Api"
+RUN dotnet build "./HE.UtilsService.Api.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "./HE.DocumentService.Api.csproj" -c Release -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "./HE.UtilsService.Api.csproj" -c Release -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "HE.DocumentService.Api.dll"]
+ENTRYPOINT ["dotnet", "HE.UtilsService.Api.dll"]
 

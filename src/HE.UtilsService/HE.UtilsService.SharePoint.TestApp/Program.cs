@@ -1,15 +1,15 @@
-using System.Net;
 using HE.DocumentService.Api.Configuration;
 using HE.DocumentService.Api.Extensions;
 using HE.DocumentService.SharePoint.Configuration;
 using HE.DocumentService.SharePoint.Extensions;
 using HE.DocumentService.SharePoint.Interfaces;
 using HE.DocumentService.SharePoint.Models.File;
-using HE.DocumentService.TestApp;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+
+namespace HE.UtilsService.SharePoint.TestApp;
 
 internal class Program
 {
@@ -18,22 +18,22 @@ internal class Program
         IHost CreateApplicationHost()
         {
             var configuration = new ConfigurationBuilder()
-                    .SetBasePath(Directory.GetCurrentDirectory())
-                    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-                    .AddEnvironmentVariables()
-                    .AddUserSecrets<Program>()
-                    .Build();
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                .AddEnvironmentVariables()
+                .AddUserSecrets<Program>()
+                .Build();
 
             var host = Host.CreateDefaultBuilder()
-                    .ConfigureServices((context, services) =>
-                    {
-                        // Adding the DI container for configuration
-                        services.Configure<AppConfig>(configuration.GetSection("AppConfiguration"));
-                        services.AddConfigs();
-                        services.AddSharePointServices();
-                        services.AddAutoMapper(typeof(SpAutoMapperProfile));
-                    })
-                    .Build();
+                .ConfigureServices((context, services) =>
+                {
+                    // Adding the DI container for configuration
+                    services.Configure<AppConfig>(configuration.GetSection("AppConfiguration"));
+                    services.AddConfigs();
+                    services.AddSharePointServices();
+                    services.AddAutoMapper(typeof(SpAutoMapperProfile));
+                })
+                .Build();
 
             return host;
         }
@@ -49,7 +49,6 @@ internal class Program
         var filePath = "TestFile1.txt";
 
         //CreateFolders(spService);
-
         //await UploadFile(spService, filePath);
 
         await GetFiles(spService);
@@ -75,7 +74,7 @@ internal class Program
     private static async Task UploadFile(ISharePointFilesService spService, string filePath)
     {
         using Stream stream = File.OpenRead(filePath);
-        IFormFile file = new FormFile(stream, stream.Position, stream.Length, "", filePath);
+        IFormFile file = new FormFile(stream, stream.Position, stream.Length, string.Empty, filePath);
 
         var fileUpload = new FileUploadModel()
         {

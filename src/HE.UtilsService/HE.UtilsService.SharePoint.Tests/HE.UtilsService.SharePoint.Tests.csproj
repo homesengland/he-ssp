@@ -2,10 +2,11 @@
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
+    <RootNamespace>HE.DocumentService.Tests</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\HE.DocumentService.SharePoint\HE.DocumentService.SharePoint.csproj"/>
+    <ProjectReference Include="..\HE.UtilsService.SharePoint\HE.UtilsService.SharePoint.csproj" />
   </ItemGroup>
 
 </Project>

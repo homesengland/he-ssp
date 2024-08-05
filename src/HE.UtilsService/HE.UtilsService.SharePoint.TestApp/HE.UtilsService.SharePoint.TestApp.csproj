@@ -15,8 +15,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\HE.DocumentService.Api\HE.DocumentService.Api.csproj" />
-    <ProjectReference Include="..\HE.DocumentService.SharePoint\HE.DocumentService.SharePoint.csproj" />
+    <ProjectReference Include="..\HE.UtilsService.Api\HE.UtilsService.Api.csproj" />
+    <ProjectReference Include="..\HE.UtilsService.SharePoint\HE.UtilsService.SharePoint.csproj" />
   </ItemGroup>
 
   <ItemGroup>
