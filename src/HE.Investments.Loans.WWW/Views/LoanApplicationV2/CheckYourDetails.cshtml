@@ -16,55 +16,54 @@
 
         <gds-summary-list class="govuk-!-margin-bottom-9">
             @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
-                   {
-                       { "Title", "Registered organisation name" },
-                       { "Value", Model.CompanyRegisteredName },
-                   })
+            {
+                { "Title", "Registered organisation name" },
+                { "Value", Model.CompanyRegisteredName },
+            })
 
             @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
-                   {
-                       { "Title", "Company Registration Number" },
-                       { "Value", Model.CompanyRegistrationNumber },
-                   })
+            {
+                { "Title", "Company Registration Number" },
+                { "Value", Model.CompanyRegistrationNumber },
+            })
 
             @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
-                   {
-                       { "Title", "Organisation address" },
-                       { "Value", Model.CompanyAddress },
-                   })
+            {
+                { "Title", "Organisation address" },
+                { "Value", Model.CompanyAddress },
+            })
 
             @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
-                   {
-                       { "Title", "Contact name" },
-                       { "Value", Model.LoanApplicationContactName },
-                       { "Link", Url.RouteUrl(new {
-                           controller = "Accounts",
-                           action = "UserProfile",
-                           callback,
-                           organisationId
-                       }) }
-                   })
+            {
+                { "Title", "Contact name" },
+                { "Value", Model.LoanApplicationContactName },
+                { "Link", Url.RouteUrl(new {
+                    controller = "Accounts",
+                    action = "UserProfile",
+                    callback,
+                    organisationId
+                }) }
+            })
 
             @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
-                   {
-                       { "Title", "Email address" },
-                       { "Value", Model.LoanApplicationContactEmail },
-                   })
+            {
+                { "Title", "Email address" },
+                { "Value", Model.LoanApplicationContactEmail },
+            })
 
             @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
-                   {
-                       { "Title", "Preferred telephone number" },
-                       { "Value", Model.LoanApplicationContactTelephoneNumber},
-                       { "Link", Url.RouteUrl(new {
-                           controller = "Accounts",
-                           action = "UserProfile",
-                           callback,
-                           organisationId
-                       }) }
-                   })
+            {
+                { "Title", "Preferred telephone number" },
+                { "Value", Model.LoanApplicationContactTelephoneNumber},
+                { "Link", Url.RouteUrl(new {
+                    controller = "Accounts",
+                    action = "UserProfile",
+                    callback,
+                    organisationId
+                }) }
+            })
         </gds-summary-list>
-    <gds-button name="action" type="submit" value="Continue" id="continue-button">
-        Continue
-    </gds-button>
+
+        <vc:loans-form-button />
 </he-organisation-form>
 </gds-div-grid-column-two-thirds>

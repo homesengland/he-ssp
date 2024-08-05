@@ -47,8 +47,8 @@ public class PhaseData
         AcquisitionForecastClaimDate = deliveryPhaseData.AcquisitionMilestonePaymentDate;
         StartOnSiteForecastClaimDate = deliveryPhaseData.StartOnSiteMilestonePaymentDate;
         CompletionForecastClaimDate = deliveryPhaseData.CompletionMilestonePaymentDate;
-        AcquisitionAmountOfGrantApportioned = Math.Round(phaseFunding * 0.4m);
-        StartOnSiteAmountOfGrantApportioned = Math.Round(phaseFunding * 0.35m);
+        AcquisitionAmountOfGrantApportioned = Math.Round(phaseFunding * 0.4m, MidpointRounding.AwayFromZero);
+        StartOnSiteAmountOfGrantApportioned = Math.Round(phaseFunding * 0.35m, MidpointRounding.AwayFromZero);
         CompletionAmountOfGrantApportioned = phaseFunding - AcquisitionAmountOfGrantApportioned - StartOnSiteAmountOfGrantApportioned;
     }
 }

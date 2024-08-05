@@ -1,5 +1,3 @@
-using System.Globalization;
-using System.Text;
 using He.AspNetCore.Mvc.Gds.Components.Constants;
 using He.AspNetCore.Mvc.Gds.Components.TagConstructs;
 using HE.Investments.Common.Gds;

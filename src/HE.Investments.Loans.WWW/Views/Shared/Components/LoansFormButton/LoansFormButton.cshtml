@@ -1,0 +1,12 @@
+@model (string Id, string Text, string Value, string Name, string ButtonClass, bool IsDisabled);
+
+<button class="@Model.ButtonClass"
+        data-module="govuk-button"
+        name="@Model.Name"
+        type="submit"
+        data-prevent-double-click="true"
+        value="@Model.Value"
+        disabled="@Model.IsDisabled"
+        id="@Model.Id">
+    @Model.Text
+</button>
