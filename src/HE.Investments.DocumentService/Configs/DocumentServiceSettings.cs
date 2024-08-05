@@ -6,8 +6,8 @@ public class DocumentServiceSettings : IDocumentServiceSettings
 {
     public DocumentServiceSettings(IConfiguration configuration)
     {
-        Url = configuration.GetValue<string>("AppConfiguration:DocumentService:Url") ?? string.Empty;
-        UseMock = configuration.GetValue<bool>("AppConfiguration:DocumentService:UseMock");
+        Url = configuration.GetValue<string>("AppConfiguration:UtilsService:Url") ?? string.Empty;
+        UseMock = configuration.GetValue<bool>("AppConfiguration:UtilsService:UseMock");
         if (!UseMock && string.IsNullOrWhiteSpace(Url))
         {
             throw new InvalidOperationException("Missing required Document Service Url.");
