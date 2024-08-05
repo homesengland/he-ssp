@@ -19,7 +19,7 @@ resources:
   - repository: he-invst-deployment
     type: git
     name: 'Investments Programme/he-invst-deployment'
-    ref: 'feature/104413_Rename_DocumentService_to_UtilsService_'
+    ref: 'doc_svc_rename'
   - repository: templates
     type: git
     name: 'Cloud Hosting Service/Templates'
