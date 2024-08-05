@@ -66,6 +66,10 @@ namespace HE.CRM.AHP.Plugins.Services.Application
             allocation.invln_AllocationExternalStatus = new OptionSetValue((int)invln_AllocationExternalStatus.Approved);
             allocation.invln_IsLatestAllocation = true;
 
+            // grant details - initial calculation
+            allocation.invln_TotalGrantAllocated = application.invln_fundingrequired;
+            allocation.invln_AmountRemaining = application.invln_fundingrequired;
+
             var request = new CreateRequest()
             {
                 Target = allocation
