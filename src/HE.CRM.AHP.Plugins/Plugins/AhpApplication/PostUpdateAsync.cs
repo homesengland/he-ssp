@@ -14,7 +14,7 @@ namespace HE.CRM.AHP.Plugins.Plugins.AhpApplication
         ExecutionModeEnum.Asynchronous,
         "statuscode",
         "HE.CRM.AHP.Plugins.Plugins.AhpApplication.PostUpdateAsync: Update of invln_scheme",
-        10,
+        1,
         IsolationModeEnum.Sandbox,
         Id = "720C2ECB-9DD6-4E48-B9AB-CF94E240AB73",
         Image1Name = "PreImage",
@@ -22,7 +22,9 @@ namespace HE.CRM.AHP.Plugins.Plugins.AhpApplication
         Image1Type = ImageTypeEnum.PreImage,
         Image2Name = "PostImage",
         Image2Attributes = "invln_isallocation",
-        Image2Type = ImageTypeEnum.PostImage)]
+        Image2Type = ImageTypeEnum.PostImage,
+        DeleteAsyncOperation = true
+    )]
     public class PostUpdateAsync : PluginBase<DataverseContext>, IPlugin
     {
         public override void RegisterHandlers(CrmHandlerFactory<DataverseContext> handlerFactory, IList<ICrmHandler> registeredHandlers)
