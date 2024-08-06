@@ -3,23 +3,22 @@
 @using HE.Investments.Common.Contract.Constants
 @using HE.Investments.Common.Extensions
 @using HE.Investments.Common.WWW.Extensions
-@using HE.Investments.FrontDoor.Contract.Site
 @using HE.Investments.FrontDoor.WWW.Constants
 
-@model (IList<SectionSummaryViewModel> sections, bool isSiteIdentified, bool isReadOnly)
+@model (IList<SectionSummaryViewModel> Sections, bool IsSiteIdentified, bool IsReadOnly)
 @{
-    var projectDetailsSection = Model.sections.First();
-    var projectFinancialDetailsSection = Model.sections.Last();
-    var projectSitesSection = Model.sections.Skip(1).Take(Model.sections.Count - 2).ToList();
+    var projectDetailsSection = Model.Sections.First();
+    var projectFinancialDetailsSection = Model.Sections.Last();
+    var projectSitesSection = Model.Sections.Skip(1).Take(Model.Sections.Count - 2).ToList();
     var projectId = this.GetProjectIdFromRoute();
 }
 
 <div>
     <vc:section-summary title="@projectDetailsSection.Title" items="@projectDetailsSection.Items"/>
 
-    @if (Model.isSiteIdentified)
+    @if (Model.IsSiteIdentified)
     {
-        <vc:project-sites-section-summary sites="@projectSitesSection" is-read-only="@Model.isReadOnly"/>
+        <vc:project-sites-section-summary sites="@projectSitesSection" is-read-only="@Model.IsReadOnly"/>
 
         @if (projectSitesSection.Count == 0)
         {
@@ -28,11 +27,11 @@
                     name="Identified site"
                     values="CommonResponse.Yes.ToOneElementList()"
                     action-url="@Url.OrganisationAction("IdentifiedSite", "Project", new { projectId })"
-                    is-editable="@(!Model.isReadOnly)"/>
+                    is-editable="@(!Model.IsReadOnly)"/>
             </gds-summary-list>
         }
 
-        @if (!Model.isReadOnly)
+        @if (!Model.IsReadOnly)
         {
             <div class="govuk-!-margin-bottom-9 govuk-!-font-size-19">
                 <gds-link href="@Url.OrganisationAction("NewName", "Site", new { projectId, optional=OptionalParameter.AddSite })" data-testId="add-another-site">

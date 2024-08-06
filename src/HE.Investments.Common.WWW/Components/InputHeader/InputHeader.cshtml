@@ -1,9 +1,9 @@
 @using HE.Investments.Common.WWW.Components
 
-@model (string fieldName, string title, HE.Investments.Common.WWW.Components.InputTitleType titleType, string hint, string boldParagraph, string paragraph)
+@model (string FieldName, string Title, HE.Investments.Common.WWW.Components.InputTitleType TitleType, string Hint, string BoldParagraph, string Paragraph)
 
 @{
-    var cssClass = Model.titleType switch
+    var cssClass = Model.TitleType switch
     {
         InputTitleType.PageHeader => "govuk-heading-l",
         InputTitleType.InputTitle => "govuk-label govuk-label--m",
@@ -12,33 +12,33 @@
     };
 }
 
-@if (!string.IsNullOrWhiteSpace(Model.title))
+@if (!string.IsNullOrWhiteSpace(Model.Title))
 {
     <h1 class="govuk-label-wrapper">
-        <label class="@cssClass" for="@Model.fieldName">
-            @Model.title
+        <label class="@cssClass" for="@Model.FieldName">
+            @Model.Title
         </label>
     </h1>
 }
 
-@if (!string.IsNullOrWhiteSpace(Model.paragraph))
+@if (!string.IsNullOrWhiteSpace(Model.Paragraph))
 {
-    foreach (var line in Model.paragraph.Split(Environment.NewLine))
+    foreach (var line in Model.Paragraph.Split(Environment.NewLine))
     {
         <gds-p>@line</gds-p>
     }
 }
 
-@if (!string.IsNullOrWhiteSpace(Model.hint))
+@if (!string.IsNullOrWhiteSpace(Model.Hint))
 {
     <he-div-hint>
-        @Model.hint
+        @Model.Hint
     </he-div-hint>
 }
 
-@if (!string.IsNullOrWhiteSpace(Model.boldParagraph))
+@if (!string.IsNullOrWhiteSpace(Model.BoldParagraph))
 {
-    foreach (var line in Model.boldParagraph.Split(Environment.NewLine))
+    foreach (var line in Model.BoldParagraph.Split(Environment.NewLine))
     {
         <div class="govuk-heading-s govuk-!-margin-top-7">@line</div>
     }

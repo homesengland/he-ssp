@@ -1,14 +1,14 @@
 @using HE.Investments.Common.Messages
 @using HE.Investments.Common.WWW.Extensions
 
-@model (bool isEditable, bool isLinkInsideForm)
+@model (bool IsEditable, bool IsLinkInsideForm)
 
 <div>
-    @if (Model is { isEditable: true, isLinkInsideForm: true })
+    @if (Model is { IsEditable: true, IsLinkInsideForm: true })
     {
         <vc:link-working-as-button text="Save and return to your account" name="action" value="@GenericMessages.SaveAndReturn"/>
     }
-    else if (Model is {  isEditable: true, isLinkInsideForm: false })
+    else if (Model is {  IsEditable: true, IsLinkInsideForm: false })
     {
         <gds-link class="govuk-link--no-visited-state"
                   href="@Url.OrganisationAction("Index", "Account")">

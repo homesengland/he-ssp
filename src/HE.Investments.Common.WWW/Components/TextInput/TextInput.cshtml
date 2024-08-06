@@ -2,25 +2,25 @@
 @using HE.Investments.Common.WWW.Components.ErrorMessage
 @using HE.Investments.Common.WWW.Components.InputHeader
 
-@model (string fieldName, string value, string title, HE.Investments.Common.WWW.Components.InputTitleType? titleType, string hint, string cssClass, bool isDisplayed, string paragraph)
+@model (string FieldName, string Value, string Title, HE.Investments.Common.WWW.Components.InputTitleType? TitleType, string Hint, string CssClass, bool IsDisplayed, string Paragraph)
 @{
-    var (hasError, errors) = ViewData.ModelState.GetErrors(Model.fieldName);
+    var (hasError, _) = ViewData.ModelState.GetErrors(Model.FieldName);
     var groupClass = hasError ? "govuk-form-group--error" : string.Empty;
-    var inputClass = $"govuk-input {Model.cssClass}";
+    var inputClass = $"govuk-input {Model.CssClass}";
     inputClass += hasError ? " govuk-input--error" : string.Empty;
 }
-@if (Model.isDisplayed)
+@if (Model.IsDisplayed)
 {
     <gds-div-form-group class="@groupClass">
         <vc:input-header
-            field-name="@Model.fieldName"
-            title="@Model.title"
-            title-type="@Model.titleType"
-            hint="@Model.hint"
-            paragraph="@Model.paragraph"/>
+            field-name="@Model.FieldName"
+            title="@Model.Title"
+            title-type="@Model.TitleType"
+            hint="@Model.Hint"
+            paragraph="@Model.Paragraph"/>
 
-        <vc:error-message field-name="@Model.fieldName"/>
+        <vc:error-message field-name="@Model.FieldName"/>
 
-        <input class="@inputClass" id="@Model.fieldName" name="@Model.fieldName" type="text" value="@Model.value">
+        <input class="@inputClass" id="@Model.FieldName" name="@Model.FieldName" type="text" value="@Model.Value">
     </gds-div-form-group>
 }

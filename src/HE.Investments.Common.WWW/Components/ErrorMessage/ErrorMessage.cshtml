@@ -1,6 +1,6 @@
-@model (string Name, List<string> messages)
+@model (string Name, List<string> Messages)
 
-@foreach (var message in Model.messages)
+@foreach (var message in Model.Messages)
 {
     <span class="govuk-error-message" data-valmsg-for="@Model.Name">
         <span class="govuk-visually-hidden">Error:</span>@message

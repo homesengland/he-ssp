@@ -4,30 +4,28 @@
 @using HE.Investments.Common.WWW.Components.ErrorMessage
 @using HE.Investments.Common.WWW.Components.RadioListContent
 @using HE.Investments.Common.WWW.Components
-@using HE.Investments.Common.Extensions
-@using Microsoft.AspNetCore.Html;
 
-@model (string fieldName, string title, InputTitleType titleType, DynamicComponentViewModel additionalContent, string hint, string paragraph, bool? value, bool isDisplayed)
+@model (string FieldName, string Title, InputTitleType TitleType, DynamicComponentViewModel AdditionalContent, string Hint, string Paragraph, bool? Value, bool IsDisplayed)
 @{
-    var (hasError, radioErrors) = ViewData.ModelState.GetErrors(Model.fieldName);
+    var (hasError, _) = ViewData.ModelState.GetErrors(Model.FieldName);
     var groupClass = hasError ? "govuk-form-group--error" : string.Empty;
     var values = new List<ExtendedSelectListItem>
     {
-        new("Yes", bool.TrueString, Model.value is true),
-        new("No", bool.FalseString, Model.value is false),
+        new("Yes", bool.TrueString, Model.Value is true),
+        new("No", bool.FalseString, Model.Value is false),
     };
 }
 
-@if (Model.isDisplayed)
+@if (Model.IsDisplayed)
 {
     <gds-div-form-group class="@groupClass">
         <gds-field-set>
-            <vc:input-list-header title="@Model.title" title-type="@Model.titleType" additional-content="@Model.additionalContent" hint="@Model.hint" paragraph="@Model.paragraph"/>
+            <vc:input-list-header title="@Model.Title" title-type="@Model.TitleType" additional-content="@Model.AdditionalContent" hint="@Model.Hint" paragraph="@Model.Paragraph"/>
 
-            <vc:error-message field-name="@Model.fieldName"/>
+            <vc:error-message field-name="@Model.FieldName"/>
 
             <vc:radio-list-content
-                field-name="@Model.fieldName"
+                field-name="@Model.FieldName"
                 available-options="@values"/>
 
         </gds-field-set>

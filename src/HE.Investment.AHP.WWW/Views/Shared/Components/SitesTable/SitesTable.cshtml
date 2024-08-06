@@ -3,9 +3,9 @@
 @using HE.Investments.Common.WWW.Components.PagedTable
 @using HE.Investments.Common.WWW.Extensions
 
-@model (List<TableHeaderViewModel> headers, PaginationResult<TableRowViewModel> rows, string projectId);
+@model (List<TableHeaderViewModel> Headers, PaginationResult<TableRowViewModel> Rows, string ProjectId);
 
 <vc:paged-table
-    headers="@Model.headers"
-    rows="@Model.rows"
-    navigation-url="@Url.OrganisationAction("Sites", "Project", new { Model.projectId })"/>
+    headers="@Model.Headers"
+    rows="@Model.Rows"
+    navigation-url="@Url.OrganisationAction("Sites", "Project", new { Model.ProjectId })"/>

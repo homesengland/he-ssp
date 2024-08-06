@@ -3,22 +3,22 @@
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Headings
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Summary
 @using HE.Investments.Common.WWW.Components.ErrorMessage
-@model (string title, IList<SectionSummaryItemModel> items, string name, bool hasError)
+@model (string Title, IList<SectionSummaryItemModel> Items, string Name, bool HasError)
 @{
-    var formGroupClass = "govuk-form-group " + (Model.hasError ? "govuk-form-group--error" : string.Empty);
-    var sectionId = string.IsNullOrEmpty(Model.name) ? Guid.NewGuid().ToString() : Model.name;
+    var formGroupClass = "govuk-form-group " + (Model.HasError ? "govuk-form-group--error" : string.Empty);
+    var sectionId = string.IsNullOrEmpty(Model.Name) ? Guid.NewGuid().ToString() : Model.Name;
 }
 
 <div id="@sectionId" class="@formGroupClass">
-    @if (!string.IsNullOrEmpty(Model.title))
+    @if (!string.IsNullOrEmpty(Model.Title))
     {
-        <gds-h2>@Model.title</gds-h2>
+        <gds-h2>@Model.Title</gds-h2>
     }
 
-    <vc:error-message field-name="@Model.name" />
+    <vc:error-message field-name="@Model.Name" />
 
     <gds-summary-list class="govuk-!-margin-bottom-9">
-        @foreach (var item in Model.items)
+        @foreach (var item in Model.Items)
         {
             <vc:section-summary-item
                 name="@item.Name"

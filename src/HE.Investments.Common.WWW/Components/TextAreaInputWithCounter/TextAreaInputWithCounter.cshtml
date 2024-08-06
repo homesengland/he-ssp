@@ -3,37 +3,37 @@
 @using HE.Investments.Common.WWW.Components.ErrorMessage
 @using HE.Investments.Common.WWW.Components
 
-@model (string fieldName, string title, InputTitleType? titleType, DynamicComponentViewModel descriptionComponent, string hint, string value, string inputCssClass, int rows, int maxLength, bool isDisplayed)
+@model (string FieldName, string Title, InputTitleType? TitleType, DynamicComponentViewModel DescriptionComponent, string Hint, string Value, string InputCssClass, int Rows, int MaxLength, bool IsDisplayed)
 
 @{
-    var (hasError, errors) = ViewData.ModelState.GetErrors(Model.fieldName);
+    var (hasError, _) = ViewData.ModelState.GetErrors(Model.FieldName);
     var groupClass = hasError ? "govuk-form-group--error" : string.Empty;
-    var inputClass = $"govuk-textarea govuk-js-character-count {Model.inputCssClass}";
+    var inputClass = $"govuk-textarea govuk-js-character-count {Model.InputCssClass}";
     inputClass += hasError ? " govuk-textarea--error" : string.Empty;
 }
-@if (Model.isDisplayed)
+@if (Model.IsDisplayed)
 {
-    <div class="govuk-character-count" data-module="govuk-character-count" data-maxlength="@Model.maxLength">
+    <div class="govuk-character-count" data-module="govuk-character-count" data-maxlength="@Model.MaxLength">
         <gds-div-form-group class="@groupClass">
             <vc:input-header
-                field-name="@Model.fieldName"
-                title="@Model.title"
-                title-type="@Model.titleType"
-                hint="@Model.hint"/>
+                field-name="@Model.FieldName"
+                title="@Model.Title"
+                title-type="@Model.TitleType"
+                hint="@Model.Hint"/>
 
             @* ReSharper disable once ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract *@
-            @if (Model.descriptionComponent != null)
+            @if (Model.DescriptionComponent != null)
             {
                 <vc:dynamic-component
-                    component="@Model.descriptionComponent"/>
+                    component="@Model.DescriptionComponent"/>
             }
 
-            <vc:error-message field-name="@Model.fieldName"/>
+            <vc:error-message field-name="@Model.FieldName"/>
 
-            <textarea class="@inputClass" id="@Model.fieldName" name="@Model.fieldName" rows="@Model.rows">@Model.value</textarea>
+            <textarea class="@inputClass" id="@Model.FieldName" name="@Model.FieldName" rows="@Model.Rows">@Model.Value</textarea>
 
-            <div id="@($"{Model.fieldName}-info")" class="govuk-hint govuk-character-count__message">
-                You can enter up to @Model.maxLength characters
+            <div id="@($"{Model.FieldName}-info")" class="govuk-hint govuk-character-count__message">
+                You can enter up to @Model.MaxLength characters
             </div>
         </gds-div-form-group>
     </div>

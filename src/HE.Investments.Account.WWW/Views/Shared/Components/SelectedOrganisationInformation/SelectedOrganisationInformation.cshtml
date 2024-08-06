@@ -1,27 +1,27 @@
 @using HE.Investments.Common.Extensions
-@model (string name, string street, string city, string postalCode, string companiesHouseNumber)
+@model (string Name, string Street, string City, string PostalCode, string CompaniesHouseNumber)
 
 <ul class="govuk-list">
     <li>
         <span class="govuk-body">
-            <strong>@Model.name</strong>
+            <strong>@Model.Name</strong>
         </span>
         <br/>
-        @if (Model.street.IsProvided())
+        @if (Model.Street.IsProvided())
         {
-            <span class="govuk-body">@Model.street</span>
+            <span class="govuk-body">@Model.Street</span>
             <br/>
         }
-        @if (Model.street.IsProvided())
+        @if (Model.Street.IsProvided())
         {
-            <span class="govuk-body">@Model.city</span>
+            <span class="govuk-body">@Model.City</span>
             <br/>
         }
-        @if (Model.street.IsProvided())
+        @if (Model.Street.IsProvided())
         {
-            <span class="govuk-body">@Model.postalCode</span>
+            <span class="govuk-body">@Model.PostalCode</span>
             <br/>
         }
-        <p class="govuk-body govuk-!-margin-bottom-6">Companies house number: @Model.companiesHouseNumber</p>
+        <p class="govuk-body govuk-!-margin-bottom-6">Companies house number: @Model.CompaniesHouseNumber</p>
     </li>
 </ul>

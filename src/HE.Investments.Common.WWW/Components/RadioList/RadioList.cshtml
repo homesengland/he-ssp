@@ -5,24 +5,24 @@
 @using HE.Investments.Common.WWW.Components.RadioListContent
 @using HE.Investments.Common.WWW.Components;
 
-@model (string fieldName, string title, InputTitleType titleType, DynamicComponentViewModel additionalContent, string hint, IEnumerable<ExtendedSelectListItem> availableOptions, string value)
+@model (string FieldName, string Title, InputTitleType TitleType, DynamicComponentViewModel AdditionalContent, string Hint, IEnumerable<ExtendedSelectListItem> AvailableOptions, string Value)
 
 @{
-    var (hasError, _) = ViewData.ModelState.GetErrors(Model.fieldName);
+    var (hasError, _) = ViewData.ModelState.GetErrors(Model.FieldName);
     var groupClass = hasError ? "govuk-form-group--error" : string.Empty;
 }
 
 <gds-div-form-group class="@groupClass">
     <gds-field-set>
-        <vc:input-list-header title="@Model.title" title-type="@Model.titleType" additional-content="@Model.additionalContent" hint="@Model.hint"/>
+        <vc:input-list-header title="@Model.Title" title-type="@Model.TitleType" additional-content="@Model.AdditionalContent" hint="@Model.Hint"/>
 
-        <vc:error-message field-name="@Model.fieldName"/>
+        <vc:error-message field-name="@Model.FieldName"/>
 
         <div class="govuk-radios" data-module="govuk-radios">
             <vc:radio-list-content
-                field-name="@Model.fieldName"
-                available-options="@Model.availableOptions"
-                value="@Model.value"/>
+                field-name="@Model.FieldName"
+                available-options="@Model.AvailableOptions"
+                value="@Model.Value"/>
         </div>
     </gds-field-set>
 </gds-div-form-group>

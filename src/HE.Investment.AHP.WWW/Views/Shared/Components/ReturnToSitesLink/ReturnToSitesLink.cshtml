@@ -2,24 +2,24 @@
 @using HE.Investments.Common.WWW.Components.LinkWorkingAsButton
 @using HE.Investments.Common.WWW.Extensions
 
-@model (string projectId, bool isEditable, bool isLinkInsideForm)
+@model (string ProjectId, bool IsEditable, bool IsLinkInsideForm)
 
 <div>
-    @if (Model is { isEditable: true, isLinkInsideForm: true })
+    @if (Model is { IsEditable: true, IsLinkInsideForm: true })
     {
         <vc:link-working-as-button text="Save and return to sites" name="action" value="@GenericMessages.SaveAndReturn"/>
     }
-    else if (Model is {  isEditable: true, isLinkInsideForm: false })
+    else if (Model is {  IsEditable: true, IsLinkInsideForm: false })
     {
         <gds-link class="govuk-link--no-visited-state"
-                  href="@Url.OrganisationAction("Index", "Site", new { Model.projectId })">
+                  href="@Url.OrganisationAction("Index", "Site", new { Model.ProjectId })">
             Save and return to sites
         </gds-link>
     }
     else
     {
         <gds-link class="govuk-link--no-visited-state"
-                  href="@Url.OrganisationAction("Index", "Site", new { Model.projectId })">
+                  href="@Url.OrganisationAction("Index", "Site", new { Model.ProjectId })">
             Return to sites
         </gds-link>
     }

@@ -3,19 +3,19 @@
 @using HE.Investments.FrontDoor.WWW.Extensions
 @using HE.Investments.FrontDoor.WWW.Helpers
 
-@model (IList<SectionSummaryViewModel> sites, bool isReadOnly)
+@model (IList<SectionSummaryViewModel> Sites, bool IsReadOnly)
 @{
     var projectId = this.GetProjectIdFromRoute();
 }
 
-@foreach (var site in Model.sites)
+@foreach (var site in Model.Sites)
 {
     var siteId = SiteIdFromActionUrlHelper.Get(site.Items?.Last().ActionUrl);
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <gds-h2>@site.Title details</gds-h2>
         </div>
-        @if (!Model.isReadOnly)
+        @if (!Model.IsReadOnly)
         {
             <div class="remove-site-link">
                 <gds-link href="@Url.OrganisationAction("Remove", "Site", new { projectId, siteId })" data-testId="@(site.Title)-remove-site">

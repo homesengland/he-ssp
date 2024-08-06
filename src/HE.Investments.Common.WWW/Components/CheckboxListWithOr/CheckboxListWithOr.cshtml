@@ -3,10 +3,10 @@
 @using HE.Investments.Common.WWW.Extensions;
 @using HE.Investments.Common.WWW.Components.ErrorMessage;
 @using HE.Investments.Common.WWW.Components.InputListHeader;
-@model (string fieldName, string title, InputTitleType titleType, DynamicComponentViewModel headerComponent, string hint, IEnumerable<ExtendedSelectListItem> availableOptions, ExtendedSelectListItem alternativeOption)
+@model (string FieldName, string Title, InputTitleType TitleType, DynamicComponentViewModel HeaderComponent, string Hint, IEnumerable<ExtendedSelectListItem> AvailableOptions, ExtendedSelectListItem AlternativeOption)
 
 @{
-    var (hasError, checkboxErrors) = ViewData.ModelState.GetErrors(Model.fieldName);
+    var (hasError, checkboxErrors) = ViewData.ModelState.GetErrors(Model.FieldName);
     var groupClass = hasError ? "govuk-form-group--error" : string.Empty;
 }
 
@@ -14,19 +14,19 @@
     <gds-field-set>
 
         <vc:input-list-header
-            additional-content="@Model.headerComponent"
-            title="@Model.title"
-            title-type="@Model.titleType"
-            hint="@Model.hint"/>
+            additional-content="@Model.HeaderComponent"
+            title="@Model.Title"
+            title-type="@Model.TitleType"
+            hint="@Model.Hint"/>
 
-        <vc:error-message field-name="@Model.fieldName"/>
+        <vc:error-message field-name="@Model.FieldName"/>
 
         <div id='available-option-form-group' class='govuk-form-group govuk-!-margin-bottom-6'>
             <div class="exclusive-checkbox-group">
 
                 <vc:checkbox-list-content
-                    field-name="@Model.fieldName"
-                    available-options="@Model.availableOptions"/>
+                    field-name="@Model.FieldName"
+                    available-options="@Model.AvailableOptions"/>
 
             </div>
         </div>
@@ -36,8 +36,8 @@
         <div id='alternative-option-form-group' class='govuk-form-group '>
             <div class="exclusive-checkbox-group--exclusive-option">
                 <div class="govuk-checkboxes__item">
-                    <input id="@Model.fieldName-@Model.alternativeOption.Value" type="checkbox" checked="@Model.alternativeOption.Selected" class="govuk-checkboxes__input" value="@Model.alternativeOption.Value" name="@Model.fieldName"/>
-                    <label class="govuk-label govuk-checkboxes__label" for="@Model.fieldName-@Model.alternativeOption.Value">@Model.alternativeOption.Text</label>
+                    <input id="@Model.FieldName-@Model.AlternativeOption.Value" type="checkbox" checked="@Model.AlternativeOption.Selected" class="govuk-checkboxes__input" value="@Model.AlternativeOption.Value" name="@Model.FieldName"/>
+                    <label class="govuk-label govuk-checkboxes__label" for="@Model.FieldName-@Model.AlternativeOption.Value">@Model.AlternativeOption.Text</label>
                 </div>
             </div>
         </div>
