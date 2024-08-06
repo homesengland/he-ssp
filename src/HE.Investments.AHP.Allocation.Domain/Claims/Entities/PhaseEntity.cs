@@ -34,7 +34,7 @@ public sealed class PhaseEntity : DomainEntity
     {
         if (!allocation.IsInContract)
         {
-            throw new DomainValidationException("Cannot access Claims because Organisation is not in contract");
+            throw new DomainValidationException("Cannot access Claims because Partner is not in contract");
         }
 
         Id = id;
