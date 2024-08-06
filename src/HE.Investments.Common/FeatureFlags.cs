@@ -13,4 +13,6 @@ public static class FeatureFlags
     public const string UseFrontDoorApi = nameof(UseFrontDoorApi);
 
     public const string TurnOffAhpAllocation = nameof(TurnOffAhpAllocation);
+
+    public const string AhpVariations = nameof(AhpVariations);
 }

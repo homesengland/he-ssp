@@ -13,7 +13,8 @@ public class AllocationClaimSummaryViewModel : ISummaryViewModel
         string allocationName,
         MilestoneType claimType,
         IList<SectionSummaryViewModel> sections,
-        bool isEditable)
+        bool isEditable,
+        bool canSubmitClaim)
     {
         AllocationId = allocationId;
         PhaseId = phaseId;
@@ -21,6 +22,7 @@ public class AllocationClaimSummaryViewModel : ISummaryViewModel
         ClaimType = claimType;
         Sections = sections;
         IsEditable = isEditable;
+        CanSubmitClaim = canSubmitClaim;
     }
 
     public AllocationId AllocationId { get; }
@@ -36,4 +38,6 @@ public class AllocationClaimSummaryViewModel : ISummaryViewModel
     public bool IsEditable { get; }
 
     public bool IsReadOnly => !IsEditable;
+
+    public bool CanSubmitClaim { get; }
 }

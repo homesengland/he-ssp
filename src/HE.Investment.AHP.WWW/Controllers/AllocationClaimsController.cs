@@ -1,27 +1,27 @@
-using HE.Investments.Account.Shared.Authorization.Attributes;
 using HE.Investments.AHP.Allocation.Contract;
 using HE.Investments.AHP.Allocation.Contract.Claims;
 using HE.Investments.AHP.Allocation.Contract.Claims.Queries;
+using HE.Investments.AHP.Allocation.Domain.UserContext;
 using HE.Investments.Common.Contract.Pagination;
 using HE.Investments.Common.WWW.Routing;
-using HE.Investments.Consortium.Shared.UserContext;
+using HE.Investments.Consortium.Shared.Authorization;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HE.Investment.AHP.WWW.Controllers;
 
-[AuthorizeWithCompletedProfile]
+[ConsortiumAuthorize(AllocationAccessContext.ViewClaims)]
 [Route("{organisationId}/allocation/{allocationId}/claims")]
 public class AllocationClaimsController : Controller
 {
     private readonly IMediator _mediator;
 
-    private readonly IConsortiumAccessContext _accountAccessContext;
+    private readonly IAllocationAccessContext _allocationAccessContext;
 
-    public AllocationClaimsController(IMediator mediator, IConsortiumAccessContext accountAccessContext)
+    public AllocationClaimsController(IMediator mediator, IAllocationAccessContext allocationAccessContext)
     {
         _mediator = mediator;
-        _accountAccessContext = accountAccessContext;
+        _allocationAccessContext = allocationAccessContext;
     }
 
     [HttpGet("summary")]
@@ -38,9 +38,9 @@ public class AllocationClaimsController : Controller
     [WorkflowState(AllocationClaimWorkflowState.Overview)]
     public async Task<IActionResult> Overview(string allocationId, string phaseId, CancellationToken cancellationToken)
     {
-        var canClaimMilestone = await _accountAccessContext.CanEditApplication();
+        var canEditClaim = await _allocationAccessContext.CanEditClaim();
         var phase = await _mediator.Send(new GetPhaseClaimsQuery(AllocationId.From(allocationId), PhaseId.From(phaseId)), cancellationToken);
 
-        return View((phase, canClaimMilestone));
+        return View((phase, canEditClaim));
     }
 }

@@ -6,6 +6,7 @@ using HE.Investments.AHP.Allocation.Domain.Claims.Mappers;
 using HE.Investments.AHP.Allocation.Domain.Claims.Repositories;
 using HE.Investments.AHP.Allocation.Domain.Site.Crm;
 using HE.Investments.AHP.Allocation.Domain.Site.Repositories;
+using HE.Investments.AHP.Allocation.Domain.UserContext;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace HE.Investments.AHP.Allocation.Domain.Config;
@@ -21,6 +22,7 @@ public static class DomainModule
         services.AddScoped<IAllocationRepository, AllocationRepository>();
         services.AddScoped<IPhaseRepository, PhaseRepository>();
         services.AddScoped<ISiteAllocationRepository, SiteAllocationRepository>();
+        services.AddScoped<IAllocationAccessContext, AllocationAccessContext>();
 
         services.AddMappers();
     }

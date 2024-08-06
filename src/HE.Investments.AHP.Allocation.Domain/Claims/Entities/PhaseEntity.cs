@@ -32,6 +32,11 @@ public sealed class PhaseEntity : DomainEntity
         MilestoneClaimBase completionMilestone,
         IOnlyCompletionMilestonePolicy onlyCompletionMilestonePolicy)
     {
+        if (!allocation.IsInContract)
+        {
+            throw new DomainValidationException("Cannot access Claims because Organisation is not in contract");
+        }
+
         Id = id;
         Allocation = allocation;
         Organisation = organisation;

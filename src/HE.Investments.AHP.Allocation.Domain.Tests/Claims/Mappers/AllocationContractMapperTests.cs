@@ -29,12 +29,12 @@ public class AllocationContractMapperTests : TestBase<AllocationContractMapper>
         var result = TestCandidate.Map(allocation, new PaginationRequest(1));
 
         // then
-        result.AllocationBasicInfo.Id.Should().Be(allocation.Id);
-        result.AllocationBasicInfo.Name.Should().Be(allocation.Name.Value);
-        result.AllocationBasicInfo.ReferenceNumber.Should().Be(allocation.ReferenceNumber.Value);
-        result.AllocationBasicInfo.LocalAuthority.Should().Be(allocation.LocalAuthority.Name);
-        result.AllocationBasicInfo.ProgrammeName.Should().Be(allocation.Programme.ShortName);
-        result.AllocationBasicInfo.Tenure.Should().Be(allocation.Tenure.Value);
+        result.AllocationBasicInfo.Id.Should().Be(allocation.BasicInfo.Id);
+        result.AllocationBasicInfo.Name.Should().Be(allocation.BasicInfo.Name.Value);
+        result.AllocationBasicInfo.ReferenceNumber.Should().Be(allocation.BasicInfo.ReferenceNumber.Value);
+        result.AllocationBasicInfo.LocalAuthority.Should().Be(allocation.BasicInfo.LocalAuthority.Name);
+        result.AllocationBasicInfo.ProgrammeName.Should().Be(allocation.BasicInfo.Programme.ShortName);
+        result.AllocationBasicInfo.Tenure.Should().Be(allocation.BasicInfo.Tenure);
         result.PhaseList.Items.Count.Should().Be(1);
     }
 }

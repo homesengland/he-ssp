@@ -6,7 +6,7 @@
 @using HE.Investments.Common.WWW.Extensions
 @using HE.Investments.Common.WWW.TagHelpers
 @inject IAhpExternalLinks ExternalLinks
-@model (HE.Investments.AHP.Allocation.Contract.Claims.Phase Phase, bool CanClaimMilestone)
+@model (HE.Investments.AHP.Allocation.Contract.Claims.Phase Phase, bool CanEditClaim)
 @{
     var title = ClaimPageTitles.MilestoneOverview(Model.Phase.Name);
     ViewData["Title"] = title;
@@ -31,7 +31,7 @@
     {
         <vc:claim-details-card
             claim="@milestoneClaim"
-            can-claim-milestone="@Model.CanClaimMilestone"
+            can-edit-claim="@Model.CanEditClaim"
             claim-milestone-url="@Url.OrganisationAction("ContinueAnswering", "AllocationClaim", new { allocationId = Model.Phase.Allocation.Id.Value, phaseId = Model.Phase.Id.Value, claimType = milestoneClaim.Type })"/>
     }
     <vc:return-to-allocation-link allocation-id="@Model.Phase.Allocation.Id" is-editable="false"/>
