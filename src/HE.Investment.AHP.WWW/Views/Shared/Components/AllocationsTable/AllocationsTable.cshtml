@@ -3,10 +3,10 @@
 @using HE.Investments.Common.WWW.Components.PagedTable
 @using HE.Investments.Common.WWW.Extensions
 
-@model (List<TableHeaderViewModel> headers, PaginationResult<TableRowViewModel> rows, string projectId);
+@model (List<TableHeaderViewModel> Headers, PaginationResult<TableRowViewModel> Rows, string ProjectId);
 
 <gds-h1 class="govuk-heading-s">Active allocations</gds-h1>
 <vc:paged-table
-    headers="@Model.headers"
-    rows="@Model.rows"
-    navigation-url="@Url.OrganisationAction("Allocations", "Project", new { Model.projectId })"/>
+    headers="@Model.Headers"
+    rows="@Model.Rows"
+    navigation-url="@Url.OrganisationAction("Allocations", "Project", new { Model.ProjectId })"/>
