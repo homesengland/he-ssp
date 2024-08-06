@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Claims;
 using System.Linq;
 using System.Text.Json;
 using DataverseModel;
@@ -27,6 +28,7 @@ namespace HE.CRM.AHP.Plugins.Services.Application
         private readonly ISharepointDocumentLocationRepository _sharepointDocumentLocationRepository;
         private readonly IHomeTypeRepository _homeTypeRepository;
         private readonly IHomesInDeliveryPhaseRepository _homesInDeliveryPhaseRepository;
+        private readonly IClaimStatusChangeRepository _claimStatusChangeRepository;
 
         public AllocationService(CrmServiceArgs args) : base(args)
         {
@@ -40,6 +42,7 @@ namespace HE.CRM.AHP.Plugins.Services.Application
             _sharepointDocumentLocationRepository = CrmRepositoriesFactory.Get<ISharepointDocumentLocationRepository>();
             _homeTypeRepository = CrmRepositoriesFactory.Get<IHomeTypeRepository>();
             _homesInDeliveryPhaseRepository = CrmRepositoriesFactory.Get<IHomesInDeliveryPhaseRepository>();
+            _claimStatusChangeRepository = CrmRepositoriesFactory.Get<IClaimStatusChangeRepository>();
         }
 
         public Guid CreateAllocation(Guid schemeId, bool isVariation = false)
@@ -389,23 +392,27 @@ namespace HE.CRM.AHP.Plugins.Services.Application
             var milestone = new MilestoneClaimDto();
             decimal milestoneDpAmountOfGrantApportioned = 0;
             decimal? milestoneDpPercentageOfGrantApportioned = 0;
+            int? currentClaimInternalStatus = null;
 
             switch (typeOfMilestone)
             {
                 case "Acquisition":
                     claimId = dataFromCrm.GetAliasedAttributeValue<Guid>("ClaimAcquisition", invln_Claim.Fields.invln_ClaimId);
+                    currentClaimInternalStatus = dataFromCrm.GetAliasedAttributeValue<OptionSetValue>("ClaimAcquisition", invln_Claim.Fields.StatusCode)?.Value;
                     milestone = phaseClaimsDto.AcquisitionMilestone;
                     milestoneDpAmountOfGrantApportioned = dataFromCrm.GetAliasedAttributeValue<Money>("DeliveryPhase", invln_DeliveryPhase.Fields.invln_AcquisitionValue).Value;
                     milestoneDpPercentageOfGrantApportioned = dataFromCrm.GetAliasedAttributeValue<decimal?>("DeliveryPhase", invln_DeliveryPhase.Fields.invln_AcquisitionPercentageValue);
                     break;
                 case "StartOnSite":
                     claimId = dataFromCrm.GetAliasedAttributeValue<Guid>("ClaimSoS", invln_Claim.Fields.invln_ClaimId);
+                    currentClaimInternalStatus = dataFromCrm.GetAliasedAttributeValue<OptionSetValue>("ClaimSoS", invln_Claim.Fields.StatusCode)?.Value;
                     milestone = phaseClaimsDto.StartOnSiteMilestone;
                     milestoneDpAmountOfGrantApportioned = dataFromCrm.GetAliasedAttributeValue<Money>("DeliveryPhase", invln_DeliveryPhase.Fields.invln_StartOnSiteValue).Value;
                     milestoneDpPercentageOfGrantApportioned = dataFromCrm.GetAliasedAttributeValue<decimal?>("DeliveryPhase", invln_DeliveryPhase.Fields.invln_StartOnSitePercentageValue);
                     break;
                 case "Completion":
                     claimId = dataFromCrm.GetAliasedAttributeValue<Guid>("ClaimPC", invln_Claim.Fields.invln_ClaimId);
+                    currentClaimInternalStatus = dataFromCrm.GetAliasedAttributeValue<OptionSetValue>("ClaimPC", invln_Claim.Fields.StatusCode)?.Value;
                     milestone = phaseClaimsDto.CompletionMilestone;
                     milestoneDpAmountOfGrantApportioned = dataFromCrm.GetAliasedAttributeValue<Money>("DeliveryPhase", invln_DeliveryPhase.Fields.invln_CompletionValue).Value;
                     milestoneDpPercentageOfGrantApportioned = dataFromCrm.GetAliasedAttributeValue<decimal?>("DeliveryPhase", invln_DeliveryPhase.Fields.invln_CompletionPercentageValue);
@@ -414,7 +421,7 @@ namespace HE.CRM.AHP.Plugins.Services.Application
                     break;
             }
 
-            if (milestone == null && claimId != Guid.Empty)
+            if (milestone == null && claimId != Guid.Empty) // Delete
             {
                 TracingService.Trace($"Delete Claim for {typeOfMilestone} Milestone");
                 _claimRepository.Delete(new invln_Claim()
@@ -422,7 +429,7 @@ namespace HE.CRM.AHP.Plugins.Services.Application
                     Id = claimId
                 });
             }
-            else if (milestone != null)
+            else if (milestone != null) // Create or Update
             {
                 TracingService.Trace($"Create new object invln_Claim for {typeOfMilestone} Milestone");
                 var newClaim = new invln_Claim()
@@ -470,9 +477,21 @@ namespace HE.CRM.AHP.Plugins.Services.Application
                     // Create
                     TracingService.Trace($"Create in CRM");
                     newClaim.StatusCode = new OptionSetValue((int)invln_Claim_StatusCode.Draft);
-                    newClaim.invln_ExternalStatus = new OptionSetValue((int)invln_ClaimExternalStatus.Draft);
 
-                    _claimRepository.Create(newClaim);
+                    var newClaimId = _claimRepository.Create(newClaim);
+
+                    // Create ClaimsStatusChange
+                    TracingService.Trace($"Create ClaimsStatusChange");
+                    var newClaimsStatusChange = new invln_ClaimsStatusChange()
+                    {
+                        invln_ChangeSource = new OptionSetValue((int)invln_ChangesourceSet.External),
+                        invln_Changeto = new OptionSetValue((int)invln_Claim_StatusCode.Draft),
+                        invln_ClaimID = new EntityReference(invln_Claim.EntityLogicalName, newClaimId),
+                        invln_ChangedbyExternal = new EntityReference(Contact.EntityLogicalName, dataFromCrm.GetAliasedAttributeValue<Guid>("con", Contact.Fields.ContactId)),
+                        invln_Name = "External"
+                    };
+
+                    _claimStatusChangeRepository.Create(newClaimsStatusChange);
                 }
                 else
                 {
@@ -481,11 +500,28 @@ namespace HE.CRM.AHP.Plugins.Services.Application
                     {
                         TracingService.Trace($"Change status of claim to Submitted");
                         newClaim.StatusCode = new OptionSetValue((int)invln_Claim_StatusCode.Submitted);
-                        newClaim.invln_ExternalStatus = new OptionSetValue((int)invln_ClaimExternalStatus.Submitted);
                     }
                     newClaim.Id = claimId;
                     TracingService.Trace($"Update in CRM");
                     _claimRepository.Update(newClaim);
+
+                    // Create ClaimsStatusChange
+                    TracingService.Trace($"Create ClaimsStatusChange");
+                    if (milestone.Status == (int)invln_ClaimExternalStatus.Submitted)
+                    {
+                        var newClaimsStatusChange = new invln_ClaimsStatusChange()
+                        {
+                            invln_ChangeSource = new OptionSetValue((int)invln_ChangesourceSet.External),
+                            invln_Changefrom = new OptionSetValue(currentClaimInternalStatus.Value),
+                            invln_Changeto = new OptionSetValue((int)invln_Claim_StatusCode.Submitted),
+                            invln_ClaimID = new EntityReference(invln_Claim.EntityLogicalName, claimId),
+                            invln_ChangedbyExternal = new EntityReference(Contact.EntityLogicalName, dataFromCrm.GetAliasedAttributeValue<Guid>("con", Contact.Fields.ContactId)),
+                            invln_Name = "External"
+                        };
+
+                        _claimStatusChangeRepository.Create(newClaimsStatusChange);
+                    }
+
                 }
                 TracingService.Trace($"End of Created or Updated in CRM");
             }
