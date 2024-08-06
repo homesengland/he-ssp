@@ -22,7 +22,7 @@ resources:
   - repository: he-invst-deployment
     type: git
     name: 'Investments Programme/he-invst-deployment'
-    ref: 'doc_svc_rename' #'development_R3'
+    ref: 'development_R3'
   - repository: templates
     type: git
     name: 'Cloud Hosting Service/Templates'
