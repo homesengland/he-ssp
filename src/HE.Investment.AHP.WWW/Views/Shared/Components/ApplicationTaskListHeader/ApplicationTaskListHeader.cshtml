@@ -1,17 +1,17 @@
 @using HE.Investments.Common.Contract
-@model (int completeSectionsCount, int incompleteSectionsCount, int totalSectionsCount, HE.Investments.Common.Contract.ApplicationStatus applicationStatus, string referenceNumber, HE.Investments.Common.Contract.ModificationDetails LastModificationDetails, HE.Investments.Common.Contract.ModificationDetails LastSubmissionDetails)
+@model (int CompleteSectionsCount, int IncompleteSectionsCount, int TotalSectionsCount, HE.Investments.Common.Contract.ApplicationStatus ApplicationStatus, string ReferenceNumber, HE.Investments.Common.Contract.ModificationDetails LastModificationDetails, HE.Investments.Common.Contract.ModificationDetails LastSubmissionDetails)
 
-<gds-h2 size="ControlSize.S" class="govuk-!-display-inline-block govuk-!-margin-bottom-1 govuk-heading-s">ID @Model.referenceNumber</gds-h2>
-<application-status-tag application-status="@Model.applicationStatus" additional-classes="govuk-!-static-margin-left-3" data-testid="application-status"></application-status-tag>
+<gds-h2 size="ControlSize.S" class="govuk-!-display-inline-block govuk-!-margin-bottom-1 govuk-heading-s">ID @Model.ReferenceNumber</gds-h2>
+<application-status-tag application-status="@Model.ApplicationStatus" additional-classes="govuk-!-static-margin-left-3" data-testid="application-status"></application-status-tag>
 
 <gds-h3 class="govuk-!-margin-bottom-1">AHP 21-26 CME</gds-h3>
-@if (Model.incompleteSectionsCount > 0)
+@if (Model.IncompleteSectionsCount > 0)
 {
     <gds-h3 class="govuk-!-margin-bottom-1">Application incomplete</gds-h3>
-    <gds-p class="govuk-body govuk-!-margin-bottom-0">You have completed @Model.completeSectionsCount of @Model.totalSectionsCount sections.</gds-p>
+    <gds-p class="govuk-body govuk-!-margin-bottom-0">You have completed @Model.CompleteSectionsCount of @Model.TotalSectionsCount sections.</gds-p>
 }
 
-@if (Model.applicationStatus is ApplicationStatus.Draft or ApplicationStatus.ReferredBackToApplicant)
+@if (Model.ApplicationStatus is ApplicationStatus.Draft or ApplicationStatus.ReferredBackToApplicant)
 {
     <vc:change-audit-details change-audit-type="Modification" modification-details="Model.LastModificationDetails" />
 }

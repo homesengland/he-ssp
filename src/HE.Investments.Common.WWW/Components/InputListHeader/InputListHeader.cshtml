@@ -1,59 +1,59 @@
 @using HE.Investments.Common.WWW.Components
 
-@model (string title, InputTitleType titleType, DynamicComponentViewModel additionalContent,  string hint, string paragraph)
+@model (string Title, InputTitleType TitleType, DynamicComponentViewModel AdditionalContent,  string Hint, string Paragraph)
 
 <gds-legend>
 
-    @if (!string.IsNullOrWhiteSpace(Model.title))
+    @if (!string.IsNullOrWhiteSpace(Model.Title))
     {
-        @if (Model.titleType == InputTitleType.PageHeader)
+        @if (Model.TitleType == InputTitleType.PageHeader)
         {
             <gds-h1>
-                @Model.title
+                @Model.Title
             </gds-h1>
         }
-        else if (Model.titleType == InputTitleType.InputTitle)
+        else if (Model.TitleType == InputTitleType.InputTitle)
         {
             <gds-h2>
-                @Model.title
+                @Model.Title
             </gds-h2>
         }
-        else if (Model.titleType == InputTitleType.SmallInputFieldsetLegend)
+        else if (Model.TitleType == InputTitleType.SmallInputFieldsetLegend)
         {
             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
-                @Model.title
+                @Model.Title
             </legend>
         }
-        else if (Model.titleType == InputTitleType.InputBoldDescription)
+        else if (Model.TitleType == InputTitleType.InputBoldDescription)
         {
             <strong>
-                @Model.title
+                @Model.Title
             </strong>
         }
         else
         {
-            <gds-p>@Model.title</gds-p>
+            <gds-p>@Model.Title</gds-p>
         }
     }
 
     @* ReSharper disable once ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract *@
-    @if (Model.additionalContent != null)
+    @if (Model.AdditionalContent != null)
     {
         <vc:dynamic-component
-            component="@Model.additionalContent"/>
+            component="@Model.AdditionalContent"/>
     }
 
-    @if (!string.IsNullOrWhiteSpace(Model.hint))
+    @if (!string.IsNullOrWhiteSpace(Model.Hint))
     {
         <he-div-hint>
-            @Model.hint
+            @Model.Hint
         </he-div-hint>
     }
 
-    @if (!string.IsNullOrWhiteSpace(Model.paragraph))
+    @if (!string.IsNullOrWhiteSpace(Model.Paragraph))
     {
     <gds-p>
-        @Model.paragraph
+        @Model.Paragraph
     </gds-p>
     }
 </gds-legend>

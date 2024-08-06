@@ -1,12 +1,12 @@
-@model (string text, string action, string controller, object values, bool isStrong)
+@model (string Text, string Action, string Controller, object Values, bool IsStrong)
 
-@if (Model.isStrong)
+@if (Model.IsStrong)
 {
     <strong>
-        <a href="@(Url.Action(Model.action, Model.controller, Model.values) ?? string.Empty)" class="govuk-link"> @Model.text </a>
+        <a href="@(Url.Action(Model.Action, Model.Controller, Model.Values) ?? string.Empty)" class="govuk-link"> @Model.Text </a>
     </strong>
 }
 else
 {
-    <a href="@(Url.Action(Model.action, Model.controller, Model.values) ?? string.Empty)" class="govuk-link"> @Model.text </a>
+    <a href="@(Url.Action(Model.Action, Model.Controller, Model.Values) ?? string.Empty)" class="govuk-link"> @Model.Text </a>
 }

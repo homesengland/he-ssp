@@ -5,39 +5,39 @@
 @using HE.Investments.Common.WWW.Components.RadioListContent
 @using HE.Investments.Common.WWW.Components
 
-@model (string fieldName, string title, InputTitleType titleType, string hint, IEnumerable<ExtendedSelectListItem> availableOptions, ExtendedSelectListItem alternativeOption, string value)
+@model (string FieldName, string Title, InputTitleType TitleType, string Hint, IEnumerable<ExtendedSelectListItem> AvailableOptions, ExtendedSelectListItem AlternativeOption, string Value)
 
 @{
-    var (hasError, radioErrors) = ViewData.ModelState.GetErrors(Model.fieldName);
+    var (hasError, _) = ViewData.ModelState.GetErrors(Model.FieldName);
     var groupClass = hasError ? "govuk-form-group--error" : string.Empty;
 }
 
 <gds-div-form-group class="@groupClass">
     <gds-field-set>
         <vc:input-list-header
-            title="@Model.title"
-            title-type="@Model.titleType"
-            hint="@Model.hint"/>
+            title="@Model.Title"
+            title-type="@Model.TitleType"
+            hint="@Model.Hint"/>
 
-        <vc:error-message field-name="@Model.fieldName"/>
+        <vc:error-message field-name="@Model.FieldName"/>
 
         <div class="govuk-radios govuk-!-margin-bottom-6" data-module="govuk-radios">
 
             <vc:radio-list-content
-                field-name="@Model.fieldName"
-                available-options="@Model.availableOptions"
-                value="@Model.value"/>
+                field-name="@Model.FieldName"
+                available-options="@Model.AvailableOptions"
+                value="@Model.Value"/>
 
             <p class="govuk-!-margin-top-4">Or</p>
             <div class="govuk-radios__item">
                 @{
-                    var orId = $"{Model.fieldName}-{Model.alternativeOption.Value}";
-                    var isSelected = Model.alternativeOption.Selected || Model.value == Model.alternativeOption.Value;
+                    var orId = $"{Model.FieldName}-{Model.AlternativeOption.Value}";
+                    var isSelected = Model.AlternativeOption.Selected || Model.Value == Model.AlternativeOption.Value;
                 }
-                @Html.RadioButton(Model.fieldName, Model.alternativeOption.Value, isSelected, new { id = orId, @class = "govuk-radios__input" })
-                <label class="govuk-label govuk-radios__label" for="@orId">@Model.alternativeOption.Text</label>
+                @Html.RadioButton(Model.FieldName, Model.AlternativeOption.Value, isSelected, new { id = orId, @class = "govuk-radios__input" })
+                <label class="govuk-label govuk-radios__label" for="@orId">@Model.AlternativeOption.Text</label>
                 <he-div-hint class="govuk-!-padding-left-3">
-                    @Model.alternativeOption.Hint
+                    @Model.AlternativeOption.Hint
                 </he-div-hint>
             </div>
         </div>

@@ -1,26 +1,26 @@
 @using HE.Investments.Common.WWW.Extensions
-@model (string name, IList<string> values, string actionUrl, Dictionary<string, string> files, bool isEditable, bool isVisible)
+@model (string Name, IList<string> Values, string ActionUrl, Dictionary<string, string> Files, bool IsEditable, bool IsVisible)
 
-@if (Model.isVisible)
+@if (Model.IsVisible)
 {
-    <div class="govuk-summary-list__row" data-testId="@($"{Model.name}-summary".ToIdTag())">
-        @if (Model.isEditable)
+    <div class="govuk-summary-list__row" data-testId="@($"{Model.Name}-summary".ToIdTag())">
+        @if (Model.IsEditable)
         {
             <dt class="govuk-summary-list__key govuk-!-width-one-half">
-                @Model.name
+                @Model.Name
             </dt>
         }
         else
         {
             <dt class="govuk-summary-list__key govuk-!-width-one-half">
-                @Model.name
+                @Model.Name
             </dt>
         }
 
         <dd class="govuk-summary-list__value">
-            @if (Model.values.Any())
+            @if (Model.Values.Any())
             {
-                foreach (var value in Model.values)
+                foreach (var value in Model.Values)
                 {
                     <p>@value</p>
                 }
@@ -30,7 +30,7 @@
                 <p>Not provided</p>
             }
 
-            @foreach (var file in Model.files)
+            @foreach (var file in Model.Files)
             {
                 <a class="govuk-label govuk-label--s" href="@file.Value">
                     @file.Key
@@ -38,12 +38,12 @@
             }
         </dd>
 
-        @if (Model.isEditable)
+        @if (Model.IsEditable)
         {
             <dd class="govuk-summary-list__actions">
-                @if (!string.IsNullOrEmpty(Model.actionUrl))
+                @if (!string.IsNullOrEmpty(Model.ActionUrl))
                 {
-                    <gds-link href=@Model.actionUrl>
+                    <gds-link href=@Model.ActionUrl>
                         Change
                     </gds-link>
                 }

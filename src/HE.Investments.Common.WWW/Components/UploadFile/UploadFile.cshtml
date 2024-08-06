@@ -1,77 +1,77 @@
 @using HE.Investments.Common.Extensions
-@model (string title, string fieldName, string allowedExtensions, string customHeader, int? maxFileSizeInMb, string description, string multiple, bool isHidden, bool hasFileError, List<string> fileErrorMessages, string uploadOneFileUrl, string removeFileUrlTemplate, string downloadFileUrlTemplate)
+@model (string Title, string FieldName, string AllowedExtensions, string CustomHeader, int? MaxFileSizeInMb, string Description, string Multiple, bool IsHidden, bool HasFileError, List<string> FileErrorMessages, string UploadOneFileUrl, string RemoveFileUrlTemplate, string DownloadFileUrlTemplate)
 
-@if (!string.IsNullOrWhiteSpace(Model.title))
+@if (!string.IsNullOrWhiteSpace(Model.Title))
 {
-    <gds-h2>@Model.title</gds-h2>
+    <gds-h2>@Model.Title</gds-h2>
 }
 
-@if (!string.IsNullOrWhiteSpace(Model.uploadOneFileUrl))
+@if (!string.IsNullOrWhiteSpace(Model.UploadOneFileUrl))
 {
-    @Html.Hidden("upload-file-url", Model.uploadOneFileUrl)
+    @Html.Hidden("upload-file-url", Model.UploadOneFileUrl)
 }
 
-@if (!string.IsNullOrWhiteSpace(Model.removeFileUrlTemplate))
+@if (!string.IsNullOrWhiteSpace(Model.RemoveFileUrlTemplate))
 {
-    @Html.Hidden("remove-file-url-template", Model.removeFileUrlTemplate)
+    @Html.Hidden("remove-file-url-template", Model.RemoveFileUrlTemplate)
 }
 
-@if (!string.IsNullOrWhiteSpace(Model.downloadFileUrlTemplate))
+@if (!string.IsNullOrWhiteSpace(Model.DownloadFileUrlTemplate))
 {
-    @Html.Hidden("download-file-url-template", Model.downloadFileUrlTemplate)
+    @Html.Hidden("download-file-url-template", Model.DownloadFileUrlTemplate)
 }
 
-@if (!string.IsNullOrWhiteSpace(Model.description))
+@if (!string.IsNullOrWhiteSpace(Model.Description))
 {
-    <he-div-hint class="govuk-!-margin-bottom-6">@Model.description</he-div-hint>
+    <he-div-hint class="govuk-!-margin-bottom-6">@Model.Description</he-div-hint>
 }
 
-<div id="file-input-form-group" class="govuk-form-group @(Model.hasFileError ? "govuk-form-group--error" : string.Empty)">
+<div id="file-input-form-group" class="govuk-form-group @(Model.HasFileError ? "govuk-form-group--error" : string.Empty)">
 
-    @if (!Model.isHidden)
+    @if (!Model.IsHidden)
     {
-        @if (!string.IsNullOrWhiteSpace(Model.customHeader))
+        @if (!string.IsNullOrWhiteSpace(Model.CustomHeader))
         {
-            <label class="govuk-label" for="@Model.fieldName">
-                <span>@Model.customHeader</span>
+            <label class="govuk-label" for="@Model.FieldName">
+                <span>@Model.CustomHeader</span>
             </label>
         }
         else
         {
-            <label class="govuk-label" for="@Model.fieldName">
-                <span>Upload a file (@Model.allowedExtensions)</span>
-                @if (Model.maxFileSizeInMb.HasValue)
+            <label class="govuk-label" for="@Model.FieldName">
+                <span>Upload a file (@Model.AllowedExtensions)</span>
+                @if (Model.MaxFileSizeInMb.HasValue)
                 {
                     <br/>
-                    <span>Maximum file size @Model.maxFileSizeInMb MB</span>
-                    @Html.Hidden("MaxFileSizeInMegabytes", Model.maxFileSizeInMb)
+                    <span>Maximum file size @Model.MaxFileSizeInMb MB</span>
+                    @Html.Hidden("MaxFileSizeInMegabytes", Model.MaxFileSizeInMb)
                 }
             </label>
         }
 
-        @if (Model.hasFileError && Model.fileErrorMessages.IsProvided())
+        @if (Model.HasFileError && Model.FileErrorMessages.IsProvided())
         {
-            foreach (var errorMessage in Model.fileErrorMessages)
+            foreach (var errorMessage in Model.FileErrorMessages)
             {
                 <span id="File-error"
                       class="govuk-error-message field-validation-error"
-                      data-valmsg-for="@(Model.fieldName)"
+                      data-valmsg-for="@(Model.FieldName)"
                       data-valmsg-replace="true">
                     <span class="govuk-visually-hidden">Error:</span>@errorMessage
                 </span>
             }
         }
-        <input class="govuk-file-upload" id="@Model.fieldName" name="@Model.fieldName" type="file" @Model.multiple>
+        <input class="govuk-file-upload" id="@Model.FieldName" name="@Model.FieldName" type="file" @Model.Multiple>
     }
     else
     {
         <div class="govuk-label">
-            <span>Upload a file (@Model.allowedExtensions)</span>
-            @if (Model.maxFileSizeInMb.HasValue)
+            <span>Upload a file (@Model.AllowedExtensions)</span>
+            @if (Model.MaxFileSizeInMb.HasValue)
             {
                 <br/>
-                <span>Maximum file size @Model.maxFileSizeInMb MB</span>
-                @Html.Hidden("MaxFileSizeInMegabytes", Model.maxFileSizeInMb)
+                <span>Maximum file size @Model.MaxFileSizeInMb MB</span>
+                @Html.Hidden("MaxFileSizeInMegabytes", Model.MaxFileSizeInMb)
             }
         </div>
     }

@@ -1,12 +1,12 @@
 @using HE.Investments.Common.Extensions
-@model (bool displayBanner, string phaseName)
+@model (bool DisplayBanner, string PhaseName)
 
-@if (Model.displayBanner)
+@if (Model.DisplayBanner)
 {
     <div class="govuk-phase-banner">
         <p class="govuk-phase-banner__content">
             <strong class="govuk-tag govuk-phase-banner__content__tag">
-                @(Model.phaseName.IsProvided() ? Model.phaseName : "Beta")
+                @(Model.PhaseName.IsProvided() ? Model.PhaseName : "Beta")
             </strong>
             <span class="govuk-phase-banner__text">
                 This is a new service. Help us improve it and <a class="govuk-link" target="_blank" href="https://forms.office.com.mcas.ms/Pages/DesignPageV2.aspx?subpage=design&token=d1379654639f4b6697c0cdb5865b275f&id=aeKo-hEIOEWC500pAJIZv2Z-_huvU6RLtscR1CKy7lRURVZGNlhMMFFNN1AxREwzVk5FV0dEOUtDUS4u">give your feedback (opens in new tab)</a>.

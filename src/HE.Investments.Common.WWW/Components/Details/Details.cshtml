@@ -1,25 +1,25 @@
-@model (string title, string contentText, string linkText, string linkUrl, HE.Investments.Common.WWW.Components.DynamicComponentViewModel contentComponent)
+@model (string Title, string ContentText, string LinkText, string LinkUrl, HE.Investments.Common.WWW.Components.DynamicComponentViewModel ContentComponent)
 
 <details class="govuk-details" data-module="govuk-details">
     <summary class="govuk-details__summary">
         <span class="govuk-details__summary-text">
-            @Model.title
+            @Model.Title
         </span>
     </summary>
     <div class="govuk-details__text">
-        @if (!string.IsNullOrWhiteSpace(Model.contentText))
+        @if (!string.IsNullOrWhiteSpace(Model.ContentText))
         {
-            @Model.contentText
-            if (!string.IsNullOrWhiteSpace(Model.linkText) && !string.IsNullOrWhiteSpace(Model.linkUrl))
+            @Model.ContentText
+            if (!string.IsNullOrWhiteSpace(Model.LinkText) && !string.IsNullOrWhiteSpace(Model.LinkUrl))
             {
-                <a target="_blank" href="@Model.linkUrl">@Model.linkText</a> 
+                <a target="_blank" href="@Model.LinkUrl">@Model.LinkText</a>
             }
         }
 
-        @if(Model.contentComponent != null)
+        @if(Model.ContentComponent != null)
         {
             <vc:dynamic-component
-                component="@Model.contentComponent"/>
+                component="@Model.ContentComponent"/>
         }
     </div>
 </details>

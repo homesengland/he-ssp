@@ -1,26 +1,26 @@
 @using HE.Investments.Common.WWW.Models;
 @using HE.Investments.Common.WWW.Extensions;
 @using HE.Investments.Common.WWW.Components.ErrorMessage;
-@model (string fieldName, string value, ExtendedSelectListItem checkbox, DynamicComponentViewModel contentComponent)
+@model (string FieldName, string Value, ExtendedSelectListItem Checkbox, DynamicComponentViewModel ContentComponent)
 
 @{
-    var (hasError, checkboxErrors) = ViewData.ModelState.GetErrors(Model.fieldName);
+    var (hasError, checkboxErrors) = ViewData.ModelState.GetErrors(Model.FieldName);
     var groupClass = hasError ? "govuk-form-group--error" : string.Empty;
 }
 
 <gds-div-form-group class="@groupClass">
     <gds-field-set>
-        <vc:error-message field-name="@Model.fieldName"/>
+        <vc:error-message field-name="@Model.FieldName"/>
 
-        @if(Model.contentComponent != null)
+        @if(Model.ContentComponent != null)
         {
             <vc:dynamic-component
-                component="@Model.contentComponent"/>
+                component="@Model.ContentComponent"/>
         }
 
         <vc:checkbox-list-content
-            field-name="@Model.fieldName"
-            available-options="@(new List<ExtendedSelectListItem> { Model.checkbox })"/>
+            field-name="@Model.FieldName"
+            available-options="@(new List<ExtendedSelectListItem> { Model.Checkbox })"/>
 
     </gds-field-set>
 </gds-div-form-group>

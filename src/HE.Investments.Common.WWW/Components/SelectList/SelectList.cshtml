@@ -2,10 +2,10 @@
 @using HE.Investments.Common.Contract.Pagination
 @using HE.Investments.Common.WWW.Extensions
 
-@model (PaginationResult<SelectListItemViewModel> list, string pagingNavigationUrl, string addActionUrl, string addActionText, HE.Investments.Common.WWW.Components.DynamicComponentViewModel additionalContent)
+@model (PaginationResult<SelectListItemViewModel> List, string PagingNavigationUrl, string AddActionUrl, string AddActionText, HE.Investments.Common.WWW.Components.DynamicComponentViewModel AdditionalContent)
 
 <ul class="govuk-list" data-testId="select-list">
-    @foreach (var item in Model.list.Items)
+    @foreach (var item in Model.List.Items)
     {
         <li class="govuk-!-margin-bottom-4">
             <gds-p class="govuk-!-margin-bottom-0">
@@ -27,20 +27,20 @@
 </ul>
 
 <he-pagination
-    base-url="@Model.pagingNavigationUrl"
-    page="@Model.list.CurrentPage"
-    items-per-page="@Model.list.ItemsPerPage"
-    total-items="@Model.list.TotalItems">
+    base-url="@Model.PagingNavigationUrl"
+    page="@Model.List.CurrentPage"
+    items-per-page="@Model.List.ItemsPerPage"
+    total-items="@Model.List.TotalItems">
 </he-pagination>
 
-@if (!string.IsNullOrWhiteSpace(Model.addActionUrl))
+@if (!string.IsNullOrWhiteSpace(Model.AddActionUrl))
 {
-    var text = string.IsNullOrWhiteSpace(Model.addActionText) ? "Add" : Model.addActionText;
-    <link-button action-url="@Model.addActionUrl">@text</link-button>
+    var text = string.IsNullOrWhiteSpace(Model.AddActionText) ? "Add" : Model.AddActionText;
+    <link-button action-url="@Model.AddActionUrl">@text</link-button>
 }
 
 @* ReSharper disable once ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract *@
-@if (Model.additionalContent != null)
+@if (Model.AdditionalContent != null)
 {
-    <vc:dynamic-component component="@Model.additionalContent"/>
+    <vc:dynamic-component component="@Model.AdditionalContent"/>
 }

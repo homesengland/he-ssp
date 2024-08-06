@@ -1,16 +1,16 @@
 @using HE.Investments.Common.WWW.Components.Table
 @using HE.Investments.Common.Contract.Pagination
 
-@model (List<TableHeaderViewModel> headers, PaginationResult<TableRowViewModel> rows);
+@model (List<TableHeaderViewModel> Headers, PaginationResult<TableRowViewModel> Rows);
 
 <div class="govuk-!-margin-bottom-9">
     <vc:table
-        headers="@Model.headers"
-        rows="@Model.rows.Items"/>
+        headers="@Model.Headers"
+        rows="@Model.Rows.Items"/>
     <he-pagination
         base-url="@Url.Action("Index", "Users")"
-        page="@Model.rows.CurrentPage"
-        items-per-page="@Model.rows.ItemsPerPage"
-        total-items="@Model.rows.TotalItems">
+        page="@Model.Rows.CurrentPage"
+        items-per-page="@Model.Rows.ItemsPerPage"
+        total-items="@Model.Rows.TotalItems">
     </he-pagination>
 </div>
