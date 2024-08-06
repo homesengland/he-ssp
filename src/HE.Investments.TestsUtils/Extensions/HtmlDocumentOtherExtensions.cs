@@ -102,6 +102,21 @@ public static class HtmlDocumentOtherExtensions
         return htmlDocument;
     }
 
+    public static IHtmlDocument HasTableRowWithValues(this IHtmlDocument htmlDocument, List<string> values)
+    {
+        var tableRows = htmlDocument.GetElements(".govuk-table__row");
+
+        foreach (var value in values)
+        {
+            var exist = tableRows
+                .Any(tr => tr.QuerySelectorAll("td").Any(td => td.TextContent.Contains(value)));
+
+            exist.Should().BeTrue($"There is no table row with value: '{value}'");
+        }
+
+        return htmlDocument;
+    }
+
     public static IHtmlDocument HasPanel(this IHtmlDocument htmlDocument, string title, string subTitle, string reference, bool confirmation = false)
     {
         var panel = htmlDocument.GetElements(".govuk-panel").Single();
