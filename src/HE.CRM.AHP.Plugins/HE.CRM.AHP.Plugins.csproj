@@ -109,10 +109,12 @@
     <Compile Include="Handlers\AHPApplication\RecalculateDeliveryphaseHandler.cs" />
     <Compile Include="Handlers\AhpStatusChange\SendNotificationOnCreateHandler.cs" />
     <Compile Include="Handlers\Claims\GrantDetailsCalculateHandler.cs" />
+    <Compile Include="Handlers\Claims\NotificationAfterChangingClaimStatusHandler.cs" />
     <Compile Include="Handlers\ContactWebrole\SendNotificationOnAdminRoleGrantedPlugin.cs" />
     <Compile Include="Handlers\ContactWebrole\SendNotificationOnRoleModificationHandler.cs" />
     <Compile Include="Handlers\CustomApi\Allocation\CreateAllocationHandler.cs" />
     <Compile Include="Handlers\CustomApi\Allocation\GetAllocationClaimsHandler.cs" />
+    <Compile Include="Handlers\CustomApi\Allocation\GetAllocationHandler.cs" />
     <Compile Include="Handlers\CustomApi\Allocation\SetAllocationPhaseHandler.cs" />
     <Compile Include="Handlers\CustomApi\ChangeAhpApplicationHandler.cs" />
     <Compile Include="Handlers\CustomApi\CheckIfApplicationWithGivenNameExistsHandler.cs" />
@@ -235,6 +237,7 @@
     <Compile Include="Plugins\ContactWebrole\SendNotificationOnAdminRoleGrantedPlugin.cs" />
     <Compile Include="Plugins\ContactWebrole\SendNotificationOnRoleModificationPlugin.cs" />
     <Compile Include="Plugins\CustomApi\Allocation\GetAllocationClaimsPlugin.cs" />
+    <Compile Include="Plugins\CustomApi\Allocation\GetAllocationPlugin.cs" />
     <Compile Include="Plugins\CustomApi\Allocation\CreateAllocationPlugin.cs" />
     <Compile Include="Plugins\CustomApi\Allocation\SetAllocationPhasePlugin.cs" />
     <Compile Include="Plugins\CustomApi\ChangeAhpApplicationStatusPlugin.cs" />

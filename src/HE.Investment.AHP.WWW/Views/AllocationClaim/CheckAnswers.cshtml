@@ -25,9 +25,12 @@
     }
 
     <he-organisation-form asp-controller="AllocationClaim" asp-action="Submit" asp-route-allocationId="@Model.AllocationId" asp-route-phaseId="@Model.PhaseId" asp-route-claimType="@Model.ClaimType" asp-method="post" novalidate>
-        <vc:form-button text="Submit claim"/>
+        @if (Model.CanSubmitClaim)
+        {
+            <vc:form-button text="Submit claim" />
+        }
 
-        <a href="@Url.OrganisationAction("Overview", "AllocationClaims", new { Model.AllocationId, Model.PhaseId })" class="govuk-button govuk-button--secondary govuk-!-margin-left-3" role="button">
+        <a href="@Url.OrganisationAction("Overview", "AllocationClaims", new { Model.AllocationId, Model.PhaseId })" class="govuk-button govuk-button--secondary @(Model.CanSubmitClaim ? "govuk-!-margin-left-3" : "")" role="button">
             Save as draft
         </a>
 

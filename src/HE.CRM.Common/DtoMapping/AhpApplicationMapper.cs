@@ -1,8 +1,10 @@
 using DataverseModel;
+using HE.Base.Common.Extensions;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using Microsoft.Xrm.Sdk;
 using System;
 using System.Collections.Generic;
+using System.Net.NetworkInformation;
 
 namespace HE.CRM.Common.DtoMapping
 {
@@ -213,7 +215,8 @@ namespace HE.CRM.Common.DtoMapping
             return ahpAllocationDtoToReturn;
         }
 
-        public static AllocationClaimsDto MapToAllocationClaimsDto(invln_scheme allocation, List<PhaseClaimsDto> listOfPhaseClaims, he_LocalAuthority localAuthority) {
+        public static AllocationClaimsDto MapToAllocationClaimsDto(invln_scheme allocation, List<PhaseClaimsDto> listOfPhaseClaims, he_LocalAuthority localAuthority)
+        {
             var allocationClaimsDtoReturn = new AllocationClaimsDto()
             {
                 Id = allocation.invln_schemeId.ToString(),
@@ -238,6 +241,47 @@ namespace HE.CRM.Common.DtoMapping
                 ListOfPhaseClaims = listOfPhaseClaims,
             };
             return allocationClaimsDtoReturn;
+        }
+
+        public static AllocationDto MapToAllocationDto(Entity recordDataFromCrm)
+        {
+            var allocationDtoReturn = new AllocationDto()
+            {
+                Id = recordDataFromCrm.GetAliasedAttributeValue<Guid>("Allocation", invln_scheme.Fields.invln_schemeId),
+                ReferenceNumber = recordDataFromCrm.GetAliasedAttributeValue<string>("Allocation", invln_scheme.Fields.invln_applicationid),
+                Name = recordDataFromCrm.GetAliasedAttributeValue<string>("Allocation", invln_scheme.Fields.invln_schemename),
+                LocalAuthority = new LocalAuthorityDto()
+                {
+                    id = recordDataFromCrm.GetAliasedAttributeValue<Guid>("AllocationLocalAuthority", he_LocalAuthority.Fields.he_LocalAuthorityId).ToString(),
+                    name = recordDataFromCrm.GetAliasedAttributeValue<string>("AllocationLocalAuthority", he_LocalAuthority.Fields.he_Name),
+                    code = recordDataFromCrm.GetAliasedAttributeValue<string>("AllocationLocalAuthority", he_LocalAuthority.Fields.he_GSSCode)
+                },
+                ProgrammeId = recordDataFromCrm.GetAliasedAttributeValue<EntityReference>("Allocation", invln_scheme.Fields.invln_programmelookup).Id,
+                Tenure = recordDataFromCrm.GetAliasedAttributeValue<OptionSetValue>("Allocation", invln_scheme.Fields.invln_Tenure).Value,
+                FDProjectId = recordDataFromCrm.GetAliasedAttributeValue<EntityReference>("AllocationSiteAhpProject", invln_ahpproject.Fields.invln_HeProjectId).Id.ToString(),
+                IsInContract = recordDataFromCrm.GetAliasedAttributeValue<Guid>("AppContract", invln_ahpcontract.Fields.invln_ahpcontractId) != Guid.Empty,
+                HasDraftAllocation = recordDataFromCrm.GetAliasedAttributeValue<Guid>("Variation", invln_scheme.Fields.invln_schemeId) != Guid.Empty,
+                OrganisationName = recordDataFromCrm.GetAliasedAttributeValue<EntityReference>("Allocation", invln_scheme.Fields.invln_organisationid).Name,
+                LastExternalModificationOn = recordDataFromCrm.GetAliasedAttributeValue<DateTime?>("Allocation", invln_scheme.Fields.invln_lastexternalmodificationon),
+                LastExternalModificationBy = new ContactDto()
+                {
+                    contactId = recordDataFromCrm.GetAliasedAttributeValue<Guid>("AllocationLastExternalModificationBy", Contact.Fields.ContactId).ToString(),
+                    firstName = recordDataFromCrm.GetAliasedAttributeValue<string>("AllocationLastExternalModificationBy", Contact.Fields.FirstName),
+                    lastName = recordDataFromCrm.GetAliasedAttributeValue<string>("AllocationLastExternalModificationBy", Contact.Fields.LastName),
+                    email = recordDataFromCrm.GetAliasedAttributeValue<string>("AllocationLastExternalModificationBy", Contact.Fields.EMailAddress1),
+                    phoneNumber = recordDataFromCrm.GetAliasedAttributeValue<string>("AllocationLastExternalModificationBy", Contact.Fields.Address1_Telephone1),
+                    secondaryPhoneNumber = recordDataFromCrm.GetAliasedAttributeValue<string>("AllocationLastExternalModificationBy", Contact.Fields.Address1_Telephone2),
+
+                    jobTitle = recordDataFromCrm.GetAliasedAttributeValue<string>("AllocationLastExternalModificationBy", Contact.Fields.JobTitle),
+                    city = recordDataFromCrm.GetAliasedAttributeValue<string>("AllocationLastExternalModificationBy", Contact.Fields.Address1_City),
+                    county = recordDataFromCrm.GetAliasedAttributeValue<string>("AllocationLastExternalModificationBy", Contact.Fields.Address1_County),
+                    postcode = recordDataFromCrm.GetAliasedAttributeValue<string>("AllocationLastExternalModificationBy", Contact.Fields.Address1_PostalCode),
+                    country = recordDataFromCrm.GetAliasedAttributeValue<string>("AllocationLastExternalModificationBy", Contact.Fields.Address1_Country),
+                    isTermsAndConditionsAccepted = recordDataFromCrm.GetAliasedAttributeValue<bool?>("AllocationLastExternalModificationBy", Contact.Fields.invln_termsandconditionsaccepted),
+                    contactExternalId = recordDataFromCrm.GetAliasedAttributeValue<string>("AllocationLastExternalModificationBy", Contact.Fields.invln_externalid)
+                }
+            };
+            return allocationDtoReturn;
         }
 
         private static OptionSetValue MapNullableIntToOptionSetValue(int? valueToMap)

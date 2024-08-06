@@ -22,7 +22,8 @@ public class AllocationClaimCheckAnswersViewModelFactory : IAllocationClaimCheck
         AllocationId allocationId,
         PhaseId phaseId,
         MilestoneClaim claim,
-        IUrlHelper urlHelper)
+        IUrlHelper urlHelper,
+        bool isEditable)
     {
         string CreateAction(string actionName) =>
             CreateAllocationClaimActionUrl(
@@ -32,7 +33,7 @@ public class AllocationClaimCheckAnswersViewModelFactory : IAllocationClaimCheck
                 claim.Type,
                 actionName);
 
-        return CreateClaimSummary(claim, CreateAction, claim.IsEditable);
+        return CreateClaimSummary(claim, CreateAction, isEditable);
     }
 
     private static SectionSummaryViewModel CreateClaimSummary(MilestoneClaim claim, CreateAction createAction, bool isEditable)

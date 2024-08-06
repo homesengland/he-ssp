@@ -202,7 +202,10 @@ namespace HE.CRM.Common.Repositories.Implementations
                 invln_scheme.Fields.invln_Tenure,
                 invln_scheme.Fields.invln_TotalGrantAllocated,
                 invln_scheme.Fields.invln_AmountPaid,
-                invln_scheme.Fields.invln_AmountRemaining);
+                invln_scheme.Fields.invln_AmountRemaining,
+                invln_scheme.Fields.invln_BaseApplication,
+                invln_scheme.Fields.invln_organisationid
+                );
             query.Criteria.AddCondition(invln_scheme.Fields.invln_organisationid, ConditionOperator.Equal, query_invln_organisationid);
             query.Criteria.AddCondition(invln_scheme.Fields.invln_isallocation, ConditionOperator.Equal, query_invln_isallocation);
             query.Criteria.AddCondition(invln_scheme.Fields.invln_schemeId, ConditionOperator.Equal, query_invln_schemeid);
@@ -333,6 +336,102 @@ namespace HE.CRM.Common.Repositories.Implementations
 
             return service.RetrieveMultiple(query);
         }
+
+        public EntityCollection GetAllocationForAllocationDto(Guid baseApplicationId, Guid allocationId, Guid allocationPartnerId, Guid allocationProgrammeId)
+        {
+
+            var query_invln_schemeid = baseApplicationId.ToString();
+            var Allocation_invln_schemeid = allocationId.ToString();
+            var Variation_invln_isvariation = true;
+            var AppContract_invln_partner = allocationPartnerId.ToString();
+            var AppContract_invln_programme = allocationProgrammeId.ToString();
+
+            var query = new QueryExpression(invln_scheme.EntityLogicalName);
+            query.ColumnSet.AddColumn(invln_scheme.Fields.invln_schemeId);
+            query.Criteria.AddCondition(invln_scheme.Fields.invln_schemeId, ConditionOperator.Equal, query_invln_schemeid);
+            var Allocation = query.AddLink(
+                invln_scheme.EntityLogicalName,
+                invln_scheme.Fields.invln_schemeId,
+                invln_scheme.Fields.invln_BaseApplication);
+            Allocation.EntityAlias = "Allocation";
+            Allocation.Columns.AddColumns(
+                invln_scheme.Fields.invln_schemeId,
+                invln_scheme.Fields.invln_organisationid,
+                invln_scheme.Fields.invln_programmelookup,
+                invln_scheme.Fields.invln_applicationid,
+                invln_scheme.Fields.invln_HELocalAuthorityID,
+                invln_scheme.Fields.invln_lastexternalmodificationby,
+                invln_scheme.Fields.invln_lastexternalmodificationon,
+                invln_scheme.Fields.invln_schemename,
+                invln_scheme.Fields.invln_Tenure);
+            Allocation.LinkCriteria.AddCondition(invln_scheme.Fields.invln_schemeId, ConditionOperator.Equal, Allocation_invln_schemeid);
+            var AllocationSite = Allocation.AddLink(
+                invln_Sites.EntityLogicalName,
+                invln_scheme.Fields.invln_Site,
+                invln_Sites.Fields.invln_SitesId);
+            AllocationSite.EntityAlias = "AllocationSite";
+            var AlloCationSiteAhpProject = AllocationSite.AddLink(
+                invln_ahpproject.EntityLogicalName,
+                invln_Sites.Fields.invln_AHPProjectId,
+                invln_ahpproject.Fields.invln_ahpprojectId);
+            AlloCationSiteAhpProject.EntityAlias = "AllocationSiteAhpProject";
+            AlloCationSiteAhpProject.Columns.AddColumn(invln_ahpproject.Fields.invln_HeProjectId);
+            var AllocationLocalAuthority = Allocation.AddLink(
+                he_LocalAuthority.EntityLogicalName,
+                invln_scheme.Fields.invln_HELocalAuthorityID,
+                he_LocalAuthority.Fields.he_LocalAuthorityId);
+            AllocationLocalAuthority.EntityAlias = "AllocationLocalAuthority";
+            AllocationLocalAuthority.Columns.AddColumns(
+                he_LocalAuthority.Fields.he_GSSCode,
+                he_LocalAuthority.Fields.he_LocalAuthorityId,
+                he_LocalAuthority.Fields.he_Name);
+            var AllocationLastExternalModificationBy = Allocation.AddLink(
+                Contact.EntityLogicalName,
+                invln_scheme.Fields.invln_lastexternalmodificationby,
+                Contact.Fields.ContactId,
+                JoinOperator.LeftOuter);
+            AllocationLastExternalModificationBy.EntityAlias = "AllocationLastExternalModificationBy";
+            AllocationLastExternalModificationBy.Columns.AddColumns(
+                Contact.Fields.ContactId,
+                Contact.Fields.FirstName,
+                Contact.Fields.LastName,
+                Contact.Fields.EMailAddress1,
+                Contact.Fields.Address1_City,
+                Contact.Fields.Address1_Country,
+                Contact.Fields.Address1_County,
+                Contact.Fields.Address1_PostalCode,
+                Contact.Fields.Address1_Telephone1,
+                Contact.Fields.Address1_Telephone2,
+                Contact.Fields.invln_termsandconditionsaccepted,
+                Contact.Fields.JobTitle,
+                Contact.Fields.invln_externalid);
+            var Variation = query.AddLink(
+                invln_scheme.EntityLogicalName,
+                invln_scheme.Fields.invln_BaseApplication,
+                invln_scheme.Fields.invln_schemeId,
+                JoinOperator.LeftOuter);
+            Variation.EntityAlias = "Variation";
+            Variation.Columns.AddColumn(invln_scheme.Fields.invln_schemeId);
+            Variation.LinkCriteria.AddCondition(invln_scheme.Fields.invln_isvariation, ConditionOperator.Equal, Variation_invln_isvariation);
+            var AppContract = query.AddLink(
+                invln_ahpcontract.EntityLogicalName,
+                invln_scheme.Fields.invln_schemeId,
+                invln_ahpcontract.Fields.invln_AHPApplication,
+                JoinOperator.LeftOuter);
+            AppContract.EntityAlias = "AppContract";
+            AppContract.Columns.AddColumns(
+                invln_ahpcontract.Fields.invln_ahpcontractId,
+                invln_ahpcontract.Fields.invln_DateExecuted,
+                invln_ahpcontract.Fields.invln_Partner,
+                invln_ahpcontract.Fields.invln_Programme);
+            AppContract.LinkCriteria.AddCondition(invln_ahpcontract.Fields.invln_Partner, ConditionOperator.Equal, AppContract_invln_partner);
+            AppContract.LinkCriteria.AddCondition(invln_ahpcontract.Fields.invln_Programme, ConditionOperator.Equal, AppContract_invln_programme);
+            AppContract.LinkCriteria.AddCondition(invln_ahpcontract.Fields.invln_DateExecuted, ConditionOperator.NotNull);
+
+            return service.RetrieveMultiple(query);
+        }
+
+
 
 
     }

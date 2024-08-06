@@ -1,0 +1,49 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33723.286
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HE.UtilsService.Api", "HE.UtilsService.Api\HE.UtilsService.Api.csproj", "{AFBF0047-D08E-420B-B425-FA8C99B10C84}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HE.UtilsService.SharePoint", "HE.UtilsService.SharePoint\HE.UtilsService.SharePoint.csproj", "{7E9AE818-D513-444B-A74A-53B94D397C8B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HE.UtilsService.SharePoint.Tests", "HE.UtilsService.SharePoint.Tests\HE.UtilsService.SharePoint.Tests.csproj", "{447429F7-D228-4D63-8A52-ABBDB7014656}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HE.UtilsService.SharePoint.TestApp", "HE.UtilsService.SharePoint.TestApp\HE.UtilsService.SharePoint.TestApp.csproj", "{434A0615-08C5-4842-B425-020B900D2A0E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HE.UtilsService.BannerNotification", "HE.UtilsService.BannerNotification\HE.UtilsService.BannerNotification.csproj", "{B09F2913-B3CA-4D4E-AE8F-466A6B8471FE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AFBF0047-D08E-420B-B425-FA8C99B10C84}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AFBF0047-D08E-420B-B425-FA8C99B10C84}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AFBF0047-D08E-420B-B425-FA8C99B10C84}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AFBF0047-D08E-420B-B425-FA8C99B10C84}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7E9AE818-D513-444B-A74A-53B94D397C8B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7E9AE818-D513-444B-A74A-53B94D397C8B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7E9AE818-D513-444B-A74A-53B94D397C8B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7E9AE818-D513-444B-A74A-53B94D397C8B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{447429F7-D228-4D63-8A52-ABBDB7014656}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{447429F7-D228-4D63-8A52-ABBDB7014656}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{447429F7-D228-4D63-8A52-ABBDB7014656}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{447429F7-D228-4D63-8A52-ABBDB7014656}.Release|Any CPU.Build.0 = Release|Any CPU
+		{434A0615-08C5-4842-B425-020B900D2A0E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{434A0615-08C5-4842-B425-020B900D2A0E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{434A0615-08C5-4842-B425-020B900D2A0E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{434A0615-08C5-4842-B425-020B900D2A0E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B09F2913-B3CA-4D4E-AE8F-466A6B8471FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B09F2913-B3CA-4D4E-AE8F-466A6B8471FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B09F2913-B3CA-4D4E-AE8F-466A6B8471FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B09F2913-B3CA-4D4E-AE8F-466A6B8471FE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {139A325A-D687-41F6-9328-0F1DEB1BC92D}
+	EndGlobalSection
+EndGlobal

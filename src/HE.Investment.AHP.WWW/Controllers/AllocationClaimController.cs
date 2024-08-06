@@ -2,36 +2,40 @@ using HE.Investment.AHP.WWW.Extensions;
 using HE.Investment.AHP.WWW.Models.AllocationClaim;
 using HE.Investment.AHP.WWW.Models.AllocationClaim.Factories;
 using HE.Investment.AHP.WWW.Workflows;
-using HE.Investments.Account.Shared.Authorization.Attributes;
 using HE.Investments.AHP.Allocation.Contract;
 using HE.Investments.AHP.Allocation.Contract.Claims;
 using HE.Investments.AHP.Allocation.Contract.Claims.Commands;
 using HE.Investments.AHP.Allocation.Contract.Claims.Enum;
 using HE.Investments.AHP.Allocation.Contract.Claims.Queries;
+using HE.Investments.AHP.Allocation.Domain.UserContext;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.WWW.Controllers;
 using HE.Investments.Common.WWW.Extensions;
 using HE.Investments.Common.WWW.Routing;
 using HE.Investments.Consortium.Shared.Authorization;
-using HE.Investments.Consortium.Shared.UserContext;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HE.Investment.AHP.WWW.Controllers;
 
-[AuthorizeWithCompletedProfile]
-[ConsortiumAuthorize(ConsortiumAccessContext.Submit)]
+[ConsortiumAuthorize(AllocationAccessContext.FulfillClaims)]
 [Route("{organisationId}/allocation/{allocationId}/claims/{phaseId}/{claimType}")]
 public class AllocationClaimController : WorkflowController<AllocationClaimWorkflowState>
 {
     private readonly IMediator _mediator;
 
+    private readonly IAllocationAccessContext _allocationAccessContext;
+
     private readonly IAllocationClaimCheckAnswersViewModelFactory _allocationClaimCheckAnswersViewModelFactory;
 
-    public AllocationClaimController(IMediator mediator, IAllocationClaimCheckAnswersViewModelFactory allocationClaimCheckAnswersViewModelFactory)
+    public AllocationClaimController(
+        IMediator mediator,
+        IAllocationClaimCheckAnswersViewModelFactory allocationClaimCheckAnswersViewModelFactory,
+        IAllocationAccessContext allocationAccessContext)
     {
         _mediator = mediator;
+        _allocationAccessContext = allocationAccessContext;
         _allocationClaimCheckAnswersViewModelFactory = allocationClaimCheckAnswersViewModelFactory;
     }
 
@@ -158,6 +162,7 @@ public class AllocationClaimController : WorkflowController<AllocationClaimWorkf
             cancellationToken));
     }
 
+    [ConsortiumAuthorize(AllocationAccessContext.SubmitClaims)]
     [HttpPost("submit")]
     [WorkflowState(AllocationClaimWorkflowState.CheckAnswers)]
     public async Task<IActionResult> Submit(
@@ -272,11 +277,13 @@ public class AllocationClaimController : WorkflowController<AllocationClaimWorkf
         CancellationToken cancellationToken)
     {
         var phaseClaim = await GetClaimModel(allocationId.Value, phaseId.Value, claimType, cancellationToken);
+        var isEditable = phaseClaim.Claim.IsEditable && await _allocationAccessContext.CanEditClaim();
         var claimSection = _allocationClaimCheckAnswersViewModelFactory.CreateSummary(
             allocationId,
             phaseId,
             phaseClaim.Claim,
-            Url);
+            Url,
+            isEditable);
 
         return new AllocationClaimSummaryViewModel(
             allocationId,
@@ -284,7 +291,8 @@ public class AllocationClaimController : WorkflowController<AllocationClaimWorkf
             phaseClaim.Allocation.Name,
             claimType,
             [claimSection],
-            phaseClaim.Claim.IsEditable);
+            isEditable,
+            await _allocationAccessContext.CanSubmitClaim());
     }
 
     private async Task<IActionResult> HandleCancelAndReturnAction<TCommand>(TCommand command, CancellationToken cancellationToken)

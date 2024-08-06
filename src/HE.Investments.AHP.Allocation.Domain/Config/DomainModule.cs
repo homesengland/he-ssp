@@ -8,6 +8,7 @@ using HE.Investments.AHP.Allocation.Domain.Project.Crm;
 using HE.Investments.AHP.Allocation.Domain.Project.Repositories;
 using HE.Investments.AHP.Allocation.Domain.Site.Crm;
 using HE.Investments.AHP.Allocation.Domain.Site.Repositories;
+using HE.Investments.AHP.Allocation.Domain.UserContext;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace HE.Investments.AHP.Allocation.Domain.Config;
@@ -40,6 +41,7 @@ public static class DomainModule
         services.AddScoped<ISiteAllocationCrmContext, SiteAllocationCrmContext>();
         services.AddScoped<IProjectAllocationCrmContext, ProjectAllocationCrmContext>();
         services.Decorate<IProjectAllocationCrmContext, RequestCacheProjectAllocationCrmContextDecorator>();
+        services.AddScoped<IAllocationAccessContext, AllocationAccessContext>();
     }
 
     private static void AddRepositories(this IServiceCollection services)

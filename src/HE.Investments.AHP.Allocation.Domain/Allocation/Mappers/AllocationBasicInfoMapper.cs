@@ -1,5 +1,8 @@
 using HE.Common.IntegrationModel.PortalIntegrationModel;
+using HE.Investment.AHP.Domain.Application.Repositories;
 using HE.Investments.AHP.Allocation.Contract;
+using HE.Investments.AHP.Allocation.Domain.Allocation.ValueObjects;
+using HE.Investments.Organisation.LocalAuthorities.ValueObjects;
 using HE.Investments.Programme.Contract;
 using HE.Investments.Programme.Contract.Queries;
 using MediatR;
@@ -22,10 +25,11 @@ public sealed class AllocationBasicInfoMapper : IAllocationBasicInfoMapper
 
         return new AllocationBasicInfo(
             AllocationId.From(allocation.Id),
-            allocation.Name,
-            allocation.ReferenceNumber,
-            allocation.LocalAuthority.name,
+            new AllocationName(allocation.Name),
+            new AllocationReferenceNumber(allocation.ReferenceNumber),
+            new LocalAuthority(new LocalAuthorityCode(allocation.LocalAuthority.code), allocation.LocalAuthority.name),
             programme,
-            AllocationTenureMapper.ToDomain(allocation.Tenure).Value);
+            ApplicationTenureMapper.ToDomain(allocation.Tenure)!.Value,
+            true); // TODO: AB#104589 map from DTO when provided by CRM
     }
 }

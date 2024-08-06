@@ -1,68 +1,27 @@
-using HE.Investments.AHP.Allocation.Contract;
 using HE.Investments.AHP.Allocation.Domain.Allocation.ValueObjects;
 using HE.Investments.AHP.Allocation.Domain.Claims.Entities;
-using HE.Investments.Common.Contract;
 using HE.Investments.Common.Domain;
-using AhpProgramme = HE.Investments.Programme.Contract.Programme;
+using AllocationBasicInfo = HE.Investments.AHP.Allocation.Domain.Allocation.ValueObjects.AllocationBasicInfo;
 
 namespace HE.Investments.AHP.Allocation.Domain.Allocation.Entities;
 
-public class AllocationEntity : DomainEntity
+public sealed class AllocationEntity : DomainEntity
 {
+    private readonly IList<PhaseEntity> _phases;
+
     public AllocationEntity(
-        AllocationId id,
-        AllocationName name,
-        AllocationReferenceNumber referenceNumber,
-        LocalAuthority localAuthority,
-        AhpProgramme programme,
-        AllocationTenure tenure,
+        AllocationBasicInfo allocationBasicInfo,
         GrantDetails grantDetails,
-        List<PhaseEntity> listOfPhaseClaims)
+        IEnumerable<PhaseEntity> listOfPhaseClaims)
     {
-        Id = id;
-        Name = name;
-        ReferenceNumber = referenceNumber;
-        LocalAuthority = localAuthority;
-        Programme = programme;
-        Tenure = tenure;
+        BasicInfo = allocationBasicInfo;
         GrantDetails = grantDetails;
-        ListOfPhaseClaims = listOfPhaseClaims;
+        _phases = listOfPhaseClaims.ToList();
     }
 
-    public AllocationId Id { get; }
-
-    public AllocationName Name { get; }
-
-    public AllocationReferenceNumber ReferenceNumber { get; }
-
-    public LocalAuthority LocalAuthority { get; }
-
-    public AhpProgramme Programme { get; }
-
-    public AllocationTenure Tenure { get; }
+    public AllocationBasicInfo BasicInfo { get; }
 
     public GrantDetails GrantDetails { get; }
 
-    public List<PhaseEntity> ListOfPhaseClaims { get; }
-
-    public static AllocationEntity New(
-        AllocationId id,
-        AllocationName name,
-        AllocationReferenceNumber referenceNumber,
-        LocalAuthority localAuthority,
-        AhpProgramme programme,
-        AllocationTenure tenure,
-        GrantDetails grantDetails,
-        List<PhaseEntity> listOfPhaseClaims)
-    {
-        return new AllocationEntity(
-            id,
-            name,
-            referenceNumber,
-            localAuthority,
-            programme,
-            tenure,
-            grantDetails,
-            listOfPhaseClaims);
-    }
+    public IEnumerable<PhaseEntity> ListOfPhaseClaims => _phases;
 }

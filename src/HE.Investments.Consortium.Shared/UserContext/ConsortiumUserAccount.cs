@@ -20,7 +20,9 @@ public record ConsortiumUserAccount(
 
     public bool CanManageConsortium => HasOneOfRole([.. ConsortiumAccessContext.ManageConsortiumRoles]);
 
-    public bool CanEdit => CanEditApplication && (Consortium.IsLeadPartner || Consortium.HasNoConsortium);
+    public bool CanEdit => CanEditApplication && IsLeadOrganisation;
 
-    public bool CanSubmit => CanSubmitApplication && (Consortium.IsLeadPartner || Consortium.HasNoConsortium);
+    public bool CanSubmit => CanSubmitApplication && IsLeadOrganisation;
+
+    public bool IsLeadOrganisation => Consortium.IsLeadPartner || Consortium.HasNoConsortium;
 }

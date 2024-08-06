@@ -16,25 +16,29 @@ public sealed class AllocationContractMapper : IAllocationContractMapper
 
     public AllocationDetails Map(AllocationEntity allocation, PaginationRequest paginationRequest)
     {
-        var allocationBasicInfo = new AllocationBasicInfo(
-            allocation.Id,
-            allocation.Name.Value,
-            allocation.ReferenceNumber.Value,
-            allocation.LocalAuthority.Name,
-            allocation.Programme.ShortName,
-            allocation.Tenure.Value);
-        var phases = allocation.ListOfPhaseClaims.Select(_phaseContractMapper.Map).ToList();
-
         var startIndex = (paginationRequest.Page - 1) * paginationRequest.ItemsPerPage;
-        var filteredPhases = phases
+        var filteredPhases = allocation.ListOfPhaseClaims
+            .Select(_phaseContractMapper.Map)
             .Skip(startIndex)
             .Take(paginationRequest.ItemsPerPage)
             .ToList();
 
         return new AllocationDetails(
-            allocationBasicInfo,
+            MapAllocationBasicInfo(allocation.BasicInfo),
             MapGrantDetails(allocation.GrantDetails),
-            new PaginationResult<Phase>(filteredPhases, paginationRequest.Page, paginationRequest.ItemsPerPage, allocation.ListOfPhaseClaims.Count));
+            new PaginationResult<Phase>(filteredPhases, paginationRequest.Page, paginationRequest.ItemsPerPage, allocation.ListOfPhaseClaims.Count()));
+    }
+
+    private static AllocationBasicInfo MapAllocationBasicInfo(
+        HE.Investments.AHP.Allocation.Domain.Allocation.ValueObjects.AllocationBasicInfo allocationBasicInfo)
+    {
+        return new AllocationBasicInfo(
+            allocationBasicInfo.Id,
+            allocationBasicInfo.Name.Value,
+            allocationBasicInfo.ReferenceNumber.Value,
+            allocationBasicInfo.LocalAuthority.Name,
+            allocationBasicInfo.Programme.ShortName,
+            allocationBasicInfo.Tenure);
     }
 
     private static GrantDetails MapGrantDetails(Allocation.ValueObjects.GrantDetails grantDetails)

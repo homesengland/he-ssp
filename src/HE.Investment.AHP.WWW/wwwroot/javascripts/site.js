@@ -396,5 +396,5 @@
 
   initModule(window.GOVUKFrontend.CharacterCount, "govuk-character-count");
   initModule(window.GOVUKFrontend.Radios, "govuk-radios");
-
+  initModule(window.GOVUKFrontend.Button, "govuk-button");
 })();

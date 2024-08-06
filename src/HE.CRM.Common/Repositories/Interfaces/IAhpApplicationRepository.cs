@@ -18,5 +18,6 @@ namespace HE.CRM.Common.Repositories.Interfaces
         List<invln_scheme> GetListOfApplicationToSendReminder(string calculatedDate);
         invln_scheme GetAllocation(Guid allocationId, Guid organisationId, Contact contact = null);
         EntityCollection GetAllocationWithDeliveryPhaseAndClaims(string externalContactId, Guid accountId, Guid allocationId, Guid deliveryPhaseId);
+        EntityCollection GetAllocationForAllocationDto(Guid BaseApplicationId, Guid AllocationId, Guid AllocationPartnerId, Guid AllocationProgrammeId);
     }
 }

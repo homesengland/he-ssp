@@ -47,7 +47,7 @@ public class ConsortiumAccessContext : IConsortiumAccessContext
         return account.CanSubmitApplication && (account.Consortium.IsLeadPartner || account.Consortium.HasNoConsortium);
     }
 
-    private static UserRole[] ToUserAccountRoles(string roles)
+    protected static UserRole[] ToUserAccountRoles(string roles)
     {
         return roles.Split(',').Select(x => (UserRole)Enum.Parse(typeof(UserRole), x)).ToArray();
     }
