@@ -18,7 +18,7 @@ namespace HE.CRM.AHP.Plugins.Plugins.Claim
     ExecutionModeEnum.Synchronous,
     filteringAttributes: "statuscode",
     stepName: "HE.CRM.AHP.Plugins.Plugins.Claim.PreUpdate: Update of invln_Claim",
-    executionOrder: 5,
+    executionOrder: 1,
     IsolationModeEnum.Sandbox,
     Id = "3B59636F-EBA5-407E-B1BD-CDC82067A9A5",
     Image1Type = ImageTypeEnum.PreImage,
