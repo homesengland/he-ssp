@@ -57,10 +57,10 @@
                       asp-excludelabel="true">
         </gds-checkbox>
 
-        <gds-button data-module="govuk-button" type="submit" name="redirect" value=@RedirectOption.SignUp>
-            Create an account
-        </gds-button>
+        <vc:loans-form-button
+            name="redirect"
+            value="@RedirectOption.SignUp.ToString()"
+            text="Create an account" />
     </he-organisation-form>
-
 
 </gds-div-grid-column-two-thirds>

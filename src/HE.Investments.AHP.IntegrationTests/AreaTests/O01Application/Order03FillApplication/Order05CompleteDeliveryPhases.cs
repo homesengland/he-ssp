@@ -248,8 +248,8 @@ public class Order05CompleteDeliveryPhases : AhpApplicationIntegrationTest
         // given
         var checkAnswersUrl = BuildDeliveryPhasesPage(DeliveryPhasePagesUrl.CheckAnswers, RehabDeliveryPhase);
         var rehabFunding = await GetRequiredFunding(checkAnswersUrl) * DeliveryPhasesData.RehabHomesPercentage;
-        var acquisitionFunding = Math.Round(rehabFunding * 0.4m);
-        var startOnSiteFunding = Math.Round(rehabFunding * 0.35m);
+        var acquisitionFunding = Math.Round(rehabFunding * 0.4m, MidpointRounding.AwayFromZero);
+        var startOnSiteFunding = Math.Round(rehabFunding * 0.35m, MidpointRounding.AwayFromZero);
         var completionFunding = rehabFunding - acquisitionFunding - startOnSiteFunding;
         var checkAnswersPage = await GetCurrentPage(checkAnswersUrl);
         checkAnswersPage

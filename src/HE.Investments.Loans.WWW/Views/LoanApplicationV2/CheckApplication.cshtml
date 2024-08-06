@@ -33,22 +33,10 @@
             @await Html.PartialAsync("_ProjectAnswers", project)
         }
 
-
         <gds-h2 size="ControlSize.M">Submit your application</gds-h2>
         <p>By submitting this application you are confirming that, to the best of your knowledge, the details you are providing are correct.</p>
 
-        @if (loanApplicationWorkflow.IsFilled())
-        {
-            <button class="govuk-button" data-module="govuk-button" name="action" type="submit" value="Continue" id="accept-and-submit">
-                Accept and submit
-            </button>
-        }
-        else
-        {
-            <button class="govuk-button govuk-button--secondary" data-module="govuk-button" type="button" id="accept-and-submit">
-                Accept and submit
-            </button>
-        }
+        <vc:loans-form-button text="Accept and submit" id="accept-and-submit" button-type="@loanApplicationWorkflow.IsFilled() ? ButtonType.Standard : ButtonType.Secondary"/>
     </he-organisation-form>
 
     <gds-back-link href="@Url.OrganisationAction("Back","LoanApplicationV2", new { currentPage = LoanApplicationWorkflow.State.CheckApplication, ApplicationId = Model.ID})" text="Return to application" class="govuk-!-margin-bottom-7"></gds-back-link>
