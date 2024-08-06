@@ -145,6 +145,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_BorrowerPreviousSchemes.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_Cashflow.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_Claim.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_ClaimsStatusChange.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_comment.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_Conditions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_Consortium.cs" />

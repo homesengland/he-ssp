@@ -108,6 +108,7 @@
     <Compile Include="Handlers\AHPApplication\UpdateLocalAuthorityWhenSiteIsChanged.cs" />
     <Compile Include="Handlers\AHPApplication\RecalculateDeliveryphaseHandler.cs" />
     <Compile Include="Handlers\AhpStatusChange\SendNotificationOnCreateHandler.cs" />
+    <Compile Include="Handlers\Claims\ChangeClaimExternalStatusOnClaimInternalStatusChangeHandler.cs" />
     <Compile Include="Handlers\Claims\GrantDetailsCalculateHandler.cs" />
     <Compile Include="Handlers\Claims\NotificationAfterChangingClaimStatusHandler.cs" />
     <Compile Include="Handlers\ContactWebrole\SendNotificationOnAdminRoleGrantedPlugin.cs" />
@@ -234,6 +235,7 @@
     <Compile Include="Plugins\AhpApplication\PreUpdate.cs" />
     <Compile Include="Plugins\AhpStatusChange\SendNotificationOnCreatePlugin.cs" />
     <Compile Include="Plugins\Claim\PostUpdateAsync.cs" />
+    <Compile Include="Plugins\Claim\PreUpdate.cs" />
     <Compile Include="Plugins\ContactWebrole\SendNotificationOnAdminRoleGrantedPlugin.cs" />
     <Compile Include="Plugins\ContactWebrole\SendNotificationOnRoleModificationPlugin.cs" />
     <Compile Include="Plugins\CustomApi\Allocation\GetAllocationClaimsPlugin.cs" />
@@ -302,6 +304,8 @@
     <Compile Include="Services\Application\ApplicationService.cs" />
     <Compile Include="Services\Application\IAllocationService.cs" />
     <Compile Include="Services\Application\IApplicationService.cs" />
+    <Compile Include="Services\Claim\ClaimService.cs" />
+    <Compile Include="Services\Claim\IClaimService.cs" />
     <Compile Include="Services\Consortium\ConsortiumService.cs" />
     <Compile Include="Services\Consortium\IConsortiumService.cs" />
     <Compile Include="Services\Contacts\ContactService.cs" />
