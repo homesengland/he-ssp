@@ -45,9 +45,7 @@
                            type="text"/>
             </gds-div-form-group>
 
-            <button class="govuk-button" data-module="govuk-button" name="action" type="submit" id="search-local-authority-button">
-                Search
-            </button>
+            <vc:loans-form-button text="Search" id="search-local-authority-button"/>
             @Html.HiddenFor(c => c.ProjectId)
             @Html.HiddenFor(c => c.ApplicationId)
 

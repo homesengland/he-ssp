@@ -323,6 +323,65 @@ namespace HE.CRM.AHP.Plugins.Services.Application
             CreateOrUpdateOrDeleteClaimForAllocationPhase(allocationId, deliveryPhaseId, phaseClaimsDto, "Completion", dataFromCrm);
         }
 
+        public AllocationDto GetAllocation(string externalContactId, Guid accountId, Guid allocationId)
+        {
+            TracingService.Trace("GetAllocation");
+            AllocationDto result = null;
+            Contact contact = null;
+            contact = _contactRepository.GetContactViaExternalId(externalContactId);
+
+            TracingService.Trace("Starting WebRole check");
+            var webroleList = _contactWebroleRepository.GetListOfUsersWithoutLimitedRole(accountId.ToString());
+            var isOtherThanLimitedUser = webroleList.Exists(x => x.invln_Contactid.Id == contact.Id);
+            var isLimitedUser = _contactWebroleRepository.IsContactHaveSelectedWebRoleForOrganisation(contact.Id, accountId, invln_Permission.Limiteduser);
+
+            TracingService.Trace($"isOtherThanLimitedUser : {isOtherThanLimitedUser}  isLimitedUser : {isLimitedUser}  ");
+            TracingService.Trace("WebRole checked");
+
+            invln_scheme allocation = null;
+            if (isLimitedUser == true && isOtherThanLimitedUser == false)
+            {
+                TracingService.Trace("Get allocation for isLimitedUser");
+                allocation = _ahpApplicationRepository.GetAllocation(allocationId, accountId, contact);
+            }
+            if (isOtherThanLimitedUser == true)
+            {
+                TracingService.Trace("Get allocation for isOtherThanLimitedUser");
+                allocation = _ahpApplicationRepository.GetAllocation(allocationId, accountId);
+            }
+
+            if (allocation == null)
+            {
+                TracingService.Trace("allocation == null");
+                return result;
+            }
+
+            TracingService.Trace($"Allocation data:");
+            TracingService.Trace($"baseApplicationId : {allocation.invln_BaseApplication?.Id}");
+            TracingService.Trace($"allocation Id : {allocation.invln_schemeId}");
+            TracingService.Trace($"allocation PartnerId : {allocation.invln_organisationid?.Id}");
+            TracingService.Trace($"allocation ProgrammeId : {allocation.invln_programmelookup?.Id}");
+
+
+            TracingService.Trace("Get data from Crm");
+            var dataFromCrm = _ahpApplicationRepository.GetAllocationForAllocationDto(allocation.invln_BaseApplication.Id, allocation.Id, allocation.invln_organisationid.Id, allocation.invln_programmelookup.Id).Entities;
+
+            TracingService.Trace($"Was record found in CRM?  {dataFromCrm.Count > 0}");
+            if (dataFromCrm.Count == 0)
+            {
+                return result;
+            }
+
+            var recordDataFromCrm = dataFromCrm.FirstOrDefault();
+
+            // Mapp to AllocationDto
+            TracingService.Trace("Mapp to AllocationClaimsDto");
+            result = AhpApplicationMapper.MapToAllocationDto(recordDataFromCrm);
+
+            TracingService.Trace("Return Result");
+            return result;
+        }
+
 
         private void CreateOrUpdateOrDeleteClaimForAllocationPhase(Guid allocationId, Guid deliveryPhaseId, PhaseClaimsDto phaseClaimsDto, string typeOfMilestone, Entity dataFromCrm)
         {

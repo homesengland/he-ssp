@@ -40,10 +40,7 @@
         </gds-div-grid-column-two-thirds>
 
         <vc:files-table asp-for="@Model.OrganisationMoreInformationFiles"/>
-
-        <button class="govuk-button" id="continue-button" data-module="govuk-button" name="action" type="submit" value="@(Model.StateChanged ? "Change" : "Continue")">
-            Continue
-        </button>
+        <vc:loans-form-button value="@(Model.StateChanged ? "Change" : "Continue")"/>
 
         <partial name="_HomeAndCheckAnswersLinks"/>
     </he-organisation-form>

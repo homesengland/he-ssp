@@ -42,13 +42,4 @@
     <ProjectReference Include="..\HE.Investments.Organisation\HE.Investments.Organisation.csproj"/>
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Views\Shared\Components\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <_ContentIncludedByDefault Remove="Views\LoanApplication\ApplicationSubmitted.cshtml" />
-    <_ContentIncludedByDefault Remove="Views\LoanApplication\CheckAnswers.cshtml" />
-  </ItemGroup>
-
 </Project>

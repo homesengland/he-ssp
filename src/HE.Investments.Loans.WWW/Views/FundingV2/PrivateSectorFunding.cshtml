@@ -54,9 +54,7 @@
                 conditional-input-error="@inputErrors">
             </gds-radio-yes-no>
         </gds-div-form-group>
-            <button class="govuk-button" data-module="govuk-button" name="action" type="submit" value="@(Model.StateChanged?"Change":"Continue")" id="continue-button">
-            Continue
-        </button>
+        <vc:loans-form-button value="@(Model.StateChanged ? "Change" : "Continue")"/>
     </gds-field-set>
 
     </he-organisation-form>
