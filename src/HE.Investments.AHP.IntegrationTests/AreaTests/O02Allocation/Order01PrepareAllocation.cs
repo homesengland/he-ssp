@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using FluentAssertions;
 using HE.Investment.AHP.WWW.Views.AllocationClaims.Const;
 using HE.Investments.AHP.IntegrationTests.AreaTests.O01Application.Order03FillApplication.Data;
@@ -8,6 +9,8 @@ using HE.Investments.AHP.IntegrationTests.AreaTests.O01Application.Pages;
 using HE.Investments.AHP.IntegrationTests.AreaTests.O02Allocation.Data.Phase;
 using HE.Investments.AHP.IntegrationTests.AreaTests.O02Allocation.Pages;
 using HE.Investments.AHP.IntegrationTests.Framework;
+using HE.Investments.Common.Contract;
+using HE.Investments.Common.Extensions;
 using HE.Investments.TestsUtils.Extensions;
 using Xunit;
 using Xunit.Abstractions;
@@ -102,6 +105,40 @@ public class Order01PrepareAllocation : AhpIntegrationTest
         allocation.Should().NotBeNull("New allocation should be displayed on the project dashboard");
     }
 
+    [Fact(Skip = AhpConfig.SkipTest)]
+    [Order(3)]
+    public async Task Order03_DisplayAllocationOnAllocationListView()
+    {
+        // given
+        var projectDetailsPage = await TestClient.NavigateTo(ProjectPagesUrl.ProjectDetails(UserOrganisationData.OrganisationId, ProjectData.ProjectId));
+        projectDetailsPage
+            .HasTitle(ProjectData.ProjectName)
+            .UrlEndWith(ProjectPagesUrl.ProjectDetails(UserOrganisationData.OrganisationId, ProjectData.ProjectId));
+
+        // when
+        var allocationsListPage = await TestClient.NavigateTo(projectDetailsPage.GetLinkByTestId("view-all-Allocations"));
+
+        // then
+        allocationsListPage
+            .UrlEndWith(AllocationPagesUrl.ProjectAllocationList(UserOrganisationData.OrganisationId, ShortGuid.FromString(ProjectData.ProjectId).Value))
+            .HasTitle("Affordable Homes Programme 2021-2026 Continuous Market Engagement allocations")
+            .HasPageHeader(header: "Active allocations")
+            .HasTableRowsHeaders(
+            [
+                "Name",
+                "Homes",
+                "Tenure",
+                "Local authority",
+            ])
+            .HasLinkWithText(AllocationData.AllocationName, out _)
+            .HasTableRowWithValues(
+            [
+                SchemeInformationData.HousesToDeliver.ToString(CultureInfo.InvariantCulture),
+                AllocationData.Tenure.GetDescription(),
+                SiteData.LocalAuthorityName,
+            ]);
+    }
+
     private async Task AhpProjectShouldExist()
     {
         if (ProjectData.IsProjectNotCreated())
@@ -114,7 +151,7 @@ public class Order01PrepareAllocation : AhpIntegrationTest
 
             ProjectData.SetProjectId(projectId);
             var consortiumId = await AhpCrmContext.GetAhpConsortium(LoginData);
-            await AhpProjectDataManipulator.CreateAhpProject(LoginData, ProjectData.ProjectId, ProjectData.ProjectName, siteId, SiteData.SiteName, consortiumId?.Id?.Value);
+            await AhpProjectDataManipulator.CreateAhpProject(LoginData, ProjectData.ProjectId, ProjectData.ProjectName, siteId, SiteData.SiteName, consortiumId?.Id.Value);
             var ahpProject = await AhpProjectDataManipulator.GetAhpProject(LoginData, projectId);
             SiteData.SetSiteId(ahpProject.ListOfSites.Single().id);
             await AhpDataManipulator.MakeSiteUsableForAllocation(LoginData, SiteData);
