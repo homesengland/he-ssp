@@ -5,8 +5,8 @@ namespace HE.Investment.AHP.WWW.Views.Shared.Components.ClaimDetailsCard;
 
 public class ClaimDetailsCard : ViewComponent
 {
-    public IViewComponentResult Invoke(MilestoneClaim claim, bool canClaimMilestone, string? claimMilestoneUrl = null)
+    public IViewComponentResult Invoke(MilestoneClaim claim, bool canEditClaim, string? claimMilestoneUrl = null)
     {
-        return View("ClaimDetailsCard", (claim, canClaimMilestone, claimMilestoneUrl ?? string.Empty));
+        return View("ClaimDetailsCard", (claim, canEditClaim, claimMilestoneUrl ?? string.Empty));
     }
 }

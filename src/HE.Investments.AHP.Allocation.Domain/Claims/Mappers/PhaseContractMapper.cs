@@ -42,9 +42,9 @@ public sealed class PhaseContractMapper : IPhaseContractMapper
     {
         return new(
             allocationBasicInfo.Id,
-            allocationBasicInfo.Name,
-            allocationBasicInfo.ReferenceNumber,
-            allocationBasicInfo.LocalAuthority,
+            allocationBasicInfo.Name.Value,
+            allocationBasicInfo.ReferenceNumber.Value,
+            allocationBasicInfo.LocalAuthority.Name,
             allocationBasicInfo.Programme.ShortName,
             allocationBasicInfo.Tenure);
     }

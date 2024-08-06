@@ -1,4 +1,5 @@
 using HE.Common.IntegrationModel.PortalIntegrationModel;
+using HE.Investment.AHP.Domain.Application.Repositories;
 using HE.Investment.AHP.Domain.Delivery.Policies;
 using HE.Investments.Account.Shared;
 using HE.Investments.Account.Shared.User;
@@ -14,8 +15,6 @@ using HE.Investments.Consortium.Shared.UserContext;
 using HE.Investments.Programme.Contract;
 using HE.Investments.Programme.Contract.Queries;
 using MediatR;
-using AhpProgramme = HE.Investments.Programme.Contract.Programme;
-using AllocationBasicInfo = HE.Investments.AHP.Allocation.Domain.Allocation.ValueObjects.AllocationBasicInfo;
 
 namespace HE.Investments.AHP.Allocation.Domain.Allocation.Repositories;
 
@@ -27,17 +26,21 @@ public class AllocationRepository : IAllocationRepository
 
     private readonly IPhaseCrmMapper _phaseCrmMapper;
 
+    private readonly IAllocationBasicInfoMapper _allocationBasicInfoMapper;
+
     private readonly IOnlyCompletionMilestonePolicy _onlyCompletionMilestonePolicy;
 
     public AllocationRepository(
         IAllocationCrmContext allocationCrmContext,
         IMediator mediator,
         IPhaseCrmMapper phaseCrmMapper,
+        IAllocationBasicInfoMapper allocationBasicInfoMapper,
         IOnlyCompletionMilestonePolicy onlyCompletionMilestonePolicy)
     {
         _allocationCrmContext = allocationCrmContext;
         _mediator = mediator;
         _phaseCrmMapper = phaseCrmMapper;
+        _allocationBasicInfoMapper = allocationBasicInfoMapper;
         _onlyCompletionMilestonePolicy = onlyCompletionMilestonePolicy;
     }
 
@@ -47,9 +50,7 @@ public class AllocationRepository : IAllocationRepository
         var organisationId = organisation.OrganisationId.ToGuidAsString();
         var allocation = await _allocationCrmContext.GetById(id.ToGuidAsString(), organisationId, userAccount.UserGlobalId.ToString(), cancellationToken);
 
-        var programme = await _mediator.Send(new GetProgrammeQuery(ProgrammeId.From(allocation.ProgrammeId)), cancellationToken);
-
-        return CreateEntity(allocation, programme, organisation);
+        return await CreateEntity(allocation, organisation, cancellationToken);
     }
 
     public async Task<AllocationOverview> GetOverview(AllocationId id, ConsortiumUserAccount userAccount, CancellationToken cancellationToken)
@@ -65,7 +66,7 @@ public class AllocationRepository : IAllocationRepository
             allocationDto.ReferenceNumber,
             allocationDto.LocalAuthority.name,
             programme.ShortName,
-            AllocationTenureMapper.ToDomain(allocationDto.Tenure).Value);
+            ApplicationTenureMapper.ToDomain(allocationDto.Tenure)!.Value);
 
         return new AllocationOverview(
             allocationBasicInfo,
@@ -76,25 +77,12 @@ public class AllocationRepository : IAllocationRepository
             false);
     }
 
-    private AllocationEntity CreateEntity(AllocationClaimsDto allocationDto, AhpProgramme programme, OrganisationBasicInfo organisation)
+    private async Task<AllocationEntity> CreateEntity(AllocationClaimsDto allocationDto, OrganisationBasicInfo organisation, CancellationToken cancellationToken)
     {
-        var allocationId = AllocationId.From(allocationDto.Id);
-        var tenure = AllocationTenureMapper.ToDomain(allocationDto.Tenure);
-        var allocationBasicInfo = new AllocationBasicInfo(
-            allocationId,
-            allocationDto.Name,
-            allocationDto.ReferenceNumber,
-            allocationDto.LocalAuthority.name,
-            programme,
-            tenure.Value);
+        var allocationBasicInfo = await _allocationBasicInfoMapper.Map(allocationDto, cancellationToken);
 
         return new AllocationEntity(
-            allocationId,
-            new AllocationName(allocationDto.Name),
-            new AllocationReferenceNumber(allocationDto.ReferenceNumber),
-            new LocalAuthority(allocationDto.LocalAuthority.code, allocationDto.LocalAuthority.name),
-            programme,
-            tenure,
+            allocationBasicInfo,
             new GrantDetails(allocationDto.GrantDetails.TotalGrantAllocated, allocationDto.GrantDetails.AmountPaid, allocationDto.GrantDetails.AmountRemaining),
             allocationDto.ListOfPhaseClaims
                 .Select(x => _phaseCrmMapper.MapToDomain(x, allocationBasicInfo, organisation, _onlyCompletionMilestonePolicy))

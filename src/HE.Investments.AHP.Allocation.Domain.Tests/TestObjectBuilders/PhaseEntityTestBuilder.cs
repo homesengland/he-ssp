@@ -13,8 +13,6 @@ namespace HE.Investments.AHP.Allocation.Domain.Tests.TestObjectBuilders;
 
 public class PhaseEntityTestBuilder : TestObjectBuilder<PhaseEntityTestBuilder, PhaseEntity>
 {
-    private static Mock<IOnlyCompletionMilestonePolicy> _mockOnlyCompletionMilestonePolicy;
-
     private PhaseEntityTestBuilder(PhaseEntity item)
         : base(item)
     {
@@ -24,7 +22,8 @@ public class PhaseEntityTestBuilder : TestObjectBuilder<PhaseEntityTestBuilder, 
 
     public static PhaseEntityTestBuilder New(bool? isOnlyCompletionMilestone = null)
     {
-        ReturnOnlyCompletionMilestonePolicy(isOnlyCompletionMilestone);
+        var onlyCompletionMilestonePolicy = MockOnlyCompletionMilestonePolicy(isOnlyCompletionMilestone);
+
         return new PhaseEntityTestBuilder(new(
             PhaseId.From(GuidTestData.GuidTwo.ToString()),
             new AllocationBasicInfoBuilder().Build(),
@@ -35,7 +34,7 @@ public class PhaseEntityTestBuilder : TestObjectBuilder<PhaseEntityTestBuilder, 
             null,
             null,
             MilestoneClaimTestBuilder.Draft().WithType(MilestoneType.Completion).Build(),
-            _mockOnlyCompletionMilestonePolicy.Object));
+            onlyCompletionMilestonePolicy));
     }
 
     public PhaseEntityTestBuilder WithId(string value) => SetProperty(x => x.Id, new PhaseId(value));
@@ -48,10 +47,12 @@ public class PhaseEntityTestBuilder : TestObjectBuilder<PhaseEntityTestBuilder, 
 
     public PhaseEntityTestBuilder WithCompletionMilestone(MilestoneClaimBase value) => SetProperty(x => x.CompletionMilestone, value);
 
-    private static void ReturnOnlyCompletionMilestonePolicy(bool? returnValue)
+    private static IOnlyCompletionMilestonePolicy MockOnlyCompletionMilestonePolicy(bool? returnValue)
     {
-        _mockOnlyCompletionMilestonePolicy = new Mock<IOnlyCompletionMilestonePolicy>();
-        _mockOnlyCompletionMilestonePolicy
+        var mockOnlyCompletionMilestonePolicy = new Mock<IOnlyCompletionMilestonePolicy>();
+        mockOnlyCompletionMilestonePolicy
             .Setup(x => x.IsOnlyCompletionMilestone(It.IsAny<bool>(), It.IsAny<BuildActivity>())).Returns(returnValue ?? false);
+
+        return mockOnlyCompletionMilestonePolicy.Object;
     }
 }

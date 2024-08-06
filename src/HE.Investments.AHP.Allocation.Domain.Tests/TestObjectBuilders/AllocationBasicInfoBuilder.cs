@@ -1,6 +1,8 @@
 using HE.Investment.AHP.Contract.Application;
 using HE.Investments.AHP.Allocation.Contract;
+using HE.Investments.AHP.Allocation.Domain.Allocation.ValueObjects;
 using HE.Investments.Common.Tests.TestData;
+using HE.Investments.Organisation.LocalAuthorities.ValueObjects;
 using HE.Investments.Programme.Contract;
 using HE.Investments.Programme.Contract.Enums;
 using HE.Investments.TestsUtils.TestFramework;
@@ -13,9 +15,9 @@ public class AllocationBasicInfoBuilder : TestObjectBuilder<AllocationBasicInfoB
     public AllocationBasicInfoBuilder()
         : base(new AllocationBasicInfo(
             AllocationId.From(GuidTestData.GuidOne.ToString()),
-            "Allocation",
-            "G00001",
-            "Reading",
+            new AllocationName("Allocation"),
+            new AllocationReferenceNumber("G00001"),
+            new LocalAuthority(new LocalAuthorityCode("7000178"), "Oxford"),
             new Programme.Contract.Programme(
                 ProgrammeId.From("d5fe3baa-eeae-ee11-a569-0022480041cf"),
                 "Ahp",
@@ -26,7 +28,8 @@ public class AllocationBasicInfoBuilder : TestObjectBuilder<AllocationBasicInfoB
                 new DateRange(new DateOnly(2021, 1, 1), new DateOnly(2022, 1, 1)),
                 new DateRange(new DateOnly(2021, 1, 1), new DateOnly(2022, 1, 1)),
                 new DateRange(new DateOnly(2021, 1, 1), new DateOnly(2022, 1, 1))),
-            Tenure.AffordableRent))
+            Tenure.AffordableRent,
+            true))
     {
     }
 

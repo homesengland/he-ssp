@@ -11,5 +11,6 @@ public interface IAllocationClaimCheckAnswersViewModelFactory
         AllocationId allocationId,
         PhaseId phaseId,
         MilestoneClaim claim,
-        IUrlHelper urlHelper);
+        IUrlHelper urlHelper,
+        bool isEditable);
 }

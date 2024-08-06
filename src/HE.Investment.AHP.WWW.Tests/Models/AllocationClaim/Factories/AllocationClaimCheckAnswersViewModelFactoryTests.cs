@@ -37,7 +37,7 @@ public class AllocationClaimCheckAnswersViewModelFactoryTests
         var urlHelper = MockUrlHelper();
 
         // when
-        var result = new AllocationClaimCheckAnswersViewModelFactory().CreateSummary(allocationId, phaseId, claim, urlHelper);
+        var result = new AllocationClaimCheckAnswersViewModelFactory().CreateSummary(allocationId, phaseId, claim, urlHelper, true);
 
         // then
         result.Items.Should().HaveCount(4);
@@ -75,7 +75,7 @@ public class AllocationClaimCheckAnswersViewModelFactoryTests
         var urlHelper = MockUrlHelper();
 
         // when
-        var result = new AllocationClaimCheckAnswersViewModelFactory().CreateSummary(allocationId, phaseId, claim, urlHelper);
+        var result = new AllocationClaimCheckAnswersViewModelFactory().CreateSummary(allocationId, phaseId, claim, urlHelper, true);
 
         // then
         result.Items.Should().HaveCount(3);
