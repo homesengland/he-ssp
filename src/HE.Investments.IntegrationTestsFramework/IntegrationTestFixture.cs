@@ -90,7 +90,7 @@ public class IntegrationTestFixture<TProgram> : WebApplicationFactory<TProgram>
                 })
                 .AddScheme<AuthenticationSchemeOptions, TestAuthHandler>(TestAuthHandler.AuthenticationScheme, _ => { });
 
-            x.AddSingleton<IDocumentServiceSettings, MockedDocumentServiceSettings>();
+            x.AddSingleton<IUtilsServiceSettings, MockedUtilsServiceSettings>();
             x.Decorate<IHttpClientFactory, IntegrationTestsHttpClientFactory>();
             x.AddSingleton<DateTimeManipulator>();
             x.AddSingleton<IDateTimeProvider>(x => x.GetRequiredService<DateTimeManipulator>());
@@ -110,7 +110,7 @@ public class IntegrationTestFixture<TProgram> : WebApplicationFactory<TProgram>
         }
     }
 
-    private sealed class MockedDocumentServiceSettings : IDocumentServiceSettings
+    private sealed class MockedUtilsServiceSettings : IUtilsServiceSettings
     {
         public string Url => string.Empty;
 
