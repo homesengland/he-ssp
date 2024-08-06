@@ -23,6 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\HE.UtilsService.BannerNotification\HE.UtilsService.BannerNotification.csproj" />
     <ProjectReference Include="..\HE.UtilsService.SharePoint\HE.UtilsService.SharePoint.csproj" />
   </ItemGroup>
 
