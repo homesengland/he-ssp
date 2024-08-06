@@ -3,6 +3,7 @@ using HE.Investment.AHP.Contract.Project.Commands;
 using HE.Investment.AHP.Contract.Project.Queries;
 using HE.Investment.AHP.Contract.Site.Queries;
 using HE.Investment.AHP.WWW.Models.Project;
+using HE.Investments.AHP.Allocation.Contract.Project.Queries;
 using HE.Investments.Common.Contract.Pagination;
 using HE.Investments.Common.WWW.Controllers;
 using HE.Investments.Consortium.Shared.Authorization;
@@ -80,8 +81,8 @@ public class ProjectController : Controller
     public async Task<IActionResult> Allocations(string projectId, int? page)
     {
         return View(
-            "ListOfApplications",
-            await _mediator.Send(new GetProjectDetailsQuery(FrontDoorProjectId.From(projectId), new PaginationRequest(page ?? 1))));
+            "ListOfAllocations",
+            await _mediator.Send(new GetProjectAllocationsQuery(FrontDoorProjectId.From(projectId), new PaginationRequest(page ?? 1))));
     }
 
     [HttpGet("{projectId}/sites")]

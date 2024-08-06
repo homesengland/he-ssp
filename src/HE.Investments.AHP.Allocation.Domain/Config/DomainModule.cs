@@ -4,6 +4,8 @@ using HE.Investments.AHP.Allocation.Domain.Allocation.Repositories;
 using HE.Investments.AHP.Allocation.Domain.Claims.Crm;
 using HE.Investments.AHP.Allocation.Domain.Claims.Mappers;
 using HE.Investments.AHP.Allocation.Domain.Claims.Repositories;
+using HE.Investments.AHP.Allocation.Domain.Project.Crm;
+using HE.Investments.AHP.Allocation.Domain.Project.Repositories;
 using HE.Investments.AHP.Allocation.Domain.Site.Crm;
 using HE.Investments.AHP.Allocation.Domain.Site.Repositories;
 using Microsoft.Extensions.DependencyInjection;
@@ -15,13 +17,8 @@ public static class DomainModule
     public static void AddAllocationDomainModule(this IServiceCollection services)
     {
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(DomainModule).Assembly));
-        services.AddScoped<IAllocationCrmContext, AllocationCrmContext>();
-        services.Decorate<IAllocationCrmContext, RequestCacheAllocationCrmContextDecorator>();
-        services.AddScoped<ISiteAllocationCrmContext, SiteAllocationCrmContext>();
-        services.AddScoped<IAllocationRepository, AllocationRepository>();
-        services.AddScoped<IPhaseRepository, PhaseRepository>();
-        services.AddScoped<ISiteAllocationRepository, SiteAllocationRepository>();
-
+        services.AddCrmContexts();
+        services.AddRepositories();
         services.AddMappers();
     }
 
@@ -34,5 +31,22 @@ public static class DomainModule
         services.AddSingleton<IMilestoneClaimContractMapper, MilestoneClaimContractMapper>();
         services.AddSingleton<MilestoneStatusMapper>();
         services.AddSingleton<MilestoneTypeMapper>();
+    }
+
+    private static void AddCrmContexts(this IServiceCollection services)
+    {
+        services.AddScoped<IAllocationCrmContext, AllocationCrmContext>();
+        services.Decorate<IAllocationCrmContext, RequestCacheAllocationCrmContextDecorator>();
+        services.AddScoped<ISiteAllocationCrmContext, SiteAllocationCrmContext>();
+        services.AddScoped<IProjectAllocationCrmContext, ProjectAllocationCrmContext>();
+        services.Decorate<IProjectAllocationCrmContext, RequestCacheProjectAllocationCrmContextDecorator>();
+    }
+
+    private static void AddRepositories(this IServiceCollection services)
+    {
+        services.AddScoped<IAllocationRepository, AllocationRepository>();
+        services.AddScoped<IPhaseRepository, PhaseRepository>();
+        services.AddScoped<ISiteAllocationRepository, SiteAllocationRepository>();
+        services.AddScoped<IProjectAllocationRepository, ProjectAllocationRepository>();
     }
 }
