@@ -17,7 +17,15 @@ export class LoanApplicationService {
     let status = this.common.getAttribute("statuscode").getValue();
 
     if (status == LoanAppInternalStatus.Draft
-      || status == LoanAppInternalStatus.ApplicationSubmitted) {
+      || status == LoanAppInternalStatus.Inactive
+      || status == LoanAppInternalStatus.ApplicationSubmitted
+      || status == LoanAppInternalStatus.HoldRequested
+      || status == LoanAppInternalStatus.OnHold
+      || status == LoanAppInternalStatus.CashflowRequested
+      || status == LoanAppInternalStatus.Withdrawn
+      || status == LoanAppInternalStatus.FeeIndemnitySigned
+      || status == LoanAppInternalStatus.ApplicationUnderReview
+      || status == LoanAppInternalStatus.CashflowUnderReview) {
       this.common.setControlRequiredV2('invln_securities', false);
     } else {
       this.common.setControlRequiredV2('invln_securities', true);
