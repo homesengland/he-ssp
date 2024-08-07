@@ -34,6 +34,17 @@ pr:
     - src/HE.Investments.TestsUtils/*
     - src/HE.Investments.Programme.*/*
 
+parameters:
+  - name: forcePushToProd
+    displayName: Force Push to Production
+    type: boolean
+    default: false
+
+variables:
+  buildMajor: 0
+  buildMinor: 0
+  buildBranch: $[replace(variables['Build.SourceBranch'], '/', '.')]
+
 pool:
   vmImage: 'ubuntu-22.04'
 
