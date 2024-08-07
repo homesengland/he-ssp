@@ -1,6 +1,7 @@
 using HE.UtilsService.Api.Configuration;
 using HE.UtilsService.Api.Extensions;
 using HE.UtilsService.Api.Middlewares;
+using HE.UtilsService.BannerNotification.Configuration;
 using HE.UtilsService.SharePoint.Configuration;
 using HE.UtilsService.SharePoint.Extensions;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
@@ -13,6 +14,7 @@ builder.Services.Configure<AppConfig>(builder.Configuration.GetSection("AppConfi
 builder.Services.AddConfigs();
 builder.Services.AddSharePointServices();
 builder.Services.AddAutoMapper(typeof(SpAutoMapperProfile));
+builder.Services.AddBannerNotificationModule();
 builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddControllers();
