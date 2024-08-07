@@ -16,6 +16,21 @@ export class LoanApplicationService {
   public takeActionsOnTabSecurities() {
     let status = this.common.getAttribute("statuscode").getValue();
 
+    let requireSectionForStatuses = [
+      LoanAppInternalStatus.ReferredBacktoApplicant,
+      LoanAppInternalStatus.SentforApproval,
+      LoanAppInternalStatus.UnderReview,
+      LoanAppInternalStatus.NotApproved,
+      LoanAppInternalStatus.ApprovedSubjecttoDueDiligence,
+      LoanAppInternalStatus.ApplicationDeclined,
+      LoanAppInternalStatus.InDueDiligence,
+      LoanAppInternalStatus.SentforPreCompleteApproval,
+      LoanAppInternalStatus.ApprovedSubjectToContract,
+      LoanAppInternalStatus.AwaitingCPSatisfaction,
+      LoanAppInternalStatus.CPsSatisfied,
+      LoanAppInternalStatus.LoanAvailable
+    ]
+
     if (status == LoanAppInternalStatus.Draft
       || status == LoanAppInternalStatus.ApplicationSubmitted) {
       this.common.setControlRequiredV2('invln_securities', false);
@@ -23,58 +38,90 @@ export class LoanApplicationService {
       this.common.setControlRequiredV2('invln_securities', true);
     }
 
-    this.common.hideSection("tab_9", Securities.debenture.toString());
-    this.common.hideSection("tab_9", Securities.firstLegalCharge.toString());
-    this.common.hideSection("tab_9", Securities.subsequentCharge.toString());
-    this.common.hideSection("tab_9", Securities.personalGuarantee.toString());
-    this.common.hideSection("tab_9", Securities.parentCompanyGuarantee.toString());
-    this.common.hideSection("tab_9", Securities.subordinatedDeed.toString());
-    this.common.hideSection("tab_9", Securities.costOverrunGuarantee.toString());
-    this.common.hideSection("tab_9", Securities.completionGuarantee.toString());
-    this.common.hideSection("tab_9", Securities.interestShortfall.toString());
-    this.common.hideSection("tab_9", Securities.other.toString());
-    this.common.hideSection("tab_9", Securities.collateralWarranty.toString());
-    this.common.hideControl('invln_customsecurity', true)
+    let requireSection = requireSectionForStatuses.includes(status);
+    var securities: any = this.common.getAttributeValue('invln_securities');
 
-    var securities: any = this.common.getAttributeValue('invln_securities')
-    if (securities != null) {
-      if (securities.includes(Securities.debenture)) {
-        this.common.showSection("tab_9", Securities.debenture.toString());
+    const securitiesArray = Object
+      .keys(Securities)
+      .filter((v) => !isNaN(Number(v)))
+      .map((x) => parseInt(x));
+
+    if (securities == null) {
+      this.hideSecuritySections(securitiesArray);
+      return;
+    }
+    
+    for (let i = 0; i < securitiesArray.length; i++) {
+      let securityItem = securitiesArray[i];
+      if (securities.includes(securityItem)) {
+        this.showSecuritySection(securityItem.toString(), requireSection);
       }
-      if (securities.includes(Securities.firstLegalCharge)) {
-        this.common.showSection("tab_9", Securities.firstLegalCharge.toString());
-      }
-      if (securities.includes(Securities.subsequentCharge)) {
-        this.common.showSection("tab_9", Securities.subsequentCharge.toString());
-      }
-      if (securities.includes(Securities.personalGuarantee)) {
-        this.common.showSection("tab_9", Securities.personalGuarantee.toString());
-      }
-      if (securities.includes(Securities.parentCompanyGuarantee)) {
-        this.common.showSection("tab_9", Securities.parentCompanyGuarantee.toString());
-      }
-      if (securities.includes(Securities.subordinatedDeed)) {
-        this.common.showSection("tab_9", Securities.subordinatedDeed.toString());
-      }
-      if (securities.includes(Securities.costOverrunGuarantee)) {
-        this.common.showSection("tab_9", Securities.costOverrunGuarantee.toString());
-      }
-      if (securities.includes(Securities.completionGuarantee)) {
-        this.common.showSection("tab_9", Securities.completionGuarantee.toString());
-      }
-      if (securities.includes(Securities.interestShortfall)) {
-        this.common.showSection("tab_9", Securities.interestShortfall.toString());
-      }
-      if (securities.includes(Securities.other)) {
-        this.common.showSection("tab_9", Securities.other.toString());
-        this.common.hideControl('invln_customsecurity', false)
-      }
-      if (securities.includes(Securities.collateralWarranty)) {
-        this.common.showSection("tab_9", Securities.collateralWarranty.toString());
+      else {
+        this.hideSecuritySection(securityItem.toString());
       }
     }
   }
 
+  private showSecuritySection(sectionName: string, required: boolean) {
+    var tab = this.common.getTab("tab_9");
+    if (tab == null) {
+      console.warn("Tab 'tab_9' not found");
+      return;
+    }
+    var section = tab.sections.get(sectionName)
+    if (section == null) {
+      console.warn(`Section ${sectionName} not found in tab 'tab_9'`);
+      return;
+    }
+    
+    section.setVisible(true);
+    
+    for (let i = 0; i < section.controls.getLength(); i++) {
+      let controlName = section.controls.get(i).getName();
+      this.common.setControlRequiredV2(controlName, required);
+    }
+  }
+
+  private hideSecuritySection(sectionName: string) {
+    var tab = this.common.getTab("tab_9");
+    if (tab == null) {
+      console.warn("Tab 'tab_9' not found");
+      return;
+    }
+    var section = tab.sections.get(sectionName)
+    if (section == null) {
+      console.warn(`Section ${sectionName} not found in tab 'tab_9'`);
+      return;
+    }
+    
+    section.setVisible(false);
+
+    for (let i = 0; i < section.controls.getLength(); i++) {
+      let controlName = section.controls.get(i).getName();
+      this.common.setControlRequiredV2(controlName, false);
+    }
+  }
+
+  private hideSecuritySections(sectionNames: number[]) {
+    var tab = this.common.getTab("tab_9");
+    if (tab == null) {
+      console.warn("Tab 'tab_9' not found");
+      return;
+    }
+
+    for (let i = 0; i < sectionNames.length; i++) {
+      let sectionName = sectionNames[i].toString();
+      let section = tab.sections.get(sectionName);
+      
+      section.setVisible(false);
+
+      for (let i = 0; i < section.controls.getLength(); i++) {
+        let controlName = section.controls.get(i).getName();
+        this.common.setControlRequiredV2(controlName, false);
+      }
+    }
+  }
+  
   public populateFields() {
     var additionalReturns = this.common.getAttributeValue('invln_additionalreturns')
     if (additionalReturns) {
