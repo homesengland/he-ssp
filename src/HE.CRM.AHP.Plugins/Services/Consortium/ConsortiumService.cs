@@ -289,6 +289,25 @@ namespace HE.CRM.AHP.Plugins.Services.Consortium
                         return false;
                     }
                 }
+
+                if (!string.IsNullOrEmpty(applicationId))
+                {
+                    var application = _ahpApplicationRepository.GetById(new Guid(applicationId), invln_scheme.Fields.invln_contactid);
+                    if (application.invln_contactid.Equals(contactId))
+                        return true;
+                }
+
+                if (siteId != null)
+                {
+                    var site = _siteRepository.GetById(new Guid(siteId));
+                    if (site.invln_CreatedByContactId != null)
+                    {
+                        if (site.invln_CreatedByContactId.Equals(contactId))
+                        {
+                            return true;
+                        }
+                    }
+                }
             }
             if (role == (int)invln_Permission.Inputonly && operation != Operation.Submit)
                 return true;
