@@ -15,7 +15,22 @@ public class AllocationCrmContext : IAllocationCrmContext
         _service = service;
     }
 
-    public async Task<AllocationClaimsDto> GetById(string id, string organisationId, string userId, CancellationToken cancellationToken)
+    public async Task<AllocationDto> GetAllocation(string id, string organisationId, string userId, CancellationToken cancellationToken)
+    {
+        var request = new invln_getallocationRequest
+        {
+            invln_userid = userId,
+            invln_accountid = ShortGuid.ToGuid(organisationId),
+            invln_allocationid = ShortGuid.ToGuid(id),
+        };
+
+        return await _service.ExecuteAsync<invln_getallocationRequest, invln_getallocationResponse, AllocationDto>(
+            request,
+            r => r.invln_ahpallocation,
+            cancellationToken);
+    }
+
+    public async Task<AllocationClaimsDto> GetAllocationClaims(string id, string organisationId, string userId, CancellationToken cancellationToken)
     {
         var request = new invln_getallocationclaimsRequest
         {
@@ -30,7 +45,7 @@ public class AllocationCrmContext : IAllocationCrmContext
             cancellationToken);
     }
 
-    public async Task Save(string allocationId, PhaseClaimsDto dto, string organisationId, string userId, CancellationToken cancellationToken)
+    public async Task SavePhaseClaims(string allocationId, PhaseClaimsDto dto, string organisationId, string userId, CancellationToken cancellationToken)
     {
         var request = new invln_setallocationphaseRequest
         {

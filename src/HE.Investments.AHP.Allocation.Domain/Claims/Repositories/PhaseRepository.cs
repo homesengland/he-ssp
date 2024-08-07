@@ -41,7 +41,7 @@ public class PhaseRepository : IPhaseRepository
     {
         var organisation = userAccount.SelectedOrganisation();
         var organisationId = organisation.OrganisationId.Value;
-        var allocation = await _allocationCrmContext.GetById(allocationId.ToGuidAsString(), organisationId, userAccount.UserGlobalId.ToString(), cancellationToken);
+        var allocation = await _allocationCrmContext.GetAllocationClaims(allocationId.ToGuidAsString(), organisationId, userAccount.UserGlobalId.ToString(), cancellationToken);
         var phase = allocation.ListOfPhaseClaims.Find(x => x.Id == phaseId.ToGuidAsString())
                     ?? throw new NotFoundException(nameof(PhaseEntity), phaseId);
         var allocationBasicInfo = await _allocationBasicInfoMapper.Map(allocation, cancellationToken);
@@ -57,7 +57,7 @@ public class PhaseRepository : IPhaseRepository
         }
 
         var dto = _phaseCrmMapper.MapToDto(phaseEntity);
-        await _allocationCrmContext.Save(
+        await _allocationCrmContext.SavePhaseClaims(
             phaseEntity.Allocation.Id.Value,
             dto,
             userAccount.SelectedOrganisationId().Value,

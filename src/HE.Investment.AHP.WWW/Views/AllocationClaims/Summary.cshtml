@@ -22,8 +22,7 @@
     {
         <vc:phase-details-card
             phase="@phase"
-            phase-url="@Url.OrganisationAction("Overview", "AllocationClaims",  new { allocationId = Model.AllocationBasicInfo.Id, phaseId = phase.Id })"
-            />
+            phase-url="@Url.OrganisationAction("Overview", "AllocationClaims",  new { allocationId = Model.AllocationBasicInfo.Id, phaseId = phase.Id })"/>
     }
     <he-pagination
         base-url="@Url.OrganisationAction("Summary", "AllocationClaims", new { allocationId = Model.AllocationBasicInfo.Id })"

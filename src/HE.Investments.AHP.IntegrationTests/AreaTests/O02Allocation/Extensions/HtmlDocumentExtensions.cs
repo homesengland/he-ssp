@@ -1,3 +1,4 @@
+using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
 using FluentAssertions;
 using HE.Investments.AHP.Allocation.Contract.Claims.Enum;
@@ -27,5 +28,12 @@ public static class HtmlDocumentExtensions
     public static IHtmlDocument HasMilestoneStatusTag(this IHtmlDocument htmlDocument, MilestoneType milestoneType, MilestoneStatus status)
     {
         return htmlDocument.HasStatusTagByTestId(status.GetDescription(), $"{milestoneType.ToString().ToIdTag()}-milestone-status");
+    }
+
+    public static IElement HasSummaryCardSection(this IHtmlDocument htmlDocument, string sectionName)
+    {
+        htmlDocument.HasElementForTestId($"{sectionName.ToIdTag()}-card-section", out var cardSection);
+
+        return cardSection;
     }
 }

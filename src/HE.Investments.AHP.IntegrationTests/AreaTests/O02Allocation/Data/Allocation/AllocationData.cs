@@ -32,15 +32,6 @@ public class AllocationData
     {
         Tenure = applicationData.Tenure;
         CalculateGrantDetails(totalGrantAllocated, grantAmountPaid);
-        SetGrantDetailsAsZeroAndRemoveItWhen();
-    }
-
-    private void SetGrantDetailsAsZeroAndRemoveItWhen()
-    {
-        // TODO: 104185 - Remove when CRM implementation is done
-        TotalGrantAllocated = 0;
-        AmountPaid = 0;
-        AmountRemaining = 0;
     }
 
     private void CalculateGrantDetails(decimal totalGrantAllocated, decimal grantAmountPaid = 0)

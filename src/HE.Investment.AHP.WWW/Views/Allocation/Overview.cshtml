@@ -33,7 +33,7 @@
     {
         @await Html.PartialAsync(
             "Partials/_OverviewMenu",
-            ("Manage Allocation", "View and manage allocation", "View and change details for this allocation, or tell us if there is anything you are unable to deliver.", @Url.OrganisationAction("Manage", "Allocation", new { allocationId = Model.BasicInfo.Id.Value })))
+            ("Manage Allocation", "View and manage allocation", "View and change details for this allocation, or tell us if there is anything you are unable to deliver.", Url.OrganisationAction("Manage", "Allocation", new { allocationId = Model.BasicInfo.Id.Value })))
 
         @if (Model.IsInContract)
         {
@@ -45,6 +45,6 @@
     {
         @await Html.PartialAsync(
             "Partials/_OverviewMenu",
-            ("Make a Claim", "Manage claims", "View upcoming milestones, previous claims or make a claim on this allocation.", @Url.OrganisationAction("summary", "AllocationClaims", new { allocationId = Model.BasicInfo.Id.Value })))
+            ("Make a Claim", "Manage claims", "View upcoming milestones, previous claims or make a claim on this allocation.", Url.OrganisationAction("summary", "AllocationClaims", new { allocationId = Model.BasicInfo.Id.Value })))
     }
 </div>
