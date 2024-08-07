@@ -458,6 +458,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\msdyn_ComputationAccuracy.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\msdyn_ConsoleApplicationNotificationAction.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\msdyn_ConsoleApplicationParameterRuntimeType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OptionSets\msdyn_ConsultModeType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OptionSets\msdyn_ConversationAccessType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\msdyn_conversationaction_language_locale.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\msdyn_conversationcharacteristicsource.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\msdyn_ConversationCharacteristicStatus.cs" />
