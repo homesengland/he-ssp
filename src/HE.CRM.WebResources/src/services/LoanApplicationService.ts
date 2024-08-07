@@ -19,6 +19,7 @@ export class LoanApplicationService {
     let requireSectionForStatuses = [
       LoanAppInternalStatus.ReferredBacktoApplicant,
       LoanAppInternalStatus.SentforApproval,
+      LoanAppInternalStatus.UnderReview,
       LoanAppInternalStatus.NotApproved,
       LoanAppInternalStatus.ApprovedSubjecttoDueDiligence,
       LoanAppInternalStatus.ApplicationDeclined,
