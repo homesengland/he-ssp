@@ -54,10 +54,10 @@ namespace HE.CRM.Common.Repositories.Implementations
             }
         }
 
-        public bool PartnerIsInContract(Guid accountId, Guid progrtammeId)
+        public bool PartnerIsInContract(Guid accountId, Guid programmeId)
         {
             var query_invln_partner = accountId.ToString();
-            var query_invln_programme = progrtammeId.ToString();
+            var query_invln_programme = programmeId.ToString();
 
             var query = new QueryExpression(invln_ahpcontract.EntityLogicalName)
             {
