@@ -11,7 +11,7 @@
 
     ViewBag.Breadcrumbs = AhpBreadcrumbsBuilder
         .New(organisationId)
-        .WithSites(Model.Page.Items.Select(x => x.ProjectId).First())
+        .WithSites(Model.Page.Items.Select(x => x.FrontDoorProjectId.Value).First())
         .Build();
 
     var actionName = Model.Page.Items.Any() ? "Index" : "Details";

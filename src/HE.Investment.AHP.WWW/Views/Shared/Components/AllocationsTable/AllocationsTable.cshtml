@@ -1,12 +1,28 @@
 @using HE.Investments.Common.WWW.Components.Table
 @using HE.Investments.Common.Contract.Pagination
-@using HE.Investments.Common.WWW.Components.PagedTable
+@using HE.Investments.Common.WWW.Components.Select
 @using HE.Investments.Common.WWW.Extensions
 
 @model (List<TableHeaderViewModel> Headers, PaginationResult<TableRowViewModel> Rows, string ProjectId);
 
-<gds-h1 class="govuk-heading-s">Active allocations</gds-h1>
-<vc:paged-table
-    headers="@Model.Headers"
-    rows="@Model.Rows"
-    navigation-url="@Url.OrganisationAction("Allocations", "Project", new { Model.ProjectId })"/>
+@{
+    var options = new List<SelectOptionModel>()
+    {
+        new("ViewAll", "View all", true),
+        new("ClaimDue", "Claim due"),
+    };
+}
+
+<div>
+    <vc:select
+        title="Active allocations"
+        label-text="Allocation list view filters"
+        name="allocationListViewFilters"
+        options="@options"
+        is-label-hidden="true"/>
+
+    <vc:sortable-paged-table
+        headers="@Model.Headers"
+        rows="@Model.Rows"
+        navigation-url="@Url.OrganisationAction("Allocations", "Project", new { Model.ProjectId })"/>
+</div>

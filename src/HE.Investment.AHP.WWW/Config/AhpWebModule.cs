@@ -11,10 +11,10 @@ using HE.Investment.AHP.WWW.Notifications;
 using HE.Investment.AHP.WWW.Routing;
 using HE.Investments.AHP.Allocation.Domain.Config;
 using HE.Investments.AHP.Consortium.Domain.Config;
+using HE.Investments.AHP.ProjectDashboard.Domain.Config;
 using HE.Investments.Api.Config;
 using HE.Investments.Common;
 using HE.Investments.Common.Config;
-using HE.Investments.Common.Contract.Enum;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Infrastructure.Events;
 using HE.Investments.Common.Models.App;
@@ -26,6 +26,7 @@ using HE.Investments.Consortium.Shared.Authorization;
 using HE.Investments.DocumentService.Extensions;
 using HE.Investments.Organisation.Config;
 using HE.Investments.Programme.Domain.Config;
+using HE.UtilsService.BannerNotification.Shared;
 
 namespace HE.Investment.AHP.WWW.Config;
 
@@ -44,6 +45,7 @@ public static class AhpWebModule
         services.AddDomainModule();
         services.AddConsortiumDomainModule();
         services.AddAllocationDomainModule();
+        services.AddProjectDashboardDomainModule();
         services.AddProgrammeSubdomainModule();
         services.AddEventInfrastructure();
         services.AddNotificationPublisher(ApplicationType.Ahp);

@@ -13,13 +13,24 @@ namespace HE.CRM.Plugins.Services.GovNotifyEmail
 {
     public class GovNotifyEmailService : CrmService, IGovNotifyEmailService
     {
-
         private readonly IGovNotifyEmailRepository _govNotifyEmailRepositoryAdmin;
         private readonly IEnvironmentVariableRepository _environmentVariableRepositoryAdmin;
         private readonly INotificationSettingRepository _notificationSettingRepositoryAdmin;
         private readonly ISystemUserRepository _systemUserRepositoryAdmin;
         private readonly ILoanApplicationRepository _loanApplicationRepositoryAdmin;
         private readonly IContactRepository _contactRepositoryAdmin;
+
+        public JsonSerializerOptions SerializerOptions
+        {
+            get
+            {
+                return new JsonSerializerOptions
+                {
+                    Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+                    WriteIndented = true
+                };
+            }
+        }
 
         public GovNotifyEmailService(CrmServiceArgs args) : base(args)
         {
@@ -367,30 +378,32 @@ namespace HE.CRM.Plugins.Services.GovNotifyEmail
             {
                 this.TracingService.Trace("INTERNAL_SENT_FOR_APPROVAL_NOTIFICATION");
                 var emailTemplate = _notificationSettingRepositoryAdmin.GetTemplateViaTypeName("INTERNAL_SENT_FOR_APPROVAL_NOTIFICATION");
-                var ownerData = _systemUserRepositoryAdmin.GetById(loanApplication.OwnerId.Id, nameof(SystemUser.InternalEMailAddress).ToLower(), nameof(SystemUser.FullName).ToLower());
-                var govNotParams = new INTERNAL_SENT_FOR_APPROVAL_NOTIFICATION()
+                var ownerData = _systemUserRepositoryAdmin.GetById(loanApplication.OwnerId.Id, SystemUser.Fields.InternalEMailAddress, SystemUser.Fields.FullName);
+
+                var subject = $"Application ref no {loanApplication.invln_Name} ISP Reviewed";
+                if (emailTemplate != null)
                 {
-                    templateId = emailTemplate?.invln_templateid,
-                    personalisation = new parameters_INTERNAL_SENT_FOR_APPROVAL_NOTIFICATION()
+                    var govNotParams = new INTERNAL_SENT_FOR_APPROVAL_NOTIFICATION()
                     {
-                        recipientEmail = ownerData.InternalEMailAddress,
-                        username = ownerData.FullName ?? "NO NAME",
-                        applicationId = loanApplication.invln_Name,
-                        applicationUrl = GetLoanApplicationUrl(loanApplication.ToEntityReference()),
-                        subject = $"Application ref no {loanApplication.invln_Name} ISP Reviewed"
-,
-                    }
-                };
+                        templateId = emailTemplate?.invln_templateid,
+                        personalisation = new parameters_INTERNAL_SENT_FOR_APPROVAL_NOTIFICATION()
+                        {
+                            recipientEmail = ownerData.InternalEMailAddress,
+                            username = ownerData.FullName ?? "NO NAME",
+                            applicationId = loanApplication.invln_Name,
+                            applicationUrl = GetLoanApplicationUrl(loanApplication.ToEntityReference()),
+                            subject = subject,
+                        }
+                    };
 
-                var options = new JsonSerializerOptions
+                    var parameters = JsonSerializer.Serialize(govNotParams, SerializerOptions);
+                    TracingService.Trace("SendGovNotifyEmail");
+                    this.SendGovNotifyEmail(loanApplication.OwnerId, loanApplication.ToEntityReference(), subject, parameters, emailTemplate);
+                }
+                else
                 {
-                    Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
-                    WriteIndented = true
-                };
-
-                var parameters = JsonSerializer.Serialize(govNotParams, options);
-                this.SendGovNotifyEmail(loanApplication.OwnerId, loanApplication.ToEntityReference(), $"Application ref no {loanApplication.invln_Name} ISP Reviewed", parameters, emailTemplate);
-
+                    Logger.Warn("emailTemplate is null Mail not send.");
+                }
             }
         }
 

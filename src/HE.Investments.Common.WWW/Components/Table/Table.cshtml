@@ -1,19 +1,6 @@
 @using HE.Investments.Common.WWW.Components.Table
+@using HE.Investments.Common.WWW.Extensions
 @model (IList<TableHeaderViewModel> Headers, IList<TableRowViewModel> Rows)
-
-@{
-    string GetWidthClass(CellWidth width) => width switch
-    {
-        CellWidth.OneHalf => "govuk-!-width-one-half",
-        CellWidth.OneThird => "govuk-!-width-one-third",
-        CellWidth.OneQuarter => "govuk-!-width-one-quarter",
-        CellWidth.OneFifth => "govuk-!-width-one-fifth",
-        CellWidth.OneSixth => "govuk-!-width-one-sixth",
-        CellWidth.OneEighth => "govuk-!-width-one-eighth",
-        CellWidth.Undefined => string.Empty,
-        _ => throw new ArgumentOutOfRangeException(nameof(width), width, null),
-    };
-}
 
 <table class="govuk-table">
     <thead class="govuk-table__head">
@@ -22,8 +9,8 @@
         {
             if (header.IsDisplayed)
             {
-                var headerClass = $"govuk-table__header";
-                headerClass += $" {GetWidthClass(header.Width)}";
+                var headerClass = "govuk-table__header";
+                headerClass += $" {header.Width.GetWidthClass()}";
                 headerClass += header.IsHidden ? " govuk-table__header--hidden" : string.Empty;
                 <th scope="col" class="@headerClass">@header.Title</th>
             }

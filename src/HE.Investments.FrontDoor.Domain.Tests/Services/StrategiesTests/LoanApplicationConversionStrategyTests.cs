@@ -11,6 +11,7 @@ using HE.Investments.FrontDoor.Domain.Tests.Project.TestDataBuilders;
 using HE.Investments.FrontDoor.Domain.Tests.Site.TestDataBuilders;
 using HE.Investments.FrontDoor.Shared.Project;
 using HE.Investments.FrontDoor.Shared.Project.Contract;
+using HE.UtilsService.BannerNotification.Shared;
 using Xunit;
 
 namespace HE.Investments.FrontDoor.Domain.Tests.Services.StrategiesTests;

@@ -6,6 +6,7 @@ using HE.Investments.Common.Messages;
 using HE.Investments.Common.WWW.Components;
 using HE.Investments.Common.WWW.Components.Link;
 using HE.Investments.Common.WWW.Components.Table;
+using HE.Investments.Common.WWW.Enums;
 using HE.Investments.Common.WWW.Extensions;
 using HE.Investments.Common.WWW.Utils;
 using Microsoft.AspNetCore.Mvc;
@@ -33,7 +34,7 @@ public class SitesTable : ViewComponent
                     new(Component: CreateSiteStatusComponent(x)),
                 };
 
-                return new TableRowViewModel(x.Id, tableItems);
+                return new TableRowViewModel(x.Id.Value, tableItems);
             })
             .ToList();
 

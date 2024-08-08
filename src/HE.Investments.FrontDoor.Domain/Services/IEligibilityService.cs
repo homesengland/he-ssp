@@ -1,7 +1,6 @@
-using HE.Investments.Common.Contract.Enum;
 using HE.Investments.Common.Contract.Validators;
 using HE.Investments.FrontDoor.Domain.Project;
-using HE.Investments.FrontDoor.Shared.Project;
+using HE.UtilsService.BannerNotification.Shared;
 
 namespace HE.Investments.FrontDoor.Domain.Services;
 

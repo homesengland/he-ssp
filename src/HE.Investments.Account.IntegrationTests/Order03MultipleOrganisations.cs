@@ -33,7 +33,7 @@ public class Order03MultipleOrganisations : AccountIntegrationTest
             .UrlEndWith(MainPagesUrl.OrganisationList)
             .HasTitle(UserOrganisationsPageTitles.List)
             .HasTotalSummaryCards(1)
-            .HasSummaryCardWithTitle(FreshProfileData.OrganisationName)
+            .HasSummaryCardWithTitle(FreshProfileData.OrganisationName, out _)
             .HasLinkWithTestId("add-another-organisation-link", out var addAnotherOrganisationLink)
             .HasLinkWithTestId("manage-profile-link", out _);
 
@@ -112,8 +112,8 @@ public class Order03MultipleOrganisations : AccountIntegrationTest
             .UrlEndWith(MainPagesUrl.OrganisationList)
             .HasTitle(UserOrganisationsPageTitles.List)
             .HasTotalSummaryCards(2)
-            .HasSummaryCardWithTitle(FreshProfileData.OrganisationName)
-            .HasSummaryCardWithTitle(UserOrganisationsData.SecondaryOrganisationName)
+            .HasSummaryCardWithTitle(FreshProfileData.OrganisationName, out _)
+            .HasSummaryCardWithTitle(UserOrganisationsData.SecondaryOrganisationName, out _)
             .HasLinkWithTestId("add-another-organisation-link", out _)
             .HasLinkWithTestId("manage-profile-link", out _);
     }
@@ -156,8 +156,8 @@ public class Order03MultipleOrganisations : AccountIntegrationTest
             .UrlEndWith(MainPagesUrl.OrganisationList)
             .HasTitle(UserOrganisationsPageTitles.List)
             .HasTotalSummaryCards(2)
-            .HasSummaryCardWithTitle(FreshProfileData.OrganisationName)
-            .HasSummaryCardWithTitle(UserOrganisationsData.SecondaryOrganisationName)
+            .HasSummaryCardWithTitle(FreshProfileData.OrganisationName, out _)
+            .HasSummaryCardWithTitle(UserOrganisationsData.SecondaryOrganisationName, out _)
             .HasLinkWithTestId("add-another-organisation-link", out _)
             .HasLinkWithTestId("manage-profile-link", out _);
     }

@@ -16,6 +16,7 @@ using HE.Investments.Common.WWW.Config;
 using HE.Investments.Common.WWW.Infrastructure.Authorization;
 using HE.Investments.Common.WWW.Infrastructure.ErrorHandling;
 using HE.Investments.Common.WWW.Infrastructure.Middlewares;
+using HE.UtilsService.BannerNotification.Shared;
 
 namespace HE.Investments.Account.WWW.Config;
 

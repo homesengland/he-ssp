@@ -47,6 +47,7 @@ public class SiteRepository : ISiteRepository
         return new SiteBasicInfo(
             site.Id,
             site.Name,
+            site.Status,
             site.FrontDoorProjectId,
             site.FrontDoorSiteId,
             site.LandAcquisitionStatus,

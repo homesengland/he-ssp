@@ -1,13 +1,11 @@
 using HE.Investments.Account.Shared;
-using HE.Investments.Common.Contract.Enum;
 using HE.Investments.Common.Contract.Exceptions;
 using HE.Investments.Common.Contract.Validators;
 using HE.Investments.Common.Messages;
 using HE.Investments.FrontDoor.Domain.Project;
-using HE.Investments.FrontDoor.Domain.Project.Repository;
 using HE.Investments.FrontDoor.Domain.Services.Strategies;
 using HE.Investments.FrontDoor.Domain.Site.Repository;
-using HE.Investments.FrontDoor.Shared.Project;
+using HE.UtilsService.BannerNotification.Shared;
 using Microsoft.Extensions.Logging;
 
 namespace HE.Investments.FrontDoor.Domain.Services;

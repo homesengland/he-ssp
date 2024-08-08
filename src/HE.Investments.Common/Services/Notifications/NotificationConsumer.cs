@@ -1,5 +1,7 @@
 using HE.Investments.Common.Contract.Enum;
 using HE.Investments.Common.Infrastructure.Cache.Interfaces;
+using HE.Investments.Common.User;
+using HE.UtilsService.BannerNotification.Shared;
 
 namespace HE.Investments.Common.Services.Notifications;
 
@@ -15,11 +17,12 @@ internal sealed class NotificationConsumer : INotificationConsumer
         ICacheService cacheService,
         INotificationKeyFactory notificationKeyFactory,
         IEnumerable<IDisplayNotificationFactory> displayNotificationFactories,
-        ApplicationType application)
+        ApplicationType application,
+        IUserContext userContext)
     {
         _cacheService = cacheService;
         _displayNotificationFactories = displayNotificationFactories.ToDictionary(x => x.HandledNotificationType, x => x);
-        _userNotificationKey = notificationKeyFactory.CreateKey(application);
+        _userNotificationKey = notificationKeyFactory.KeyForUser(userContext.UserGlobalId, application);
     }
 
     public DisplayNotification? Pop()

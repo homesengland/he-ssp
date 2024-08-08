@@ -1,7 +1,7 @@
 using System.Globalization;
 using AngleSharp.Html.Dom;
 using HE.Investment.AHP.Contract.Application;
-using HE.Investment.AHP.Contract.Project;
+using HE.Investments.AHP.ProjectDashboard.Contract.Project;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Pagination;
 using HE.Investments.Common.Extensions;

@@ -1,4 +1,4 @@
-using HE.Investment.AHP.Contract.Project.Queries;
+using HE.Investments.AHP.ProjectDashboard.Contract.Project.Queries;
 using HE.Investments.Common.Contract.Pagination;
 using HE.Investments.Consortium.Shared.Authorization;
 using MediatR;

@@ -18,6 +18,8 @@ ENV VSS_NUGET_EXTERNAL_FEED_ENDPOINTS \
 WORKDIR /src
 COPY ["HE.UtilsService.Api/HE.UtilsService.Api.csproj", "HE.UtilsService.Api/"]
 COPY ["HE.UtilsService.SharePoint/HE.UtilsService.SharePoint.csproj", "HE.UtilsService.SharePoint/"]
+COPY ["HE.UtilsService.BannerNotification/HE.UtilsService.BannerNotification.csproj", "HE.UtilsService.BannerNotification/"]
+COPY ["HE.UtilsService.BannerNotification.Shared/HE.UtilsService.BannerNotification.Shared.csproj", "HE.UtilsService.BannerNotification.Shared/"]
 RUN dotnet restore "./HE.UtilsService.Api/HE.UtilsService.Api.csproj"
 COPY . .
 WORKDIR "/src/HE.UtilsService.Api"

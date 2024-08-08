@@ -20,6 +20,7 @@ using HE.Investments.FrontDoor.WWW.Models;
 using HE.Investments.FrontDoor.WWW.Models.Factories;
 using HE.Investments.FrontDoor.WWW.Workflows;
 using HE.Investments.Organisation.LocalAuthorities.ValueObjects;
+using HE.UtilsService.BannerNotification.Shared;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

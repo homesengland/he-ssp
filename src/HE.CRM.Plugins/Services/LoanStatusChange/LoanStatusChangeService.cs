@@ -46,6 +46,7 @@ namespace HE.CRM.Plugins.Services.LoanStatusChange
 
         public void SendNotificationOnLoanStatusChangeCreate(invln_Loanstatuschange target)
         {
+            TracingService.Trace("SendNotificationOnLoanStatusChangeCreate");
             if (target.invln_changesource != null)
             {
                 var loanApplication = _loanApplicationRepository.GetById(target.invln_Loanapplication.Id, new string[] { nameof(invln_Loanapplication.OwnerId).ToLower(), nameof(invln_Loanapplication.invln_Name).ToLower(), nameof(invln_Loanapplication.invln_Contact).ToLower() });

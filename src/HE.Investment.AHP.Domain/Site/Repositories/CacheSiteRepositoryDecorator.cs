@@ -85,6 +85,7 @@ internal sealed class CacheSiteRepositoryDecorator : ISiteRepository
         {
             Id = entity.Id.ToGuidAsString(),
             Name = entity.Name.Value,
+            Status = entity.Status,
             ProjectId = entity.FrontDoorProjectId?.Value,
             SiteId = entity.FrontDoorSiteId?.Value,
             AcquisitionStatus = entity.LandAcquisitionStatus.Value,
@@ -103,6 +104,7 @@ internal sealed class CacheSiteRepositoryDecorator : ISiteRepository
         return new SiteBasicInfo(
             SiteId.From(dto.Id),
             new SiteName(dto.Name),
+            dto.Status,
             FrontDoorProjectId.Create(dto.ProjectId),
             FrontDoorSiteId.Create(dto.SiteId),
             new LandAcquisitionStatus(dto.AcquisitionStatus),
@@ -115,6 +117,8 @@ internal sealed class CacheSiteRepositoryDecorator : ISiteRepository
         public string Id { get; set; }
 
         public string Name { get; set; }
+
+        public SiteStatus Status { get; set; }
 
         public string? ProjectId { get; set; }
 

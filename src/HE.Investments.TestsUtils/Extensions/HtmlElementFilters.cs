@@ -1,12 +1,12 @@
 using AngleSharp.Dom;
-using AngleSharp.Html.Dom;
 using FluentAssertions;
 
 namespace HE.Investments.TestsUtils.Extensions;
 
 public static class HtmlElementFilters
 {
-    public static List<IElement> WithText(IList<IElement> elements, string? text = null)
+    public static List<TElement> WithText<TElement>(IList<TElement> elements, string? text = null)
+        where TElement : IElement
     {
         if (!string.IsNullOrEmpty(text))
         {

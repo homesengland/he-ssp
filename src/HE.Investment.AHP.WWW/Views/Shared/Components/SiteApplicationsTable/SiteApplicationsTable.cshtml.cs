@@ -1,7 +1,7 @@
 using System.Globalization;
 using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.WWW.Controllers;
-using HE.Investments.AHP.Allocation.Contract.Site;
+using HE.Investments.AHP.ProjectDashboard.Contract.Site;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Messages;
@@ -9,6 +9,7 @@ using HE.Investments.Common.WWW.Components;
 using HE.Investments.Common.WWW.Components.ApplicationStatusTagComponent;
 using HE.Investments.Common.WWW.Components.Link;
 using HE.Investments.Common.WWW.Components.Table;
+using HE.Investments.Common.WWW.Enums;
 using HE.Investments.Common.WWW.Extensions;
 using HE.Investments.Common.WWW.Utils;
 using Microsoft.AspNetCore.Mvc;
@@ -23,8 +24,8 @@ public class SiteApplicationsTable : ViewComponent
         {
             new("Application name", CellWidth.OneThird),
             new("Tenure"),
-            new("No of homes"),
-            new("Status"),
+            new("No of homes", CellWidth.OneFifth),
+            new("Status", CellWidth.OneFifth),
         };
 
         var organisationId = Request.GetOrganisationIdFromRoute();
