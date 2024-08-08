@@ -44,7 +44,8 @@ public class GetProjectAllocationsQueryHandler : IRequestHandler<GetProjectAlloc
                 x.Name,
                 x.Tenure,
                 x.HousesToDeliver,
-                x.LocalAuthorityName))
+                x.LocalAuthorityName,
+                x.HasMilestoneInDueState))
             .ToList();
 
         return new ProjectAllocationsModel(

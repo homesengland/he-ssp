@@ -8,14 +8,19 @@ internal sealed class RequestCacheProjectAllocationCrmContextDecorator : IProjec
 {
     private readonly IProjectAllocationCrmContext _decorated;
 
-    private readonly InMemoryCache<AhpProjectDto, string> _cache = new();
+    private readonly InMemoryCache<ProjectWithAllocationListDto, string> _cache = new();
 
     public RequestCacheProjectAllocationCrmContextDecorator(IProjectAllocationCrmContext decorated)
     {
         _decorated = decorated;
     }
 
-    public async Task<AhpProjectDto> GetProjectAllocations(string projectId, string userId, string organisationId, string? consortiumId, CancellationToken cancellationToken)
+    public async Task<ProjectWithAllocationListDto> GetProjectAllocations(
+        string projectId,
+        string userId,
+        string organisationId,
+        string? consortiumId,
+        CancellationToken cancellationToken)
     {
         return (await _cache.GetFromCache(
             $"{projectId.ToGuidAsString()}_{userId}",

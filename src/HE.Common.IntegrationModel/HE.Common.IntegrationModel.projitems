@@ -38,6 +38,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)PortalIntegrationModel\PagingRequestDto.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)PortalIntegrationModel\PhaseClaimsDto.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)PortalIntegrationModel\ProgrammeDto.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)PortalIntegrationModel\ProjectWithAllocationListDto.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)PortalIntegrationModel\SiteDetailsDto.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)PortalIntegrationModel\SiteDto.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)PortalIntegrationModel\UserAccountDto.cs" />
