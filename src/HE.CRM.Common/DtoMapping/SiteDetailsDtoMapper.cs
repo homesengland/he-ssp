@@ -65,6 +65,7 @@ namespace HE.CRM.Common.DtoMapping
             if (heLocalAuthority != null)
             {
                 siteDetailToReturn.invln_HeLocalAuthorityId = heLocalAuthority.ToEntityReference();
+                siteDetailToReturn.invln_HERegion = new OptionSetValue(heLocalAuthority.he_laregion.Value);
             }
 
             if (localAuthority != null)
