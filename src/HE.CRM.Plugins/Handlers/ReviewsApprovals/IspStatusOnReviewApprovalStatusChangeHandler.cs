@@ -1,11 +1,5 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using DataverseModel;
 using HE.Base.Plugins.Handlers;
-using HE.CRM.Plugins.Services.LoanStatusChange;
 using HE.CRM.Plugins.Services.ReviewsApprovals;
 
 namespace HE.CRM.Plugins.Handlers.ReviewsApprovals
@@ -18,7 +12,9 @@ namespace HE.CRM.Plugins.Handlers.ReviewsApprovals
         private invln_reviewapproval PostImage => ExecutionData.PostImage;
 
         #endregion
+
         #region Base Methods Overrides
+
         public override bool CanWork()
         {
             return Target != null;
