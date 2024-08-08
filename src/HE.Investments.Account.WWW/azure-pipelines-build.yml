@@ -48,6 +48,8 @@ variables:
 pool:
   vmImage: 'ubuntu-22.04'
 
+name: $(buildMajor).$(buildMinor).$(Rev:r)-$(buildBranch)
+
 resources:
   repositories:
   - repository: he-invst-deployment
