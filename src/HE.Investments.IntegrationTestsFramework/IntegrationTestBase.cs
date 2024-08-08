@@ -1,10 +1,11 @@
+using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Text;
 using AngleSharp.Html.Dom;
 using HE.Investments.IntegrationTestsFramework.Config;
 using HE.Investments.IntegrationTestsFramework.Utils;
 using HE.Investments.TestsUtils.Extensions;
-using Microsoft.FeatureManagement;
 using Xunit;
 
 namespace HE.Investments.IntegrationTestsFramework;
@@ -113,6 +114,34 @@ public class IntegrationTestBase<TProgram> : IAsyncLifetime
     protected T? GetSharedDataOrNull<T>(string key)
     {
         return _fixture.DataBag.TryGetValue(key, out var data) ? (T)data : default;
+    }
+
+    [SuppressMessage("Design", "CA1031", Justification = "We want to catch all exceptions and retry check within some time")]
+    protected async Task<TimeSpan> WaitFor(Func<Task<bool>> waitCondition, TimeSpan timeout, TimeSpan? refreshDelay = null)
+    {
+        var stopwatch = Stopwatch.StartNew();
+        while (true)
+        {
+            var errorDetails = "no details";
+            try
+            {
+                if (await waitCondition())
+                {
+                    return stopwatch.Elapsed;
+                }
+            }
+            catch (Exception ex)
+            {
+                errorDetails = ex.Message;
+            }
+
+            await Task.Delay(refreshDelay ?? TimeSpan.FromSeconds(1));
+
+            if (stopwatch.Elapsed > timeout)
+            {
+                throw new TimeoutException($"Wait condition did not become true within the timeout of {timeout.TotalSeconds} seconds, {errorDetails}.");
+            }
+        }
     }
 
     protected async Task<IHtmlDocument> TestQuestionPage(

@@ -163,10 +163,14 @@ public static class HtmlDocumentOtherExtensions
         return htmlDocument;
     }
 
-    public static IHtmlDocument HasSummaryCardWithTitle(this IHtmlDocument htmlDocument, string title)
+    public static IHtmlDocument HasSummaryCardWithTitle(this IHtmlDocument htmlDocument, string title, out IElement summaryCard)
     {
         var summaryCardsTitles = htmlDocument.GetElementsByClassName("govuk-summary-card__title");
-        summaryCardsTitles.Should().Contain(x => x.TextContent.Contains(title), $"There is no summary card with title: '{title}'");
+        var summaryCardTitle = summaryCardsTitles.FirstOrDefault(x => x.TextContent.Contains(title));
+
+        summaryCardTitle.Should().NotBeNull($"There is no summary card with title: '{title}'");
+
+        summaryCard = htmlDocument.GetElementsByClassName("govuk-summary-card").Single(x => x.IsAncestorOf(summaryCardTitle!));
 
         return htmlDocument;
     }

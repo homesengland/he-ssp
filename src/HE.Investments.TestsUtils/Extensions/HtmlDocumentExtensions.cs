@@ -1,10 +1,7 @@
-using System.Globalization;
-using System.Text;
 using System.Web;
 using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
 using FluentAssertions;
-using HE.Investments.Common.Extensions;
 using HE.Investments.TestsUtils.Helpers;
 
 namespace HE.Investments.TestsUtils.Extensions;
@@ -146,25 +143,7 @@ public static class HtmlDocumentExtensions
 
     public static IDictionary<string, SummaryItem> GetSummaryListItems(this IHtmlDocument htmlDocument)
     {
-        var summaryRows = htmlDocument.GetElementsByClassName("govuk-summary-list__row");
-        var dictionary = new Dictionary<string, SummaryItem>();
-        var duplicateKeyCounter = 1;
-        foreach (var summaryRow in summaryRows)
-        {
-            var key = summaryRow.GetElementsByClassName("govuk-summary-list__key").Single().InnerHtml.Trim();
-            var header = summaryRow.Parent?.PreviousSibling?.PreviousSibling?.Text().Trim() ?? string.Empty;
-            var value = GetValueFor(summaryRow);
-            var link = summaryRow.QuerySelector<IHtmlAnchorElement>(".govuk-summary-list__actions a");
-            var item = new SummaryItem(header, key, value, link);
-
-            if (!dictionary.TryAdd(key, item))
-            {
-                dictionary[$"{(header.IsProvided() ? header : duplicateKeyCounter.ToString(CultureInfo.InvariantCulture))} - {key}"] = item;
-                duplicateKeyCounter++;
-            }
-        }
-
-        return dictionary;
+        return htmlDocument.Body!.GetSummaryListItems();
     }
 
     public static string NotificationMessage(this IHtmlDocument htmlDocument)
@@ -275,34 +254,5 @@ public static class HtmlDocumentExtensions
         insetText.Should().NotBeNull("Inset text does not exist");
 
         return insetText!.InnerHtml.Trim();
-    }
-
-    private static string GetValueFor(IElement summaryRow)
-    {
-        var valueRow = summaryRow.GetElementsByClassName("govuk-summary-list__value").SingleOrDefault();
-
-        var valueBuilder = new StringBuilder();
-        if (valueRow?.Children.Length > 1)
-        {
-            foreach (var child in valueRow.Children)
-            {
-                valueBuilder.AppendLine(child.TextContent.Trim());
-            }
-        }
-        else if (valueRow?.Children.Length == 1)
-        {
-            valueBuilder.Append(valueRow.LastElementChild!.InnerHtml.Trim());
-        }
-        else if (!string.IsNullOrEmpty(valueRow?.InnerHtml))
-        {
-            valueBuilder.Append(valueRow!.InnerHtml);
-        }
-        else
-        {
-            return string.Empty;
-        }
-
-        var value = valueBuilder.ToString();
-        return HttpUtility.HtmlDecode(value);
     }
 }

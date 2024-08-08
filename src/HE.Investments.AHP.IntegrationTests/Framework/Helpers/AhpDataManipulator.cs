@@ -22,7 +22,7 @@ public class AhpDataManipulator
         _ahpCrmContext = ahpCrmContext;
     }
 
-    public async Task<string> CreateAhpAllocation(
+    public async Task<string> CreateAhpApplication(
         ILoginData loginData,
         SiteData siteData,
         FinancialDetailsData financialDetailsData,
@@ -31,11 +31,11 @@ public class AhpDataManipulator
         DeliveryPhasesData deliveryPhasesData,
         AllocationData allocationData)
     {
-        var allocationId = await CreateAllocation(loginData, siteData, financialDetailsData, schemeInformationData, allocationData.AllocationName);
-        await AddHomeTypes(loginData, allocationId, homeTypesData, schemeInformationData);
-        await AddDeliveryPhases(loginData, allocationId, deliveryPhasesData, homeTypesData, schemeInformationData);
+        var applicationId = await CreateApplication(loginData, siteData, financialDetailsData, schemeInformationData, allocationData.AllocationName);
+        await AddHomeTypes(loginData, applicationId, homeTypesData, schemeInformationData);
+        await AddDeliveryPhases(loginData, applicationId, deliveryPhasesData, homeTypesData, schemeInformationData);
 
-        return allocationId;
+        return applicationId;
     }
 
     public async Task MakeSiteUsableForAllocation(ILoginData loginData, SiteData siteData)
@@ -55,7 +55,7 @@ public class AhpDataManipulator
         await _ahpCrmContext.SaveAhpSite(dto, loginData, CancellationToken.None);
     }
 
-    private async Task<string> CreateAllocation(
+    private async Task<string> CreateApplication(
         ILoginData loginData,
         SiteData siteData,
         FinancialDetailsData financialDetailsData,
@@ -106,7 +106,6 @@ public class AhpDataManipulator
             representationsandwarranties = true,
             schemeInformationSectionCompletionStatus = (int)invln_Sectioncompletionstatus.Completed,
             tenure = (int)invln_Tenure.Affordablerent,
-            isAllocation = true,
         };
         var applicationId = await _ahpCrmContext.SaveAhpApplication(applicationDto, loginData, CancellationToken.None);
 

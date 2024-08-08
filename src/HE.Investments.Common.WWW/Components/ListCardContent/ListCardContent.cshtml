@@ -1,3 +1,6 @@
+@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Headings
+@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Paragraphs
+@using HE.Investments.Common.WWW.Extensions
 @model HE.Investments.Common.WWW.Components.ListCard.ListCardModel
 @{
     var hasPaging = !string.IsNullOrEmpty(Model.ViewAllUrl);
@@ -6,7 +9,7 @@
     var restItemsCount = Model.Items.Count - itemsToDisplayCount;
 }
 
-<div class="govuk-summary-card__content-item">
+<div class="govuk-summary-card__content-item" data-testid="@(Model.Title?.ToIdTag() ?? "unknown")-card-section">
     @if (!string.IsNullOrEmpty(Model.Title))
     {
         <gds-h3 size="ControlSize.S">@Model.Title</gds-h3>
@@ -23,7 +26,7 @@
             <div class="govuk-summary-list__row">
                 <dt class="govuk-summary-list__key">
                     <strong>
-                        <a href="@item.Url">@item.Name</a>
+                        <a class="govuk-link" href="@item.Url">@item.Name</a>
                     </strong>
                 </dt>
                 @if (@item.StatusComponent != null)
