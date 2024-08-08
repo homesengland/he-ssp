@@ -1,4 +1,4 @@
-namespace HE.UtilsService.BannerNotification.Contract;
+namespace HE.UtilsService.BannerNotification.Shared;
 
 public enum ApplicationType
 {
