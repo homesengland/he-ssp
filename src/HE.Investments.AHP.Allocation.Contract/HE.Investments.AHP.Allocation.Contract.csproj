@@ -14,8 +14,4 @@
   <ProjectReference Include="..\HE.Investments.Common\HE.Investments.Common.csproj"/>
 </ItemGroup>
 
-<ItemGroup>
-  <Folder Include="Project\" />
-</ItemGroup>
-
 </Project>
