@@ -1,4 +1,6 @@
 using HE.UtilsService.Api.Configuration;
+using HE.UtilsService.BannerNotification.Configuration;
+using HE.UtilsService.BannerNotification.Storage.Redis;
 using HE.UtilsService.SharePoint.Configuration;
 using Microsoft.Extensions.Options;
 
@@ -10,5 +12,7 @@ public static class ServiceCollectionExtension
     {
         services.AddSingleton<IAppConfig>(x => x.GetRequiredService<IOptions<AppConfig>>().Value);
         services.AddSingleton<ISharePointConfiguration>(x => x.GetRequiredService<IAppConfig>().SharePoint);
+        services.AddSingleton<INotificationConfig>(x => x.GetRequiredService<IAppConfig>().Notification);
+        services.AddSingleton<IRedisConfig>(x => x.GetRequiredService<IAppConfig>().Notification);
     }
 }
