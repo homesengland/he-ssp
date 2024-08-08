@@ -59,7 +59,7 @@ resources:
   - repository: templates
     type: git
     name: 'Cloud Hosting Service/Templates'
-    ref: 'master'
+    ref: 'feature/trivyScanPath'
 
 stages:
 - template: portal-deployment-pipelines/azure-pipelines-account-mgmt-portal-build.yml@he-invst-deployment
