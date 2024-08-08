@@ -4,11 +4,12 @@ using FluentAssertions;
 using HE.Investment.AHP.WWW.Views.AllocationClaims.Const;
 using HE.Investments.AHP.IntegrationTests.AreaTests.O02Allocation.Consts;
 using HE.Investments.AHP.IntegrationTests.AreaTests.O02Allocation.Data.Phase;
+using HE.Investments.AHP.IntegrationTests.AreaTests.O02Allocation.Extensions;
 using HE.Investments.AHP.IntegrationTests.AreaTests.O02Allocation.Helpers;
 using HE.Investments.AHP.IntegrationTests.AreaTests.O02Allocation.Pages;
 using HE.Investments.AHP.IntegrationTests.Framework;
 using HE.Investments.Common.Contract;
-using HE.Investments.Common.Extensions;
+using HE.Investments.IntegrationTestsFramework.Assertions;
 using HE.Investments.TestsUtils.Extensions;
 using Xunit;
 using Xunit.Abstractions;
@@ -30,26 +31,28 @@ public class Order02ManageClaims : AhpIntegrationTest
 
     [Fact(Skip = AhpConfig.SkipTest)]
     [Order(1)]
-    public async Task Order01_ShouldDisplayClaimsSummaryWithData()
+    public async Task Order01_ShouldDisplayClaimsSummary()
     {
-        // given & when
-        var summaryPage = await TestClient.NavigateTo(ClaimsPagesUrl.Summary(UserOrganisationData.OrganisationId, AllocationData.AllocationId));
-        var phaseSummary = summaryPage.GetSummaryListItems();
-
-        // then
+        // given
+        var summaryPage = await GetCurrentPage(ClaimsPagesUrl.Summary(UserOrganisationData.OrganisationId, AllocationData.AllocationId));
         summaryPage
             .UrlEndWith(ClaimsPagesUrl.Summary(UserOrganisationData.OrganisationId, AllocationData.AllocationId))
             .HasTitle(ClaimPageTitles.Summary)
             .HasTitleCaption(AllocationData.AllocationName)
             .HasReturnToAllocationLink()
-            .HasSummaryCardWithTitle(PhaseData.PhaseName)
-            .HasGrantDetails(AllocationData.TotalGrantAllocated, AllocationData.AmountPaid, AllocationData.AmountRemaining);
+            .HasGrantDetails(AllocationData.TotalGrantAllocated, AllocationData.AmountPaid, AllocationData.AmountRemaining)
+            .HasSummaryCardWithTitle(PhaseData.PhaseName, out var phaseSummaryCard);
+        phaseSummaryCard.HasLinkWithText("View phase", out _);
 
-        phaseSummary[PhaseFields.NumberOfHomes].Value.Should().Be(PhaseData.NumberOfHomes.ToString(CultureInfo.InvariantCulture));
-        phaseSummary[PhaseFields.BuildActivityType].Value.Should().Be(PhaseData.BuildActivityType.GetDescription());
-        phaseSummary[PhaseFields.AcquisitionForecastClaimDate].Value.Should().Be(PhaseData.AcquisitionForecastClaimDate.ToFormattedDateString());
-        phaseSummary[PhaseFields.StartOnSiteForecastClaimDate].Value.Should().Be(PhaseData.StartOnSiteForecastClaimDate.ToFormattedDateString());
-        phaseSummary[PhaseFields.CompletionForecastClaimDate].Value.Should().Be(PhaseData.CompletionForecastClaimDate.ToFormattedDateString());
+        // when
+        var phaseSummary = phaseSummaryCard.GetSummaryListItems();
+
+        // then
+        phaseSummary.Should().ContainKey(PhaseFields.NumberOfHomes).WithValue(PhaseData.NumberOfHomes.ToString(CultureInfo.InvariantCulture));
+        phaseSummary.Should().ContainKey(PhaseFields.BuildActivityType).WithValue(PhaseData.BuildActivityType);
+        phaseSummary.Should().ContainKey(PhaseFields.AcquisitionForecastClaimDate).WithValue(PhaseData.AcquisitionForecastClaimDate);
+        phaseSummary.Should().ContainKey(PhaseFields.StartOnSiteForecastClaimDate).WithValue(PhaseData.StartOnSiteForecastClaimDate);
+        phaseSummary.Should().ContainKey(PhaseFields.CompletionForecastClaimDate).WithValue(PhaseData.CompletionForecastClaimDate);
 
         SaveCurrentPage();
     }
@@ -59,16 +62,18 @@ public class Order02ManageClaims : AhpIntegrationTest
     public async Task Order02_ShouldProceedToPhaseClaimsOverview()
     {
         // given
-        var summaryPage =
-            await GetCurrentPage(ClaimsPagesUrl.Summary(UserOrganisationData.OrganisationId, AllocationData.AllocationId));
-        var phaseOverviewLink = summaryPage
-            .UrlWithoutQueryEndsWith(ClaimsPagesUrl.Summary(UserOrganisationData.OrganisationId, AllocationData.AllocationId))
-            .HasTitleCaption(AllocationData.AllocationName)
-            .GetLinkByTestId($"view-phase-{ShortGuid.FromString(PhaseData.PhaseId).Value}-link");
+        var summaryPage = await GetCurrentPage(ClaimsPagesUrl.Summary(UserOrganisationData.OrganisationId, AllocationData.AllocationId));
+        summaryPage
+            .UrlEndWith(ClaimsPagesUrl.Summary(UserOrganisationData.OrganisationId, AllocationData.AllocationId))
+            .HasTitle(ClaimPageTitles.Summary)
+            .HasSummaryCardWithTitle(PhaseData.PhaseName, out var summaryCard);
+        summaryCard.HasLinkWithText("View phase", out var phaseOverviewLink);
+
+        var phaseId = phaseOverviewLink.ExtractParameter("phaseId", ClaimsPagesUrl.Overview(string.Empty, string.Empty, "{phaseId}"));
+        PhaseData.SetPhaseId(phaseId);
 
         // when
         var overviewPage = await TestClient.NavigateTo(phaseOverviewLink);
-        var milestoneSummary = overviewPage.GetSummaryListItems();
 
         // then
         overviewPage
@@ -79,19 +84,33 @@ public class Order02ManageClaims : AhpIntegrationTest
             .HasTitle(ClaimPageTitles.MilestoneOverview(PhaseData.PhaseName))
             .HasTitleCaption(AllocationData.AllocationName)
             .HasReturnToAllocationLink()
-            .HasSummaryCardWithTitle("Acquisition milestone")
-            .HasSummaryCardWithTitle("Start on site milestone")
-            .HasSummaryCardWithTitle("Practical completion milestone");
+            .HasSummaryCardWithTitle("Acquisition milestone", out var acquisitionSummaryCard)
+            .HasSummaryCardWithTitle("Start on site milestone", out var startOnSiteSummaryCard)
+            .HasSummaryCardWithTitle("Practical completion milestone", out var completionSummaryCard);
 
-        milestoneSummary[MilestoneFields.AmountOfGrantApportioned()].Value.Should().BePoundsOnly(PhaseData.AcquisitionAmountOfGrantApportioned);
-        milestoneSummary[MilestoneFields.PercentageOfGrantApportioned()].Value.Should().Be(PhaseData.AcquisitionPercentageOfGrantApportioned);
-        milestoneSummary[MilestoneFields.ForecastClaimDate()].Value.Should().Be(PhaseData.AcquisitionForecastClaimDate.ToFormattedDateString());
-        milestoneSummary[MilestoneFields.AmountOfGrantApportioned("1")].Value.Should().BePoundsOnly(PhaseData.StartOnSiteAmountOfGrantApportioned);
-        milestoneSummary[MilestoneFields.PercentageOfGrantApportioned("2")].Value.Should().Be(PhaseData.StartOnSitePercentageOfGrantApportioned);
-        milestoneSummary[MilestoneFields.ForecastClaimDate("3")].Value.Should().Be(PhaseData.StartOnSiteForecastClaimDate.ToFormattedDateString());
-        milestoneSummary[MilestoneFields.AmountOfGrantApportioned("4")].Value.Should().BePoundsOnly(PhaseData.CompletionAmountOfGrantApportioned);
-        milestoneSummary[MilestoneFields.PercentageOfGrantApportioned("5")].Value.Should().Be(PhaseData.CompletionPercentageOfGrantApportioned);
-        milestoneSummary[MilestoneFields.ForecastClaimDate("6")].Value.Should().Be(PhaseData.CompletionForecastClaimDate.ToFormattedDateString());
+        var acquisitionSummary = acquisitionSummaryCard.GetSummaryListItems();
+        acquisitionSummary.Should()
+            .ContainKey(MilestoneFields.AmountOfGrantApportioned)
+            .WhoseValue.Value.Should()
+            .BePoundsOnly(PhaseData.AcquisitionAmountOfGrantApportioned);
+        acquisitionSummary.Should().ContainKey(MilestoneFields.PercentageOfGrantApportioned).WithValue(PhaseData.AcquisitionPercentageOfGrantApportioned);
+        acquisitionSummary.Should().ContainKey(MilestoneFields.ForecastClaimDate).WithValue(PhaseData.AcquisitionForecastClaimDate);
+
+        var startOnSiteSummary = startOnSiteSummaryCard.GetSummaryListItems();
+        startOnSiteSummary.Should()
+            .ContainKey(MilestoneFields.AmountOfGrantApportioned)
+            .WhoseValue.Value.Should()
+            .BePoundsOnly(PhaseData.StartOnSiteAmountOfGrantApportioned);
+        startOnSiteSummary.Should().ContainKey(MilestoneFields.PercentageOfGrantApportioned).WithValue(PhaseData.StartOnSitePercentageOfGrantApportioned);
+        startOnSiteSummary.Should().ContainKey(MilestoneFields.ForecastClaimDate).WithValue(PhaseData.StartOnSiteForecastClaimDate);
+
+        var completionSummary = completionSummaryCard.GetSummaryListItems();
+        completionSummary.Should()
+            .ContainKey(MilestoneFields.AmountOfGrantApportioned)
+            .WhoseValue.Value.Should()
+            .BePoundsOnly(PhaseData.CompletionAmountOfGrantApportioned);
+        completionSummary.Should().ContainKey(MilestoneFields.PercentageOfGrantApportioned).WithValue(PhaseData.CompletionPercentageOfGrantApportioned);
+        completionSummary.Should().ContainKey(MilestoneFields.ForecastClaimDate).WithValue(PhaseData.CompletionForecastClaimDate);
 
         SaveCurrentPage();
     }

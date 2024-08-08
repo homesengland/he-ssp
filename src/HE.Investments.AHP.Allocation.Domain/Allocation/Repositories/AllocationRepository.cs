@@ -48,17 +48,18 @@ public class AllocationRepository : IAllocationRepository
     {
         var organisation = userAccount.SelectedOrganisation();
         var organisationId = organisation.OrganisationId.ToGuidAsString();
-        var allocation = await _allocationCrmContext.GetById(id.ToGuidAsString(), organisationId, userAccount.UserGlobalId.ToString(), cancellationToken);
+        var allocation = await _allocationCrmContext.GetAllocationClaims(id.ToGuidAsString(), organisationId, userAccount.UserGlobalId.ToString(), cancellationToken);
 
         return await CreateEntity(allocation, organisation, cancellationToken);
     }
 
     public async Task<AllocationOverview> GetOverview(AllocationId id, ConsortiumUserAccount userAccount, CancellationToken cancellationToken)
     {
-        // TODO: Change method after #103595
-        var organisationId = userAccount.SelectedOrganisationId().ToGuidAsString();
-        var allocationDto = await _allocationCrmContext.GetById(id.ToGuidAsString(), organisationId, userAccount.UserGlobalId.ToString(), cancellationToken);
-
+        var allocationDto = await _allocationCrmContext.GetAllocation(
+            id.ToGuidAsString(),
+            userAccount.SelectedOrganisationId().ToGuidAsString(),
+            userAccount.UserGlobalId.ToString(),
+            cancellationToken);
         var programme = await _mediator.Send(new GetProgrammeQuery(ProgrammeId.From(allocationDto.ProgrammeId)), cancellationToken);
         var allocationBasicInfo = new Contract.AllocationBasicInfo(
             AllocationId.From(allocationDto.Id),
@@ -70,11 +71,14 @@ public class AllocationRepository : IAllocationRepository
 
         return new AllocationOverview(
             allocationBasicInfo,
-            new ModificationDetails("Carq", "Power", DateTime.Now),
-            true,
-            userAccount.SelectedOrganisation().RegisteredCompanyName,
-            string.Empty,
-            false);
+            new ModificationDetails(
+                allocationDto.LastExternalModificationBy?.firstName,
+                allocationDto.LastExternalModificationBy?.lastName,
+                allocationDto.LastExternalModificationOn),
+            true, // TODO: AB#104786 use allocationDto.IsInContract when flag will be set in Integration Tests
+            allocationDto.OrganisationName,
+            allocationDto.FDProjectId,
+            allocationDto.HasDraftAllocation);
     }
 
     private async Task<AllocationEntity> CreateEntity(AllocationClaimsDto allocationDto, OrganisationBasicInfo organisation, CancellationToken cancellationToken)

@@ -9,9 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HE.UtilsService.SharePoint"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HE.UtilsService.SharePoint.Tests", "HE.UtilsService.SharePoint.Tests\HE.UtilsService.SharePoint.Tests.csproj", "{447429F7-D228-4D63-8A52-ABBDB7014656}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HE.UtilsService.SharePoint.TestApp", "HE.UtilsService.SharePoint.TestApp\HE.UtilsService.SharePoint.TestApp.csproj", "{434A0615-08C5-4842-B425-020B900D2A0E}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HE.UtilsService.BannerNotification", "HE.UtilsService.BannerNotification\HE.UtilsService.BannerNotification.csproj", "{B09F2913-B3CA-4D4E-AE8F-466A6B8471FE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HE.UtilsService.BannerNotification.Shared", "HE.UtilsService.BannerNotification.Shared\HE.UtilsService.BannerNotification.Shared.csproj", "{1DD10F65-8917-43E5-A3B9-EE6125F5BD99}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,14 +31,14 @@ Global
 		{447429F7-D228-4D63-8A52-ABBDB7014656}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{447429F7-D228-4D63-8A52-ABBDB7014656}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{447429F7-D228-4D63-8A52-ABBDB7014656}.Release|Any CPU.Build.0 = Release|Any CPU
-		{434A0615-08C5-4842-B425-020B900D2A0E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{434A0615-08C5-4842-B425-020B900D2A0E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{434A0615-08C5-4842-B425-020B900D2A0E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{434A0615-08C5-4842-B425-020B900D2A0E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B09F2913-B3CA-4D4E-AE8F-466A6B8471FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B09F2913-B3CA-4D4E-AE8F-466A6B8471FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B09F2913-B3CA-4D4E-AE8F-466A6B8471FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B09F2913-B3CA-4D4E-AE8F-466A6B8471FE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1DD10F65-8917-43E5-A3B9-EE6125F5BD99}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1DD10F65-8917-43E5-A3B9-EE6125F5BD99}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1DD10F65-8917-43E5-A3B9-EE6125F5BD99}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1DD10F65-8917-43E5-A3B9-EE6125F5BD99}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

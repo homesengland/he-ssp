@@ -30,6 +30,6 @@ public sealed class AllocationBasicInfoMapper : IAllocationBasicInfoMapper
             new LocalAuthority(new LocalAuthorityCode(allocation.LocalAuthority.code), allocation.LocalAuthority.name),
             programme,
             ApplicationTenureMapper.ToDomain(allocation.Tenure)!.Value,
-            true); // TODO: AB#104589 map from DTO when provided by CRM
+            true); // TODO: AB#104589/AB#104786 map from DTO when provided by CRM and set in Integration Tests
     }
 }

@@ -1,4 +1,4 @@
-using HE.UtilsService.BannerNotification.Contract;
+using HE.UtilsService.BannerNotification;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HE.UtilsService.Api.Controllers;
@@ -7,9 +7,17 @@ namespace HE.UtilsService.Api.Controllers;
 [Route("[controller]")]
 public class BannerNotificationController : Controller
 {
-    [HttpPost("publish")]
-    public IActionResult Publish(BannerNotificaiton request)
+    private readonly INotificationService _notificationService;
+
+    public BannerNotificationController(INotificationService notificationService)
     {
-        return Ok(request);
+        _notificationService = notificationService;
+    }
+
+    [HttpPost("publish")]
+    public async Task<IActionResult> Publish(BannerNotification.Contract.BannerNotification request, CancellationToken cancellationToken)
+    {
+        await _notificationService.PublishNotification(request, cancellationToken);
+        return Accepted();
     }
 }
