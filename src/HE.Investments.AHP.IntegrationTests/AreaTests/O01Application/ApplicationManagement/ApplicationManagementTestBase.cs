@@ -1,10 +1,10 @@
 using FluentAssertions;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investment.AHP.Domain.Application.Crm;
-using HE.Investment.AHP.Domain.Project.Crm;
 using HE.Investment.AHP.Domain.Site.Crm;
 using HE.Investments.AHP.IntegrationTests.AreaTests.O01Application.ApplicationManagement.Data.Model;
 using HE.Investments.AHP.IntegrationTests.Framework;
+using HE.Investments.AHP.ProjectDashboard.Domain.Project.Crm;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit.Abstractions;
 

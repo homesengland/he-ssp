@@ -29,9 +29,9 @@ public class GetSiteListQueryHandler : IRequestHandler<GetSiteListQuery, SitesLi
             new PaginationResult<SiteBasicModel>(
                 sitesPage.Items.Select(x =>
                         new SiteBasicModel(
-                            x.Id.Value,
+                            x.Id,
                             x.Name.Value,
-                            x.FrontDoorProjectId.Value,
+                            x.FrontDoorProjectId,
                             x.LocalAuthority?.Name,
                             x.Status))
                     .ToList(),

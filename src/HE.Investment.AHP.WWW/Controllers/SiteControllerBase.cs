@@ -27,7 +27,7 @@ public abstract class SiteControllerBase<TState> : WorkflowController<TState>
     {
         var siteBasicModel = await _mediator.Send(new GetSiteBasicDetailsQuery(siteId), cancellationToken);
         ViewBag.SiteName = siteBasicModel.Name;
-        ViewBag.ProjectId = siteBasicModel.ProjectId;
+        ViewBag.ProjectId = siteBasicModel.FrontDoorProjectId.Value;
         return siteBasicModel;
     }
 }

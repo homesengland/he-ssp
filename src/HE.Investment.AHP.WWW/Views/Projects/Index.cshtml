@@ -1,12 +1,11 @@
 @using HE.Investments.Common.WWW.Components.PageHeader
-@using HE.Investment.AHP.Contract.Project;
 @using HE.Investment.AHP.WWW.Routing
 @using HE.Investment.AHP.WWW.Views.Shared.Components.ProjectListCard
 @using HE.Investment.AHP.WWW.Views.Shared.Components.SiteStatusTag
 @using HE.Investments.Common.WWW.Extensions
 @using HE.Investments.Common.WWW.TagHelpers.Pagination
 
-@model ProjectsListModel;
+@model HE.Investments.AHP.ProjectDashboard.Contract.Project.ProjectsListModel;
 @{
     var title = $"{Model.ProgrammeName} projects";
     ViewData["Title"] = title;

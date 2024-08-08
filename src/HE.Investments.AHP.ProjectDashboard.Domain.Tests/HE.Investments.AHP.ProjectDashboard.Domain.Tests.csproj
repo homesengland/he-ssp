@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Moq" Version="4.18.4"/>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\HE.Investment.AHP.Domain.Tests\HE.Investment.AHP.Domain.Tests.csproj" />
+    <ProjectReference Include="..\HE.Investments.AHP.Consortium.Domain.Tests\HE.Investments.AHP.Consortium.Domain.Tests.csproj" />
+    <ProjectReference Include="..\HE.Investments.AHP.ProjectDashboard.Domain\HE.Investments.AHP.ProjectDashboard.Domain.csproj"/>
+    <ProjectReference Include="..\HE.Investments.Common.Tests\HE.Investments.Common.Tests.csproj"/>
+    <ProjectReference Include="..\HE.Investments.TestsUtils\HE.Investments.TestsUtils.csproj"/>
+  </ItemGroup>
+
+</Project>

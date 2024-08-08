@@ -1,7 +1,7 @@
 using System.Globalization;
 using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.WWW.Controllers;
-using HE.Investments.AHP.Allocation.Contract.Site;
+using HE.Investments.AHP.ProjectDashboard.Contract.Site;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.WWW.Components;

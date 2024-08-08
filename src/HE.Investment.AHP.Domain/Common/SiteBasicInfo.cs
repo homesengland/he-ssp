@@ -8,6 +8,7 @@ namespace HE.Investment.AHP.Domain.Common;
 public record SiteBasicInfo(
     SiteId Id,
     SiteName Name,
+    SiteStatus Status,
     FrontDoorProjectId? FrontDoorProjectId,
     FrontDoorSiteId? FrontDoorSiteId,
     LandAcquisitionStatus LandAcquisitionStatus,
