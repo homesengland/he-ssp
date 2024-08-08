@@ -300,9 +300,14 @@ namespace HE.CRM.AHP.Plugins.Services.Application
                 listOfPhaseClaims.Add(DeliveryPhaseMapper.MapToPhaseClaimsDto(recordData, claimAcquisitionDto, claimSoSDto, claimPCDto));
             }
 
+            TracingService.Trace("Check if partnerIsInContract");
+            TracingService.Trace($"allocation PartnerId : {allocation.invln_organisationid?.Id}");
+            TracingService.Trace($"allocation ProgrammeId : {allocation.invln_programmelookup?.Id}");
+            var partnerIsInContract = _accountRepository.PartnerIsInContract(allocation.invln_organisationid.Id, allocation.invln_programmelookup.Id);
+
             // Mapp Allocation
             TracingService.Trace("Mapp to AllocationClaimsDto");
-            result = AhpApplicationMapper.MapToAllocationClaimsDto(allocation, listOfPhaseClaims, _heLocalAuthorityRepository.GetById(allocation.invln_HELocalAuthorityID.Id));
+            result = AhpApplicationMapper.MapToAllocationClaimsDto(allocation, partnerIsInContract, listOfPhaseClaims, _heLocalAuthorityRepository.GetById(allocation.invln_HELocalAuthorityID.Id));
 
             TracingService.Trace("Return Result");
             return result;
@@ -364,12 +369,9 @@ namespace HE.CRM.AHP.Plugins.Services.Application
             TracingService.Trace($"Allocation data:");
             TracingService.Trace($"baseApplicationId : {allocation.invln_BaseApplication?.Id}");
             TracingService.Trace($"allocation Id : {allocation.invln_schemeId}");
-            TracingService.Trace($"allocation PartnerId : {allocation.invln_organisationid?.Id}");
-            TracingService.Trace($"allocation ProgrammeId : {allocation.invln_programmelookup?.Id}");
-
 
             TracingService.Trace("Get data from Crm");
-            var dataFromCrm = _ahpApplicationRepository.GetAllocationForAllocationDto(allocation.invln_BaseApplication.Id, allocation.Id, allocation.invln_organisationid.Id, allocation.invln_programmelookup.Id).Entities;
+            var dataFromCrm = _ahpApplicationRepository.GetAllocationForAllocationDto(allocation.invln_BaseApplication.Id, allocation.Id).Entities;
 
             TracingService.Trace($"Was record found in CRM?  {dataFromCrm.Count > 0}");
             if (dataFromCrm.Count == 0)
@@ -379,9 +381,14 @@ namespace HE.CRM.AHP.Plugins.Services.Application
 
             var recordDataFromCrm = dataFromCrm.FirstOrDefault();
 
+            TracingService.Trace("Check if partnerIsInContract");
+            TracingService.Trace($"allocation PartnerId : {allocation.invln_organisationid?.Id}");
+            TracingService.Trace($"allocation ProgrammeId : {allocation.invln_programmelookup?.Id}");
+            var partnerIsInContract = _accountRepository.PartnerIsInContract(allocation.invln_organisationid.Id, allocation.invln_programmelookup.Id);
+
             // Mapp to AllocationDto
             TracingService.Trace("Mapp to AllocationClaimsDto");
-            result = AhpApplicationMapper.MapToAllocationDto(recordDataFromCrm);
+            result = AhpApplicationMapper.MapToAllocationDto(recordDataFromCrm, partnerIsInContract);
 
             TracingService.Trace("Return Result");
             return result;

@@ -10,6 +10,7 @@ namespace HE.Common.IntegrationModel.PortalIntegrationModel
         public LocalAuthorityDto LocalAuthority { get; set; }
         public string ProgrammeId { get; set; }
         public int Tenure { get; set; }
+        public bool IsInContract { get; set; }
         public GrantDetailsDto GrantDetails { get; set; }
         public List<PhaseClaimsDto> ListOfPhaseClaims { get; set; }
     }
