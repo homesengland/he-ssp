@@ -4,13 +4,13 @@ namespace HE.UtilsService.BannerNotification.Storage;
 
 public class ApplicationAreaNotifications
 {
-    public ApplicationAreaNotifications(string key, IList<NotificationRequest> notificationRequests)
+    public ApplicationAreaNotifications(string key, IList<NotificationRequest>? notificationRequests)
     {
         Key = key;
-        NotificationRequests.AddRange(notificationRequests);
+        NotificationRequests.AddRange(notificationRequests ?? []);
     }
 
-    public string Key { get; private set; }
+    public string Key { get; }
 
     public List<NotificationRequest> NotificationRequests { get; } = [];
 

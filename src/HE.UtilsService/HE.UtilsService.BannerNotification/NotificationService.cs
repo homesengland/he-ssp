@@ -21,11 +21,10 @@ public class NotificationService : INotificationService
                                         _notificationKeyFactory.KeyForOrganisation(
                                                 notification.OrganisationId,
                                                 notification.ApplicationType,
-                                                notification.ApplicationArea),
-                                        cancellationToken);
+                                                notification.ApplicationArea));
 
-        areaNotifications.AddNotification(notification.NotificationType, notification.NotificationParameters);
+        areaNotifications.AddNotification(notification.NotificationType, notification.NotificationParameters ?? []);
 
-        await _notificationRepository.Save(areaNotifications, cancellationToken);
+        await _notificationRepository.Save(areaNotifications);
     }
 }

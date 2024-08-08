@@ -15,5 +15,5 @@ public class BannerNotification
     [MinLength(1, ErrorMessage = "NotificationType must not be empty")]
     public string NotificationType { get; set; }
 
-    public List<BannerNotificationParameter> NotificationParameters { get; set; }
+    public List<BannerNotificationParameter>? NotificationParameters { get; set; }
 }
