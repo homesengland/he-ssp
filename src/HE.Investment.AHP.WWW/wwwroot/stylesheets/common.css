@@ -1,3 +1,8 @@
 .govuk-\!-align-center{
   justify-content: center;
 }
+
+.govuk-\!-display-inline{
+  line-height: 1.75;
+  display: inline;
+}

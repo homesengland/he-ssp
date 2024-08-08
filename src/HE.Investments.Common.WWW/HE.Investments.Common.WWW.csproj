@@ -71,6 +71,7 @@
     <EmbeddedResource Include="Components\ContactInformation\ContactInformation.cshtml" />
     <EmbeddedResource Include="Components\SortablePagedTable\SortablePagedTable.cshtml" />
     <EmbeddedResource Include="Components\SortableTable\SortableTable.cshtml" />
+    <EmbeddedResource Include="Components\Select\Select.cshtml" />
   </ItemGroup>
 
   <ItemGroup>

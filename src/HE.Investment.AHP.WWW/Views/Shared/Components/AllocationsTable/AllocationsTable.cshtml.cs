@@ -28,7 +28,6 @@ public class AllocationsTable : ViewComponent
 
         var organisationId = HttpContext.GetOrganisationIdFromRoute();
         var allocationsPage = allocations
-            .TakePage(new PaginationRequest(currentPage))
             .Select(x =>
             {
                 var tableItems = new List<TableValueViewModel>
