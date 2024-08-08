@@ -1,21 +1,15 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
 using DataverseModel;
 using HE.Base.Services;
-using HE.CRM.Common.Repositories.Implementations;
 using HE.CRM.Common.Repositories.Interfaces;
-using HE.CRM.Plugins.Services.LocalAuthority;
 using Microsoft.Xrm.Sdk;
 
 namespace HE.CRM.Plugins.Services.ReviewsApprovals
 {
     public class ReviewsApprovalsService : CrmService, IReviewsApprovalsService
     {
-
         private readonly IReviewApprovalRepository _reviewApprovalRepository;
         private readonly IIspRepository _ispRepository;
 
@@ -27,7 +21,7 @@ namespace HE.CRM.Plugins.Services.ReviewsApprovals
 
         public void UpdateIspRelatedToApprovalsService(invln_reviewapproval target, invln_reviewapproval postImage)
         {
-            TracingService.Trace("UpdateIspRelatedToApprovalsService");
+            Logger.Trace("ReviewsApprovalsService.UpdateIspRelatedToApprovalsService");
             if (postImage != null && postImage.invln_ispid != null && postImage.invln_status != null)
             {
                 var isp = _ispRepository.GetById(postImage.invln_ispid.Id, invln_ISP.Fields.invln_ApprovalLevelNew);
@@ -38,6 +32,7 @@ namespace HE.CRM.Plugins.Services.ReviewsApprovals
                 };
                 var reviewApprovals = _reviewApprovalRepository.GetReviewApprovalsForIsp(postImage.invln_ispid, null)
                     .ToList();
+
                 if (reviewApprovals.Count == 0)
                 {
                     return;
@@ -106,7 +101,7 @@ namespace HE.CRM.Plugins.Services.ReviewsApprovals
 
         private void CheckAndChangeToAproved(List<invln_reviewapproval> reviewApprovals, invln_ISP ispToUpdate, invln_ISP isp)
         {
-            TracingService.Trace("CheckAndChangeToAproved");
+            Logger.Trace("CheckAndChangeToAproved");
             var mostRecentRAList = FindMostRecentReviewApprovalRecords(reviewApprovals);
 
             TracingService.Trace("Check Rejected");
@@ -133,15 +128,17 @@ namespace HE.CRM.Plugins.Services.ReviewsApprovals
             var hoFTeam = teamRepository.GetTeamByName("Hof Team");
 
             var lastDesApprowals = mostRecentRAList
-            .Where(x => x.OwnerId.Id == desTeam.Id)
-            .OrderByDescending(x => x.CreatedOn.Value).FirstOrDefault();
+                .Where(x => x.OwnerId.Id == desTeam.Id)
+                .OrderByDescending(x => x.CreatedOn.Value).FirstOrDefault();
 
             var lastHoFApprowals = mostRecentRAList
                 .FirstOrDefault(x => x.OwnerId.Id == hoFTeam.Id && x.CreatedOn.Value >= lastDesApprowals.CreatedOn.Value);
+
             if (ChackConditionForHoFApprovalLevelToApproved(isp, lastDesApprowals, lastHoFApprowals))
             {
                 UpdateISPStatus(ispToUpdate, new OptionSetValue((int)invln_ApprovalStatus.Approved));
             }
+
             if (ChackConditionForHoFApprovalLevelToInReview(isp, lastDesApprowals, lastHoFApprowals))
             {
                 UpdateISPStatus(ispToUpdate, new OptionSetValue((int)invln_ApprovalStatus.InReview));
@@ -155,18 +152,18 @@ namespace HE.CRM.Plugins.Services.ReviewsApprovals
 
         private bool ChackConditionForHoFApprovalLevelToApproved(invln_ISP isp, invln_reviewapproval des, invln_reviewapproval hof)
         {
-            return (hof != null
+            return hof != null
                 && (des.invln_status.Value == (int)invln_StatusReviewApprovalSet.Approved || des.invln_status.Value == (int)invln_StatusReviewApprovalSet.Reviewed)
                 && (hof.invln_status.Value == (int)invln_StatusReviewApprovalSet.Approved)
-                && isp.invln_ApprovalLevelNew.Value == (int)invln_ApprovalLevel.HoF);
+                && isp.invln_ApprovalLevelNew.Value == (int)invln_ApprovalLevel.HoF;
         }
 
         private bool ChackConditionForHoFApprovalLevelToInReview(invln_ISP isp, invln_reviewapproval des, invln_reviewapproval hof)
         {
-            return (hof != null
+            return hof != null
                 && (des.invln_status.Value == (int)invln_StatusReviewApprovalSet.Approved || des.invln_status.Value == (int)invln_StatusReviewApprovalSet.Reviewed)
                 && (hof.invln_status.Value == (int)invln_StatusReviewApprovalSet.Reviewed)
-                && isp.invln_ApprovalLevelNew.Value == (int)invln_ApprovalLevel.HoF);
+                && isp.invln_ApprovalLevelNew.Value == (int)invln_ApprovalLevel.HoF;
         }
 
         private void UpdateISPStatus(invln_ISP ispToUpdate, OptionSetValue value)

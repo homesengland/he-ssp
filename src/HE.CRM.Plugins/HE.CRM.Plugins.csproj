@@ -173,6 +173,7 @@
     <Compile Include="Handlers\LoanStatusChange\SendNotificationOnCreateHandler.cs" />
     <Compile Include="Handlers\ReviewsApprovals\CreateReviewApprovalForRiskTeamHandler.cs" />
     <Compile Include="Handlers\ReviewsApprovals\IspStatusOnReviewApprovalStatusChangeHandler.cs" />
+    <Compile Include="Handlers\ReviewsApprovals\SetApprovalDateAndApproverHandler.cs" />
     <Compile Include="Handlers\ReviewsApprovals\NotificationAfterChangingReviewsApprovalStatusHandler.cs" />
     <Compile Include="Handlers\SiteDetails\FulfillRegionOnLocalAuthorityChangeHandler.cs" />
     <Compile Include="Handlers\SiteDetails\UpdateLoansApplicationAfterStatusChange.cs" />
@@ -225,6 +226,7 @@
     <Compile Include="Plugins\LoanApplications\ChangeExternalStatusOnInternalStatusChangePlugin.cs" />
     <Compile Include="Plugins\LoanApplications\SetFieldsWhenChangingStatusFromDraftPlugin.cs" />
     <Compile Include="Plugins\ReviewsApprovals\PostUpdate.cs" />
+    <Compile Include="Plugins\ReviewsApprovals\PreUpdate.cs" />
     <Compile Include="Plugins\ReviewsApprovals\PostUpdateAsync.cs" />
     <Compile Include="Plugins\SiteDetails\PreUpdate.cs" />
     <Compile Include="Services\Accounts\AccountService.cs" />
