@@ -38,6 +38,7 @@
     <link rel="apple-touch-icon" sizes="167x167" href="~/assets/images/govuk-apple-touch-icon-167x167.png">
     <link rel="apple-touch-icon" sizes="152x152" href="~/assets/images/govuk-apple-touch-icon-152x152.png">
     <link rel="apple-touch-icon" href="~/assets/images/govuk-apple-touch-icon.png">
+    <script src="~/javascripts/jquery/jquery-3.7.1.min.js"></script>
 
     @RenderSection("HeadCss", required: false)
     <meta property="og:image" content="~/assets/images/govuk-opengraph-image.png" />
@@ -153,6 +154,7 @@
     </footer>
     @RenderSection("BodyEnd", required: false)
     <script src="~/javascripts/govuk-frontend-all.min.js"></script>
+    <script src="~/javascripts/moj-frontend-all.min.js"></script>
     <he-identity-idle-session time-in-seconds="1260" />
 </body>
 </html>

@@ -6,7 +6,8 @@
       "!wwwroot/stylesheets/*.min.css",
       "!wwwroot/stylesheets/main.css",
       "!wwwroot/stylesheets/govuk-frontend-all.min.css",
-      "!wwwroot/stylesheets/govuk-frontend-extensions.min.css"
+      "!wwwroot/stylesheets/govuk-frontend-extensions.min.css",
+      "!wwwroot/stylesheets/moj-frontend-all.min.css"
     ]
   },
   {
@@ -15,7 +16,8 @@
       "wwwroot/stylesheets/*.css",
       "!wwwroot/stylesheets/*.min.css",
       "!wwwroot/stylesheets/govuk-frontend-all.min.css",
-      "!wwwroot/stylesheets/govuk-frontend-extensions.min.css"
+      "!wwwroot/stylesheets/govuk-frontend-extensions.min.css",
+      "!wwwroot/stylesheets/moj-frontend-all.min.css"
     ],
     "minify": {
       "enabled": false,
@@ -30,6 +32,7 @@
       "!wwwroot/javascripts/site.js",
       "!wwwroot/javascripts/enable-js.js",
       "!wwwroot/javascripts/govuk-frontend-all.min.js",
+      "!wwwroot/javascripts/moj-frontend-all.min.js",
       "!wwwroot/javascripts/tmp.js"
     ]
   },
@@ -40,6 +43,7 @@
       "!wwwroot/javascripts/*.min.js",
       "!wwwroot/javascripts/enable-js.js",
       "!wwwroot/javascripts/govuk-frontend-all.min.js",
+      "!wwwroot/javascripts/moj-frontend-all.min.js",
       "!wwwroot/javascripts/tmp.js"
     ],
     "minify": {
