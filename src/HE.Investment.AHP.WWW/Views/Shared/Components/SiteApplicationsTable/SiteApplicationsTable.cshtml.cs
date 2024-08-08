@@ -23,8 +23,8 @@ public class SiteApplicationsTable : ViewComponent
         {
             new("Application name", CellWidth.OneThird),
             new("Tenure"),
-            new("No of homes"),
-            new("Status"),
+            new("No of homes", CellWidth.OneFifth),
+            new("Status", CellWidth.OneFifth),
         };
 
         var organisationId = Request.GetOrganisationIdFromRoute();
