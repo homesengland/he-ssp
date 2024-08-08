@@ -54,6 +54,28 @@ namespace HE.CRM.Common.Repositories.Implementations
             }
         }
 
+        public bool PartnerIsInContract(Guid accountId, Guid programmeId)
+        {
+            var query_invln_partner = accountId.ToString();
+            var query_invln_programme = programmeId.ToString();
+
+            var query = new QueryExpression(invln_ahpcontract.EntityLogicalName)
+            {
+                ColumnSet = new ColumnSet(invln_ahpcontract.Fields.invln_ahpcontractId),
+                Criteria =
+                {
+                    Conditions =
+                    {
+                        new ConditionExpression(invln_ahpcontract.Fields.invln_Partner, ConditionOperator.Equal, query_invln_partner),
+                        new ConditionExpression(invln_ahpcontract.Fields.invln_Programme, ConditionOperator.Equal, query_invln_programme),
+                        new ConditionExpression(invln_ahpcontract.Fields.invln_DateExecuted, ConditionOperator.NotNull)
+                    }
+                }
+            };
+
+            return service.RetrieveMultiple(query).Entities.Count > 0;
+        }
+
         #endregion Interface Implementation
     }
 }

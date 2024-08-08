@@ -215,7 +215,7 @@ namespace HE.CRM.Common.DtoMapping
             return ahpAllocationDtoToReturn;
         }
 
-        public static AllocationClaimsDto MapToAllocationClaimsDto(invln_scheme allocation, List<PhaseClaimsDto> listOfPhaseClaims, he_LocalAuthority localAuthority)
+        public static AllocationClaimsDto MapToAllocationClaimsDto(invln_scheme allocation, bool partnerIsInContract, List<PhaseClaimsDto> listOfPhaseClaims, he_LocalAuthority localAuthority)
         {
             var allocationClaimsDtoReturn = new AllocationClaimsDto()
             {
@@ -230,6 +230,7 @@ namespace HE.CRM.Common.DtoMapping
                 },
                 ProgrammeId = allocation.invln_programmelookup?.Id.ToString(),
                 Tenure = allocation.invln_Tenure.Value,
+                IsInContract = partnerIsInContract,
 
                 GrantDetails = new GrantDetailsDto()
                 {
@@ -243,7 +244,7 @@ namespace HE.CRM.Common.DtoMapping
             return allocationClaimsDtoReturn;
         }
 
-        public static AllocationDto MapToAllocationDto(Entity recordDataFromCrm)
+        public static AllocationDto MapToAllocationDto(Entity recordDataFromCrm, bool partnerIsInContract)
         {
             var allocationDtoReturn = new AllocationDto()
             {
@@ -259,7 +260,7 @@ namespace HE.CRM.Common.DtoMapping
                 ProgrammeId = recordDataFromCrm.GetAliasedAttributeValue<EntityReference>("Allocation", invln_scheme.Fields.invln_programmelookup).Id,
                 Tenure = recordDataFromCrm.GetAliasedAttributeValue<OptionSetValue>("Allocation", invln_scheme.Fields.invln_Tenure).Value,
                 FDProjectId = recordDataFromCrm.GetAliasedAttributeValue<EntityReference>("AllocationSiteAhpProject", invln_ahpproject.Fields.invln_HeProjectId).Id.ToString(),
-                IsInContract = recordDataFromCrm.GetAliasedAttributeValue<Guid>("AppContract", invln_ahpcontract.Fields.invln_ahpcontractId) != Guid.Empty,
+                IsInContract = partnerIsInContract,
                 HasDraftAllocation = recordDataFromCrm.GetAliasedAttributeValue<Guid>("Variation", invln_scheme.Fields.invln_schemeId) != Guid.Empty,
                 OrganisationName = recordDataFromCrm.GetAliasedAttributeValue<EntityReference>("Allocation", invln_scheme.Fields.invln_organisationid).Name,
                 LastExternalModificationOn = recordDataFromCrm.GetAliasedAttributeValue<DateTime?>("Allocation", invln_scheme.Fields.invln_lastexternalmodificationon),
