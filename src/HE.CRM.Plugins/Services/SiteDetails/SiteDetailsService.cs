@@ -110,6 +110,7 @@ namespace HE.CRM.Plugins.Services.SiteDetails
                 siteDetailToUpdate.Id = detailsId;
                 siteDetailsRepository.Update(siteDetailToUpdate);
                 SetLastModificationDateOnRelatedLoanApplication(siteDetailToUpdate);
+                SetRegionOnRelatedLoanApplication(siteDetailToUpdate, heLocalAuthority);
             }
         }
         public void DeleteSiteDetails(string siteDetailsId)
@@ -163,6 +164,7 @@ namespace HE.CRM.Plugins.Services.SiteDetails
             siteDetailsRepository.Create(siteDetailsToCreate);
 
             SetLastModificationDateOnRelatedLoanApplication(siteDetailsToCreate);
+            SetRegionOnRelatedLoanApplication(siteDetailsToCreate, heLocalAuthority);
         }
 
         public void SetLastModificationDateOnRelatedLoanApplication(invln_SiteDetails siteDetails)
@@ -253,6 +255,21 @@ namespace HE.CRM.Plugins.Services.SiteDetails
             }
             return generatedAttribuesFetchXml;
         }
+
+        private void SetRegionOnRelatedLoanApplication(invln_SiteDetails siteDetails, he_LocalAuthority heLocalAuthority)
+        {
+            if (siteDetails.invln_Loanapplication != null)
+            {
+                var loanApplicationToUpdate = new invln_Loanapplication()
+                {
+                    Id = siteDetails.invln_Loanapplication.Id,
+                    invln_LARegion = new OptionSetValue(heLocalAuthority.he_laregion.Value)
+                };
+
+                _loanApplicationRepository.Update(loanApplicationToUpdate);
+            }
+        }
+
         #endregion
     }
 }
