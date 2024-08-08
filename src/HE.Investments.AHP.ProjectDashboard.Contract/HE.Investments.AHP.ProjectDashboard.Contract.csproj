@@ -1,0 +1,12 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\HE.Investment.AHP.Contract\HE.Investment.AHP.Contract.csproj" />
+      <ProjectReference Include="..\HE.Investments.AHP.Allocation.Contract\HE.Investments.AHP.Allocation.Contract.csproj" />
+    </ItemGroup>
+
+</Project>

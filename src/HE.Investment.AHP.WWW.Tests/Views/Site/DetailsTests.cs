@@ -1,6 +1,6 @@
 using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.Site;
-using HE.Investments.AHP.Allocation.Contract.Site;
+using HE.Investments.AHP.ProjectDashboard.Contract.Site;
 using HE.Investments.Common.Contract;
 using HE.Investments.FrontDoor.Shared.Project;
 

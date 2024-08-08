@@ -33,7 +33,7 @@ public class SitesTable : ViewComponent
                     new(Component: CreateSiteStatusComponent(x)),
                 };
 
-                return new TableRowViewModel(x.Id, tableItems);
+                return new TableRowViewModel(x.Id.Value, tableItems);
             })
             .ToList();
 

@@ -1,4 +1,3 @@
-using System.Diagnostics.CodeAnalysis;
 using HE.Investments.Common.Contract.Infrastructure.Events;
 using MediatR;
 

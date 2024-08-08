@@ -256,7 +256,7 @@ public class SitePartnersController : SiteControllerBase<SitePartnersWorkflowSta
         }
 
         return await this.ReturnToSitesListOrContinue(
-            siteBasicDetails.ProjectId,
+            siteBasicDetails.FrontDoorProjectId.Value,
             async () => await Continue(new { siteId, organisationIdentifier = result.ReturnedData.Id.Value, workflow }));
     }
 

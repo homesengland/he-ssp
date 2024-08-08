@@ -2,6 +2,7 @@ using HE.Investment.AHP.Contract.Site;
 using HE.Investment.AHP.Contract.Site.Queries;
 using HE.Investment.AHP.Domain.Site.Repositories;
 using HE.Investments.Account.Shared;
+using HE.Investments.FrontDoor.Shared.Project;
 using MediatR;
 
 namespace HE.Investment.AHP.Domain.Site.QueryHandlers;
@@ -21,12 +22,12 @@ public class GetSiteBasicDetailsQueryHandler : IRequestHandler<GetSiteBasicDetai
     public async Task<SiteBasicModel> Handle(GetSiteBasicDetailsQuery request, CancellationToken cancellationToken)
     {
         var userAccount = await _accountUserContext.GetSelectedAccount();
-        var site = await _siteRepository.GetSite(SiteId.From(request.SiteId), userAccount, cancellationToken);
+        var site = await _siteRepository.GetSiteBasicInfo(SiteId.From(request.SiteId), userAccount, cancellationToken);
 
         return new SiteBasicModel(
-            site.Id.Value,
+            site.Id,
             site.Name.Value,
-            site.FrontDoorProjectId.Value,
+            site.FrontDoorProjectId ?? FrontDoorProjectId.New(),
             site.LocalAuthority?.Name,
             site.Status);
     }

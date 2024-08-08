@@ -1,6 +1,6 @@
 using System.Globalization;
-using HE.Investment.AHP.Contract.Project;
 using HE.Investment.AHP.WWW.Controllers;
+using HE.Investments.AHP.ProjectDashboard.Contract.Project;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Contract.Pagination;
 using HE.Investments.Common.Extensions;

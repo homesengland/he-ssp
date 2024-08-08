@@ -23,6 +23,7 @@ public class FinancialDetailsEntityBuilder
             new SiteBasicInfo(
                 applicationBasicInfo.SiteId,
                 new SiteName("Site name"),
+                SiteStatus.Submitted,
                 null,
                 null,
                 new LandAcquisitionStatus(SiteLandAcquisitionStatus.FullOwnership),

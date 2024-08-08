@@ -10,6 +10,7 @@ public static class SiteBasicInfoTestData
     public static SiteBasicInfo DefaultSite(SiteId siteId) => new(
         siteId,
         new SiteName("Site name"),
+        SiteStatus.InProgress,
         null,
         null,
         new LandAcquisitionStatus(SiteLandAcquisitionStatus.FullOwnership),
