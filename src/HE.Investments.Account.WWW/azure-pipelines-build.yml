@@ -48,7 +48,7 @@ variables:
 pool:
   vmImage: 'ubuntu-22.04'
 
-name: $(buildMajor).$(buildMinor).$(Rev:r)-$(buildBranch)
+name: $(buildMajor).$(buildMinor).$(Rev:r)-acct.$(buildBranch)
 
 resources:
   repositories:
