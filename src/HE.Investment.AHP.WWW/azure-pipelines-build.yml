@@ -41,7 +41,7 @@ pr:
     - src/HE.Investments.DocumentService/*
     - src/HE.Investments.IntegrationTestsFramework/*
     - src/HE.Investments.Organisation/*
-    - src/HE.Investments.TestsUtils/*
+    - src/HE.Investments.T  estsUtils/*
     - src/HE.Investments.FrontDoor.Shared/*
     - src/HE.Investments.Api/*
     - src/HE.Investments.Programme.*/*
