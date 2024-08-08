@@ -31,8 +31,7 @@ namespace HE.CRM.Plugins.Handlers.ReviewsApprovals
                 return false;
             }
 
-            var currentStatuCode = ExecutionData.Target.invln_status.Value;
-            return this.ValueChanged(invln_reviewapproval.Fields.invln_status) && (currentStatuCode == (int)invln_StatusReviewApprovalSet.Reviewed || currentStatuCode == (int)invln_StatusReviewApprovalSet.Approved);
+            return ValueChanged(invln_reviewapproval.Fields.invln_status, (int)invln_StatusReviewApprovalSet.Reviewed) || ValueChanged(invln_reviewapproval.Fields.invln_status, (int)invln_StatusReviewApprovalSet.Approved);
         }
 
         public override void DoWork()

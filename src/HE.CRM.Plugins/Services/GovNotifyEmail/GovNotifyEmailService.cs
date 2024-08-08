@@ -13,13 +13,24 @@ namespace HE.CRM.Plugins.Services.GovNotifyEmail
 {
     public class GovNotifyEmailService : CrmService, IGovNotifyEmailService
     {
-
         private readonly IGovNotifyEmailRepository _govNotifyEmailRepositoryAdmin;
         private readonly IEnvironmentVariableRepository _environmentVariableRepositoryAdmin;
         private readonly INotificationSettingRepository _notificationSettingRepositoryAdmin;
         private readonly ISystemUserRepository _systemUserRepositoryAdmin;
         private readonly ILoanApplicationRepository _loanApplicationRepositoryAdmin;
         private readonly IContactRepository _contactRepositoryAdmin;
+
+        public JsonSerializerOptions SerializerOptions
+        {
+            get
+            {
+                return new JsonSerializerOptions
+                {
+                    Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+                    WriteIndented = true
+                };
+            }
+        }
 
         public GovNotifyEmailService(CrmServiceArgs args) : base(args)
         {
@@ -370,7 +381,7 @@ namespace HE.CRM.Plugins.Services.GovNotifyEmail
                 var ownerData = _systemUserRepositoryAdmin.GetById(loanApplication.OwnerId.Id, SystemUser.Fields.InternalEMailAddress, SystemUser.Fields.FullName);
 
                 var subject = $"Application ref no {loanApplication.invln_Name} ISP Reviewed";
-                if (emailTemplate != null && ownerData != null)
+                if (emailTemplate != null)
                 {
                     var govNotParams = new INTERNAL_SENT_FOR_APPROVAL_NOTIFICATION()
                     {
@@ -381,24 +392,17 @@ namespace HE.CRM.Plugins.Services.GovNotifyEmail
                             username = ownerData.FullName ?? "NO NAME",
                             applicationId = loanApplication.invln_Name,
                             applicationUrl = GetLoanApplicationUrl(loanApplication.ToEntityReference()),
-                            subject = subject
-,
+                            subject = subject,
                         }
                     };
 
-                    var options = new JsonSerializerOptions
-                    {
-                        Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
-                        WriteIndented = true
-                    };
-
-                    var parameters = JsonSerializer.Serialize(govNotParams, options);
+                    var parameters = JsonSerializer.Serialize(govNotParams, SerializerOptions);
                     TracingService.Trace("SendGovNotifyEmail");
                     this.SendGovNotifyEmail(loanApplication.OwnerId, loanApplication.ToEntityReference(), subject, parameters, emailTemplate);
                 }
                 else
                 {
-                    TracingService.Trace("emailTemplate is null or ownerData is null Mail not send.");
+                    Logger.Warn("emailTemplate is null Mail not send.");
                 }
             }
         }

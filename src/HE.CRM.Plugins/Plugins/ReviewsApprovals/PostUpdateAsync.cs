@@ -18,7 +18,7 @@ namespace HE.CRM.Plugins.Plugins.ReviewsApprovals
         StageEnum.PostOperation,
         ExecutionModeEnum.Asynchronous,
         invln_reviewapproval.Fields.invln_status,
-        "HE.CRM.Plugins.Plugins.ReviewsApprovals.SendNotification: Update of ReviewApproval",
+        "HE.CRM.Plugins.Plugins.ReviewsApprovals.PostUpdateAsync: Update of invln_reviewapproval",
         1,
         IsolationModeEnum.Sandbox,
         Id = "59755766-E93D-4A2A-9F1D-D7D4737F801F",
@@ -28,7 +28,7 @@ namespace HE.CRM.Plugins.Plugins.ReviewsApprovals
         Image2Name = "PostImage",
         Image2Attributes = "invln_status, invln_reviewapprovalid, invln_ispid",
         Image2Type = ImageTypeEnum.PostImage,
-        DeleteAsyncOperation = false
+        DeleteAsyncOperation = true
     )]
 
     public class PostUpdateAsync : PluginBase<DataverseContext>, IPlugin
