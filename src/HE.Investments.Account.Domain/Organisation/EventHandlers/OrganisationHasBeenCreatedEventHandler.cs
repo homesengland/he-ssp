@@ -1,8 +1,8 @@
 using HE.Investments.Account.Contract.Organisation.Events;
 using HE.Investments.Account.Domain.Organisation.Notifications;
-using HE.Investments.Common.Contract.Enum;
 using HE.Investments.Common.Infrastructure.Events;
 using HE.Investments.Common.Services.Notifications;
+using HE.UtilsService.BannerNotification.Shared;
 
 namespace HE.Investments.Account.Domain.Organisation.EventHandlers;
 

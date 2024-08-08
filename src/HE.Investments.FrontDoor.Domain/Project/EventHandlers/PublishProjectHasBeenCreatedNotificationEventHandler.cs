@@ -1,7 +1,7 @@
-using HE.Investments.Common.Contract.Enum;
 using HE.Investments.Common.Infrastructure.Events;
 using HE.Investments.Common.Services.Notifications;
 using HE.Investments.FrontDoor.Contract.Project.Events;
+using HE.UtilsService.BannerNotification.Shared;
 
 namespace HE.Investments.FrontDoor.Domain.Project.EventHandlers;
 

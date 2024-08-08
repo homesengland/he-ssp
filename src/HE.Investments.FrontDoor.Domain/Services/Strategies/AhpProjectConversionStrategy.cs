@@ -1,11 +1,10 @@
-using HE.Investments.Common.Contract.Enum;
-using HE.Investments.FrontDoor.Domain.Config;
 using HE.Investments.FrontDoor.Domain.Project;
 using HE.Investments.FrontDoor.Domain.Site;
 using HE.Investments.FrontDoor.Domain.Site.Utilities;
 using HE.Investments.FrontDoor.Shared.Project.Contract;
 using HE.Investments.Programme.Contract;
 using HE.Investments.Programme.Contract.Config;
+using HE.UtilsService.BannerNotification.Shared;
 using AffordableHomesAmountType = HE.Investments.FrontDoor.Shared.Project.Contract.AffordableHomesAmount;
 
 namespace HE.Investments.FrontDoor.Domain.Services.Strategies;

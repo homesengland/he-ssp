@@ -17,6 +17,7 @@ using HE.Investments.Organisation.Config;
 using HE.Investments.Organisation.LocalAuthorities;
 using HE.Investments.Organisation.LocalAuthorities.Repositories;
 using HE.Investments.Programme.Domain.Config;
+using HE.UtilsService.BannerNotification.Shared;
 using Microsoft.PowerPlatform.Dataverse.Client;
 using DomainModule = HE.Investments.FrontDoor.Domain.Config.DomainModule;
 

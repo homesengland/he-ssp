@@ -2,6 +2,8 @@ using System.Reflection;
 using HE.Investments.Common.Contract.Enum;
 using HE.Investments.Common.Infrastructure.Cache.Interfaces;
 using HE.Investments.Common.Services.Notifications;
+using HE.Investments.Common.User;
+using HE.UtilsService.BannerNotification.Shared;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
@@ -13,7 +15,11 @@ public static class CommonModule
     {
         services.TryAddScoped<INotificationKeyFactory, NotificationKeyFactory>();
         services.AddScoped<INotificationPublisher>(x =>
-            new NotificationPublisher(x.GetRequiredService<ICacheService>(), x.GetRequiredService<INotificationKeyFactory>(), application));
+            new NotificationPublisher(
+                x.GetRequiredService<ICacheService>(),
+                x.GetRequiredService<INotificationKeyFactory>(),
+                application,
+                x.GetRequiredService<IUserContext>()));
     }
 
     public static void AddNotificationConsumer(
@@ -26,7 +32,8 @@ public static class CommonModule
             x.GetRequiredService<ICacheService>(),
             x.GetRequiredService<INotificationKeyFactory>(),
             x.GetServices<IDisplayNotificationFactory>(),
-            application));
+            application,
+            x.GetRequiredService<IUserContext>()));
 
         foreach (var factoryType in displayNotificationFactoriesAssembly.GetTypes()
                      .Where(x => typeof(IDisplayNotificationFactory).IsAssignableFrom(x) && x.IsClass && !x.IsGenericType))

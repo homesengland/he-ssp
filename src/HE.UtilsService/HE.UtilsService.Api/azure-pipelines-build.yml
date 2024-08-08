@@ -7,10 +7,10 @@ trigger:
   batch: true
   branches:
     include:
-      - development_R3
+    - development_R3
   paths:
     include:
-      - src/HE.UtilsService/*
+    - src/HE.UtilsService/*
 
 pr:
   branches:

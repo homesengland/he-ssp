@@ -1,9 +1,9 @@
 using HE.Investments.Account.Shared;
-using HE.Investments.Common.Contract.Enum;
 using HE.Investments.Common.Contract.Validators;
 using HE.Investments.FrontDoor.Contract.Project.Queries;
 using HE.Investments.FrontDoor.Domain.Project.Repository;
 using HE.Investments.FrontDoor.Domain.Services;
+using HE.UtilsService.BannerNotification.Shared;
 using MediatR;
 
 namespace HE.Investments.FrontDoor.Domain.Project.CommandHandlers;

@@ -1,4 +1,4 @@
-using HE.Investments.Common.Contract.Enum;
+using HE.UtilsService.BannerNotification.Shared;
 
 namespace HE.Investments.Common.Services.Notifications;
 
