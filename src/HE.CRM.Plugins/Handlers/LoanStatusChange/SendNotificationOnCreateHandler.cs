@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using DataverseModel;
 using HE.Base.Plugins.Handlers;
 using HE.CRM.Plugins.Services.LoanStatusChange;
@@ -19,6 +20,7 @@ namespace HE.CRM.Plugins.Handlers.LoanStatusChange
 
         public override void DoWork()
         {
+            TracingService.Trace("SendNotificationOnCreateHandler");
             CrmServicesFactory.Get<ILoanStatusChangeService>().SendNotificationOnLoanStatusChangeCreate(target);
         }
 
