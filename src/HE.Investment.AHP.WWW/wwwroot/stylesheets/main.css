@@ -98,6 +98,11 @@
   }
 }
 
+.govuk-table__header--hidden{
+  visibility: hidden;
+  border: 0;
+}
+
 .govuk-tag {
   display: inline;
 }

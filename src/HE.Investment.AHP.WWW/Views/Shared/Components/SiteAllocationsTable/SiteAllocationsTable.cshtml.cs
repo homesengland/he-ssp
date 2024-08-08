@@ -19,9 +19,10 @@ public class SiteAllocationsTable : ViewComponent
     {
         var tableHeaders = new List<TableHeaderViewModel>
         {
-            new("Application name", CellWidth.OneThird),
+            new("Allocation name", CellWidth.OneThird),
             new("Tenure"),
             new("No of homes", CellWidth.OneFifth),
+            new("Status", CellWidth.OneFifth, IsHidden: true),
         };
 
         var organisationId = Request.GetOrganisationIdFromRoute();
