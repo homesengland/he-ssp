@@ -1,5 +1,4 @@
 using HE.Investments.Common.Contract.Validators;
-using HE.Investments.FrontDoor.Contract.Project;
 using HE.Investments.FrontDoor.Shared.Project;
 using MediatR;
 

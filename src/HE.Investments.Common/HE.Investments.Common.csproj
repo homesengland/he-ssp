@@ -20,6 +20,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\HE.Investments.Common.Contract\HE.Investments.Common.Contract.csproj" />
+    <ProjectReference Include="..\HE.UtilsService\HE.UtilsService.BannerNotification.Shared\HE.UtilsService.BannerNotification.Shared.csproj" />
   </ItemGroup>
 
 </Project>

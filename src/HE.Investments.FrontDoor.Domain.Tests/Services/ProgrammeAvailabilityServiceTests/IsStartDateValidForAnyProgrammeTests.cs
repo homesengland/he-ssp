@@ -1,7 +1,6 @@
 using FluentAssertions;
 using HE.Investments.FrontDoor.Domain.Services;
 using HE.Investments.FrontDoor.Domain.Tests.Services.TestDataBuilders;
-using HE.Investments.Programme.Contract.Enums;
 using HE.Investments.Programme.Contract.Queries;
 using HE.Investments.TestsUtils.TestFramework;
 using MediatR;

@@ -3,6 +3,7 @@ using HE.Investments.Common;
 using HE.Investments.Common.Contract.Enum;
 using HE.Investments.Common.WWW.Extensions;
 using HE.Investments.FrontDoor.WWW.Config;
+using HE.UtilsService.BannerNotification.Shared;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.FeatureManagement;
 

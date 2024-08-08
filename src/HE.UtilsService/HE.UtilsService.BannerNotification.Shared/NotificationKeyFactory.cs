@@ -11,4 +11,9 @@ public class NotificationKeyFactory : INotificationKeyFactory
 
         return $"notification-{application.ToString().ToLowerInvariant()}-{area.ToString()!.ToLowerInvariant()}-{organisationId}";
     }
+
+    public string KeyForUser(string userGlobalId, ApplicationType application)
+    {
+        return $"notification-{application.ToString().ToLowerInvariant()}-{userGlobalId}";
+    }
 }

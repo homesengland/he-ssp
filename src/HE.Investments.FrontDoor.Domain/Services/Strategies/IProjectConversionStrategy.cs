@@ -1,6 +1,6 @@
-using HE.Investments.Common.Contract.Enum;
 using HE.Investments.FrontDoor.Domain.Project;
 using HE.Investments.FrontDoor.Domain.Site;
+using HE.UtilsService.BannerNotification.Shared;
 
 namespace HE.Investments.FrontDoor.Domain.Services.Strategies;
 

@@ -2,7 +2,6 @@ using FluentValidation;
 using HE.Investments.Api.Config;
 using HE.Investments.Common;
 using HE.Investments.Common.Config;
-using HE.Investments.Common.Contract.Enum;
 using HE.Investments.Common.CRM;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Infrastructure.Events;
@@ -16,6 +15,7 @@ using HE.Investments.Loans.WWW.Models;
 using HE.Investments.Loans.WWW.Notifications;
 using HE.Investments.Loans.WWW.Routing;
 using HE.Investments.Organisation.Config;
+using HE.UtilsService.BannerNotification.Shared;
 
 namespace HE.Investments.Loans.WWW.Config;
 
