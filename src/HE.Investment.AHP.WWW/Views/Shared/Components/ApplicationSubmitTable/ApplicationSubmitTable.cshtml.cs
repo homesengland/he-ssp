@@ -1,5 +1,6 @@
 using HE.Investment.AHP.WWW.Models.Application;
 using HE.Investments.Common.WWW.Components.Table;
+using HE.Investments.Common.WWW.Enums;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HE.Investment.AHP.WWW.Views.Shared.Components.ApplicationSubmitTable;
