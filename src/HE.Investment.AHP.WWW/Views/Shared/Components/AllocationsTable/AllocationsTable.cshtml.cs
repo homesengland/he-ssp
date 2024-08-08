@@ -7,6 +7,7 @@ using HE.Investments.Common.Extensions;
 using HE.Investments.Common.WWW.Components;
 using HE.Investments.Common.WWW.Components.Link;
 using HE.Investments.Common.WWW.Components.Table;
+using HE.Investments.Common.WWW.Enums;
 using HE.Investments.Common.WWW.Extensions;
 using HE.Investments.Common.WWW.Utils;
 using Microsoft.AspNetCore.Mvc;
@@ -27,7 +28,6 @@ public class AllocationsTable : ViewComponent
 
         var organisationId = HttpContext.GetOrganisationIdFromRoute();
         var allocationsPage = allocations
-            .TakePage(new PaginationRequest(currentPage))
             .Select(x =>
             {
                 var tableItems = new List<TableValueViewModel>

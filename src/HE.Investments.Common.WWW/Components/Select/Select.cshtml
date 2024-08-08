@@ -1,0 +1,30 @@
+@using HE.Investments.Common.WWW.Components.Select;
+
+@model (string LabelText, string Name, List<SelectOptionModel> Options, string Title, bool IsLabelHidden)
+
+<div class="govuk-form-group">
+
+    @if (!string.IsNullOrWhiteSpace(Model.Title))
+    {
+        <gds-h1 class="govuk-heading-m govuk-!-display-inline">@Model.Title</gds-h1>
+    }
+
+    <span class="govuk-header__signin">
+        <label class="govuk-label @(Model.IsLabelHidden ? "govuk-visually-hidden" : "")" for="@Model.Name">
+            @Model.LabelText
+        </label>
+        <select class="govuk-select" id="@Model.Name" name="@Model.Name">
+            @foreach (var option in Model.Options)
+            {
+                @if (option.IsSelected)
+                {
+                    <option value="@option.Value" selected>@option.DisplayText</option>
+                }
+                else
+                {
+                    <option value="@option.Value">@option.DisplayText</option>
+                }
+            }
+        </select>
+    </span>
+</div>

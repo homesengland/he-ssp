@@ -42,6 +42,11 @@
   justify-content: center;
 }
 
+.govuk-\!-display-inline{
+  line-height: 1.75;
+  display: inline;
+}
+
 .grant-details-value {
   font-weight: bold;
   float: right;
