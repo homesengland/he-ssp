@@ -1,9 +1,8 @@
 using HE.Investment.AHP.Contract.AhpProgramme;
-using HE.Investment.AHP.Contract.Project.Commands;
-using HE.Investment.AHP.Contract.Project.Queries;
 using HE.Investment.AHP.Contract.Site.Queries;
 using HE.Investment.AHP.WWW.Models.Project;
-using HE.Investments.AHP.Allocation.Contract.Project.Queries;
+using HE.Investments.AHP.ProjectDashboard.Contract.Project.Commands;
+using HE.Investments.AHP.ProjectDashboard.Contract.Project.Queries;
 using HE.Investments.Common.Contract.Pagination;
 using HE.Investments.Common.WWW.Controllers;
 using HE.Investments.Consortium.Shared.Authorization;

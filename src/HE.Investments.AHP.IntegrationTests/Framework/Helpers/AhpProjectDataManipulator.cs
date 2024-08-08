@@ -1,5 +1,5 @@
 using HE.Common.IntegrationModel.PortalIntegrationModel;
-using HE.Investment.AHP.Domain.Project.Crm;
+using HE.Investments.AHP.ProjectDashboard.Domain.Project.Crm;
 using HE.Investments.IntegrationTestsFramework.Auth;
 
 namespace HE.Investments.AHP.IntegrationTests.Framework.Helpers;

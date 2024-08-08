@@ -1,8 +1,8 @@
-using HE.Investment.AHP.Domain.Project.Crm;
 using HE.Investment.AHP.WWW;
 using HE.Investments.AHP.IntegrationTests.Framework.Crm;
 using HE.Investments.AHP.IntegrationTests.Framework.Helpers;
 using HE.Investments.AHP.IntegrationTests.Framework.Prerequisites;
+using HE.Investments.AHP.ProjectDashboard.Domain.Project.Crm;
 using HE.Investments.FrontDoor.IntegrationTests.Utils;
 using HE.Investments.IntegrationTestsFramework;
 using Microsoft.Extensions.DependencyInjection;

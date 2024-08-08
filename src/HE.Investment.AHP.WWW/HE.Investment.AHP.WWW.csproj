@@ -35,6 +35,8 @@
     <ProjectReference Include="..\HE.Investments.AHP.Allocation.Domain\HE.Investments.AHP.Allocation.Domain.csproj" />
     <ProjectReference Include="..\HE.Investments.AHP.Consortium.Contract\HE.Investments.AHP.Consortium.Contract.csproj" />
     <ProjectReference Include="..\HE.Investments.AHP.Consortium.Domain\HE.Investments.AHP.Consortium.Domain.csproj" />
+    <ProjectReference Include="..\HE.Investments.AHP.ProjectDashboard.Contract\HE.Investments.AHP.ProjectDashboard.Contract.csproj" />
+    <ProjectReference Include="..\HE.Investments.AHP.ProjectDashboard.Domain\HE.Investments.AHP.ProjectDashboard.Domain.csproj" />
     <ProjectReference Include="..\HE.Investments.Api\HE.Investments.Api.csproj" />
     <ProjectReference Include="..\HE.Investments.Common.Contract\HE.Investments.Common.Contract.csproj" />
     <ProjectReference Include="..\HE.Investments.Consortium.Shared\HE.Investments.Consortium.Shared.csproj" />
