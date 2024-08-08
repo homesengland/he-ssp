@@ -69,6 +69,8 @@
     <EmbeddedResource Include="Components\ListCard\ListCard.cshtml" />
     <EmbeddedResource Include="Components\PhaseBanner\PhaseBanner.cshtml" />
     <EmbeddedResource Include="Components\ContactInformation\ContactInformation.cshtml" />
+    <EmbeddedResource Include="Components\SortablePagedTable\SortablePagedTable.cshtml" />
+    <EmbeddedResource Include="Components\SortableTable\SortableTable.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
