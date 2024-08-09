@@ -1,4 +1,5 @@
 using HE.UtilsService.BannerNotification.Contract;
+using HE.UtilsService.BannerNotification.Shared;
 
 namespace HE.UtilsService.BannerNotification.Storage;
 

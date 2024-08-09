@@ -1,5 +1,6 @@
 using System.Text.Json;
 using HE.UtilsService.BannerNotification.Configuration;
+using HE.UtilsService.BannerNotification.Shared;
 using StackExchange.Redis;
 
 namespace HE.UtilsService.BannerNotification.Storage.Redis;

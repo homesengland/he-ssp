@@ -1,4 +1,5 @@
 using System.Text.Json;
+using HE.UtilsService.BannerNotification.Shared;
 
 namespace HE.UtilsService.BannerNotification.Storage.InMemory;
 

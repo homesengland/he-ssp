@@ -1,4 +1,4 @@
-namespace HE.UtilsService.BannerNotification.Storage;
+namespace HE.UtilsService.BannerNotification.Shared;
 
 public class NotificationRequest
 {
