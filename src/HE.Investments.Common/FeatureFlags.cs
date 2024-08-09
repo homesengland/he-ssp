@@ -15,4 +15,6 @@ public static class FeatureFlags
     public const string TurnOffAhpAllocation = nameof(TurnOffAhpAllocation);
 
     public const string AhpVariations = nameof(AhpVariations);
+
+    public const string DisableAhpIsInContract = nameof(DisableAhpIsInContract);
 }

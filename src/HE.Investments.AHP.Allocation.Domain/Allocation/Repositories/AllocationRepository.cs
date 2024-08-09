@@ -10,11 +10,13 @@ using HE.Investments.AHP.Allocation.Domain.Allocation.Entities;
 using HE.Investments.AHP.Allocation.Domain.Allocation.Mappers;
 using HE.Investments.AHP.Allocation.Domain.Allocation.ValueObjects;
 using HE.Investments.AHP.Allocation.Domain.Claims.Crm;
+using HE.Investments.Common;
 using HE.Investments.Common.Contract;
 using HE.Investments.Consortium.Shared.UserContext;
 using HE.Investments.Programme.Contract;
 using HE.Investments.Programme.Contract.Queries;
 using MediatR;
+using Microsoft.FeatureManagement;
 
 namespace HE.Investments.AHP.Allocation.Domain.Allocation.Repositories;
 
@@ -30,18 +32,22 @@ public class AllocationRepository : IAllocationRepository
 
     private readonly IOnlyCompletionMilestonePolicy _onlyCompletionMilestonePolicy;
 
+    private readonly IFeatureManager _featureManager;
+
     public AllocationRepository(
         IAllocationCrmContext allocationCrmContext,
         IMediator mediator,
         IPhaseCrmMapper phaseCrmMapper,
         IAllocationBasicInfoMapper allocationBasicInfoMapper,
-        IOnlyCompletionMilestonePolicy onlyCompletionMilestonePolicy)
+        IOnlyCompletionMilestonePolicy onlyCompletionMilestonePolicy,
+        IFeatureManager featureManager)
     {
         _allocationCrmContext = allocationCrmContext;
         _mediator = mediator;
         _phaseCrmMapper = phaseCrmMapper;
         _allocationBasicInfoMapper = allocationBasicInfoMapper;
         _onlyCompletionMilestonePolicy = onlyCompletionMilestonePolicy;
+        _featureManager = featureManager;
     }
 
     public async Task<AllocationEntity> GetById(AllocationId id, UserAccount userAccount, CancellationToken cancellationToken)
@@ -68,6 +74,7 @@ public class AllocationRepository : IAllocationRepository
             allocationDto.LocalAuthority.name,
             programme.ShortName,
             ApplicationTenureMapper.ToDomain(allocationDto.Tenure)!.Value);
+        var isInContractDisabled = await _featureManager.IsEnabledAsync(FeatureFlags.DisableAhpIsInContract);
 
         return new AllocationOverview(
             allocationBasicInfo,
@@ -75,7 +82,7 @@ public class AllocationRepository : IAllocationRepository
                 allocationDto.LastExternalModificationBy?.firstName,
                 allocationDto.LastExternalModificationBy?.lastName,
                 allocationDto.LastExternalModificationOn),
-            true, // TODO: AB#104786 use allocationDto.IsInContract when flag will be set in Integration Tests
+            isInContractDisabled || allocationDto.IsInContract,
             allocationDto.OrganisationName,
             allocationDto.FDProjectId,
             allocationDto.HasDraftAllocation);
