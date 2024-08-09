@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace HE.UtilsService.BannerNotification.Shared;
 
 public class NotificationRequest
