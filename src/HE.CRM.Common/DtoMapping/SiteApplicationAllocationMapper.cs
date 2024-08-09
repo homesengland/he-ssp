@@ -40,8 +40,8 @@ namespace HE.CRM.Common.DtoMapping
                 {
                     allocationId = allo.Id.ToString(),
                     allocationName = allo.invln_schemename,
-                    housesToDeliver = allo?.invln_noofhomes,
-                    tenure = allo?.invln_Tenure?.Value,
+                    housesToDeliver = allo.invln_noofhomes.HasValue ? allo.invln_noofhomes.Value : 0,
+                    tenure = allo.invln_Tenure != null ? allo.invln_Tenure.Value : 0,
                 };
                 siteApp.AhpAllocations.Add(ahpAllocationsDto);
             }
