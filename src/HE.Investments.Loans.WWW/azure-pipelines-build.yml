@@ -45,15 +45,29 @@ pr:
     - src/HE.Investments.FrontDoor.Shared/*
     - src/HE.Investments.Api/*
 
+parameters:
+  - name: forcePushToProd
+    displayName: Force Push to Production
+    type: boolean
+    default: false
+
+variables:
+  buildMajor: 0
+  buildMinor: 0
+  buildBranch: $[replace(variables['Build.SourceBranch'], '/', '.')]
+
 pool:
   vmImage: 'ubuntu-22.04'
+
+name: $(buildMajor).$(buildMinor).$(Rev:r)-loans.$(buildBranch)
+
 
 resources:
   repositories:
   - repository: he-invst-deployment
     type: git
     name: 'Investments Programme/he-invst-deployment'
-    ref: 'development_R3'
+    ref: 'feature/semver'
   - repository: templates
     type: git
     name: 'Cloud Hosting Service/Templates'
