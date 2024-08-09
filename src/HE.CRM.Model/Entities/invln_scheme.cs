@@ -244,6 +244,8 @@ namespace DataverseModel
 			public const string invln_isallocationName = "invln_isallocationname";
 			public const string invln_IsLatestAllocation = "invln_islatestallocation";
 			public const string invln_islatestallocationName = "invln_islatestallocationname";
+			public const string invln_IsLatestVersion = "invln_islatestversion";
+			public const string invln_islatestversionName = "invln_islatestversionname";
 			public const string invln_isvariation = "invln_isvariation";
 			public const string invln_isvariationName = "invln_isvariationname";
 			public const string invln_LAApproval = "invln_laapproval";
@@ -2256,6 +2258,40 @@ namespace DataverseModel
 				if (this.FormattedValues.Contains("invln_islatestallocation"))
 				{
 					return this.FormattedValues["invln_islatestallocation"];
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_islatestversion")]
+		public System.Nullable<bool> invln_IsLatestVersion
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("invln_islatestversion");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_IsLatestVersion");
+				this.SetAttributeValue("invln_islatestversion", value);
+				this.OnPropertyChanged("invln_IsLatestVersion");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_islatestversionname")]
+		public string invln_islatestversionName
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				if (this.FormattedValues.Contains("invln_islatestversion"))
+				{
+					return this.FormattedValues["invln_islatestversion"];
 				}
 				else
 				{
