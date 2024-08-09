@@ -48,5 +48,81 @@ namespace HE.CRM.Common.Repositories.Implementations
             query_invln_consortiummember.LinkCriteria.AddCondition(invln_ConsortiumMember.Fields.StatusCode, ConditionOperator.NotEqual, (int)invln_ConsortiumMember_StatusCode.Removalconfirmed);
             return service.RetrieveMultiple(query).Entities.Select(x => x.ToEntity<invln_Consortium>()).ToList();
         }
+
+        public EntityCollection GetConsortiumIdForAhpApplication(Guid ahpApplicationId)
+        {
+            var query_invln_schemeid = ahpApplicationId.ToString();
+
+            var query = new QueryExpression(invln_scheme.EntityLogicalName)
+            {
+                ColumnSet = new ColumnSet(invln_scheme.Fields.invln_schemeId),
+                Criteria =
+                {
+                    Conditions =
+                    {
+                        new ConditionExpression(invln_scheme.Fields.invln_schemeId, ConditionOperator.Equal, query_invln_schemeid)
+                    }
+                },
+                LinkEntities =
+                {
+                    new LinkEntity(
+                        invln_scheme.EntityLogicalName,
+                        invln_Sites.EntityLogicalName,
+                        invln_scheme.Fields.invln_Site,
+                        invln_Sites.Fields.invln_SitesId,
+                        JoinOperator.Inner)
+                    {
+                        EntityAlias = "Site",
+                        Columns = new ColumnSet(invln_Sites.Fields.invln_SitesId),
+                        LinkEntities =
+                        {
+                            new LinkEntity(
+                                invln_Sites.EntityLogicalName,
+                                invln_ahpproject.EntityLogicalName,
+                                invln_Sites.Fields.invln_AHPProjectId,
+                                invln_ahpproject.Fields.invln_ahpprojectId,
+                                JoinOperator.Inner)
+                            {
+                                EntityAlias = "AhpProject",
+                                Columns = new ColumnSet(invln_ahpproject.Fields.invln_ConsortiumId)
+                            }
+                        }
+                    }
+                }
+            };
+            return service.RetrieveMultiple(query);
+        }
+
+        public EntityCollection GetConsortiumIdForAhpSite(Guid siteId)
+        {
+            var query_invln_sitesid = siteId.ToString();
+
+            var query = new QueryExpression(invln_Sites.EntityLogicalName)
+            {
+                ColumnSet = new ColumnSet(invln_Sites.Fields.invln_SitesId),
+                Criteria =
+                {
+                    Conditions =
+                    {
+                        new ConditionExpression(invln_Sites.Fields.invln_SitesId, ConditionOperator.Equal, query_invln_sitesid)
+                    }
+                },
+                LinkEntities =
+                {
+                    new LinkEntity(
+                        invln_Sites.EntityLogicalName,
+                        invln_ahpproject.EntityLogicalName,
+                        invln_Sites.Fields.invln_AHPProjectId,
+                        invln_ahpproject.Fields.invln_ahpprojectId,
+                        JoinOperator.Inner)
+                    {
+                        EntityAlias = "AhpProject",
+                        Columns = new ColumnSet(invln_ahpproject.Fields.invln_ConsortiumId)
+                    }
+                }
+            };
+            return service.RetrieveMultiple(query);
+        }
+
     }
 }

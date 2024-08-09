@@ -5,6 +5,7 @@ using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using DataverseModel;
+using HE.Base.Common.Extensions;
 using HE.Base.Services;
 using HE.CRM.Common.Repositories.interfaces;
 using HE.CRM.Common.Repositories.Interfaces;
@@ -138,6 +139,32 @@ namespace HE.CRM.AHP.Plugins.Services.Consortium
 
             TracingService.Trace("Check web role");
             return UserHasAccess(externalUserId, new Guid(organizationId), siteId, applicationId, ahpProject);
+        }
+
+        public Guid GetConsortiumIdForApplication (Guid ahpAplicationId)
+        {
+            var dataFromCrm = _consortiumRepository.GetConsortiumIdForAhpApplication(ahpAplicationId).Entities.FirstOrDefault();
+
+            if (dataFromCrm != null)
+            {
+                return dataFromCrm.GetAliasedAttributeValue<Guid>("AhpProject", invln_ahpproject.Fields.invln_ConsortiumId);
+
+            }
+
+            return Guid.Empty;
+        }
+
+        public Guid GetConsortiumIdForSite(Guid siteId)
+        {
+            var dataFromCrm = _consortiumRepository.GetConsortiumIdForAhpSite(siteId).Entities.FirstOrDefault();
+
+            if (dataFromCrm != null)
+            {
+                return dataFromCrm.GetAliasedAttributeValue<Guid>("AhpProject", invln_ahpproject.Fields.invln_ConsortiumId);
+
+            }
+
+            return Guid.Empty;
         }
 
         private bool IsApplicationPartner(invln_scheme application, string organizationId)

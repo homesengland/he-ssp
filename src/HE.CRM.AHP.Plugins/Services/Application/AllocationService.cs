@@ -65,7 +65,7 @@ namespace HE.CRM.AHP.Plugins.Services.Application
             allocation.invln_VersionNumber = 1;
             allocation.invln_AllocationInternalStatus = new OptionSetValue((int)invln_AllocationInternalStatus.Approved);
             allocation.invln_AllocationExternalStatus = new OptionSetValue((int)invln_AllocationExternalStatus.Approved);
-            allocation.invln_IsLatestAllocation = true;
+            allocation.invln_IsLatestVersion = true;
 
             // grant details - initial calculation
             allocation.invln_TotalGrantAllocated = application.invln_fundingrequired;
