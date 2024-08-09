@@ -4,5 +4,5 @@ public class NotificationRequest
 {
     public string NotificationType { get; set; }
 
-    public IDictionary<string, string> Parameters { get; set; }
+    public Dictionary<string, string> Parameters { get; set; }
 }
