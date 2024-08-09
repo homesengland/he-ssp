@@ -6,6 +6,7 @@ using HE.Investments.Common.User;
 using HE.UtilsService.BannerNotification.Shared;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.Extensions.Logging;
 
 namespace HE.Investments.Common.Config;
 
@@ -33,7 +34,8 @@ public static class CommonModule
             x.GetRequiredService<INotificationKeyFactory>(),
             x.GetServices<IDisplayNotificationFactory>(),
             application,
-            x.GetRequiredService<IUserContext>()));
+            x.GetRequiredService<IUserContext>(),
+            x.GetRequiredService<ILogger<NotificationConsumer>>()));
 
         foreach (var factoryType in displayNotificationFactoriesAssembly.GetTypes()
                      .Where(x => typeof(IDisplayNotificationFactory).IsAssignableFrom(x) && x.IsClass && !x.IsGenericType))

@@ -1,35 +1,38 @@
 @using HE.Investments.Common.Extensions
 @using HE.Investments.Common.Services.Notifications;
 
-@model (DisplayNotification DisplayNotification, bool ShouldAddTopMargin);
+@model (DisplayNotification[] DisplayNotifications, bool ShouldAddTopMargin);
 
-@if (Model.DisplayNotification.IsProvided())
+@if (Model.DisplayNotifications.IsProvided())
 {
-    <div
-        class="govuk-notification-banner @(Model.DisplayNotification.NotificationType == NotificationType.Success ? "govuk-notification-banner--success" : "") govuk-!-margin-bottom-7 @(Model.ShouldAddTopMargin ? "govuk-!-margin-top-7" : "")"
-        role="alert"
-        aria-labelledby="govuk-notification-banner-title"
-        data-module="govuk-notification-banner">
-        <div class="govuk-notification-banner__header">
-            <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">
-                @Model.DisplayNotification.Title
-            </h2>
-        </div>
-        <div class="govuk-notification-banner__content">
-            <h3 class="govuk-notification-banner__heading govuk-!-display-inline">
-                @Model.DisplayNotification.Description
+    foreach (var displayNotification in Model.DisplayNotifications)
+    {
+        <div
+            class="govuk-notification-banner @(displayNotification.NotificationType == NotificationType.Success ? "govuk-notification-banner--success" : "") govuk-!-margin-bottom-7 @(Model.ShouldAddTopMargin ? "govuk-!-margin-top-7" : "")"
+            role="alert"
+            aria-labelledby="govuk-notification-banner-title"
+            data-module="govuk-notification-banner">
+            <div class="govuk-notification-banner__header">
+                <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">
+                    @displayNotification.Title
+                </h2>
+            </div>
+            <div class="govuk-notification-banner__content">
+                <h3 class="govuk-notification-banner__heading govuk-!-display-inline">
+                    @displayNotification.Description
 
-                @if (Model.DisplayNotification.LinkDescription != null)
+                    @if (displayNotification.LinkDescription != null)
+                    {
+                        <br/>
+                        <a href="@displayNotification.LinkDescriptionUrl">@displayNotification.LinkDescription</a>
+                    }
+                </h3>
+
+                @if (displayNotification.Body != null)
                 {
-                    <br/>
-                    <a href="@Model.DisplayNotification.LinkDescriptionUrl">@Model.DisplayNotification.LinkDescription</a>
+                    <p class="govuk-body govuk-!-margin-top-4">@displayNotification.Body</p>
                 }
-            </h3>
-
-            @if (Model.DisplayNotification.Body != null)
-            {
-                <p class="govuk-body govuk-!-margin-top-4">@Model.DisplayNotification.Body</p>
-            }
+            </div>
         </div>
-    </div>
+    }
 }

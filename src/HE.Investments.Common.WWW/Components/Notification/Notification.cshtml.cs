@@ -1,4 +1,5 @@
 using HE.Investments.Common.Services.Notifications;
+using HE.UtilsService.BannerNotification.Shared;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HE.Investments.Common.WWW.Components.Notification;
@@ -12,9 +13,17 @@ public class Notification : ViewComponent
         _notificationConsumer = notificationConsumer;
     }
 
-    public IViewComponentResult Invoke(DisplayNotification? displayNotification = null, bool shouldAddTopMargin = false)
+    public IViewComponentResult Invoke(
+        DisplayNotification? displayNotification = null,
+        bool shouldAddTopMargin = false,
+        ApplicationArea? applicationArea = null)
     {
-        displayNotification ??= _notificationConsumer.Pop();
-        return View("Notification", (displayNotification, shouldAddTopMargin));
+        var displayNotifications = _notificationConsumer.Pop(applicationArea);
+        if (displayNotification != null)
+        {
+            displayNotifications = displayNotifications.Append(displayNotification).ToArray();
+        }
+
+        return View("Notification", (displayNotifications, shouldAddTopMargin));
     }
 }

@@ -5,6 +5,7 @@
 @using HE.Investments.Common.WWW.Components.PageHeader
 @using HE.Investments.Common.WWW.Extensions
 @using HE.Investments.Common.WWW.TagHelpers
+@using HE.UtilsService.BannerNotification.Shared
 @inject IAhpExternalLinks ExternalLinks
 @model (HE.Investments.AHP.Allocation.Contract.Claims.Phase Phase, bool CanEditClaim)
 @{
@@ -14,7 +15,7 @@
 
 <gds-div-grid-column-two-thirds>
     <gds-back-link href="@Url.OrganisationAction("Summary", "AllocationClaims",  new { allocationId = Model.Phase.Allocation.Id.Value })"></gds-back-link>
-    <vc:notification />
+    <vc:notification application-area="ApplicationArea.Claims" />
     <vc:page-header caption="@Model.Phase.Allocation.Name" title="@title"/>
     <vc:allocation-header allocation="@Model.Phase.Allocation"/>
 
