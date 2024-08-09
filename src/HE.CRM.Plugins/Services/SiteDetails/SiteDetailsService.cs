@@ -110,7 +110,7 @@ namespace HE.CRM.Plugins.Services.SiteDetails
                 siteDetailToUpdate.Id = detailsId;
                 siteDetailsRepository.Update(siteDetailToUpdate);
                 SetLastModificationDateOnRelatedLoanApplication(siteDetailToUpdate);
-                SetRegionOnRelatedLoanApplication(siteDetailToUpdate, heLocalAuthority);
+                SetRegionOnRelatedLoanApplication(new Guid(loanApplicationId), heLocalAuthority);
             }
         }
         public void DeleteSiteDetails(string siteDetailsId)
@@ -164,13 +164,14 @@ namespace HE.CRM.Plugins.Services.SiteDetails
             siteDetailsRepository.Create(siteDetailsToCreate);
 
             SetLastModificationDateOnRelatedLoanApplication(siteDetailsToCreate);
-            SetRegionOnRelatedLoanApplication(siteDetailsToCreate, heLocalAuthority);
+            SetRegionOnRelatedLoanApplication(new Guid(loanApplicationId), heLocalAuthority);
         }
 
         public void SetLastModificationDateOnRelatedLoanApplication(invln_SiteDetails siteDetails)
         {
             if (siteDetails.invln_Loanapplication != null)
             {
+                TracingService.Trace($"SetLastModificationDateOnRelatedLoanApplication");
                 var loanApplicationToUpdate = new invln_Loanapplication()
                 {
                     Id = siteDetails.invln_Loanapplication.Id,
@@ -256,13 +257,15 @@ namespace HE.CRM.Plugins.Services.SiteDetails
             return generatedAttribuesFetchXml;
         }
 
-        private void SetRegionOnRelatedLoanApplication(invln_SiteDetails siteDetails, he_LocalAuthority heLocalAuthority)
+        private void SetRegionOnRelatedLoanApplication(Guid loanApplicationId, he_LocalAuthority heLocalAuthority)
         {
-            if (siteDetails.invln_Loanapplication != null && heLocalAuthority != null)
+            if (heLocalAuthority != null)
             {
+                TracingService.Trace($"SetRegionOnRelatedLoanApplication");
+                TracingService.Trace($"heLocalAuthority.he_laregion : {heLocalAuthority.he_laregion.Value}");
                 var loanApplicationToUpdate = new invln_Loanapplication()
                 {
-                    Id = siteDetails.invln_Loanapplication.Id,
+                    Id = loanApplicationId,
                     invln_LARegion = new OptionSetValue(heLocalAuthority.he_laregion.Value)
                 };
 
