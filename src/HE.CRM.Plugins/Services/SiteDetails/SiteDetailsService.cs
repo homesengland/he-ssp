@@ -258,7 +258,7 @@ namespace HE.CRM.Plugins.Services.SiteDetails
 
         private void SetRegionOnRelatedLoanApplication(invln_SiteDetails siteDetails, he_LocalAuthority heLocalAuthority)
         {
-            if (siteDetails.invln_Loanapplication != null)
+            if (siteDetails.invln_Loanapplication != null && heLocalAuthority != null)
             {
                 var loanApplicationToUpdate = new invln_Loanapplication()
                 {
