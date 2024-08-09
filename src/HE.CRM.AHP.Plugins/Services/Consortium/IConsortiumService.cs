@@ -12,5 +12,8 @@ namespace HE.CRM.AHP.Plugins.Services.Consortium
     public interface IConsortiumService : ICrmService
     {
         bool CheckAccess(Operation operation, RecordType recordtype, string externalUserId, string siteId = null, string applicationId = null, string consortiumId = null, string organizationId = null, string ahpProject = null);
+
+        Guid GetConsortiumIdForApplication(Guid ahpAplicationId);
+        Guid GetConsortiumIdForSite(Guid siteId);
     }
 }

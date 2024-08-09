@@ -14,6 +14,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)PortalIntegrationModel\AhpAllocationForSiteDto.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)PortalIntegrationModel\AhpAllocationDto.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)PortalIntegrationModel\AhpProjectDto.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)PortalIntegrationModel\AhpSiteApplicationAllocationDto.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)PortalIntegrationModel\AhpSiteApplicationAndAllocationDto.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)PortalIntegrationModel\AllocationClaimsDto.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)PortalIntegrationModel\AhpApplicationDto.cs" />
