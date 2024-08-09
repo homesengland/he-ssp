@@ -4,7 +4,7 @@ namespace HE.Investments.AHP.ProjectDashboard.Domain.Project.Crm;
 
 public interface IProjectAllocationCrmContext
 {
-    Task<AhpProjectDto> GetProjectAllocations(
+    Task<ProjectWithAllocationListDto> GetProjectAllocations(
         string projectId,
         string userId,
         string organisationId,

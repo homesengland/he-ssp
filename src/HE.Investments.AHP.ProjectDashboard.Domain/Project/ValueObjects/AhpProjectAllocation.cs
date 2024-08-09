@@ -11,7 +11,8 @@ public class AhpProjectAllocation : ValueObject
         int housesToDeliver,
         Tenure tenure,
         string localAuthorityName,
-        DateTime? lastModificationOn)
+        DateTime? lastModificationOn,
+        bool? hasMilestoneInDueState = null)
     {
         Id = id;
         Name = name;
@@ -19,6 +20,7 @@ public class AhpProjectAllocation : ValueObject
         Tenure = tenure;
         LocalAuthorityName = localAuthorityName;
         LastModificationOn = lastModificationOn;
+        HasMilestoneInDueState = hasMilestoneInDueState;
     }
 
     public string Id { get; }
@@ -32,6 +34,8 @@ public class AhpProjectAllocation : ValueObject
     public string LocalAuthorityName { get; }
 
     public DateTime? LastModificationOn { get; }
+
+    public bool? HasMilestoneInDueState { get; }
 
     protected override IEnumerable<object?> GetAtomicValues()
     {

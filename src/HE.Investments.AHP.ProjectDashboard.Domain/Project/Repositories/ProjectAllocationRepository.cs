@@ -31,20 +31,21 @@ public class ProjectAllocationRepository : IProjectAllocationRepository
 
         return new AhpProjectOverview(
             projectId,
-            new AhpProjectName(project.AhpProjectName),
-            allocations: MapAhpAllocation(project));
+            new AhpProjectName(project.ProjectName),
+            allocations: MapAhpAllocations(project));
     }
 
-    private List<AhpProjectAllocation>? MapAhpAllocation(AhpProjectDto project)
+    private List<AhpProjectAllocation>? MapAhpAllocations(ProjectWithAllocationListDto project)
     {
-        return project.ListOfAhpAllocations?
+        return project.ListOfAllocations?
             .Select(x => new AhpProjectAllocation(
-                x.Id,
+                x.Id.ToString(),
                 x.Name,
                 x.Homes,
                 _tenureMapper.ToDomain(x.Tenure)!.Value,
                 x.LocalAuthority.name,
-                null))
+                null,
+                x.HasMilestoneInDueState))
             .ToList();
     }
 }
